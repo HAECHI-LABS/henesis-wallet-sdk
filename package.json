@@ -1,0 +1,22 @@
+{
+  "name": "core",
+  "version": "0.0.1",
+  "description": "henesis wallet sdk core module",
+  "author": "Jun <leebduk@gmail.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "src/core.ts",
+  "directories": {
+    "lib": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}
