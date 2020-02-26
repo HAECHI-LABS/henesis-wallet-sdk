@@ -1,0 +1,19 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "version": "0.0.0",
+  "command": {
+    "version": {
+      "conventionalCommits": true,
+      "message": "chore(release): publish %s"
+    }
+  },
+  "ignoreChanges": [
+    "*.md",
+    "*.json",
+    "*.txt",
+    "test/**",
+    "package.json"
+  ]
+}

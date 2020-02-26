@@ -1,0 +1,19 @@
+{
+  "name": "enclave",
+  "version": "0.0.1",
+  "description": "henesis wallet enclave module",
+  "author": "Jun <leebduk@gmail.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "src/enclave.ts",
+  "directories": {
+    "lib": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  }
+}
