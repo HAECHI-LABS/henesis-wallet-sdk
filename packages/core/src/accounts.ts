@@ -13,6 +13,16 @@ export interface Key {
   xpub: string;
 }
 
+export interface KeyFile {
+
+}
+
+export interface KeySecret {
+  address: string;
+  xpub: string;
+  keyFile: KeyFile;
+}
+
 export interface Account {
   id: string;
   email: string;

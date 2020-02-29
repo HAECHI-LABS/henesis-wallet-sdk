@@ -1,6 +1,8 @@
 import {Accounts} from "./accounts";
 import {HttpClient} from "./httpClient";
+import {Wallets} from "./wallets";
 import pjson from '../package.json';
+import {Wallet} from "./wallet";
 
 export interface SDKOptions {
   accessToken: string;
@@ -26,11 +28,12 @@ export interface SDK {
 
 }
 
+
 export class SDK {
   private readonly sdkVersion: string;
-  public readonly wallets: any;
+  public readonly wallets: Wallets;
   public readonly accounts: Accounts;
-  private readonly client: Client;
+  public readonly client: Client;
 
   // todo: validation params;
   constructor(params: SDKOptions) {
@@ -42,5 +45,6 @@ export class SDK {
     }) as any;
 
     this.accounts = new Accounts(this.client);
+    this.wallets = new Wallets(this.client);
   }
 }
