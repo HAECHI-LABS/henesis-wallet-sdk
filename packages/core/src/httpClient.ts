@@ -4,7 +4,6 @@ import {Converter} from "./converter/converter";
 export interface ClientOptions {
   accessToken: string;
   secret: string;
-  sdkVersion: string;
   env?: string;
 }
 
@@ -13,12 +12,10 @@ export class HttpClient {
   private readonly client: AxiosInstance;
   private readonly accessToken: string;
   private readonly secret: string;
-  private readonly sdkVersion: string;
 
   constructor(params: ClientOptions) {
     this.secret = params.secret;
     this.accessToken = params.accessToken;
-    this.sdkVersion = params.sdkVersion;
     this.client = axios.create({
       baseURL: this.baseUrl,
       timeout: 30000,
@@ -28,7 +25,6 @@ export class HttpClient {
     });
     this.client.interceptors.request.use(config => {
       config.headers['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
-      config.headers['X-Henesis-SDK-Version'] = this.sdkVersion;
       if (this.accessToken) {
         config.headers['Authorization'] = 'Bearer ' + this.accessToken;
       }

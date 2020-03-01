@@ -1,26 +1,22 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
     "module": "commonjs",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "allowJs": true,
-    "sourceMap": true,
-    "outDir": "./dist",
-    "strict": false,
+    "declaration": true,
     "noImplicitAny": false,
-    "baseUrl": "./src/",
-    "paths": {
-      "#/*": [
-        "*"
-      ]
-    }
+    "removeComments": true,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "lib": [
+      "es6"
+    ]
   },
-  "include": [
-    "packages/**/*.ts"
-  ],
   "exclude": [
     "node_modules",
-    "dist"
+    "**/*.spec.ts",
+    "**/__mocks__"
   ]
 }
