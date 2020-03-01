@@ -2,7 +2,6 @@ import {Accounts} from "./accounts";
 import {HttpClient} from "./httpClient";
 import {Wallets} from "./wallets";
 import pjson from '../package.json';
-import {Wallet} from "./wallet";
 
 export interface SDKOptions {
   accessToken: string;

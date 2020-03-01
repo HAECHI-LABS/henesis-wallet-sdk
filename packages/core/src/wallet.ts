@@ -1,11 +1,9 @@
 import {WalletInformation} from "./wallets";
-import {Client, SDK} from "./sdk";
+import {Client} from "./sdk";
 import {DefaultEthereumTransactionFactory} from "./transaction/factory";
 import {DefaultSignerFactory} from "./signer/factory";
 import {DefaultSigner} from "./signer/defaultSigner";
 import {MultiSignaturePayload} from "./multiSignaturePayload";
-import {Erc20TransferTransaction} from "./transaction/erc20TransferTransaction";
-import {KeyFile} from "./accounts";
 
 export interface Transaction {
 
@@ -34,6 +32,7 @@ export class Wallet {
       passphrase: string
   ): Promise<Transaction> {
     const payload: MultiSignaturePayload = this.transactionFactory.getTransaction("eth")
+        .setNonce(await Wallet.getNextSequenceId(this.walletInformation.id))
         .buildRaw(to, value, "0x0");
     return this.sendTransaction(
         this.walletInformation.id,
@@ -52,6 +51,7 @@ export class Wallet {
   ): Promise<Transaction> {
     const payload: MultiSignaturePayload = this.transactionFactory
         .getTransaction("erc20")
+        .setNonce(await Wallet.getNextSequenceId(this.walletInformation.id))
         .build(to, value, tokenContractAddress);
     return this.sendTransaction(
         this.walletInformation.id,
@@ -75,10 +75,13 @@ export class Wallet {
     } catch (e) {
 
     }
-    return await this.client.post(`${this.baseUrl}/transactions`, payload) as Transaction;
+    return await this.client.post<Transaction>(`${this.baseUrl}/transactions`, payload);
   }
 
   private getNextNonce(): bigint {
+    return null;
+  }
+  static async getNextSequenceId(walletId:string): Promise<number> {
     return null;
   }
 
