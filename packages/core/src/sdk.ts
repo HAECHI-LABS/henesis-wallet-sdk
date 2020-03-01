@@ -22,7 +22,6 @@ export interface Client {
 }
 
 export class SDK {
-  private readonly sdkVersion: string;
   public readonly wallets: any;
   public readonly accounts: Accounts;
   private readonly client: Client;

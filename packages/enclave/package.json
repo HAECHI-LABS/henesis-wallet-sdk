@@ -20,8 +20,9 @@
     "preBootstrap": "rm -rf ./node_modules"
   },
   "dependencies": {
+    "@haechi-labs/henesis-wallet-core": "^0.0.1",
     "express": "^4.17.1",
-    "@haechi-labs/henesis-wallet-core": "^0.0.1"
+    "ts-node": "^8.6.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.2",
