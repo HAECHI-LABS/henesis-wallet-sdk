@@ -15,11 +15,11 @@ export class App {
   constructor(params: AppOption) {
     this.application = express();
     this.port = params.port ? params.port : 3000;
-    if (params.controllers) {
-      this.routeController(params.controllers);
-    }
     if (params.middleWares) {
       this.applyMiddleWares(params.middleWares);
+    }
+    if (params.controllers) {
+      this.routeController(params.controllers);
     }
   }
 

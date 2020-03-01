@@ -23,8 +23,12 @@ export interface Client {
 }
 
 export class SDK {
+<<<<<<< HEAD
   private readonly sdkVersion: string;
   public readonly wallets: Wallets;
+=======
+  public readonly wallets: any;
+>>>>>>> feat: implement sdk injector, promise wrapper middlewares
   public readonly accounts: Accounts;
   private readonly client: Client;
 
