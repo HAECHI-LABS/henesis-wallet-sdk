@@ -2,7 +2,7 @@
   "name": "core",
   "version": "0.0.1",
   "description": "henesis wallet sdk core module",
-  "author": "Jun <leebduk@gmail.com>",
+  "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
   "license": "ISC",
   "main": "src/core.ts",

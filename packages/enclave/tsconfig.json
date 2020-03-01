@@ -4,7 +4,11 @@
     "module": "commonjs",
     "target": "es2017",
     "outDir": "./src",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
   },
   "include": [
     "./src"
