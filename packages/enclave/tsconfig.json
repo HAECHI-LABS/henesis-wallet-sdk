@@ -3,7 +3,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2017",
-    "outDir": "./src",
+    "outDir": "./lib",
     "rootDir": "./src",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,

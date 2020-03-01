@@ -1,11 +1,12 @@
 {
-  "name": "core",
+  "name": "@haechi-labs/henesis-wallet-core",
   "version": "0.0.1",
   "description": "henesis wallet sdk core module",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
   "license": "ISC",
-  "main": "src/core.ts",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "directories": {
     "lib": "src",
     "test": "__tests__"
@@ -14,7 +15,9 @@
     "src"
   ],
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": "rm -rf ./lib && tsc",
+    "preBootstrap": "rm -rf ./node_modules"
   },
   "dependencies": {
     "@types/jest": "^24.0.15",
