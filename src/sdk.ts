@@ -1,6 +1,6 @@
-import {Accounts} from "./accounts";
-import {HttpClient} from "./httpClient";
-import {Wallets} from "./wallets";
+import { Accounts } from './accounts';
+import { HttpClient } from './httpClient';
+import { Wallets } from './wallets';
 
 export interface SDKOptions {
   accessToken: string;
@@ -23,13 +23,10 @@ export interface Client {
 }
 
 export class SDK {
-<<<<<<< HEAD
-  private readonly sdkVersion: string;
   public readonly wallets: Wallets;
-=======
-  public readonly wallets: any;
->>>>>>> feat: implement sdk injector, promise wrapper middlewares
+
   public readonly accounts: Accounts;
+
   private readonly client: Client;
 
   // todo: validation params;

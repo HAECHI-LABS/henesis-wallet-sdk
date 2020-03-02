@@ -1,90 +1,39 @@
-import {Client} from "../sdk";
-import {WalletInformation} from "../wallets";
-import {IEthereumWallet, IWallet, PayloadAndSignature, Transaction} from "../interfaces/Iwallet";
-import {GlobalCoinFactory} from "../coin/coinFactory";
+import { Client } from '../sdk';
+import { HalfSignedTransaction, Wallet, WalletInformation } from '../wallet';
 
-export class EthereumWallet implements IEthereumWallet{
-  private client: Client;
-  private keychains: any;
-  private walletInformation: WalletInformation;
-  private baseUrl = "/wallets"
-  static REGISTERED_TICKER = ["eth","omg"];
-
-  constructor(client: Client, keychains: any, walletInformation: WalletInformation) {
-    this.client = client;
-    this.keychains = keychains;
-    this.walletInformation = walletInformation;
+export class EthereumWallet extends Wallet {
+  constructor(client: Client, walletInformation: WalletInformation) {
+    super(client, walletInformation);
   }
 
-  static createInstance(client: Client, keychains: any, walletInformation: WalletInformation) {
-    return new EthereumWallet(client, keychains, walletInformation);
+  static createInstance(client: Client, walletInformation: WalletInformation) {
+    return new EthereumWallet(client, walletInformation);
   }
 
-  public transfer(
-      ticker: string,
-      to: string,
-      value: number,
-      passphrase: string
-  ): Transaction {
-    const coin = this.getCoinConstructor(ticker)(this.keychains);
-    const payloadAndSignature: PayloadAndSignature = coin.transfer(
-        to,
-        value,
-        this.walletInformation.address,
-        passphrase
-    );
-    return this.sendTransaction(
-        to,
-        value,
-        payloadAndSignature
-    );
+  getChain(): string {
+    return '';
   }
 
-  private sendTransaction(
-      to: string,
-      value: number,
-      payloadAndSignaure: PayloadAndSignature
-  ): Transaction {
-    return null;
+  getSequenceId(): number {
+    return 0;
   }
 
-  public contractCall(contractAddress: string, value: number, data:string, passphrase: string): Transaction {
-    const nativeCoin = this.getCoinConstructor("eth")(this.keychains);
-    const payloadAndSignature: PayloadAndSignature = nativeCoin.transfer(
-        contractAddress,
-        value,
-        this.walletInformation.address,
-        passphrase,
-        data
-    );
-    return null;
+  isValidAddress(address: string): boolean {
+    return false;
   }
 
-  private getCoinConstructor(ticker) {
-    if(!EthereumWallet.REGISTERED_TICKER.includes(ticker)){
-      throw Error(`ticker:${ticker} is not registered`);
-    }
-    return GlobalCoinFactory.getCoin(ticker);
+  transfer() {
   }
 
-  public getWalletSequenceId():number {
-    return null;
+  verifyAddress(address: string): boolean {
+    return false;
   }
 
-  public getAddress():string {
-    return this.walletInformation.address;
+  contractCall(contractAddress: string, value: number, data: string, passphrase: string): HalfSignedTransaction {
+    return undefined;
   }
 
-  public async createUserWallet(name, passphrase): Promise<WalletInformation> {
-    //TODO make contract call data
-    const nativeCoin = this.getCoinConstructor("eth")(this.keychains);
-    const payloadAndSignature: PayloadAndSignature = nativeCoin.transfer(
-        this.walletInformation.address,
-        0,
-        this.walletInformation.address,
-        passphrase,
-        "data"
-    );
-    return await this.client.post<WalletInformation>(`${this.baseUrl}/${this.walletInformation.id}/user-wallets`)
+  createUserWallet(): Wallet {
+    return undefined;
   }
 }

@@ -1,22 +1,14 @@
 export class Converter {
   static toSnakeCase(obj: any) {
-    const toSnake = (s) => {
-      return s.replace(/[\w]([A-Z])/g, function (m) {
-        return m[0] + "_" + m[1];
-      }).toLowerCase();
-    };
+    const toSnake = (s) => s.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toLowerCase();
 
     return this.changeObjectProperty(obj, toSnake);
   }
 
   static toCamelCase(obj: any) {
-    const toCamel = (s) => {
-      return s.replace(/([-_][a-z])/ig, ($1) => {
-        return $1.toUpperCase()
-          .replace('-', '')
-          .replace('_', '');
-      });
-    };
+    const toCamel = (s) => s.replace(/([-_][a-z])/ig, ($1) => $1.toUpperCase()
+      .replace('-', '')
+      .replace('_', ''));
 
     return this.changeObjectProperty(obj, toCamel);
   }
@@ -31,11 +23,9 @@ export class Converter {
         });
 
       return n;
-    } else if (Array.isArray(o)) {
-      return o.map((i) => {
-        return this.changeObjectProperty(i, converter);
-      });
+    } if (Array.isArray(o)) {
+      return o.map((i) => this.changeObjectProperty(i, converter));
     }
     return o;
-  };
+  }
 }

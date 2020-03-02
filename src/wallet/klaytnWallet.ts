@@ -1,81 +1,39 @@
-import {Client} from "../sdk";
-import {WalletInformation} from "../wallets";
-import {IEthereumWallet, IWallet, PayloadAndSignature, Transaction} from "../interfaces/Iwallet";
-import {GlobalCoinFactory} from "../coin/coinFactory";
+import { Client } from '../sdk';
+import { HalfSignedTransaction, Wallet, WalletInformation } from '../wallet';
 
-export class KlaytnWallet implements IEthereumWallet{
-  private client: Client;
-  private keychains: any;
-  private walletInformation: WalletInformation;
-  static REGISTERED_TICKER = ["klay","kct"];
-
-  constructor(client: Client, keychains: any, walletInformation: WalletInformation) {
-    this.client = client;
-    this.keychains = keychains;
-    this.walletInformation = walletInformation;
+export class KlaytnWallet extends Wallet {
+  constructor(client: Client, walletInformation: WalletInformation) {
+    super(client, walletInformation);
   }
 
-  static createInstance(client: Client, keychains: any, walletInformation: WalletInformation) {
-    return new KlaytnWallet(client, keychains, walletInformation);
+  static createInstance(client: Client, walletInformation: WalletInformation) {
+    return new KlaytnWallet(client, walletInformation);
   }
 
-  public transfer(
-      ticker: string,
-      to: string,
-      value: number,
-      passphrase: string
-  ): Transaction {
-    const coin = this.getCoinConstructor("klay")(this.keychains);
-    const payloadAndSignature: PayloadAndSignature = coin.transfer(
-        to,
-        value,
-        this.walletInformation.address,
-        passphrase
-    );
-    return this.sendTransaction(
-        to,
-        value,
-        payloadAndSignature
-    );
+  getChain(): string {
+    throw new Error('Method not implemented.');
   }
 
-  private sendTransaction(
-      to: string,
-      value: number,
-      payloadAndSignaure: PayloadAndSignature
-  ): Transaction {
-    return null;
+  verifyAddress(address: string): boolean {
+    throw new Error('Method not implemented.');
   }
 
-  public contractCall(contractAddress: string, value: number, data:string, passphrase: string): Transaction {
-    const nativeCoin = this.getCoinConstructor("klay")(this.keychains);
-    const payloadAndSignature: PayloadAndSignature = nativeCoin.transfer(
-        contractAddress,
-        value,
-        this.walletInformation.address,
-        passphrase,
-        data
-    );
-    return null;
+  isValidAddress(address: string): boolean {
+    throw new Error('Method not implemented.');
   }
 
-  private getCoinConstructor(ticker) {
-    if(!KlaytnWallet.REGISTERED_TICKER.includes(ticker)){
-      throw Error(`ticker:${ticker} is not registered`);
-    }
-    return GlobalCoinFactory.getCoin(ticker);
+  getSequenceId(): number {
+    throw new Error('Method not implemented.');
   }
 
-  public getWalletSequenceId():number {
-    return null;
+  transfer() {
   }
 
-  public getAddress():string {
-    return this.walletInformation.address;
+  contractCall(contractAddress: string, value: number, data: string, passphrase: string): HalfSignedTransaction {
+    return undefined;
   }
 
-
-  public createUserWallet(name, passphrase): Promise<WalletInformation> {
+  createUserWallet(): Wallet {
     return undefined;
   }
 }
