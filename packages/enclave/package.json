@@ -17,7 +17,8 @@
     "start": "nodemon",
     "test": "echo \"Error: run tests from root\" && exit 1",
     "build": "rm -rf ./lib && tsc",
-    "preBootstrap": "rm -rf ./node_modules"
+    "preBootstrap": "rm -rf ./node_modules",
+    "lint:fix": "eslint 'src/**' --fix"
   },
   "dependencies": {
     "@haechi-labs/henesis-wallet-core": "^0.0.1",

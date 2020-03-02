@@ -1,5 +1,5 @@
-import axios, {AxiosInstance} from "axios";
-import {Converter} from "./converter/converter";
+import axios, { AxiosInstance } from 'axios';
+import { Converter } from './converter/converter';
 
 export interface ClientOptions {
   accessToken: string;
@@ -8,9 +8,12 @@ export interface ClientOptions {
 }
 
 export class HttpClient {
-  private readonly baseUrl: string = 'http://localhost:8080/v1';
+  private readonly baseUrl: string = 'http://localhost:8080/api/v1';
+
   private readonly client: AxiosInstance;
+
   private readonly accessToken: string;
+
   private readonly secret: string;
 
   constructor(params: ClientOptions) {
@@ -19,14 +22,14 @@ export class HttpClient {
     this.client = axios.create({
       baseURL: this.baseUrl,
       timeout: 30000,
-      validateStatus: function (status) {
+      validateStatus(status) {
         return status >= 200 && status < 300; // default
       },
     });
-    this.client.interceptors.request.use(config => {
+    this.client.interceptors.request.use((config) => {
       config.headers['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
       if (this.accessToken) {
-        config.headers['Authorization'] = 'Bearer ' + this.accessToken;
+        config.headers.Authorization = `Bearer ${this.accessToken}`;
       }
 
       const timestamp = Date.now();
@@ -37,17 +40,17 @@ export class HttpClient {
       return config;
     });
 
-    this.client.interceptors.request.use(config => {
+    this.client.interceptors.request.use((config) => {
       config.data = Converter.toSnakeCase(config.data);
       return config;
     });
 
-    this.client.interceptors.response.use(response => {
+    this.client.interceptors.response.use((response) => {
       if (response.data) {
-        return Converter.toCamelCase(response.data)
+        return Converter.toCamelCase(response.data);
       }
       return response;
-    }, error => {
+    }, (error) => {
       if (error.response) {
         return Promise.reject(Converter.toCamelCase(error.response.data));
       }
@@ -82,7 +85,7 @@ class AxiosMethodProxy {
         };
 
         return ProxyMethod;
-      }
+      },
     });
   }
 }
