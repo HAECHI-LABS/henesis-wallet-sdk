@@ -26,7 +26,9 @@
     "jest": "^24.8.0",
     "jest-extended": "^0.11.1",
     "ts-jest": "^24.0.2",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.2",
+    "web3": "^1.2.6",
+    "web3-eth": "^1.2.6"
   },
   "jest": {
     "transform": {
@@ -35,7 +37,8 @@
     "testRegex": "\\.spec\\.ts$",
     "moduleFileExtensions": [
       "ts",
-      "js"
+      "js",
+      "json"
     ],
     "globals": {
       "ts-jest": {

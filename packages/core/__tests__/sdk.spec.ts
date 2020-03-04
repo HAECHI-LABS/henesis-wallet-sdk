@@ -34,7 +34,7 @@ describe('SDK', () => {
         };
 
         nock(baseUrl)
-          .get('/v1/accounts/me')
+          .get('/api/v1/accounts/me')
           .reply(200, response);
 
         const sdk = new SDK({
@@ -59,7 +59,7 @@ describe('SDK', () => {
         };
 
         nock(baseUrl)
-          .post('/v1/accounts/login')
+          .post('/api/v1/accounts/login')
           .reply(200, response);
 
         const sdk = new SDK({
@@ -79,7 +79,7 @@ describe('SDK', () => {
         };
 
         nock(baseUrl)
-          .post('/v1/accounts/token')
+          .post('/api/v1/accounts/token')
           .reply(200, response);
 
         const sdk = new SDK({
@@ -98,7 +98,7 @@ describe('SDK', () => {
         };
 
         nock(baseUrl)
-          .post('/v1/accounts/secret')
+          .post('/api/v1/accounts/secret')
           .reply(200, response);
 
         const sdk = new SDK({
@@ -110,61 +110,4 @@ describe('SDK', () => {
       });
     });
   });
-  describe("wallets", ()=>{
-    describe("masterWallet", ()=>{
-      const sdk = new SDK({
-        accessToken: "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6ImZiMTg2YzQ0MzAxNTc3YTQ2ZDFiNjYwZThmNGQ5NTNjIiwiaXNzIjoidHhtYW5hZ2VyLWRldiIsImlhdCI6MTU4MjY5NDI5MCwiZXhwIjoxNTgzMDU0MjkwfQ.BAFBndRyB9-KHlI-RNKHrXKs08f6HngUvqfZ8_iD9hAp_Hx_tqofL2CbHrSov_Ct-oLUADY9N9Z64lvZN4hCRA",
-        secret: "secret"
-      });
-      it('should find masterwallet', async () => {
-        const response = {
-          "id": "20a5fa879bcb14a5c7b1e654961c3599",
-          "name": "my_wallet",
-          "address": "0xzdasyoz3uz6ik4spnkzbzihiwbgoglazf3n1ihax",
-          "blockchain": "ethereum",
-          "created_at": "2020-02-25 22:57:21",
-          "updated_at": "2020-02-25 22:57:21",
-          "backup_key": {
-            "address": "0xz19cff3cad9a374392a203b93bfeef4e06f04a44",
-            "pub": "0xz0ebb4ba4351cc4be33b1098a17310e228e707b984766fb54b059f3d25b333ae60047b7ddb931a96a167225bf55a7d036328ada3b7745abdb9b5ee77fc55431f1c"
-          },
-          "account_key": {
-            "address": "0xzdab3d3ad3c5c69c976529bf03d2d51c49e67624",
-            "pub": "0xz95888a0f0d54cd6faca708c47dd71e5cea741eb13a77493ef30cbae9e3c594f3836cc4d84ccaa41459537b0d345e6423c08b7a0033d7f030deb9acfe442a256"
-          }
-        }
-        nock(baseUrl)
-            .get('/v1/wallets/11')
-            .reply(200, response);
-        const masterWallet = await sdk.wallets.getMasterWalletById("11");
-        expect(masterWallet.getAddress()).toEqual("0xzdasyoz3uz6ik4spnkzbzihiwbgoglazf3n1ihax");
-      })
-      it('should create masterwallet', async () => {
-        const response ={
-          "id": "20a5fa879bcb14a5c7b1e654961c3599",
-          "name": "my_wallet",
-          "address": "0xzdasyoz3uz6ik4spnkzbzihiwbgoglazf3n1ihax",
-          "blockchain": "ethereum",
-          "created_at": "2020-02-25 22:57:21",
-          "updated_at": "2020-02-25 22:57:21",
-          "backup_key": {
-            "address": "0xz19cff3cad9a374392a203b93bfeef4e06f04a44",
-            "xpub": "0xz0ebb4ba4351cc4be33b1098a17310e228e707b984766fb54b059f3d25b333ae60047b7ddb931a96a167225bf55a7d036328ada3b7745abdb9b5ee77fc55431f1c"
-          },
-          "account_key": {
-            "address": "0xzdab3d3ad3c5c69c976529bf03d2d51c49e67624",
-            "pub": "0xz95888a0f0d54cd6faca708c47dd71e5cea741eb13a77493ef30cbae9e3c594f3836cc4d84ccaa41459537b0d345e6423c08b7a0033d7f030deb9acfe442a256"
-          }
-        }
-        nock(baseUrl)
-            .post('/v1/wallets/')
-            .reply(200, response);
-        const masterWallet = await sdk.wallets.createMasterWallet(
-            "name",
-            "ethereum"
-        );
-        expect(masterWallet.getAddress()).toEqual("0xzdasyoz3uz6ik4spnkzbzihiwbgoglazf3n1ihax");
-      })
-    })
-  })
 });

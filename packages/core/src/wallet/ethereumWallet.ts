@@ -1,5 +1,6 @@
-import { Client } from '../sdk';
-import { HalfSignedTransaction, Wallet, WalletInformation } from '../wallet';
+import {Client} from '../sdk';
+import {Wallet, WalletInformation} from '../wallet';
+import {HalfSignedTransaction} from '../coin';
 
 export class EthereumWallet extends Wallet {
   constructor(client: Client, walletInformation: WalletInformation) {

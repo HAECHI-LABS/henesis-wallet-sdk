@@ -1,8 +1,12 @@
-import { Client } from '../sdk';
-import { HalfSignedTransaction, Wallet, WalletInformation } from '../wallet';
+import {Client} from '../sdk';
+import {Wallet, WalletInformation} from '../wallet';
+import {HalfSignedTransaction} from '../coin';
 
 export class KlaytnWallet extends Wallet {
-  constructor(client: Client, walletInformation: WalletInformation) {
+  constructor(
+    client: Client,
+    walletInformation: WalletInformation
+  ) {
     super(client, walletInformation);
   }
 

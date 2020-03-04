@@ -1,14 +1,6 @@
 import { Client } from './sdk';
 import { Key } from './key';
-
-export interface MultiSignaturePayload {
-
-}
-
-export interface HalfSignedTransaction {
-  signature: string;
-  payload: MultiSignaturePayload;
-}
+import {HalfSignedTransaction} from './coin';
 
 export interface WalletInformation {
   id: string;

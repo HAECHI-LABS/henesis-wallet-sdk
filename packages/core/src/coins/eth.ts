@@ -1,20 +1,32 @@
-import { Coin } from '../coin';
-import { HalfSignedTransaction } from '../wallet';
+import {buildDataOptions, Coin} from '../coin';
+import eth from '../contracts/Eth.json';
+import {Contract} from 'web3-eth-contract';
+import {AbiItem} from 'web3-utils';
+import Web3 from 'web3';
 
 export class Eth extends Coin {
+  private eth: Contract;
+
+  constructor() {
+    super();
+    this.eth = new new Web3().eth.Contract((eth as AbiItem[]));
+  }
+
   static createInstance() {
     return new Eth();
   }
 
-  getAddress(): string {
-    throw new Error('Method not implemented.');
-  }
-
   getName(): string {
-    throw new Error('Method not implemented.');
+    return 'eth';
   }
 
-  signTransaction(): HalfSignedTransaction {
-    throw new Error('Method not implemented.');
+  buildData(params: buildDataOptions): string {
+    return this.eth
+      .methods
+      .transferEth(
+        params.to,
+        params.amount
+      )
+      .encodeABI();
   }
 }
