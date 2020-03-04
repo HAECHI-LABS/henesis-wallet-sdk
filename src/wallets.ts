@@ -1,5 +1,4 @@
 import { Client } from './sdk';
-import { Wallet } from './wallet';
 
 export class Wallets {
   private readonly client: Client;
