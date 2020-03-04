@@ -14,6 +14,9 @@ export class Converter {
   }
 
   static changeObjectProperty(o, converter: (obj: any) => any) {
+    if (Array.isArray(o)) {
+      return o.map((i) => this.changeObjectProperty(i, converter));
+    }
     if (typeof o === 'object') {
       const n = {};
 
@@ -23,8 +26,6 @@ export class Converter {
         });
 
       return n;
-    } if (Array.isArray(o)) {
-      return o.map((i) => this.changeObjectProperty(i, converter));
     }
     return o;
   }

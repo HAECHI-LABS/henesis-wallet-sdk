@@ -5,9 +5,7 @@ import { EthereumWallet } from './wallet/ethereumWallet';
 import { KlaytnWallet } from './wallet/klaytnWallet';
 import {
   Eth,
-  Omg,
   Klay,
-  Kct,
 } from './coins';
 
 export type DefaultCoinConstructor = (keychains: any) => Coin;
@@ -35,6 +33,4 @@ GlobalWalletFactory.register('klaytn', KlaytnWallet.createInstance);
 
 export const GlobalCoinFactory: Factory<DefaultCoinConstructor> = new Factory<DefaultCoinConstructor>();
 GlobalCoinFactory.register('eth', Eth.createInstance);
-GlobalCoinFactory.register('omg', Omg.createInstance);
 GlobalCoinFactory.register('klay', Klay.createInstance);
-GlobalCoinFactory.register('kct', Kct.createInstance);

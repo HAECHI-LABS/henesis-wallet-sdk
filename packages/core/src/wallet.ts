@@ -1,5 +1,5 @@
 import { Client } from './sdk';
-import { Key } from './key';
+import { Key } from './keychain';
 import { HalfSignedTransaction } from './coin';
 
 export interface WalletInformation {
