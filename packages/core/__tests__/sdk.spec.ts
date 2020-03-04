@@ -2,6 +2,7 @@ import {SDK} from "../src/sdk";
 import {Token, Account, Secret} from "../src/accounts";
 import nock from "nock";
 import {Converter} from "../src/converter/converter";
+import {EthereumKeychain, KeyWithPriv} from "../src/keychain";
 
 const baseUrl = 'http://localhost:8080';
 
@@ -110,4 +111,36 @@ describe('SDK', () => {
       });
     });
   });
+  describe("wallets", ()=>{
+  })
+  describe("keychian", () =>{
+    const keychain = new EthereumKeychain();
+
+    describe("#signPayload() + #recoverAddressFromSignatrue()", ()=> {
+      const keyWithPriv = keychain.create("password");
+      const payload = "payload";
+      it("success sign payload and verify", ()=>{
+        const signature = keychain.signPayload(payload,keyWithPriv.keyFile,"password");
+        expect(keyWithPriv.address).toEqual(keychain.recoverAddressFromSignature(payload, signature));
+      });
+      it("fail sign payload and verify because of wrong password", ()=>{
+        expect( () => keychain.signPayload(payload,keyWithPriv.keyFile,"wrong-password"))
+            .toThrow(TypeError);
+      });
+    });
+    describe("#create()", ()=> {
+      const Accounts = require('web3-eth-accounts');
+      const web3Account = new Accounts("");
+      it("success create private key", ()=>{
+        const keyWithPriv:KeyWithPriv = keychain.create("password");
+        expect(web3Account.privateKeyToAccount(keyWithPriv.priv).address).toEqual(keyWithPriv.address);
+      })
+    })
+    describe("#decryptKeyFile()", ()=> {
+      const keyWithPriv = keychain.create("password");
+      it("success decrypt keyfile", ()=> {
+        expect(keychain.decryptKeyFile(keyWithPriv.keyFile, "password")).toEqual(keyWithPriv.priv);
+      })
+    })
+  })
 });
