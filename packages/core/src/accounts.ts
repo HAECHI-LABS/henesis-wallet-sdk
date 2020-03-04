@@ -1,5 +1,5 @@
 import { Client } from './sdk';
-import { Key } from './key';
+import { Key } from './keychain';
 
 export interface Secret {
   secret: string;
