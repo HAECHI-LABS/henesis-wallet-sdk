@@ -69,7 +69,7 @@ export class EthereumKeychains implements Keychains {
 
   public signPayload(payload: string, keyFile: string, password: string): string {
     const priv = this.decryptKeyFile(keyFile, password);
-    const payloadBuffer = new Buffer(payload.slice(2), 'hex');
+    const payloadBuffer = new Buffer(keccak256(payload).slice(2), 'hex');
     const preambleBuffer = Buffer.from(`\x19Ethereum Signed Message:\n${payload.length}`);
     const ethMessage = Buffer.concat([preambleBuffer, payloadBuffer]);
     const signature = secp256k1
