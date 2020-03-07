@@ -69,9 +69,12 @@ export class EthereumKeychains implements Keychains {
 
   public signPayload(payload: string, keyFile: string, password: string): string {
     const priv = this.decryptKeyFile(keyFile, password);
+    const payloadBuffer = new Buffer(payload.slice(2), 'hex');
+    const preambleBuffer = Buffer.from(`\x19Ethereum Signed Message:\n${payload.length}`);
+    const ethMessage = Buffer.concat([preambleBuffer, payloadBuffer]);
     const signature = secp256k1
       .keyFromPrivate(new Buffer(priv.slice(2), 'hex'))
-      .sign(new Buffer(payload.slice(2), 'hex'), { canonical: true });
+      .sign(ethMessage, { canonical: true });
 
     return encodeSignature([
       fromString(Bytes.fromNumber(BASE_V_VALUE + signature.recoveryParam)),
@@ -82,7 +85,7 @@ export class EthereumKeychains implements Keychains {
   public recoverAddressFromSignature(payload: string, signature: string) {
     const vals = decodeSignature(signature);
     const vrs = { v: Bytes.toNumber(vals[0]), r: vals[1].slice(2), s: vals[2].slice(2) };
-    const ecPublicKey = secp256k1.recoverPubKey(new Buffer(payload.slice(2), 'hex'), vrs, vrs.v < 2 ? vrs.v : 1 - (vrs.v % 2));
+    const ecPublicKey = secp256k1.recoverPubKey(this.payloadToEthMessage(payload), vrs, vrs.v < 2 ? vrs.v : 1 - (vrs.v % 2));
     const publicKey = `0x${ecPublicKey.encode('hex', false).slice(2)}`;
     const publicHash = keccak256(publicKey);
     const address = toChecksum(`0x${publicHash.slice(-40)}`);
@@ -107,5 +110,10 @@ export class EthereumKeychains implements Keychains {
       ],
     };
     return sjcl.encrypt(password, privateKey, encryptOptions);
+  }
+  private payloadToEthMessage(payload:string):Buffer {
+    const payloadBuffer = new Buffer(payload.slice(2), 'hex');
+    const preambleBuffer = Buffer.from(`\x19Ethereum Signed Message:\n${payload.length}`);
+    return Buffer.concat([preambleBuffer, payloadBuffer]);
   }
 }

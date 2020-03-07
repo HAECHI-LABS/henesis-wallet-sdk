@@ -54,11 +54,11 @@ describe('keychian', () => {
 
   describe('#recoverAddressFromSignatrue()', () => {
     it('success recover address from signature', () => {
-      const payload = 'multiSigPayload';
-      const signature = '0xdb9355c277cc96c5fbce1735d126c74938b9176217cb102cfcb8b2d0b249c5b85d66af37983511d5c6e5acf5379f425f988a813bf4871252170ee18d917b7ea21c';
+      const payload = 'payload';
+      const signature = '0x8c69d0cfb8452b34de4cec8654ada16dd75004ca3903f337719c5f0f087a656d460e929e509b5d6603a9aef250d111f9f4cf85d774a8b047b5c3166c70e4e0e31b';
       const recoveredAddress = keychain.recoverAddressFromSignature(payload, signature);
 
-      expect(recoveredAddress).toEqual('0xB90a54033AC0362B7F716468467Ae5442E68CfFa');
+      expect(recoveredAddress).toEqual('0x4a90503f58E9F4B4cC7C170889D872eBa8b2942E');
     });
   });
 });
