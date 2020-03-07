@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { Converter } from './converter/converter';
+import { Converter } from './utils';
 
 export interface ClientOptions {
   accessToken: string;

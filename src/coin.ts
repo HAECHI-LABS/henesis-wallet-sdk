@@ -3,7 +3,7 @@ import { AbiItem } from 'web3-utils';
 import Web3 from 'web3';
 import erc20 from './contracts/ERC20.json';
 
-export interface MultiSignaturePayload {
+export interface MultiSigPayload {
   walletAddress: string;
   toAddress: string;
   value: number;
@@ -13,18 +13,14 @@ export interface MultiSignaturePayload {
 
 export interface HalfSignedTransaction {
   signature: string;
-  payload: MultiSignaturePayload;
-}
-
-export interface buildDataOptions {
-  to: string;
-  amount: number;
+  blockchain: string;
+  multiSigPayload: MultiSigPayload;
 }
 
 export abstract class Coin {
   abstract getName(): string;
 
-  abstract buildData(params: buildDataOptions): string;
+  abstract buildData(to: string, amount: number): string;
 }
 
 export abstract class Erc20 extends Coin {
@@ -39,13 +35,13 @@ export abstract class Erc20 extends Coin {
 
   abstract getName(): string;
 
-  buildData(params: buildDataOptions): string {
+  buildData(to: string, amount: number): string {
     return this.erc20
       .methods
       .transferToken(
         this.getAddress(),
-        params.to,
-        params.amount,
+        to,
+        amount,
       )
       .encodeABI();
   }

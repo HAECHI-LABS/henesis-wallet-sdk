@@ -1,11 +1,28 @@
 import { Client } from './sdk';
+import {MasterWallet, WalletData} from './wallet';
+import {Keychains} from './keychains';
 
 export class Wallets {
   private readonly client: Client;
 
-  private baseUrl = '/api/v1/wallets';
+  private readonly keychains: Keychains;
 
-  constructor(client: Client) {
+  private baseUrl = '/wallets';
+
+  constructor(client: Client, keychains: Keychains) {
     this.client = client;
+    this.keychains = keychains;
+  }
+
+  public async getMasterWallet(id: string): Promise<MasterWallet>{
+    const walletData = await this.client.get<WalletData>(
+      this.baseUrl + `/${id}`
+    );
+
+    return new MasterWallet(
+      this.client,
+      walletData,
+      this.keychains,
+    )
   }
 }
