@@ -11,7 +11,7 @@ describe('keychian', () => {
 
   describe('#signPayload()', () => {
     it('success sign multiSigPayload and verify', () => {
-      const payload = 'multiSigPayload';
+      const payload = '0x1212121212121212';
       const password = 'password';
       const signature = keychain.signPayload(payload, keyWithPriv.keyFile, password);
       const recoveredAddress = keychain.recoverAddressFromSignature(payload, signature);
@@ -20,7 +20,7 @@ describe('keychian', () => {
     });
 
     it('fail sign multiSigPayload and verify because of wrong password', () => {
-      const payload = 'multiSigPayload';
+      const payload = '0x1212121212121212';
       const password = 'wrong_password';
       expect(() => keychain.signPayload(payload, keyWithPriv.keyFile, password))
         .toThrow(TypeError);
@@ -34,15 +34,8 @@ describe('keychian', () => {
       const password = 'password';
       const newKeyWithPriv:KeyWithPriv = keychain.create(password);
 
-      expect(web3Account.privateKeyToAccount(newKeyWithPriv.priv).address).toEqual(newKeyWithPriv.address);
-    });
-
-    it('asd', () =>{
-      const key = keychain.create("password");
-      const key2 = keychain.create("password");
-
-      console.log(key);
-      console.log(key2);
+      expect(web3Account.privateKeyToAccount(newKeyWithPriv.priv).address)
+        .toEqual(newKeyWithPriv.address);
     });
   });
 
@@ -54,11 +47,11 @@ describe('keychian', () => {
 
   describe('#recoverAddressFromSignatrue()', () => {
     it('success recover address from signature', () => {
-      const payload = 'payload';
-      const signature = '0x8c69d0cfb8452b34de4cec8654ada16dd75004ca3903f337719c5f0f087a656d460e929e509b5d6603a9aef250d111f9f4cf85d774a8b047b5c3166c70e4e0e31b';
+      const payload = '0x1212121212121212';
+      const signature = '0xc22beb8b1a10797ea38cdb98aef219bb4618877a92e3c71ae2a0a713030ed23469b544416f1b16080cf4cb59d45067d8834444259276bf608f7cee1fcc5dd87c1c';
       const recoveredAddress = keychain.recoverAddressFromSignature(payload, signature);
 
-      expect(recoveredAddress).toEqual('0x4a90503f58E9F4B4cC7C170889D872eBa8b2942E');
+      expect(recoveredAddress).toEqual('0x1A0457316980374C4b9A8Ed3BbC2f4bcBd3B5306');
     });
   });
 });

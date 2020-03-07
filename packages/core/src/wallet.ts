@@ -8,6 +8,7 @@ import Web3 from 'web3';
 import {AbiItem} from 'web3-utils';
 
 const Bytes = require('./vendor/eth-lib/bytes');
+const { keccak256 } = require('./vendor/eth-lib/hash');
 
 export interface Nonce {
   nonce: number;
@@ -120,29 +121,28 @@ export abstract class EthLikeWallet extends Wallet {
 
     const signature = this.signPayload(
       multiSigPayload,
-      passphrase
+      passphrase,
     );
 
     return this.sendTransaction({
       signature,
       blockchain: this.getChain(),
-      multiSigPayload
+      multiSigPayload,
     });
   }
 
   protected signPayload(multiSigPayload: MultiSigPayload, passphrase: string) {
-    const payload =
-      '0x' +
-      multiSigPayload.walletAddress.slice(2) +
-      multiSigPayload.toAddress.slice(2) +
-      Bytes.pad(32, Bytes.fromNat(`0x${multiSigPayload.value.toString(16)}`)).slice(2) +
-      Bytes.pad(32, Bytes.fromNat(`0x${multiSigPayload.walletNonce.toString(16)}`)).slice(2) +
-      multiSigPayload.hexData.slice(2);
+    const payload = '0x'
+      + multiSigPayload.walletAddress.toLowerCase().slice(2)
+      + multiSigPayload.toAddress.toLowerCase().slice(2)
+      + Bytes.pad(32, Bytes.fromNat(`0x${multiSigPayload.value.toString(16)}`)).slice(2)
+      + Bytes.pad(32, Bytes.fromNat(`0x${multiSigPayload.walletNonce.toString(16)}`)).slice(2)
+      + multiSigPayload.hexData.slice(2);
 
     return this.keychains.signPayload(
       payload,
       this.walletData.accountKey.keyFile,
-      passphrase
+      passphrase,
     );
   }
 

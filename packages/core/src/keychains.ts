@@ -4,7 +4,7 @@ import {
 } from './utils';
 
 const elliptic = require('elliptic');
-const { keccak256, keccak256s } = require('./vendor/eth-lib/hash');
+const { keccak256 } = require('./vendor/eth-lib/hash');
 const Bytes = require('./vendor/eth-lib/bytes');
 const sjcl = require('./vendor/sjcl');
 const { fromString } = require('./vendor/eth-lib/nat');
@@ -28,9 +28,9 @@ export interface Keychains {
 
   decryptKeyFile(keyFile: string, password: string): string;
 
-  signPayload(payload: string, keyFile: string, password: string): string;
+  signPayload(hexPayload: string, keyFile: string, password: string): string;
 
-  recoverAddressFromSignature(payload: string, signature: string): string;
+  recoverAddressFromSignature(hexPayload: string, signature: string): string;
 }
 
 export class EthereumKeychains implements Keychains {
@@ -41,7 +41,7 @@ export class EthereumKeychains implements Keychains {
     const middleHex = Bytes.concat(Bytes.concat(Bytes.random(32), innerHex), Bytes.random(32));
     const privateKey = keccak256(middleHex);
 
-    const buffer = new Buffer(privateKey.slice(2), 'hex');
+    const buffer = Buffer.from(privateKey.slice(2), 'hex');
     const ecKey = secp256k1.keyFromPrivate(buffer);
     const publicKey = `0x${ecKey.getPublic(false, 'hex').slice(2)}`;
     const publicHash = keccak256(publicKey);
@@ -67,32 +67,42 @@ export class EthereumKeychains implements Keychains {
     }
   }
 
-  public signPayload(payload: string, keyFile: string, password: string): string {
+  public signPayload(hexPayload: string, keyFile: string, password: string): string {
+    const hashedMessage = keccak256(this.payloadToEthMessage(hexPayload));
+
     const priv = this.decryptKeyFile(keyFile, password);
-    const payloadBuffer = new Buffer(keccak256(payload).slice(2), 'hex');
-    const preambleBuffer = Buffer.from(`\x19Ethereum Signed Message:\n${payload.length}`);
-    const ethMessage = Buffer.concat([preambleBuffer, payloadBuffer]);
     const signature = secp256k1
-      .keyFromPrivate(new Buffer(priv.slice(2), 'hex'))
-      .sign(ethMessage, { canonical: true });
+      .keyFromPrivate(Buffer.from(priv.slice(2), 'hex'))
+      .sign(
+        Buffer.from(hashedMessage.slice(2), 'hex'),
+        { canonical: true },
+      );
 
     return encodeSignature([
       fromString(Bytes.fromNumber(BASE_V_VALUE + signature.recoveryParam)),
       Bytes.pad(32, Bytes.fromNat(`0x${signature.r.toString(16)}`)),
-      Bytes.pad(32, Bytes.fromNat(`0x${signature.s.toString(16)}`))]);
+      Bytes.pad(32, Bytes.fromNat(`0x${signature.s.toString(16)}`)),
+    ]);
   }
 
-  public recoverAddressFromSignature(payload: string, signature: string) {
+  public recoverAddressFromSignature(hexPayload: string, signature: string) {
     const vals = decodeSignature(signature);
-    const vrs = { v: Bytes.toNumber(vals[0]), r: vals[1].slice(2), s: vals[2].slice(2) };
-    const ecPublicKey = secp256k1.recoverPubKey(this.payloadToEthMessage(payload), vrs, vrs.v < 2 ? vrs.v : 1 - (vrs.v % 2));
+    const vrs = {
+      v: Bytes.toNumber(vals[0]),
+      r: vals[1].slice(2),
+      s: vals[2].slice(2),
+    };
+    const ecPublicKey = secp256k1.recoverPubKey(
+      Buffer.from(keccak256(this.payloadToEthMessage(hexPayload)).slice(2), 'hex'),
+      vrs,
+      vrs.v < 2 ? vrs.v : 1 - (vrs.v % 2),
+    );
     const publicKey = `0x${ecPublicKey.encode('hex', false).slice(2)}`;
     const publicHash = keccak256(publicKey);
-    const address = toChecksum(`0x${publicHash.slice(-40)}`);
-    return address;
+    return toChecksum(`0x${publicHash.slice(-40)}`);
   }
 
-  private encryptPrivToKeyFile(privateKey:string, password:string):string {
+  private encryptPrivToKeyFile(privateKey: string, password: string): string {
     const randomSalt = crypto.randomBytes(8);
     const randomIV = crypto.randomBytes(16);
     const encryptOptions = {
@@ -111,9 +121,11 @@ export class EthereumKeychains implements Keychains {
     };
     return sjcl.encrypt(password, privateKey, encryptOptions);
   }
-  private payloadToEthMessage(payload:string):Buffer {
-    const payloadBuffer = new Buffer(payload.slice(2), 'hex');
-    const preambleBuffer = Buffer.from(`\x19Ethereum Signed Message:\n${payload.length}`);
+
+  private payloadToEthMessage(hexPayload: string): Buffer {
+    const hashedPayload = keccak256(hexPayload);
+    const payloadBuffer = Buffer.from(hashedPayload.slice(2), 'hex');
+    const preambleBuffer = Buffer.from(`\u0019Ethereum Signed Message:\n${payloadBuffer.length}`);
     return Buffer.concat([preambleBuffer, payloadBuffer]);
   }
 }
