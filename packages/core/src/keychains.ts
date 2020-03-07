@@ -23,7 +23,7 @@ export interface KeyWithPriv extends Key {
   priv: string;
 }
 
-export interface Keychain {
+export interface Keychains {
   create(password: string): KeyWithPriv;
 
   decryptKeyFile(keyFile: string, password: string): string;
@@ -33,7 +33,7 @@ export interface Keychain {
   recoverAddressFromSignature(payload: string, signature: string): string;
 }
 
-export class EthereumKeychain implements Keychain {
+export class EthereumKeychains implements Keychains {
   public create(password: string): KeyWithPriv {
     const entropy = crypto.randomBytes(512 / 8);
 

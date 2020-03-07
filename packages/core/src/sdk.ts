@@ -1,6 +1,7 @@
 import { Accounts } from './accounts';
 import { HttpClient } from './httpClient';
 import { Wallets } from './wallets';
+import {EthereumKeychains, Keychains} from './keychains';
 
 export interface SDKOptions {
   accessToken: string;
@@ -27,6 +28,8 @@ export class SDK {
 
   public readonly accounts: Accounts;
 
+  public readonly keychains: Keychains;
+
   private readonly client: Client;
 
   // todo: validation params;
@@ -37,6 +40,7 @@ export class SDK {
     }) as any;
 
     this.accounts = new Accounts(this.client);
-    this.wallets = new Wallets(this.client);
+    this.keychains = new EthereumKeychains();
+    this.wallets = new Wallets(this.client, this.keychains);
   }
 }

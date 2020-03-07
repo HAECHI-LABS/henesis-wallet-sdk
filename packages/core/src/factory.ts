@@ -1,17 +1,5 @@
-import { Coin } from './coin';
-import { Client } from './sdk';
-import { Wallet, WalletInformation } from './wallet';
-import { EthereumWallet } from './wallet/ethereumWallet';
-import { KlaytnWallet } from './wallet/klaytnWallet';
-import {
-  Eth,
-  Omg,
-  Klay,
-  Kct,
-} from './coins';
-
-export type DefaultCoinConstructor = (keychains: any) => Coin;
-export type DefaultWalletConstructor = (client: Client, walletInformation: WalletInformation) => Wallet;
+import {Coin} from './coin';
+import {Eth, Hib, Klay} from './coins';
 
 export class Factory<T> {
   private c = new Map<string, T>();
@@ -24,17 +12,21 @@ export class Factory<T> {
     throw new Error(`unknown type: ${coin}`);
   }
 
-  public register(name: string, item: T): void {
+  public register(name: string, item: T): this {
     this.c.set(name, item);
+    return this;
   }
 }
 
-export const GlobalWalletFactory: Factory<DefaultWalletConstructor> = new Factory<DefaultWalletConstructor>();
-GlobalWalletFactory.register('ethereum', EthereumWallet.createInstance);
-GlobalWalletFactory.register('klaytn', KlaytnWallet.createInstance);
+export const GlobalCoinFactoryGenerator: Factory<Factory<Coin>> = new Factory<Factory<Coin>>();
+GlobalCoinFactoryGenerator.register(
+  'ETHEREUM',
+  new Factory<Coin>().register('eth', new Eth())
+);
 
-export const GlobalCoinFactory: Factory<DefaultCoinConstructor> = new Factory<DefaultCoinConstructor>();
-GlobalCoinFactory.register('eth', Eth.createInstance);
-GlobalCoinFactory.register('omg', Omg.createInstance);
-GlobalCoinFactory.register('klay', Klay.createInstance);
-GlobalCoinFactory.register('kct', Kct.createInstance);
+GlobalCoinFactoryGenerator.register(
+  'KLAYTN',
+  new Factory<Coin>()
+    .register('klay', new Klay())
+    .register('hib', new Hib())
+);

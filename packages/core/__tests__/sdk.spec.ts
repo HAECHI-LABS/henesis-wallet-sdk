@@ -1,8 +1,8 @@
 import nock from 'nock';
-import { SDK } from '../src/sdk';
+import { SDK } from '../src';
 import { Token, Account, Secret } from '../src/accounts';
-import { Converter } from '../src/converter/converter';
-import { EthereumKeychain, KeyWithPriv } from '../src/keychain';
+import {Converter} from '../src/utils';
+import {MasterWallet, UserWallet} from '../src/wallet';
 
 const baseUrl = 'http://localhost:8080';
 
@@ -112,7 +112,5 @@ describe('SDK', () => {
         expect(secret).toEqual(Converter.toCamelCase(response));
       });
     });
-  });
-  describe('wallets', () => {
   });
 });
