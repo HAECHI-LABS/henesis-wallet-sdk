@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "lint:fix": "eslint 'src/**/*.ts' '__tests__/**/*.ts' --fix",
-    "test": "echo \"Error: run tests from root\" && exit 1",
+    "test": "jest",
     "build": "rm -rf ./lib && tsc",
     "preBootstrap": "rm -rf ./node_modules"
   },
