@@ -41,7 +41,7 @@ export class Converter {
     }
 
     if (typeof o === 'object') {
-      if (!o){
+      if (!o) {
         return null;
       }
       const n = {};
