@@ -1,8 +1,8 @@
 import nock from 'nock';
-import {SDK} from '../src';
-import {Token, Account, Secret} from '../src/accounts';
-import {Converter} from '../src/utils';
-import {MasterWallet, UserWallet} from '../src/wallet';
+import { SDK } from '../src';
+import { Token, Account, Secret } from '../src/accounts';
+import { Converter } from '../src/utils';
+import { MasterWallet, MasterWalletData, UserWallet } from '../src/wallet';
 
 const baseUrl = 'http://localhost:8080';
 
@@ -17,7 +17,7 @@ describe('SDK', () => {
           organization: 'haechi',
           secret:
             'MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEBh6KEagxayPRxQGwY7Q4tnMnUFi0+kEJI/+D1XrT14hZY+aCv1dFssq3tazxog+BYYgOGSqW0bswDHSkkbiuTw==',
-          roles: {0: 'USER'},
+          roles: { 0: 'USER' },
           access_token:
             'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6ImZiMTg2YzQ0MzAxNTc3YTQ2ZDFiNjYwZThmNGQ5NTNjIiwiaXNzIjoidHhtYW5hZ2VyLWRldiIsImlhdCI6MTU4Mjc5MDAxNCwiZXhwIjoxNTgyNzkwMDE5fQ.7tH7mm8spEuokI5NDggSkLWJ1yJfBF8azpmt-8o9Jfhyoe4m7HdRc918NcxQotTiSBkz61inwsoHcdmU57PkQA',
           henesis_eth_key:
@@ -113,4 +113,5 @@ describe('SDK', () => {
       });
     });
   });
+
 });

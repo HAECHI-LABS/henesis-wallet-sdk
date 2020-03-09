@@ -1,14 +1,16 @@
-import {Client} from './sdk';
-import {Coin, Erc20, HalfSignedTransaction, MultiSigPayload} from './coin';
-import {Key, Keychains} from './keychains';
-import {Factory, GlobalCoinFactoryGenerator} from './factory';
-import {Contract} from 'web3-eth-contract';
-import wallet from './contracts/MasterWallet.json';
+import { Contract } from 'web3-eth-contract';
 import Web3 from 'web3';
-import {AbiItem} from 'web3-utils';
+import { AbiItem } from 'web3-utils';
+import { Client } from './sdk';
+import {
+  Coin, Erc20, HalfSignedTransaction, MultiSigPayload,
+} from './coin';
+import { Key, Keychains } from './keychains';
+import { Factory, GlobalCoinFactoryGenerator } from './factory';
+import wallet from './contracts/MasterWallet.json';
 
 const Bytes = require('./vendor/eth-lib/bytes');
-const {keccak256} = require('./vendor/eth-lib/hash');
+const { keccak256 } = require('./vendor/eth-lib/hash');
 
 export interface Nonce {
   nonce: number;
@@ -56,7 +58,7 @@ export abstract class Wallet {
   protected constructor(
     client: Client,
     keychains: Keychains,
-    coinFactory: Factory<Coin>
+    coinFactory: Factory<Coin>,
   ) {
     this.client = client;
     this.keychains = keychains;
@@ -84,6 +86,7 @@ export abstract class Wallet {
   ): Promise<Transaction>;
 
   abstract getBalance(): Promise<number>;
+
   abstract tokenBalance(ticker: string): Promise<number>;
 }
 
@@ -115,15 +118,15 @@ export abstract class EthLikeWallet extends Wallet {
     contractAddress: string,
     value: number,
     data: string,
-    passphrase: string
+    passphrase: string,
   ): Promise<Transaction> {
     const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
       walletNonce: nonce,
-      value: value,
+      value,
       toAddress: this.masterWalletData.address,
-      walletAddress: this.masterWalletData.address
+      walletAddress: this.masterWalletData.address,
     };
 
     const signature = this.signPayload(
@@ -139,12 +142,12 @@ export abstract class EthLikeWallet extends Wallet {
   }
 
   protected signPayload(multiSigPayload: MultiSigPayload, passphrase: string) {
-    const payload = '0x'
-      + multiSigPayload.walletAddress.toLowerCase().slice(2)
-      + multiSigPayload.toAddress.toLowerCase().slice(2)
-      + Bytes.pad(32, Bytes.fromNat(`0x${multiSigPayload.value.toString(16)}`)).slice(2)
-      + Bytes.pad(32, Bytes.fromNat(`0x${multiSigPayload.walletNonce.toString(16)}`)).slice(2)
-      + multiSigPayload.hexData.slice(2);
+    const payload = `0x${
+      multiSigPayload.walletAddress.toLowerCase().slice(2)
+    }${multiSigPayload.toAddress.toLowerCase().slice(2)
+    }${Bytes.pad(32, Bytes.fromNat(`0x${multiSigPayload.value.toString(16)}`)).slice(2)
+    }${Bytes.pad(32, Bytes.fromNat(`0x${multiSigPayload.walletNonce.toString(16)}`)).slice(2)
+    }${multiSigPayload.hexData.slice(2)}`;
 
     return this.keychains.signPayload(
       payload,
@@ -157,7 +160,7 @@ export abstract class EthLikeWallet extends Wallet {
     return this.client
       .post<Transaction>(
         `${this.baseUrl}/transactions`,
-        halfSignedTransaction
+        halfSignedTransaction,
       );
   }
 
@@ -165,35 +168,35 @@ export abstract class EthLikeWallet extends Wallet {
     ticker: string,
     to: string,
     amount: number,
-    passphrase: string
+    passphrase: string,
   ): Promise<Transaction> {
     const coin: Coin = this.coinFactory.get(ticker);
     const hexData = coin.buildData(to, amount);
     const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
-      hexData: hexData,
+      hexData,
       walletNonce: nonce,
       value: 0,
       toAddress: this.masterWalletData.address,
-      walletAddress: this.masterWalletData.address
+      walletAddress: this.masterWalletData.address,
     };
 
     const signature = this.signPayload(
       multiSigPayload,
-      passphrase
+      passphrase,
     );
 
     return this.sendTransaction({
       signature,
       blockchain: this.getChain(),
-      multiSigPayload
+      multiSigPayload,
     });
   }
 
   async getNonce(): Promise<number> {
     const nonce: Nonce = await this.client
       .get<Nonce>(`${this.baseUrl}/${this.masterWalletData.id}/nonce`);
-    return nonce.nonce
+    return nonce.nonce;
   }
 }
 
@@ -217,12 +220,12 @@ export class MasterWallet extends EthLikeWallet {
       walletNonce: nonce,
       value: 0,
       toAddress: this.masterWalletData.address,
-      walletAddress: this.masterWalletData.address
+      walletAddress: this.masterWalletData.address,
     };
 
     const signature = this.signPayload(
       multiSigPayload,
-      passphrase
+      passphrase,
     );
 
     const userWalletData = await this.client
@@ -232,15 +235,16 @@ export class MasterWallet extends EthLikeWallet {
           name,
           signature,
           blockchain: this.getChain(),
-          multiSigPayload
-        });
+          multiSigPayload,
+        },
+      );
 
     return new UserWallet(
       this.client,
       this.masterWalletData,
       this.keychains,
-      userWalletData
-    )
+      userWalletData,
+    );
   }
 
   async getUserWallet(walletId: string): Promise<UserWallet> {
@@ -250,8 +254,8 @@ export class MasterWallet extends EthLikeWallet {
       this.client,
       this.masterWalletData,
       this.keychains,
-      userWalletData
-    )
+      userWalletData,
+    );
   }
 
   async getBalance(): Promise<number> {
@@ -262,7 +266,7 @@ export class MasterWallet extends EthLikeWallet {
 
   async tokenBalance(ticker: string): Promise<number> {
     const coin: Coin = this.coinFactory.get(ticker);
-    if (!coin.isErc20()){
+    if (!coin.isErc20()) {
       throw new Error(`${ticker} is not erc20 token`);
     }
     const address: string = (coin as Erc20).getAddress();
@@ -283,7 +287,7 @@ export class UserWallet extends EthLikeWallet {
     client: Client,
     walletData: MasterWalletData,
     keychains: Keychains,
-    userWalletData: UserWalletData
+    userWalletData: UserWalletData,
   ) {
     super(client, walletData, keychains);
     this.userWalletData = userWalletData;
@@ -303,7 +307,7 @@ export class UserWallet extends EthLikeWallet {
 
   async tokenBalance(ticker: string): Promise<number> {
     const coin: Coin = this.coinFactory.get(ticker);
-    if (!coin.isErc20()){
+    if (!coin.isErc20()) {
       throw new Error(`${ticker} is not erc20 token`);
     }
     const address: string = (coin as Erc20).getAddress();
