@@ -6,6 +6,10 @@ describe('Erc20', () => {
       return '0x280460de5d4488DDA8e29dFb947a8D4574203E3F';
     }
 
+    isErc20(): boolean {
+      return true;
+    }
+
     getName(): string {
       return 'etc20Impl';
     }
