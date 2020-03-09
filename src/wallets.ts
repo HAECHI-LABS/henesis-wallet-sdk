@@ -1,5 +1,5 @@
 import { Client } from './sdk';
-import {MasterWallet, WalletData} from './wallet';
+import {MasterWallet, MasterWalletData} from './wallet';
 import {Keychains} from './keychains';
 
 export class Wallets {
@@ -15,7 +15,7 @@ export class Wallets {
   }
 
   public async getMasterWallet(id: string): Promise<MasterWallet>{
-    const walletData = await this.client.get<WalletData>(
+    const walletData = await this.client.get<MasterWalletData>(
       this.baseUrl + `/${id}`
     );
 

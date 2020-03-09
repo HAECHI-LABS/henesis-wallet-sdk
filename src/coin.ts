@@ -21,6 +21,8 @@ export abstract class Coin {
   abstract getName(): string;
 
   abstract buildData(to: string, amount: number): string;
+
+  abstract isErc20(): boolean;
 }
 
 export abstract class Erc20 extends Coin {
