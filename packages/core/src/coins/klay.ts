@@ -2,7 +2,7 @@ import { Contract } from 'web3-eth-contract';
 import { AbiItem } from 'web3-utils';
 import Web3 from 'web3';
 import klay from '../contracts/Klay.json';
-import { Coin } from '../coin';
+import {Coin} from '../coin';
 
 export class Klay extends Coin {
   private readonly klay: Contract;
@@ -24,5 +24,9 @@ export class Klay extends Coin {
         amount,
       )
       .encodeABI();
+  }
+
+  isErc20(): boolean {
+    return false;
   }
 }

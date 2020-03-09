@@ -1,5 +1,5 @@
 import {Client} from './sdk';
-import {Coin, HalfSignedTransaction, MultiSigPayload} from './coin';
+import {Coin, Erc20, HalfSignedTransaction, MultiSigPayload} from './coin';
 import {Key, Keychains} from './keychains';
 import {Factory, GlobalCoinFactoryGenerator} from './factory';
 import {Contract} from 'web3-eth-contract';
@@ -8,10 +8,14 @@ import Web3 from 'web3';
 import {AbiItem} from 'web3-utils';
 
 const Bytes = require('./vendor/eth-lib/bytes');
-const { keccak256 } = require('./vendor/eth-lib/hash');
+const {keccak256} = require('./vendor/eth-lib/hash');
 
 export interface Nonce {
   nonce: number;
+}
+
+export interface Balance {
+  balance: number;
 }
 
 export interface Transaction {
@@ -26,12 +30,18 @@ export interface Transaction {
 export interface WalletData {
   id: string;
   name: string;
-  walletType: string;
   address: string;
   blockchain: string;
   createdAt: string;
+}
+
+export interface MasterWalletData extends WalletData {
   backupKey: Key;
   accountKey: Key;
+}
+
+export interface UserWalletData extends WalletData {
+
 }
 
 export abstract class Wallet {
@@ -39,20 +49,16 @@ export abstract class Wallet {
 
   protected readonly baseUrl = '/wallets';
 
-  protected readonly walletData: WalletData;
-
   protected readonly keychains: Keychains;
 
   protected readonly coinFactory: Factory<Coin>;
 
   protected constructor(
     client: Client,
-    walletData: WalletData,
     keychains: Keychains,
     coinFactory: Factory<Coin>
   ) {
     this.client = client;
-    this.walletData = walletData;
     this.keychains = keychains;
     this.coinFactory = coinFactory;
   }
@@ -77,19 +83,20 @@ export abstract class Wallet {
     passphrase: string
   ): Promise<Transaction>;
 
-  protected getNonce(): Promise<Nonce> {
-    return this.client
-      .get<Nonce>(`${this.baseUrl}/${this.walletData.id}/nonce`);
-  }
+  abstract getBalance(): Promise<number>;
+  abstract tokenBalance(ticker: string): Promise<number>;
 }
 
 export abstract class EthLikeWallet extends Wallet {
+  protected masterWalletData: MasterWalletData;
+
   protected constructor(
     client: Client,
-    walletData: WalletData,
+    masterWalletData: MasterWalletData,
     keychains: Keychains,
   ) {
-    super(client, walletData, keychains, GlobalCoinFactoryGenerator.get(walletData.blockchain));
+    super(client, keychains, GlobalCoinFactoryGenerator.get(masterWalletData.blockchain));
+    this.masterWalletData = masterWalletData;
   }
 
   verifyAddress(address: string): boolean {
@@ -97,7 +104,7 @@ export abstract class EthLikeWallet extends Wallet {
   }
 
   getChain(): string {
-    return this.walletData.blockchain;
+    return this.masterWalletData.blockchain;
   }
 
   isValidAddress(address: string): boolean {
@@ -110,13 +117,13 @@ export abstract class EthLikeWallet extends Wallet {
     data: string,
     passphrase: string
   ): Promise<Transaction> {
-    const nonce: Nonce = await this.getNonce();
+    const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
-      walletNonce: nonce.nonce,
+      walletNonce: nonce,
       value: value,
-      toAddress: this.walletData.address,
-      walletAddress: this.walletData.address
+      toAddress: this.masterWalletData.address,
+      walletAddress: this.masterWalletData.address
     };
 
     const signature = this.signPayload(
@@ -141,7 +148,7 @@ export abstract class EthLikeWallet extends Wallet {
 
     return this.keychains.signPayload(
       payload,
-      this.walletData.accountKey.keyFile,
+      this.masterWalletData.accountKey.keyFile,
       passphrase,
     );
   }
@@ -162,14 +169,13 @@ export abstract class EthLikeWallet extends Wallet {
   ): Promise<Transaction> {
     const coin: Coin = this.coinFactory.get(ticker);
     const hexData = coin.buildData(to, amount);
-    const nonce: Nonce = await this.getNonce();
-    const value = Bytes.pad(32, Bytes.fromNat(`0x0`)); // nonce is zero
+    const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
       hexData: hexData,
-      walletNonce: nonce.nonce,
-      value: value,
-      toAddress: this.walletData.address,
-      walletAddress: this.walletData.address
+      walletNonce: nonce,
+      value: 0,
+      toAddress: this.masterWalletData.address,
+      walletAddress: this.masterWalletData.address
     };
 
     const signature = this.signPayload(
@@ -183,6 +189,12 @@ export abstract class EthLikeWallet extends Wallet {
       multiSigPayload
     });
   }
+
+  async getNonce(): Promise<number> {
+    const nonce: Nonce = await this.client
+      .get<Nonce>(`${this.baseUrl}/${this.masterWalletData.id}/nonce`);
+    return nonce.nonce
+  }
 }
 
 export class MasterWallet extends EthLikeWallet {
@@ -190,22 +202,22 @@ export class MasterWallet extends EthLikeWallet {
 
   public constructor(
     client: Client,
-    walletData: WalletData,
+    walletData: MasterWalletData,
     keychains: Keychains,
   ) {
     super(client, walletData, keychains);
     this.wallet = new new Web3().eth.Contract((wallet as AbiItem[]));
   }
 
-  async createUserWallet(passphrase: string): Promise<UserWallet> {
-    const nonce: Nonce = await this.getNonce();
+  async createUserWallet(name: string, passphrase: string): Promise<UserWallet> {
+    const nonce = await this.getNonce();
     const data = this.wallet.methods.createUserWallet().encodeABI();
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
-      walletNonce: nonce.nonce,
+      walletNonce: nonce,
       value: 0,
-      toAddress: this.walletData.address,
-      walletAddress: this.walletData.address
+      toAddress: this.masterWalletData.address,
+      walletAddress: this.masterWalletData.address
     };
 
     const signature = this.signPayload(
@@ -213,26 +225,94 @@ export class MasterWallet extends EthLikeWallet {
       passphrase
     );
 
-    const walletData = await this.client.post<WalletData>(`${this.baseUrl}/${this.walletData.id}/user-wallets`, {
-      signature,
-      blockchain: this.getChain(),
-      multiSigPayload
-    });
+    const userWalletData = await this.client
+      .post<UserWalletData>(
+        `${this.baseUrl}/${this.masterWalletData.id}/user-wallets`,
+        {
+          name,
+          signature,
+          blockchain: this.getChain(),
+          multiSigPayload
+        });
 
     return new UserWallet(
       this.client,
-      walletData,
+      this.masterWalletData,
       this.keychains,
+      userWalletData
     )
+  }
+
+  async getUserWallet(walletId: string): Promise<UserWallet> {
+    const userWalletData = await this.client
+      .get<UserWalletData>(`${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${walletId}`);
+    return new UserWallet(
+      this.client,
+      this.masterWalletData,
+      this.keychains,
+      userWalletData
+    )
+  }
+
+  async getBalance(): Promise<number> {
+    const balance: Balance = await this.client
+      .get<Balance>(`${this.baseUrl}/${this.masterWalletData.id}/balance`);
+    return balance.balance;
+  }
+
+  async tokenBalance(ticker: string): Promise<number> {
+    const coin: Coin = this.coinFactory.get(ticker);
+    if (!coin.isErc20()){
+      throw new Error(`${ticker} is not erc20 token`);
+    }
+    const address: string = (coin as Erc20).getAddress();
+    const balance: Balance = await this.client
+      .get<Balance>(`${this.baseUrl}/${this.masterWalletData.id}/tokenBalance?address=${address}`);
+    return balance.balance;
+  }
+
+  async getAddress() {
+    return this.masterWalletData.address;
   }
 }
 
 export class UserWallet extends EthLikeWallet {
+  private readonly userWalletData: UserWalletData;
+
   public constructor(
     client: Client,
-    walletData: WalletData,
-    keychains: Keychains
+    walletData: MasterWalletData,
+    keychains: Keychains,
+    userWalletData: UserWalletData
   ) {
     super(client, walletData, keychains);
+    this.userWalletData = userWalletData;
+  }
+
+  async getNonce(): Promise<number> {
+    const nonce: Nonce = await this.client
+      .get<Nonce>(`${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/nonce`);
+    return nonce.nonce;
+  }
+
+  async getBalance(): Promise<number> {
+    const balance: Balance = await this.client
+      .get<Balance>(`${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/balance`);
+    return balance.balance;
+  }
+
+  async tokenBalance(ticker: string): Promise<number> {
+    const coin: Coin = this.coinFactory.get(ticker);
+    if (!coin.isErc20()){
+      throw new Error(`${ticker} is not erc20 token`);
+    }
+    const address: string = (coin as Erc20).getAddress();
+    const balance: Balance = await this.client
+      .get<Balance>(`${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/tokenBalance?address=${address}`);
+    return balance.balance;
+  }
+
+  async getAddress() {
+    return this.userWalletData.address;
   }
 }

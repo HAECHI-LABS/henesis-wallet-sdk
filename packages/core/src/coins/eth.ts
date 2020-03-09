@@ -25,4 +25,8 @@ export class Eth extends Coin {
       )
       .encodeABI();
   }
+
+  isErc20(): boolean {
+    return false;
+  }
 }
