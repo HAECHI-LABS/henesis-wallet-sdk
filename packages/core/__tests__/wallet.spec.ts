@@ -28,7 +28,7 @@ describe('Wallet', () => {
             '{"iv":"1lsvVj19dYI3Rkf7g9MLMw==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"79Hft/yrA7Y=","ct":"vSYilJIDPPeZzRq15Q7MoE9AvqZ2wtQc6S2vDPfbFOzdYQTfy8cdZbPSmIcdNnrCK6hZndUCtD3QJewPgqixz1cyOjUcGQjWjqo="}',
         };
         (wallet as any).keychains = keychain;
-        (wallet as any).walletData = {
+        (wallet as any).masterWalletData = {
           accountKey: keyWithPriv,
         };
         const multiSigPayload: MultiSigPayload = {
