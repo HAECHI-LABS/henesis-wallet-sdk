@@ -1,7 +1,7 @@
 import { Accounts } from './accounts';
 import { HttpClient } from './httpClient';
 import { Wallets } from './wallets';
-import {EthereumKeychains, Keychains} from './keychains';
+import { EthereumKeychains, Keychains } from './keychains';
 
 export interface SDKOptions {
   accessToken: string;
