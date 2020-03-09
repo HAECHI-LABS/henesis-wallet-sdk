@@ -1,6 +1,6 @@
 import { Client } from './sdk';
-import {MasterWallet, MasterWalletData} from './wallet';
-import {Keychains} from './keychains';
+import { MasterWallet, MasterWalletData } from './wallet';
+import { Keychains } from './keychains';
 
 export class Wallets {
   private readonly client: Client;
@@ -14,15 +14,54 @@ export class Wallets {
     this.keychains = keychains;
   }
 
-  public async getMasterWallet(id: string): Promise<MasterWallet>{
+  public async getMasterWallet(id: string): Promise<MasterWallet> {
     const walletData = await this.client.get<MasterWalletData>(
-      this.baseUrl + `/${id}`
+      `${this.baseUrl}/${id}`,
     );
 
     return new MasterWallet(
       this.client,
       walletData,
       this.keychains,
-    )
+    );
+  }
+
+  public async getMasterWallets(): Promise<Array<MasterWallet>> {
+    const walletDatas = await this.client.get<Array<MasterWalletData>>(
+      this.baseUrl,
+    );
+
+    return walletDatas.map((x) => new MasterWallet(
+      this.client,
+      x,
+      this.keychains,
+    ));
+  }
+
+  public async createMasterWallet(id: string, blockchain: string, passphrase: string): Promise<MasterWallet> {
+    const accountKey = this.keychains.create(passphrase);
+    const backupKey = this.keychains.create(passphrase);
+    const walletData = await this.client.post<MasterWalletData>(
+      this.baseUrl,
+      {
+        name: id,
+        blockchain,
+        account_key: {
+          address: accountKey.address,
+          pub: accountKey.pub,
+          keyFile: accountKey.keyFile.replace('//', '/'),
+        },
+        backup_key: {
+          address: backupKey.address,
+          pub: backupKey.pub,
+          keyFile: backupKey.keyFile.replace('//', '/'),
+        },
+      },
+    );
+    return new MasterWallet(
+      this.client,
+      walletData,
+      this.keychains,
+    );
   }
 }
