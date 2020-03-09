@@ -10,4 +10,12 @@ export class MockEthLikeWallet extends EthLikeWallet {
   ) {
     super(client, walletData, keychains);
   }
+
+  async getBalance() {
+    return 10;
+  }
+
+  async tokenBalance() {
+    return 100;
+  }
 }
