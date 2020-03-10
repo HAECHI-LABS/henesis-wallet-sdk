@@ -1,6 +1,7 @@
 import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Key, KeyWithPriv, Keychains } from './keychains';
+import { Blockchain } from './blockchain';
 
 export class Wallets {
   private readonly client: Client;
@@ -38,7 +39,7 @@ export class Wallets {
     ));
   }
 
-  public async createMasterWallet(id: string, blockchain: string, passphrase: string): Promise<MasterWallet> {
+  public async createMasterWallet(id: string, blockchain: Blockchain, passphrase: string): Promise<MasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const walletData = await this.client.post<MasterWalletData>(
