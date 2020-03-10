@@ -275,7 +275,7 @@ export class MasterWallet extends EthLikeWallet {
     return balance.balance;
   }
 
-  async getAddress() {
+  getAddress() {
     return this.masterWalletData.address;
   }
 }
@@ -316,7 +316,7 @@ export class UserWallet extends EthLikeWallet {
     return balance.balance;
   }
 
-  async getAddress() {
+  getAddress() {
     return this.userWalletData.address;
   }
 }
