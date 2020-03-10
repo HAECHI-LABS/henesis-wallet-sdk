@@ -7,6 +7,7 @@ import {
   Coin, Erc20, HalfSignedTransaction, MultiSigPayload,
 } from './coin';
 import { Key, Keychains } from './keychains';
+import { Blockchain } from './blockchain';
 import { Factory, GlobalCoinFactoryGenerator } from './factory';
 import wallet from './contracts/MasterWallet.json';
 
@@ -23,7 +24,7 @@ export interface Balance {
 
 export interface Transaction {
   id: string;
-  blockchain: string;
+  blockchain: Blockchain;
   walletId: string;
   accountId: string;
   hash: string;
@@ -34,7 +35,7 @@ export interface WalletData {
   id: string;
   name: string;
   address: string;
-  blockchain: string;
+  blockchain: Blockchain;
   createdAt: string;
 }
 
@@ -66,7 +67,7 @@ export abstract class Wallet {
     this.coinFactory = coinFactory;
   }
 
-  abstract getChain(): string;
+  abstract getChain(): Blockchain;
 
   abstract verifyAddress(address: string): boolean;
 
@@ -107,7 +108,7 @@ export abstract class EthLikeWallet extends Wallet {
     return false;
   }
 
-  getChain(): string {
+  getChain(): Blockchain {
     return this.masterWalletData.blockchain;
   }
 
