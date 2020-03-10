@@ -39,22 +39,29 @@ export class Wallets {
   }
 
   public async createMasterWallet(id: string, blockchain: string, passphrase: string): Promise<MasterWallet> {
-    const accountKey = this.removePrivateKey(this.keychains.create(passphrase));
-    const backupKey = this.removePrivateKey(this.keychains.create(passphrase));
+    const accountKey = this.keychains.create(passphrase);
+    const backupKey = this.keychains.create(passphrase);
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
       {
         name: id,
         blockchain,
-        account_key: accountKey as Key,
-        backup_key: backupKey as Key,
+        account_key: this.removePrivateKey(accountKey),
+        backup_key: this.removePrivateKey(backupKey),
       },
     );
+
+    this.createRecoveryKit(walletData, accountKey, backupKey);
+
     return new MasterWallet(
       this.client,
       walletData,
       this.keychains,
     );
+  }
+
+  private createRecoveryKit(walletData: MasterWalletData, accountKey: KeyWithPriv, backupKey: KeyWithPriv) {
+    return true;
   }
 
   private removePrivateKey(key: KeyWithPriv): Key {
