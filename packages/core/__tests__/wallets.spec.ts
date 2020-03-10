@@ -12,6 +12,8 @@ describe('Wallets', ()=>{
         name: 'klaytn_test_masterWallet',
         address: '0x6b8efffae6dd7773a7c5c87e971a40b201bf78c8',
         blockchain: 'KLAYTN',
+        createdAt: '1583837537277',
+        updatedAt: '1583837537277',
         backupKey:
         { 
           address: '0x716ba9752bbf769428dcd59352e4c16f64a2a856',
@@ -53,8 +55,8 @@ describe('Wallets', ()=>{
           name: 'my_wallet',
           address: '0xzdasyoz3uz6ik4spnkzbzihiwbgoglazf3n1ihax',
           blockchain: 'KLAYTN',
-          created_at: '2020-02-25 22:57:21',
-          updated_at: '2020-02-25 22:57:21',
+          createdAt: '1583837537277',
+          updatedAt: '1583837537277',
           backupKey:
           { 
             address: '0x716ba9752bbf769428dcd59352e4c16f64a2a856',
@@ -77,8 +79,8 @@ describe('Wallets', ()=>{
           name: 'my_wallet',
           address: '0xzdasyoz3uz6ik4spnkzbzihiwbgoglazf3n1ihax',
           blockchain: 'KLAYTN',
-          created_at: '2020-02-25 22:57:21',
-          updated_at: '2020-02-25 22:57:21',
+          createdAt: '1583837537278',
+          updatedAt: '1583837537278',
           backupKey:
           { 
             address: '0x716ba9752bbf769428dcd59352e4c16f64a2a856',
