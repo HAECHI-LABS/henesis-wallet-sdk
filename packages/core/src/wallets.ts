@@ -1,6 +1,6 @@
 import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
-import { Keychains } from './keychains';
+import { Key, KeyWithPriv, Keychains } from './keychains';
 
 export class Wallets {
   private readonly client: Client;
@@ -39,23 +39,15 @@ export class Wallets {
   }
 
   public async createMasterWallet(id: string, blockchain: string, passphrase: string): Promise<MasterWallet> {
-    const accountKey = this.keychains.create(passphrase);
-    const backupKey = this.keychains.create(passphrase);
+    const accountKey = this.removePrivateKey(this.keychains.create(passphrase));
+    const backupKey = this.removePrivateKey(this.keychains.create(passphrase));
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
       {
         name: id,
         blockchain,
-        account_key: {
-          address: accountKey.address,
-          pub: accountKey.pub,
-          keyFile: accountKey.keyFile.replace('//', '/'),
-        },
-        backup_key: {
-          address: backupKey.address,
-          pub: backupKey.pub,
-          keyFile: backupKey.keyFile.replace('//', '/'),
-        },
+        account_key: accountKey as Key,
+        backup_key: backupKey as Key,
       },
     );
     return new MasterWallet(
@@ -63,5 +55,13 @@ export class Wallets {
       walletData,
       this.keychains,
     );
+  }
+
+  private removePrivateKey(key: KeyWithPriv): Key {
+    return {
+      address : key.address,
+      pub : key.pub,
+      keyFile : key.keyFile
+    };
   }
 }
