@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import hmacSHA256 from 'crypto-js/hmac-sha512';
 import { Converter } from './utils';
 
 export interface ClientOptions {
@@ -62,7 +63,7 @@ export class HttpClient {
 
   // todo: implement sign
   createSig(message: string): string {
-    return message;
+    return hmacSHA256(message, this.secret);
   }
 }
 
