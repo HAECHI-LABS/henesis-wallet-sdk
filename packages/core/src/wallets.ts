@@ -46,8 +46,8 @@ export class Wallets {
       {
         name: id,
         blockchain,
-        account_key: this.removePrivateKey(accountKey),
-        backup_key: this.removePrivateKey(backupKey),
+        accountKey: this.removePrivateKey(accountKey),
+        backupKey: this.removePrivateKey(backupKey),
       },
     );
 
