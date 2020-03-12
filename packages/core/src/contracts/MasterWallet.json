@@ -1,7 +1,12 @@
 [
   {
     "constant": false,
-    "inputs": [],
+    "inputs": [
+      {
+        "name": "_salt",
+        "type": "uint256"
+      }
+    ],
     "name": "createUserWallet",
     "outputs": [
       {
