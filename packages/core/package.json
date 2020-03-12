@@ -21,6 +21,7 @@
     "preBootstrap": "rm -rf ./node_modules"
   },
   "dependencies": {
+    "@types/bignumber.js": "^5.0.0",
     "@types/jest": "^24.0.15",
     "axios": "^0.19.2",
     "jest": "^24.8.0",
