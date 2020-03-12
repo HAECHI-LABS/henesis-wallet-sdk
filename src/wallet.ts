@@ -212,9 +212,9 @@ export class MasterWallet extends EthLikeWallet {
     this.wallet = new new Web3().eth.Contract((wallet as AbiItem[]));
   }
 
-  async createUserWallet(name: string, passphrase: string): Promise<UserWallet> {
+  async createUserWallet(name: string, createNonce: number, passphrase: string): Promise<UserWallet> {
     const nonce = await this.getNonce();
-    const data = this.wallet.methods.createUserWallet().encodeABI();
+    const data = this.wallet.methods.createUserWallet(createNonce).encodeABI();
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
       walletNonce: nonce,
