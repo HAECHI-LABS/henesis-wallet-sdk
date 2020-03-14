@@ -1,13 +1,14 @@
 import { Contract } from 'web3-eth-contract';
 import { AbiItem } from 'web3-utils';
+import BN from 'bn.js';
 import Web3 from 'web3';
 import erc20 from './contracts/ERC20.json';
 
 export interface MultiSigPayload {
   walletAddress: string;
   toAddress: string;
-  value: number;
-  walletNonce: number;
+  value: BN;
+  walletNonce: BN;
   hexData: string;
 }
 
@@ -20,7 +21,7 @@ export interface HalfSignedTransaction {
 export abstract class Coin {
   abstract getName(): string;
 
-  abstract buildData(to: string, amount: number): string;
+  abstract buildData(to: string, amount: BN): string;
 
   abstract isErc20(): boolean;
 }
@@ -37,7 +38,7 @@ export abstract class Erc20 extends Coin {
 
   abstract getName(): string;
 
-  buildData(to: string, amount: number): string {
+  buildData(to: string, amount: BN): string {
     return this.erc20
       .methods
       .transferToken(

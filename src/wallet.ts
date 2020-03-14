@@ -1,6 +1,7 @@
 import { Contract } from 'web3-eth-contract';
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
+import BN from 'bn.js';
 import { Client } from './sdk';
 import {
   Coin, Erc20, HalfSignedTransaction, MultiSigPayload,
@@ -13,11 +14,11 @@ const Bytes = require('./vendor/eth-lib/bytes');
 const { keccak256 } = require('./vendor/eth-lib/hash');
 
 export interface Nonce {
-  nonce: number;
+  nonce: BN;
 }
 
 export interface Balance {
-  balance: number;
+  balance: BN;
 }
 
 export interface Transaction {
@@ -74,20 +75,20 @@ export abstract class Wallet {
   abstract transfer(
     ticker: string,
     to: string,
-    amount: number,
+    amount: BN,
     passphrase: string
   ): Promise<Transaction>;
 
   abstract contractCall(
     contractAddress: string,
-    value: number,
+    value: BN,
     data: string,
     passphrase: string
   ): Promise<Transaction>;
 
-  abstract getBalance(): Promise<number>;
+  abstract getBalance(): Promise<BN>;
 
-  abstract tokenBalance(ticker: string): Promise<number>;
+  abstract tokenBalance(ticker: string): Promise<BN>;
 }
 
 export abstract class EthLikeWallet extends Wallet {
@@ -116,7 +117,7 @@ export abstract class EthLikeWallet extends Wallet {
 
   async contractCall(
     contractAddress: string,
-    value: number,
+    value: BN,
     data: string,
     passphrase: string,
   ): Promise<Transaction> {
@@ -167,7 +168,7 @@ export abstract class EthLikeWallet extends Wallet {
   async transfer(
     ticker: string,
     to: string,
-    amount: number,
+    amount: BN,
     passphrase: string,
   ): Promise<Transaction> {
     const coin: Coin = this.coinFactory.get(ticker);
@@ -193,7 +194,7 @@ export abstract class EthLikeWallet extends Wallet {
     });
   }
 
-  async getNonce(): Promise<number> {
+  async getNonce(): Promise<BN> {
     const nonce: Nonce = await this.client
       .get<Nonce>(`${this.baseUrl}/${this.masterWalletData.id}/nonce`);
     return nonce.nonce;
@@ -212,9 +213,12 @@ export class MasterWallet extends EthLikeWallet {
     this.wallet = new new Web3().eth.Contract((wallet as AbiItem[]));
   }
 
-  async createUserWallet(name: string, createNonce: number, passphrase: string): Promise<UserWallet> {
+  async createUserWallet(name: string, passphrase: string, salt?: BN): Promise<UserWallet> {
     const nonce = await this.getNonce();
-    const data = this.wallet.methods.createUserWallet(createNonce).encodeABI();
+    // generates 32byte(256 bit) randoma hex string and converts to BN when salt is not defined
+    if(salt === undefined) {salt = Web3.utils.toBN(Web3.utils.randomHex(32))};
+    console.log(salt);
+    const data = this.wallet.methods.createUserWallet(salt).encodeABI();
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
       walletNonce: nonce,
@@ -258,13 +262,13 @@ export class MasterWallet extends EthLikeWallet {
     );
   }
 
-  async getBalance(): Promise<number> {
+  async getBalance(): Promise<BN> {
     const balance: Balance = await this.client
       .get<Balance>(`${this.baseUrl}/${this.masterWalletData.id}/balance`);
     return balance.balance;
   }
 
-  async tokenBalance(ticker: string): Promise<number> {
+  async tokenBalance(ticker: string): Promise<BN> {
     const coin: Coin = this.coinFactory.get(ticker);
     if (!coin.isErc20()) {
       throw new Error(`${ticker} is not erc20 token`);
@@ -293,19 +297,19 @@ export class UserWallet extends EthLikeWallet {
     this.userWalletData = userWalletData;
   }
 
-  async getNonce(): Promise<number> {
+  async getNonce(): Promise<BN> {
     const nonce: Nonce = await this.client
       .get<Nonce>(`${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/nonce`);
     return nonce.nonce;
   }
 
-  async getBalance(): Promise<number> {
+  async getBalance(): Promise<BN> {
     const balance: Balance = await this.client
       .get<Balance>(`${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/balance`);
     return balance.balance;
   }
 
-  async tokenBalance(ticker: string): Promise<number> {
+  async tokenBalance(ticker: string): Promise<BN> {
     const coin: Coin = this.coinFactory.get(ticker);
     if (!coin.isErc20()) {
       throw new Error(`${ticker} is not erc20 token`);
