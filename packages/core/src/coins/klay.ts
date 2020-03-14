@@ -1,5 +1,6 @@
 import { Contract } from 'web3-eth-contract';
 import { AbiItem } from 'web3-utils';
+import BN from 'bn.js';
 import Web3 from 'web3';
 import klay from '../contracts/Klay.json';
 import { Coin } from '../coin';
@@ -16,7 +17,7 @@ export class Klay extends Coin {
     return 'klay';
   }
 
-  buildData(to: string, amount: number): string {
+  buildData(to: string, amount: BN): string {
     return this.klay
       .methods
       .transferKlay(
