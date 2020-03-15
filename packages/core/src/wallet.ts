@@ -177,7 +177,7 @@ export abstract class EthLikeWallet extends Wallet {
     const multiSigPayload: MultiSigPayload = {
       hexData,
       walletNonce: nonce,
-      value: 0,
+      value: new BN(0),
       toAddress: this.masterWalletData.address,
       walletAddress: this.masterWalletData.address,
     };
@@ -222,7 +222,7 @@ export class MasterWallet extends EthLikeWallet {
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
       walletNonce: nonce,
-      value: 0,
+      value: new BN(0),
       toAddress: this.masterWalletData.address,
       walletAddress: this.masterWalletData.address,
     };
