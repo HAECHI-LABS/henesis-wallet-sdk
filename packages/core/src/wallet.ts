@@ -217,7 +217,6 @@ export class MasterWallet extends EthLikeWallet {
     const nonce = await this.getNonce();
     // generates 32byte(256 bit) randoma hex string and converts to BN when salt is not defined
     if(salt === undefined) {salt = Web3.utils.toBN(Web3.utils.randomHex(32))};
-    console.log(salt);
     const data = this.wallet.methods.createUserWallet(salt).encodeABI();
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
