@@ -1,5 +1,5 @@
 import { Coin } from './coin';
-import { Eth, Hib, Klay } from './coins';
+import { Coins, Eth, Hib, Klay } from './coins';
 import { Blockchain } from './blockchain';
 
 export class Factory<T> {
@@ -22,12 +22,12 @@ export class Factory<T> {
 export const GlobalCoinFactoryGenerator: Factory<Factory<Coin>> = new Factory<Factory<Coin>>();
 GlobalCoinFactoryGenerator.register(
   Blockchain.Ethereum,
-  new Factory<Coin>().register('eth', new Eth()),
+  new Factory<Coin>().register(Coins.Eth, new Eth()),
 );
 
 GlobalCoinFactoryGenerator.register(
   Blockchain.Klaytn,
   new Factory<Coin>()
-    .register('klay', new Klay())
-    .register('hib', new Hib()),
+    .register(Coins.Klay, new Klay())
+    .register(Coins.Hib, new Hib()),
 );
