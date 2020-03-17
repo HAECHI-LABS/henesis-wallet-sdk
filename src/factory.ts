@@ -21,12 +21,12 @@ export class Factory<T> {
 
 export const GlobalCoinFactoryGenerator: Factory<Factory<Coin>> = new Factory<Factory<Coin>>();
 GlobalCoinFactoryGenerator.register(
-  Blockchain.ethereum,
+  Blockchain.Ethereum,
   new Factory<Coin>().register('eth', new Eth()),
 );
 
 GlobalCoinFactoryGenerator.register(
-  Blockchain.klaytn,
+  Blockchain.Klaytn,
   new Factory<Coin>()
     .register('klay', new Klay())
     .register('hib', new Hib()),
