@@ -2,6 +2,7 @@ import * as crypto from 'crypto';
 import {
   bytesToWord, decodeSignature, encodeSignature, toChecksum,
 } from './utils';
+import { Blockchain } from './blockchain';
 
 const elliptic = require('elliptic');
 const { keccak256 } = require('./vendor/eth-lib/hash');
@@ -28,9 +29,9 @@ export interface Keychains {
 
   decryptKeyFile(keyFile: string, password: string): string;
 
-  signPayload(hexPayload: string, keyFile: string, password: string): string;
+  signPayload(blockchain: Blockchain, hexPayload: string, keyFile: string, password: string): string;
 
-  recoverAddressFromSignature(hexPayload: string, signature: string): string;
+  recoverAddressFromSignature(blockchain: Blockchain, hexPayload: string, signature: string): string;
 }
 
 export class EthereumKeychains implements Keychains {
@@ -67,8 +68,8 @@ export class EthereumKeychains implements Keychains {
     }
   }
 
-  public signPayload(hexPayload: string, keyFile: string, password: string): string {
-    const hashedMessage = keccak256(this.payloadToEthMessage(hexPayload));
+  public signPayload(blockchain: Blockchain, hexPayload: string, keyFile: string, password: string): string {
+    const hashedMessage = keccak256(this.payloadToPrefixedMessage(blockchain, hexPayload));
 
     const priv = this.decryptKeyFile(keyFile, password);
     const signature = secp256k1
@@ -85,7 +86,7 @@ export class EthereumKeychains implements Keychains {
     ]);
   }
 
-  public recoverAddressFromSignature(hexPayload: string, signature: string) {
+  public recoverAddressFromSignature(blockchain: Blockchain, hexPayload: string, signature: string) {
     const vals = decodeSignature(signature);
     const vrs = {
       v: Bytes.toNumber(vals[0]),
@@ -93,7 +94,7 @@ export class EthereumKeychains implements Keychains {
       s: vals[2].slice(2),
     };
     const ecPublicKey = secp256k1.recoverPubKey(
-      Buffer.from(keccak256(this.payloadToEthMessage(hexPayload)).slice(2), 'hex'),
+      Buffer.from(keccak256(this.payloadToPrefixedMessage(blockchain, hexPayload)).slice(2), 'hex'),
       vrs,
       vrs.v < 2 ? vrs.v : 1 - (vrs.v % 2),
     );
@@ -122,10 +123,15 @@ export class EthereumKeychains implements Keychains {
     return sjcl.encrypt(password, privateKey, encryptOptions);
   }
 
-  private payloadToEthMessage(hexPayload: string): Buffer {
+  private payloadToPrefixedMessage(blockchain: Blockchain, hexPayload: string): Buffer {
     const hashedPayload = keccak256(hexPayload);
     const payloadBuffer = Buffer.from(hashedPayload.slice(2), 'hex');
-    const preambleBuffer = Buffer.from(`\u0019Ethereum Signed Message:\n${payloadBuffer.length}`);
+    const preambleBuffer = Buffer.from(`\u0019${this.blockchainPrefix(blockchain)} Signed Message:\n${payloadBuffer.length}`);
     return Buffer.concat([preambleBuffer, payloadBuffer]);
+  }
+
+  private blockchainPrefix(blockchain: Blockchain): string {
+    let keys = Object.keys(Blockchain).filter(x => Blockchain[x] == blockchain);
+    return keys.length > 0 ? keys[0] : null;
   }
 }
