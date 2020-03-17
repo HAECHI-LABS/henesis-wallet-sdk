@@ -33,6 +33,7 @@ describe('Wallet', () => {
         };
         (wallet as any).keychains = keychain;
         (wallet as any).masterWalletData = {
+          blockchain: "ETHEREUM",
           accountKey: keyWithPriv,
         };
         const multiSigPayload: MultiSigPayload = {
