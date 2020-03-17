@@ -2,7 +2,6 @@ import nock from 'nock';
 import { SDK } from '../src';
 import { Token, Account, Secret } from '../src/accounts';
 import { Converter } from '../src/utils';
-import { MasterWallet, MasterWalletData, UserWallet } from '../src/wallet';
 
 const baseUrl = 'http://localhost:8080';
 
