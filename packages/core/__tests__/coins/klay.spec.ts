@@ -1,5 +1,6 @@
 import BN from 'bn.js';
 import { Klay } from '../../src/coins';
+import BN from 'bn.js';
 
 describe('Klay', () => {
   let klay: Klay;
