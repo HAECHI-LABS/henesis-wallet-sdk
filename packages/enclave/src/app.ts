@@ -14,6 +14,8 @@ export class App {
 
   constructor(params: AppOption) {
     this.application = express();
+    this.application.use(express.json());
+    this.application.use(express.urlencoded({ extended: false }));
     this.port = params.port ? params.port : 3000;
     if (params.middleWares) {
       this.applyMiddleWares(params.middleWares);
