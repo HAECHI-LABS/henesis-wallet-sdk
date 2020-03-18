@@ -28,6 +28,7 @@ export class HttpClient {
         return status >= 200 && status < 300; // default
       },
     });
+
     this.client.interceptors.request.use((config) => {
       config.headers['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
       if (this.accessToken) {
