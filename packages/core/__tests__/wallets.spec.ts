@@ -4,11 +4,11 @@ import { MasterWallet} from '../src/wallet';
 import { Blockchain } from '../src/blockchain';
 
 const baseUrl = 'http://localhost:8080';
-describe('Wallets', ()=>{
+describe('Wallets', () => {
   describe('#createMasterWallet()', () => {
     jest.setTimeout(5000000);
     it('should be able to create master wallet', async () => {
-      const response = { 
+      const response = {
         id: '39e16b3eab64f4d595a6cd6ca4035703',
         name: 'klaytn_test_masterWallet',
         address: '0x6b8efffae6dd7773a7c5c87e971a40b201bf78c8',
@@ -16,12 +16,12 @@ describe('Wallets', ()=>{
         createdAt: '1583837537277',
         updatedAt: '1583837537277',
         backupKey:
-        { 
+        {
           address: '0x716ba9752bbf769428dcd59352e4c16f64a2a856',
           pub:
           '0xf1c6031a12cc0c2f15ac409833ed03685420f30f30dd077aba52ee61b0e39133821e20c7f4089b55f8a4c7a650c0da41f80e6de7ef9e1f4de0eb3ebf09b360f6',
           keyFile:
-          '{"iv":"BEySd1ljOn4Sbb6BKTqlNQ==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"T85A09XexMM=","ct":"qvjhYYQXObQB4ta49b6iDwLX1+aynHOM1zhdC0bIozvW9e6MmrZaRa1N+0MxjAX/fPJQYia0KJGCEgoXfSGRCF0wWhGDBM9jK9Q="}' 
+          '{"iv":"BEySd1ljOn4Sbb6BKTqlNQ==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"T85A09XexMM=","ct":"qvjhYYQXObQB4ta49b6iDwLX1+aynHOM1zhdC0bIozvW9e6MmrZaRa1N+0MxjAX/fPJQYia0KJGCEgoXfSGRCF0wWhGDBM9jK9Q="}',
         },
         accountKey:
         {
@@ -29,8 +29,8 @@ describe('Wallets', ()=>{
           pub:
           '0x2a514115f574b9becbb7b43c4dabf2165b97cd64f492787171f54a81e8aa7b3e72cb42335a8e0a5bc774a0dc7ec2c29f74b6b239fabecce655d714dbc2f9ae03',
           keyFile:
-          '{"iv":"gw6l4gKz7k3BjTOP23FOCA==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"UFHEh0shodQ=","ct":"tWPRVQIY6JGIt2uM7Pw/5nn+M4hZAIBjLfIXnxecl6VzHDzMdC0wa0jjsHUEOJCaNXWHiDcRTLl1Iwm1ql42toj9jdVUHTbL6bQ="}' 
-        }
+          '{"iv":"gw6l4gKz7k3BjTOP23FOCA==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"UFHEh0shodQ=","ct":"tWPRVQIY6JGIt2uM7Pw/5nn+M4hZAIBjLfIXnxecl6VzHDzMdC0wa0jjsHUEOJCaNXWHiDcRTLl1Iwm1ql42toj9jdVUHTbL6bQ="}',
+        },
       };
 
       const sdk = new SDK({
@@ -59,12 +59,12 @@ describe('Wallets', ()=>{
           createdAt: '1583837537277',
           updatedAt: '1583837537277',
           backupKey:
-          { 
+          {
             address: '0x716ba9752bbf769428dcd59352e4c16f64a2a856',
             pub:
             '0xf1c6031a12cc0c2f15ac409833ed03685420f30f30dd077aba52ee61b0e39133821e20c7f4089b55f8a4c7a650c0da41f80e6de7ef9e1f4de0eb3ebf09b360f6',
             keyFile:
-            '{"iv":"BEySd1ljOn4Sbb6BKTqlNQ==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"T85A09XexMM=","ct":"qvjhYYQXObQB4ta49b6iDwLX1+aynHOM1zhdC0bIozvW9e6MmrZaRa1N+0MxjAX/fPJQYia0KJGCEgoXfSGRCF0wWhGDBM9jK9Q="}' 
+            '{"iv":"BEySd1ljOn4Sbb6BKTqlNQ==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"T85A09XexMM=","ct":"qvjhYYQXObQB4ta49b6iDwLX1+aynHOM1zhdC0bIozvW9e6MmrZaRa1N+0MxjAX/fPJQYia0KJGCEgoXfSGRCF0wWhGDBM9jK9Q="}',
           },
           accountKey:
           {
@@ -72,8 +72,8 @@ describe('Wallets', ()=>{
             pub:
             '0x2a514115f574b9becbb7b43c4dabf2165b97cd64f492787171f54a81e8aa7b3e72cb42335a8e0a5bc774a0dc7ec2c29f74b6b239fabecce655d714dbc2f9ae03',
             keyFile:
-            '{"iv":"gw6l4gKz7k3BjTOP23FOCA==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"UFHEh0shodQ=","ct":"tWPRVQIY6JGIt2uM7Pw/5nn+M4hZAIBjLfIXnxecl6VzHDzMdC0wa0jjsHUEOJCaNXWHiDcRTLl1Iwm1ql42toj9jdVUHTbL6bQ="}' 
-          }
+            '{"iv":"gw6l4gKz7k3BjTOP23FOCA==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"UFHEh0shodQ=","ct":"tWPRVQIY6JGIt2uM7Pw/5nn+M4hZAIBjLfIXnxecl6VzHDzMdC0wa0jjsHUEOJCaNXWHiDcRTLl1Iwm1ql42toj9jdVUHTbL6bQ="}',
+          },
         },
         {
           id: '20a5fa879bcb14a5c7b1e654961c3599',
@@ -83,12 +83,12 @@ describe('Wallets', ()=>{
           createdAt: '1583837537278',
           updatedAt: '1583837537278',
           backupKey:
-          { 
+          {
             address: '0x716ba9752bbf769428dcd59352e4c16f64a2a856',
             pub:
             '0xf1c6031a12cc0c2f15ac409833ed03685420f30f30dd077aba52ee61b0e39133821e20c7f4089b55f8a4c7a650c0da41f80e6de7ef9e1f4de0eb3ebf09b360f6',
             keyFile:
-            '{"iv":"BEySd1ljOn4Sbb6BKTqlNQ==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"T85A09XexMM=","ct":"qvjhYYQXObQB4ta49b6iDwLX1+aynHOM1zhdC0bIozvW9e6MmrZaRa1N+0MxjAX/fPJQYia0KJGCEgoXfSGRCF0wWhGDBM9jK9Q="}' 
+            '{"iv":"BEySd1ljOn4Sbb6BKTqlNQ==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"T85A09XexMM=","ct":"qvjhYYQXObQB4ta49b6iDwLX1+aynHOM1zhdC0bIozvW9e6MmrZaRa1N+0MxjAX/fPJQYia0KJGCEgoXfSGRCF0wWhGDBM9jK9Q="}',
           },
           accountKey:
           {
@@ -96,8 +96,8 @@ describe('Wallets', ()=>{
             pub:
             '0x2a514115f574b9becbb7b43c4dabf2165b97cd64f492787171f54a81e8aa7b3e72cb42335a8e0a5bc774a0dc7ec2c29f74b6b239fabecce655d714dbc2f9ae03',
             keyFile:
-            '{"iv":"gw6l4gKz7k3BjTOP23FOCA==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"UFHEh0shodQ=","ct":"tWPRVQIY6JGIt2uM7Pw/5nn+M4hZAIBjLfIXnxecl6VzHDzMdC0wa0jjsHUEOJCaNXWHiDcRTLl1Iwm1ql42toj9jdVUHTbL6bQ="}' 
-          }
+            '{"iv":"gw6l4gKz7k3BjTOP23FOCA==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"UFHEh0shodQ=","ct":"tWPRVQIY6JGIt2uM7Pw/5nn+M4hZAIBjLfIXnxecl6VzHDzMdC0wa0jjsHUEOJCaNXWHiDcRTLl1Iwm1ql42toj9jdVUHTbL6bQ="}',
+          },
         },
       ];
 
