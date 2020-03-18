@@ -131,7 +131,7 @@ export class EthereumKeychains implements Keychains {
   }
 
   private blockchainPrefix(blockchain: Blockchain): string {
-    let keys = Object.keys(Blockchain).filter(x => Blockchain[x] == blockchain);
+    const keys = Object.keys(Blockchain).filter((x) => Blockchain[x] == blockchain);
     return keys.length > 0 ? keys[0] : null;
   }
 }

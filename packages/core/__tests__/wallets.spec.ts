@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { SDK } from '../src';
-import { MasterWallet} from '../src/wallet';
+import { MasterWallet } from '../src/wallet';
 import { Blockchain } from '../src/blockchain';
 
 const baseUrl = 'http://localhost:8080';
@@ -42,7 +42,7 @@ describe('Wallets', () => {
         .post('/api/v1/wallets')
         .reply(200, response);
 
-      const masterWallet: MasterWallet = await sdk.wallets.createMasterWallet('klaytn_test_masterWallet', Blockchain.klaytn, 'password');
+      const masterWallet: MasterWallet = await sdk.wallets.createMasterWallet('klaytn_test_masterWallet', Blockchain.Klaytn, 'password');
       expect(masterWallet.getAddress()).toEqual(response.address);
     });
   });
