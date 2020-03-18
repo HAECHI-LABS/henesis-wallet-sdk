@@ -1,5 +1,5 @@
-import { Erc20 } from '../src/coin';
 import BN from 'bn.js';
+import { Erc20 } from '../src/coin';
 
 describe('Erc20', () => {
   class ERC20Impl extends Erc20 {
