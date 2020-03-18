@@ -1,4 +1,5 @@
-const sjcl = {
+let sjcl;
+sjcl = {
   cipher: {},
   hash: {},
   keyexchange: {},
@@ -6,8 +7,28 @@ const sjcl = {
   misc: {},
   codec: {},
   exception: {
-    corrupt(a) { this.toString = function () { return `CORRUPT: ${this.message}`; }; this.message = a; }, invalid(a) { this.toString = function () { return `INVALID: ${this.message}`; }; this.message = a; }, bug(a) { this.toString = function () { return `BUG: ${this.message}`; }; this.message = a; }, notReady(a) { this.toString = function () { return `NOT READY: ${this.message}`; }; this.message = a; },
-  },
+    corrupt(a) {
+      this.toString = function() {
+        return `CORRUPT: ${this.message}`;
+      };
+      this.message = a;
+    }, invalid(a) {
+      this.toString = function() {
+        return `INVALID: ${this.message}`;
+      };
+      this.message = a;
+    }, bug(a) {
+      this.toString = function() {
+        return `BUG: ${this.message}`;
+      };
+      this.message = a;
+    }, notReady(a) {
+      this.toString = function() {
+        return `NOT READY: ${this.message}`;
+      };
+      this.message = a;
+    }
+  }
 };
 sjcl.cipher.aes = function (a) {
   this.s[0][0][0] || this.O(); let b; let c; let d; let e; const f = this.s[0][4]; const g = this.s[1]; b = a.length; let h = 1; if (b !== 4 && b !== 6 && b !== 8) throw new sjcl.exception.invalid('invalid aes key size'); this.b = [d = a.slice(0), e = []]; for (a = b; a < 4 * b + 28; a++) { c = d[a - 1]; if (a % b === 0 || b === 8 && a % b === 4)c = f[c >>> 24] << 24 ^ f[c >> 16 & 255] << 16 ^ f[c >> 8 & 255] << 8 ^ f[c & 255], a % b === 0 && (c = c << 8 ^ c >>> 24 ^ h << 24, h = h << 1 ^ 283 * (h >> 7)); d[a] = d[a - b] ^ c; } for (b = 0; a; b++, a--) {
