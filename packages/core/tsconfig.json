@@ -5,11 +5,14 @@
     "target": "es2017",
     "outDir": "./lib",
     "rootDir": "./src",
+    "allowJs": true,
     "resolveJsonModule": true
   },
   "include": [
-    "./src",
-    "./__tests__",
-    "./example"
+    "./src"
+  ],
+  "exclude": [
+    "./example",
+    "./__tests__"
   ]
 }
