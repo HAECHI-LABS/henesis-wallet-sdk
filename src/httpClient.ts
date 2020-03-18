@@ -36,9 +36,11 @@ export class HttpClient {
       }
 
       const timestamp = Date.now();
-      const body = JSON.stringify(config.data);
-      const message = timestamp + body;
-      config.headers['X-Henesis-Signature'] = this.createSig(message);
+      if (this.secret) {
+        const body = JSON.stringify(config.data);
+        const message = timestamp + body;
+        config.headers['X-Henesis-Signature'] = this.createSig(message);
+      }
       config.headers['X-Henesis-Timestamp'] = timestamp;
       return config;
     });
