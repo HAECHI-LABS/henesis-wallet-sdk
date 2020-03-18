@@ -1,4 +1,4 @@
 export enum Blockchain {
-  Ethereum = "ETHEREUM",
-  Klaytn = "KLAYTN"
+  Ethereum = 'ETHEREUM',
+  Klaytn = 'KLAYTN'
 }

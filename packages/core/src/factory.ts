@@ -1,5 +1,7 @@
 import { Coin } from './coin';
-import { Coins, Eth, Hib, Klay } from './coins';
+import {
+  Coins, Eth, Hib, Klay,
+} from './coins';
 import { Blockchain } from './blockchain';
 
 export class Factory<T> {
