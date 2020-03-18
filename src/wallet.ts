@@ -292,6 +292,10 @@ export class MasterWallet extends EthLikeWallet {
   getAddress() {
     return this.masterWalletData.address;
   }
+
+  getData(): MasterWalletData {
+    return this.masterWalletData;
+  }
 }
 
 export class UserWallet extends EthLikeWallet {
@@ -332,5 +336,9 @@ export class UserWallet extends EthLikeWallet {
 
   getAddress() {
     return this.userWalletData.address;
+  }
+
+  getData(): UserWalletData {
+    return this.userWalletData;
   }
 }
