@@ -212,7 +212,7 @@ export abstract class EthLikeWallet extends Wallet {
   async getNonce(): Promise<BN> {
     const nonce: Nonce = await this.client
       .get<Nonce>(`${this.baseUrl}/${this.masterWalletData.id}/nonce`);
-    return new BN(nonce.nonce);
+    return new BN(`${nonce.nonce}`);
   }
 }
 
@@ -305,7 +305,7 @@ export class MasterWallet extends EthLikeWallet {
   async getBalance(): Promise<BN> {
     const balance: Balance = await this.client
       .get<Balance>(`${this.baseUrl}/${this.masterWalletData.id}/balance`);
-    return new BN(balance.balance);
+    return new BN(`${balance.balance}`);
   }
 
   async tokenBalance(ticker: string): Promise<BN> {
@@ -316,7 +316,7 @@ export class MasterWallet extends EthLikeWallet {
     const address: string = (coin as Erc20).getAddress();
     const balance: Balance = await this.client
       .get<Balance>(`${this.baseUrl}/${this.masterWalletData.id}/tokenBalance?address=${address}`);
-    return balance.balance;
+    return new BN(`${balance.balance}`);
   }
 
   getAddress(): string {
@@ -344,13 +344,13 @@ export class UserWallet extends EthLikeWallet {
   async getNonce(): Promise<BN> {
     const nonce: Nonce = await this.client
       .get<Nonce>(`${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/nonce`);
-    return new BN(nonce.nonce);
+    return new BN(`${nonce.nonce}`);
   }
 
   async getBalance(): Promise<BN> {
     const balance: Balance = await this.client
       .get<Balance>(`${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/balance`);
-    return new BN(balance.balance);
+    return new BN(`${balance.balance}`);
   }
 
   async tokenBalance(ticker: string): Promise<BN> {
@@ -361,7 +361,7 @@ export class UserWallet extends EthLikeWallet {
     const address: string = (coin as Erc20).getAddress();
     const balance: Balance = await this.client
       .get<Balance>(`${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/tokenBalance?address=${address}`);
-    return new BN(balance.balance);
+    return new BN(`${balance.balance}`);
   }
 
   getAddress(): string {

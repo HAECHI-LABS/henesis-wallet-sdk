@@ -3,6 +3,7 @@ import { MasterWalletData, UserWallet, UserWalletData } from '@haechi-labs/henes
 import { SDK } from '@haechi-labs/henesis-wallet-core';
 import { Controller } from '../types';
 import AbstractController from './controller';
+import BN from "bn.js";
 
 export interface Transaction {
   transactionId: string;
@@ -13,9 +14,8 @@ export interface NonceResponse {
 }
 
 export interface BalanceResponse {
-  balance: number
+  balance: String
 }
-
 
 export default class WalletController extends AbstractController implements Controller {
   private path = '/api/v1/wallets';
@@ -33,27 +33,50 @@ export default class WalletController extends AbstractController implements Cont
     );
 
     this.router.post(
-      `${this.path}/:masterWalletId/transactions`,
-      this.promiseWrapper(this.sendMasterWalletTransaction),
+      `${this.path}/:masterWalletId/contractCall`,
+      this.promiseWrapper(this.sendMasterWalletContractCall),
     );
+
     this.router.post(
-      `${this.path}/:masterWalletId/user-wallets/:userWalletId/transactions`,
-      this.promiseWrapper(this.sendUserWalletTransaction),
+      `${this.path}/:masterWalletId/user-wallets/:userWalletId/contractCall`,
+      this.promiseWrapper(this.sendUserWalletContractCall),
+    );
+    
+    this.router.get(
+      `${this.path}/:masterWalletId`,
+      this.promiseWrapper(this.getMasterWallet),
     );
 
     this.router.get(
       `${this.path}/:masterWalletId/balance`,
       this.promiseWrapper(this.getMasterWalletBalance),
     );
+
+    this.router.get(
+      `${this.path}/:masterWalletId/user-wallets/:userWalletId`,
+      this.promiseWrapper(this.getUserWallet),
+    );
+
     this.router.get(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/balance`,
       this.promiseWrapper(this.getUserWalletBalance),
+    );
+
+    this.router.get(
+      `${this.path}/:masterWalletId/tokenBalance/:ticker`,
+      this.promiseWrapper(this.getMasterWalletTokenBalance),
+    );
+
+    this.router.get(
+      `${this.path}/:masterWalletId/user-wallets/:userWalletId/tokenBalance/:ticker`,
+      this.promiseWrapper(this.getUserWalletTokenBalance),
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/transfer`,
       this.promiseWrapper(this.sendMasterWalletCoin),
     );
+
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/transfer`,
       this.promiseWrapper(this.sendUserWalletCoin),
@@ -81,13 +104,21 @@ export default class WalletController extends AbstractController implements Cont
     )).getData();
   }
 
+  private async getMasterWallet(req: express.Request): Promise<MasterWalletData> {
+    const masterWallet = await req.sdk
+      .wallets
+      .getMasterWallet(req.params.masterWalletId);
+
+    return (await masterWallet.getData());
+  }
+
   private async getMasterWalletBalance(req: express.Request): Promise<BalanceResponse> {
     const masterWallet = await req.sdk
       .wallets
       .getMasterWallet(req.params.masterWalletId);
 
     return {
-      balance: (await masterWallet.getBalance()).toNumber(),
+      balance: (await masterWallet.getBalance()).toString()
     };
   }
 
@@ -98,16 +129,65 @@ export default class WalletController extends AbstractController implements Cont
       req.params.userWalletId,
     );
     return {
-      balance: (await userWallet.getBalance()).toNumber(),
+      balance: (await userWallet.getBalance()).toString(),
     };
   }
 
-  private async sendMasterWalletTransaction(req: express.Request): Promise<Transaction> {
-    return null;
+  private async getMasterWalletTokenBalance(req: express.Request): Promise<BalanceResponse> {
+    const masterWallet = await req.sdk
+      .wallets
+      .getMasterWallet(req.params.masterWalletId);
+
+    return {
+      balance: (await masterWallet.tokenBalance(req.params.ticker)).toString(),
+    };
   }
 
-  private async sendUserWalletTransaction(req: express.Request): Promise<Transaction> {
-    return null;
+  private async getUserWalletTokenBalance(req: express.Request): Promise<BalanceResponse> {
+    const userWallet = await this.getUserWallet(
+      req.sdk,
+      req.params.masterWalletId,
+      req.params.userWalletId,
+    );
+    return {
+      balance: (await userWallet.tokenBalance(req.params.ticker)).toString(),
+    };
+  }
+
+  private async sendMasterWalletContractCall(req: express.Request): Promise<Transaction> {
+    const masterWallet = await req.sdk
+      .wallets
+      .getMasterWallet(req.params.masterWalletId);
+
+    const transaction = await masterWallet.contractCall(
+      req.body.contractAddress,
+      new BN(`${req.body.value}`),
+      req.body.data,
+      req.body.passphrase,
+    );
+
+    return {
+      transactionId: transaction.id,
+    };
+  }
+
+  private async sendUserWalletContractCall(req: express.Request): Promise<Transaction> {
+    const userWallet = await this.getUserWallet(
+      req.sdk,
+      req.params.masterWalletId,
+      req.params.userWalletId,
+    );
+
+    const transaction = await userWallet.contractCall(
+      req.body.contractAddress,
+      new BN(`${req.body.value}`),
+      req.body.data,
+      req.body.passphrase,
+    );
+
+    return {
+      transactionId: transaction.id,
+    };
   }
 
   private async sendMasterWalletCoin(req: express.Request): Promise<Transaction> {
@@ -137,7 +217,7 @@ export default class WalletController extends AbstractController implements Cont
     const transaction = await userWallet.transfer(
       req.body.ticker,
       req.body.to,
-      req.body.amount,
+      new BN(`${req.body.amount}`),
       req.body.passphrase,
     );
 
