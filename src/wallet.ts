@@ -48,6 +48,15 @@ export interface UserWalletData extends WalletData {
 
 }
 
+function stringifyMultiSigPayloadBigInteger(multiSigPayload:MultiSigPayload) {
+  return {
+    hexData: multiSigPayload.hexData,
+    walletNonce: multiSigPayload.walletNonce.toString(10),
+    value: multiSigPayload.value.toString(10),
+    toAddress: multiSigPayload.toAddress,
+    walletAddress: multiSigPayload.walletAddress
+  }
+}
 export abstract class Wallet {
   protected readonly client: Client;
 
@@ -141,7 +150,7 @@ export abstract class EthLikeWallet extends Wallet {
     return this.sendTransaction({
       signature,
       blockchain: this.getChain(),
-      multiSigPayload,
+      multiSigPayload:stringifyMultiSigPayloadBigInteger(multiSigPayload),
     });
   }
 
@@ -161,7 +170,7 @@ export abstract class EthLikeWallet extends Wallet {
     );
   }
 
-  protected sendTransaction(halfSignedTransaction: HalfSignedTransaction) {
+  protected sendTransaction(halfSignedTransaction: any) {
     return this.client
       .post<Transaction>(
         `${this.baseUrl}/transactions`,
@@ -205,7 +214,8 @@ export abstract class EthLikeWallet extends Wallet {
     return this.sendTransaction({
       signature,
       blockchain: this.getChain(),
-      multiSigPayload,
+      multiSigPayload: stringifyMultiSigPayloadBigInteger(multiSigPayload),
+      walletId: this.masterWalletData.id
     });
   }
 
@@ -273,13 +283,7 @@ export class MasterWallet extends EthLikeWallet {
           salt: salt.toString(10),
           signature,
           blockchain: this.getChain(),
-          multiSigPayload: {
-            hexData: data,
-            walletNonce: multiSigPayload.walletNonce.toString(10),
-            value: multiSigPayload.value.toString(10),
-            toAddress: multiSigPayload.toAddress,
-            walletAddress: multiSigPayload.walletAddress,
-          },
+          multiSigPayload: stringifyMultiSigPayloadBigInteger(multiSigPayload),
         },
       );
 
