@@ -46,7 +46,7 @@ describe('keychian', () => {
     });
   });
   
-  describe.only('#changePassword()', () => {
+  describe('#changePassword()', () => {
     it('should not change privkey', () => {
       const keyfile = keychain.changePassword(keyWithPriv.keyFile, 'password', 'newPassword').keyFile;
       expect(keychain.decryptKeyFile(keyfile, 'newPassword')).toEqual(keyWithPriv.priv);
