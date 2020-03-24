@@ -27,6 +27,8 @@ export interface KeyWithPriv extends Key {
 export interface Keychains {
   create(password: string): KeyWithPriv;
 
+  changePassword(keyFile: string, password: string, newPassword: string): KeyWithPriv;
+
   decryptKeyFile(keyFile: string, password: string): string;
 
   signPayload(blockchain: Blockchain, hexPayload: string, keyFile: string, password: string): string;
@@ -54,6 +56,21 @@ export class EthereumKeychains implements Keychains {
       pub: publicKey,
       priv: privateKey,
       keyFile,
+    };
+  }
+
+  public changePassword(keyFile: string, password: string, newPassword: string): KeyWithPriv {
+    const priv = this.decryptKeyFile(keyFile, password);
+    const ecKey = secp256k1.keyFromPrivate(Buffer.from(priv.slice(2), 'hex'))
+    const publicKey = `0x${ecKey.getPublic(false, 'hex').slice(2)}`;
+    const publicHash = keccak256(publicKey);
+    const address = toChecksum(`0x${publicHash.slice(-40)}`);
+    const newKeyFile = this.encryptPrivToKeyFile(priv, newPassword);
+    return {
+      address,
+      pub: publicKey,
+      priv: priv,
+      keyFile: newKeyFile,
     };
   }
 
