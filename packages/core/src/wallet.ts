@@ -89,6 +89,8 @@ export abstract class Wallet {
 
   abstract getBalance(): Promise<BN>;
 
+  abstract getAddress(): string;
+
   abstract tokenBalance(ticker: string): Promise<BN>;
 }
 
@@ -127,8 +129,8 @@ export abstract class EthLikeWallet extends Wallet {
       hexData: data,
       walletNonce: nonce,
       value,
-      toAddress: this.masterWalletData.address,
-      walletAddress: this.masterWalletData.address,
+      toAddress: contractAddress,
+      walletAddress: this.getAddress(),
     };
 
     const signature = this.signPayload(
@@ -163,7 +165,18 @@ export abstract class EthLikeWallet extends Wallet {
     return this.client
       .post<Transaction>(
         `${this.baseUrl}/transactions`,
-        halfSignedTransaction,
+        {
+          walletId: this.masterWalletData.id,
+          signature: halfSignedTransaction.signature,
+          blockchain: halfSignedTransaction.blockchain,
+          multiSigPayload: {
+            hexData: halfSignedTransaction.multiSigPayload.hexData,
+            walletNonce: halfSignedTransaction.multiSigPayload.walletNonce.toString(10),
+            value: halfSignedTransaction.multiSigPayload.value.toString(10),
+            toAddress: halfSignedTransaction.multiSigPayload.toAddress,
+            walletAddress: halfSignedTransaction.multiSigPayload.walletAddress,
+          },
+        },
       );
   }
 
@@ -180,8 +193,8 @@ export abstract class EthLikeWallet extends Wallet {
       hexData,
       walletNonce: nonce,
       value: new BN(0),
-      toAddress: this.masterWalletData.address,
-      walletAddress: this.masterWalletData.address,
+      toAddress: this.getAddress(),
+      walletAddress: this.getAddress(),
     };
 
     const signature = this.signPayload(
@@ -226,8 +239,8 @@ export class MasterWallet extends EthLikeWallet {
       hexData: data,
       walletNonce: nonce,
       value: new BN(0),
-      toAddress: this.masterWalletData.address,
-      walletAddress: this.masterWalletData.address,
+      toAddress: this.getAddress(),
+      walletAddress: this.getAddress(),
     };
 
     const signature = this.signPayload(
@@ -247,8 +260,8 @@ export class MasterWallet extends EthLikeWallet {
             hexData: data,
             walletNonce: multiSigPayload.walletNonce.toString(10),
             value: multiSigPayload.value.toString(10),
-            toAddress: this.masterWalletData.address,
-            walletAddress: this.masterWalletData.address,
+            toAddress: multiSigPayload.toAddress,
+            walletAddress: multiSigPayload.walletAddress,
           },
         },
       );
@@ -289,7 +302,7 @@ export class MasterWallet extends EthLikeWallet {
     return balance.balance;
   }
 
-  getAddress() {
+  getAddress(): string {
     return this.masterWalletData.address;
   }
 
@@ -334,7 +347,7 @@ export class UserWallet extends EthLikeWallet {
     return new BN(balance.balance);
   }
 
-  getAddress() {
+  getAddress(): string {
     return this.userWalletData.address;
   }
 
