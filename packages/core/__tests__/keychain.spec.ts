@@ -45,6 +45,13 @@ describe('keychian', () => {
       expect(keychain.decryptKeyFile(keyWithPriv.keyFile, 'password')).toEqual(keyWithPriv.priv);
     });
   });
+  
+  describe.only('#changePassword()', () => {
+    it('should not change privkey', () => {
+      const keyfile = keychain.changePassword(keyWithPriv.keyFile, 'password', 'newPassword').keyFile;
+      expect(keychain.decryptKeyFile(keyfile, 'newPassword')).toEqual(keyWithPriv.priv);
+    });
+  });
 
   describe('#recoverAddressFromSignatrue()', () => {
     it('success recover address from signature', () => {
