@@ -2,6 +2,7 @@ import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Key, KeyWithPriv, Keychains } from './keychains';
 import { Blockchain } from './blockchain';
+import CryptoJS from 'crypto-js';
 
 export class Wallets {
   private readonly client: Client;
@@ -46,6 +47,8 @@ export class Wallets {
   ): Promise<MasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
+    const encryptionKey = this.createEncryptionKey(passphrase).toString(CryptoJS.enc.BASE64);
+    const encryptedPassphrase = CryptoJS.AES.encrypt(passphrase, encryptionKey.toString(CryptoJS.enc.BASE64)).toString(CryptoJS.enc.BASE64);
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
       {
@@ -53,10 +56,11 @@ export class Wallets {
         blockchain,
         accountKey: this.removePrivateKey(accountKey),
         backupKey: this.removePrivateKey(backupKey),
+        encryptionKey: encryptionKey
       },
     );
 
-    this.createRecoveryKit(walletData, accountKey, backupKey);
+    this.createRecoveryKit(walletData, accountKey, backupKey,  encryptedPassphrase);
 
     return new MasterWallet(
       this.client,
@@ -65,7 +69,42 @@ export class Wallets {
     );
   }
 
-  private createRecoveryKit(walletData: MasterWalletData, accountKey: KeyWithPriv, backupKey: KeyWithPriv) {
+  public async changePassphrase(
+    id: string,
+    passphrase: string,
+    newPassphrase: string,
+  ): Promise<MasterWallet> {
+    const walletData : MasterWalletData = await this.client.get<MasterWalletData>(
+      `${this.baseUrl}/${id}`,
+    );
+    const newKey : KeyWithPriv = this.keychains.changePassword(
+      walletData.accountKey.keyFile,
+      passphrase,
+      newPassphrase,
+    );
+    const key = await this.client.patch<Key>(
+      `${this.baseUrl}/${id}/account-key`,
+      {
+        keyFile:newKey.keyFile
+      }
+    );
+    const newData: MasterWalletData = await this.client.get<MasterWalletData>(
+      `${this.baseUrl}/${id}`,
+    );
+    return new MasterWallet(
+      this.client,
+      newData,
+      this.keychains,
+    );
+  }
+
+  private createEncryptionKey(p) {
+    const salt = CryptoJS.lib.WordArray.random(128/8);
+    //generates 256bit key
+    return CryptoJS.PBKDF2(p, salt, { keySize: 256/32, iterations: 1000 });
+  }
+
+  private createRecoveryKit(walletData: MasterWalletData, accountKey: KeyWithPriv, backupKey: KeyWithPriv, encryptedPassphrase: string) {
     return true;
   }
 
