@@ -1,9 +1,9 @@
 import express from 'express';
 import { MasterWalletData, UserWallet, UserWalletData } from '@haechi-labs/henesis-wallet-core/lib/wallet';
 import { SDK } from '@haechi-labs/henesis-wallet-core';
+import BN from 'bn.js';
 import { Controller } from '../types';
 import AbstractController from './controller';
-import BN from "bn.js";
 
 export interface Transaction {
   transactionId: string;
@@ -41,7 +41,7 @@ export default class WalletController extends AbstractController implements Cont
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/contractCall`,
       this.promiseWrapper(this.sendUserWalletContractCall),
     );
-    
+
     this.router.get(
       `${this.path}/:masterWalletId`,
       this.promiseWrapper(this.getMasterWallet),
@@ -118,7 +118,7 @@ export default class WalletController extends AbstractController implements Cont
       .getMasterWallet(req.params.masterWalletId);
 
     return {
-      balance: (await masterWallet.getBalance()).toString()
+      balance: (await masterWallet.getBalance()).toString(),
     };
   }
 
