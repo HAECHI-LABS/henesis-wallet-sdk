@@ -6,9 +6,9 @@ import {Client} from './sdk';
 import {
   Coin, Erc20, HalfSignedTransaction, MultiSigPayload,
 } from './coin';
-import { Key, Keychains, KeyWithPriv } from './keychains';
-import { Blockchain } from './blockchain';
-import { Factory, GlobalCoinFactoryGenerator } from './factory';
+import {Key, Keychains, KeyWithPriv} from './keychains';
+import {Blockchain} from './blockchain';
+import {Factory, GlobalCoinFactoryGenerator} from './factory';
 import wallet from './contracts/MasterWallet.json';
 
 const Bytes = require('./vendor/eth-lib/bytes');
@@ -147,12 +147,11 @@ export abstract class EthLikeWallet extends Wallet {
         multiSigPayload,
         passphrase,
     );
-
-    return this.sendTransaction({
-      signature,
-      blockchain: this.getChain(),
-      multiSigPayload: multiSigPayload,
-    }, this.masterWalletData.id);
+    return this.sendTransaction(
+        signature,
+        this.getChain(),
+        multiSigPayload,
+        this.masterWalletData.id);
   }
 
   protected signPayload(multiSigPayload: MultiSigPayload, passphrase: string) {
@@ -171,17 +170,15 @@ export abstract class EthLikeWallet extends Wallet {
     );
   }
 
-  protected sendTransaction(halfSignedTransaction: HalfSignedTransaction, walletId: string, gasPrice?: BN, gasLimit?: BN) {
+  protected sendTransaction(signature: string, blockchain: string, multiSigPayload: MultiSigPayload, walletId: string, gasPrice?: BN, gasLimit?: BN) {
     return this.client
         .post<Transaction>(
             `${this.baseUrl}/transactions`,
             {
               walletId,
-              halfSignedTransaction: {
-                signature: halfSignedTransaction.signature,
-                blockchain: halfSignedTransaction.blockchain,
-                multiSigPayload: convertMultiSigPayloadToDTO(halfSignedTransaction.multiSigPayload)
-              },
+              blockchain,
+              signature,
+              multiSigPayload: convertMultiSigPayloadToDTO(multiSigPayload),
               gasPrice,
               gasLimit
             }
@@ -210,11 +207,11 @@ export abstract class EthLikeWallet extends Wallet {
         passphrase,
     );
 
-    return this.sendTransaction({
-      signature,
-      blockchain: this.getChain(),
-      multiSigPayload: multiSigPayload,
-    }, this.masterWalletData.id);
+    return this.sendTransaction(
+        signature,
+        this.getChain(),
+        multiSigPayload,
+        this.masterWalletData.id);
   }
 
   async getNonce(): Promise<BN> {
@@ -237,17 +234,17 @@ export class MasterWallet extends EthLikeWallet {
   }
 
   async changePassphrase(passphrase: string, newPassphrase: string): Promise<void> {
-    const newKey : KeyWithPriv = this.keychains.changePassword(
-      this.masterWalletData.accountKey.keyFile,
-      passphrase,
-      newPassphrase,
+    const newKey: KeyWithPriv = this.keychains.changePassword(
+        this.masterWalletData.accountKey.keyFile,
+        passphrase,
+        newPassphrase,
     );
 
-    const key : Key = await this.client.patch<Key>(
-      `${this.baseUrl}/${this.masterWalletData.id}/account-key`,
-      {
-        keyFile: newKey.keyFile,
-      },
+    const key: Key = await this.client.patch<Key>(
+        `${this.baseUrl}/${this.masterWalletData.id}/account-key`,
+        {
+          keyFile: newKey.keyFile,
+        },
     );
 
     this.masterWalletData.accountKey = key;
