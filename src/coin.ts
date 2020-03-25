@@ -14,12 +14,9 @@ export interface MultiSigPayload {
 }
 
 export interface HalfSignedTransaction {
-  walletId: string;
   signature: string;
   blockchain: Blockchain;
   multiSigPayload: MultiSigPayload;
-  gasPrice: BN;
-  gasLimit: BN;
 }
 
 export abstract class Coin {
