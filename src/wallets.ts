@@ -1,8 +1,8 @@
+import CryptoJS from 'crypto-js';
 import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Key, KeyWithPriv, Keychains } from './keychains';
 import { Blockchain } from './blockchain';
-import CryptoJS from 'crypto-js';
 
 export class Wallets {
   private readonly client: Client;
@@ -56,11 +56,11 @@ export class Wallets {
         blockchain,
         accountKey: this.removePrivateKey(accountKey),
         backupKey: this.removePrivateKey(backupKey),
-        encryptionKey: encryptionKey
+        encryptionKey,
       },
     );
 
-    this.createRecoveryKit(walletData, accountKey, backupKey,  encryptedPassphrase);
+    this.createRecoveryKit(walletData, accountKey, backupKey, encryptedPassphrase);
 
     return new MasterWallet(
       this.client,
@@ -69,10 +69,10 @@ export class Wallets {
     );
   }
 
-  private createEncryptionKey(p) {
-    const salt = CryptoJS.lib.WordArray.random(128/8);
-    //generates 256bit key
-    return CryptoJS.PBKDF2(p, salt, { keySize: 256/32, iterations: 1000 });
+  private createEncryptionKey(p: string) {
+    const salt = CryptoJS.lib.WordArray.random(128 / 8);
+    // generates 256bit key
+    return CryptoJS.PBKDF2(p, salt, { keySize: 256 / 32, iterations: 1000 });
   }
 
   private createRecoveryKit(walletData: MasterWalletData, accountKey: KeyWithPriv, backupKey: KeyWithPriv, encryptedPassphrase: string) {
