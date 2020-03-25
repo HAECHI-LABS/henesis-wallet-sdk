@@ -227,19 +227,19 @@ export class MasterWallet extends EthLikeWallet {
     super(client, walletData, keychains);
     this.wallet = new new Web3().eth.Contract((wallet as AbiItem[]));
   }
-  
+
   async changePassphrase(passphrase: string, newPassphrase: string): Promise<void> {
     const newKey : KeyWithPriv = this.keychains.changePassword(
       this.masterWalletData.accountKey.keyFile,
       passphrase,
       newPassphrase,
     );
-    
-    const key : Key= await this.client.patch<Key>(
+
+    const key : Key = await this.client.patch<Key>(
       `${this.baseUrl}/${this.masterWalletData.id}/account-key`,
       {
-        keyFile:newKey.keyFile
-      }
+        keyFile: newKey.keyFile,
+      },
     );
 
     this.masterWalletData.accountKey = key;
