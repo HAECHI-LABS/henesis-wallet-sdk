@@ -69,35 +69,6 @@ export class Wallets {
     );
   }
 
-  public async changePassphrase(
-    id: string,
-    passphrase: string,
-    newPassphrase: string,
-  ): Promise<MasterWallet> {
-    const walletData : MasterWalletData = await this.client.get<MasterWalletData>(
-      `${this.baseUrl}/${id}`,
-    );
-    const newKey : KeyWithPriv = this.keychains.changePassword(
-      walletData.accountKey.keyFile,
-      passphrase,
-      newPassphrase,
-    );
-    const key = await this.client.patch<Key>(
-      `${this.baseUrl}/${id}/account-key`,
-      {
-        keyFile:newKey.keyFile
-      }
-    );
-    const newData: MasterWalletData = await this.client.get<MasterWalletData>(
-      `${this.baseUrl}/${id}`,
-    );
-    return new MasterWallet(
-      this.client,
-      newData,
-      this.keychains,
-    );
-  }
-
   private createEncryptionKey(p) {
     const salt = CryptoJS.lib.WordArray.random(128/8);
     //generates 256bit key
