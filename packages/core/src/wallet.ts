@@ -6,7 +6,7 @@ import { Client } from './sdk';
 import {
   Coin, Erc20, HalfSignedTransaction, MultiSigPayload,
 } from './coin';
-import { Key, Keychains } from './keychains';
+import { Key, Keychains, KeyWithPriv } from './keychains';
 import { Blockchain } from './blockchain';
 import { Factory, GlobalCoinFactoryGenerator } from './factory';
 import wallet from './contracts/MasterWallet.json';
@@ -213,6 +213,23 @@ export class MasterWallet extends EthLikeWallet {
   ) {
     super(client, walletData, keychains);
     this.wallet = new new Web3().eth.Contract((wallet as AbiItem[]));
+  }
+  
+  async changePassphrase(passphrase: string, newPassphrase: string): Promise<void> {
+    const newKey : KeyWithPriv = this.keychains.changePassword(
+      this.masterWalletData.accountKey.keyFile,
+      passphrase,
+      newPassphrase,
+    );
+    
+    const key : Key= await this.client.patch<Key>(
+      `${this.baseUrl}/${this.masterWalletData.id}/account-key`,
+      {
+        keyFile:newKey.keyFile
+      }
+    );
+
+    this.masterWalletData.accountKey = key;
   }
 
   async createUserWallet(name: string, passphrase: string, salt?: BN): Promise<UserWallet> {
