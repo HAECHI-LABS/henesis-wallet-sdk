@@ -13,12 +13,6 @@ export interface MultiSigPayload {
   hexData: string;
 }
 
-export interface HalfSignedTransaction {
-  signature: string;
-  blockchain: Blockchain;
-  multiSigPayload: MultiSigPayload;
-}
-
 export abstract class Coin {
   abstract getName(): string;
 

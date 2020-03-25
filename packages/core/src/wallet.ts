@@ -4,7 +4,7 @@ import {AbiItem} from 'web3-utils';
 import BN from 'bn.js';
 import {Client} from './sdk';
 import {
-  Coin, Erc20, HalfSignedTransaction, MultiSigPayload,
+  Coin, Erc20, MultiSigPayload,
 } from './coin';
 import {Key, Keychains, KeyWithPriv} from './keychains';
 import {Blockchain} from './blockchain';
