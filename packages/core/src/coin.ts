@@ -3,7 +3,6 @@ import { AbiItem } from 'web3-utils';
 import BN from 'bn.js';
 import Web3 from 'web3';
 import erc20 from './contracts/ERC20.json';
-import { Blockchain } from './blockchain';
 
 export interface MultiSigPayload {
   walletAddress: string;
