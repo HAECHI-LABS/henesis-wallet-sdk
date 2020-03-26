@@ -10,6 +10,6 @@ export class Hib extends Erc20 {
   }
 
   getAddress(): string {
-    return '0xE06b40df899b9717b4E6B50711E1dc72d08184cF';
+    return process.env.COIN_HIB_ADDRESS ? process.env.COIN_HIB_ADDRESS : '0xE06b40df899b9717b4E6B50711E1dc72d08184cF';
   }
 }
