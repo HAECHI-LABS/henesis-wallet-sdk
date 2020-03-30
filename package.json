@@ -5,12 +5,10 @@
     "bootstrap": "rm -rf ./**./node_modules && npm install && npm run lerna:bootstrap && npm run build",
     "build": "lerna run build",
     "publish:prerelease": "lerna version prerelease && lerna publish from-git",
-    "test": "jest"
+    "test": "lerna run test"
   },
   "devDependencies": {
-    "lerna": "^3.16.4",
-    "@types/jest": "^25.1.3",
-    "jest": "^25.1.0"
+    "lerna": "^3.16.4"
   },
   "author": "Haechi labs Team",
   "license": "LGPL3",

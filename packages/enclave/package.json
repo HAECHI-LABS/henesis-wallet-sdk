@@ -1,6 +1,6 @@
 {
   "name": "@haechi-labs/henesis-wallet-enclave",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha.0",
   "description": "henesis wallet enclave module",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
@@ -15,18 +15,19 @@
   ],
   "scripts": {
     "start": "nodemon",
-    "test": "echo \"Error: run tests from root\" && exit 1",
+    "lint:fix": "eslint 'src/**/*.ts' '__tests__/**/*.ts' --fix",
+    "test": "jest --passWithNoTests",
     "build": "rm -rf ./lib && tsc",
-    "preBootstrap": "rm -rf ./node_modules",
-    "lint:fix": "eslint 'src/**' --fix"
+    "preBootstrap": "rm -rf ./node_modules"
   },
   "dependencies": {
-    "@haechi-labs/henesis-wallet-core": "^0.0.1",
+    "@haechi-labs/henesis-wallet-core": "^0.0.1-alpha.0",
     "express": "^4.17.1",
     "ts-node": "^8.6.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.2",
+    "@types/jest": "^24.0.15",
     "@types/node": "^13.7.7",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
@@ -36,8 +37,28 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^24.8.0",
+    "jest-extended": "^0.11.1",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.8.3"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "\\.spec\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ],
+    "globals": {
+      "ts-jest": {
+        "diagnostics": true
+      }
+    },
+    "testEnvironment": "node"
   }
 }

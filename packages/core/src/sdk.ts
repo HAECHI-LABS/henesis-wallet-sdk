@@ -3,10 +3,16 @@ import { HttpClient } from './httpClient';
 import { Wallets } from './wallets';
 import { EthereumKeychains, Keychains } from './keychains';
 
+export enum Env {
+  Dev,
+  Prod
+}
+
 export interface SDKOptions {
   accessToken: string;
   secret: string;
-  env?: string;
+  url?: string;
+  env?: Env;
 }
 
 export interface Client {
@@ -37,6 +43,8 @@ export class SDK {
     this.client = new HttpClient({
       secret: params.secret,
       accessToken: params.accessToken,
+      url: params.url,
+      env: params.env,
     }) as any;
 
     this.accounts = new Accounts(this.client);
