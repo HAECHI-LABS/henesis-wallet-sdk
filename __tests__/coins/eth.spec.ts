@@ -1,6 +1,6 @@
 import BN from 'bn.js';
+
 import { Eth } from '../../src/coins';
-import BN from 'bn.js';
 
 describe('Eth', () => {
   let eth: Eth;

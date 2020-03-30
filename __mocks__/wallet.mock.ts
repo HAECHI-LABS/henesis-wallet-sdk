@@ -19,4 +19,8 @@ export class MockEthLikeWallet extends EthLikeWallet {
   async tokenBalance() {
     return new BN(100);
   }
+
+  getAddress(): string {
+    return "";
+  }
 }
