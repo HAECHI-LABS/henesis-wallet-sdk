@@ -1,7 +1,8 @@
-import nock from 'nock';
-import { SDK } from '../src';
-import { Token, Account, Secret } from '../src/accounts';
-import { Converter } from '../src/utils';
+import nock from "nock";
+import { SDK } from "../src";
+import { Account, Secret, Token } from "../src/accounts";
+import { Converter } from "../src/utils";
+import { Env } from "../src/sdk";
 
 const baseUrl = 'http://localhost:8080';
 
@@ -40,6 +41,7 @@ describe('SDK', () => {
         const sdk = new SDK({
           accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6ImZiMTg2YzQ0MzAxNTc3YTQ2ZDFiNjYwZThmNGQ5NTNjIiwiaXNzIjoidHhtYW5hZ2VyLWRldiIsImlhdCI6MTU4MjY5NDI5MCwiZXhwIjoxNTgzMDU0MjkwfQ.BAFBndRyB9-KHlI-RNKHrXKs08f6HngUvqfZ8_iD9hAp_Hx_tqofL2CbHrSov_Ct-oLUADY9N9Z64lvZN4hCRA',
           secret: 'secret',
+          url: 'http://localhost:8080/api/v1'
         });
 
         const account = await sdk.accounts.get();
@@ -65,6 +67,7 @@ describe('SDK', () => {
         const sdk = new SDK({
           accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6ImZiMTg2YzQ0MzAxNTc3YTQ2ZDFiNjYwZThmNGQ5NTNjIiwiaXNzIjoidHhtYW5hZ2VyLWRldiIsImlhdCI6MTU4MjY5NDI5MCwiZXhwIjoxNTgzMDU0MjkwfQ.BAFBndRyB9-KHlI-RNKHrXKs08f6HngUvqfZ8_iD9hAp_Hx_tqofL2CbHrSov_Ct-oLUADY9N9Z64lvZN4hCRA',
           secret: 'secret',
+          url: 'http://localhost:8080/api/v1'
         });
 
         const account: Account = await sdk.accounts.login('haechi2@haechi.io', 'password');
@@ -86,6 +89,7 @@ describe('SDK', () => {
         const sdk = new SDK({
           accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6ImZiMTg2YzQ0MzAxNTc3YTQ2ZDFiNjYwZThmNGQ5NTNjIiwiaXNzIjoidHhtYW5hZ2VyLWRldiIsImlhdCI6MTU4MjY5NDI5MCwiZXhwIjoxNTgzMDU0MjkwfQ.BAFBndRyB9-KHlI-RNKHrXKs08f6HngUvqfZ8_iD9hAp_Hx_tqofL2CbHrSov_Ct-oLUADY9N9Z64lvZN4hCRA',
           secret: 'secret',
+          url: 'http://localhost:8080/api/v1'
         });
         const token: Token = await sdk.accounts.token(5000);
         expect(token).toEqual(Converter.toCamelCase(response));
@@ -106,6 +110,7 @@ describe('SDK', () => {
         const sdk = new SDK({
           accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6ImZiMTg2YzQ0MzAxNTc3YTQ2ZDFiNjYwZThmNGQ5NTNjIiwiaXNzIjoidHhtYW5hZ2VyLWRldiIsImlhdCI6MTU4MjY5NDI5MCwiZXhwIjoxNTgzMDU0MjkwfQ.BAFBndRyB9-KHlI-RNKHrXKs08f6HngUvqfZ8_iD9hAp_Hx_tqofL2CbHrSov_Ct-oLUADY9N9Z64lvZN4hCRA',
           secret: 'secret',
+          url: 'http://localhost:8080/api/v1'
         });
         const secret: Secret = await sdk.accounts.secret('haechi2@haechi.io', 'password');
         expect(secret).toEqual(Converter.toCamelCase(response));

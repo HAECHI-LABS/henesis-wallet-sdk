@@ -15,10 +15,10 @@
   ],
   "scripts": {
     "start": "nodemon",
-    "test": "echo \"Error: run tests from root\" && exit 1",
+    "lint:fix": "eslint 'src/**/*.ts' '__tests__/**/*.ts' --fix",
+    "test": "jest --passWithNoTests",
     "build": "rm -rf ./lib && tsc",
-    "preBootstrap": "rm -rf ./node_modules",
-    "lint:fix": "eslint 'src/**' --fix"
+    "preBootstrap": "rm -rf ./node_modules"
   },
   "dependencies": {
     "@haechi-labs/henesis-wallet-core": "^0.0.1",
@@ -38,6 +38,27 @@
     "eslint-plugin-prettier": "^3.1.2",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "@types/jest": "^24.0.15",
+    "jest": "^24.8.0",
+    "jest-extended": "^0.11.1",
+    "ts-jest": "^24.0.2"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "\\.spec\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ],
+    "globals": {
+      "ts-jest": {
+        "diagnostics": true
+      }
+    },
+    "testEnvironment": "node"
   }
 }
