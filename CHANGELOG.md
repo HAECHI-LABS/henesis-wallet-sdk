@@ -8,6 +8,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
+* add lib to files not src ([35c507f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/35c507f7dc2ae9eee2bb7a2a2bc39ed078e60203))
+
+
+
+
+
+## [0.0.1-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.0...v0.0.1-alpha.1) (2020-03-31)
+
+
+### Bug Fixes
+
 * add lib to files not src ([a29dacf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a29dacf950fd56588a17689d51be84174407025d))
 
 
