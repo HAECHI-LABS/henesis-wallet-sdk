@@ -1,5 +1,5 @@
-import { Client } from "./sdk";
-import { Key } from "./keychains";
+import { Client } from './sdk';
+import { Key } from './keychains';
 
 export interface Secret {
   secret: string;
@@ -41,7 +41,7 @@ export interface AccountWithKey extends Account {
 export class Accounts {
   private readonly client: Client;
 
-  private readonly baseUrl = "/accounts";
+  private readonly baseUrl = '/accounts';
 
   constructor(client: Client) {
     this.client = client;
@@ -57,16 +57,15 @@ export class Accounts {
       .post<Account>(`${this.baseUrl}/login`, {
         email,
         password,
-        otpCode
+        otpCode,
       });
   }
 
   public changePassword(password: string, newPassword: string, otpCode?: string): Promise<void> {
     return this.client.patch(`${this.baseUrl}/password`, {
-        newPassword,
-        password,
-        otpCode
-      }
-    );
+      newPassword,
+      password,
+      otpCode,
+    });
   }
 }

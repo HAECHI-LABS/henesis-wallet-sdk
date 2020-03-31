@@ -139,7 +139,7 @@ export default class WalletController extends AbstractController implements Cont
       .getMasterWallet(req.params.masterWalletId);
 
     return {
-      balance: (await masterWallet.tokenBalance(req.params.ticker)).toString(),
+      balance: (await masterWallet.getTokenBalance(req.params.ticker)).toString(),
     };
   }
 
@@ -150,7 +150,7 @@ export default class WalletController extends AbstractController implements Cont
       req.params.userWalletId,
     );
     return {
-      balance: (await userWallet.tokenBalance(req.params.ticker)).toString(),
+      balance: (await userWallet.getTokenBalance(req.params.ticker)).toString(),
     };
   }
 

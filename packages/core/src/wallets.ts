@@ -81,7 +81,7 @@ export class Wallets {
     walletData: MasterWalletData,
     accountKey: KeyWithPriv,
     backupKey: KeyWithPriv,
-    encryptedPassphrase: string
+    encryptedPassphrase: string,
   ) {
     return true;
   }

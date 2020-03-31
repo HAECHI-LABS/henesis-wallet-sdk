@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "start": "nodemon",
-    "lint:fix": "eslint 'src/**/*.ts' '__tests__/**/*.ts' --fix",
+    "lint:fix": "eslint 'src/**/*.ts' --fix",
     "test": "jest --passWithNoTests",
     "build": "rm -rf ./lib && tsc",
     "preBootstrap": "rm -rf ./node_modules"

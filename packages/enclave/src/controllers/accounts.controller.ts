@@ -12,33 +12,14 @@ export default class AccountsController extends AbstractController implements Co
   }
 
   public initRoutes() {
-    this.router.get(`${this.path}/me`, this.promiseWrapper(this.me));
     this.router.post(`${this.path}/login`, this.promiseWrapper(this.login));
-    this.router.post(`${this.path}/token`, this.promiseWrapper(this.token));
-    this.router.post(`${this.path}/secret`, this.promiseWrapper(this.secret));
-  }
-
-  private async me(req: express.Request): Promise<AccountWithKey> {
-    return await req.sdk.accounts.get();
-  }
-
-  private async token(req: express.Request) {
-    return await req.sdk.accounts.token(
-      req.body.expiresIn,
-    );
-  }
-
-  private async secret(req: express.Request) {
-    return await req.sdk.accounts.secret(
-      req.body.email,
-      req.body.password,
-    );
   }
 
   private async login(req: express.Request): Promise<Account> {
     return await req.sdk.accounts.login(
       req.body.email,
       req.body.password,
+      req.body.otpCode,
     );
   }
 }
