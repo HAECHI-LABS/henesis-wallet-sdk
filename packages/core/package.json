@@ -5,7 +5,7 @@
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
   "license": "ISC",
-  "main": "./lib/sdk.js",
+  "main": "./lib/index.js",
   "files": [
     "lib"
   ],
