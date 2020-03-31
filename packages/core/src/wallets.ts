@@ -4,7 +4,7 @@ import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains } from './keychains';
 import { Blockchain } from './blockchain';
 import { Key, KeyWithPriv } from "./types";
-
+import { generatePdf } from './keycard';
 export class Wallets {
   private readonly client: Client;
 
@@ -78,12 +78,13 @@ export class Wallets {
     return CryptoJS.PBKDF2(p, salt, { keySize: 256 / 32, iterations: 1000 });
   }
 
-  private createRecoveryKit(
+  private async createRecoveryKit(
     walletData: MasterWalletData,
     accountKey: KeyWithPriv,
     backupKey: KeyWithPriv,
-    encryptedPassphrase: string,
+    encryptedPassphrase: string
   ) {
+    await generatePdf({ data : walletData, accountKey, backupKey, encryptedPassphrase});
     return true;
   }
 
