@@ -1,6 +1,7 @@
 import {SDK} from '../src';
 import {MasterWallet} from '../src/wallet';
 import 'dotenv/config'
+import { Coins } from "../src/coins";
 
 async function main() {
   const sdk = new SDK({
@@ -10,7 +11,7 @@ async function main() {
   });
 
   const wallet: MasterWallet = await sdk.wallets.getMasterWallet("3be5351bd52626108326f9ec44b7b633");
-  console.log(wallet.getData());
+  console.log(await wallet.getTokenBalance(Coins.Hib));
 }
 
 main().catch((e) => console.error(e));

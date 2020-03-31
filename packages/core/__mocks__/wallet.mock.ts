@@ -16,7 +16,7 @@ export class MockEthLikeWallet extends EthLikeWallet {
     return new BN(10);
   }
 
-  async tokenBalance() {
+  async getTokenBalance() {
     return new BN(100);
   }
 
