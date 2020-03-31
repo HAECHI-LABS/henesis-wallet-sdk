@@ -1,5 +1,4 @@
-import {SDK} from '../src';
-import {MasterWallet} from '../src/wallet';
+import { SDK } from "../src";
 import 'dotenv/config'
 
 async function main() {
@@ -9,8 +8,10 @@ async function main() {
     url: "http://localhost:8080/api/v1"
   });
 
-  const wallet: MasterWallet = await sdk.wallets.getMasterWallet("3be5351bd52626108326f9ec44b7b633");
-  console.log(wallet.getData());
+  await sdk.accounts.changePassword(
+    "password",
+    "password2",
+  );
 }
 
 main().catch((e) => console.error(e));

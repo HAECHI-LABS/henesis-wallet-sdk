@@ -10,7 +10,7 @@ async function main() {
   });
 
   const wallet: MasterWallet = await sdk.wallets.getMasterWallet("3be5351bd52626108326f9ec44b7b633");
-  console.log(wallet.getData());
+  console.log(await wallet.getBalance());
 }
 
 main().catch((e) => console.error(e));
