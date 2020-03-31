@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.0...v0.0.1-alpha.1) (2020-03-31)
+
+
+### Bug Fixes
+
+* add lib to files not src ([a29dacf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a29dacf950fd56588a17689d51be84174407025d))
+
+
+
+
+
+## [0.0.1-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.0...v0.0.1-alpha.2) (2020-03-31)
+
+
+### Bug Fixes
+
+* add lib to files not src ([2c98f1b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2c98f1bd0da1a09cdef1c1b1ea3630b7ccc0784e))
+
+
+
+
+
+## [0.0.1-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.0...v0.0.1-alpha.1) (2020-03-31)
+
+
+### Bug Fixes
+
+* add lib to files not src ([002d9cd](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/002d9cd750489735dc4bd6de8505236a0c671dd9))
+
+
+
+
+
 ## 0.0.1-alpha.0 (2020-03-30)
 
 
