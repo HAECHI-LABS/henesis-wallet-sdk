@@ -28,8 +28,8 @@ export class Wallets {
     );
   }
 
-  public async getMasterWallets(): Promise<Array<MasterWallet>> {
-    const walletDatas = await this.client.get<Array<MasterWalletData>>(
+  public async getMasterWallets(): Promise<MasterWallet[]> {
+    const walletDatas = await this.client.get<MasterWalletData[]>(
       this.baseUrl,
     );
 
@@ -47,8 +47,11 @@ export class Wallets {
   ): Promise<MasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
-    const encryptionKey = this.createEncryptionKey(passphrase).toString(CryptoJS.enc.BASE64);
-    const encryptedPassphrase = CryptoJS.AES.encrypt(passphrase, encryptionKey.toString(CryptoJS.enc.BASE64)).toString(CryptoJS.enc.BASE64);
+    const encryptionKey = this.createEncryptionKey(passphrase)
+      .toString(CryptoJS.enc.BASE64);
+    const encryptedPassphrase = CryptoJS.AES
+      .encrypt(passphrase, encryptionKey.toString(CryptoJS.enc.BASE64))
+      .toString(CryptoJS.enc.BASE64);
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
       {
@@ -61,7 +64,6 @@ export class Wallets {
     );
 
     this.createRecoveryKit(walletData, accountKey, backupKey, encryptedPassphrase);
-
     return new MasterWallet(
       this.client,
       walletData,
@@ -75,7 +77,12 @@ export class Wallets {
     return CryptoJS.PBKDF2(p, salt, { keySize: 256 / 32, iterations: 1000 });
   }
 
-  private createRecoveryKit(walletData: MasterWalletData, accountKey: KeyWithPriv, backupKey: KeyWithPriv, encryptedPassphrase: string) {
+  private createRecoveryKit(
+    walletData: MasterWalletData,
+    accountKey: KeyWithPriv,
+    backupKey: KeyWithPriv,
+    encryptedPassphrase: string
+  ) {
     return true;
   }
 
