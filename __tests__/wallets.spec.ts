@@ -36,7 +36,7 @@ describe('Wallets', () => {
       const sdk = new SDK({
         accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjQwOGMyMWQ0OGM4MGNiMDNkM2U3NWMwMTUxMTRiZTkzIiwiaXNzIjoidHhtYW5hZ2VyLWRldiIsImlhdCI6MTU4Mzc5OTY5MSwiZXhwIjoxNTg0MTU5NjkxfQ.RoGvobumJV0iBmN-0j23pgl8QlC5I02rfOVYQxL3HlYcxXRn8IUfghfQt-MvEoHG6hgIVfqzhfdLFsQqP_NgmQ',
         secret: 'secret',
-        url: 'http://localhost:8080/api/v1'
+        url: 'http://localhost:8080/api/v1',
       });
 
       nock(baseUrl)
@@ -110,7 +110,7 @@ describe('Wallets', () => {
       const sdk = new SDK({
         accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjQwOGMyMWQ0OGM4MGNiMDNkM2U3NWMwMTUxMTRiZTkzIiwiaXNzIjoidHhtYW5hZ2VyLWRldiIsImlhdCI6MTU4Mzc5OTY5MSwiZXhwIjoxNTg0MTU5NjkxfQ.RoGvobumJV0iBmN-0j23pgl8QlC5I02rfOVYQxL3HlYcxXRn8IUfghfQt-MvEoHG6hgIVfqzhfdLFsQqP_NgmQ',
         secret: 'secret',
-        url: 'http://localhost:8080/api/v1'
+        url: 'http://localhost:8080/api/v1',
       });
 
       const masterWallet = await sdk.wallets.getMasterWallets();

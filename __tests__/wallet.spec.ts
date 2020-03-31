@@ -102,7 +102,7 @@ describe('Wallet', () => {
         const sdk = new SDK({
           accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjQwOGMyMWQ0OGM4MGNiMDNkM2U3NWMwMTUxMTRiZTkzIiwiaXNzIjoidHhtYW5hZ2VyLWRldiIsImlhdCI6MTU4Mzc5OTY5MSwiZXhwIjoxNTg0MTU5NjkxfQ.RoGvobumJV0iBmN-0j23pgl8QlC5I02rfOVYQxL3HlYcxXRn8IUfghfQt-MvEoHG6hgIVfqzhfdLFsQqP_NgmQ',
           secret: 'secret',
-          url: 'http://localhost:8080/api/v1'
+          url: 'http://localhost:8080/api/v1',
         });
         const wallet = await sdk.wallets.getMasterWallet('20a5fa879bcb14a5c7b1e654961c3599');
         const userWallet = await wallet.createUserWallet('klaytn_test', 'password');
