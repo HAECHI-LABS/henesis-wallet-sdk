@@ -1,18 +1,13 @@
 {
   "name": "@haechi-labs/henesis-wallet-core",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.1",
   "description": "henesis wallet sdk core module",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
   "license": "ISC",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
-  "directories": {
-    "lib": "src",
-    "test": "__tests__"
-  },
+  "main": "./lib/sdk.js",
   "files": [
-    "src"
+    "lib"
   ],
   "scripts": {
     "lint:fix": "eslint 'src/**/*.ts' '__tests__/**/*.ts' --fix",
