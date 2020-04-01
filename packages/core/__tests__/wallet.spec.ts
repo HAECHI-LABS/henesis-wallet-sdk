@@ -2,7 +2,7 @@ import nock from 'nock';
 import BN from 'bn.js';
 import { SDK } from '../src';
 import { MultiSigPayload } from '../src/coin';
-import { EthLikeWallet } from '../src/wallet';
+import { EthLikeWallet, WalletStatus } from '../src/wallet';
 import { MockEthLikeWallet } from '../__mocks__/wallet.mock';
 import { EthereumKeychains } from '../src/keychains';
 
@@ -58,6 +58,7 @@ describe('Wallet', () => {
           name: 'my_wallet',
           address: '0x6b8efffae6dd7773a7c5c87e971a40b201bf78c8',
           blockchain: 'KLAYTN',
+          status: 'ACTIVE',
           createdAt: '1583837537277',
           updatedAt: '1583837537277',
           backupKey:
@@ -100,13 +101,14 @@ describe('Wallet', () => {
           .reply(200, userWalletResponse);
 
         const sdk = new SDK({
-          accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjQwOGMyMWQ0OGM4MGNiMDNkM2U3NWMwMTUxMTRiZTkzIiwiaXNzIjoidHhtYW5hZ2VyLWRldiIsImlhdCI6MTU4Mzc5OTY5MSwiZXhwIjoxNTg0MTU5NjkxfQ.RoGvobumJV0iBmN-0j23pgl8QlC5I02rfOVYQxL3HlYcxXRn8IUfghfQt-MvEoHG6hgIVfqzhfdLFsQqP_NgmQ',
+          accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJlbWFpbCI6ImhhZWNoaUBoYWVjaGkuaW8iLCJpZCI6IjQ5ODAzZmJmMGEyYTJjM2FiM2EwYWJhOGI5OGRiYjJhIiwidHlwZSI6IlNIT1JUIiwiaXNzIjoid2FsbGV0LWRldiIsImlhdCI6MTU4NTcxODU0NiwiZXhwIjoxNTg2MDc4NTQ2fQ.Ixk0uUUIMnZLVyDA9BRPy_zyqoqtza7m-cNalbhVqlzv2ZDhh4FvPI6NOOHo_rlJYgd9iXkkoZGfJqD5DMfNng',
           secret: 'secret',
           url: 'http://localhost:8080/api/v1',
         });
         const wallet = await sdk.wallets.getMasterWallet('20a5fa879bcb14a5c7b1e654961c3599');
         const userWallet = await wallet.createUserWallet('klaytn_test', 'password');
         expect(userWallet.getAddress()).toEqual('0xc6d286f3e6b43dd410bd1a79e224adb27d3a83d2');
+        expect(userWallet.getData().status).toEqual(WalletStatus.Active);
       });
     });
   });
