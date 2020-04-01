@@ -3,6 +3,7 @@ import {
   bytesToWord, decodeSignature, encodeSignature, toChecksum,
 } from './utils';
 import { Blockchain } from './blockchain';
+import { Key } from './types';
 
 const elliptic = require('elliptic');
 const { keccak256 } = require('./vendor/eth-lib/hash');
@@ -14,11 +15,6 @@ const secp256k1 = new (elliptic.ec)("secp256k1"); // eslint-disable-line
 
 const BASE_V_VALUE = 27;
 
-export interface Key {
-  address: string;
-  pub: string;
-  keyFile: string;
-}
 
 export interface KeyWithPriv extends Key {
   priv: string;
