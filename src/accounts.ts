@@ -1,13 +1,5 @@
 import { Client } from './sdk';
-import { Key } from './keychains';
-
-export interface Secret {
-  secret: string;
-}
-
-export interface Token {
-  accessToken: string;
-}
+import { Key } from './types';
 
 export interface AccountWithOTP extends Account {
   otp: OTP;

@@ -1,3 +1,15 @@
+import BN from 'bn.js';
+
+export interface Balance {
+  balance: BN;
+}
+
+export interface Key {
+  address: string;
+  pub: string;
+  keyFile: string;
+}
+
 export interface PaginationOptions {
   page: number;
   size: number;
@@ -11,4 +23,12 @@ export interface Pagination<T> {
     totalCount: number;
   }
   results: T[];
+}
+
+export interface Secret {
+  secret: string;
+}
+
+export interface Token {
+  accessToken: string;
 }
