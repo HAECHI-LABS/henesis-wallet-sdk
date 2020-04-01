@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.3...v0.0.1-alpha.4) (2020-04-01)
+
+
+### Bug Fixes
+
+* remove createOrganization ([197bb2a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/197bb2a54816657ea47daa560e5d6551a2e3834e))
+
+
+### Features
+
+* implemented events ([c09eed2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c09eed2d3e9e1077de0bf32db184c27877e89741))
+* implemented organizations for CRUD /api/v1/organizations api ([abeaf38](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/abeaf38f4d4e8e584240629584248d4692bd1d63))
+
+
+
+
+
 ## [0.0.1-alpha.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.2...v0.0.1-alpha.3) (2020-03-31)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-core
