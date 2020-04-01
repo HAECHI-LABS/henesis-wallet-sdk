@@ -2,6 +2,7 @@ import { Accounts } from './accounts';
 import { HttpClient } from './httpClient';
 import { Wallets } from './wallets';
 import { EthereumKeychains, Keychains } from './keychains';
+import { Events } from './events';
 
 export enum Env {
   Dev,
@@ -14,6 +15,7 @@ export interface SDKOptions {
   url?: string;
   env?: Env;
 }
+
 
 export interface Client {
   get<T = any>(url: string): Promise<T>;
@@ -36,6 +38,8 @@ export class SDK {
 
   public readonly keychains: Keychains;
 
+  public readonly events: Events;
+
   private readonly client: Client;
 
   // todo: validation params;
@@ -50,5 +54,6 @@ export class SDK {
     this.accounts = new Accounts(this.client);
     this.keychains = new EthereumKeychains();
     this.wallets = new Wallets(this.client, this.keychains);
+    this.events = new Events(this.client);
   }
 }

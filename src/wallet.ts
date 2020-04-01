@@ -3,6 +3,7 @@ import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
 import BN from 'bn.js';
 import { Client } from './sdk';
+import { PaginationOptions, Pagination } from './types';
 import { Coin, Erc20, MultiSigPayload } from './coin';
 import { Key, Keychains, KeyWithPriv } from './keychains';
 import { Blockchain } from './blockchain';
@@ -44,21 +45,6 @@ export interface MasterWalletData extends WalletData {
 
 export interface UserWalletData extends WalletData {
 
-}
-
-export interface PaginationOptions {
-  page: number;
-  size: number;
-  sort?: string;
-}
-
-export interface Pagination<T> {
-  pagination: {
-    nextUrl: string;
-    previousUrl: string;
-    totalCount: number;
-  }
-  results: T[];
 }
 
 function convertMultiSigPayloadToDTO(multiSigPayload: MultiSigPayload) {
