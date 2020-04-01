@@ -39,10 +39,6 @@ export class Organizations {
     return await this.client.get<Account[]>(`${this.baseUrl}/me/accounts`);
   }
 
-  public async createOrganization(name: string): Promise<Organization> {
-    return this.client.post<Organization>(`${this.baseUrl}`, { name });
-  }
-
   public async createSecret(email: string, password: string): Promise<Secret> {
     return this.client.post<Secret>(`${this.baseUrl}/secret`, { email, password });
   }
