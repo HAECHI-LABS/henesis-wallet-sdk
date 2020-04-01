@@ -1,8 +1,9 @@
 import CryptoJS from 'crypto-js';
 import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
-import { Key, KeyWithPriv, Keychains } from './keychains';
+import { Keychains } from './keychains';
 import { Blockchain } from './blockchain';
+import { Key, KeyWithPriv } from "./types";
 
 export class Wallets {
   private readonly client: Client;

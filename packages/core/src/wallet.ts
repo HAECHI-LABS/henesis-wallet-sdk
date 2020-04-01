@@ -4,10 +4,10 @@ import { AbiItem } from 'web3-utils';
 import BN from 'bn.js';
 import { Client } from './sdk';
 import {
-  PaginationOptions, Pagination, Key, Balance,
-} from './types';
+  PaginationOptions, Pagination, Key, Balance, KeyWithPriv
+} from "./types";
 import { Coin, Erc20, MultiSigPayload } from './coin';
-import { Keychains, KeyWithPriv } from './keychains';
+import { Keychains } from './keychains';
 import { Blockchain } from './blockchain';
 import { Factory, GlobalCoinFactoryGenerator } from './factory';
 import wallet from './contracts/MasterWallet.json';
