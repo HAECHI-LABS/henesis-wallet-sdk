@@ -21,6 +21,11 @@ export interface Balance {
   balance: BN;
 }
 
+export enum WalletStatus {
+  Inactive = 'INACTIVE',
+  Active = 'ACTIVE'
+}
+
 export interface Transaction {
   id: string;
   blockchain: Blockchain;
@@ -36,6 +41,7 @@ export interface WalletData {
   address: string;
   blockchain: Blockchain;
   createdAt: string;
+  status: WalletStatus;
 }
 
 export interface MasterWalletData extends WalletData {
