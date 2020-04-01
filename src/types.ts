@@ -10,6 +10,10 @@ export interface Key {
   keyFile: string;
 }
 
+export interface KeyWithPriv extends Key {
+  priv: string;
+}
+
 export interface PaginationOptions {
   page: number;
   size: number;

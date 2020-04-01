@@ -3,7 +3,7 @@ import {
   bytesToWord, decodeSignature, encodeSignature, toChecksum,
 } from './utils';
 import { Blockchain } from './blockchain';
-import { Key } from './types';
+import { KeyWithPriv } from "./types";
 
 const elliptic = require('elliptic');
 const { keccak256 } = require('./vendor/eth-lib/hash');
@@ -14,11 +14,6 @@ const { fromString } = require('./vendor/eth-lib/nat');
 const secp256k1 = new (elliptic.ec)("secp256k1"); // eslint-disable-line
 
 const BASE_V_VALUE = 27;
-
-
-export interface KeyWithPriv extends Key {
-  priv: string;
-}
 
 export interface Keychains {
   create(password: string): KeyWithPriv;
