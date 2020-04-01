@@ -3,9 +3,11 @@ import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
 import BN from 'bn.js';
 import { Client } from './sdk';
-import { PaginationOptions, Pagination } from './types';
+import {
+  PaginationOptions, Pagination, Key, Balance,
+} from './types';
 import { Coin, Erc20, MultiSigPayload } from './coin';
-import { Key, Keychains, KeyWithPriv } from './keychains';
+import { Keychains, KeyWithPriv } from './keychains';
 import { Blockchain } from './blockchain';
 import { Factory, GlobalCoinFactoryGenerator } from './factory';
 import wallet from './contracts/MasterWallet.json';
@@ -15,10 +17,6 @@ const { keccak256 } = require('./vendor/eth-lib/hash');
 
 export interface Nonce {
   nonce: BN;
-}
-
-export interface Balance {
-  balance: BN;
 }
 
 export enum WalletStatus {
