@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.4...v0.0.1-alpha.5) (2020-04-02)
+
+
+### Features
+
+* add search key to pagination request, add gasusages api, change balance type(bn -> balance interface) ([b71a8de](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b71a8dea8c6c7db6fd90f321a88d139d645f4836))
+
+
+
+
+
 ## [0.0.1-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.3...v0.0.1-alpha.4) (2020-04-01)
 
 
