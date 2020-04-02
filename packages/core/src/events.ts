@@ -5,10 +5,22 @@ import { Converter } from "./utils";
 
 export interface Event {
   createdAt: string;
-  status: string;
+  status: EventStatusType;
   toAddress: string;
   transactionHash: string;
   walletId: string;
+}
+
+export enum EventStatusType {
+  PENDING,
+  FAILED,
+  MINED,
+  CONFIRMED
+}
+
+export enum TransferType {
+  WITHDRAWAL,
+  DEPOSIT
 }
 
 export interface ValueTransferEvent extends Event {
@@ -16,7 +28,7 @@ export interface ValueTransferEvent extends Event {
   coinSymbol: string;
   from: string;
   to: string;
-  transferType: string;
+  transferType: TransferType;
 }
 
 export interface EventPaginationOptions extends PaginationOptions{
@@ -46,8 +58,8 @@ export class Events {
   }
 
   public async getValueTransferEvents(walletId: string, options?: EventPaginationOptions): Promise<Pagination<ValueTransferEvent>> {
-    const queryString: string = options ? Object.keys(options)
-      .map((key) => `${key}=${options[key]}`).join("&") : "";
+    const queryString: string = options ? Object.keys(Converter.toSnakeCase(options))
+      .map((key) => `${key}=${Converter.toSnakeCase(options)[key]}`).join("&") : "";
 
     const data: Pagination<ValueTransferEvent> = await this.client
       .get<Pagination<ValueTransferEvent>>(`/value-transfer-events?${queryString}&wallet_id=${walletId}`);
