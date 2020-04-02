@@ -1,6 +1,7 @@
-import * as BN from 'bn.js';
-import { Client } from './sdk';
-import { Pagination, PaginationOptions } from './types';
+import * as BN from "bn.js";
+import { Client } from "./sdk";
+import { Pagination, PaginationOptions } from "./types";
+import { Converter } from "./utils";
 
 export interface Event {
   createdAt: string;
@@ -10,12 +11,17 @@ export interface Event {
   walletId: string;
 }
 
-export interface ValueTransferEvent extends Event{
+export interface ValueTransferEvent extends Event {
   amount: BN;
   coinSymbol: string;
   from: string;
   to: string;
   transferType: string;
+}
+
+export interface EventPaginationOptions extends PaginationOptions{
+  address?: string;
+  transactionHash: string;
 }
 
 export class Events {
@@ -25,27 +31,29 @@ export class Events {
     this.client = client;
   }
 
-  public async getCallEvents(walletId:string, options?: PaginationOptions): Promise<Pagination<Event>> {
-    const queryString: string = options ? Object.keys(options)
-      .map((key) => `${key}=${options[key]}`).join('&') : '';
+  public async getCallEvents(walletId: string, options?: EventPaginationOptions): Promise<Pagination<Event>> {
+    const queryString: string = options ? Object.keys(Converter.toSnakeCase(options))
+      .map((key) => {
+        return `${key}=${Converter.toSnakeCase(options)[key]}`;
+      }).join("&") : "";
 
     const data: Pagination<Event> = await this.client
       .get<Pagination<Event>>(`/call-events?${queryString}&wallet_id=${walletId}`);
     return {
       pagination: data.pagination,
-      results: data.results,
+      results: data.results
     };
   }
 
-  public async getValueTransferEvents(walletId:string, options?: PaginationOptions): Promise<Pagination<ValueTransferEvent>> {
+  public async getValueTransferEvents(walletId: string, options?: EventPaginationOptions): Promise<Pagination<ValueTransferEvent>> {
     const queryString: string = options ? Object.keys(options)
-      .map((key) => `${key}=${options[key]}`).join('&') : '';
+      .map((key) => `${key}=${options[key]}`).join("&") : "";
 
     const data: Pagination<ValueTransferEvent> = await this.client
       .get<Pagination<ValueTransferEvent>>(`/value-transfer-events?${queryString}&wallet_id=${walletId}`);
     return {
       pagination: data.pagination,
-      results: data.results,
+      results: data.results
     };
   }
 }

@@ -9,8 +9,8 @@ async function main() {
     url: "http://localhost:8080/api/v1"
   });
 
-  const wallet: MasterWallet = await sdk.wallets.getMasterWallet("3be5351bd52626108326f9ec44b7b633");
-  const userWallet: UserWallet = await wallet.getUserWallet("f2f719478e5ce9f1b45a44fab94b1556");
+  const wallet: MasterWallet = await sdk.wallets.getMasterWallet("73846a39bcd6124a205834c05daea5f5");
+  const userWallet: UserWallet = await wallet.getUserWallet("e7a8e1ff3704388577278ea00d753c51");
   console.log(await userWallet.getBalance());
 }
 
