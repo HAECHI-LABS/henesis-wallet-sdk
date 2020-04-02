@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.5...v0.0.1-alpha.6) (2020-04-02)
+
+
+### Bug Fixes
+
+* fix url null check statement, chore: add type path index.d.ts ([0b8079b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0b8079b6030f1b40ac205682b9cffd1a70fa9308))
+
+
+
+
+
 ## [0.0.1-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.4...v0.0.1-alpha.5) (2020-04-02)
 
 
