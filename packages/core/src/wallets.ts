@@ -64,7 +64,8 @@ export class Wallets {
       },
     );
 
-    this.createRecoveryKit(walletData, accountKey, backupKey, encryptedPassphrase);
+    await this.createRecoveryKit(walletData, accountKey, backupKey, encryptedPassphrase);
+
     return new MasterWallet(
       this.client,
       walletData,
@@ -83,9 +84,9 @@ export class Wallets {
     accountKey: KeyWithPriv,
     backupKey: KeyWithPriv,
     encryptedPassphrase: string
-  ) {
-    await generatePdf({ data : walletData, accountKey, backupKey, encryptedPassphrase});
-    return true;
+  ) : Promise<string> {
+    const path = await generatePdf({ data : walletData, accountKey, backupKey, encryptedPassphrase});
+    return path;
   }
 
   private removePrivateKey(key: KeyWithPriv): Key {
