@@ -53,6 +53,19 @@ export class Wallets {
     const encryptedPassphrase = CryptoJS.AES
       .encrypt(passphrase, encryptionKey.toString(CryptoJS.enc.BASE64))
       .toString(CryptoJS.enc.BASE64);
+    const henesisKeys = await this.client.get<any>(
+      '/organizations/me'
+    );
+    var henesisKey : Key;
+    switch(blockchain) {
+      case Blockchain.Ethereum: 
+        henesisKey = henesisKeys.henesisEthKey;
+        break;
+      case Blockchain.Klaytn:
+        henesisKey = henesisKeys.henesisKlayKey;
+    };
+
+    await this.createRecoveryKit(name, blockchain, accountKey, backupKey, henesisKey.address, encryptedPassphrase);
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
       {
@@ -63,8 +76,6 @@ export class Wallets {
         encryptionKey,
       },
     );
-
-    await this.createRecoveryKit(walletData, accountKey, backupKey, encryptedPassphrase);
 
     return new MasterWallet(
       this.client,
@@ -79,13 +90,8 @@ export class Wallets {
     return CryptoJS.PBKDF2(p, salt, { keySize: 256 / 32, iterations: 1000 });
   }
 
-  private async createRecoveryKit(
-    walletData: MasterWalletData,
-    accountKey: KeyWithPriv,
-    backupKey: KeyWithPriv,
-    encryptedPassphrase: string
-  ) : Promise<string> {
-    const path = await generatePdf({ data : walletData, accountKey, backupKey, encryptedPassphrase});
+  private async createRecoveryKit(name: string, blockchain: Blockchain, accountKey: KeyWithPriv, backupKey: KeyWithPriv, henesisKey: string, encryptedPassphrase: string) : Promise<string>{
+    const path = await generatePdf({ name, blockchain, accountKey, backupKey, henesisKey, encryptedPassphrase});
     return path;
   }
 
