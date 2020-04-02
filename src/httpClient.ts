@@ -21,7 +21,7 @@ export class HttpClient {
   private readonly secret: string;
 
   constructor(params: ClientOptions) {
-    if (params.url !== null) {
+    if (params.url != null) {
       this.baseUrl = params.url;
     }
     this.secret = params.secret;
