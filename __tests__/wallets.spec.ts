@@ -5,7 +5,7 @@ import { Blockchain } from '../src/blockchain';
 
 const baseUrl = 'http://localhost:8080';
 describe('Wallets', () => {
-  describe('#createMasterWallet()', () => {
+  describe.only('#createMasterWallet()', () => {
     jest.setTimeout(5000000);
     it('should be able to create master wallet', async () => {
       const response = {
