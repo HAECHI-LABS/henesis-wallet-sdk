@@ -1,6 +1,6 @@
 {
   "name": "@haechi-labs/henesis-wallet-core",
-  "version": "0.0.1-alpha.6",
+  "version": "0.0.1-alpha.7",
   "description": "henesis wallet sdk core module",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
@@ -58,5 +58,6 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.2",
     "nock": "^12.0.1"
-  }
+  },
+  "gitHead": "ca83cd8dcac533beb9e12d76ed1047fb29d8aea7"
 }
