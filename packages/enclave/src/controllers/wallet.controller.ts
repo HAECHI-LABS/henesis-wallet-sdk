@@ -62,16 +62,6 @@ export default class WalletController extends AbstractController implements Cont
       this.promiseWrapper(this.getUserWalletBalance),
     );
 
-    this.router.get(
-      `${this.path}/:masterWalletId/tokenBalance/:ticker`,
-      this.promiseWrapper(this.getMasterWalletTokenBalance),
-    );
-
-    this.router.get(
-      `${this.path}/:masterWalletId/user-wallets/:userWalletId/tokenBalance/:ticker`,
-      this.promiseWrapper(this.getUserWalletTokenBalance),
-    );
-
     this.router.post(
       `${this.path}/:masterWalletId/transfer`,
       this.promiseWrapper(this.sendMasterWalletCoin),
@@ -130,27 +120,6 @@ export default class WalletController extends AbstractController implements Cont
     );
     return {
       balance: (await userWallet.getBalance()).toString(),
-    };
-  }
-
-  private async getMasterWalletTokenBalance(req: express.Request): Promise<BalanceResponse> {
-    const masterWallet = await req.sdk
-      .wallets
-      .getMasterWallet(req.params.masterWalletId);
-
-    return {
-      balance: (await masterWallet.getTokenBalance(req.params.ticker)).toString(),
-    };
-  }
-
-  private async getUserWalletTokenBalance(req: express.Request): Promise<BalanceResponse> {
-    const userWallet = await this.getUserWallet(
-      req.sdk,
-      req.params.masterWalletId,
-      req.params.userWalletId,
-    );
-    return {
-      balance: (await userWallet.getTokenBalance(req.params.ticker)).toString(),
     };
   }
 

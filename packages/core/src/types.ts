@@ -1,7 +1,10 @@
 import BN from 'bn.js';
 
 export interface Balance {
-  balance: BN;
+  coinType: string;
+  amount: BN;
+  name: string;
+  symbol: string;
 }
 
 export interface Key {
@@ -15,8 +18,8 @@ export interface KeyWithPriv extends Key {
 }
 
 export interface PaginationOptions {
-  page: number;
-  size: number;
+  page?: number;
+  size?: number;
   sort?: string;
 }
 

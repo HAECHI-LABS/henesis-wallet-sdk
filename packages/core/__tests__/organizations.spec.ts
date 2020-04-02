@@ -4,30 +4,11 @@ import { SDK } from '../src';
 import { Blockchain } from '../src/blockchain';
 import { Organization } from '../src/organizations';
 import { Account } from '../src/accounts';
-import { Secret, Token } from '../src/types';
+import { Balance, Secret, Token } from "../src/types";
 
 const baseUrl = 'http://localhost:8080';
 
 describe('Organizations', () => {
-  describe('#getOrganizationBalance()', () => {
-    it('success return balance of an organization', async () => {
-      const response = {
-        balance: 100,
-      };
-      nock(baseUrl)
-        .get('/api/v1/organizations/balance?blockchain=KLAYTN')
-        .reply(200, response);
-      const sdk = new SDK(
-        {
-          accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJlbWFpbCI6ImhhZWNoaUBoYWVjaGkuaW8iLCJpZCI6IjQ5ODAzZmJmMGEyYTJjM2FiM2EwYWJhOGI5OGRiYjJhIiwidHlwZSI6IlNIT1JUIiwiaXNzIjoid2FsbGV0LWRldiIsImlhdCI6MTU4NTcxODU0NiwiZXhwIjoxNTg2MDc4NTQ2fQ.Ixk0uUUIMnZLVyDA9BRPy_zyqoqtza7m-cNalbhVqlzv2ZDhh4FvPI6NOOHo_rlJYgd9iXkkoZGfJqD5DMfNng',
-          secret: 'secret',
-          url: 'http://localhost:8080/api/v1',
-        },
-      );
-      const balance:BN = await sdk.organizations.getOrganizationBalance(Blockchain.Klaytn);
-      expect(balance).toEqual(new BN(`${response.balance}`));
-    });
-  });
   describe('#getOrganization()', () => {
     it('success return an organization', async () => {
       const response = {
@@ -95,7 +76,7 @@ describe('Organizations', () => {
         },
       ];
       nock(baseUrl)
-        .get('/api/v1/organizations/me/accounts')
+        .get('/api/v1/organizations/accounts')
         .reply(200, response);
       const sdk = new SDK(
         {

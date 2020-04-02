@@ -5,6 +5,7 @@ import {
 } from './types';
 
 import { Account } from './accounts';
+import { Blockchain } from "./blockchain";
 
 export interface Organization {
   accessToken: string;
@@ -26,9 +27,10 @@ export class Organizations {
     this.client = client;
   }
 
-  public async getOrganizationBalance(blockchain: string): Promise<BN> {
-    const balance: Balance = await this.client.get<Balance>(`${this.baseUrl}/balance?blockchain=${blockchain}`);
-    return new BN(`${balance.balance}`);
+  public async getOrganizationBalance(blockchain: Blockchain): Promise<Balance> {
+    const balance = await this.client.get(`${this.baseUrl}/balance?blockchain=${blockchain}`);
+    balance.amount = new BN(`${balance.amount}`);
+    return balance;
   }
 
   public async getOrganization(): Promise<Organization> {
@@ -36,7 +38,7 @@ export class Organizations {
   }
 
   public async getAccounts(): Promise<Account[]> {
-    return await this.client.get<Account[]>(`${this.baseUrl}/me/accounts`);
+    return await this.client.get<Account[]>(`${this.baseUrl}/accounts`);
   }
 
   public async createSecret(email: string, password: string): Promise<Secret> {
