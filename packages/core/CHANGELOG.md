@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.6...v0.0.1-alpha.8) (2020-04-02)
+
+
+### Features
+
+* add event status, transfer type ([a8b84a9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a8b84a9cda2a79f92198ca069d3c9d2082695e40))
+
+
+
+
+
 ## [0.0.1-alpha.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.6...v0.0.1-alpha.7) (2020-04-02)
 
 
