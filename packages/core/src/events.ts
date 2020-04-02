@@ -33,7 +33,7 @@ export interface ValueTransferEvent extends Event {
 
 export interface EventPaginationOptions extends PaginationOptions{
   address?: string;
-  transactionHash: string;
+  transactionHash?: string;
 }
 
 export class Events {
