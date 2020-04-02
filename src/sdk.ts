@@ -4,6 +4,7 @@ import { Wallets } from './wallets';
 import { EthereumKeychains, Keychains } from './keychains';
 import { Events } from './events';
 import { Organizations } from './organizations';
+import { Gasusages } from "./gasusages";
 
 export enum Env {
   Dev,
@@ -43,6 +44,8 @@ export class SDK {
 
   public readonly organizations: Organizations;
 
+  public readonly gasusages: Gasusages;
+
   private readonly client: Client;
 
   // todo: validation params;
@@ -59,5 +62,6 @@ export class SDK {
     this.wallets = new Wallets(this.client, this.keychains);
     this.events = new Events(this.client);
     this.organizations = new Organizations(this.client);
+    this.gasusages = new Gasusages(this.client);
   }
 }
