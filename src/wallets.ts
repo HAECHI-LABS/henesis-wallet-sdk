@@ -1,10 +1,12 @@
 import CryptoJS from 'crypto-js';
+import fs from 'fs';
 import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains } from './keychains';
 import { Blockchain } from './blockchain';
 import { Key, KeyWithPriv } from "./types";
 import { generatePdf } from './keycard';
+
 export class Wallets {
   private readonly client: Client;
 
@@ -54,16 +56,16 @@ export class Wallets {
       .encrypt(passphrase, encryptionKey.toString(CryptoJS.enc.BASE64))
       .toString(CryptoJS.enc.BASE64);
     const henesisKeys = await this.client.get<any>(
-      '/organizations/me'
+      '/organizations/me',
     );
-    var henesisKey : Key;
-    switch(blockchain) {
-      case Blockchain.Ethereum: 
+    let henesisKey : Key;
+    switch (blockchain) {
+      case Blockchain.Ethereum:
         henesisKey = henesisKeys.henesisEthKey;
         break;
       case Blockchain.Klaytn:
         henesisKey = henesisKeys.henesisKlayKey;
-    };
+    }
 
     await this.createRecoveryKit(name, blockchain, accountKey, backupKey, henesisKey.address, encryptedPassphrase);
     const walletData = await this.client.post<MasterWalletData>(
@@ -90,9 +92,18 @@ export class Wallets {
     return CryptoJS.PBKDF2(p, salt, { keySize: 256 / 32, iterations: 1000 });
   }
 
-  private async createRecoveryKit(name: string, blockchain: Blockchain, accountKey: KeyWithPriv, backupKey: KeyWithPriv, henesisKey: string, encryptedPassphrase: string) : Promise<string>{
-    const path = await generatePdf({ name, blockchain, accountKey, backupKey, henesisKey, encryptedPassphrase});
-    return path;
+  private async createRecoveryKit(name: string, blockchain: Blockchain, accountKey: KeyWithPriv, backupKey: KeyWithPriv, henesisKey: string, encryptedPassphrase: string) : Promise<string> {
+    const path = 'test.pdf';
+    const stream = fs.createWriteStream(path);
+    const docs = await generatePdf({
+      name, blockchain, accountKey, backupKey, henesisKey, encryptedPassphrase,
+    });
+    docs.pipe(stream);
+    return new Promise(((resolve, reject) => {
+      stream.on('finish', () => resolve(path));
+      stream.on('error', reject);
+    }));
+    return;
   }
 
   private removePrivateKey(key: KeyWithPriv): Key {
