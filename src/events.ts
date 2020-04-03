@@ -12,15 +12,15 @@ export interface Event {
 }
 
 export enum EventStatusType {
-  PENDING,
-  FAILED,
-  MINED,
-  CONFIRMED
+  PENDING = "PENDING",
+  FAILED = "FAILED",
+  MINED = "MINED",
+  CONFIRMED = "CONFIRMED"
 }
 
 export enum TransferType {
-  WITHDRAWAL,
-  DEPOSIT
+  WITHDRAWAL = "WITHDRAWAL",
+  DEPOSIT = "DEPOSIT"
 }
 
 export interface ValueTransferEvent extends Event {
