@@ -3,7 +3,7 @@ import QRCode from 'qrcode';
 import fs from 'fs';
 import SVGtoPDF from 'svg-to-pdfkit';
 import { MasterWalletData } from './wallet';
-import { KeyWithPriv } from './keychains';
+import { KeyWithPriv } from './types';
 import { Blockchain } from './blockchain';
 
 export interface PdfOption {
