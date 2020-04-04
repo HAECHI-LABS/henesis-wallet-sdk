@@ -41,8 +41,8 @@ export class Organizations {
     return await this.client.get<Account[]>(`${this.baseUrl}/accounts`);
   }
 
-  public async createSecret(email: string, password: string): Promise<Secret> {
-    return this.client.post<Secret>(`${this.baseUrl}/secret`, { email, password });
+  public async createSecret(): Promise<Secret> {
+    return this.client.post<Secret>(`${this.baseUrl}/secret`);
   }
 
   public async createAccessToken(expiresIn?: number): Promise<Token> {
