@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.9...v0.0.1-alpha.10) (2020-04-04)
+
+**Note:** Version bump only for package henesis-wallet-sdk
+
+
+
+
+
 ## [0.0.1-alpha.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.8...v0.0.1-alpha.9) (2020-04-02)
 
 **Note:** Version bump only for package henesis-wallet-sdk
