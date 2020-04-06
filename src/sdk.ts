@@ -4,7 +4,7 @@ import { Wallets } from './wallets';
 import { EthereumKeychains, Keychains } from './keychains';
 import { Events } from './events';
 import { Organizations } from './organizations';
-import { Gasusages } from "./gasusages";
+import { Gasusages } from './gasusages';
 
 export enum Env {
   Dev,
