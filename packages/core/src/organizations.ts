@@ -5,7 +5,7 @@ import {
 } from './types';
 
 import { Account } from './accounts';
-import { Blockchain } from "./blockchain";
+import { Blockchain } from './blockchain';
 
 export interface Organization {
   accessToken: string;

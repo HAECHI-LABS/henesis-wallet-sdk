@@ -42,10 +42,9 @@ describe('Wallets', () => {
       nock(baseUrl)
         .post('/api/v1/wallets')
         .reply(200, response);
-      const keysResponse = 
-        {
-          access_token: "string",
-          henesis_eth_key: 
+      const keysResponse = {
+        access_token: 'string',
+        henesis_eth_key:
           {
             address: '0x716ba9752bbf769428dcd59352e4c16f64a2a856',
             pub:
@@ -53,7 +52,7 @@ describe('Wallets', () => {
             keyFile:
             '{"iv":"BEySd1ljOn4Sbb6BKTqlNQ==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"T85A09XexMM=","ct":"qvjhYYQXObQB4ta49b6iDwLX1+aynHOM1zhdC0bIozvW9e6MmrZaRa1N+0MxjAX/fPJQYia0KJGCEgoXfSGRCF0wWhGDBM9jK9Q="}',
           },
-          henesis_klay_key: 
+        henesis_klay_key:
           {
             address: '0xc6d286f3e6b43dd410bd1a79e224adb27d3a83d2',
             pub:
@@ -61,10 +60,10 @@ describe('Wallets', () => {
             keyFile:
             '{"iv":"gw6l4gKz7k3BjTOP23FOCA==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"UFHEh0shodQ=","ct":"tWPRVQIY6JGIt2uM7Pw/5nn+M4hZAIBjLfIXnxecl6VzHDzMdC0wa0jjsHUEOJCaNXWHiDcRTLl1Iwm1ql42toj9jdVUHTbL6bQ="}',
           },
-          id: "39e16b3eab64f4d595a6cd6ca4035703",
-          name: "haechi",
-          secret: "secret"
-        };
+        id: '39e16b3eab64f4d595a6cd6ca4035703',
+        name: 'haechi',
+        secret: 'secret',
+      };
       nock(baseUrl)
         .get('/api/v1/organizations/me')
         .reply(200, keysResponse);
