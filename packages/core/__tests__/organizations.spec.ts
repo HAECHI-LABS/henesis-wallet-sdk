@@ -105,7 +105,7 @@ describe('Organizations', () => {
           url: 'http://localhost:8080/api/v1',
         },
       );
-      const secret: Secret = await sdk.organizations.createSecret('haechi@haechi.io', 'password');
+      const secret: Secret = await sdk.organizations.createSecret();
       expect(secret).toEqual(response);
     });
   });
