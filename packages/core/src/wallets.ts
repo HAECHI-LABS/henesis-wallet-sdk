@@ -103,7 +103,6 @@ export class Wallets {
       stream.on('finish', () => resolve(path));
       stream.on('error', reject);
     }));
-    return;
   }
 
   private removePrivateKey(key: KeyWithPriv): Key {
