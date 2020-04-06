@@ -1,5 +1,6 @@
 import CryptoJS from 'crypto-js';
 import fs from 'fs';
+import {join} from 'path';
 import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains } from './keychains';
@@ -47,7 +48,17 @@ export class Wallets {
     name: string,
     blockchain: Blockchain,
     passphrase: string,
+    pdfPath?: string,
   ): Promise<MasterWallet> {
+    if (pdfPath === undefined) {
+      pdfPath = "./";
+      console.log("pdf path is not defined, defaults to current directory");
+    }
+
+    if (!fs.existsSync(pdfPath) || !fs.lstatSync(pdfPath).isDirectory()){
+      throw new Error(`given path ${pdfPath} is not valid directory`);
+    }
+
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKey = this.createEncryptionKey(passphrase)
@@ -67,7 +78,7 @@ export class Wallets {
         henesisKey = henesisKeys.henesisKlayKey;
     }
 
-    await this.createRecoveryKit(name, blockchain, accountKey, backupKey, henesisKey.address, encryptedPassphrase);
+    await this.createRecoveryKit(name, blockchain, accountKey, backupKey, henesisKey.address, encryptedPassphrase, pdfPath);
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
       {
@@ -92,8 +103,8 @@ export class Wallets {
     return CryptoJS.PBKDF2(p, salt, { keySize: 256 / 32, iterations: 1000 });
   }
 
-  private async createRecoveryKit(name: string, blockchain: Blockchain, accountKey: KeyWithPriv, backupKey: KeyWithPriv, henesisKey: string, encryptedPassphrase: string) : Promise<string> {
-    const path = 'test.pdf';
+  private async createRecoveryKit(name: string, blockchain: Blockchain, accountKey: KeyWithPriv, backupKey: KeyWithPriv, henesisKey: string, encryptedPassphrase: string, pdfPath: string) : Promise<string> {
+    const path = join(pdfPath, `${name}.pdf`);
     const stream = fs.createWriteStream(path);
     const docs = await generatePdf({
       name, blockchain, accountKey, backupKey, henesisKey, encryptedPassphrase,
