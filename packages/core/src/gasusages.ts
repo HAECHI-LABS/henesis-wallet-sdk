@@ -1,11 +1,11 @@
-import { Client } from "./sdk";
-import { Blockchain } from "./blockchain";
-import BN from "bn.js";
+import BN from 'bn.js';
+import { Client } from './sdk';
+import { Blockchain } from './blockchain';
 
 export enum MethodName {
-  TRANSFER = "transfer",
-  TRANSFER_ERC20 = "transferErc20",
-  CREATE_MASTER_WALLET = "createMasterWallet"
+  TRANSFER = 'transfer',
+  TRANSFER_ERC20 = 'transferErc20',
+  CREATE_MASTER_WALLET = 'createMasterWallet'
 }
 
 export interface Method {
@@ -18,7 +18,7 @@ export interface Method {
 export class Gasusages {
   private readonly client: Client;
 
-  private readonly baseUrl = "/method-gas-usages";
+  private readonly baseUrl = '/method-gas-usages';
 
   constructor(client: Client) {
     this.client = client;

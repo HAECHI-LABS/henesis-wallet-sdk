@@ -4,7 +4,7 @@ import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains } from './keychains';
 import { Blockchain } from './blockchain';
-import { Key, KeyWithPriv } from "./types";
+import { Key, KeyWithPriv } from './types';
 import { generatePdf } from './keycard';
 
 export class Wallets {

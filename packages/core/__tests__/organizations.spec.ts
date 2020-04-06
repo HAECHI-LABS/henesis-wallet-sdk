@@ -4,7 +4,7 @@ import { SDK } from '../src';
 import { Blockchain } from '../src/blockchain';
 import { Organization } from '../src/organizations';
 import { Account } from '../src/accounts';
-import { Balance, Secret, Token } from "../src/types";
+import { Balance, Secret, Token } from '../src/types';
 
 const baseUrl = 'http://localhost:8080';
 

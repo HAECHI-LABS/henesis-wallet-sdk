@@ -3,7 +3,7 @@ import {
   bytesToWord, decodeSignature, encodeSignature, toChecksum,
 } from './utils';
 import { Blockchain } from './blockchain';
-import { KeyWithPriv } from "./types";
+import { KeyWithPriv } from './types';
 
 const elliptic = require('elliptic');
 const { keccak256 } = require('./vendor/eth-lib/hash');
