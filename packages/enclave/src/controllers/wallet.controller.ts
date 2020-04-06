@@ -1,5 +1,5 @@
 import express from 'express';
-import { MasterWallet, MasterWalletData, UserWallet, UserWalletData } from '@haechi-labs/henesis-wallet-core/lib/wallet';
+import { MasterWalletData, UserWallet, UserWalletData } from '@haechi-labs/henesis-wallet-core/lib/wallet';
 import { Pagination } from '@haechi-labs/henesis-wallet-core/lib/types';
 import { SDK } from '@haechi-labs/henesis-wallet-core';
 import BN from 'bn.js';
@@ -103,8 +103,9 @@ export default class WalletController extends AbstractController implements Cont
     );
   }
 
-  private async getMasterWallets(req: express.Request): Promise<MasterWallet[]> {
-    return (await req.sdk.wallets.getMasterWallets());
+  private async getMasterWallets(req: express.Request): Promise<MasterWalletData[]> {
+    const wallets =  await req.sdk.wallets.getMasterWallets();
+    return wallets.map(x => x.getData());
   }
 
   private async createMasterWallet(req: express.Request): Promise<MasterWalletData> {
@@ -145,6 +146,7 @@ export default class WalletController extends AbstractController implements Cont
     return (await masterWallet.createUserWallet(
       req.body.name,
       req.body.passphrase,
+      req.body.salt,
     )).getData();
   }
 
@@ -272,14 +274,15 @@ export default class WalletController extends AbstractController implements Cont
       .getUserWallet(userWalletId);
   }
 
-  private async getUserWallets(req: express.Request): Promise<Pagination<UserWallet>> {
+  private async getUserWallets(req: express.Request): Promise<UserWalletData[]> {
     const masterWallet =  await req.sdk.wallets.getMasterWallet(req.params.masterWalletId);
-    return await masterWallet.getUserWallets({
+    const wallets = (await masterWallet.getUserWallets({
       page: +req.params.page,
       size: +req.params.size,
       sort: req.params.sort,
       name: req.params.name,
       address: req.params.address
-    });
+    })).results;
+    return wallets.map(x=>x.getData());
   }
 }
