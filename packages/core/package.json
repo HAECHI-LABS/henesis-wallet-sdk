@@ -25,6 +25,7 @@
     "dotenv": "^8.2.0",
     "jest": "^24.8.0",
     "jest-extended": "^0.11.1",
+    "path": "^0.12.7",
     "pdfkit": "^0.11.0",
     "qrcode": "^1.4.4",
     "svg-to-pdfkit": "^0.1.8",
