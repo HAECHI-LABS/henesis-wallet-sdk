@@ -75,8 +75,4 @@ export async function generatePdf(option : PdfOption) : Promise<PDFDocument> {
   await setQRCode(docs, 'D. Encrypted Wallet Passphrase', 'This is the wallet password, encrypted client-side with a key held by Henesis.', option.encryptedPassphrase, 36, 681);
   docs.end();
   return docs;
-  // return new Promise(((resolve, reject) => {
-  //  stream.on('finish', () => resolve(path));
-  //  stream.on('error', reject);
-  // }));
 }
