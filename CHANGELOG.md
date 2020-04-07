@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.11](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.10...v0.0.1-alpha.11) (2020-04-07)
+
+
+### Bug Fixes
+
+* await for document to finish ([103c777](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/103c7770a390b21595d9c345df33ff260ab83a47))
+
+
+### Features
+
+* design done ([ebec675](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ebec6756a904fa5a9166db1024df4973fe9c66e5))
+* design on ([d3b0e4a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d3b0e4a73e3bb151784bf748020071890f8b10c9))
+* keycard minimal spec implemented ([70432ea](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/70432ea819cab792617412ae5ae2aa6a5e5b5538))
+* updated controllers to match current version of sdk ([73a70f7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/73a70f7439dec1bb3c08eae498c202e7b1f7f30b))
+
+
+
+
+
 ## [0.0.1-alpha.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.9...v0.0.1-alpha.10) (2020-04-04)
 
 **Note:** Version bump only for package henesis-wallet-sdk
