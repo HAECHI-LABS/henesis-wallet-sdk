@@ -11,12 +11,12 @@ export interface Transaction {
 }
 
 export interface NonceResponse {
-  nonce: BN
+  nonce: string
 }
 
 export interface BalanceResponse {
   coinType: string;
-  amount: BN;
+  amount: string;
   name: string;
   symbol: string;
 }
@@ -34,10 +34,6 @@ export default class WalletController extends AbstractController implements Cont
 
     this.router.post(`${this.path}`, this.promiseWrapper(this.createMasterWallet));
 
-    this.router.get(`${this.path}/:masterWalletId/isValidAddress/:address`,
-      this.promiseWrapper(this.isValidAddress),
-    );
-
     this.router.get(`${this.path}/:masterWalletId/user-wallets`,
       this.promiseWrapper(this.getUserWallets)
     );
@@ -48,12 +44,12 @@ export default class WalletController extends AbstractController implements Cont
     );
 
     this.router.post(
-      `${this.path}/:masterWalletId/contractCall`,
+      `${this.path}/:masterWalletId/contract-call`,
       this.promiseWrapper(this.sendMasterWalletContractCall),
     );
 
     this.router.post(
-      `${this.path}/:masterWalletId/user-wallets/:userWalletId/contractCall`,
+      `${this.path}/:masterWalletId/user-wallets/:userWalletId/contract-call`,
       this.promiseWrapper(this.sendUserWalletContractCall),
     );
 
@@ -63,7 +59,7 @@ export default class WalletController extends AbstractController implements Cont
     );
 
     this.router.put(
-      `${this.path}/:masterWalletId/passPhrase`,
+      `${this.path}/:masterWalletId/pass-phrase`,
       this.promiseWrapper(this.changePassphrase),
     );
 
@@ -131,13 +127,6 @@ export default class WalletController extends AbstractController implements Cont
       )); 
   }
 
-  private async isValidAddress(req: express.Request): Promise<boolean> {
-    const masterWallet = await req.sdk
-      .wallets
-      .getMasterWallet(req.params.masterWalletId);
-    return (await masterWallet.isValidAddress(req.params.address));
-  }
-
   private async createUserWallet(req: express.Request): Promise<UserWalletData> {
     const masterWallet = await req.sdk
       .wallets
@@ -163,7 +152,15 @@ export default class WalletController extends AbstractController implements Cont
       .wallets
       .getMasterWallet(req.params.masterWalletId);
 
-    return await masterWallet.getBalance();
+    const balances = await masterWallet.getBalance();
+    return balances.map( x => {
+      return {
+        coinType : x.coinType,
+        amount : x.amount.toString(),
+        name : x.name,
+        symbol : x.symbol
+      };
+    });
   }
 
   private async getUserWalletBalance(req: express.Request): Promise<BalanceResponse[]> {
@@ -172,7 +169,15 @@ export default class WalletController extends AbstractController implements Cont
       req.params.masterWalletId,
       req.params.userWalletId,
     );
-    return await userWallet.getBalance();
+    const balances = await userWallet.getBalance();
+    return balances.map( x => {
+      return {
+        coinType : x.coinType,
+        amount : x.amount.toString(),
+        name : x.name,
+        symbol : x.symbol
+      };
+    });
   }
 
   private async getMasterWalletNonce(req: express.Request): Promise<NonceResponse> {
@@ -180,7 +185,7 @@ export default class WalletController extends AbstractController implements Cont
       .wallets
       .getMasterWallet(req.params.masterWalletId);
     return {
-      nonce: await masterWallet.getNonce()
+      nonce: (await masterWallet.getNonce()).toString()
     };
   }
 
@@ -191,7 +196,7 @@ export default class WalletController extends AbstractController implements Cont
       req.params.userWalletId,
     );
     return {
-      nonce: await userWallet.getNonce()
+      nonce: (await userWallet.getNonce()).toString()
     };
   }
 
