@@ -10,6 +10,6 @@ export class Hib extends Erc20 {
   }
 
   getAddress(): string {
-    return '0xE06b40df899b9717b4E6B50711E1dc72d08184cF';
+    return '0xB1CA09Fa5A1f6C7f425421c3c2cc8F8F1F13f4b9';
   }
 }
