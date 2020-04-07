@@ -44,12 +44,12 @@ export default class WalletController extends AbstractController implements Cont
     );
 
     this.router.post(
-      `${this.path}/:masterWalletId/contract-call`,
+      `${this.path}/:masterWalletId/contractcall`,
       this.promiseWrapper(this.sendMasterWalletContractCall),
     );
 
     this.router.post(
-      `${this.path}/:masterWalletId/user-wallets/:userWalletId/contract-call`,
+      `${this.path}/:masterWalletId/user-wallets/:userWalletId/contractcall`,
       this.promiseWrapper(this.sendUserWalletContractCall),
     );
 
@@ -59,7 +59,7 @@ export default class WalletController extends AbstractController implements Cont
     );
 
     this.router.put(
-      `${this.path}/:masterWalletId/pass-phrase`,
+      `${this.path}/:masterWalletId/passphrase`,
       this.promiseWrapper(this.changePassphrase),
     );
 
