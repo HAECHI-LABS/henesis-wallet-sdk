@@ -1,8 +1,8 @@
-import axios, { AxiosInstance } from 'axios';
-import hmacSHA256 from 'crypto-js/hmac-sha256';
-import Base64 from 'crypto-js/enc-base64';
-import { Converter } from './utils';
-import { Env } from './sdk';
+import axios, { AxiosInstance } from "axios";
+import hmacSHA256 from "crypto-js/hmac-sha256";
+import Base64 from "crypto-js/enc-base64";
+import { Converter } from "./utils";
+import { Env } from "./sdk";
 
 export interface ClientOptions {
   accessToken: string;
@@ -12,7 +12,7 @@ export interface ClientOptions {
 }
 
 export class HttpClient {
-  private readonly baseUrl: string = 'http://wallet-test.henesis.io/api/v1';
+  private readonly baseUrl: string = "http://wallet-test.henesis.io/api/v1";
 
   private readonly client: AxiosInstance;
 
@@ -31,22 +31,26 @@ export class HttpClient {
       timeout: 30000,
       validateStatus(status) {
         return status >= 200 && status < 300; // default
-      },
+      }
     });
 
     this.client.interceptors.request.use((config) => {
-      config.headers['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
+      config.headers["If-Modified-Since"] = "Mon, 26 Jul 1997 05:00:00 GMT";
       if (this.accessToken) {
         config.headers.Authorization = `Bearer ${this.accessToken}`;
       }
 
       const timestamp = Date.now();
       if (this.secret) {
-        const body = JSON.stringify(config.data);
-        const message = timestamp + body;
-        config.headers['X-Henesis-Signature'] = this.createSig(message);
+        let body = "";
+        if (config.data) {
+          body = JSON.stringify(config.data);
+        }
+        const path = config.baseURL + config.url + (config.params ? config.params : '');
+        const message = config.method.toUpperCase() + path + body + timestamp;
+        config.headers["X-Henesis-Signature"] = this.createSig(message);
       }
-      config.headers['X-Henesis-Timestamp'] = timestamp;
+      config.headers["X-Henesis-Timestamp"] = timestamp;
       return config;
     });
 
@@ -90,12 +94,12 @@ class AxiosMethodProxy {
         }
 
         ProxyMethod.method = method;
-        ProxyMethod.request = function () {
+        ProxyMethod.request = function() {
           return method;
         };
 
         return ProxyMethod;
-      },
+      }
     });
   }
 }
