@@ -184,7 +184,7 @@ export default class WalletController extends AbstractController implements Cont
     });
   }
 
-  private async getUserWalletTokenBalance(req: express.Request): Promise<BalanceResponse> {
+  private async getUserWalletTokenBalance(req: express.Request): Promise<any> {
     const userWallet = await this.getUserWallet(
         req.sdk,
         req.params.masterWalletId,
@@ -194,7 +194,7 @@ export default class WalletController extends AbstractController implements Cont
     const hibBalance  = balances.filter(x => x.name === "hib")[0]
     return {
       coinType: hibBalance.coinType,
-      amount: hibBalance.amount.toString(),
+      balance: hibBalance.amount.toString(),
       name: hibBalance.name,
       symbol: hibBalance.symbol
     };
