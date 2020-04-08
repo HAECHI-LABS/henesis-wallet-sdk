@@ -110,8 +110,7 @@ export default class WalletController extends AbstractController implements Cont
       .createMasterWallet(
         req.body.name,
         req.body.blockchain,
-        req.body.passphrase,
-        req.body.pdfPath,
+        req.body.passphrase
       )).getData();
   }
 

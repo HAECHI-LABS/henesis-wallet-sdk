@@ -48,17 +48,7 @@ export class Wallets {
     name: string,
     blockchain: Blockchain,
     passphrase: string,
-    pdfPath?: string,
   ): Promise<MasterWallet> {
-    if (pdfPath === undefined) {
-      pdfPath = './';
-      console.log('pdf path is not defined, defaults to current directory');
-    }
-
-    if (!fs.existsSync(pdfPath) || !fs.lstatSync(pdfPath).isDirectory()) {
-      throw new Error(`given path ${pdfPath} is not valid directory`);
-    }
-
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKey = this.createEncryptionKey(passphrase)
@@ -78,7 +68,6 @@ export class Wallets {
         henesisKey = henesisKeys.henesisKlayKey;
     }
 
-    await this.createRecoveryKit(name, blockchain, accountKey, backupKey, henesisKey.address, encryptedPassphrase, pdfPath);
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
       {
