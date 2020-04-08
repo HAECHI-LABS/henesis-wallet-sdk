@@ -20,9 +20,10 @@ export interface OTP {
   url: string;
 }
 
-export interface Role {
-  VIEWER,
-  ADMIN
+export enum Role {
+  VIEWER = 'VIEWER',
+  ADMIN = 'ADMIN',
+  HAECHI = 'HAECHI'
 }
 
 export interface AccountWithKey extends Account {
