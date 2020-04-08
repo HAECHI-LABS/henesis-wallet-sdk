@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
 import fs from 'fs';
-import {join} from 'path';
+import { join } from 'path';
 import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains } from './keychains';
@@ -51,11 +51,11 @@ export class Wallets {
     pdfPath?: string,
   ): Promise<MasterWallet> {
     if (pdfPath === undefined) {
-      pdfPath = "./";
-      console.log("pdf path is not defined, defaults to current directory");
+      pdfPath = './';
+      console.log('pdf path is not defined, defaults to current directory');
     }
 
-    if (!fs.existsSync(pdfPath) || !fs.lstatSync(pdfPath).isDirectory()){
+    if (!fs.existsSync(pdfPath) || !fs.lstatSync(pdfPath).isDirectory()) {
       throw new Error(`given path ${pdfPath} is not valid directory`);
     }
 
