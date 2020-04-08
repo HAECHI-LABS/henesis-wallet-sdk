@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.12](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.11...v0.0.1-alpha.12) (2020-04-08)
+
+
+### Bug Fixes
+
+* add method, query params to signature message ([b7e788c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b7e788c11b2caf0b6f1debf484ff06a2ad187d62))
+* change role type(interface -> enum) ([5c4c2c3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5c4c2c333957442c3ae214114ad76723e8bd9cb7))
+
+
+
+
+
 ## [0.0.1-alpha.11](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.10...v0.0.1-alpha.11) (2020-04-07)
 
 
