@@ -191,7 +191,7 @@ export default class WalletController extends AbstractController implements Cont
         req.params.userWalletId,
     );
     const balances = await userWallet.getBalance();
-    const hibBalance  = balances.filter(x => x.coinType === "Hib")[0]
+    const hibBalance  = balances.filter(x => x.name === "hib")[0]
     return {
       coinType: hibBalance.coinType,
       amount: hibBalance.amount.toString(),
