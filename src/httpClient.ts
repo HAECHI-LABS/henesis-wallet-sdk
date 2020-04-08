@@ -12,7 +12,7 @@ export interface ClientOptions {
 }
 
 export class HttpClient {
-  private readonly baseUrl: string = 'http://wallet-test.henesis.io/api/v1';
+  private readonly baseUrl: string = 'http://dev.wallet.henesis.io/api/v1';
 
   private readonly client: AxiosInstance;
 
