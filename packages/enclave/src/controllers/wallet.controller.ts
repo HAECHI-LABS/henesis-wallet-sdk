@@ -243,7 +243,7 @@ export default class WalletController extends AbstractController implements Cont
     const transaction = await masterWallet.transfer(
       req.body.ticker,
       req.body.to,
-      req.body.amount,
+      new BN(`${req.body.amount}`),
       req.body.passphrase,
       req.body.otp,
     );
