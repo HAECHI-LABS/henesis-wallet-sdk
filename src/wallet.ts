@@ -2,6 +2,7 @@ import { Contract } from 'web3-eth-contract';
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
 import BN from 'bn.js';
+import CryptoJS from 'crypto-js';
 import { Client } from './sdk';
 import {
   PaginationOptions, Pagination, Key, KeyWithPriv, Balance,
@@ -46,6 +47,7 @@ export interface WalletData {
 export interface MasterWalletData extends WalletData {
   backupKey: Key;
   accountKey: Key;
+  encryptionKey: string;
 }
 
 export interface UserWalletData extends WalletData {
@@ -256,6 +258,20 @@ export class MasterWallet extends EthLikeWallet {
   ) {
     super(client, walletData, keychains);
     this.wallet = new new Web3().eth.Contract((wallet as AbiItem[]));
+  }
+
+  async restorePassphrase(encryptedPassphrase: string, newPassphrase: string, otpCode?: string): Promise<void>{
+    const encryptionKey = this.masterWalletData.encryptionKey;
+    const decrypted = CryptoJS.AES.decrypt(encryptedPassphrase, encryptionKey);
+    const passphrase = this.hex2a(decrypted.toString());
+    await this.changePassphrase(passphrase, newPassphrase, otpCode);
+  }
+
+  hex2a(hex) {
+    var str = '';
+    for (var i = 0; i < hex.length; i += 2)
+      str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
   }
 
   async changePassphrase(passphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
