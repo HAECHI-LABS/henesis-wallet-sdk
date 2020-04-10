@@ -116,7 +116,6 @@ export default class WalletController extends AbstractController implements Cont
             req.body.name,
             req.body.blockchain,
             req.body.passphrase,
-            req.body.pdfPath,
         )).getData();
   }
 

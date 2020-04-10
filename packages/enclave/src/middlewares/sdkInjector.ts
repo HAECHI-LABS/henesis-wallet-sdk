@@ -10,10 +10,9 @@ export default (req: express.Request, resp: express.Response, next: express.Next
     }
   }
 
-  if (req.headers['X-Henesis-Secret']) {
-    secret = req.headers['X-Henesis-Secret'];
+  if (req.headers['x-henesis-secret']) {
+    secret = req.headers['x-henesis-secret'];
   }
-
   req.sdk = new SDK({
     accessToken,
     secret,
