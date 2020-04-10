@@ -17,6 +17,7 @@ export default (req: express.Request, resp: express.Response, next: express.Next
   req.sdk = new SDK({
     accessToken,
     secret,
+    url: "http://test.wallet.henesis.io/api/v1"
   });
   next();
 };
