@@ -388,7 +388,7 @@ export class UserWallet extends EthLikeWallet {
     return new BN(`${nonce.nonce}`);
   }
 
-  async getBalance(): Promise<Balance[]> {
+  async getBalance(): Promise<any[]> {
     const balances: {
       coinType: string;
       amount: number;
@@ -399,7 +399,7 @@ export class UserWallet extends EthLikeWallet {
 
     return balances.map((balance) => ({
       symbol: balance.symbol,
-      amount: new BN(`${balance.amount}`),
+      amount: new BN(balance.amount.toLocaleString().replace(/,/g,'')),
       coinType: balance.coinType,
       name: balance.name,
     }));
