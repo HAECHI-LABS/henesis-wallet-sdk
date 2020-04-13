@@ -114,6 +114,8 @@ export abstract class Wallet {
   abstract getBalance(): Promise<Balance[]>;
 
   abstract getAddress(): string;
+
+  abstract getId(): string;
 }
 
 export abstract class EthLikeWallet extends Wallet {
@@ -236,7 +238,7 @@ export abstract class EthLikeWallet extends Wallet {
       signature,
       this.getChain(),
       multiSigPayload,
-      this.masterWalletData.id,
+      this.getId(),
       otpCode,
     );
   }
@@ -383,6 +385,10 @@ export class MasterWallet extends EthLikeWallet {
       )),
     } as Pagination<UserWallet>;
   }
+
+  getId(): string {
+    return this.masterWalletData.id;
+  }
 }
 
 export class UserWallet extends EthLikeWallet {
@@ -427,5 +433,9 @@ export class UserWallet extends EthLikeWallet {
 
   getData(): UserWalletData {
     return this.userWalletData;
+  }
+
+  getId(): string {
+    return this.userWalletData.id;
   }
 }
