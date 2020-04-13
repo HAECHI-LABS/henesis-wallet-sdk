@@ -67,7 +67,7 @@ export default class WalletController extends AbstractController implements Cont
       `${this.path}/:masterWalletId/nonce`,
       this.promiseWrapper(this.getMasterWalletNonce),
     );
-    
+
     this.router.get(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/nonce`,
       this.promiseWrapper(this.getUserWalletNonce),
@@ -100,8 +100,8 @@ export default class WalletController extends AbstractController implements Cont
   }
 
   private async getMasterWallets(req: express.Request): Promise<MasterWalletData[]> {
-    const wallets =  await req.sdk.wallets.getMasterWallets();
-    return wallets.map(x => x.getData());
+    const wallets = await req.sdk.wallets.getMasterWallets();
+    return wallets.map((x) => x.getData());
   }
 
   private async createMasterWallet(req: express.Request): Promise<MasterWalletData> {
@@ -110,7 +110,7 @@ export default class WalletController extends AbstractController implements Cont
       .createMasterWallet(
         req.body.name,
         req.body.blockchain,
-        req.body.passphrase
+        req.body.passphrase,
       )).getData();
   }
 
@@ -118,12 +118,11 @@ export default class WalletController extends AbstractController implements Cont
     const masterWallet = await req.sdk
       .wallets
       .getMasterWallet(req.params.masterWalletId);
-    return (await masterWallet.
-      changePassphrase(
-        req.body.passphrase,
-        req.body.newPassphrase,
-        req.body.otp,
-      )); 
+    return (await masterWallet.changePassphrase(
+      req.body.passphrase,
+      req.body.newPassphrase,
+      req.body.otp,
+    ));
   }
 
   private async createUserWallet(req: express.Request): Promise<UserWalletData> {
@@ -152,31 +151,27 @@ export default class WalletController extends AbstractController implements Cont
       .getMasterWallet(req.params.masterWalletId);
 
     const balances = await masterWallet.getBalance();
-    return balances.map( x => {
-      return {
-        coinType : x.coinType,
-        amount : x.amount.toString(),
-        name : x.name,
-        symbol : x.symbol
-      };
-    });
+    return balances.map((x) => ({
+      coinType: x.coinType,
+      amount: x.amount.toString(),
+      name: x.name,
+      symbol: x.symbol,
+    }));
   }
 
   private async getUserWalletBalance(req: express.Request): Promise<BalanceResponse[]> {
-    const userWallet = await this.getUserWallet(
+    const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
       req.params.userWalletId,
     );
     const balances = await userWallet.getBalance();
-    return balances.map( x => {
-      return {
-        coinType : x.coinType,
-        amount : x.amount.toString(),
-        name : x.name,
-        symbol : x.symbol
-      };
-    });
+    return balances.map((x) => ({
+      coinType: x.coinType,
+      amount: x.amount.toString(),
+      name: x.name,
+      symbol: x.symbol,
+    }));
   }
 
   private async getMasterWalletNonce(req: express.Request): Promise<NonceResponse> {
@@ -184,18 +179,18 @@ export default class WalletController extends AbstractController implements Cont
       .wallets
       .getMasterWallet(req.params.masterWalletId);
     return {
-      nonce: (await masterWallet.getNonce()).toString()
+      nonce: (await masterWallet.getNonce()).toString(),
     };
   }
 
   private async getUserWalletNonce(req: express.Request): Promise<NonceResponse> {
-    const userWallet = await this.getUserWallet(
+    const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
       req.params.userWalletId,
     );
     return {
-      nonce: (await userWallet.getNonce()).toString()
+      nonce: (await userWallet.getNonce()).toString(),
     };
   }
 
@@ -217,7 +212,7 @@ export default class WalletController extends AbstractController implements Cont
   }
 
   private async sendUserWalletContractCall(req: express.Request): Promise<Transaction> {
-    const userWallet = await this.getUserWallet(
+    const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
       req.params.userWalletId,
@@ -254,7 +249,7 @@ export default class WalletController extends AbstractController implements Cont
   }
 
   private async sendUserWalletCoin(req: express.Request): Promise<Transaction> {
-    const userWallet = await this.getUserWallet(
+    const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
       req.params.userWalletId,
@@ -273,20 +268,28 @@ export default class WalletController extends AbstractController implements Cont
     };
   }
 
-  private async getUserWallet(sdk: SDK, masterWalletId: string, userWalletId: string): Promise<UserWallet> {
+  private async getUserWallet(req: express.Request): Promise<UserWallet> {
+    return this.getUserWalletByContext(
+      req.sdk,
+      req.params.masterWalletId,
+      req.params.userWalletId,
+    );
+  }
+
+  private async getUserWalletByContext(sdk: SDK, masterWalletId: string, userWalletId: string): Promise<UserWallet> {
     return (await sdk.wallets.getMasterWallet(masterWalletId))
       .getUserWallet(userWalletId);
   }
 
   private async getUserWallets(req: express.Request): Promise<UserWalletData[]> {
-    const masterWallet =  await req.sdk.wallets.getMasterWallet(req.params.masterWalletId);
+    const masterWallet = await req.sdk.wallets.getMasterWallet(req.params.masterWalletId);
     const wallets = (await masterWallet.getUserWallets({
       page: +req.params.page,
       size: +req.params.size,
       sort: req.params.sort,
       name: req.params.name,
-      address: req.params.address
+      address: req.params.address,
     })).results;
-    return wallets.map(x=>x.getData());
+    return wallets.map((x) => x.getData());
   }
 }
