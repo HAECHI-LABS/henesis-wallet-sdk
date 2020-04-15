@@ -1,7 +1,7 @@
 import nock from 'nock';
 import { SDK } from '../src';
 import { MasterWallet } from '../src/wallet';
-import { Blockchain } from '../src/blockchain';
+import { BlockchainType } from '../src/blockchain';
 
 const baseUrl = 'http://localhost:8080';
 describe('Wallets', () => {
@@ -67,8 +67,7 @@ describe('Wallets', () => {
       nock(baseUrl)
         .get('/api/v1/organizations/me')
         .reply(200, keysResponse);
-      await expect(sdk.wallets.createMasterWallet('should_not_exist', Blockchain.Klaytn, 'password', './noneExisting')).rejects.toThrow(Error);
-      const masterWallet: MasterWallet = await sdk.wallets.createMasterWallet('klaytn_test_masterWallet', Blockchain.Klaytn, 'password', './');
+      const masterWallet: MasterWallet = await sdk.wallets.createMasterWallet('klaytn_test_masterWallet', BlockchainType.Klaytn, 'password');
       expect(masterWallet.getAddress()).toEqual(response.address);
     });
   });

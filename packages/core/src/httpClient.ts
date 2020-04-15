@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
-import { Converter } from './utils';
+import { ObjectConverter } from './utils';
 import { Env } from './sdk';
 
 export interface ClientOptions {
@@ -55,18 +55,18 @@ export class HttpClient {
     });
 
     this.client.interceptors.request.use((config) => {
-      config.data = Converter.toSnakeCase(config.data);
+      config.data = ObjectConverter.toSnakeCase(config.data);
       return config;
     });
 
     this.client.interceptors.response.use((response) => {
       if (response.data) {
-        return Converter.toCamelCase(response.data);
+        return ObjectConverter.toCamelCase(response.data);
       }
       return response;
     }, (error) => {
       if (error.response) {
-        return Promise.reject(Converter.toCamelCase(error.response.data));
+        return Promise.reject(ObjectConverter.toCamelCase(error.response.data));
       }
       return Promise.reject(error);
     });

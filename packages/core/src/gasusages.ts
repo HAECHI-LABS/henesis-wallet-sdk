@@ -1,6 +1,7 @@
 import BN from 'bn.js';
 import { Client } from './sdk';
-import { Blockchain } from './blockchain';
+import { BlockchainType } from './blockchain';
+import { BNConverter } from './utils';
 
 export enum MethodName {
   TRANSFER = 'transfer',
@@ -10,7 +11,7 @@ export enum MethodName {
 
 export interface Method {
   id: string;
-  blockchain: Blockchain,
+  blockchain: BlockchainType,
   name: MethodName,
   estimatedGasConsumption: BN
 }
@@ -24,9 +25,9 @@ export class Gasusages {
     this.client = client;
   }
 
-  public async getMethodGasUsages(blockchain: Blockchain, methodName: MethodName): Promise<Method> {
+  public async getMethodGasUsages(blockchain: BlockchainType, methodName: MethodName): Promise<Method> {
     const balance = await this.client.get(`${this.baseUrl}/?blockchain=${blockchain}&name=${methodName}`);
-    balance.estimatedGasConsumption = new BN(`${balance.estimatedGasConsumption}`);
+    balance.estimatedGasConsumption = BNConverter.hexStringToBN(balance.estimatedGasConsumption);
     return balance;
   }
 }
