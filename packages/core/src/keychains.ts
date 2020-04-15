@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import {
   bytesToWord, decodeSignature, encodeSignature, toChecksum,
 } from './utils';
-import { Blockchain } from './blockchain';
+import { BlockchainType } from './blockchain';
 import { KeyWithPriv } from './types';
 
 const elliptic = require('elliptic');
@@ -22,9 +22,9 @@ export interface Keychains {
 
   decryptKeyFile(keyFile: string, password: string): string;
 
-  signPayload(blockchain: Blockchain, hexPayload: string, keyFile: string, password: string): string;
+  signPayload(blockchain: BlockchainType, hexPayload: string, keyFile: string, password: string): string;
 
-  recoverAddressFromSignature(blockchain: Blockchain, hexPayload: string, signature: string): string;
+  recoverAddressFromSignature(blockchain: BlockchainType, hexPayload: string, signature: string): string;
 }
 
 export class EthereumKeychains implements Keychains {
@@ -76,7 +76,7 @@ export class EthereumKeychains implements Keychains {
     }
   }
 
-  public signPayload(blockchain: Blockchain, hexPayload: string, keyFile: string, password: string): string {
+  public signPayload(blockchain: BlockchainType, hexPayload: string, keyFile: string, password: string): string {
     const hashedMessage = keccak256(this.payloadToPrefixedMessage(blockchain, hexPayload));
 
     const priv = this.decryptKeyFile(keyFile, password);
@@ -94,7 +94,7 @@ export class EthereumKeychains implements Keychains {
     ]);
   }
 
-  public recoverAddressFromSignature(blockchain: Blockchain, hexPayload: string, signature: string) {
+  public recoverAddressFromSignature(blockchain: BlockchainType, hexPayload: string, signature: string) {
     const vals = decodeSignature(signature);
     const vrs = {
       v: Bytes.toNumber(vals[0]),
@@ -131,15 +131,15 @@ export class EthereumKeychains implements Keychains {
     return sjcl.encrypt(password, privateKey, encryptOptions);
   }
 
-  private payloadToPrefixedMessage(blockchain: Blockchain, hexPayload: string): Buffer {
+  private payloadToPrefixedMessage(blockchain: BlockchainType, hexPayload: string): Buffer {
     const hashedPayload = keccak256(hexPayload);
     const payloadBuffer = Buffer.from(hashedPayload.slice(2), 'hex');
     const preambleBuffer = Buffer.from(`\u0019${this.blockchainPrefix(blockchain)} Signed Message:\n${payloadBuffer.length}`);
     return Buffer.concat([preambleBuffer, payloadBuffer]);
   }
 
-  private blockchainPrefix(blockchain: Blockchain): string {
-    const keys = Object.keys(Blockchain).filter((x) => Blockchain[x] == blockchain);
+  private blockchainPrefix(blockchain: BlockchainType): string {
+    const keys = Object.keys(BlockchainType).filter((x) => BlockchainType[x] == blockchain);
     return keys.length > 0 ? keys[0] : null;
   }
 }

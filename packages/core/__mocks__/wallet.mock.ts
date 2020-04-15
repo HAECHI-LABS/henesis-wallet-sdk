@@ -19,4 +19,8 @@ export class MockEthLikeWallet extends EthLikeWallet {
   getAddress(): string {
     return "";
   }
+
+  getId(): string {
+    return "id";
+  }
 }

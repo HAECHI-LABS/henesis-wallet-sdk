@@ -5,7 +5,8 @@ import {
 } from './types';
 
 import { Account } from './accounts';
-import { Blockchain } from './blockchain';
+import { BlockchainType } from './blockchain';
+import { BNConverter } from './utils';
 
 export interface Organization {
   accessToken: string;
@@ -27,9 +28,9 @@ export class Organizations {
     this.client = client;
   }
 
-  public async getOrganizationBalance(blockchain: Blockchain): Promise<Balance> {
+  public async getOrganizationBalance(blockchain: BlockchainType): Promise<Balance> {
     const balance = await this.client.get(`${this.baseUrl}/balance?blockchain=${blockchain}`);
-    balance.amount = new BN(`${balance.amount}`);
+    balance.amount = BNConverter.hexStringToBN(balance.amount);
     return balance;
   }
 

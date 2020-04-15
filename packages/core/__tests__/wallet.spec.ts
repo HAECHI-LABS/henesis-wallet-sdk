@@ -5,6 +5,7 @@ import { MultiSigPayload } from '../src/coin';
 import { EthLikeWallet, WalletStatus } from '../src/wallet';
 import { MockEthLikeWallet } from '../__mocks__/wallet.mock';
 import { EthereumKeychains } from '../src/keychains';
+import { BNConverter } from '../src/utils';
 
 const baseUrl = 'http://localhost:8080';
 describe('Wallet', () => {
@@ -39,8 +40,8 @@ describe('Wallet', () => {
         const multiSigPayload: MultiSigPayload = {
           walletAddress: '0x4F79BB2A91F88054710e24328c77f557d14e14AF',
           toAddress: '0x6732c278C58FC90542cce498981844A073D693d7',
-          value: new BN(0),
-          walletNonce: new BN(0),
+          value: BNConverter.hexStringToBN('0x0'),
+          walletNonce: BNConverter.hexStringToBN('0x0'),
           hexData: '0xc801bf9b000000000000000000000000000000000000000000000000000000000000006400000000000000000000000026064a2e2b568d9a6d01b93d039d1da9cf2a58cd',
         };
         const expectedSignature = '0x'
@@ -79,7 +80,7 @@ describe('Wallet', () => {
             },
         };
         const nonceResponse = {
-          nonce: '0',
+          nonce: '0x0',
         };
         const userWalletResponse = {
           address: '0xc6d286f3e6b43dd410bd1a79e224adb27d3a83d2',
