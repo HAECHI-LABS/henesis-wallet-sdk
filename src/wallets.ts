@@ -4,7 +4,7 @@ import { join } from 'path';
 import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains } from './keychains';
-import { Blockchain } from './blockchain';
+import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
 import { generatePdf } from './keycard';
 
@@ -46,7 +46,7 @@ export class Wallets {
 
   public async createMasterWallet(
     name: string,
-    blockchain: Blockchain,
+    blockchain: BlockchainType,
     passphrase: string,
   ): Promise<MasterWallet> {
     const accountKey = this.keychains.create(passphrase);
@@ -61,10 +61,10 @@ export class Wallets {
     );
     let henesisKey : Key;
     switch (blockchain) {
-      case Blockchain.Ethereum:
+      case BlockchainType.Ethereum:
         henesisKey = henesisKeys.henesisEthKey;
         break;
-      case Blockchain.Klaytn:
+      case BlockchainType.Klaytn:
         henesisKey = henesisKeys.henesisKlayKey;
     }
 
@@ -92,7 +92,7 @@ export class Wallets {
     return CryptoJS.PBKDF2(p, salt, { keySize: 256 / 32, iterations: 1000 });
   }
 
-  private async createRecoveryKit(name: string, blockchain: Blockchain, accountKey: KeyWithPriv, backupKey: KeyWithPriv, henesisKey: string, encryptedPassphrase: string, pdfPath: string) : Promise<string> {
+  private async createRecoveryKit(name: string, blockchain: BlockchainType, accountKey: KeyWithPriv, backupKey: KeyWithPriv, henesisKey: string, encryptedPassphrase: string, pdfPath: string) : Promise<string> {
     const path = join(pdfPath, `${name}.pdf`);
     const stream = fs.createWriteStream(path);
     const docs = await generatePdf({

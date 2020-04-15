@@ -1,14 +1,12 @@
 import PDFDocument from 'pdfkit';
 import QRCode from 'qrcode';
-import fs from 'fs';
 import SVGtoPDF from 'svg-to-pdfkit';
-import { MasterWalletData } from './wallet';
 import { KeyWithPriv } from './types';
-import { Blockchain } from './blockchain';
+import { BlockchainType } from './blockchain';
 
 export interface PdfOption {
   name : string;
-  blockchain : Blockchain;
+  blockchain : BlockchainType;
   accountKey : KeyWithPriv;
   backupKey : KeyWithPriv;
   henesisKey : string;

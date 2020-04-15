@@ -1,3 +1,5 @@
+import BN from 'bn.js';
+
 const Bytes = require('../vendor/eth-lib/bytes');
 const { keccak256s } = require('../vendor/eth-lib/hash');
 
@@ -20,7 +22,7 @@ export const toChecksum = (address) => {
 
 export const bytesToWord = (bytes?: Uint8Array): number => bytes.reduce((num, byte) => num * 0x100 + byte, 0);
 
-export class Converter {
+export class ObjectConverter {
   static toSnakeCase(obj: any) {
     const toSnake = (s) => s.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toLowerCase();
 
@@ -53,5 +55,32 @@ export class Converter {
       return n;
     }
     return o;
+  }
+}
+
+export class BNConverter {
+  static add0x(hexString: string): string {
+    if (hexString.length > 2 && hexString.substring(0, 2) == '0x') {
+      return hexString;
+    }
+    return `0x${hexString}`;
+  }
+
+  static remove0x(hexString: string): string {
+    if (hexString.length > 2 && hexString.substring(0, 2) == '0x') {
+      return hexString.substring(2);
+    }
+    return hexString;
+  }
+
+  static bnToHexString(bn: BN): string {
+    return `0x${bn.toString(16)}`;
+  }
+
+  static hexStringToBN(hexString: string) {
+    if (!hexString.startsWith('0x')) {
+      throw new Error(`invalid hex string format: ${hexString}`);
+    }
+    return new BN(this.remove0x(hexString), 16);
   }
 }
