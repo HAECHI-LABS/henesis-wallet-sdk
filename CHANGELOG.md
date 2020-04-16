@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.15](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.14...v0.0.1-alpha.15) (2020-04-16)
+
+
+### Bug Fixes
+
+* fix wrong wallet id bug in contract call method ([be7eba1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/be7eba114eebce6c7dae6bc6a220a5f2b7872b15))
+* remove fixed url ([58d0da8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/58d0da8a1c5b93f7f4099be46121df627d06dcae))
+
+
+### Features
+
+* add access token to account, implement account role change method, implement wallet name change method ([5e34090](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5e34090427239a58df8ba893a1974b1dab8bc353))
+
+
+
+
+
 ## [0.0.1-alpha.14](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.13...v0.0.1-alpha.14) (2020-04-16)
 
 
