@@ -169,7 +169,7 @@ export abstract class EthLikeWallet extends Wallet {
       signature,
       this.getChain(),
       multiSigPayload,
-      this.masterWalletData.id,
+      this.getId(),
       otpCode,
     );
   }
