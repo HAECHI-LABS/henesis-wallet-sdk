@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.14](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.13...v0.0.1-alpha.14) (2020-04-16)
+
+
+### Bug Fixes
+
+* change header to lowercase ([af253ff](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/af253fff5ed0e5b79a7a17a090ee94e6cf04432d))
+* fix transfer wallet id bug ([9a996ce](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9a996cec873cc5f51088f8e97ad0cc96c8769f0b))
+* fix user wallet method bug ([657b0f6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/657b0f6f0f259e5307e70a1c7c90a1d461a0b4a9))
+
+
+### Features
+
+* add 2bko's hcut token ([12b70e3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/12b70e3d109093e9e4666199ce10761a4e2e0836))
+* add drm coin, change to use hex format ([e9e1d28](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e9e1d28004d33a07685558ef2b2b49e563322296))
+* added restorepassphrase function ([73878dd](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/73878dd1ec008346d2e0e2dede61ddc401b4be2f))
+
+
+
+
+
 ## [0.0.1-alpha.13](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.12...v0.0.1-alpha.13) (2020-04-08)
 
 **Note:** Version bump only for package henesis-wallet-sdk
