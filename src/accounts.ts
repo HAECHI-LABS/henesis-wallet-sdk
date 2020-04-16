@@ -1,5 +1,5 @@
 import { Client } from './sdk';
-import { Key, Token } from "./types";
+import { Key, Token } from './types';
 
 export interface AccountWithOTP extends Account {
   otp: OTP;
