@@ -17,7 +17,6 @@ export default (req: express.Request, resp: express.Response, next: express.Next
   req.sdk = new SDK({
     accessToken,
     secret,
-    url: 'http://localhost:8080/api/v1',
   });
   next();
 };
