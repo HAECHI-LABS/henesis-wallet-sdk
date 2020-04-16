@@ -4,12 +4,11 @@ import {
   Balance, Secret, Token, Key,
 } from './types';
 
-import { Account } from './accounts';
+import { Account, Role } from "./accounts";
 import { BlockchainType } from './blockchain';
 import { BNConverter } from './utils';
 
 export interface Organization {
-  accessToken: string;
   henesisEthKey: Key;
   henesisKlayKey: Key;
   id: string;
@@ -21,8 +20,6 @@ export class Organizations {
   private readonly client: Client;
 
   private readonly baseUrl = '/organizations';
-
-  private readonly DEFAULT_TOKEN_EXPIRED_TIME = 3600;
 
   constructor(client: Client) {
     this.client = client;
@@ -46,9 +43,9 @@ export class Organizations {
     return this.client.post<Secret>(`${this.baseUrl}/secret`);
   }
 
-  public async createAccessToken(expiresIn?: number): Promise<Token> {
-    const requestExpiresIn = expiresIn || this.DEFAULT_TOKEN_EXPIRED_TIME;
-    return this.client.post<Token>(`${this.baseUrl}/token`, { expiresIn: requestExpiresIn });
+  public async changeAccountRole(accountId: string, role: Role): Promise<Account>{
+    return this.client.patch<Account>(`${this.baseUrl}/accounts/${accountId}`,{
+      role
+    })
   }
-  // todo public async changeAccountRole()
 }
