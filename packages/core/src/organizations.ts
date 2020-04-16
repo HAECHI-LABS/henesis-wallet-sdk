@@ -4,7 +4,7 @@ import {
   Balance, Secret, Token, Key,
 } from './types';
 
-import { Account, Role } from "./accounts";
+import { Account, Role } from './accounts';
 import { BlockchainType } from './blockchain';
 import { BNConverter } from './utils';
 
@@ -43,9 +43,9 @@ export class Organizations {
     return this.client.post<Secret>(`${this.baseUrl}/secret`);
   }
 
-  public async changeAccountRole(accountId: string, role: Role): Promise<Account>{
-    return this.client.patch<Account>(`${this.baseUrl}/accounts/${accountId}`,{
-      role
-    })
+  public async changeAccountRole(accountId: string, role: Role): Promise<Account> {
+    return this.client.patch<Account>(`${this.baseUrl}/accounts/${accountId}`, {
+      role,
+    });
   }
 }
