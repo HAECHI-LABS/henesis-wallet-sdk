@@ -52,9 +52,6 @@ export class Wallets {
     const backupKey = this.keychains.create(passphrase);
     const encryptionKey = this.createEncryptionKey(passphrase)
       .toString(CryptoJS.enc.BASE64);
-    const encryptedPassphrase = CryptoJS.AES
-      .encrypt(passphrase, encryptionKey.toString(CryptoJS.enc.BASE64))
-      .toString(CryptoJS.enc.BASE64);
     const henesisKeys = await this.client.get<any>(
       '/organizations/me',
     );
@@ -89,27 +86,6 @@ export class Wallets {
     const salt = CryptoJS.lib.WordArray.random(128 / 8);
     // generates 256bit key
     return CryptoJS.PBKDF2(p, salt, { keySize: 256 / 32, iterations: 1000 });
-  }
-
-  private async createRecoveryKit(
-    name: string,
-    blockchain: BlockchainType,
-    accountKey: KeyWithPriv,
-    backupKey: KeyWithPriv,
-    henesisKey: string,
-    encryptedPassphrase: string,
-    pdfPath: string
-  ) : Promise<string> {
-    const path = join(pdfPath, `${name}.pdf`);
-    const stream = require('fs').createWriteStream(path);
-    const docs = await generatePdf({
-      name, blockchain, accountKey, backupKey, henesisKey, encryptedPassphrase,
-    });
-    docs.pipe(stream);
-    return new Promise(((resolve, reject) => {
-      stream.on('finish', () => resolve(path));
-      stream.on('error', reject);
-    }));
   }
 
   private removePrivateKey(key: KeyWithPriv): Key {
