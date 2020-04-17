@@ -45,6 +45,7 @@ export class Events {
 
   public async getCallEvents(walletId: string, options?: EventPaginationOptions): Promise<Pagination<Event>> {
     const queryString: string = options ? Object.keys(ObjectConverter.toSnakeCase(options))
+      .filter((key) => !!options[key])
       .map((key) => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`).join('&') : '';
 
     const data: Pagination<Event> = await this.client
@@ -57,6 +58,7 @@ export class Events {
 
   public async getValueTransferEvents(walletId: string, options?: EventPaginationOptions): Promise<Pagination<ValueTransferEvent>> {
     const queryString: string = options ? Object.keys(ObjectConverter.toSnakeCase(options))
+      .filter((key) => !!options[key])
       .map((key) => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`).join('&') : '';
 
     const data: Pagination<ValueTransferEvent> = await this.client
