@@ -374,6 +374,7 @@ export class MasterWallet extends EthLikeWallet {
 
   async getUserWallets(options?: UserWalletPaginationOptions): Promise<Pagination<UserWallet>> {
     const queryString: string = options ? Object.keys(ObjectConverter.toSnakeCase(options))
+      .filter((key) => !!options[key])
       .map((key) => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`).join('&') : '';
 
     const data: Pagination<UserWalletData> = await this.client
