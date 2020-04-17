@@ -1,7 +1,7 @@
 import {SDK} from '../src';
 import {MasterWallet} from '../src/wallet';
 import 'dotenv/config'
-import {Blockchain} from '../src/blockchain';
+import {BlockchainType} from '../src/blockchain';
 
 async function main() {
   const sdk = new SDK({
@@ -12,7 +12,7 @@ async function main() {
 
   const wallet: MasterWallet = await sdk.wallets.createMasterWallet(
     "wallet1",
-    Blockchain.Klaytn,
+    BlockchainType.Klaytn,
     "passphrase"
   );
 
