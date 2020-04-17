@@ -265,11 +265,11 @@ export default class WalletController extends AbstractController implements Cont
   private async getUserWallets(req: express.Request): Promise<UserWalletData[]> {
     const masterWallet = await req.sdk.wallets.getMasterWallet(req.params.masterWalletId);
     const wallets = (await masterWallet.getUserWallets({
-      page: +req.params.page,
-      size: +req.params.size,
-      sort: req.params.sort,
-      name: req.params.name,
-      address: req.params.address,
+      page: +req.query.page,
+      size: +req.query.size,
+      sort: req.query.sort as string,
+      name: req.query.name as string,
+      address: req.query.address as string,
     })).results;
     return wallets.map((x) => x.getData());
   }
