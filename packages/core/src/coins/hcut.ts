@@ -11,6 +11,6 @@ export class Hcut extends Erc20 {
 
   getAddress(): string {
     // TODO: check mainnet address
-    return '0xd31a9d28d66a1f7e62b5565416ea14607690f788';
+    return '0xCF3A844202Cf46d70A68aAF9b396d5820D3Aa642';
   }
 }
