@@ -4,14 +4,6 @@ import BN from 'bn.js';
 import Web3 from 'web3';
 import erc20 from './contracts/ERC20.json';
 
-export interface MultiSigPayload {
-  walletAddress: string;
-  toAddress: string;
-  value: BN;
-  walletNonce: BN;
-  hexData: string;
-}
-
 export abstract class Coin {
   abstract getName(): string;
 

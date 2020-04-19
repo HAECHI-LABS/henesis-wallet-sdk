@@ -1,8 +1,7 @@
 import nock from 'nock';
 import BN from 'bn.js';
 import { SDK } from '../src';
-import { MultiSigPayload } from '../src/coin';
-import { EthLikeWallet, WalletStatus } from '../src/wallet';
+import { EthLikeWallet, WalletStatus, MultiSigPayload } from '../src/wallet';
 import { MockEthLikeWallet } from '../__mocks__/wallet.mock';
 import { EthereumKeychains } from '../src/keychains';
 import { BNConverter } from '../src/utils';
