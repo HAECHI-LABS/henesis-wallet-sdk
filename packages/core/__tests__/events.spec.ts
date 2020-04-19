@@ -8,9 +8,9 @@ describe('Events', () => {
       const walletId = 'e6f6a6dd37d73ea0a506e6b669017d3f';
       const response = {
         pagination: {
-          page: 1,
-          size: 1,
-          sort: 'desc',
+          nextUrl: 'http://localhost:8080/api/v1/transactions?blockchain=ETHEREUM?page=1?size=15',
+          previousUrl: null,
+          totalCount: 2,
         },
         results: [
           {
@@ -52,9 +52,9 @@ describe('Events', () => {
       const walletId = 'e6f6a6dd37d73ea0a506e6b669017d3f';
       const response = {
         pagination: {
-          page: 1,
-          size: 1,
-          sort: 'desc',
+          nextUrl: 'http://localhost:8080/api/v1/transactions?blockchain=ETHEREUM?page=1?size=15',
+          previousUrl: null,
+          totalCount: 2,
         },
         results: [
           {

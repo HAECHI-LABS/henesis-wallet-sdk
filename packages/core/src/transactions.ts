@@ -1,0 +1,68 @@
+import * as BN from 'bn.js';
+import { Client } from './sdk';
+import { BlockchainType } from './blockchain';
+import { MultiSigPayload } from './wallet';
+import { Pagination, PaginationOptions } from './types';
+import { ObjectConverter } from './utils';
+
+export interface Transaction {
+  id: string;
+  blockchain: BlockchainType;
+  sender: string;
+  keyId: string;
+  hash: string;
+  error: string;
+  signedMultiSigPayload: SignedMultiSigPayload;
+  rawTransaction: RawTransaction;
+  status: TransactionStatus;
+}
+
+export interface SignedMultiSigPayload {
+  signature: string;
+  payload: MultiSigPayload;
+}
+
+export interface RawTransaction {
+  nonce: BN;
+  gasPrice: BN;
+  gasLimit: BN;
+  to: string;
+  value: BN;
+  data: string;
+}
+
+export enum TransactionStatus {
+  REQUESTED = 'REQUESTED',
+  PENDING = 'PENDING',
+  FAILED = 'FAILED',
+  MINED = 'MINED',
+  CONFIRMED = 'CONFIRMED',
+  REPLACED = 'REPLACED'
+}
+
+
+export class Transactions {
+  private readonly client: Client;
+
+  private readonly baseUrl = '/transactions';
+
+  constructor(client: Client) {
+    this.client = client;
+  }
+
+  public async getTransaction(blockchain: BlockchainType, transactionId: string): Promise<Transaction> {
+    return await this.client.get<Transaction>(`${this.baseUrl}/${transactionId}?blockchain=${blockchain}`);
+  }
+
+  public async getTransactions(blockchain: BlockchainType, options?: PaginationOptions): Promise<Pagination<Transaction>> {
+    const queryString: string = options ? Object.keys(ObjectConverter.toSnakeCase(options))
+      .filter((key) => !!options[key])
+      .map((key) => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`).join('&') : '';
+
+    const data: Pagination<Transaction> = await this.client.get<Pagination<Transaction>>(`${this.baseUrl}?${queryString}&blockchain=${blockchain}`);
+    return {
+      pagination: data.pagination,
+      results: data.results,
+    };
+  }
+}
