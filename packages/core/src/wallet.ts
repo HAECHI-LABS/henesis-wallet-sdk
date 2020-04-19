@@ -7,7 +7,7 @@ import { Client } from './sdk';
 import {
   PaginationOptions, Pagination, Key, KeyWithPriv, Balance,
 } from './types';
-import { Coin, MultiSigPayload } from './coin';
+import { Coin } from './coin';
 import { Keychains } from './keychains';
 import { BlockchainType } from './blockchain';
 import { Factory, GlobalCoinFactoryGenerator } from './factory';
@@ -25,6 +25,14 @@ export interface Nonce {
 export enum WalletStatus {
   Inactive = 'INACTIVE',
   Active = 'ACTIVE'
+}
+
+export interface MultiSigPayload {
+  walletAddress: string;
+  toAddress: string;
+  value: BN;
+  walletNonce: BN;
+  hexData: string;
 }
 
 export interface Transaction {
