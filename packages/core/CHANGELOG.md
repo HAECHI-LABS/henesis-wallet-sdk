@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.18](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.17...v0.0.1-alpha.18) (2020-04-20)
+
+
+### Bug Fixes
+
+* add message when password is invalid ([75fe052](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/75fe052efb45f8ae5a51473779c57c2c48f4b665))
+* params to query ([7396e12](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7396e12530f68c99669f0e0fc3c4f4505b8a3cef))
+
+
+### Features
+
+* add transactions to SDK ([5860bbf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5860bbfa7deea8200d1d923b09acf0262085d80a))
+* pdf generation will be defined on client ([5145357](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5145357a9f472302cb81020439e057229b55dc01))
+
+
+
+
+
 ## [0.0.1-alpha.17](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.16...v0.0.1-alpha.17) (2020-04-17)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-core

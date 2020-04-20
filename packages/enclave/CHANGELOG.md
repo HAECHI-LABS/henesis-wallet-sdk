@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.18](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.17...v0.0.1-alpha.18) (2020-04-20)
+
+
+### Bug Fixes
+
+* add message when password is invalid ([75fe052](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/75fe052efb45f8ae5a51473779c57c2c48f4b665))
+* params to query ([7396e12](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7396e12530f68c99669f0e0fc3c4f4505b8a3cef))
+* sendStatus to status ([b5cc691](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b5cc69109bc099b1d1d183306a00c9a225b49206))
+
+
+
+
+
 ## [0.0.1-alpha.17](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.16...v0.0.1-alpha.17) (2020-04-17)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
