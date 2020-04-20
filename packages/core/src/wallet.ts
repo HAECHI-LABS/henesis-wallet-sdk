@@ -288,6 +288,25 @@ export class MasterWallet extends EthLikeWallet {
     return str;
   }
 
+  verifyEncryptedPassphrase(encryptedPassphrase: string): boolean {
+    const { encryptionKey } = this.masterWalletData;
+    const decrypted = CryptoJS.AES.decrypt(encryptedPassphrase, encryptionKey);
+    const passphrase = this.hex2a(decrypted.toString());
+    return this.verifyPassphrase(passphrase);
+  }
+
+  verifyPassphrase(passphrase: string): boolean {
+    try {
+      this.keychains.decryptKeyFile(
+        this.masterWalletData.accountKey.keyFile,
+        passphrase,
+      );
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   async changePassphrase(passphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
     const newKey: KeyWithPriv = this.keychains.changePassword(
       this.masterWalletData.accountKey.keyFile,

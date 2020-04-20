@@ -41,12 +41,12 @@ export class Wallets {
       this.keychains,
     ));
   }
-  
+
   public async createRecoveryKit(
     name: string,
     blockchain: BlockchainType,
-    passphrase: string
-  ): Promise<RecoveryKit>{
+    passphrase: string,
+  ): Promise<RecoveryKit> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKey = this.createEncryptionKey(passphrase)
@@ -74,10 +74,10 @@ export class Wallets {
       encryptedPassphrase,
     );
   }
-  
+
   public async createMasterWalletWithKit(
-    recoveryKit: RecoveryKit
-  ): Promise<MasterWallet>{
+    recoveryKit: RecoveryKit,
+  ): Promise<MasterWallet> {
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
       {
@@ -85,14 +85,14 @@ export class Wallets {
         blockchain: recoveryKit.getBlockchain(),
         accountKey: recoveryKit.getAccountKey(),
         backupKey: recoveryKit.getBackupKey(),
-        encryptionKey: recoveryKit.getEncryptedPassphrase()
-      }
+        encryptionKey: recoveryKit.getEncryptedPassphrase(),
+      },
     );
 
     return new MasterWallet(
       this.client,
       walletData,
-      this.keychains
+      this.keychains,
     );
   }
 
@@ -138,4 +138,3 @@ export class Wallets {
     };
   }
 }
-

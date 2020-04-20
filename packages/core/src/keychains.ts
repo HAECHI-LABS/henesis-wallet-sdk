@@ -1,13 +1,14 @@
 import crypto from 'crypto';
+import PDFDocument from 'pdfkit';
+import QRCode from 'qrcode';
+import SVGtoPDF from 'svg-to-pdfkit';
 import {
   bytesToWord, decodeSignature, encodeSignature, toChecksum,
 } from './utils';
 import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
-import PDFDocument from 'pdfkit';
-import QRCode from 'qrcode';
-import SVGtoPDF from 'svg-to-pdfkit';
 import { logo } from './resources/logo';
+
 const elliptic = require('elliptic');
 const { keccak256 } = require('./vendor/eth-lib/hash');
 const Bytes = require('./vendor/eth-lib/bytes');
@@ -150,10 +151,15 @@ export class EthereumKeychains implements Keychains {
 
 export class RecoveryKit {
   private name: string;
+
   private blockchain: BlockchainType;
+
   private henesisKey: Key;
+
   private accountKey: KeyWithPriv;
+
   private backupKey: KeyWithPriv;
+
   private encryptedPassphrase: string
 
   public constructor(
@@ -162,8 +168,8 @@ export class RecoveryKit {
     henesisKey: Key,
     accountKey: KeyWithPriv,
     backupKey: KeyWithPriv,
-    encryptedPassphrase: string
-  ){
+    encryptedPassphrase: string,
+  ) {
     this.name = name;
     this.blockchain = blockchain;
     this.henesisKey = henesisKey;
@@ -175,23 +181,23 @@ export class RecoveryKit {
   async generatePdf(): Promise<PDFDocument> {
     const docs = new PDFDocument({ size: 'A4' });
     docs
-    .font(`Helvetica`)
-    .fontSize(24)
-    .fillColor('#060607')
-    .text(this.name, 36, 36);
+      .font('Helvetica')
+      .fontSize(24)
+      .fillColor('#060607')
+      .text(this.name, 36, 36);
     // write wallet description
     docs
-    .font(`Helvetica`)
-    .fontSize(10)
-    .fillColor('#3A4044')
-    .text(`Platform : ${this.camelize(this.blockchain)}`, 36, 76)
-    .text(`Created Time : ${this.getFormattedDate(new Date())}`, 36, 91);
+      .font('Helvetica')
+      .fontSize(10)
+      .fillColor('#3A4044')
+      .text(`Platform : ${this.camelize(this.blockchain)}`, 36, 76)
+      .text(`Created Time : ${this.getFormattedDate(new Date())}`, 36, 91);
     // write note
     docs
-    .font(`Helvetica`)
-    .fontSize(9)
-    .fillColor('#F5405B')
-    .text('This is a Recovery Kit to recover your keys when you lost them. Print this document, or keep it securely offline.', 36, 134, { width: 305 });
+      .font('Helvetica')
+      .fontSize(9)
+      .fillColor('#F5405B')
+      .text('This is a Recovery Kit to recover your keys when you lost them. Print this document, or keep it securely offline.', 36, 134, { width: 305 });
     // draw logo
     SVGtoPDF(docs, logo, 468, 36, { width: 91, preserveAspectRatio: 'xMinYMin' });
     await this.setQRCode(docs, 'A. Account Key', 'This is your private key, encrypted with your passphrase.', this.accountKey.keyFile, 36, 224);
@@ -205,17 +211,17 @@ export class RecoveryKit {
   async setQRCode(docs : PDFDocument, name: string, desc: string, data : string, x : number, y : number) : Promise<void> {
     const qr = await QRCode.toString(data, { type: 'svg', color: { light: '0000' }, margin: 0 });
     docs
-    .font(`Helvetica`)
-    .fontSize(13)
-    .fillColor('#060607')
-    .text(name, x, y)
-    .fontSize(9)
-    .fillColor('#748089')
-    .text(desc, x, docs.y + 3, { width: 340 })
-    .fillColor('#465365')
-    .text('Data : ', x, docs.y + 12)
-    .fillColor('#465365')
-    .text(data, x, docs.y + 5, { width: 390, align: 'justify' });
+      .font('Helvetica')
+      .fontSize(13)
+      .fillColor('#060607')
+      .text(name, x, y)
+      .fontSize(9)
+      .fillColor('#748089')
+      .text(desc, x, docs.y + 3, { width: 340 })
+      .fillColor('#465365')
+      .text('Data : ', x, docs.y + 12)
+      .fillColor('#465365')
+      .text(data, x, docs.y + 5, { width: 390, align: 'justify' });
     SVGtoPDF(docs, qr, 453, y, { width: 105, height: 105, preserveAspectRatio: 'xMinYMin' });
   }
 
@@ -242,12 +248,12 @@ export class RecoveryKit {
   getHenesisKey(): Key {
     return this.henesisKey;
   }
-  
+
   getAccountKey(): KeyWithPriv {
     return this.accountKey;
   }
 
-  getBackupKey(): KeyWithPriv{
+  getBackupKey(): KeyWithPriv {
     return this.backupKey;
   }
 
@@ -255,4 +261,3 @@ export class RecoveryKit {
     return this.encryptedPassphrase;
   }
 }
-

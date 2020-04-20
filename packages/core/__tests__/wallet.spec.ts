@@ -1,18 +1,32 @@
 import nock from 'nock';
-import BN from 'bn.js';
 import { SDK } from '../src';
-import { EthLikeWallet, WalletStatus, MultiSigPayload } from '../src/wallet';
-import { MockEthLikeWallet } from '../__mocks__/wallet.mock';
+import {
+  EthLikeWallet,
+  MasterWallet, MultiSigPayload, WalletStatus,
+} from '../src/wallet';
 import { EthereumKeychains } from '../src/keychains';
 import { BNConverter } from '../src/utils';
+import { MockEthLikeWallet } from '../__mocks__/wallet.mock';
 
 const baseUrl = 'http://localhost:8080';
 describe('Wallet', () => {
+  const password = 'password';
+  const encryptedPassphrase = 'U2FsdGVkX1/5UcQztsrOcyCz+qzokaTpjouGxtX9NFw=';
+  const keyWithPriv = {
+    address: '0xb0A6d9b21F45aCC64365CDBb523405411c3b050F',
+    pub: '0x4d5cfc604d29a96298c1851899e9ca3d2a6337ead83bb3e9cfd822dc81ac87574f0b7aa725df739e0770b677db12bf9e19c46b7b55fd1ef75aaabe2a054e50a0',
+    priv: '0xf276c114c14b6ac782a2de88d3d1a0157a11cf805c3d73bd4ae4fe54751da2ff',
+    keyFile: '{"iv":"htWaAhMGgfR1ehOdvdmmOw==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"rdvBsRRtKXg=","ct":"vXtrIIxU+iPiZ4gOXOht/EsWRJSljW6WLCWn10eFysvLRwUrFLzB9Jq25XuW3+OBwT9wJttcdWQyfJjruG+vKCCKWWhLmeoTLQw="}',
+  };
+  let keychain: EthereumKeychains;
+
+  beforeAll(() => {
+    keychain = new EthereumKeychains();
+  });
+
   describe('EthLikeWallet', () => {
     let wallet: EthLikeWallet;
-    let keychain: EthereumKeychains;
     beforeEach(() => {
-      keychain = new EthereumKeychains();
       wallet = new MockEthLikeWallet(
         null,
         {
@@ -24,60 +38,100 @@ describe('Wallet', () => {
 
     describe('#signPayload()', () => {
       it('should return valid signature', () => {
-        const keyWithPriv = {
-          address: '0x954811D579c16D79b8797066f41DFb846a169a0F',
-          pub: '0x48ad86c7fda903b00bb10c046aa9fdaa64f4aebd2b768ff269946d87230d735b1c2020478776bf176d7d46f87a404b3f6e3301d4cf6ca79b59247704f90c9e60',
-          priv: '0x68de31542f68c785056a977c838517c9db1902ea6d10794c322e32440d1f5497',
-          keyFile:
-            '{"iv":"1lsvVj19dYI3Rkf7g9MLMw==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"79Hft/yrA7Y=","ct":"vSYilJIDPPeZzRq15Q7MoE9AvqZ2wtQc6S2vDPfbFOzdYQTfy8cdZbPSmIcdNnrCK6hZndUCtD3QJewPgqixz1cyOjUcGQjWjqo="}',
-        };
-        (wallet as any).keychains = keychain;
         (wallet as any).masterWalletData = {
           blockchain: 'ETHEREUM',
           accountKey: keyWithPriv,
         };
         const multiSigPayload: MultiSigPayload = {
-          walletAddress: '0x4F79BB2A91F88054710e24328c77f557d14e14AF',
+          walletAddress: '0xbcbc740cbeb5a6e6fcea548725e82b10b6edd9e3',
           toAddress: '0x6732c278C58FC90542cce498981844A073D693d7',
           value: BNConverter.hexStringToBN('0x0'),
           walletNonce: BNConverter.hexStringToBN('0x0'),
           hexData: '0xc801bf9b000000000000000000000000000000000000000000000000000000000000006400000000000000000000000026064a2e2b568d9a6d01b93d039d1da9cf2a58cd',
         };
         const expectedSignature = '0x'
-          + '2042cf1aca32120e43f5dc193492e2d343f49d61460f0a9213cdc377a94a70d0' // r
-          + '067e7c583b03c0a8aabac4b5254b590d1476eaf8a465fdf55927d202a261ab60' // s
-          + '1c'; // v
-        expect((wallet as any).signPayload(multiSigPayload, 'password')).toEqual(expectedSignature);
+          + '011bb0cfe4641dbba9269e681d710183a99cc1a7b0c341e40324425fc78b8936' // r
+          + '41db2742192de9f405769abe8d856f7a7232c6f96fd7c4c20938c39ac9e787a0' // s
+          + '1b'; // v
+        expect((wallet as any).signPayload(multiSigPayload, password)).toEqual(expectedSignature);
+      });
+    });
+  });
+
+  describe('MasterWallet', () => {
+    let wallet: MasterWallet;
+    beforeAll(() => {
+      wallet = new MasterWallet(
+        null,
+        {
+          blockchain: 'ETHEREUM',
+        } as any,
+        keychain,
+      );
+    });
+
+    describe('#verifyPassphrase()', () => {
+      beforeAll(() => {
+        (wallet as any).masterWalletData = {
+          blockchain: 'ETHEREUM',
+          accountKey: keyWithPriv,
+        };
+      });
+
+      it('should return true when passphrase is valid', () => {
+        const isValid = wallet.verifyPassphrase(password);
+        expect(isValid).toEqual(true);
+      });
+
+      it('should return false when passphrase is invalid', () => {
+        const isValid = wallet.verifyPassphrase(`invalid${password}`);
+        expect(isValid).toEqual(false);
+      });
+    });
+
+    describe('#verifyEncryptedPassphrase()', () => {
+      beforeAll(() => {
+        (wallet as any).masterWalletData = {
+          blockchain: 'ETHEREUM',
+          accountKey: keyWithPriv,
+          encryptionKey: '83b80190a2c2322d69c7b498d259243ea8cd46b40b411f81614adb2685c2ba78',
+        };
+      });
+
+      it('should return true when passphrase is valid', () => {
+        const isValid = wallet.verifyEncryptedPassphrase(encryptedPassphrase);
+        expect(isValid).toEqual(true);
+      });
+
+      it('should return false when passphrase is invalid', () => {
+        const isValid = wallet.verifyEncryptedPassphrase(`invalid${encryptedPassphrase}`);
+        expect(isValid).toEqual(false);
       });
     });
 
     describe('#createUserWallet()', () => {
       it('should be able to create user wallet when salt is not given', async () => {
         const masterWalletResponse = {
-          id: '20a5fa879bcb14a5c7b1e654961c3599',
-          name: 'my_wallet',
-          address: '0x6b8efffae6dd7773a7c5c87e971a40b201bf78c8',
-          blockchain: 'KLAYTN',
-          status: 'ACTIVE',
-          createdAt: '1583837537277',
-          updatedAt: '1583837537277',
-          backupKey:
-            {
-              address: '0x716ba9752bbf769428dcd59352e4c16f64a2a856',
-              pub:
-                '0xf1c6031a12cc0c2f15ac409833ed03685420f30f30dd077aba52ee61b0e39133821e20c7f4089b55f8a4c7a650c0da41f80e6de7ef9e1f4de0eb3ebf09b360f6',
-              keyFile:
-                '{"iv":"BEySd1ljOn4Sbb6BKTqlNQ==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"T85A09XexMM=","ct":"qvjhYYQXObQB4ta49b6iDwLX1+aynHOM1zhdC0bIozvW9e6MmrZaRa1N+0MxjAX/fPJQYia0KJGCEgoXfSGRCF0wWhGDBM9jK9Q="}',
-            },
-          accountKey:
-            {
-              address: '0xc6d286f3e6b43dd410bd1a79e224adb27d3a83d2',
-              pub:
-                '0x2a514115f574b9becbb7b43c4dabf2165b97cd64f492787171f54a81e8aa7b3e72cb42335a8e0a5bc774a0dc7ec2c29f74b6b239fabecce655d714dbc2f9ae03',
-              keyFile:
-                '{"iv":"gw6l4gKz7k3BjTOP23FOCA==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"UFHEh0shodQ=","ct":"tWPRVQIY6JGIt2uM7Pw/5nn+M4hZAIBjLfIXnxecl6VzHDzMdC0wa0jjsHUEOJCaNXWHiDcRTLl1Iwm1ql42toj9jdVUHTbL6bQ="}',
-            },
+          id: 'b338377ef0fb54c3a3110a37f67caef1',
+          name: 'test-wallet',
+          address: '0xbcbc740cbeb5a6e6fcea548725e82b10b6edd9e3',
+          blockchain: 'ETHEREUM',
+          status: 'INACTIVE',
+          encryptionKey: '83b80190a2c2322d69c7b498d259243ea8cd46b40b411f81614adb2685c2ba78',
+          backupKey: {
+            address: '0xb0a6d9b21f45acc64365cdbb523405411c3b050f',
+            pub: '0x4d5cfc604d29a96298c1851899e9ca3d2a6337ead83bb3e9cfd822dc81ac87574f0b7aa725df739e0770b677db12bf9e19c46b7b55fd1ef75aaabe2a054e50a0',
+            keyFile: '{"iv":"htWaAhMGgfR1ehOdvdmmOw==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"rdvBsRRtKXg=","ct":"vXtrIIxU+iPiZ4gOXOht/EsWRJSljW6WLCWn10eFysvLRwUrFLzB9Jq25XuW3+OBwT9wJttcdWQyfJjruG+vKCCKWWhLmeoTLQw="}',
+          },
+          accountKey: {
+            address: '0x86e8779d5554f0c1863764c601a1fc0025f5e56f',
+            pub: '0xd37016171e6af94894d4b86434a210d19da591a175e9149b7f57f90d7820006bbf82a0393490de07cc868e863bd2c1556c799d73174fe1b91eb3428ed914b24d',
+            keyFile: '{"iv":"LiViH3kLTNvmq0osD00WLw==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"mvHVy1IfAgw=","ct":"+njIB3NPHrjIKupdVeq4xIAazhgpWYtda8vLJ1HcKG5+kvZQJFwfl7/QBQZKpMnPnnfK6khM1dSUtrh5sJ+knABnsoU2ZoBXfh0="}',
+          },
+          createdAt: '1587391943874',
+          updatedAt: '1587391943874',
         };
+
         const nonceResponse = {
           nonce: '0x0',
         };
@@ -91,13 +145,13 @@ describe('Wallet', () => {
           updated_at: '1583837537277',
         };
         nock(baseUrl)
-          .get('/api/v1/wallets/20a5fa879bcb14a5c7b1e654961c3599')
+          .get('/api/v1/wallets/b338377ef0fb54c3a3110a37f67caef1')
           .reply(200, masterWalletResponse);
         nock(baseUrl)
-          .get('/api/v1/wallets/20a5fa879bcb14a5c7b1e654961c3599/nonce')
+          .get('/api/v1/wallets/b338377ef0fb54c3a3110a37f67caef1/nonce')
           .reply(200, nonceResponse);
         nock(baseUrl)
-          .post('/api/v1/wallets/20a5fa879bcb14a5c7b1e654961c3599/user-wallets')
+          .post('/api/v1/wallets/b338377ef0fb54c3a3110a37f67caef1/user-wallets')
           .reply(200, userWalletResponse);
 
         const sdk = new SDK({
@@ -105,8 +159,8 @@ describe('Wallet', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v1',
         });
-        const wallet = await sdk.wallets.getMasterWallet('20a5fa879bcb14a5c7b1e654961c3599');
-        const userWallet = await wallet.createUserWallet('klaytn_test', 'password');
+        wallet = await sdk.wallets.getMasterWallet('b338377ef0fb54c3a3110a37f67caef1');
+        const userWallet = await wallet.createUserWallet('klaytn_test', password);
         expect(userWallet.getAddress()).toEqual('0xc6d286f3e6b43dd410bd1a79e224adb27d3a83d2');
         expect(userWallet.getData().status).toEqual(WalletStatus.Active);
       });
