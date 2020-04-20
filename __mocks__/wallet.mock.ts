@@ -23,4 +23,7 @@ export class MockEthLikeWallet extends EthLikeWallet {
   getId(): string {
     return "id";
   }
+
+  changeName(name: string) {
+  }
 }
