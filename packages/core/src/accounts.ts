@@ -1,5 +1,5 @@
 import { Client } from './sdk';
-import { Key } from './types';
+import { Key, Token } from './types';
 
 export interface AccountWithOTP extends Account {
   otp: OTP;
@@ -10,6 +10,7 @@ export interface Account {
   email: string;
   firstName: string;
   lastName: string;
+  accessToken: string;
   organizationId: string;
   roles: Role[];
 }
@@ -35,6 +36,8 @@ export class Accounts {
 
   private readonly baseUrl = '/accounts';
 
+  private readonly DEFAULT_TOKEN_EXPIRED_TIME = 3600;
+
   constructor(client: Client) {
     this.client = client;
   }
@@ -59,5 +62,14 @@ export class Accounts {
       password,
       otpCode,
     });
+  }
+
+  public async createAccessToken(expiresIn?: number): Promise<Token> {
+    const requestExpiresIn = expiresIn || this.DEFAULT_TOKEN_EXPIRED_TIME;
+    return this.client.post<Token>(`${this.baseUrl}/token`, { expiresIn: requestExpiresIn });
+  }
+
+  public async getAccessToken(): Promise<Token> {
+    return this.client.get<Token>(`${this.baseUrl}/token`);
   }
 }

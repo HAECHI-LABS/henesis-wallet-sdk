@@ -1,8 +1,8 @@
 import { Coin } from './coin';
 import {
-  Coins, Eth, Hib, Klay,
+  Ticker, Drm, Eth, Hib, Klay, Hcut,
 } from './coins';
-import { Blockchain } from './blockchain';
+import { BlockchainType } from './blockchain';
 
 export class Factory<T> {
   private c = new Map<string, T>();
@@ -23,13 +23,16 @@ export class Factory<T> {
 
 export const GlobalCoinFactoryGenerator: Factory<Factory<Coin>> = new Factory<Factory<Coin>>();
 GlobalCoinFactoryGenerator.register(
-  Blockchain.Ethereum,
-  new Factory<Coin>().register(Coins.Eth, new Eth()),
+  BlockchainType.Ethereum,
+  new Factory<Coin>()
+    .register(Ticker.Eth, new Eth())
+    .register(Ticker.Hcut, new Hcut())
+    .register(Ticker.Drm, new Drm()),
 );
 
 GlobalCoinFactoryGenerator.register(
-  Blockchain.Klaytn,
+  BlockchainType.Klaytn,
   new Factory<Coin>()
-    .register(Coins.Klay, new Klay())
-    .register(Coins.Hib, new Hib()),
+    .register(Ticker.Klay, new Klay())
+    .register(Ticker.Hib, new Hib()),
 );

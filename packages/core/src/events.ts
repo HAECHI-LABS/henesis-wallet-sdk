@@ -1,7 +1,7 @@
 import * as BN from 'bn.js';
 import { Client } from './sdk';
 import { Pagination, PaginationOptions } from './types';
-import { Converter } from './utils';
+import { ObjectConverter } from './utils';
 
 export interface Event {
   createdAt: string;
@@ -44,8 +44,9 @@ export class Events {
   }
 
   public async getCallEvents(walletId: string, options?: EventPaginationOptions): Promise<Pagination<Event>> {
-    const queryString: string = options ? Object.keys(Converter.toSnakeCase(options))
-      .map((key) => `${key}=${Converter.toSnakeCase(options)[key]}`).join('&') : '';
+    const queryString: string = options ? Object.keys(ObjectConverter.toSnakeCase(options))
+      .filter((key) => !!options[key])
+      .map((key) => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`).join('&') : '';
 
     const data: Pagination<Event> = await this.client
       .get<Pagination<Event>>(`/call-events?${queryString}&wallet_id=${walletId}`);
@@ -56,8 +57,9 @@ export class Events {
   }
 
   public async getValueTransferEvents(walletId: string, options?: EventPaginationOptions): Promise<Pagination<ValueTransferEvent>> {
-    const queryString: string = options ? Object.keys(Converter.toSnakeCase(options))
-      .map((key) => `${key}=${Converter.toSnakeCase(options)[key]}`).join('&') : '';
+    const queryString: string = options ? Object.keys(ObjectConverter.toSnakeCase(options))
+      .filter((key) => !!options[key])
+      .map((key) => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`).join('&') : '';
 
     const data: Pagination<ValueTransferEvent> = await this.client
       .get<Pagination<ValueTransferEvent>>(`/value-transfer-events?${queryString}&wallet_id=${walletId}`);

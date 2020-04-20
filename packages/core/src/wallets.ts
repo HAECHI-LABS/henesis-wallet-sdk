@@ -1,12 +1,10 @@
 import CryptoJS from 'crypto-js';
-import fs from 'fs';
 import { join } from 'path';
 import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
-import { Keychains } from './keychains';
-import { Blockchain } from './blockchain';
+import { Keychains, RecoveryKit } from './keychains';
+import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
-import { generatePdf } from './keycard';
 
 export class Wallets {
   private readonly client: Client;
@@ -43,30 +41,70 @@ export class Wallets {
       this.keychains,
     ));
   }
-
-  public async createMasterWallet(
+  
+  public async createRecoveryKit(
     name: string,
-    blockchain: Blockchain,
-    passphrase: string,
-  ): Promise<MasterWallet> {
+    blockchain: BlockchainType,
+    passphrase: string
+  ): Promise<RecoveryKit>{
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKey = this.createEncryptionKey(passphrase)
-      .toString(CryptoJS.enc.BASE64);
-    const encryptedPassphrase = CryptoJS.AES
-      .encrypt(passphrase, encryptionKey.toString(CryptoJS.enc.BASE64))
       .toString(CryptoJS.enc.BASE64);
     const henesisKeys = await this.client.get<any>(
       '/organizations/me',
     );
     let henesisKey : Key;
     switch (blockchain) {
-      case Blockchain.Ethereum:
+      case BlockchainType.Ethereum:
         henesisKey = henesisKeys.henesisEthKey;
         break;
-      case Blockchain.Klaytn:
+      case BlockchainType.Klaytn:
         henesisKey = henesisKeys.henesisKlayKey;
     }
+    const encryptedPassphrase = CryptoJS.AES
+      .encrypt(passphrase, encryptionKey.toString(CryptoJS.enc.BASE64))
+      .toString(CryptoJS.enc.BASE64);
+    return new RecoveryKit(
+      name,
+      blockchain,
+      henesisKey,
+      accountKey,
+      backupKey,
+      encryptedPassphrase,
+    );
+  }
+  
+  public async createMasterWalletWithKit(
+    recoveryKit: RecoveryKit
+  ): Promise<MasterWallet>{
+    const walletData = await this.client.post<MasterWalletData>(
+      this.baseUrl,
+      {
+        name: recoveryKit.getName(),
+        blockchain: recoveryKit.getBlockchain(),
+        accountKey: recoveryKit.getAccountKey(),
+        backupKey: recoveryKit.getBackupKey(),
+        encryptionKey: recoveryKit.getEncryptedPassphrase()
+      }
+    );
+
+    return new MasterWallet(
+      this.client,
+      walletData,
+      this.keychains
+    );
+  }
+
+  public async createMasterWallet(
+    name: string,
+    blockchain: BlockchainType,
+    passphrase: string,
+  ): Promise<MasterWallet> {
+    const accountKey = this.keychains.create(passphrase);
+    const backupKey = this.keychains.create(passphrase);
+    const encryptionKey = this.createEncryptionKey(passphrase)
+      .toString(CryptoJS.enc.BASE64);
 
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
@@ -92,19 +130,6 @@ export class Wallets {
     return CryptoJS.PBKDF2(p, salt, { keySize: 256 / 32, iterations: 1000 });
   }
 
-  private async createRecoveryKit(name: string, blockchain: Blockchain, accountKey: KeyWithPriv, backupKey: KeyWithPriv, henesisKey: string, encryptedPassphrase: string, pdfPath: string) : Promise<string> {
-    const path = join(pdfPath, `${name}.pdf`);
-    const stream = fs.createWriteStream(path);
-    const docs = await generatePdf({
-      name, blockchain, accountKey, backupKey, henesisKey, encryptedPassphrase,
-    });
-    docs.pipe(stream);
-    return new Promise(((resolve, reject) => {
-      stream.on('finish', () => resolve(path));
-      stream.on('error', reject);
-    }));
-  }
-
   private removePrivateKey(key: KeyWithPriv): Key {
     return {
       address: key.address,
@@ -113,3 +138,4 @@ export class Wallets {
     };
   }
 }
+
