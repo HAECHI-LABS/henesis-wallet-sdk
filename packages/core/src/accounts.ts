@@ -56,6 +56,13 @@ export class Accounts {
       });
   }
 
+  public changeName(firstName: string, lastName: string): Promise<void> {
+    return this.client.patch(`${this.baseUrl}/name`, {
+      firstName,
+      lastName,
+    });
+  }
+
   public changePassword(password: string, newPassword: string, otpCode?: string): Promise<void> {
     return this.client.patch(`${this.baseUrl}/password`, {
       newPassword,
