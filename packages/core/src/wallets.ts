@@ -2,10 +2,9 @@ import CryptoJS from 'crypto-js';
 import { join } from 'path';
 import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
-import { Keychains } from './keychains';
+import { Keychains, RecoveryKit } from './keychains';
 import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
-import { generatePdf } from './keycard';
 
 export class Wallets {
   private readonly client: Client;
@@ -42,12 +41,12 @@ export class Wallets {
       this.keychains,
     ));
   }
-
-  public async createMasterWallet(
+  
+  public async createRecoveryKit(
     name: string,
     blockchain: BlockchainType,
-    passphrase: string,
-  ): Promise<MasterWallet> {
+    passphrase: string
+  ): Promise<RecoveryKit>{
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKey = this.createEncryptionKey(passphrase)
@@ -63,6 +62,49 @@ export class Wallets {
       case BlockchainType.Klaytn:
         henesisKey = henesisKeys.henesisKlayKey;
     }
+    const encryptedPassphrase = CryptoJS.AES
+      .encrypt(passphrase, encryptionKey.toString(CryptoJS.enc.BASE64))
+      .toString(CryptoJS.enc.BASE64);
+    return new RecoveryKit(
+      name,
+      blockchain,
+      henesisKey,
+      accountKey,
+      backupKey,
+      encryptedPassphrase,
+    );
+  }
+  
+  public async createMasterWalletWithKit(
+    recoveryKit: RecoveryKit
+  ): Promise<MasterWallet>{
+    const walletData = await this.client.post<MasterWalletData>(
+      this.baseUrl,
+      {
+        name: recoveryKit.getName(),
+        blockchain: recoveryKit.getBlockchain(),
+        accountKey: recoveryKit.getAccountKey(),
+        backupKey: recoveryKit.getBackupKey(),
+        encryptionKey: recoveryKit.getEncryptedPassphrase()
+      }
+    );
+
+    return new MasterWallet(
+      this.client,
+      walletData,
+      this.keychains
+    );
+  }
+
+  public async createMasterWallet(
+    name: string,
+    blockchain: BlockchainType,
+    passphrase: string,
+  ): Promise<MasterWallet> {
+    const accountKey = this.keychains.create(passphrase);
+    const backupKey = this.keychains.create(passphrase);
+    const encryptionKey = this.createEncryptionKey(passphrase)
+      .toString(CryptoJS.enc.BASE64);
 
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
@@ -96,3 +138,4 @@ export class Wallets {
     };
   }
 }
+
