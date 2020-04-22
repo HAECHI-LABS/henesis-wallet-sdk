@@ -1,10 +1,14 @@
 import CryptoJS from 'crypto-js';
-import { join } from 'path';
 import { Client } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains, RecoveryKit } from './keychains';
 import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
+import { ObjectConverter } from "./utils";
+
+export interface MasterWalletSearchOptions {
+  name?: string;
+}
 
 export class Wallets {
   private readonly client: Client;
@@ -30,9 +34,13 @@ export class Wallets {
     );
   }
 
-  public async getMasterWallets(): Promise<MasterWallet[]> {
+  public async getMasterWallets(options?: MasterWalletSearchOptions): Promise<MasterWallet[]> {
+    const queryString: string = options ? Object.keys(ObjectConverter.toSnakeCase(options))
+      .filter((key) => !!options[key])
+      .map((key) => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`).join('&') : '';
+
     const walletDatas = await this.client.get<MasterWalletData[]>(
-      this.baseUrl,
+      `${this.baseUrl}?${queryString}`,
     );
 
     return walletDatas.map((x) => new MasterWallet(
