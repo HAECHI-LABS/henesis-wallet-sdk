@@ -12,11 +12,11 @@ import { Keychains } from './keychains';
 import { BlockchainType } from './blockchain';
 import { Factory, GlobalCoinFactoryGenerator } from './factory';
 import wallet from './contracts/MasterWallet.json';
-import { BNConverter, ObjectConverter } from './utils';
+import {BNConverter, ObjectConverter, toChecksum} from './utils';
 import { Ticker } from './coins';
 
 const Bytes = require('./vendor/eth-lib/bytes');
-const { keccak256 } = require('./vendor/eth-lib/hash');
+const { keccak256s } = require('./vendor/eth-lib/hash');
 
 export interface Nonce {
   nonce: BN;
@@ -102,8 +102,6 @@ export abstract class Wallet {
 
   abstract verifyAddress(address: string): boolean;
 
-  abstract isValidAddress(address: string): boolean;
-
   abstract transfer(
     ticker: Ticker | string,
     to: string,
@@ -142,15 +140,24 @@ export abstract class EthLikeWallet extends Wallet {
   }
 
   verifyAddress(address: string): boolean {
-    return false;
+    if (!/^(0x|0X)?[0-9a-fA-F]{40}$/i.test(address)) {
+      return false;
+    }
+
+    const checksumAddress = toChecksum(address);
+    const addressHash = keccak256s(address.slice(2));
+    for (let i = 0; i < 40; i++) {
+      if ((parseInt(addressHash[i + 2], 16) > 7) && (address[i + 2].toUpperCase() !== checksumAddress[i + 2])
+          || ((parseInt(addressHash[i + 2], 16) <= 7) && (address[i + 2].toLowerCase() !== checksumAddress[i + 2]))) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   getChain(): BlockchainType {
     return this.masterWalletData.blockchain;
-  }
-
-  isValidAddress(address: string): boolean {
-    return false;
   }
 
   async contractCall(
