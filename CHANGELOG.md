@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.20](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.19...v0.0.1-alpha.20) (2020-04-22)
+
+
+### Features
+
+* add search option to get master wallets method ([307239d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/307239dd3b4b45f21e91e38eaa551e50be58e753))
+* add verifyAddress method ([87e3eda](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/87e3eda84ed9ed02259085eb644f62a1827eb4ab))
+
+
+
+
+
 ## [0.0.1-alpha.19](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.18...v0.0.1-alpha.19) (2020-04-21)
 
 
