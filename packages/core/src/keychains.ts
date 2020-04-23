@@ -150,17 +150,19 @@ export class EthereumKeychains implements Keychains {
 }
 
 export class RecoveryKit {
-  private name: string;
+  private readonly name: string;
 
-  private blockchain: BlockchainType;
+  private readonly blockchain: BlockchainType;
 
-  private henesisKey: Key;
+  private readonly henesisKey: Key;
 
-  private accountKey: KeyWithPriv;
+  private readonly accountKey: KeyWithPriv;
 
-  private backupKey: KeyWithPriv;
+  private readonly backupKey: KeyWithPriv;
 
-  private encryptedPassphrase: string
+  private readonly encryptedPassphrase: string;
+
+  private readonly encryptionKey: string;
 
   public constructor(
     name: string,
@@ -169,6 +171,7 @@ export class RecoveryKit {
     accountKey: KeyWithPriv,
     backupKey: KeyWithPriv,
     encryptedPassphrase: string,
+    encryptionKey: string,
   ) {
     this.name = name;
     this.blockchain = blockchain;
@@ -176,6 +179,7 @@ export class RecoveryKit {
     this.accountKey = accountKey;
     this.backupKey = backupKey;
     this.encryptedPassphrase = encryptedPassphrase;
+    this.encryptionKey = encryptionKey;
   }
 
   async generatePdf(): Promise<PDFDocument> {
@@ -259,5 +263,9 @@ export class RecoveryKit {
 
   getEncryptedPassphrase(): string {
     return this.encryptedPassphrase;
+  }
+
+  getEncryptionKey(): string {
+    return this.encryptionKey;
   }
 }

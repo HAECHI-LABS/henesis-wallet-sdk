@@ -12,7 +12,7 @@ import { Keychains } from './keychains';
 import { BlockchainType } from './blockchain';
 import { Factory, GlobalCoinFactoryGenerator } from './factory';
 import wallet from './contracts/MasterWallet.json';
-import {BNConverter, ObjectConverter, toChecksum} from './utils';
+import { BNConverter, ObjectConverter, toChecksum } from './utils';
 import { Ticker } from './coins';
 
 const Bytes = require('./vendor/eth-lib/bytes');
