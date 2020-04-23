@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.21](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.20...v0.0.1-alpha.21) (2020-04-23)
+
+
+### Features
+
+* add otp code to changeAccountRole method in orgs ([edd6b72](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/edd6b7245958db07f4af31f2ed8df0c245713506))
+
+
+
+
+
 ## [0.0.1-alpha.20](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.19...v0.0.1-alpha.20) (2020-04-22)
 
 
