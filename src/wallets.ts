@@ -4,7 +4,7 @@ import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains, RecoveryKit } from './keychains';
 import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
-import { ObjectConverter } from "./utils";
+import { ObjectConverter } from './utils';
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -71,7 +71,7 @@ export class Wallets {
         henesisKey = henesisKeys.henesisKlayKey;
     }
     const encryptedPassphrase = CryptoJS.AES
-      .encrypt(passphrase, encryptionKey.toString(CryptoJS.enc.BASE64))
+      .encrypt(passphrase, encryptionKey)
       .toString(CryptoJS.enc.BASE64);
     return new RecoveryKit(
       name,
@@ -80,6 +80,7 @@ export class Wallets {
       accountKey,
       backupKey,
       encryptedPassphrase,
+      encryptionKey,
     );
   }
 
@@ -93,7 +94,7 @@ export class Wallets {
         blockchain: recoveryKit.getBlockchain(),
         accountKey: recoveryKit.getAccountKey(),
         backupKey: recoveryKit.getBackupKey(),
-        encryptionKey: recoveryKit.getEncryptedPassphrase(),
+        encryptionKey: recoveryKit.getEncryptionKey(),
       },
     );
 
