@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.22](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.21...v0.0.1-alpha.22) (2020-04-23)
+
+
+### Bug Fixes
+
+* fix encryption key bug ([449dee4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/449dee437f7ee2933ea53fb6f59c1a2d0c1b0bb9))
+
+
+
+
+
 ## [0.0.1-alpha.21](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.20...v0.0.1-alpha.21) (2020-04-23)
 
 
