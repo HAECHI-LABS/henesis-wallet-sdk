@@ -234,7 +234,7 @@ export default class WalletController extends AbstractController implements Cont
 
     return await userWallet.contractCall(
       req.body.contractAddress,
-      BNConverter.hexStringToBN(req.body.value),
+      BNConverter.hexStringToBN("0x0"),
       req.body.data,
       req.body.passphrase,
     );
