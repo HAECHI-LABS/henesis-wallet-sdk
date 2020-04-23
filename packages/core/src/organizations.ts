@@ -43,9 +43,10 @@ export class Organizations {
     return this.client.post<Secret>(`${this.baseUrl}/secret`);
   }
 
-  public async changeAccountRole(accountId: string, role: Role): Promise<Account> {
+  public async changeAccountRole(accountId: string, role: Role, otpCode?: string): Promise<Account> {
     return this.client.patch<Account>(`${this.baseUrl}/accounts/${accountId}`, {
       role,
+      otpCode
     });
   }
 }
