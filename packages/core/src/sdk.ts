@@ -8,7 +8,9 @@ import { Gasusages } from './gasusages';
 import { Transactions } from './transactions';
 
 export enum Env {
+  Local,
   Dev,
+  Test,
   Prod
 }
 
