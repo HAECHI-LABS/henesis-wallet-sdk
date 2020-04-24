@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.23](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.22...v0.0.1-alpha.23) (2020-04-24)
+
+
+### Bug Fixes
+
+* add reverted status ([4a139dc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4a139dc92bd268b34c10ec3be9c433d780de2ec2))
+* fix transfer event bn bug, add env ([e879012](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e879012dc2a893afa1a1a2f1b913a95094d0a764))
+
+
+
+
+
 ## [0.0.1-alpha.22](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.21...v0.0.1-alpha.22) (2020-04-23)
 
 
