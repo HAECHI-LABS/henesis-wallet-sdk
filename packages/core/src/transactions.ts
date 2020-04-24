@@ -36,6 +36,7 @@ export enum TransactionStatus {
   PENDING = 'PENDING',
   FAILED = 'FAILED',
   MINED = 'MINED',
+  REVERTED = 'REVERTED',
   CONFIRMED = 'CONFIRMED',
   REPLACED = 'REPLACED'
 }
