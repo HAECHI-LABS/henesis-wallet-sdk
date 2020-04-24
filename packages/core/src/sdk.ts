@@ -7,7 +7,7 @@ import { Organizations } from './organizations';
 import { Gasusages } from './gasusages';
 import { Transactions } from './transactions';
 
-export enum Env {
+export const enum Env {
   Local,
   Dev,
   Test,
