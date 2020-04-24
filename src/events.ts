@@ -1,7 +1,7 @@
 import * as BN from 'bn.js';
 import { Client } from './sdk';
 import { Pagination, PaginationOptions } from './types';
-import { ObjectConverter } from './utils';
+import { BNConverter, ObjectConverter } from "./utils";
 
 export interface Event {
   createdAt: string;
@@ -60,12 +60,15 @@ export class Events {
     const queryString: string = options ? Object.keys(ObjectConverter.toSnakeCase(options))
       .filter((key) => !!options[key])
       .map((key) => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`).join('&') : '';
+    const data = await this.client
+      .get(`/value-transfer-events?${queryString}&wallet_id=${walletId}`);
 
-    const data: Pagination<ValueTransferEvent> = await this.client
-      .get<Pagination<ValueTransferEvent>>(`/value-transfer-events?${queryString}&wallet_id=${walletId}`);
     return {
       pagination: data.pagination,
-      results: data.results,
+      results: data.results.map(e => {
+        e.amount = BNConverter.hexStringToBN(e.amount);
+        return e;
+      })
     };
   }
 }

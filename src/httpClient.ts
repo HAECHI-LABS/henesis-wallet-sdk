@@ -11,8 +11,14 @@ export interface ClientOptions {
   env?: Env;
 }
 
+const baseUrls = new Map<Env, string>();
+baseUrls.set(Env.Local, "http://localhost:8080/api/v1");
+baseUrls.set(Env.Test, "http://test.wallet.henesis.io/api/v1");
+baseUrls.set(Env.Dev, "http://dev.wallet.henesis.io/api/v1");
+baseUrls.set(Env.Prod, "http://wallet.henesis.io/api/v1");
+
 export class HttpClient {
-  private readonly baseUrl: string = 'http://dev.wallet.henesis.io/api/v1';
+  private readonly baseUrl: string = baseUrls.get(Env.Prod);
 
   private readonly client: AxiosInstance;
 
@@ -21,6 +27,9 @@ export class HttpClient {
   private readonly secret: string;
 
   constructor(params: ClientOptions) {
+    if (params.env !== null && params.url !== undefined){
+      this.baseUrl = baseUrls.get(params.env);
+    }
     if (params.url !== null && params.url !== undefined) {
       this.baseUrl = params.url;
     }
