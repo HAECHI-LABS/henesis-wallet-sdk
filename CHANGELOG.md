@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.24](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.23...v0.0.1-alpha.24) (2020-04-24)
+
+
+### Bug Fixes
+
+* add const to Env ([ffae714](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ffae714e46a4f6fd4166c0b2b5ee0317a29c1d52))
+
+
+
+
+
 ## [0.0.1-alpha.23](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.22...v0.0.1-alpha.23) (2020-04-24)
 
 
