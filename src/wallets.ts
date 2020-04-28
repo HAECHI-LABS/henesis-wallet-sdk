@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js';
-import { Client, Env } from "./sdk";
+import { Client, Env } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains, RecoveryKit } from './keychains';
 import { BlockchainType } from './blockchain';
@@ -84,7 +84,7 @@ export class Wallets {
       backupKey,
       encryptedPassphrase,
       encryptionKey,
-      this.env
+      this.env,
     );
   }
 
