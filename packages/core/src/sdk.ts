@@ -21,7 +21,6 @@ export interface SDKOptions {
   env?: Env;
 }
 
-
 export interface Client {
   get<T = any>(url: string): Promise<T>;
 
@@ -55,16 +54,21 @@ export class SDK {
 
   // todo: validation params;
   constructor(params: SDKOptions) {
+    let env = Env.Prod;
+    if (params.env !== undefined && params.env !== null){
+      env = params.env;
+    }
+
     this.client = new HttpClient({
       secret: params.secret,
       accessToken: params.accessToken,
       url: params.url,
-      env: params.env,
+      env: env,
     }) as any;
 
     this.accounts = new Accounts(this.client);
     this.keychains = new EthereumKeychains();
-    this.wallets = new Wallets(this.client, this.keychains);
+    this.wallets = new Wallets(this.client, this.keychains, env);
     this.events = new Events(this.client);
     this.organizations = new Organizations(this.client);
     this.gasusages = new Gasusages(this.client);

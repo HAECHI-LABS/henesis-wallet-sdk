@@ -8,6 +8,7 @@ import {
 import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
 import { logo } from './resources/logo';
+import { Env } from "./sdk";
 
 const elliptic = require('elliptic');
 const { keccak256 } = require('./vendor/eth-lib/hash');
@@ -164,6 +165,8 @@ export class RecoveryKit {
 
   private readonly encryptionKey: string;
 
+  private readonly env: Env;
+
   public constructor(
     name: string,
     blockchain: BlockchainType,
@@ -172,6 +175,7 @@ export class RecoveryKit {
     backupKey: KeyWithPriv,
     encryptedPassphrase: string,
     encryptionKey: string,
+    env: Env,
   ) {
     this.name = name;
     this.blockchain = blockchain;
@@ -180,6 +184,7 @@ export class RecoveryKit {
     this.backupKey = backupKey;
     this.encryptedPassphrase = encryptedPassphrase;
     this.encryptionKey = encryptionKey;
+    this.env = env;
   }
 
   async generatePdf(): Promise<PDFDocument> {
@@ -194,7 +199,7 @@ export class RecoveryKit {
       .font('Helvetica')
       .fontSize(10)
       .fillColor('#3A4044')
-      .text(`Platform : ${this.camelize(this.blockchain)}`, 36, 76)
+      .text(`Platform : ${this.env == Env.Test ? "Testnet" : ""} ${this.camelize(this.blockchain)}`, 36, 76)
       .text(`Created Time : ${this.getFormattedDate(new Date())}`, 36, 91);
     // write note
     docs
