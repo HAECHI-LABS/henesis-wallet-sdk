@@ -55,7 +55,7 @@ export class SDK {
   // todo: validation params;
   constructor(params: SDKOptions) {
     let env = Env.Prod;
-    if (params.env !== undefined && params.env !== null){
+    if (params.env !== undefined && params.env !== null) {
       env = params.env;
     }
 
@@ -63,7 +63,7 @@ export class SDK {
       secret: params.secret,
       accessToken: params.accessToken,
       url: params.url,
-      env: env,
+      env,
     }) as any;
 
     this.accounts = new Accounts(this.client);
