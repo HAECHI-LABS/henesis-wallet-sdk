@@ -1,7 +1,7 @@
 import * as BN from 'bn.js';
 import { Client } from './sdk';
 import { Pagination, PaginationOptions } from './types';
-import { BNConverter, ObjectConverter } from "./utils";
+import { BNConverter, ObjectConverter } from './utils';
 
 export interface Event {
   createdAt: string;
@@ -65,10 +65,10 @@ export class Events {
 
     return {
       pagination: data.pagination,
-      results: data.results.map(e => {
+      results: data.results.map((e) => {
         e.amount = BNConverter.hexStringToBN(e.amount);
         return e;
-      })
+      }),
     };
   }
 }

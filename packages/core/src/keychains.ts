@@ -8,7 +8,7 @@ import {
 import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
 import { logo } from './resources/logo';
-import { Env } from "./sdk";
+import { Env } from './sdk';
 
 const elliptic = require('elliptic');
 const { keccak256 } = require('./vendor/eth-lib/hash');
@@ -199,7 +199,7 @@ export class RecoveryKit {
       .font('Helvetica')
       .fontSize(10)
       .fillColor('#3A4044')
-      .text(`Platform : ${this.env == Env.Test ? "Testnet" : ""} ${this.camelize(this.blockchain)}`, 36, 76)
+      .text(`Platform : ${this.env == Env.Test ? 'Testnet' : ''} ${this.camelize(this.blockchain)}`, 36, 76)
       .text(`Created Time : ${this.getFormattedDate(new Date())}`, 36, 91);
     // write note
     docs
