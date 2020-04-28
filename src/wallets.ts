@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js';
-import { Client } from './sdk';
+import { Client, Env } from "./sdk";
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains, RecoveryKit } from './keychains';
 import { BlockchainType } from './blockchain';
@@ -15,11 +15,14 @@ export class Wallets {
 
   private readonly keychains: Keychains;
 
+  private readonly env: Env;
+
   private baseUrl = '/wallets';
 
-  constructor(client: Client, keychains: Keychains) {
+  constructor(client: Client, keychains: Keychains, env: Env) {
     this.client = client;
     this.keychains = keychains;
+    this.env = env;
   }
 
   public async getMasterWallet(id: string): Promise<MasterWallet> {
@@ -81,6 +84,7 @@ export class Wallets {
       backupKey,
       encryptedPassphrase,
       encryptionKey,
+      this.env
     );
   }
 
