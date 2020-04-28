@@ -2,7 +2,7 @@ import { Client } from './sdk';
 import { Key, Token } from './types';
 
 export interface AccountWithOTP extends Account {
-  otp: OTP;
+  otp?: OTP;
 }
 
 export interface Account {
@@ -10,7 +10,7 @@ export interface Account {
   email: string;
   firstName: string;
   lastName: string;
-  accessToken: string;
+  accessToken?: string;
   organizationId: string;
   roles: Role[];
 }
@@ -26,11 +26,6 @@ export enum Role {
   HAECHI = 'HAECHI'
 }
 
-export interface AccountWithKey extends Account {
-  henesisEthKey: Key;
-  henesisKlayKey: Key;
-}
-
 export class Accounts {
   private readonly client: Client;
 
@@ -42,14 +37,14 @@ export class Accounts {
     this.client = client;
   }
 
-  public me(): Promise<AccountWithOTP> {
+  public me(): Promise<Account> {
     return this.client
-      .get<AccountWithOTP>(`${this.baseUrl}/me`);
+      .get<Account>(`${this.baseUrl}/me`);
   }
 
-  public login(email: string, password: string, otpCode?: string): Promise<Account> {
+  public login(email: string, password: string, otpCode?: string): Promise<AccountWithOTP> {
     return this.client
-      .post<Account>(`${this.baseUrl}/login`, {
+      .post<AccountWithOTP>(`${this.baseUrl}/login`, {
         email,
         password,
         otpCode,
