@@ -9,7 +9,6 @@ export default abstract class AbstractController {
   protected promiseWrapper(promiseRequestHandler: Function): MiddleWare {
     const self = this;
 
-
     return function (req: express.Request, res: express.Response, next: express.NextFunction) {
       Promise.resolve(promiseRequestHandler.bind(self, req, res, next)())
         .then((result) => {
