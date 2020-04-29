@@ -1,6 +1,6 @@
 {
   "name": "@haechi-labs/henesis-wallet-enclave",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-beta.0",
   "description": "henesis wallet enclave module",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
