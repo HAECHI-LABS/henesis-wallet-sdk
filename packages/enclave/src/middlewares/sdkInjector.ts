@@ -1,5 +1,6 @@
 import express from 'express';
 import { SDK } from '@haechi-labs/henesis-wallet-core';
+import { Env } from "@haechi-labs/henesis-wallet-core/lib/sdk";
 
 export default (req: express.Request, resp: express.Response, next: express.NextFunction) => {
   let accessToken; let secret;
@@ -14,9 +15,17 @@ export default (req: express.Request, resp: express.Response, next: express.Next
     secret = req.headers['x-henesis-secret'];
   }
 
+  let env: Env = Env.Prod;
+  if (process.env.NODE_ENV === "development"){
+    env = Env.Dev
+  }
+  if (process.env.NODE_ENV === "test"){
+    env = Env.Test
+  }
   req.sdk = new SDK({
     accessToken,
     secret,
+    env: env
   });
   next();
 };
