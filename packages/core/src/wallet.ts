@@ -144,11 +144,12 @@ export abstract class EthLikeWallet extends Wallet {
       return false;
     }
 
-    const checksumAddress = toChecksum(address);
-    const addressHash = keccak256s(address.slice(2));
+    const lowerCaseAddress = address.toLowerCase();
+    const checksumAddress = toChecksum(lowerCaseAddress);
+    const addressHash = keccak256s(lowerCaseAddress.slice(2));
     for (let i = 0; i < 40; i++) {
-      if ((parseInt(addressHash[i + 2], 16) > 7) && (address[i + 2].toUpperCase() !== checksumAddress[i + 2])
-          || ((parseInt(addressHash[i + 2], 16) <= 7) && (address[i + 2].toLowerCase() !== checksumAddress[i + 2]))) {
+      if ((parseInt(addressHash[i + 2], 16) > 7) && (lowerCaseAddress[i + 2].toUpperCase() !== checksumAddress[i + 2])
+          || ((parseInt(addressHash[i + 2], 16) <= 7) && (lowerCaseAddress[i + 2].toLowerCase() !== checksumAddress[i + 2]))) {
         return false;
       }
     }
