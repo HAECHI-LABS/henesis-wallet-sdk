@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.1-alpha.27](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.26...v0.0.1-alpha.27) (2020-04-29)
+
+
+### Bug Fixes
+
+* verify address handling case insensitive ([8c5d857](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8c5d85726b4d807d8557e802b129b6768f18067a))
+
+
+
+
+
 ## [0.0.1-alpha.26](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.25...v0.0.1-alpha.26) (2020-04-29)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-core
