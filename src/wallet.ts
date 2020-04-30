@@ -108,6 +108,11 @@ export abstract class Wallet {
     otpCode?: string,
   ): Promise<Transaction>;
 
+  abstract replaceTransaction(
+    transactionId: string,
+    otpCode?: string,
+  ): Promise<Transaction>;
+
   abstract contractCall(
     contractAddress: string,
     value: BN,
@@ -157,6 +162,24 @@ export abstract class EthLikeWallet extends Wallet {
 
   getChain(): BlockchainType {
     return this.masterWalletData.blockchain;
+  }
+
+  async replaceTransaction(
+    transactionId: string,
+    otpCode?: string,
+  ): Promise<Transaction> {
+    const walletId = this.getId();
+    const blockchain = this.getChain();
+    return this.client
+      .post<Transaction>(
+        `${this.baseUrl}/transactions`,
+        {
+          walletId,
+          transactionId,
+          blockchain,
+          otpCode,
+        },
+      );
   }
 
   async contractCall(
