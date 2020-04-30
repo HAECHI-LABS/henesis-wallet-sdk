@@ -65,6 +65,16 @@ export default class WalletController extends AbstractController implements Cont
       this.promiseWrapper(this.getMasterWalletNonce),
     );
 
+    this.router.post(
+      `${this.path}/:masterWalletId/transactions`,
+      this.promiseWrapper(this.replaceMasterWalletTransaction),
+    );
+
+    this.router.post(
+      `${this.path}/:masterWalletId/user-wallets/:userWalletId/transactions`,
+      this.promiseWrapper(this.replaceUserWalletTransaction),
+    );
+
     this.router.get(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/nonce`,
       this.promiseWrapper(this.getUserWalletNonce),
@@ -188,6 +198,24 @@ export default class WalletController extends AbstractController implements Cont
     return {
       nonce: BNConverter.bnToHexString(await userWallet.getNonce()),
     };
+  }
+
+  private async replaceMasterWalletTransaction(req: express.Request): Promise<Transaction> {
+    const masterWallet = await req.sdk
+      .wallets
+      .getMasterWallet(req.params.masterWalletId);
+
+    return await masterWallet.replaceTransaction(req.body.transactionId);
+  }
+
+  private async replaceUserWalletTransaction(req: express.Request): Promise<Transaction> {
+    const userWallet = await this.getUserWalletByContext(
+      req.sdk,
+      req.params.masterWalletId,
+      req.params.userWalletId,
+    );
+
+    return await userWallet.replaceTransaction(req.body.transactionId);
   }
 
   private async sendMasterWalletContractCall(req: express.Request): Promise<Transaction> {
