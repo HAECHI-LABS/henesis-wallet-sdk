@@ -109,7 +109,7 @@ export default class WalletController extends AbstractController implements Cont
     );
 
     this.router.post(
-      `${this.path}/:masterWalletId/batch-transaction`,
+      `${this.path}/:masterWalletId/batch-transactions`,
       this.promiseWrapper(this.sendMasterWalletBatchTransactions),
     );
   }
@@ -312,12 +312,16 @@ export default class WalletController extends AbstractController implements Cont
 
       if (this.isTransferRequest(request)) {
         request = request as TransferRequest;
-        payload = await masterWallet.buildContractCallPayload(
-          request.contractAddress,
-          BNConverter.hexStringToBN(request.value),
-          request.data,
+        payload = await masterWallet.buildTransferPayload(
+          request.ticker,
+          request.to,
+          BNConverter.hexStringToBN(request.amount),
           req.body.passphrase,
         );
+      }
+
+      if (!payload) {
+        throw new Error('invalid batch transactions request format');
       }
       batch.add(payload);
     }
