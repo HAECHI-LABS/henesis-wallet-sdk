@@ -2,7 +2,6 @@ import { Contract } from 'web3-eth-contract';
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
 import BN from 'bn.js';
-import CryptoJS from 'crypto-js';
 import { Client } from './sdk';
 import {
   PaginationOptions, Pagination, Key, KeyWithPriv, Balance,
@@ -14,6 +13,8 @@ import { Factory, GlobalCoinFactoryGenerator } from './factory';
 import wallet from './contracts/MasterWallet.json';
 import { BNConverter, ObjectConverter, toChecksum } from './utils';
 import { Ticker } from './coins';
+import aesjs from "aes-js";
+import { Base64 } from 'js-base64';
 
 const Bytes = require('./vendor/eth-lib/bytes');
 const { keccak256s } = require('./vendor/eth-lib/hash');
@@ -284,22 +285,19 @@ export class MasterWallet extends EthLikeWallet {
   }
 
   async restorePassphrase(encryptedPassphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
-    const { encryptionKey } = this.masterWalletData;
-    const decrypted = CryptoJS.AES.decrypt(encryptedPassphrase, encryptionKey);
-    const passphrase = this.hex2a(decrypted.toString());
+    const passphrase = this.recoverPassphrase(encryptedPassphrase);
     await this.changePassphrase(passphrase, newPassphrase, otpCode);
   }
 
-  hex2a(hex: string): string {
-    let str = '';
-    for (let i = 0; i < hex.length; i += 2) str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
-    return str;
+  recoverPassphrase(encryptedPassphrase: string): string{
+    const { encryptionKey } = this.masterWalletData;
+    const aesCtr = new aesjs.ModeOfOperation.ctr(aesjs.utils.hex.toBytes(encryptionKey));
+    const decryptedBytes = aesCtr.decrypt(aesjs.utils.hex.toBytes(Base64.decode(encryptedPassphrase)));
+    return aesjs.utils.utf8.fromBytes(decryptedBytes);
   }
 
   verifyEncryptedPassphrase(encryptedPassphrase: string): boolean {
-    const { encryptionKey } = this.masterWalletData;
-    const decrypted = CryptoJS.AES.decrypt(encryptedPassphrase, encryptionKey);
-    const passphrase = this.hex2a(decrypted.toString());
+    const passphrase = this.recoverPassphrase(encryptedPassphrase);
     return this.verifyPassphrase(passphrase);
   }
 
