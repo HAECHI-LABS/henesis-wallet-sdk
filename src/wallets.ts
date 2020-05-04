@@ -1,10 +1,12 @@
-import CryptoJS from 'crypto-js';
 import { Client, Env } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains, RecoveryKit } from './keychains';
 import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
 import { ObjectConverter } from './utils';
+import aesjs from 'aes-js';
+import pbkdf2 from 'pbkdf2';
+import { Base64 } from 'js-base64';
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -60,8 +62,7 @@ export class Wallets {
   ): Promise<RecoveryKit> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
-    const encryptionKey = this.createEncryptionKey(passphrase)
-      .toString(CryptoJS.enc.BASE64);
+    const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
     const henesisKeys = await this.client.get<any>(
       '/organizations/me',
     );
@@ -73,17 +74,20 @@ export class Wallets {
       case BlockchainType.Klaytn:
         henesisKey = henesisKeys.henesisKlayKey;
     }
-    const encryptedPassphrase = CryptoJS.AES
-      .encrypt(passphrase, encryptionKey)
-      .toString(CryptoJS.enc.BASE64);
+
+    const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
+    const encryptedPassphrase = aesjs.utils.hex.fromBytes(
+      aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))
+    );
+
     return new RecoveryKit(
       name,
       blockchain,
       henesisKey,
       accountKey,
       backupKey,
-      encryptedPassphrase,
-      encryptionKey,
+      Base64.encode(encryptedPassphrase),
+      aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
       this.env,
     );
   }
@@ -116,9 +120,7 @@ export class Wallets {
   ): Promise<MasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
-    const encryptionKey = this.createEncryptionKey(passphrase)
-      .toString(CryptoJS.enc.BASE64);
-
+    const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
       {
@@ -126,7 +128,7 @@ export class Wallets {
         blockchain,
         accountKey: this.removePrivateKey(accountKey),
         backupKey: this.removePrivateKey(backupKey),
-        encryptionKey,
+        encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
       },
     );
 
@@ -137,10 +139,9 @@ export class Wallets {
     );
   }
 
-  private createEncryptionKey(p: string) {
-    const salt = CryptoJS.lib.WordArray.random(128 / 8);
-    // generates 256bit key
-    return CryptoJS.PBKDF2(p, salt, { keySize: 256 / 32, iterations: 1000 });
+  // generates 256bit key
+  private createEncryptionKey(p: string): Buffer {
+    return pbkdf2.pbkdf2Sync(p, 'salt', 1, 256 / 8, 'sha512');
   }
 
   private removePrivateKey(key: KeyWithPriv): Key {
