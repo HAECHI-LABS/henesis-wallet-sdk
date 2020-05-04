@@ -1,15 +1,15 @@
-import { Contract } from 'web3-eth-contract';
+import {Contract} from 'web3-eth-contract';
 import Web3 from 'web3';
-import { AbiItem } from 'web3-utils';
+import {AbiItem} from 'web3-utils';
 import BN from 'bn.js';
 import { Client } from './sdk';
 import {
   PaginationOptions, Pagination, Key, KeyWithPriv, Balance,
 } from './types';
-import { Coin } from './coin';
-import { Keychains } from './keychains';
-import { BlockchainType } from './blockchain';
-import { Factory, GlobalCoinFactoryGenerator } from './factory';
+import {Coin} from './coin';
+import {Keychains} from './keychains';
+import {BlockchainType} from './blockchain';
+import {Factory, GlobalCoinFactoryGenerator} from './factory';
 import wallet from './contracts/MasterWallet.json';
 import { BNConverter, ObjectConverter, toChecksum } from './utils';
 import { Ticker } from './coins';
@@ -19,7 +19,7 @@ import { MultiSigPayload, SignedMultiSigPayload } from './transactions';
 import BatchRequest from './batch';
 
 const Bytes = require('./vendor/eth-lib/bytes');
-const { keccak256s } = require('./vendor/eth-lib/hash');
+const {keccak256s} = require('./vendor/eth-lib/hash');
 
 export interface Nonce {
   nonce: BN;
@@ -62,16 +62,6 @@ export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;
   id?: string;
   address?: string;
-}
-
-function convertMultiSigPayloadToDTO(multiSigPayload: MultiSigPayload) {
-  return {
-    hexData: multiSigPayload.hexData,
-    walletNonce: BNConverter.bnToHexString(multiSigPayload.walletNonce),
-    value: BNConverter.bnToHexString(multiSigPayload.value),
-    toAddress: multiSigPayload.toAddress,
-    walletAddress: multiSigPayload.walletAddress,
-  };
 }
 
 function convertSignedMultiSigPayloadToDTO(signedMultiSigPayload: SignedMultiSigPayload) {
@@ -157,7 +147,7 @@ export abstract class EthLikeWallet extends Wallet {
     const addressHash = keccak256s(lowerCaseAddress.slice(2));
     for (let i = 0; i < 40; i++) {
       if ((parseInt(addressHash[i + 2], 16) > 7) && (lowerCaseAddress[i + 2].toUpperCase() !== checksumAddress[i + 2])
-          || ((parseInt(addressHash[i + 2], 16) <= 7) && (lowerCaseAddress[i + 2].toLowerCase() !== checksumAddress[i + 2]))) {
+        || ((parseInt(addressHash[i + 2], 16) <= 7) && (lowerCaseAddress[i + 2].toLowerCase() !== checksumAddress[i + 2]))) {
         return false;
       }
     }
@@ -403,7 +393,7 @@ export class MasterWallet extends EthLikeWallet {
     );
   }
 
-  async createUserWallet(name: string, passphrase: string, salt?: BN): Promise<UserWallet> {
+  public async buildUserWalletPayload(name: string, passphrase: string, salt?: BN) {
     const nonce = await this.getNonce();
     // generates 32byte(256 bit) randoma hex string and converts to BN when salt is not defined
     if (salt === undefined) {
@@ -423,15 +413,22 @@ export class MasterWallet extends EthLikeWallet {
       passphrase,
     );
 
+    return {
+      signature,
+      multiSigPayload,
+    };
+  }
+
+  async createUserWallet(name: string, passphrase: string, salt?: BN): Promise<UserWallet> {
+    const signedMultiSigPayload = await this.buildUserWalletPayload(name, passphrase, salt);
     const userWalletData = await this.client
       .post<UserWalletData>(
         `${this.baseUrl}/${this.masterWalletData.id}/user-wallets`,
         {
           name,
           salt: BNConverter.bnToHexString(salt),
-          signature,
           blockchain: this.getChain(),
-          multiSigPayload: convertMultiSigPayloadToDTO(multiSigPayload),
+          signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(signedMultiSigPayload),
         },
       );
 
