@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2020-05-04)
+
+
+### Bug Fixes
+
+* change aes library to pure javascript library ([0738fc1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0738fc14b243c2274642ec9261bc642c860a61ba))
+
+
+
+
+
 # [1.0.0-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v0.0.1-alpha.27...v1.0.0-alpha.0) (2020-04-29)
 
 **Note:** Version bump only for package henesis-wallet-sdk
