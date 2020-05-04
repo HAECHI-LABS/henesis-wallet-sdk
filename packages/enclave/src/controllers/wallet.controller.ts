@@ -1,10 +1,11 @@
-import express from 'express';
+import express, { request } from 'express';
 import {
   MasterWalletData, Transaction, UserWallet, UserWalletData,
 } from '@haechi-labs/henesis-wallet-core/lib/wallet';
 import { SDK } from '@haechi-labs/henesis-wallet-core';
 import { BNConverter } from '@haechi-labs/henesis-wallet-core/lib/utils';
 import { Ticker } from '@haechi-labs/henesis-wallet-core/lib/coins';
+import BN from 'bn.js';
 import { Controller } from '../types';
 import AbstractController from './controller';
 
@@ -17,6 +18,18 @@ export interface BalanceResponse {
   amount: string;
   name: string;
   symbol: string;
+}
+
+interface TransferRequest {
+  ticker: Ticker | string,
+  to: string,
+  amount: BN,
+}
+
+interface ContractCallRequest {
+  contractAddress: string,
+  value: BN,
+  data: string,
 }
 
 export default class WalletController extends AbstractController implements Controller {
@@ -93,6 +106,11 @@ export default class WalletController extends AbstractController implements Cont
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/transfer`,
       this.promiseWrapper(this.sendUserWalletCoin),
+    );
+
+    this.router.post(
+      `${this.path}/:masterWalletId/batch-transaction`,
+      this.promiseWrapper(this.sendMasterWalletBatchTransactions),
     );
   }
 
@@ -272,5 +290,55 @@ export default class WalletController extends AbstractController implements Cont
       address: req.query.address as string,
     })).results;
     return wallets.map((x) => x.getData());
+  }
+
+  private async sendMasterWalletBatchTransactions(req: express.Request): Promise<Transaction[]> {
+    const masterWallet = await req.sdk
+      .wallets
+      .getMasterWallet(req.params.masterWalletId);
+
+    const batch = masterWallet.createBatchRequest(req.body.otp);
+    for (let request of req.body.requests) {
+      let payload;
+      if (this.isContractCallRequest(request)) {
+        request = request as ContractCallRequest;
+        payload = await masterWallet.buildContractCallPayload(
+          request.contractAddress,
+          BNConverter.hexStringToBN(request.value),
+          request.data,
+          req.body.passphrase,
+        );
+      }
+
+      if (this.isTransferRequest(request)) {
+        request = request as TransferRequest;
+        payload = await masterWallet.buildContractCallPayload(
+          request.contractAddress,
+          BNConverter.hexStringToBN(request.value),
+          request.data,
+          req.body.passphrase,
+        );
+      }
+      batch.add(payload);
+    }
+
+    return batch.execute();
+  }
+
+
+  private isContractCallRequest(request: any): request is ContractCallRequest {
+    return (
+      (request.contractAddress !== undefined)
+      && (request.value !== undefined)
+      && (request.data !== undefined)
+    );
+  }
+
+  private isTransferRequest(request: any): request is TransferRequest {
+    return (
+      (request.ticker !== undefined)
+      && (request.to !== undefined)
+      && (request.amount !== undefined)
+    );
   }
 }

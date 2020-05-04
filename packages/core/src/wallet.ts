@@ -15,6 +15,8 @@ import { BNConverter, ObjectConverter, toChecksum } from './utils';
 import { Ticker } from './coins';
 import aesjs from "aes-js";
 import { Base64 } from 'js-base64';
+import { MultiSigPayload, SignedMultiSigPayload } from './transactions';
+import BatchRequest from './batch';
 
 const Bytes = require('./vendor/eth-lib/bytes');
 const { keccak256s } = require('./vendor/eth-lib/hash');
@@ -26,14 +28,6 @@ export interface Nonce {
 export enum WalletStatus {
   Inactive = 'INACTIVE',
   Active = 'ACTIVE'
-}
-
-export interface MultiSigPayload {
-  walletAddress: string;
-  toAddress: string;
-  value: BN;
-  walletNonce: BN;
-  hexData: string;
 }
 
 export interface Transaction {
@@ -80,6 +74,19 @@ function convertMultiSigPayloadToDTO(multiSigPayload: MultiSigPayload) {
   };
 }
 
+function convertSignedMultiSigPayloadToDTO(signedMultiSigPayload: SignedMultiSigPayload) {
+  return {
+    signature: signedMultiSigPayload.signature,
+    multiSigPayload: {
+      hexData: signedMultiSigPayload.multiSigPayload.hexData,
+      walletNonce: BNConverter.bnToHexString(signedMultiSigPayload.multiSigPayload.walletNonce),
+      value: BNConverter.bnToHexString(signedMultiSigPayload.multiSigPayload.value),
+      toAddress: signedMultiSigPayload.multiSigPayload.toAddress,
+      walletAddress: signedMultiSigPayload.multiSigPayload.walletAddress,
+    },
+  };
+}
+
 export abstract class Wallet {
   protected readonly client: Client;
 
@@ -108,7 +115,7 @@ export abstract class Wallet {
     to: string,
     amount: BN,
     passphrase: string,
-    otpCode?: string
+    otpCode?: string,
   ): Promise<Transaction>;
 
   abstract contractCall(
@@ -116,7 +123,7 @@ export abstract class Wallet {
     value: BN,
     data: string,
     passphrase: string,
-    otpCode?: string
+    otpCode?: string,
   ): Promise<Transaction>;
 
   abstract getBalance(): Promise<Balance[]>;
@@ -169,6 +176,25 @@ export abstract class EthLikeWallet extends Wallet {
     passphrase: string,
     otpCode?: string,
   ): Promise<Transaction> {
+    return this.sendTransaction(
+      this.getChain(),
+      await this.buildContractCallPayload(
+        contractAddress,
+        value,
+        data,
+        passphrase,
+      ),
+      this.getId(),
+      otpCode,
+    );
+  }
+
+  public async buildContractCallPayload(
+    contractAddress: string,
+    value: BN,
+    data: string,
+    passphrase: string,
+  ): Promise<SignedMultiSigPayload> {
     const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
@@ -182,12 +208,70 @@ export abstract class EthLikeWallet extends Wallet {
       multiSigPayload,
       passphrase,
     );
-    return this.sendTransaction(
+
+    return {
       signature,
-      this.getChain(),
       multiSigPayload,
+    };
+  }
+
+
+  async transfer(
+    ticker: Ticker | string,
+    to: string,
+    amount: BN,
+    passphrase: string,
+    otpCode?: string,
+  ): Promise<Transaction> {
+    return this.sendTransaction(
+      this.getChain(),
+      await this.buildTransferPayload(
+        ticker,
+        to,
+        amount,
+        passphrase,
+      ),
       this.getId(),
       otpCode,
+    );
+  }
+
+  public async buildTransferPayload(
+    ticker: Ticker | string,
+    to: string,
+    amount: BN,
+    passphrase: string,
+  ): Promise<SignedMultiSigPayload> {
+    const coin: Coin = this.coinFactory.get(ticker);
+    const hexData = coin.buildData(to, amount);
+    const nonce = await this.getNonce();
+    const multiSigPayload: MultiSigPayload = {
+      hexData,
+      walletNonce: nonce,
+      value: BNConverter.hexStringToBN('0x0'),
+      toAddress: this.getAddress(),
+      walletAddress: this.getAddress(),
+    };
+
+    const signature = this.signPayload(
+      multiSigPayload,
+      passphrase,
+    );
+
+    return {
+      signature,
+      multiSigPayload,
+    };
+  }
+
+  public createBatchRequest(otpCode?: string) {
+    return new BatchRequest(
+      (signedMultiSigPayloads): Promise<Transaction[]> => this.sendBatchTransaction(
+        this.getChain(),
+        signedMultiSigPayloads,
+        this.getId(),
+        otpCode,
+      ),
     );
   }
 
@@ -208,9 +292,8 @@ export abstract class EthLikeWallet extends Wallet {
   }
 
   protected sendTransaction(
-    signature: string,
     blockchain: string,
-    multiSigPayload: MultiSigPayload,
+    signedMultiSigPayload: SignedMultiSigPayload,
     walletId: string,
     otpCode?: string,
     gasPrice?: BN,
@@ -222,8 +305,7 @@ export abstract class EthLikeWallet extends Wallet {
         {
           walletId,
           blockchain,
-          signature,
-          multiSigPayload: convertMultiSigPayloadToDTO(multiSigPayload),
+          signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(signedMultiSigPayload),
           gasPrice,
           gasLimit,
           otpCode,
@@ -231,36 +313,28 @@ export abstract class EthLikeWallet extends Wallet {
       );
   }
 
-  async transfer(
-    ticker: Ticker | string,
-    to: string,
-    amount: BN,
-    passphrase: string,
+  protected async sendBatchTransaction(
+    blockchain: string,
+    signedMultiSigPayloads: SignedMultiSigPayload[],
+    walletId: string,
     otpCode?: string,
-  ): Promise<Transaction> {
-    const coin: Coin = this.coinFactory.get(ticker);
-    const hexData = coin.buildData(to, amount);
-    const nonce = await this.getNonce();
-    const multiSigPayload: MultiSigPayload = {
-      hexData,
-      walletNonce: nonce,
-      value: BNConverter.hexStringToBN('0x0'),
-      toAddress: this.getAddress(),
-      walletAddress: this.getAddress(),
-    };
-
-    const signature = this.signPayload(
-      multiSigPayload,
-      passphrase,
-    );
-
-    return this.sendTransaction(
-      signature,
-      this.getChain(),
-      multiSigPayload,
-      this.getId(),
-      otpCode,
-    );
+    gasPrice?: BN,
+    gasLimit?: BN,
+  ): Promise<Transaction[]> {
+    const signedMultiSigPayloadDTOs = signedMultiSigPayloads
+      .map((signedMultiSigPayload) => convertSignedMultiSigPayloadToDTO(signedMultiSigPayload));
+    return this.client
+      .post<Transaction[]>(
+        `${this.baseUrl}/batch-transactions`,
+        {
+          walletId,
+          blockchain,
+          signedMultiSigPayloads: signedMultiSigPayloadDTOs,
+          gasPrice,
+          gasLimit,
+          otpCode,
+        },
+      );
   }
 
   async getNonce(): Promise<BN> {

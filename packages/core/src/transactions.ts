@@ -1,7 +1,6 @@
 import * as BN from 'bn.js';
 import { Client } from './sdk';
 import { BlockchainType } from './blockchain';
-import { MultiSigPayload } from './wallet';
 import { Pagination, PaginationOptions } from './types';
 import { ObjectConverter } from './utils';
 
@@ -17,9 +16,17 @@ export interface Transaction {
   status: TransactionStatus;
 }
 
+export interface MultiSigPayload {
+  walletAddress: string;
+  toAddress: string;
+  value: BN;
+  walletNonce: BN;
+  hexData: string;
+}
+
 export interface SignedMultiSigPayload {
   signature: string;
-  payload: MultiSigPayload;
+  multiSigPayload: MultiSigPayload;
 }
 
 export interface RawTransaction {
