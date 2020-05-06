@@ -136,6 +136,7 @@ export default class WalletController extends AbstractController implements Cont
         req.body.name,
         req.body.blockchain,
         req.body.passphrase,
+        req.body.gasPrice ? BNConverter.hexStringToBN(req.body.gasPrice) : undefined,
       )).getData();
   }
 
@@ -146,7 +147,7 @@ export default class WalletController extends AbstractController implements Cont
     return (await masterWallet.changePassphrase(
       req.body.passphrase,
       req.body.newPassphrase,
-      req.body.otp,
+      req.body.otpCode,
     ));
   }
 
@@ -158,6 +159,7 @@ export default class WalletController extends AbstractController implements Cont
     return (await masterWallet.createUserWallet(
       req.body.name,
       req.body.passphrase,
+      req.body.gasPrice ? BNConverter.hexStringToBN(req.body.gasPrice) : undefined,
       req.body.salt ? BNConverter.hexStringToBN(req.body.salt) : undefined,
     )).getData();
   }
@@ -246,6 +248,9 @@ export default class WalletController extends AbstractController implements Cont
       BNConverter.hexStringToBN(req.body.value),
       req.body.data,
       req.body.passphrase,
+      req.body.otpCode,
+      req.body.gasPrice ? BNConverter.hexStringToBN(req.body.gasPrice) : undefined,
+      req.body.gasLimit ? BNConverter.hexStringToBN(req.body.gasLimit) : undefined,
     );
 
     return transaction;
@@ -263,6 +268,9 @@ export default class WalletController extends AbstractController implements Cont
       BNConverter.hexStringToBN(req.body.value),
       req.body.data,
       req.body.passphrase,
+      req.body.otpCode,
+      req.body.gasPrice ? BNConverter.hexStringToBN(req.body.gasPrice) : undefined,
+      req.body.gasLimit ? BNConverter.hexStringToBN(req.body.gasLimit) : undefined,
     );
   }
 
@@ -276,7 +284,9 @@ export default class WalletController extends AbstractController implements Cont
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
-      req.body.otp,
+      req.body.otpCode,
+      req.body.gasPrice ? BNConverter.hexStringToBN(req.body.gasPrice) : undefined,
+      req.body.gasLimit ? BNConverter.hexStringToBN(req.body.gasLimit) : undefined,
     );
   }
 
@@ -291,7 +301,9 @@ export default class WalletController extends AbstractController implements Cont
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
-      req.body.otp,
+      req.body.otpCode,
+      req.body.gasPrice ? BNConverter.hexStringToBN(req.body.gasPrice) : undefined,
+      req.body.gasLimit ? BNConverter.hexStringToBN(req.body.gasLimit) : undefined,
     );
   }
 
@@ -325,7 +337,7 @@ export default class WalletController extends AbstractController implements Cont
       .wallets
       .getMasterWallet(req.params.masterWalletId);
 
-    const batch = masterWallet.createBatchRequest(req.body.otp);
+    const batch = masterWallet.createBatchRequest(req.body.otpCode);
     for (let request of req.body.requests) {
       let payload;
       if (this.isContractCallRequest(request)) {
