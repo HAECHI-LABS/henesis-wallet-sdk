@@ -77,6 +77,8 @@ export class EthereumKeychains implements Keychains {
     } catch (error) {
       if (error.message.includes('ccm: tag doesn\'t match')) {
         error.message = `password error - ${error.message}`;
+      } else if (error.message === 'sjcl.exception.corrupt is not a constructor') {
+        error.message = 'password error';
       }
       throw error;
     }
