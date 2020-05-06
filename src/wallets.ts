@@ -1,12 +1,13 @@
+import aesjs from 'aes-js';
+import pbkdf2 from 'pbkdf2';
+import { Base64 } from 'js-base64';
+import * as BN from 'bn.js';
 import { Client, Env } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains, RecoveryKit } from './keychains';
 import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
-import { ObjectConverter } from './utils';
-import aesjs from 'aes-js';
-import pbkdf2 from 'pbkdf2';
-import { Base64 } from 'js-base64';
+import { BNConverter, ObjectConverter } from './utils';
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -77,7 +78,7 @@ export class Wallets {
 
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
-      aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))
+      aes.encrypt(aesjs.utils.utf8.toBytes(passphrase)),
     );
 
     return new RecoveryKit(
@@ -117,6 +118,7 @@ export class Wallets {
     name: string,
     blockchain: BlockchainType,
     passphrase: string,
+    gasPrice?: BN,
   ): Promise<MasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
@@ -129,6 +131,7 @@ export class Wallets {
         accountKey: this.removePrivateKey(accountKey),
         backupKey: this.removePrivateKey(backupKey),
         encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
       },
     );
 

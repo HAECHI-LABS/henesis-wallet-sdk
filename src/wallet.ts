@@ -1,25 +1,25 @@
-import {Contract} from 'web3-eth-contract';
+import { Contract } from 'web3-eth-contract';
 import Web3 from 'web3';
-import {AbiItem} from 'web3-utils';
+import { AbiItem } from 'web3-utils';
 import BN from 'bn.js';
+import aesjs from 'aes-js';
+import { Base64 } from 'js-base64';
 import { Client } from './sdk';
 import {
   PaginationOptions, Pagination, Key, KeyWithPriv, Balance,
 } from './types';
-import {Coin} from './coin';
-import {Keychains} from './keychains';
-import {BlockchainType} from './blockchain';
-import {Factory, GlobalCoinFactoryGenerator} from './factory';
+import { Coin } from './coin';
+import { Keychains } from './keychains';
+import { BlockchainType } from './blockchain';
+import { Factory, GlobalCoinFactoryGenerator } from './factory';
 import wallet from './contracts/MasterWallet.json';
 import { BNConverter, ObjectConverter, toChecksum } from './utils';
 import { Ticker } from './coins';
-import aesjs from "aes-js";
-import { Base64 } from 'js-base64';
 import { MultiSigPayload, SignedMultiSigPayload } from './transactions';
 import BatchRequest from './batch';
 
 const Bytes = require('./vendor/eth-lib/bytes');
-const {keccak256s} = require('./vendor/eth-lib/hash');
+const { keccak256s } = require('./vendor/eth-lib/hash');
 
 export interface Nonce {
   nonce: BN;
@@ -188,6 +188,8 @@ export abstract class EthLikeWallet extends Wallet {
     data: string,
     passphrase: string,
     otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
   ): Promise<Transaction> {
     return this.sendTransaction(
       this.getChain(),
@@ -199,6 +201,8 @@ export abstract class EthLikeWallet extends Wallet {
       ),
       this.getId(),
       otpCode,
+      gasPrice,
+      gasLimit,
     );
   }
 
@@ -235,6 +239,8 @@ export abstract class EthLikeWallet extends Wallet {
     amount: BN,
     passphrase: string,
     otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
   ): Promise<Transaction> {
     return this.sendTransaction(
       this.getChain(),
@@ -246,6 +252,8 @@ export abstract class EthLikeWallet extends Wallet {
       ),
       this.getId(),
       otpCode,
+      gasPrice,
+      gasLimit,
     );
   }
 
@@ -319,8 +327,8 @@ export abstract class EthLikeWallet extends Wallet {
           walletId,
           blockchain,
           signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(signedMultiSigPayload),
-          gasPrice,
-          gasLimit,
+          gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+          gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
           otpCode,
         },
       );
@@ -343,8 +351,8 @@ export abstract class EthLikeWallet extends Wallet {
           walletId,
           blockchain,
           signedMultiSigPayloads: signedMultiSigPayloadDTOs,
-          gasPrice,
-          gasLimit,
+          gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+          gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
           otpCode,
         },
       );
@@ -376,7 +384,7 @@ export class MasterWallet extends EthLikeWallet {
     await this.changePassphrase(passphrase, newPassphrase, otpCode);
   }
 
-  recoverPassphrase(encryptedPassphrase: string): string{
+  recoverPassphrase(encryptedPassphrase: string): string {
     const { encryptionKey } = this.masterWalletData;
     const aesCtr = new aesjs.ModeOfOperation.ctr(aesjs.utils.hex.toBytes(encryptionKey));
     const decryptedBytes = aesCtr.decrypt(aesjs.utils.hex.toBytes(Base64.decode(encryptedPassphrase)));
@@ -416,7 +424,12 @@ export class MasterWallet extends EthLikeWallet {
     );
   }
 
-  public async buildUserWalletPayload(name: string, passphrase: string, salt?: BN) {
+  async createUserWallet(
+    name: string,
+    passphrase: string,
+    gasPrice?: BN,
+    salt?: BN,
+  ): Promise<UserWallet> {
     const nonce = await this.getNonce();
     // generates 32byte(256 bit) randoma hex string and converts to BN when salt is not defined
     if (salt === undefined) {
@@ -436,14 +449,11 @@ export class MasterWallet extends EthLikeWallet {
       passphrase,
     );
 
-    return {
+    const signedMultiSigPayload = {
       signature,
       multiSigPayload,
     };
-  }
 
-  async createUserWallet(name: string, passphrase: string, salt?: BN): Promise<UserWallet> {
-    const signedMultiSigPayload = await this.buildUserWalletPayload(name, passphrase, salt);
     const userWalletData = await this.client
       .post<UserWalletData>(
         `${this.baseUrl}/${this.masterWalletData.id}/user-wallets`,
@@ -452,6 +462,7 @@ export class MasterWallet extends EthLikeWallet {
           salt: BNConverter.bnToHexString(salt),
           blockchain: this.getChain(),
           signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(signedMultiSigPayload),
+          gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
         },
       );
 
