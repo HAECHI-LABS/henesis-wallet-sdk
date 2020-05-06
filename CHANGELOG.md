@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.0-alpha.2...v1.0.0) (2020-05-06)
+
+
+### Features
+
+* add password error exception ([e2920d7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e2920d7e3602f5aa32dedc4941f9bbb3c7dbab84))
+* add replace endpoint ([d81ffdb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d81ffdb4212f65471f1b6c0336ee30793f7d2856))
+* implements batch transactions ([76c85cd](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/76c85cd3126bfc22b61a0d16d7f3eba71d181212))
+* set gas price as input parameter ([5eec90f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5eec90f192ad61e25b1ed247b33f9d788f18ab07))
+
+
+
+
+
 # [1.0.0-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2020-05-04)
 
 **Note:** Version bump only for package henesis-wallet-sdk
