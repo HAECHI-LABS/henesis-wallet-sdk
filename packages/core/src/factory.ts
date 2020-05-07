@@ -1,6 +1,6 @@
 import { Coin } from './coin';
 import {
-  Ticker, Drm, Eth, Hib, Klay, Hcut,
+  Ticker, Drm, Eth, Hib, Klay, Hcut, EthEvt, KlayEvt,
 } from './coins';
 import { BlockchainType } from './blockchain';
 
@@ -27,12 +27,14 @@ GlobalCoinFactoryGenerator.register(
   new Factory<Coin>()
     .register(Ticker.Eth, new Eth())
     .register(Ticker.Hcut, new Hcut())
-    .register(Ticker.Drm, new Drm()),
+    .register(Ticker.Drm, new Drm())
+    .register(Ticker.Evt, new EthEvt()),
 );
 
 GlobalCoinFactoryGenerator.register(
   BlockchainType.Klaytn,
   new Factory<Coin>()
     .register(Ticker.Klay, new Klay())
-    .register(Ticker.Hib, new Hib()),
+    .register(Ticker.Hib, new Hib())
+    .register(Ticker.Evt, new KlayEvt()),
 );
