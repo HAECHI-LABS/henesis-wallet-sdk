@@ -3,6 +3,7 @@ import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
 import { ObjectConverter } from './utils';
 import { Env } from './sdk';
+import normalizeUrl from 'normalize-url';
 
 export interface ClientOptions {
   accessToken: string;
@@ -53,7 +54,7 @@ export class HttpClient {
         if (config.data) {
           body = JSON.stringify(config.data);
         }
-        const path = config.baseURL + config.url + (config.params ? config.params : '');
+        const path = normalizeUrl(config.baseURL + config.url + (config.params ? config.params : ''));
         const message = config.method.toUpperCase() + path + body + timestamp;
         config.headers['X-Henesis-Signature'] = this.createSig(message);
       }
