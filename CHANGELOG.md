@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.1...v1.0.2) (2020-05-08)
+
+
+### Bug Fixes
+
+* normalize request url ([f81d7fb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f81d7fb778dca7d75d76ed46b24c094057990c88))
+
+
+### Features
+
+* get coin from server ([5fd09b6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5fd09b6d743967687063d0eca689770a05ee0381))
+
+
+
+
+
 ## [1.0.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.0...v1.0.1) (2020-05-07)
 
 **Note:** Version bump only for package henesis-wallet-sdk
