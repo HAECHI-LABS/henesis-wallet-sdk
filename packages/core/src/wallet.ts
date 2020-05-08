@@ -367,7 +367,7 @@ export abstract class EthLikeWallet extends Wallet {
     const coin: {
       symbol: string,
       address: string,
-    } = await this.client.get(`coins/${ticker.toUpperCase()}?blockchain=${blockchain}`);
+    } = await this.client.get(`/coins/${ticker.toUpperCase()}?blockchain=${blockchain}`);
 
     switch (coin.symbol.toUpperCase()) {
       case 'ETH':
