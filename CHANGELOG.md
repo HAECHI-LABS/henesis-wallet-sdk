@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.2...v1.0.3) (2020-05-08)
+
+
+### Bug Fixes
+
+* remove normalize url and add missing / prefix to coins url ([35a1051](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/35a1051e3c418691e880c3bec6e0cbe0417147a9))
+
+
+
+
+
 ## [1.0.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.1...v1.0.2) (2020-05-08)
 
 
