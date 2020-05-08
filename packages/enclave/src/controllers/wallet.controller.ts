@@ -4,7 +4,6 @@ import {
 } from '@haechi-labs/henesis-wallet-core/lib/wallet';
 import { SDK } from '@haechi-labs/henesis-wallet-core';
 import { BNConverter } from '@haechi-labs/henesis-wallet-core/lib/utils';
-import { Ticker } from '@haechi-labs/henesis-wallet-core/lib/coins';
 import BN from 'bn.js';
 import { Controller } from '../types';
 import AbstractController from './controller';
@@ -21,7 +20,7 @@ export interface BalanceResponse {
 }
 
 interface TransferRequest {
-  ticker: Ticker | string,
+  ticker: string,
   to: string,
   amount: BN,
 }
@@ -297,7 +296,7 @@ export default class WalletController extends AbstractController implements Cont
       req.params.userWalletId,
     );
     return await userWallet.transfer(
-      Ticker[req.body.ticker],
+      req.body.ticker,
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
