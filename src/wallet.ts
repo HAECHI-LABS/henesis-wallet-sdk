@@ -8,15 +8,15 @@ import { Client } from './sdk';
 import {
   PaginationOptions, Pagination, Key, KeyWithPriv, Balance,
 } from './types';
-import { Coin } from './coin';
 import { Keychains } from './keychains';
 import { BlockchainType } from './blockchain';
-import { Factory, GlobalCoinFactoryGenerator } from './factory';
 import wallet from './contracts/MasterWallet.json';
 import { BNConverter, ObjectConverter, toChecksum } from './utils';
-import { Ticker } from './coins';
 import { MultiSigPayload, SignedMultiSigPayload } from './transactions';
 import BatchRequest from './batch';
+import {
+  Coin, Eth, Klay, Erc20,
+} from './coin';
 
 const Bytes = require('./vendor/eth-lib/bytes');
 const { keccak256s } = require('./vendor/eth-lib/hash');
@@ -84,16 +84,12 @@ export abstract class Wallet {
 
   protected readonly keychains: Keychains;
 
-  protected readonly coinFactory: Factory<Coin>;
-
   protected constructor(
     client: Client,
     keychains: Keychains,
-    coinFactory: Factory<Coin>,
   ) {
     this.client = client;
     this.keychains = keychains;
-    this.coinFactory = coinFactory;
   }
 
   abstract getChain(): BlockchainType;
@@ -101,7 +97,7 @@ export abstract class Wallet {
   abstract verifyAddress(address: string): boolean;
 
   abstract transfer(
-    ticker: Ticker | string,
+    ticker: string,
     to: string,
     amount: BN,
     passphrase: string,
@@ -138,7 +134,7 @@ export abstract class EthLikeWallet extends Wallet {
     masterWalletData: MasterWalletData,
     keychains: Keychains,
   ) {
-    super(client, keychains, GlobalCoinFactoryGenerator.get(masterWalletData.blockchain));
+    super(client, keychains);
     this.masterWalletData = masterWalletData;
   }
 
@@ -234,7 +230,7 @@ export abstract class EthLikeWallet extends Wallet {
 
 
   async transfer(
-    ticker: Ticker | string,
+    ticker: string,
     to: string,
     amount: BN,
     passphrase: string,
@@ -258,12 +254,12 @@ export abstract class EthLikeWallet extends Wallet {
   }
 
   public async buildTransferPayload(
-    ticker: Ticker | string,
+    ticker: string,
     to: string,
     amount: BN,
     passphrase: string,
   ): Promise<SignedMultiSigPayload> {
-    const coin: Coin = this.coinFactory.get(ticker);
+    const coin: Coin = await this.getCoin(ticker);
     const hexData = coin.buildData(to, amount);
     const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
@@ -364,6 +360,25 @@ export abstract class EthLikeWallet extends Wallet {
     } = await this.client
       .get(`${this.baseUrl}/${this.masterWalletData.id}/nonce`);
     return BNConverter.hexStringToBN(nonce.nonce);
+  }
+
+  protected async getCoin(ticker: string): Promise<Coin> {
+    const blockchain = this.getChain();
+    const coin: {
+      symbol: string,
+      address: string,
+    } = await this.client.get(`coins/${ticker.toUpperCase()}?blockchain=${blockchain}`);
+
+    switch (coin.symbol.toUpperCase()) {
+      case 'ETH':
+        return new Eth();
+        break;
+      case 'KLAY':
+        return new Klay();
+        break;
+      default:
+        return new Erc20(coin.symbol, coin.address);
+    }
   }
 }
 
