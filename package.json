@@ -4,7 +4,6 @@
     "lerna:bootstrap": "lerna run preBootstrap && lerna bootstrap --hoist --no-ci",
     "bootstrap": "rm -rf ./**./node_modules && npm install && npm run lerna:bootstrap && npm run build",
     "build": "lerna run build",
-    "publish:prerelease": "npm run lerna:bootstrap && lerna version prerelease && lerna publish from-git",
     "test": "lerna run test"
   },
   "devDependencies": {
