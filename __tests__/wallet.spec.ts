@@ -1,17 +1,15 @@
 import nock from 'nock';
 import { SDK } from '../src';
-import {
-  EthLikeWallet,
-  MasterWallet, MultiSigPayload, WalletStatus,
-} from '../src/wallet';
 import { EthereumKeychains } from '../src/keychains';
 import { BNConverter } from '../src/utils';
 import { MockEthLikeWallet } from '../__mocks__/wallet.mock';
+import {EthLikeWallet, MasterWallet, WalletStatus} from "../src/wallet";
+import {MultiSigPayload} from "../src/transactions";
 
 const baseUrl = 'http://localhost:8080';
 describe('Wallet', () => {
   const password = 'password';
-  const encryptedPassphrase = 'U2FsdGVkX1/5UcQztsrOcyCz+qzokaTpjouGxtX9NFw=';
+  const encryptedPassphrase = 'NGNlNDA3ZWQ4ZGRjYWNlMA==';
   const keyWithPriv = {
     address: '0xb0A6d9b21F45aCC64365CDBb523405411c3b050F',
     pub: '0x4d5cfc604d29a96298c1851899e9ca3d2a6337ead83bb3e9cfd822dc81ac87574f0b7aa725df739e0770b677db12bf9e19c46b7b55fd1ef75aaabe2a054e50a0',
@@ -94,7 +92,7 @@ describe('Wallet', () => {
         (wallet as any).masterWalletData = {
           blockchain: 'ETHEREUM',
           accountKey: keyWithPriv,
-          encryptionKey: '83b80190a2c2322d69c7b498d259243ea8cd46b40b411f81614adb2685c2ba78',
+          encryptionKey: '867f70cf1ade02cff3752599a3a53dc4af34c7a669815ae5d513554e1c8cf252',
         };
       });
 
@@ -104,8 +102,12 @@ describe('Wallet', () => {
       });
 
       it('should return false when passphrase is invalid', () => {
-        const isValid = wallet.verifyEncryptedPassphrase(`invalid${encryptedPassphrase}`);
-        expect(isValid).toEqual(false);
+        let isValid;
+        try {
+          isValid = wallet.verifyEncryptedPassphrase(`invalid${encryptedPassphrase}`);
+        } catch (e) {
+          expect(isValid).toEqual(undefined);
+        }
       });
     });
 

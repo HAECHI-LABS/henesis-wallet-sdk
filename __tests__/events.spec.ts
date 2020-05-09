@@ -1,5 +1,6 @@
 import nock from 'nock';
 import { SDK } from '../src';
+import {BNConverter} from "../src/utils";
 
 const baseUrl = 'http://localhost:8080';
 describe('Events', () => {
@@ -62,7 +63,7 @@ describe('Events', () => {
             status: '1',
             toAddress: '1',
             transactionHash: '1',
-            amount: '2',
+            amount: '0x2',
             coinSymbol: 'Hib',
             from: '0x21',
             to: '0x2333',
@@ -74,7 +75,7 @@ describe('Events', () => {
             status: '2',
             toAddress: '2',
             transactionHash: '2',
-            amount: '2',
+            amount: '0x2',
             coinSymbol: 'Hib',
             from: '0x21',
             to: '0x2333',
@@ -98,6 +99,7 @@ describe('Events', () => {
       const eventsWithPagination = await sdk.events.getValueTransferEvents('e6f6a6dd37d73ea0a506e6b669017d3f');
       expect(eventsWithPagination.results.length).toEqual(2);
       eventsWithPagination.results.forEach((item, index) => {
+        response.results[index].amount = BNConverter.hexStringToBN(response.results[index].amount) as any;
         expect(item).toEqual(response.results[index]);
       });
     });
