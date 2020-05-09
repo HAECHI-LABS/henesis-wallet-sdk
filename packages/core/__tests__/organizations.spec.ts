@@ -3,7 +3,7 @@ import BN from 'bn.js';
 import { SDK } from '../src';
 import { BlockchainType } from '../src/blockchain';
 import { Organization } from '../src/organizations';
-import { Account } from '../src/accounts';
+import { Account, Role } from '../src/accounts';
 import { Balance, Secret, Token } from '../src/types';
 
 const baseUrl = 'http://localhost:8080';
@@ -15,7 +15,6 @@ describe('Organizations', () => {
         id: '575a431dc73615a9e65648180bbd4fbb',
         name: 'haechi-labs',
         secret: '119Es7Czo6yM4cYfS8IxTRhLfuDwDmN4rl0RK3ivuGI=',
-        access_token: '111',
         henesis_eth_key: {
           address: '0x4ef3ba60c8710f45371835cddafabf33daa83e1d',
           pub: '0x31bd93d049fefed19b640c8069046c223126505754b9a57f5df43a89b104d92c8d4be4f51a6b5bb08a3ec6c2ff022e8ff018bad52ee05fa81b4eeae16a0e2db1',
@@ -29,7 +28,6 @@ describe('Organizations', () => {
         id: '575a431dc73615a9e65648180bbd4fbb',
         name: 'haechi-labs',
         secret: '119Es7Czo6yM4cYfS8IxTRhLfuDwDmN4rl0RK3ivuGI=',
-        accessToken: '111',
         henesisEthKey: {
           address: '0x4ef3ba60c8710f45371835cddafabf33daa83e1d',
           pub: '0x31bd93d049fefed19b640c8069046c223126505754b9a57f5df43a89b104d92c8d4be4f51a6b5bb08a3ec6c2ff022e8ff018bad52ee05fa81b4eeae16a0e2db1',
@@ -61,6 +59,7 @@ describe('Organizations', () => {
           roles: [
             'HAECHI',
           ],
+          id: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
           first_name: 'dev',
           last_name: 'haechi',
         },
@@ -71,6 +70,7 @@ describe('Organizations', () => {
           roles: [
             'HAECHI',
           ],
+          id: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
           firstName: 'dev',
           lastName: 'haechi',
         },
@@ -109,13 +109,20 @@ describe('Organizations', () => {
       expect(secret).toEqual(response);
     });
   });
-  describe('#createAccessToken()', () => {
-    it('success create token', async () => {
+  describe('#changeAccountRole()', () => {
+    it('success change account role', async () => {
+      const accountId = '49803fbf0a2a2c3ab3a0aba8b98dbb2a';
       const response = {
+        id: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
+        email: 'haechi@haechi.io',
+        firstName: 'dev',
+        lastName: 'haechi',
+        organizationId: '575a431dc73615a9e65648180bbd4fbb',
         accessToken: 'token',
+        roles: [Role.VIEWER],
       };
       nock(baseUrl)
-        .post('/api/v1/organizations/token')
+        .patch(`/api/v1/organizations/accounts/${accountId}`)
         .reply(200, response);
       const sdk = new SDK(
         {
@@ -124,8 +131,8 @@ describe('Organizations', () => {
           url: 'http://localhost:8080/api/v1',
         },
       );
-      const token: Token = await sdk.organizations.createAccessToken();
-      expect(token).toEqual(response);
+      const account: Account = await sdk.organizations.changeAccountRole(accountId, Role.VIEWER);
+      expect(account).toEqual(response);
     });
   });
 });

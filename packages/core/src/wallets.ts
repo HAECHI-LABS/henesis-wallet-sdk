@@ -7,10 +7,11 @@ import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains, RecoveryKit } from './keychains';
 import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
-import { BNConverter, ObjectConverter } from './utils';
+import {BNConverter, toSnakeCase} from './utils';
 
 export interface MasterWalletSearchOptions {
   name?: string;
+  orgId?: string;
 }
 
 export class Wallets {
@@ -41,12 +42,12 @@ export class Wallets {
   }
 
   public async getMasterWallets(options?: MasterWalletSearchOptions): Promise<MasterWallet[]> {
-    const queryString: string = options ? Object.keys(ObjectConverter.toSnakeCase(options))
+    const queryString: string = options ? Object.keys(options)
       .filter((key) => !!options[key])
-      .map((key) => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`).join('&') : '';
+      .map((key) => `${toSnakeCase(key)}=${options[key]}`).join('&') : '';
 
     const walletDatas = await this.client.get<MasterWalletData[]>(
-      `${this.baseUrl}?${queryString}`,
+      `${this.baseUrl}${queryString ? `?${queryString}` : ''}`,
     );
 
     return walletDatas.map((x) => new MasterWallet(
