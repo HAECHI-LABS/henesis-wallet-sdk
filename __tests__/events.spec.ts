@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { SDK } from '../src';
-import {BNConverter} from "../src/utils";
+import { BNConverter } from '../src/utils';
 
 const baseUrl = 'http://localhost:8080';
 describe('Events', () => {
