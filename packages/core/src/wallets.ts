@@ -2,12 +2,14 @@ import aesjs from 'aes-js';
 import pbkdf2 from 'pbkdf2';
 import { Base64 } from 'js-base64';
 import * as BN from 'bn.js';
+import Web3 from 'web3';
+import crypto from 'crypto';
 import { Client, Env } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains, RecoveryKit } from './keychains';
 import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
-import {BNConverter, toSnakeCase} from './utils';
+import { BNConverter, toSnakeCase } from './utils';
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -64,7 +66,7 @@ export class Wallets {
   ): Promise<RecoveryKit> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
-    const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
+    const encryptionKeyBuffer: Buffer = this.createEncryptionKey();
     const henesisKeys = await this.client.get<any>(
       '/organizations/me',
     );
@@ -123,7 +125,7 @@ export class Wallets {
   ): Promise<MasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
-    const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
+    const encryptionKeyBuffer: Buffer = this.createEncryptionKey();
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
       {
@@ -144,8 +146,9 @@ export class Wallets {
   }
 
   // generates 256bit key
-  private createEncryptionKey(p: string): Buffer {
-    return pbkdf2.pbkdf2Sync(p, 'salt', 1, 256 / 8, 'sha512');
+  private createEncryptionKey(): Buffer {
+    const randomHexString = Web3.utils.randomHex(32).substr(2);
+    return Buffer.from(randomHexString, 'hex');
   }
 
   private removePrivateKey(key: KeyWithPriv): Key {
