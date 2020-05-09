@@ -2,7 +2,7 @@ import * as BN from 'bn.js';
 import { Client } from './sdk';
 import { BlockchainType } from './blockchain';
 import { Pagination, PaginationOptions } from './types';
-import { ObjectConverter } from './utils';
+import {toSnakeCase} from './utils';
 
 export interface Transaction {
   id: string;
@@ -63,11 +63,11 @@ export class Transactions {
   }
 
   public async getTransactions(blockchain: BlockchainType, options?: PaginationOptions): Promise<Pagination<Transaction>> {
-    const queryString: string = options ? Object.keys(ObjectConverter.toSnakeCase(options))
+    const queryString: string = options ? Object.keys(options)
       .filter((key) => !!options[key])
-      .map((key) => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`).join('&') : '';
+      .map((key) => `${toSnakeCase(key)}=${options[key]}`).join('&') : '';
 
-    const data: Pagination<Transaction> = await this.client.get<Pagination<Transaction>>(`${this.baseUrl}?${queryString}&blockchain=${blockchain}`);
+    const data: Pagination<Transaction> = await this.client.get<Pagination<Transaction>>(`${this.baseUrl}${queryString ? `?${queryString}` : ''}&blockchain=${blockchain}`);
     return {
       pagination: data.pagination,
       results: data.results,

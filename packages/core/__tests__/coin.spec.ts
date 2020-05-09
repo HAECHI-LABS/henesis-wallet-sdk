@@ -3,23 +3,9 @@ import BN from 'bn.js';
 import { Erc20 } from '../src/coin';
 
 describe('Erc20', () => {
-  class ERC20Impl extends Erc20 {
-    getAddress(): string {
-      return '0x280460de5d4488DDA8e29dFb947a8D4574203E3F';
-    }
-
-    isErc20(): boolean {
-      return true;
-    }
-
-    getName(): string {
-      return 'etc20Impl';
-    }
-  }
-
   let erc20: Erc20;
   beforeEach(() => {
-    erc20 = new ERC20Impl();
+    erc20 = new Erc20('erc20', '0x280460de5d4488DDA8e29dFb947a8D4574203E3F');
   });
 
   describe('#getAddress()', () => {
@@ -30,7 +16,7 @@ describe('Erc20', () => {
 
   describe('#getName()', () => {
     it('should return the name of erc20 contract', () => {
-      expect(erc20.getName()).toEqual('etc20Impl');
+      expect(erc20.getName()).toEqual('erc20');
     });
   });
 

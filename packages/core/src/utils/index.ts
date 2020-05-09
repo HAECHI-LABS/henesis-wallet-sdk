@@ -21,6 +21,7 @@ export const toChecksum = (address) => {
 };
 
 export const bytesToWord = (bytes?: Uint8Array): number => bytes.reduce((num, byte) => num * 0x100 + byte, 0);
+export const toSnakeCase = (s) => s.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toLowerCase();
 
 export class ObjectConverter {
   static toSnakeCase(obj: any) {
