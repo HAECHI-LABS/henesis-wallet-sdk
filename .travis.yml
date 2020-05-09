@@ -1,0 +1,37 @@
+node_js:
+  - "10.15"
+
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::8}
+
+cache: npm
+
+branches:
+  only:
+    - master
+
+before_deploy:
+  - cd $TRAVIS_BUILD_DIR
+
+deploy:
+  - provider: script
+    skip-cleanup: true
+    script: scripts/deploy.sh prod
+    on:
+      tags: true
+
+before_install:
+  - sudo apt install -y build-essential
+
+addons:
+  apt:
+    update: true
+
+install:
+  - npm install
+  - npm run lerna:bootstrap
+  - npm run build
+
+script:
+  - npm test
