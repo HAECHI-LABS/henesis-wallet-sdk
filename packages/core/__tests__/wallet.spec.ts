@@ -3,13 +3,13 @@ import { SDK } from '../src';
 import { EthereumKeychains } from '../src/keychains';
 import { BNConverter } from '../src/utils';
 import { MockEthLikeWallet } from '../__mocks__/wallet.mock';
-import {EthLikeWallet, MasterWallet, WalletStatus} from "../src/wallet";
-import {MultiSigPayload} from "../src/transactions";
+import { EthLikeWallet, MasterWallet, WalletStatus } from '../src/wallet';
+import { MultiSigPayload } from '../src/transactions';
 
 const baseUrl = 'http://localhost:8080';
 describe('Wallet', () => {
   const password = 'password';
-  const encryptedPassphrase = 'NGNlNDA3ZWQ4ZGRjYWNlMA==';
+  const encryptedPassphrase = 'MWNmZWVjNTFhNzFlMTdhMQ==';
   const keyWithPriv = {
     address: '0xb0A6d9b21F45aCC64365CDBb523405411c3b050F',
     pub: '0x4d5cfc604d29a96298c1851899e9ca3d2a6337ead83bb3e9cfd822dc81ac87574f0b7aa725df739e0770b677db12bf9e19c46b7b55fd1ef75aaabe2a054e50a0',
@@ -92,7 +92,7 @@ describe('Wallet', () => {
         (wallet as any).masterWalletData = {
           blockchain: 'ETHEREUM',
           accountKey: keyWithPriv,
-          encryptionKey: '867f70cf1ade02cff3752599a3a53dc4af34c7a669815ae5d513554e1c8cf252',
+          encryptionKey: '3a979c0d9ba528074731bae9a5d029f87ae37dae99719abbc82e76ed35e50e9e',
         };
       });
 
