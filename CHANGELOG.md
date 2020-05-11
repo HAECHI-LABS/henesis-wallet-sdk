@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.4...v1.0.5) (2020-05-11)
+
+
+### Bug Fixes
+
+* fix path error, feat: add transaction search key type ([d19eb72](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d19eb7232572012b8e6f27e771762bc6fb382a83))
+
+
+### Features
+
+* add event search key type ([d5edcde](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d5edcde03f40815440e5515014a447816ebe1cdc))
+
+
+
+
+
 ## [1.0.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.3...v1.0.4) (2020-05-11)
 
 
