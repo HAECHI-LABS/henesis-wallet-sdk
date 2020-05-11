@@ -1,4 +1,6 @@
 import BN from 'bn.js';
+import { BlockchainType } from './blockchain';
+import { TransactionStatus } from './transactions';
 
 export interface Balance {
   coinType: string;
@@ -17,7 +19,17 @@ export interface KeyWithPriv extends Key {
   priv: string;
 }
 
-export interface PaginationOptions {
+export type Timestamp = number;
+
+export interface SearchOptions {
+  toAddress?: string;
+  fromAddress?: string;
+  transactionHash?: string;
+  start?: Timestamp;
+  end?: Timestamp;
+}
+
+export interface PaginationOptions extends SearchOptions{
   page?: number;
   size?: number;
   sort?: string;

@@ -2,6 +2,7 @@ import * as BN from 'bn.js';
 import { Client } from './sdk';
 import { Pagination, PaginationOptions } from './types';
 import { BNConverter, toSnakeCase } from './utils';
+import { BlockchainType } from './blockchain';
 
 export interface Event {
   createdAt: string;
@@ -32,8 +33,9 @@ export interface ValueTransferEvent extends Event {
 }
 
 export interface EventPaginationOptions extends PaginationOptions{
-  address?: string;
   transactionHash?: string;
+  status?: EventStatusType;
+  blockchain?: BlockchainType;
 }
 
 export class Events {
