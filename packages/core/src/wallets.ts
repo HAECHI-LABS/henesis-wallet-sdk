@@ -66,7 +66,7 @@ export class Wallets {
   ): Promise<RecoveryKit> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
-    const encryptionKeyBuffer: Buffer = this.createEncryptionKey();
+    const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
     const henesisKeys = await this.client.get<any>(
       '/organizations/me',
     );
@@ -125,7 +125,7 @@ export class Wallets {
   ): Promise<MasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
-    const encryptionKeyBuffer: Buffer = this.createEncryptionKey();
+    const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
     const walletData = await this.client.post<MasterWalletData>(
       this.baseUrl,
       {
@@ -146,9 +146,9 @@ export class Wallets {
   }
 
   // generates 256bit key
-  private createEncryptionKey(): Buffer {
-    const randomHexString = Web3.utils.randomHex(32).substr(2);
-    return Buffer.from(randomHexString, 'hex');
+  private createEncryptionKey(p: string): Buffer {
+    const randomHex = Web3.utils.randomHex(32);
+    return pbkdf2.pbkdf2Sync(p, randomHex, 1, 256 / 8, 'sha512');
   }
 
   private removePrivateKey(key: KeyWithPriv): Key {
