@@ -16,6 +16,11 @@ export interface Transaction {
   status: TransactionStatus;
 }
 
+export interface TransactionPaginationOptions extends PaginationOptions{
+  status?: TransactionStatus;
+  keyId?: string;
+}
+
 export interface MultiSigPayload {
   walletAddress: string;
   toAddress: string;
@@ -67,7 +72,7 @@ export class Transactions {
       .filter((key) => !!options[key])
       .map((key) => `${toSnakeCase(key)}=${options[key]}`).join('&') : '';
 
-    const data: Pagination<Transaction> = await this.client.get<Pagination<Transaction>>(`${this.baseUrl}${queryString ? `?${queryString}` : ''}&blockchain=${blockchain}`);
+    const data: Pagination<Transaction> = await this.client.get<Pagination<Transaction>>(`${this.baseUrl}${queryString ? `?${queryString}` : '?'}&blockchain=${blockchain}`);
     return {
       pagination: data.pagination,
       results: data.results,
