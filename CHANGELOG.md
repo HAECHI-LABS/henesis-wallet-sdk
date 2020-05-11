@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.3...v1.0.4) (2020-05-11)
+
+
+### Bug Fixes
+
+* random salt when create encryption key ([3c52163](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3c52163e7a31f75010467b13a5c4589178e9cbad))
+
+
+### Features
+
+* add travis ([4821f3b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4821f3bfc22518d6cd0ae2c4ffba6f2b338f5621))
+* modify test ([24acbfa](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/24acbfae259935bb8649673ae28892aefd136d4a))
+
+
+
+
+
 ## [1.0.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.2...v1.0.3) (2020-05-08)
 
 
