@@ -3,6 +3,7 @@
   "scripts": {
     "lerna:bootstrap": "lerna run preBootstrap && lerna bootstrap --hoist --no-ci",
     "bootstrap": "rm -rf ./**./node_modules && npm install && npm run lerna:bootstrap && npm run build",
+    "publish:patch": "lerna version patch && lerna publish from-git",
     "build": "lerna run build",
     "test": "lerna run test"
   },

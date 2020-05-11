@@ -71,7 +71,6 @@ export class Transactions {
     const queryString: string = options ? Object.keys(options)
       .filter((key) => !!options[key])
       .map((key) => `${toSnakeCase(key)}=${options[key]}`).join('&') : '';
-
     const data: Pagination<Transaction> = await this.client.get<Pagination<Transaction>>(`${this.baseUrl}${queryString ? `?${queryString}` : '?'}&blockchain=${blockchain}`);
     return {
       pagination: data.pagination,
