@@ -147,8 +147,8 @@ export class Wallets {
 
   // generates 256bit key
   private createEncryptionKey(p: string): Buffer {
-    const randomHex = Web3.utils.randomHex(32);
-    return pbkdf2.pbkdf2Sync(p, randomHex, 1, 256 / 8, 'sha512');
+    const randomBytes = crypto.randomBytes(64);
+    return pbkdf2.pbkdf2Sync(p, Base64.encode(randomBytes), 1, 256 / 8, 'sha512');
   }
 
   private removePrivateKey(key: KeyWithPriv): Key {
