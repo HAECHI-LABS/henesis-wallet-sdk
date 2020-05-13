@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.7...v1.0.8) (2020-05-13)
+
+
+### Bug Fixes
+
+* fix restore and change passphrase bug ([556539c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/556539ceef706e0d67c20463578cd38efd2cfc6f))
+
+
+
+
+
 ## [1.0.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.6...v1.0.7) (2020-05-11)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-core
