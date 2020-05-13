@@ -76,38 +76,14 @@ describe('Wallet', () => {
         };
       });
 
-      it('should return true when passphrase is valid', () => {
-        const isValid = wallet.verifyPassphrase(password);
+      it('should return true when passphrase is valid', async () => {
+        const isValid = await wallet.verifyPassphrase(password);
         expect(isValid).toEqual(true);
       });
 
-      it('should return false when passphrase is invalid', () => {
-        const isValid = wallet.verifyPassphrase(`invalid${password}`);
+      it('should return false when passphrase is invalid', async () => {
+        const isValid = await wallet.verifyPassphrase(`invalid${password}`);
         expect(isValid).toEqual(false);
-      });
-    });
-
-    describe('#verifyEncryptedPassphrase()', () => {
-      beforeAll(() => {
-        (wallet as any).masterWalletData = {
-          blockchain: 'ETHEREUM',
-          accountKey: keyWithPriv,
-          encryptionKey: '3a979c0d9ba528074731bae9a5d029f87ae37dae99719abbc82e76ed35e50e9e',
-        };
-      });
-
-      it('should return true when passphrase is valid', () => {
-        const isValid = wallet.verifyEncryptedPassphrase(encryptedPassphrase);
-        expect(isValid).toEqual(true);
-      });
-
-      it('should return false when passphrase is invalid', () => {
-        let isValid;
-        try {
-          isValid = wallet.verifyEncryptedPassphrase(`invalid${encryptedPassphrase}`);
-        } catch (e) {
-          expect(isValid).toEqual(undefined);
-        }
       });
     });
 
