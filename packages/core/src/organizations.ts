@@ -1,9 +1,7 @@
-import BN from 'bn.js';
 import { Client } from './sdk';
 import {
-  Balance, Secret, Token, Key,
+  Balance, Secret, Key,
 } from './types';
-
 import { Account, Role } from './accounts';
 import { BlockchainType } from './blockchain';
 import { BNConverter } from './utils';

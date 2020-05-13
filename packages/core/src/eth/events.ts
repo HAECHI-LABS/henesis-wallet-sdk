@@ -1,8 +1,8 @@
 import * as BN from 'bn.js';
-import { Client } from './sdk';
-import { Pagination, PaginationOptions } from './types';
-import { BNConverter, toSnakeCase } from './utils';
-import { BlockchainType } from './blockchain';
+import { Pagination, PaginationOptions } from '../types';
+import { BlockchainType } from '../blockchain';
+import { Client } from '../sdk';
+import { BNConverter, toSnakeCase } from '../utils';
 
 export interface Event {
   createdAt: string;

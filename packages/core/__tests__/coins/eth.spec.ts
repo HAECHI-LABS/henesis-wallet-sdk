@@ -1,5 +1,5 @@
 import BN from 'bn.js';
-import { Eth } from '../../src/coin';
+import { Eth } from "../../src/eth/coin";
 
 describe('Eth', () => {
   let eth: Eth;
@@ -8,8 +8,8 @@ describe('Eth', () => {
   });
 
   describe('#getName()', () => {
-    it('should return eth', () => {
-      expect(eth.getName()).toEqual('eth');
+    it('should return ethereum', () => {
+      expect(eth.getName()).toEqual('ethereum');
     });
   });
 

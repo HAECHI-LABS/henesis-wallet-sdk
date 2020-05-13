@@ -1,15 +1,14 @@
 import aesjs from 'aes-js';
-import pbkdf2 from 'pbkdf2';
 import { Base64 } from 'js-base64';
 import * as BN from 'bn.js';
 import Web3 from 'web3';
-import crypto from 'crypto';
-import { Client, Env } from './sdk';
+import pbkdf2 from 'pbkdf2';
+import { Client, Env } from '../sdk';
+import { Key, Keychains, KeyWithPriv } from '../types';
 import { MasterWallet, MasterWalletData } from './wallet';
-import { Keychains, RecoveryKit } from './keychains';
-import { BlockchainType } from './blockchain';
-import { Key, KeyWithPriv } from './types';
-import { BNConverter, toSnakeCase } from './utils';
+import { BNConverter, toSnakeCase } from '../utils';
+import { BlockchainType } from '../blockchain';
+import { RecoveryKit } from '../recoverykit';
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -145,7 +144,6 @@ export class Wallets {
     );
   }
 
-  // generates 256bit key
   private createEncryptionKey(p: string): Buffer {
     const randomHex = Web3.utils.randomHex(32);
     return pbkdf2.pbkdf2Sync(p, randomHex, 1, 256 / 8, 'sha512');
