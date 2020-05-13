@@ -1,5 +1,5 @@
 import BN from 'bn.js';
-import { Klay } from '../../src/coin';
+import { Klay } from "../../src/eth/coin";
 
 describe('Klay', () => {
   let klay: Klay;
@@ -8,7 +8,7 @@ describe('Klay', () => {
   });
 
   describe('#getName()', () => {
-    it('should return eth', () => {
+    it('should return ethereum', () => {
       expect(klay.getName()).toEqual('klay');
     });
   });

@@ -1,7 +1,6 @@
-import { EthLikeWallet, MasterWalletData } from "../src/wallet";
 import { Client } from "../src/sdk";
-import { Keychains } from "../src/keychains";
-import { Balance } from "../src/types";
+import { Balance, Keychains } from "../src/types";
+import { EthLikeWallet, MasterWalletData } from "../src/eth/wallet";
 
 export class MockEthLikeWallet extends EthLikeWallet {
   public constructor(

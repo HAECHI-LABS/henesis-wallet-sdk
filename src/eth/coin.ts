@@ -2,9 +2,9 @@ import BN from 'bn.js';
 import { Contract } from 'web3-eth-contract';
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
-import erc20 from './contracts/ERC20.json';
-import eth from './contracts/Eth.json';
-import klay from './contracts/Klay.json';
+import erc20 from '../contracts/ERC20.json';
+import eth from '../contracts/Eth.json';
+import klay from '../contracts/Klay.json';
 
 export abstract class Coin {
   abstract getName(): string;

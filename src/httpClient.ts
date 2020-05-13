@@ -1,8 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
-import { ObjectConverter } from './utils';
 import { Env } from './sdk';
+import { ObjectConverter } from './utils';
 
 export interface ClientOptions {
   accessToken: string;
@@ -81,7 +81,6 @@ export class HttpClient {
     return new AxiosMethodProxy(this, this.client) as any;
   }
 
-  // todo: implement sign
   createSig(message: string): string {
     return Base64.stringify(hmacSHA256(message, this.secret));
   }

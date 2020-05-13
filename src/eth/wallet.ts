@@ -4,22 +4,21 @@ import { AbiItem } from 'web3-utils';
 import BN from 'bn.js';
 import aesjs from 'aes-js';
 import { Base64 } from 'js-base64';
-import { Client } from './sdk';
-import {
-  PaginationOptions, Pagination, Key, KeyWithPriv, Balance,
-} from './types';
-import { Keychains } from './keychains';
-import { BlockchainType } from './blockchain';
-import wallet from './contracts/MasterWallet.json';
-import { BNConverter, ObjectConverter, toChecksum } from './utils';
-import { MultiSigPayload, SignedMultiSigPayload } from './transactions';
-import BatchRequest from './batch';
 import {
   Coin, Eth, Klay, Erc20,
 } from './coin';
-
-const Bytes = require('./vendor/eth-lib/bytes');
-const { keccak256s } = require('./vendor/eth-lib/hash');
+import { BlockchainType } from '../blockchain';
+import {
+  Balance, Key, Keychains, KeyWithPriv, Pagination, PaginationOptions,
+} from '../types';
+import { MultiSigPayload, SignedMultiSigPayload } from './transactions';
+import { Client } from '../sdk';
+import { toChecksum } from './keychains';
+import BatchRequest from './batch';
+import wallet from '../contracts/MasterWallet.json';
+import Bytes from './eth-core-lib/bytes';
+import { keccak256s } from './eth-core-lib/hash';
+import { BNConverter, ObjectConverter } from '../utils';
 
 export interface Nonce {
   nonce: BN;
@@ -372,10 +371,8 @@ export abstract class EthLikeWallet extends Wallet {
     switch (coin.symbol.toUpperCase()) {
       case 'ETH':
         return new Eth();
-        break;
       case 'KLAY':
         return new Klay();
-        break;
       default:
         return new Erc20(coin.symbol, coin.address);
     }

@@ -1,6 +1,17 @@
 import BN from 'bn.js';
 import { BlockchainType } from './blockchain';
-import { TransactionStatus } from './transactions';
+
+export interface Keychains {
+  create(password: string): KeyWithPriv;
+
+  changePassword(keyFile: string, password: string, newPassword: string): KeyWithPriv;
+
+  decryptKeyFile(keyFile: string, password: string): string;
+
+  signPayload(blockchain: BlockchainType, hexPayload: string, keyFile: string, password: string): string;
+
+  recoverAddressFromSignature(blockchain: BlockchainType, hexPayload: string, signature: string): string;
+}
 
 export interface Balance {
   coinType: string;

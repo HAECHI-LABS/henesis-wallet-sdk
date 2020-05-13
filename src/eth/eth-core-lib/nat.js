@@ -1,4 +1,4 @@
-const BN = require('bn.js');
+const BN = require('../../../../../../node_modules/bn.js/lib/bn');
 const Bytes = require('./bytes');
 
 const fromBN = (bn) => `0x${bn.toString('hex')}`;

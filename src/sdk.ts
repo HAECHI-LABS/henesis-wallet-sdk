@@ -1,11 +1,7 @@
-import { Accounts } from './accounts';
-import { HttpClient } from './httpClient';
-import { Wallets } from './wallets';
-import { EthereumKeychains, Keychains } from './keychains';
-import { Events } from './events';
-import { Organizations } from './organizations';
-import { Gasusages } from './gasusages';
-import { Transactions } from './transactions';
+import { BlockchainType } from './blockchain';
+import { Accounts } from "./accounts";
+import { Organizations } from "./organizations";
+import { HttpClient } from "./httpClient";
 
 export const enum Env {
   Local,
@@ -36,23 +32,12 @@ export interface Client {
 }
 
 export class SDK {
-  public readonly wallets: Wallets;
-
   public readonly accounts: Accounts;
-
-  public readonly keychains: Keychains;
-
-  public readonly events: Events;
 
   public readonly organizations: Organizations;
 
-  public readonly gasusages: Gasusages;
-
-  public readonly transactions: Transactions;
-
   private readonly client: Client;
 
-  // todo: validation params;
   constructor(params: SDKOptions) {
     let env = Env.Prod;
     if (params.env !== undefined && params.env !== null) {
@@ -67,11 +52,10 @@ export class SDK {
     }) as any;
 
     this.accounts = new Accounts(this.client);
-    this.keychains = new EthereumKeychains();
-    this.wallets = new Wallets(this.client, this.keychains, env);
-    this.events = new Events(this.client);
     this.organizations = new Organizations(this.client);
-    this.gasusages = new Gasusages(this.client);
-    this.transactions = new Transactions(this.client);
+  }
+
+  public sdk(blockchain: BlockchainType) {
+
   }
 }
