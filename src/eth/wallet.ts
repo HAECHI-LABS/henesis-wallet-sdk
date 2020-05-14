@@ -393,25 +393,35 @@ export class MasterWallet extends EthLikeWallet {
 
   async restorePassphrase(encryptedPassphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
     const passphrase = this.recoverPassphrase(encryptedPassphrase);
-    await this.changePassphrase(passphrase, newPassphrase, otpCode);
+    const initialKey: Key = await this.client.get<Key>(
+      `${this.baseUrl}/${this.masterWalletData.id}/initial-key`,
+    );
+    await this.changePassphraseWithKeyFile(passphrase, newPassphrase, initialKey, otpCode);
   }
 
-  recoverPassphrase(encryptedPassphrase: string): string {
+  private recoverPassphrase(encryptedPassphrase: string): string {
     const { encryptionKey } = this.masterWalletData;
     const aesCtr = new aesjs.ModeOfOperation.ctr(aesjs.utils.hex.toBytes(encryptionKey));
     const decryptedBytes = aesCtr.decrypt(aesjs.utils.hex.toBytes(Base64.decode(encryptedPassphrase)));
     return aesjs.utils.utf8.fromBytes(decryptedBytes);
   }
 
-  verifyEncryptedPassphrase(encryptedPassphrase: string): boolean {
+  async verifyEncryptedPassphrase(encryptedPassphrase: string): Promise<boolean> {
     const passphrase = this.recoverPassphrase(encryptedPassphrase);
-    return this.verifyPassphrase(passphrase);
+    const initialKey: Key = await this.client.get<Key>(
+      `${this.baseUrl}/${this.masterWalletData.id}/initial-key`,
+    );
+    return await this.verifyPassphraseWithKeyFile(passphrase, initialKey);
   }
 
-  verifyPassphrase(passphrase: string): boolean {
+  async verifyPassphrase(passphrase: string): Promise<boolean> {
+    return this.verifyPassphraseWithKeyFile(passphrase);
+  }
+
+  private async verifyPassphraseWithKeyFile(passphrase: string, initialKey?: Key): Promise<boolean> {
     try {
       this.keychains.decryptKeyFile(
-        this.masterWalletData.accountKey.keyFile,
+        initialKey ? initialKey.keyFile : this.masterWalletData.accountKey.keyFile,
         passphrase,
       );
       return true;
@@ -421,8 +431,17 @@ export class MasterWallet extends EthLikeWallet {
   }
 
   async changePassphrase(passphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
+    return this.changePassphraseWithKeyFile(
+      passphrase,
+      newPassphrase,
+      undefined,
+      otpCode,
+    );
+  }
+
+  async changePassphraseWithKeyFile(passphrase: string, newPassphrase: string, initialKey?: Key, otpCode?: string): Promise<void> {
     const newKey: KeyWithPriv = this.keychains.changePassword(
-      this.masterWalletData.accountKey.keyFile,
+      initialKey ? initialKey.keyFile : this.masterWalletData.accountKey.keyFile,
       passphrase,
       newPassphrase,
     );
