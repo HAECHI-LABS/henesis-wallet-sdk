@@ -3,6 +3,7 @@ import { Pagination, PaginationOptions } from '../types';
 import { BlockchainType } from '../blockchain';
 import { Client } from '../sdk';
 import { BNConverter, toSnakeCase } from '../utils';
+import { SubModule } from "./module";
 
 export interface Event {
   createdAt: string;
@@ -38,10 +39,11 @@ export interface EventPaginationOptions extends PaginationOptions{
   blockchain?: BlockchainType;
 }
 
-export class Events {
+export class Events extends SubModule {
   private readonly client: Client;
 
   constructor(client: Client) {
+    super();
     this.client = client;
   }
 
@@ -51,7 +53,7 @@ export class Events {
       .map((key) => `${toSnakeCase(key)}=${options[key]}`).join('&') : '';
 
     const data: Pagination<Event> = await this.client
-      .get<Pagination<Event>>(`/call-events${queryString ? `?${queryString}&` : '?'}wallet_id=${walletId}`);
+      .get<Pagination<Event>>(this.getBaseUrl() + `/call-events${queryString ? `?${queryString}&` : '?'}wallet_id=${walletId}`);
     return {
       pagination: data.pagination,
       results: data.results,
@@ -63,7 +65,7 @@ export class Events {
       .filter((key) => !!options[key])
       .map((key) => `${toSnakeCase(key)}=${options[key]}`).join('&') : '';
     const data = await this.client
-      .get(`/value-transfer-events${queryString ? `?${queryString}&` : '?'}wallet_id=${walletId}`);
+      .get(this.getBaseUrl() + `/value-transfer-events${queryString ? `?${queryString}&` : '?'}wallet_id=${walletId}`);
 
     return {
       pagination: data.pagination,

@@ -9,25 +9,28 @@ import { MasterWallet, MasterWalletData } from './wallet';
 import { BNConverter, toSnakeCase } from '../utils';
 import { BlockchainType } from '../blockchain';
 import { RecoveryKit } from '../recoverykit';
+import { SubModule } from "./module";
 
 export interface MasterWalletSearchOptions {
   name?: string;
   orgId?: string;
 }
 
-export class Wallets {
+export class Wallets extends SubModule {
   private readonly client: Client;
 
   private readonly keychains: Keychains;
 
   private readonly env: Env;
 
-  private baseUrl = '/wallets';
+  private readonly baseUrl;
 
   constructor(client: Client, keychains: Keychains, env: Env) {
+    super();
     this.client = client;
     this.keychains = keychains;
     this.env = env;
+    this.baseUrl = this.getBaseUrl() + '/wallets';
   }
 
   public async getMasterWallet(id: string): Promise<MasterWallet> {
