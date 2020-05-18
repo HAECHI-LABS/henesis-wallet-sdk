@@ -3,8 +3,12 @@ import { SDK } from '../src';
 import { EthereumKeychains } from '../src/keychains';
 import { BNConverter } from '../src/utils';
 import { MockEthLikeWallet } from '../__mocks__/wallet.mock';
-import { EthLikeWallet, MasterWallet, WalletStatus } from '../src/wallet';
-import { MultiSigPayload } from '../src/transactions';
+import { EthLikeWallet, MasterWallet, Transaction, WalletStatus } from '../src/wallet';
+import { MultiSigPayload, SignedMultiSigPayload } from '../src/transactions';
+import { HttpClient } from "../src/httpClient";
+import { BlockchainType } from "../src/blockchain";
+import BN from "bn.js";
+import { Env } from "../src/sdk";
 
 const baseUrl = 'http://localhost:8080';
 describe('Wallet', () => {
@@ -23,10 +27,16 @@ describe('Wallet', () => {
   });
 
   describe('EthLikeWallet', () => {
+    const client = new HttpClient({
+      accessToken: 'TemporaryToken',
+      secret: 'WdiZiGKU3TPvRHRAprQ1ScBV3cNBd6b8QDmFlhSxM8k=',
+      env: Env.Local,
+    }) as any;
+
     let wallet: EthLikeWallet;
     beforeEach(() => {
       wallet = new MockEthLikeWallet(
-        null,
+        client,
         {
           blockchain: 'ETHEREUM',
         } as any,
@@ -52,6 +62,154 @@ describe('Wallet', () => {
           + '41db2742192de9f405769abe8d856f7a7232c6f96fd7c4c20938c39ac9e787a0' // s
           + '1b'; // v
         expect((wallet as any).signPayload(multiSigPayload, password)).toEqual(expectedSignature);
+      });
+    });
+
+    describe('Transaction', () => {
+      const blockchainPayload: BlockchainType = BlockchainType.Ethereum;
+      const signedMultiSigPayload: SignedMultiSigPayload = {
+        signature: '0x50fc48b8644bf9ae0548b3da40ecdac1a38d118ddb5effa0d56efd3e666143b83339e806e8f947f37070f5f19b0f9e1d6e09732b46ae8f8cca42b0439fc1b43c1c',
+        multiSigPayload: {
+          value: new BN(0),
+          walletAddress: '0x763de619d35763a7628a7c68b5f06f19ec4e63e0',
+          toAddress: '0x763de619d35763a7628a7c68b5f06f19ec4e63e0',
+          walletNonce: new BN(0),
+          hexData: '0x9cbaca3b0000000000000000000000008be6d4f20abfdf82836ea0119c3aa34427ff79840000000000000000000000000000000000000000000000000000000000302e31',
+        },
+      };
+      const walletIdPayload: string = 'cae4f6e4a393b7e7fe270044a2896d40';
+      const otpCodePayload: string = '000000';
+      const gasPricePayload: BN = new BN(0);
+      const gasLimitPayload: BN = new BN(0);
+      const accountId: string = '49803fbf0a2a2c3ab3a0aba8b98dbb2a';
+
+      describe('#sendTransaction()', () => {
+        it('should sendTransaction function to return Transaction Type', async () => {
+          const sendTransactionResponse: Transaction = {
+            id: '7b7404851d3cc06135b147612b0a1d02',
+            blockchain: BlockchainType.Ethereum,
+            walletId: walletIdPayload,
+            accountId,
+            hash: '0xff2526c36b171ae02d0244bf00750a40f44b4a922d5684751ca88a329d837094',
+            status: 'REQUESTED',
+          };
+
+          nock(baseUrl)
+              .post('/api/v1/wallets/transactions')
+              .reply(200, sendTransactionResponse);
+
+          const sendTx = await (wallet as any).sendTransaction(
+              blockchainPayload,
+              signedMultiSigPayload,
+              walletIdPayload,
+              otpCodePayload,
+              gasPricePayload,
+              gasLimitPayload,
+          );
+          expect(sendTx).toEqual(sendTransactionResponse);
+          expect(sendTx.walletId).toEqual(walletIdPayload);
+          expect(sendTx.blockchain).toEqual(blockchainPayload);
+        });
+      });
+
+      describe('#sendBatchTransaction()', () => {
+        it('should sendBatchTransaction function to return Transaction[] Type', async () => {
+          const signedMultiSigPayload: SignedMultiSigPayload[] = [
+            {
+              signature: '0xda4828aed7c4f78a63abf16c4722360e665bd9bf029e16f029e4ebd422cc286a0417f44b24ca77f2ec9303fa2d6abfe424dedf42f3dbdcc30eb3a909c0347aa21c',
+              multiSigPayload: {
+                value: new BN(0),
+                walletAddress: '0xa3aaaecd815703e60f505fcb10d2d38bf769c305',
+                toAddress: '0x20f3933c0d62609b5538b457e6006c25e2d5670e',
+                walletNonce: new BN(0),
+                hexData: '0xa9059cbb000000000000000000000000eca3bf7b4344114f5fe6084e7c08d49bcca7c907000000000000000000000000000000000000000000000000016345785d8a0000',
+              },
+            },
+            {
+              signature: '0xda4828aed7c4f78a63abf16c4722360e665bd9bf029e16f029e4ebd422cc286a0417f44b24ca77f2ec9303fa2d6abfe424dedf42f3dbdcc30eb3a909c0347aa21c',
+              multiSigPayload: {
+                value: new BN(0),
+                walletAddress: '0xb1d58c6b60a147558573f6a53748b7ab6c62b6e7',
+                toAddress: '0x20f3933c0d62609b5538b457e6006c25e2d5670e',
+                walletNonce: new BN(0),
+                hexData: '0xa9059cbb000000000000000000000000eca3bf7b4344114f5fe6084e7c08d49bcca7c907000000000000000000000000000000000000000000000000016345785d8a0000',
+              },
+            },
+            {
+              signature: '0xda4828aed7c4f78a63abf16c4722360e665bd9bf029e16f029e4ebd422cc286a0417f44b24ca77f2ec9303fa2d6abfe424dedf42f3dbdcc30eb3a909c0347aa21c',
+              multiSigPayload: {
+                value: new BN(0),
+                walletAddress: '0xec797359f9f0734aecd27fd729b0598f029b258f',
+                toAddress: '0x20f3933c0d62609b5538b457e6006c25e2d5670e',
+                walletNonce: new BN(0),
+                hexData: '0xa9059cbb000000000000000000000000eca3bf7b4344114f5fe6084e7c08d49bcca7c907000000000000000000000000000000000000000000000000016345785d8a0000',
+              },
+            }
+          ];
+          const sendBatchTransactionResponse: Transaction[] = [
+            {
+              id: 'e4a1e5f66a32dc50b66fb3229aed0202',
+              blockchain: BlockchainType.Ethereum,
+              walletId: walletIdPayload,
+              accountId: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
+              hash: '0xc36e5acf20f5c09ee4db9608d6e5820db80dbd13e8c0232f7bb503113f365a56',
+              status: WalletStatus.Active,
+            },
+            {
+              id: 'e4a1e5f66a32dc50b66fb3229aed0202',
+              blockchain: BlockchainType.Ethereum,
+              walletId: walletIdPayload,
+              accountId: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
+              hash: '0xc36e5acf20f5c09ee4db9608d6e5820db80dbd13e8c0232f7bb503113f365a56',
+              status: WalletStatus.Inactive,
+            },
+            {
+              id: 'e4a1e5f66a32dc50b66fb3229aed0202',
+              blockchain: BlockchainType.Ethereum,
+              walletId: walletIdPayload,
+              accountId: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
+              hash: '0xc36e5acf20f5c09ee4db9608d6e5820db80dbd13e8c0232f7bb503113f365a56',
+              status: WalletStatus.Active,
+            }
+          ];
+
+          nock(baseUrl)
+              .post('/api/v1/wallets/batch-transactions')
+              .reply(200, sendBatchTransactionResponse);
+
+          const sendBatchTx = await (wallet as any).sendBatchTransaction(
+              blockchainPayload,
+              signedMultiSigPayload,
+              walletIdPayload,
+              otpCodePayload,
+              gasPricePayload,
+              gasLimitPayload,
+          );
+          expect(sendBatchTx).toEqual(sendBatchTransactionResponse);
+        });
+      });
+
+      describe('#replaceTransaction()', () => {
+        it('should replaceTransaction function to return Transaction Type', async () => {
+          const transactionIdPayload: string = 'e4a1e5f66a32dc50b66fb3229aed0202';
+          const otpCodePayload: string = '000000';
+
+          const replaceTransactionResponse: Transaction = {
+            id: '2c08cf4beb195c582535d197aa40c498',
+            blockchain: BlockchainType.Ethereum,
+            walletId: '39e16b3eab64f4d595a6cd6ca4035703',
+            accountId: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
+            hash: '0xc36e5acf20f5c09ee4db9608d6e5820db80dbd13e8c0232f7bb503113f365a56',
+            status: WalletStatus.Active,
+          };
+
+          nock(baseUrl)
+              .post('/api/v1/wallets/transactions')
+              .reply(200, replaceTransactionResponse);
+
+          const replaceTx = await wallet.replaceTransaction(transactionIdPayload, otpCodePayload);
+          expect(replaceTx).toEqual(replaceTransactionResponse);
+        });
       });
     });
   });

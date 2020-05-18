@@ -2,6 +2,7 @@ import { EthLikeWallet, MasterWalletData } from "../src/wallet";
 import { Client } from "../src/sdk";
 import { Keychains } from "../src/keychains";
 import { Balance } from "../src/types";
+import { BlockchainType } from "../src/blockchain";
 
 export class MockEthLikeWallet extends EthLikeWallet {
   public constructor(
@@ -22,6 +23,10 @@ export class MockEthLikeWallet extends EthLikeWallet {
 
   getId(): string {
     return "id";
+  }
+
+  getChain(): BlockchainType {
+    return BlockchainType.Ethereum;
   }
 
   changeName(name: string) {
