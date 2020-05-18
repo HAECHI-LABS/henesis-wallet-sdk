@@ -20,10 +20,6 @@ import Bytes from './eth-core-lib/bytes';
 import { keccak256s } from './eth-core-lib/hash';
 import { BNConverter, ObjectConverter } from '../utils';
 
-export interface Nonce {
-  nonce: BN;
-}
-
 export enum WalletStatus {
   Inactive = 'INACTIVE',
   Active = 'ACTIVE'

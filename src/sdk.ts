@@ -1,7 +1,9 @@
-import { BlockchainType } from './blockchain';
+import { BlockchainType } from "./blockchain";
 import { Accounts } from "./accounts";
 import { Organizations } from "./organizations";
 import { HttpClient } from "./httpClient";
+import { KlayModule } from "./eth";
+import { baseUrls } from "./url";
 
 export const enum Env {
   Local,
@@ -36,6 +38,8 @@ export class SDK {
 
   public readonly organizations: Organizations;
 
+  private readonly modules = new Map<BlockchainType, any>();
+
   private readonly client: Client;
 
   constructor(params: SDKOptions) {
@@ -44,18 +48,34 @@ export class SDK {
       env = params.env;
     }
 
+    let baseUrl = baseUrls.get(params.env);
+    if (params.url !== null && params.url !== undefined) {
+      baseUrl = params.url;
+    }
+
     this.client = new HttpClient({
       secret: params.secret,
       accessToken: params.accessToken,
-      url: params.url,
-      env,
+      url: baseUrl,
     }) as any;
-
     this.accounts = new Accounts(this.client);
     this.organizations = new Organizations(this.client);
+    this.modules.set(
+      BlockchainType.Klaytn, new KlayModule({
+        env: env,
+        client: this.client
+      })
+    );
+    this.modules.set(
+      BlockchainType.Klaytn, new KlayModule({
+        env: env,
+        client: this.client
+      })
+    );
   }
 
-  public sdk(blockchain: BlockchainType) {
 
+  public blockchain(blockchain: BlockchainType) {
+    return this.modules.get(blockchain)
   }
 }

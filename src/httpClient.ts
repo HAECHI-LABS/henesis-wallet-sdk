@@ -1,24 +1,17 @@
 import axios, { AxiosInstance } from 'axios';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
-import { Env } from './sdk';
+
 import { ObjectConverter } from './utils';
 
 export interface ClientOptions {
   accessToken: string;
   secret: string;
-  url?: string;
-  env?: Env;
+  url: string;
 }
 
-const baseUrls = new Map<Env, string>();
-baseUrls.set(Env.Local, 'http://localhost:8080/api/v1');
-baseUrls.set(Env.Test, 'https://test.wallet.henesis.io/api/v1');
-baseUrls.set(Env.Dev, 'https://dev.wallet.henesis.io/api/v1');
-baseUrls.set(Env.Prod, 'https://wallet.henesis.io/api/v1');
-
 export class HttpClient {
-  private readonly baseUrl: string = baseUrls.get(Env.Prod);
+  private readonly baseUrl: string;
 
   private readonly client: AxiosInstance;
 
@@ -26,13 +19,10 @@ export class HttpClient {
 
   private readonly secret: string;
 
-  constructor(params: ClientOptions) {
-    this.baseUrl = baseUrls.get(params.env);
-    if (params.url !== null && params.url !== undefined) {
-      this.baseUrl = params.url;
-    }
-    this.secret = params.secret;
-    this.accessToken = params.accessToken;
+  constructor(options: ClientOptions) {
+    this.baseUrl = options.url;
+    this.secret = options.secret;
+    this.accessToken = options.accessToken;
     this.client = axios.create({
       baseURL: this.baseUrl,
       timeout: 30000,
