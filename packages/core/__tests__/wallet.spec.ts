@@ -86,7 +86,7 @@ describe('Wallet', () => {
       const accountId: string = '49803fbf0a2a2c3ab3a0aba8b98dbb2a';
 
       describe('#sendTransaction()', () => {
-        it('should be called normally sendTransaction function', async () => {
+        it('should be called normally', async () => {
           const sendTransactionResponse: Transaction = {
             id: '7b7404851d3cc06135b147612b0a1d02',
             blockchain,
@@ -115,7 +115,7 @@ describe('Wallet', () => {
       });
 
       describe('#sendBatchTransaction()', () => {
-        it('should be called normally sendBatchTransaction function', async () => {
+        it('should be called normally', async () => {
           const batchSignedMultiSig: SignedMultiSigPayload[] = [
             {
               signature: '0xda4828aed7c4f78a63abf16c4722360e665bd9bf029e16f029e4ebd422cc286a0417f44b24ca77f2ec9303fa2d6abfe424dedf42f3dbdcc30eb3a909c0347aa21c',
@@ -192,7 +192,7 @@ describe('Wallet', () => {
       });
 
       describe('#replaceTransaction()', () => {
-        it('should be called normally replaceTransaction function', async () => {
+        it('should be called normally', async () => {
           const transactionIdPayload: string = 'e4a1e5f66a32dc50b66fb3229aed0202';
           const otpCodePayload: string = '000000';
 
