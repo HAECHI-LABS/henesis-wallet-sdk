@@ -68,8 +68,8 @@ describe('Wallet', () => {
     });
 
     describe('Transaction', () => {
-      const blockchainPayload: BlockchainType = BlockchainType.Ethereum;
-      const signedMultiSigPayload: SignedMultiSigPayload = {
+      const blockchain: BlockchainType = BlockchainType.Ethereum;
+      const signedMultiSig: SignedMultiSigPayload = {
         signature: '0x50fc48b8644bf9ae0548b3da40ecdac1a38d118ddb5effa0d56efd3e666143b83339e806e8f947f37070f5f19b0f9e1d6e09732b46ae8f8cca42b0439fc1b43c1c',
         multiSigPayload: {
           value: new BN(0),
@@ -79,18 +79,18 @@ describe('Wallet', () => {
           hexData: '0x9cbaca3b0000000000000000000000008be6d4f20abfdf82836ea0119c3aa34427ff79840000000000000000000000000000000000000000000000000000000000302e31',
         },
       };
-      const walletIdPayload: string = 'cae4f6e4a393b7e7fe270044a2896d40';
-      const otpCodePayload: string = '000000';
-      const gasPricePayload: BN = new BN(0);
-      const gasLimitPayload: BN = new BN(0);
+      const walletId: string = 'cae4f6e4a393b7e7fe270044a2896d40';
+      const otpCode: string = '000000';
+      const gasPrice: BN = new BN(0);
+      const gasLimit: BN = new BN(0);
       const accountId: string = '49803fbf0a2a2c3ab3a0aba8b98dbb2a';
 
       describe('#sendTransaction()', () => {
         it('should be called normally sendTransaction function', async () => {
           const sendTransactionResponse: Transaction = {
             id: '7b7404851d3cc06135b147612b0a1d02',
-            blockchain: BlockchainType.Ethereum,
-            walletId: walletIdPayload,
+            blockchain,
+            walletId,
             accountId,
             hash: '0xff2526c36b171ae02d0244bf00750a40f44b4a922d5684751ca88a329d837094',
             status: 'REQUESTED',
@@ -101,22 +101,22 @@ describe('Wallet', () => {
             .reply(200, sendTransactionResponse);
 
           const sendTx = await (wallet as any).sendTransaction(
-            blockchainPayload,
-            signedMultiSigPayload,
-            walletIdPayload,
-            otpCodePayload,
-            gasPricePayload,
-            gasLimitPayload,
+            blockchain,
+            signedMultiSig,
+            walletId,
+            otpCode,
+            gasPrice,
+            gasLimit,
           );
           expect(sendTx).toEqual(sendTransactionResponse);
-          expect(sendTx.walletId).toEqual(walletIdPayload);
-          expect(sendTx.blockchain).toEqual(blockchainPayload);
+          expect(sendTx.walletId).toEqual(walletId);
+          expect(sendTx.blockchain).toEqual(blockchain);
         });
       });
 
       describe('#sendBatchTransaction()', () => {
         it('should be called normally sendBatchTransaction function', async () => {
-          const signedMultiSigPayload: SignedMultiSigPayload[] = [
+          const batchSignedMultiSig: SignedMultiSigPayload[] = [
             {
               signature: '0xda4828aed7c4f78a63abf16c4722360e665bd9bf029e16f029e4ebd422cc286a0417f44b24ca77f2ec9303fa2d6abfe424dedf42f3dbdcc30eb3a909c0347aa21c',
               multiSigPayload: {
@@ -152,7 +152,7 @@ describe('Wallet', () => {
             {
               id: 'e4a1e5f66a32dc50b66fb3229aed0202',
               blockchain: BlockchainType.Ethereum,
-              walletId: walletIdPayload,
+              walletId,
               accountId: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
               hash: '0xc36e5acf20f5c09ee4db9608d6e5820db80dbd13e8c0232f7bb503113f365a56',
               status: WalletStatus.Active,
@@ -160,7 +160,7 @@ describe('Wallet', () => {
             {
               id: 'e4a1e5f66a32dc50b66fb3229aed0202',
               blockchain: BlockchainType.Ethereum,
-              walletId: walletIdPayload,
+              walletId,
               accountId: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
               hash: '0xc36e5acf20f5c09ee4db9608d6e5820db80dbd13e8c0232f7bb503113f365a56',
               status: WalletStatus.Inactive,
@@ -168,7 +168,7 @@ describe('Wallet', () => {
             {
               id: 'e4a1e5f66a32dc50b66fb3229aed0202',
               blockchain: BlockchainType.Ethereum,
-              walletId: walletIdPayload,
+              walletId,
               accountId: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
               hash: '0xc36e5acf20f5c09ee4db9608d6e5820db80dbd13e8c0232f7bb503113f365a56',
               status: WalletStatus.Active,
@@ -180,12 +180,12 @@ describe('Wallet', () => {
             .reply(200, sendBatchTransactionResponse);
 
           const sendBatchTx = await (wallet as any).sendBatchTransaction(
-            blockchainPayload,
-            signedMultiSigPayload,
-            walletIdPayload,
-            otpCodePayload,
-            gasPricePayload,
-            gasLimitPayload,
+            blockchain,
+            batchSignedMultiSig,
+            walletId,
+            otpCode,
+            gasPrice,
+            gasLimit,
           );
           expect(sendBatchTx).toEqual(sendBatchTransactionResponse);
         });
