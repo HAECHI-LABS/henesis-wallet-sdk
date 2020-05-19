@@ -1,9 +1,9 @@
-import { BlockchainType } from "./blockchain";
 import { Accounts } from "./accounts";
 import { Organizations } from "./organizations";
 import { HttpClient } from "./httpClient";
-import { KlayModule } from "./eth";
+import { EthModule, KlayModule } from "./eth";
 import { baseUrls } from "./url";
+import { BtcModule } from "./btc";
 
 export const enum Env {
   Local,
@@ -38,7 +38,11 @@ export class SDK {
 
   public readonly organizations: Organizations;
 
-  private readonly modules = new Map<BlockchainType, any>();
+  public readonly eth: EthModule;
+
+  public readonly klay: KlayModule;
+
+  public readonly btc: BtcModule;
 
   private readonly client: Client;
 
@@ -60,22 +64,17 @@ export class SDK {
     }) as any;
     this.accounts = new Accounts(this.client);
     this.organizations = new Organizations(this.client);
-    this.modules.set(
-      BlockchainType.Klaytn, new KlayModule({
-        env: env,
-        client: this.client
-      })
-    );
-    this.modules.set(
-      BlockchainType.Klaytn, new KlayModule({
-        env: env,
-        client: this.client
-      })
-    );
-  }
-
-
-  public blockchain(blockchain: BlockchainType) {
-    return this.modules.get(blockchain)
+    this.klay = new KlayModule({
+      env: env,
+      client: this.client
+    });
+    this.eth = new EthModule({
+      env: env,
+      client: this.client
+    });
+    this.btc = new BtcModule({
+      env: env,
+      client: this.client
+    });
   }
 }
