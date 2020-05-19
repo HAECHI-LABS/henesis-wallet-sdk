@@ -1,14 +1,16 @@
 import nock from 'nock';
+import BN from 'bn.js';
 import { SDK } from '../src';
 import { EthereumKeychains } from '../src/keychains';
 import { BNConverter } from '../src/utils';
 import { MockEthLikeWallet } from '../__mocks__/wallet.mock';
-import { EthLikeWallet, MasterWallet, Transaction, WalletStatus } from '../src/wallet';
+import {
+  EthLikeWallet, MasterWallet, Transaction, WalletStatus,
+} from '../src/wallet';
 import { MultiSigPayload, SignedMultiSigPayload } from '../src/transactions';
-import { HttpClient } from "../src/httpClient";
-import { BlockchainType } from "../src/blockchain";
-import BN from "bn.js";
-import { Env } from "../src/sdk";
+import { HttpClient } from '../src/httpClient';
+import { BlockchainType } from '../src/blockchain';
+import { Env } from '../src/sdk';
 
 const baseUrl = 'http://localhost:8080';
 describe('Wallet', () => {
@@ -84,7 +86,7 @@ describe('Wallet', () => {
       const accountId: string = '49803fbf0a2a2c3ab3a0aba8b98dbb2a';
 
       describe('#sendTransaction()', () => {
-        it('should sendTransaction function to return Transaction Type', async () => {
+        it('should be called normally sendTransaction function', async () => {
           const sendTransactionResponse: Transaction = {
             id: '7b7404851d3cc06135b147612b0a1d02',
             blockchain: BlockchainType.Ethereum,
@@ -95,16 +97,16 @@ describe('Wallet', () => {
           };
 
           nock(baseUrl)
-              .post('/api/v1/wallets/transactions')
-              .reply(200, sendTransactionResponse);
+            .post('/api/v1/wallets/transactions')
+            .reply(200, sendTransactionResponse);
 
           const sendTx = await (wallet as any).sendTransaction(
-              blockchainPayload,
-              signedMultiSigPayload,
-              walletIdPayload,
-              otpCodePayload,
-              gasPricePayload,
-              gasLimitPayload,
+            blockchainPayload,
+            signedMultiSigPayload,
+            walletIdPayload,
+            otpCodePayload,
+            gasPricePayload,
+            gasLimitPayload,
           );
           expect(sendTx).toEqual(sendTransactionResponse);
           expect(sendTx.walletId).toEqual(walletIdPayload);
@@ -113,7 +115,7 @@ describe('Wallet', () => {
       });
 
       describe('#sendBatchTransaction()', () => {
-        it('should sendBatchTransaction function to return Transaction[] Type', async () => {
+        it('should be called normally sendBatchTransaction function', async () => {
           const signedMultiSigPayload: SignedMultiSigPayload[] = [
             {
               signature: '0xda4828aed7c4f78a63abf16c4722360e665bd9bf029e16f029e4ebd422cc286a0417f44b24ca77f2ec9303fa2d6abfe424dedf42f3dbdcc30eb3a909c0347aa21c',
@@ -144,7 +146,7 @@ describe('Wallet', () => {
                 walletNonce: new BN(0),
                 hexData: '0xa9059cbb000000000000000000000000eca3bf7b4344114f5fe6084e7c08d49bcca7c907000000000000000000000000000000000000000000000000016345785d8a0000',
               },
-            }
+            },
           ];
           const sendBatchTransactionResponse: Transaction[] = [
             {
@@ -170,27 +172,27 @@ describe('Wallet', () => {
               accountId: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
               hash: '0xc36e5acf20f5c09ee4db9608d6e5820db80dbd13e8c0232f7bb503113f365a56',
               status: WalletStatus.Active,
-            }
+            },
           ];
 
           nock(baseUrl)
-              .post('/api/v1/wallets/batch-transactions')
-              .reply(200, sendBatchTransactionResponse);
+            .post('/api/v1/wallets/batch-transactions')
+            .reply(200, sendBatchTransactionResponse);
 
           const sendBatchTx = await (wallet as any).sendBatchTransaction(
-              blockchainPayload,
-              signedMultiSigPayload,
-              walletIdPayload,
-              otpCodePayload,
-              gasPricePayload,
-              gasLimitPayload,
+            blockchainPayload,
+            signedMultiSigPayload,
+            walletIdPayload,
+            otpCodePayload,
+            gasPricePayload,
+            gasLimitPayload,
           );
           expect(sendBatchTx).toEqual(sendBatchTransactionResponse);
         });
       });
 
       describe('#replaceTransaction()', () => {
-        it('should replaceTransaction function to return Transaction Type', async () => {
+        it('should be called normally replaceTransaction function', async () => {
           const transactionIdPayload: string = 'e4a1e5f66a32dc50b66fb3229aed0202';
           const otpCodePayload: string = '000000';
 
@@ -204,8 +206,8 @@ describe('Wallet', () => {
           };
 
           nock(baseUrl)
-              .post('/api/v1/wallets/transactions')
-              .reply(200, replaceTransactionResponse);
+            .post('/api/v1/wallets/transactions')
+            .reply(200, replaceTransactionResponse);
 
           const replaceTx = await wallet.replaceTransaction(transactionIdPayload, otpCodePayload);
           expect(replaceTx).toEqual(replaceTransactionResponse);
