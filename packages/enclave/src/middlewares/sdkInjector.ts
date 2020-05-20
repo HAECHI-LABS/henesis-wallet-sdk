@@ -22,6 +22,9 @@ export default (req: express.Request, resp: express.Response, next: express.Next
   if (process.env.NODE_ENV === 'test') {
     env = Env.Test;
   }
+  if (process.env.NODE_ENV === 'local') {
+    env = Env.Local;
+  }
   req.sdk = new SDK({
     accessToken,
     secret,
