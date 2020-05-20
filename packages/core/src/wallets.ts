@@ -15,15 +15,6 @@ export interface MasterWalletSearchOptions {
   orgId?: string;
 }
 
-export interface CoinData {
-  address: string;
-  blockchain: BlockchainType;
-  desc: string;
-  id: number;
-  name: string;
-  symbol: string;
-}
-
 export class Wallets {
   private readonly client: Client;
 
@@ -151,14 +142,6 @@ export class Wallets {
       walletData,
       this.keychains,
     );
-  }
-
-  public async getCoinData(ticker: string, blockchain: BlockchainType): Promise<CoinData> {
-    return await this.client.get(`/coins/${ticker.toUpperCase()}?blockchain=${blockchain}`);
-  }
-
-  public async getCoinsData(): Promise<CoinData[]> {
-    return await this.client.get<CoinData[]>('/coins');
   }
 
   // generates 256bit key

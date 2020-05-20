@@ -5,8 +5,28 @@ import { AbiItem } from 'web3-utils';
 import erc20 from './contracts/ERC20.json';
 import eth from './contracts/Eth.json';
 import klay from './contracts/Klay.json';
+import { BlockchainType } from './blockchain';
+
+export interface CoinData {
+  address: string;
+  blockchain: BlockchainType;
+  desc: string;
+  id: number;
+  name: string;
+  symbol: string;
+}
 
 export abstract class Coin {
+  protected coinData: CoinData;
+
+  protected constructor(coinData: CoinData) {
+    this.coinData = coinData;
+  }
+
+  public getCoinData(): CoinData {
+    return this.coinData;
+  }
+
   abstract getName(): string;
 
   abstract buildData(to: string, amount: BN): string;
@@ -17,23 +37,17 @@ export abstract class Coin {
 export class Erc20 extends Coin {
   private readonly erc20: Contract;
 
-  private readonly name: string;
-
-  private readonly address: string;
-
-  constructor(name: string, address: string) {
-    super();
+  constructor(coinData: CoinData) {
+    super(coinData);
     this.erc20 = new new Web3().eth.Contract((erc20 as AbiItem[]));
-    this.name = name;
-    this.address = address;
   }
 
   getAddress(): string {
-    return this.address;
+    return this.coinData.address;
   }
 
   getName(): string {
-    return this.name;
+    return this.coinData.name;
   }
 
   buildData(to: string, amount: BN): string {
@@ -55,8 +69,8 @@ export class Erc20 extends Coin {
 export class Eth extends Coin {
   private eth: Contract;
 
-  constructor() {
-    super();
+  constructor(coinData: CoinData) {
+    super(coinData);
     this.eth = new new Web3().eth.Contract((eth as AbiItem[]));
   }
 
@@ -82,8 +96,8 @@ export class Eth extends Coin {
 export class Klay extends Coin {
   private readonly klay: Contract;
 
-  constructor() {
-    super();
+  constructor(coinData: CoinData) {
+    super(coinData);
     this.klay = new new Web3().eth.Contract((klay as AbiItem[]));
   }
 

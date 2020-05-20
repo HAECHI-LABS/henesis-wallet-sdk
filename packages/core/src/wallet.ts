@@ -17,6 +17,7 @@ import BatchRequest from './batch';
 import {
   Coin, Eth, Klay, Erc20,
 } from './coin';
+import { Coins } from './coins';
 
 const Bytes = require('./vendor/eth-lib/bytes');
 const { keccak256s } = require('./vendor/eth-lib/hash');
@@ -84,12 +85,15 @@ export abstract class Wallet {
 
   protected readonly keychains: Keychains;
 
+  protected readonly coins: Coins;
+
   protected constructor(
     client: Client,
     keychains: Keychains,
   ) {
     this.client = client;
     this.keychains = keychains;
+    this.coins = new Coins(this.client);
   }
 
   abstract getChain(): BlockchainType;
@@ -259,7 +263,7 @@ export abstract class EthLikeWallet extends Wallet {
     amount: BN,
     passphrase: string,
   ): Promise<SignedMultiSigPayload> {
-    const coin: Coin = await this.getCoin(ticker);
+    const coin: Coin = await this.coins.getCoin(ticker, this.getChain());
     const hexData = coin.buildData(to, amount);
     const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
@@ -360,25 +364,6 @@ export abstract class EthLikeWallet extends Wallet {
     } = await this.client
       .get(`${this.baseUrl}/${this.masterWalletData.id}/nonce`);
     return BNConverter.hexStringToBN(nonce.nonce);
-  }
-
-  protected async getCoin(ticker: string): Promise<Coin> {
-    const blockchain = this.getChain();
-    const coin: {
-      symbol: string,
-      address: string,
-    } = await this.client.get(`/coins/${ticker.toUpperCase()}?blockchain=${blockchain}`);
-
-    switch (coin.symbol.toUpperCase()) {
-      case 'ETH':
-        return new Eth();
-        break;
-      case 'KLAY':
-        return new Klay();
-        break;
-      default:
-        return new Erc20(coin.symbol, coin.address);
-    }
   }
 }
 

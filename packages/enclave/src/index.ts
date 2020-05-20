@@ -4,9 +4,9 @@ import sdkInjector from './middlewares/sdkInjector';
 import converter from './middlewares/converter';
 import WalletController from './controllers/wallet.controller';
 import CoinController from './controllers/coin.controller';
-import EventController from "./controllers/event.controller";
-import GasUsagesController from "./controllers/gasusages.controller";
-import TransactionController from "./controllers/transactions.controller";
+import EventController from './controllers/event.controller';
+import GasUsagesController from './controllers/gasusages.controller';
+import TransactionController from './controllers/transactions.controller';
 
 function main() {
   try {
