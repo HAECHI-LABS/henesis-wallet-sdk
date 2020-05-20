@@ -3,7 +3,6 @@ import pbkdf2 from 'pbkdf2';
 import { Base64 } from 'js-base64';
 import * as BN from 'bn.js';
 import Web3 from 'web3';
-import crypto from 'crypto';
 import { Client, Env } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains, RecoveryKit } from './keychains';
@@ -14,6 +13,15 @@ import { BNConverter, toSnakeCase } from './utils';
 export interface MasterWalletSearchOptions {
   name?: string;
   orgId?: string;
+}
+
+export interface CoinData {
+  address: string;
+  blockchain: BlockchainType;
+  desc: string;
+  id: number;
+  name: string;
+  symbol: string;
 }
 
 export class Wallets {
@@ -143,6 +151,14 @@ export class Wallets {
       walletData,
       this.keychains,
     );
+  }
+
+  public async getCoinData(ticker: string, blockchain: BlockchainType): Promise<CoinData> {
+    return await this.client.get(`/coins/${ticker.toUpperCase()}?blockchain=${blockchain}`);
+  }
+
+  public async getCoinsData(): Promise<CoinData[]> {
+    return await this.client.get<CoinData[]>(`/coins`);
   }
 
   // generates 256bit key
