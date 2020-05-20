@@ -3,7 +3,7 @@ import logger from './middlewares/logger';
 import sdkInjector from './middlewares/sdkInjector';
 import converter from './middlewares/converter';
 import WalletController from './controllers/wallet.controller';
-import CoinController from "./controllers/coin.controller";
+import CoinController from './controllers/coin.controller';
 
 function main() {
   try {
@@ -11,7 +11,7 @@ function main() {
       middleWares: [logger, sdkInjector, converter],
       controllers: [
         new CoinController(),
-        new WalletController()
+        new WalletController(),
       ],
       port: 3000,
     });

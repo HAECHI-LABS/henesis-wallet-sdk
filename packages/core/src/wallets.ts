@@ -158,7 +158,7 @@ export class Wallets {
   }
 
   public async getCoinsData(): Promise<CoinData[]> {
-    return await this.client.get<CoinData[]>(`/coins`);
+    return await this.client.get<CoinData[]>('/coins');
   }
 
   // generates 256bit key
