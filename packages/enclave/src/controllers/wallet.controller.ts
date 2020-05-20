@@ -1,4 +1,4 @@
-import express, { request } from 'express';
+import express from 'express';
 import {
   MasterWalletData, Transaction, UserWallet, UserWalletData,
 } from '@haechi-labs/henesis-wallet-core/lib/wallet';
