@@ -6,6 +6,7 @@ import { Events } from './events';
 import { Organizations } from './organizations';
 import { Gasusages } from './gasusages';
 import { Transactions } from './transactions';
+import { Coins } from './coins';
 
 export const enum Env {
   Local,
@@ -44,6 +45,8 @@ export class SDK {
 
   public readonly events: Events;
 
+  public readonly coins: Coins;
+
   public readonly organizations: Organizations;
 
   public readonly gasusages: Gasusages;
@@ -68,6 +71,7 @@ export class SDK {
 
     this.accounts = new Accounts(this.client);
     this.keychains = new EthereumKeychains();
+    this.coins = new Coins(this.client);
     this.wallets = new Wallets(this.client, this.keychains, env);
     this.events = new Events(this.client);
     this.organizations = new Organizations(this.client);

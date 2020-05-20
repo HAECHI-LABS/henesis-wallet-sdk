@@ -1,8 +1,8 @@
-import AbstractController from './controller';
-import { Controller } from '../types';
-import {Method, MethodName} from "@haechi-labs/henesis-wallet-core/lib/gasusages";
+import { Method, MethodName } from '@haechi-labs/henesis-wallet-core/lib/gasusages';
 import express from 'express';
-import {BlockchainType} from "@haechi-labs/henesis-wallet-core/lib/blockchain";
+import { BlockchainType } from '@haechi-labs/henesis-wallet-core/lib/blockchain';
+import { Controller } from '../types';
+import AbstractController from './controller';
 
 export default class GasUsagesController extends AbstractController implements Controller {
     private path = '/api/v1';
@@ -15,8 +15,8 @@ export default class GasUsagesController extends AbstractController implements C
     public initRoutes() {
       this.router.get(
         `${this.path}/method-gas-usages`,
-        this.promiseWrapper(this.getMethodGasUsages)
-      )
+        this.promiseWrapper(this.getMethodGasUsages),
+      );
     }
 
     private async getMethodGasUsages(req: express.Request): Promise<Method> {

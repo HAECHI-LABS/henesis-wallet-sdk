@@ -1,8 +1,8 @@
-import AbstractController from './controller';
-import { Controller } from '../types';
-import {Pagination} from "@haechi-labs/henesis-wallet-core/lib/types";
-import {Event, ValueTransferEvent} from "@haechi-labs/henesis-wallet-core/lib/events";
+import { Pagination } from '@haechi-labs/henesis-wallet-core/lib/types';
+import { Event, ValueTransferEvent } from '@haechi-labs/henesis-wallet-core/lib/events';
 import express from 'express';
+import { Controller } from '../types';
+import AbstractController from './controller';
 
 export default class EventController extends AbstractController implements Controller {
     private path = '/api/v1';
@@ -15,12 +15,12 @@ export default class EventController extends AbstractController implements Contr
     public initRoutes() {
       this.router.get(
         `${this.path}/call-events`,
-        this.promiseWrapper(this.getCallEvents)
+        this.promiseWrapper(this.getCallEvents),
       );
 
       this.router.get(
         `${this.path}/value-transfer-events`,
-        this.promiseWrapper(this.getValueTransferEvents)
+        this.promiseWrapper(this.getValueTransferEvents),
       );
     }
 

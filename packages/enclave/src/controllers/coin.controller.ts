@@ -1,6 +1,6 @@
 import express from 'express';
-import { CoinData } from '@haechi-labs/henesis-wallet-core/lib/wallets';
 import { BlockchainType } from '@haechi-labs/henesis-wallet-core/lib/blockchain';
+import { CoinData } from '@haechi-labs/henesis-wallet-core/lib/coin';
 import AbstractController from './controller';
 import { Controller } from '../types';
 
@@ -25,18 +25,11 @@ export default class CoinController extends AbstractController implements Contro
     }
 
     private async getCoin(req: express.Request): Promise<CoinData> {
-      return await req.sdk
-        .wallets
-        .getCoinData(
-          req.params.ticker,
-            req.query.blockchain as BlockchainType,
-        );
+      return (await req.sdk.coins.getCoin(req.params.ticker, req.query.blockchain as BlockchainType)).getCoinData();
     }
 
 
     private async getAllCoins(req: express.Request): Promise<CoinData[]> {
-      return await req.sdk
-        .wallets
-        .getCoinsData();
+      return (await req.sdk.coins.getCoins()).map((c) => c.getCoinData());
     }
 }
