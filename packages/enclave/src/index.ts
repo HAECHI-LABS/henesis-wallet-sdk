@@ -6,6 +6,7 @@ import WalletController from './controllers/wallet.controller';
 import CoinController from './controllers/coin.controller';
 import EventController from "./controllers/event.controller";
 import GasUsagesController from "./controllers/gasusages.controller";
+import TransactionController from "./controllers/transactions.controller";
 
 function main() {
   try {
@@ -15,6 +16,7 @@ function main() {
         new CoinController(),
         new EventController(),
         new GasUsagesController(),
+        new TransactionController(),
         new WalletController(),
       ],
       port: 3000,
