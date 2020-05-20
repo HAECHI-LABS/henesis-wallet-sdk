@@ -1,14 +1,16 @@
 import nock from 'nock';
 import BN from 'bn.js';
-import {SDK} from '../src';
-import {EthereumKeychains} from '../src/keychains';
-import {BNConverter} from '../src/utils';
-import {MockEthLikeWallet} from '../__mocks__/wallet.mock';
-import {EthLikeWallet, MasterWallet, Transaction, WalletStatus,} from '../src/wallet';
-import {MultiSigPayload, SignedMultiSigPayload} from '../src/transactions';
-import {HttpClient} from '../src/httpClient';
-import {BlockchainType} from '../src/blockchain';
-import {Env} from '../src/sdk';
+import { SDK } from '../src';
+import { EthereumKeychains } from '../src/keychains';
+import { BNConverter } from '../src/utils';
+import { MockEthLikeWallet } from '../__mocks__/wallet.mock';
+import {
+  EthLikeWallet, MasterWallet, Transaction, WalletStatus,
+} from '../src/wallet';
+import { MultiSigPayload, SignedMultiSigPayload } from '../src/transactions';
+import { HttpClient } from '../src/httpClient';
+import { BlockchainType } from '../src/blockchain';
+import { Env } from '../src/sdk';
 
 const baseUrl = 'http://localhost:8080';
 describe('Wallet', () => {
