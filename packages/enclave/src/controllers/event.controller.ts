@@ -26,14 +26,14 @@ export default class EventController extends AbstractController implements Contr
 
     private async getCallEvents(req: express.Request): Promise<Pagination<Event>> {
       return await req.sdk.events.getCallEvents(
-        req.query.wallet_id as string,
+        req.query.walletId as string,
         req.query,
       );
     }
 
     private async getValueTransferEvents(req: express.Request): Promise<Pagination<ValueTransferEvent>> {
       return await req.sdk.events.getValueTransferEvents(
-        req.query.wallet_id as string,
+        req.query.walletId as string,
         req.query,
       );
     }
