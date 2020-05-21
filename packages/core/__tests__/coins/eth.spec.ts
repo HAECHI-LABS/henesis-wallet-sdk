@@ -1,10 +1,20 @@
 import BN from 'bn.js';
 import { Eth } from '../../src/coin';
+import {BlockchainType} from "../../src/blockchain";
 
 describe('Eth', () => {
   let eth: Eth;
+  const EthereumCoin = {
+    id: 2,
+    name: '이더리움',
+    symbol: 'ETH',
+    address: null,
+    desc: '',
+    blockchain: BlockchainType.Ethereum,
+  };
+
   beforeEach(() => {
-    eth = new Eth();
+    eth = new Eth(EthereumCoin);
   });
 
   describe('#getName()', () => {

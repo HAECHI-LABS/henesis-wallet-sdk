@@ -13,15 +13,15 @@ export class Coins {
 
 	public async getCoin(ticker: string, blockchain: BlockchainType): Promise<Coin> {
 	  const coinData = await this.client.get(`/coins/${ticker.toUpperCase()}?blockchain=${blockchain}`);
-	  return this.coinResolve(coinData);
+	  return this.resolveCoin(coinData);
 	}
 
 	public async getCoins(): Promise<Coin[]> {
 	  const coinData: CoinData[] = await this.client.get<CoinData[]>('/coins');
-	  return coinData.map((coinDatum) => this.coinResolve(coinDatum));
+	  return coinData.map((coinDatum) => this.resolveCoin(coinDatum));
 	}
 
-	private coinResolve(coinData: CoinData): Coin {
+	private resolveCoin(coinData: CoinData): Coin {
 	  switch (coinData.symbol.toUpperCase()) {
 	    case 'ETH':
 	      return new Eth(coinData);
