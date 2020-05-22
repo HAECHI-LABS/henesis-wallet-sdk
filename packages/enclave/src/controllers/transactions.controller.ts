@@ -5,37 +5,40 @@ import { BlockchainType } from '@haechi-labs/henesis-wallet-core/lib/blockchain'
 import { Controller } from '../types';
 import AbstractController from './controller';
 
-export default class TransactionController extends AbstractController implements Controller {
-    private path = '/api/v1/transactions';
+export default class TransactionController extends AbstractController
+  implements Controller {
+  private path = '/api/v1/transactions';
 
-    constructor() {
-      super();
-      this.initRoutes();
-    }
+  constructor() {
+    super();
+    this.initRoutes();
+  }
 
-    public initRoutes() {
-      this.router.get(
-        `${this.path}`,
-        this.promiseWrapper(this.getAllTransactions),
-      );
+  public initRoutes() {
+    this.router.get(
+      `${this.path}`,
+      this.promiseWrapper(this.getAllTransactions),
+    );
 
-      this.router.get(
-        `${this.path}/:transactionId`,
-        this.promiseWrapper(this.getTransactionById),
-      );
-    }
+    this.router.get(
+      `${this.path}/:transactionId`,
+      this.promiseWrapper(this.getTransactionById),
+    );
+  }
 
-    private async getAllTransactions(req: express.Request): Promise<Pagination<Transaction>> {
-      return await req.sdk.transactions.getTransactions(
-        req.query.blockchain as BlockchainType,
-        req.query,
-      );
-    }
+  private async getAllTransactions(
+    req: express.Request,
+  ): Promise<Pagination<Transaction>> {
+    return await req.sdk.transactions.getTransactions(
+      req.query.blockchain as BlockchainType,
+      req.query,
+    );
+  }
 
-    private async getTransactionById(req: express.Request): Promise<Transaction> {
-      return await req.sdk.transactions.getTransaction(
-        req.query.blockchain as BlockchainType,
-        req.params.transactionId,
-      );
-    }
+  private async getTransactionById(req: express.Request): Promise<Transaction> {
+    return await req.sdk.transactions.getTransaction(
+      req.query.blockchain as BlockchainType,
+      req.params.transactionId,
+    );
+  }
 }
