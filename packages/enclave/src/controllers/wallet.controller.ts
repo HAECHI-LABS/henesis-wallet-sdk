@@ -1,6 +1,9 @@
 import express from 'express';
 import {
-  MasterWalletData, Transaction, UserWallet, UserWalletData,
+  MasterWalletData,
+  Transaction,
+  UserWallet,
+  UserWalletData,
 } from '@haechi-labs/henesis-wallet-core/lib/wallet';
 import { SDK } from '@haechi-labs/henesis-wallet-core';
 import { BNConverter } from '@haechi-labs/henesis-wallet-core/lib/utils';
@@ -9,7 +12,7 @@ import { Controller } from '../types';
 import AbstractController from './controller';
 
 export interface NonceResponse {
-  nonce: string
+  nonce: string;
 }
 
 export interface BalanceResponse {
@@ -20,18 +23,19 @@ export interface BalanceResponse {
 }
 
 interface TransferRequest {
-  ticker: string,
-  to: string,
-  amount: BN,
+  ticker: string;
+  to: string;
+  amount: BN;
 }
 
 interface ContractCallRequest {
-  contractAddress: string,
-  value: BN,
-  data: string,
+  contractAddress: string;
+  value: BN;
+  data: string;
 }
 
-export default class WalletController extends AbstractController implements Controller {
+export default class WalletController extends AbstractController
+  implements Controller {
   private path = '/api/v1/wallets';
 
   constructor() {
@@ -42,10 +46,15 @@ export default class WalletController extends AbstractController implements Cont
   public initRoutes() {
     this.router.get(`${this.path}`, this.promiseWrapper(this.getMasterWallets));
 
-    this.router.post(`${this.path}`, this.promiseWrapper(this.createMasterWallet));
+    this.router.post(
+      `${this.path}`,
+      this.promiseWrapper(this.createMasterWallet),
+    );
 
-    this.router.get(`${this.path}/:masterWalletId/user-wallets`,
-      this.promiseWrapper(this.getUserWallets));
+    this.router.get(
+      `${this.path}/:masterWalletId/user-wallets`,
+      this.promiseWrapper(this.getUserWallets),
+    );
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets`,
@@ -123,57 +132,73 @@ export default class WalletController extends AbstractController implements Cont
     );
   }
 
-  private async getMasterWallets(req: express.Request): Promise<MasterWalletData[]> {
+  private async getMasterWallets(
+    req: express.Request,
+  ): Promise<MasterWalletData[]> {
     const wallets = await req.sdk.wallets.getMasterWallets();
     return wallets.map((x) => x.getData());
   }
 
-  private async createMasterWallet(req: express.Request): Promise<MasterWalletData> {
-    return (await req.sdk
-      .wallets
-      .createMasterWallet(
+  private async createMasterWallet(
+    req: express.Request,
+  ): Promise<MasterWalletData> {
+    return (
+      await req.sdk.wallets.createMasterWallet(
         req.body.name,
         req.body.blockchain,
         req.body.passphrase,
-        req.body.gasPrice ? BNConverter.hexStringToBN(req.body.gasPrice) : undefined,
-      )).getData();
+        req.body.gasPrice
+          ? BNConverter.hexStringToBN(req.body.gasPrice)
+          : undefined,
+      )
+    ).getData();
   }
 
   private async changePassphrase(req: express.Request): Promise<void> {
-    const masterWallet = await req.sdk
-      .wallets
-      .getMasterWallet(req.params.masterWalletId);
-    return (await masterWallet.changePassphrase(
+    const masterWallet = await req.sdk.wallets.getMasterWallet(
+      req.params.masterWalletId,
+    );
+    return await masterWallet.changePassphrase(
       req.body.passphrase,
       req.body.newPassphrase,
       req.body.otpCode,
-    ));
+    );
   }
 
-  private async createUserWallet(req: express.Request): Promise<UserWalletData> {
-    const masterWallet = await req.sdk
-      .wallets
-      .getMasterWallet(req.params.masterWalletId);
+  private async createUserWallet(
+    req: express.Request,
+  ): Promise<UserWalletData> {
+    const masterWallet = await req.sdk.wallets.getMasterWallet(
+      req.params.masterWalletId,
+    );
 
-    return (await masterWallet.createUserWallet(
-      req.body.name,
-      req.body.passphrase,
-      req.body.gasPrice ? BNConverter.hexStringToBN(req.body.gasPrice) : undefined,
-      req.body.salt ? BNConverter.hexStringToBN(req.body.salt) : undefined,
-    )).getData();
+    return (
+      await masterWallet.createUserWallet(
+        req.body.name,
+        req.body.passphrase,
+        req.body.gasPrice
+          ? BNConverter.hexStringToBN(req.body.gasPrice)
+          : undefined,
+        req.body.salt ? BNConverter.hexStringToBN(req.body.salt) : undefined,
+      )
+    ).getData();
   }
 
-  private async getMasterWallet(req: express.Request): Promise<MasterWalletData> {
-    const masterWallet = await req.sdk
-      .wallets
-      .getMasterWallet(req.params.masterWalletId);
-    return (masterWallet.getData());
+  private async getMasterWallet(
+    req: express.Request,
+  ): Promise<MasterWalletData> {
+    const masterWallet = await req.sdk.wallets.getMasterWallet(
+      req.params.masterWalletId,
+    );
+    return masterWallet.getData();
   }
 
-  private async getMasterWalletBalance(req: express.Request): Promise<BalanceResponse[]> {
-    const masterWallet = await req.sdk
-      .wallets
-      .getMasterWallet(req.params.masterWalletId);
+  private async getMasterWalletBalance(
+    req: express.Request,
+  ): Promise<BalanceResponse[]> {
+    const masterWallet = await req.sdk.wallets.getMasterWallet(
+      req.params.masterWalletId,
+    );
 
     const balances = await masterWallet.getBalance();
     return balances.map((x) => ({
@@ -184,7 +209,9 @@ export default class WalletController extends AbstractController implements Cont
     }));
   }
 
-  private async getUserWalletBalance(req: express.Request): Promise<BalanceResponse[]> {
+  private async getUserWalletBalance(
+    req: express.Request,
+  ): Promise<BalanceResponse[]> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
@@ -199,16 +226,20 @@ export default class WalletController extends AbstractController implements Cont
     }));
   }
 
-  private async getMasterWalletNonce(req: express.Request): Promise<NonceResponse> {
-    const masterWallet = await req.sdk
-      .wallets
-      .getMasterWallet(req.params.masterWalletId);
+  private async getMasterWalletNonce(
+    req: express.Request,
+  ): Promise<NonceResponse> {
+    const masterWallet = await req.sdk.wallets.getMasterWallet(
+      req.params.masterWalletId,
+    );
     return {
       nonce: BNConverter.bnToHexString(await masterWallet.getNonce()),
     };
   }
 
-  private async getUserWalletNonce(req: express.Request): Promise<NonceResponse> {
+  private async getUserWalletNonce(
+    req: express.Request,
+  ): Promise<NonceResponse> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
@@ -219,15 +250,19 @@ export default class WalletController extends AbstractController implements Cont
     };
   }
 
-  private async replaceMasterWalletTransaction(req: express.Request): Promise<Transaction> {
-    const masterWallet = await req.sdk
-      .wallets
-      .getMasterWallet(req.params.masterWalletId);
+  private async replaceMasterWalletTransaction(
+    req: express.Request,
+  ): Promise<Transaction> {
+    const masterWallet = await req.sdk.wallets.getMasterWallet(
+      req.params.masterWalletId,
+    );
 
     return await masterWallet.replaceTransaction(req.body.transactionId);
   }
 
-  private async replaceUserWalletTransaction(req: express.Request): Promise<Transaction> {
+  private async replaceUserWalletTransaction(
+    req: express.Request,
+  ): Promise<Transaction> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
@@ -237,10 +272,12 @@ export default class WalletController extends AbstractController implements Cont
     return await userWallet.replaceTransaction(req.body.transactionId);
   }
 
-  private async sendMasterWalletContractCall(req: express.Request): Promise<Transaction> {
-    const masterWallet = await req.sdk
-      .wallets
-      .getMasterWallet(req.params.masterWalletId);
+  private async sendMasterWalletContractCall(
+    req: express.Request,
+  ): Promise<Transaction> {
+    const masterWallet = await req.sdk.wallets.getMasterWallet(
+      req.params.masterWalletId,
+    );
 
     const transaction = await masterWallet.contractCall(
       req.body.contractAddress,
@@ -248,14 +285,20 @@ export default class WalletController extends AbstractController implements Cont
       req.body.data,
       req.body.passphrase,
       req.body.otpCode,
-      req.body.gasPrice ? BNConverter.hexStringToBN(req.body.gasPrice) : undefined,
-      req.body.gasLimit ? BNConverter.hexStringToBN(req.body.gasLimit) : undefined,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+      req.body.gasLimit
+        ? BNConverter.hexStringToBN(req.body.gasLimit)
+        : undefined,
     );
 
     return transaction;
   }
 
-  private async sendUserWalletContractCall(req: express.Request): Promise<Transaction> {
+  private async sendUserWalletContractCall(
+    req: express.Request,
+  ): Promise<Transaction> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
@@ -268,15 +311,21 @@ export default class WalletController extends AbstractController implements Cont
       req.body.data,
       req.body.passphrase,
       req.body.otpCode,
-      req.body.gasPrice ? BNConverter.hexStringToBN(req.body.gasPrice) : undefined,
-      req.body.gasLimit ? BNConverter.hexStringToBN(req.body.gasLimit) : undefined,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+      req.body.gasLimit
+        ? BNConverter.hexStringToBN(req.body.gasLimit)
+        : undefined,
     );
   }
 
-  private async sendMasterWalletCoin(req: express.Request): Promise<Transaction> {
-    const masterWallet = await req.sdk
-      .wallets
-      .getMasterWallet(req.params.masterWalletId);
+  private async sendMasterWalletCoin(
+    req: express.Request,
+  ): Promise<Transaction> {
+    const masterWallet = await req.sdk.wallets.getMasterWallet(
+      req.params.masterWalletId,
+    );
 
     return await masterWallet.transfer(
       req.body.ticker,
@@ -284,8 +333,12 @@ export default class WalletController extends AbstractController implements Cont
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
       req.body.otpCode,
-      req.body.gasPrice ? BNConverter.hexStringToBN(req.body.gasPrice) : undefined,
-      req.body.gasLimit ? BNConverter.hexStringToBN(req.body.gasLimit) : undefined,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+      req.body.gasLimit
+        ? BNConverter.hexStringToBN(req.body.gasLimit)
+        : undefined,
     );
   }
 
@@ -301,40 +354,59 @@ export default class WalletController extends AbstractController implements Cont
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
       req.body.otpCode,
-      req.body.gasPrice ? BNConverter.hexStringToBN(req.body.gasPrice) : undefined,
-      req.body.gasLimit ? BNConverter.hexStringToBN(req.body.gasLimit) : undefined,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+      req.body.gasLimit
+        ? BNConverter.hexStringToBN(req.body.gasLimit)
+        : undefined,
     );
   }
 
   private async getUserWallet(req: express.Request): Promise<UserWalletData> {
-    return (await this.getUserWalletByContext(
-      req.sdk,
+    return (
+      await this.getUserWalletByContext(
+        req.sdk,
+        req.params.masterWalletId,
+        req.params.userWalletId,
+      )
+    ).getData();
+  }
+
+  private async getUserWalletByContext(
+    sdk: SDK,
+    masterWalletId: string,
+    userWalletId: string,
+  ): Promise<UserWallet> {
+    return (await sdk.wallets.getMasterWallet(masterWalletId)).getUserWallet(
+      userWalletId,
+    );
+  }
+
+  private async getUserWallets(
+    req: express.Request,
+  ): Promise<UserWalletData[]> {
+    const masterWallet = await req.sdk.wallets.getMasterWallet(
       req.params.masterWalletId,
-      req.params.userWalletId,
-    )).getData();
-  }
-
-  private async getUserWalletByContext(sdk: SDK, masterWalletId: string, userWalletId: string): Promise<UserWallet> {
-    return (await sdk.wallets.getMasterWallet(masterWalletId))
-      .getUserWallet(userWalletId);
-  }
-
-  private async getUserWallets(req: express.Request): Promise<UserWalletData[]> {
-    const masterWallet = await req.sdk.wallets.getMasterWallet(req.params.masterWalletId);
-    const wallets = (await masterWallet.getUserWallets({
-      page: +req.query.page,
-      size: +req.query.size,
-      sort: req.query.sort as string,
-      name: req.query.name as string,
-      address: req.query.address as string,
-    })).results;
+    );
+    const wallets = (
+      await masterWallet.getUserWallets({
+        page: +req.query.page,
+        size: +req.query.size,
+        sort: req.query.sort as string,
+        name: req.query.name as string,
+        address: req.query.address as string,
+      })
+    ).results;
     return wallets.map((x) => x.getData());
   }
 
-  private async sendMasterWalletBatchTransactions(req: express.Request): Promise<Transaction[]> {
-    const masterWallet = await req.sdk
-      .wallets
-      .getMasterWallet(req.params.masterWalletId);
+  private async sendMasterWalletBatchTransactions(
+    req: express.Request,
+  ): Promise<Transaction[]> {
+    const masterWallet = await req.sdk.wallets.getMasterWallet(
+      req.params.masterWalletId,
+    );
 
     const batch = masterWallet.createBatchRequest(req.body.otpCode);
     for (let request of req.body.requests) {
@@ -368,20 +440,19 @@ export default class WalletController extends AbstractController implements Cont
     return batch.execute();
   }
 
-
   private isContractCallRequest(request: any): request is ContractCallRequest {
     return (
-      (request.contractAddress !== undefined)
-      && (request.value !== undefined)
-      && (request.data !== undefined)
+      request.contractAddress !== undefined &&
+      request.value !== undefined &&
+      request.data !== undefined
     );
   }
 
   private isTransferRequest(request: any): request is TransferRequest {
     return (
-      (request.ticker !== undefined)
-      && (request.to !== undefined)
-      && (request.amount !== undefined)
+      request.ticker !== undefined &&
+      request.to !== undefined &&
+      request.amount !== undefined
     );
   }
 }
