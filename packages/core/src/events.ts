@@ -16,12 +16,12 @@ export enum EventStatusType {
   PENDING = 'PENDING',
   FAILED = 'FAILED',
   MINED = 'MINED',
-  CONFIRMED = 'CONFIRMED'
+  CONFIRMED = 'CONFIRMED',
 }
 
 export enum TransferType {
   WITHDRAWAL = 'WITHDRAWAL',
-  DEPOSIT = 'DEPOSIT'
+  DEPOSIT = 'DEPOSIT',
 }
 
 export interface ValueTransferEvent extends Event {
@@ -32,7 +32,7 @@ export interface ValueTransferEvent extends Event {
   transferType: TransferType;
 }
 
-export interface EventPaginationOptions extends PaginationOptions{
+export interface EventPaginationOptions extends PaginationOptions {
   transactionHash?: string;
   status?: EventStatusType;
   blockchain?: BlockchainType;
@@ -45,25 +45,43 @@ export class Events {
     this.client = client;
   }
 
-  public async getCallEvents(walletId: string, options?: EventPaginationOptions): Promise<Pagination<Event>> {
-    const queryString: string = options ? Object.keys(options)
-      .filter((key) => !!options[key])
-      .map((key) => `${toSnakeCase(key)}=${options[key]}`).join('&') : '';
+  public async getCallEvents(
+    walletId: string,
+    options?: EventPaginationOptions,
+  ): Promise<Pagination<Event>> {
+    const queryString: string = options
+      ? Object.keys(options)
+          .filter((key) => !!options[key])
+          .map((key) => `${toSnakeCase(key)}=${options[key]}`)
+          .join('&')
+      : '';
 
-    const data: Pagination<Event> = await this.client
-      .get<Pagination<Event>>(`/call-events${queryString ? `?${queryString}&` : '?'}wallet_id=${walletId}`);
+    const data: Pagination<Event> = await this.client.get<Pagination<Event>>(
+      `/call-events${
+        queryString ? `?${queryString}&` : '?'
+      }wallet_id=${walletId}`,
+    );
     return {
       pagination: data.pagination,
       results: data.results,
     };
   }
 
-  public async getValueTransferEvents(walletId: string, options?: EventPaginationOptions): Promise<Pagination<ValueTransferEvent>> {
-    const queryString: string = options ? Object.keys(options)
-      .filter((key) => !!options[key])
-      .map((key) => `${toSnakeCase(key)}=${options[key]}`).join('&') : '';
-    const data = await this.client
-      .get(`/value-transfer-events${queryString ? `?${queryString}&` : '?'}wallet_id=${walletId}`);
+  public async getValueTransferEvents(
+    walletId: string,
+    options?: EventPaginationOptions,
+  ): Promise<Pagination<ValueTransferEvent>> {
+    const queryString: string = options
+      ? Object.keys(options)
+          .filter((key) => !!options[key])
+          .map((key) => `${toSnakeCase(key)}=${options[key]}`)
+          .join('&')
+      : '';
+    const data = await this.client.get(
+      `/value-transfer-events${
+        queryString ? `?${queryString}&` : '?'
+      }wallet_id=${walletId}`,
+    );
 
     return {
       pagination: data.pagination,

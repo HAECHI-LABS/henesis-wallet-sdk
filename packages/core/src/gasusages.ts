@@ -6,14 +6,14 @@ import { BNConverter } from './utils';
 export enum MethodName {
   TRANSFER = 'transfer',
   TRANSFER_ERC20 = 'transferErc20',
-  CREATE_MASTER_WALLET = 'createMasterWallet'
+  CREATE_MASTER_WALLET = 'createMasterWallet',
 }
 
 export interface Method {
   id: string;
-  blockchain: BlockchainType,
-  name: MethodName,
-  estimatedGasConsumption: BN
+  blockchain: BlockchainType;
+  name: MethodName;
+  estimatedGasConsumption: BN;
 }
 
 export class Gasusages {
@@ -25,9 +25,16 @@ export class Gasusages {
     this.client = client;
   }
 
-  public async getMethodGasUsages(blockchain: BlockchainType, methodName: MethodName): Promise<Method> {
-    const balance = await this.client.get(`${this.baseUrl}/?blockchain=${blockchain}&name=${methodName}`);
-    balance.estimatedGasConsumption = BNConverter.hexStringToBN(balance.estimatedGasConsumption);
+  public async getMethodGasUsages(
+    blockchain: BlockchainType,
+    methodName: MethodName,
+  ): Promise<Method> {
+    const balance = await this.client.get(
+      `${this.baseUrl}/?blockchain=${blockchain}&name=${methodName}`,
+    );
+    balance.estimatedGasConsumption = BNConverter.hexStringToBN(
+      balance.estimatedGasConsumption,
+    );
     return balance;
   }
 }

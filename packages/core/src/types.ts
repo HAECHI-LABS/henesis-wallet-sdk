@@ -29,7 +29,7 @@ export interface SearchOptions {
   end?: Timestamp;
 }
 
-export interface PaginationOptions extends SearchOptions{
+export interface PaginationOptions extends SearchOptions {
   page?: number;
   size?: number;
   sort?: string;
@@ -40,7 +40,7 @@ export interface Pagination<T> {
     nextUrl: string;
     previousUrl: string;
     totalCount: number;
-  }
+  };
   results: T[];
 }
 

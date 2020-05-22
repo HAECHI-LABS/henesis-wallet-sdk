@@ -12,7 +12,7 @@ export const enum Env {
   Local,
   Dev,
   Test,
-  Prod
+  Prod,
 }
 
 export interface SDKOptions {

@@ -6,7 +6,8 @@ import { CoinData } from '../src/coin';
 const baseUrl = 'http://localhost:8080';
 describe('Coins', () => {
   const sdk = new SDK({
-    accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjQwOGMyMWQ0OGM4MGNiMDNkM2U3NWMwMTUxMTRiZTkzIiwiaXNzIjoidHhtYW5hZ2VyLWRldiIsImlhdCI6MTU4Mzc5OTY5MSwiZXhwIjoxNTg0MTU5NjkxfQ.RoGvobumJV0iBmN-0j23pgl8QlC5I02rfOVYQxL3HlYcxXRn8IUfghfQt-MvEoHG6hgIVfqzhfdLFsQqP_NgmQ',
+    accessToken:
+      'eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjQwOGMyMWQ0OGM4MGNiMDNkM2U3NWMwMTUxMTRiZTkzIiwiaXNzIjoidHhtYW5hZ2VyLWRldiIsImlhdCI6MTU4Mzc5OTY5MSwiZXhwIjoxNTg0MTU5NjkxfQ.RoGvobumJV0iBmN-0j23pgl8QlC5I02rfOVYQxL3HlYcxXRn8IUfghfQt-MvEoHG6hgIVfqzhfdLFsQqP_NgmQ',
     secret: 'secret',
     url: 'http://localhost:8080/api/v1',
   });
@@ -26,7 +27,9 @@ describe('Coins', () => {
         .get('/api/v1/coins/EVT?blockchain=ETHEREUM')
         .reply(200, coinResponse);
 
-      expect((await sdk.coins.getCoin('EVT', BlockchainType.Ethereum)).getCoinData()).toEqual(coinResponse);
+      expect(
+        (await sdk.coins.getCoin('EVT', BlockchainType.Ethereum)).getCoinData(),
+      ).toEqual(coinResponse);
     });
   });
 
@@ -59,11 +62,11 @@ describe('Coins', () => {
         },
       ];
 
-      nock(baseUrl)
-        .get('/api/v1/coins')
-        .reply(200, coinsResponse);
+      nock(baseUrl).get('/api/v1/coins').reply(200, coinsResponse);
 
-      expect(((await sdk.coins.getCoins()).map((c) => c.getCoinData()))).toEqual(coinsResponse);
+      expect((await sdk.coins.getCoins()).map((c) => c.getCoinData())).toEqual(
+        coinsResponse,
+      );
     });
   });
 });
