@@ -39,7 +39,7 @@ export class Erc20 extends Coin {
 
   constructor(coinData: CoinData) {
     super(coinData);
-    this.erc20 = new new Web3().eth.Contract((erc20 as AbiItem[]));
+    this.erc20 = new new Web3().eth.Contract(erc20 as AbiItem[]);
   }
 
   getAddress(): string {
@@ -51,13 +51,8 @@ export class Erc20 extends Coin {
   }
 
   buildData(to: string, amount: BN): string {
-    return this.erc20
-      .methods
-      .transferToken(
-        this.getAddress(),
-        to,
-        amount,
-      )
+    return this.erc20.methods
+      .transferToken(this.getAddress(), to, amount)
       .encodeABI();
   }
 
@@ -71,7 +66,7 @@ export class Eth extends Coin {
 
   constructor(coinData: CoinData) {
     super(coinData);
-    this.eth = new new Web3().eth.Contract((eth as AbiItem[]));
+    this.eth = new new Web3().eth.Contract(eth as AbiItem[]);
   }
 
   getName(): string {
@@ -79,13 +74,7 @@ export class Eth extends Coin {
   }
 
   buildData(to: string, amount: BN): string {
-    return this.eth
-      .methods
-      .transferEth(
-        to,
-        amount,
-      )
-      .encodeABI();
+    return this.eth.methods.transferEth(to, amount).encodeABI();
   }
 
   isErc20(): boolean {
@@ -98,7 +87,7 @@ export class Klay extends Coin {
 
   constructor(coinData: CoinData) {
     super(coinData);
-    this.klay = new new Web3().eth.Contract((klay as AbiItem[]));
+    this.klay = new new Web3().eth.Contract(klay as AbiItem[]);
   }
 
   getName(): string {
@@ -106,13 +95,7 @@ export class Klay extends Coin {
   }
 
   buildData(to: string, amount: BN): string {
-    return this.klay
-      .methods
-      .transferKlay(
-        to,
-        amount,
-      )
-      .encodeABI();
+    return this.klay.methods.transferKlay(to, amount).encodeABI();
   }
 
   isErc20(): boolean {

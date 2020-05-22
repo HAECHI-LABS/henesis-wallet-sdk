@@ -53,7 +53,8 @@ export class HttpClient {
         if (config.data) {
           body = JSON.stringify(config.data);
         }
-        const path = config.baseURL + config.url + (config.params ? config.params : '');
+        const path =
+          config.baseURL + config.url + (config.params ? config.params : '');
         const message = config.method.toUpperCase() + path + body + timestamp;
         config.headers['X-Henesis-Signature'] = this.createSig(message);
       }
@@ -66,17 +67,22 @@ export class HttpClient {
       return config;
     });
 
-    this.client.interceptors.response.use((response) => {
-      if (response.data) {
-        return ObjectConverter.toCamelCase(response.data);
-      }
-      return response;
-    }, (error) => {
-      if (error.response) {
-        return Promise.reject(ObjectConverter.toCamelCase(error.response.data));
-      }
-      return Promise.reject(error);
-    });
+    this.client.interceptors.response.use(
+      (response) => {
+        if (response.data) {
+          return ObjectConverter.toCamelCase(response.data);
+        }
+        return response;
+      },
+      (error) => {
+        if (error.response) {
+          return Promise.reject(
+            ObjectConverter.toCamelCase(error.response.data),
+          );
+        }
+        return Promise.reject(error);
+      },
+    );
 
     return new AxiosMethodProxy(this, this.client) as any;
   }
