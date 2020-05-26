@@ -5,6 +5,7 @@ describe('HttpClient', () => {
     const options : ClientOptions = {
       accessToken: 'TemporaryToken',
       secret: 'WdiZiGKU3TPvRHRAprQ1ScBV3cNBd6b8QDmFlhSxM8k=',
+      url: "http://localhost:8080"
     };
 
     const client : HttpClient = new HttpClient(options);

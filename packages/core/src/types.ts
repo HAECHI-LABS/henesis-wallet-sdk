@@ -21,7 +21,7 @@ export interface Balance {
 }
 
 export interface Key {
-  address: string;
+  address?: string;
   pub: string;
   keyFile: string;
 }
