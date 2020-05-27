@@ -1,8 +1,8 @@
 import { Accounts } from './accounts';
 import { Organizations } from './organizations';
-import { HttpClient, Client } from './httpClient';
+import { HttpClient, Client, enhancedBlockchainClient } from './httpClient';
 import { EthModule, KlayModule } from './eth';
-import { baseUrls, makePrefixPathByBlockchainType } from './url';
+import { baseUrls } from './url';
 import { BtcModule } from './btc';
 import { BlockchainType } from './blockchain';
 
@@ -19,30 +19,6 @@ export interface SDKOptions {
   url?: string;
   env?: Env;
 }
-
-const enhancedBlockchainClient = (client: Client, blockchain: BlockchainType): Client => {
-  const prefixPath = makePrefixPathByBlockchainType(blockchain);
-  return {
-    get<T = any>(url: string): Promise<T> {
-      return client.get(`${url}${prefixPath}`);
-    },
-    delete<T = any>(url: string): Promise<T> {
-      return client.delete(`${url}${prefixPath}`);
-    },
-    options<T = any>(url: string): Promise<T> {
-      return client.delete(`${url}${prefixPath}`);
-    },
-    post<T = any>(url: string, data?: any): Promise<T> {
-      return client.post(`${url}${prefixPath}`, data);
-    },
-    put<T = any>(url: string, data?: any): Promise<T> {
-      return client.put(`${url}${prefixPath}`, data);
-    },
-    patch<T = any>(url: string, data?: any): Promise<T> {
-      return client.patch(`${url}${prefixPath}`, data);
-    },
-  };
-};
 
 export class SDK {
   public readonly accounts: Accounts;
