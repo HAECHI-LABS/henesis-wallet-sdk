@@ -1,6 +1,6 @@
 import BN from 'bn.js';
 import { BlockchainType } from '../blockchain';
-import { Client } from '../sdk';
+import { Client } from "../httpClient";
 import { BNConverter } from '../utils';
 import { SubModule } from "./module";
 

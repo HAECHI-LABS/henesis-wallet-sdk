@@ -1,4 +1,4 @@
-import { Client } from "../sdk";
+import { Client } from "../httpClient";
 import { ModuleOptions } from "../module";
 
 export abstract class BtcSubModule {

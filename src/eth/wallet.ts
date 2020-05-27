@@ -12,7 +12,7 @@ import {
   Balance, Key, Keychains, KeyWithPriv, Pagination, PaginationOptions,
 } from '../types';
 import { MultiSigPayload, SignedMultiSigPayload } from './transactions';
-import { Client } from '../sdk';
+import { Client } from "../httpClient";
 import { toChecksum } from './keychains';
 import BatchRequest from './batch';
 import wallet from '../contracts/MasterWallet.json';

@@ -1,4 +1,4 @@
-import { Client } from "../sdk";
+import { Client } from "../httpClient";
 import { BtcSubModule } from "./module";
 import { BTCKeychains } from "./keychains";
 import BN from "bn.js";

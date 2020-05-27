@@ -1,7 +1,7 @@
 import * as BN from "bn.js";
 import { BlockchainType } from "../blockchain";
 import { Pagination, PaginationOptions } from "../types";
-import { Client } from "../sdk";
+import { Client } from "../httpClient";
 import { toSnakeCase } from "../utils";
 import { SubModule } from "./module";
 

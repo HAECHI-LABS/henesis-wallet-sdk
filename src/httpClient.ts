@@ -10,6 +10,20 @@ export interface ClientOptions {
   url: string;
 }
 
+export interface Client {
+  get<T = any>(url: string): Promise<T>;
+
+  delete<T = any>(url: string): Promise<T>;
+
+  options<T = any>(url: string): Promise<T>;
+
+  post<T = any>(url: string, data?: any): Promise<T>;
+
+  put<T = any>(url: string, data?: any): Promise<T>;
+
+  patch<T = any>(url: string, data?: any): Promise<T>;
+}
+
 export class HttpClient {
   private readonly baseUrl: string;
 

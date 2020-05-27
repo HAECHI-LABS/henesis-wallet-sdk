@@ -3,7 +3,8 @@ import { Keychains } from "../types";
 import { Events } from "./events";
 import { Gasusages } from "./gasusages";
 import { Transactions } from "./transactions";
-import { Client, Env } from "../sdk";
+import { Env } from "../sdk";
+import { Client } from "../httpClient";
 import { EthKeychains } from "./keychains";
 
 export interface ModuleOptions {
