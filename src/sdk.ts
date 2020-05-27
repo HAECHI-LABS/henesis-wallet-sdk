@@ -34,59 +34,29 @@ export interface Client {
   patch<T = any>(url: string, data?: any): Promise<T>;
 }
 
-export interface BlockchainClientOptions {
-  client: Client;
-  blockchain: BlockchainType;
-}
-
-export class BlockchainClient implements Client {
-  private readonly client: Client;
-  private readonly blockchain: BlockchainType;
-
-  constructor(options: BlockchainClientOptions) {
-    this.client = options.client;
-    this.blockchain = options.blockchain;
-  }
-
-  public get(url: string) {
-    return this.client.get(
-      `${url}${makePrefixPathByBlockchainType(this.blockchain)}`
-    );
-  }
-
-  public delete(url: string) {
-    return this.client.delete(
-      `${url}${makePrefixPathByBlockchainType(this.blockchain)}`
-    );
-  }
-
-  public options(url: string) {
-    return this.client.options(
-      `${url}${makePrefixPathByBlockchainType(this.blockchain)}`
-    );
-  }
-
-  public post(url: string, data?: any) {
-    return this.client.post(
-      `${url}${makePrefixPathByBlockchainType(this.blockchain)}`,
-      data
-    );
-  }
-
-  public put(url: string, data?: any) {
-    return this.client.put(
-      `${url}${makePrefixPathByBlockchainType(this.blockchain)}`,
-      data
-    );
-  }
-
-  public patch(url: string, data?: any) {
-    return this.client.patch(
-      `${url}${makePrefixPathByBlockchainType(this.blockchain)}`,
-      data
-    );
-  }
-}
+const enhancedBlockchainClient = (client: Client, blockchain: BlockchainType): Client => {
+  const prefixPath = makePrefixPathByBlockchainType(blockchain);
+  return {
+    get<T = any>(url: string): Promise<T> {
+      return client.get(`${url}${prefixPath}`);
+    },
+    delete<T = any>(url: string): Promise<T> {
+      return client.delete(`${url}${prefixPath}`);
+    },
+    options<T = any>(url: string): Promise<T> {
+      return client.delete(`${url}${prefixPath}`);
+    },
+    post<T = any>(url: string, data?: any): Promise<T> {
+      return client.post(`${url}${prefixPath}`, data);
+    },
+    put<T = any>(url: string, data?: any): Promise<T> {
+      return client.put(`${url}${prefixPath}`, data);
+    },
+    patch<T = any>(url: string, data?: any): Promise<T> {
+      return client.patch(`${url}${prefixPath}`, data);
+    },
+  };
+};
 
 export class SDK {
   public readonly accounts: Accounts;
@@ -121,24 +91,15 @@ export class SDK {
     this.organizations = new Organizations(this.client);
     this.klay = new KlayModule({
       env: env,
-      client: new BlockchainClient({
-        blockchain: BlockchainType.Klaytn,
-        client: this.client,
-      }),
+      client: enhancedBlockchainClient(this.client, BlockchainType.Klaytn)
     });
     this.eth = new EthModule({
       env: env,
-      client: new BlockchainClient({
-        blockchain: BlockchainType.Ethereum,
-        client: this.client,
-      }),
+      client: enhancedBlockchainClient(this.client, BlockchainType.Ethereum)
     });
     this.btc = new BtcModule({
       env: env,
-      client: new BlockchainClient({
-        blockchain: BlockchainType.BITCOIN,
-        client: this.client,
-      }),
+      client: enhancedBlockchainClient(this.client, BlockchainType.BITCOIN)
     });
   }
 }
