@@ -1,15 +1,16 @@
-import { Accounts } from "./accounts";
-import { Organizations } from "./organizations";
-import { HttpClient } from "./httpClient";
-import { EthModule, KlayModule } from "./eth";
-import { baseUrls } from "./url";
-import { BtcModule } from "./btc";
+import { Accounts } from './accounts';
+import { Organizations } from './organizations';
+import { HttpClient } from './httpClient';
+import { EthModule, KlayModule } from './eth';
+import { baseUrls, makePrefixPathByBlockchainType } from './url';
+import { BtcModule } from './btc';
+import { BlockchainType } from './blockchain';
 
 export const enum Env {
   Local,
   Dev,
   Test,
-  Prod
+  Prod,
 }
 
 export interface SDKOptions {
@@ -31,6 +32,60 @@ export interface Client {
   put<T = any>(url: string, data?: any): Promise<T>;
 
   patch<T = any>(url: string, data?: any): Promise<T>;
+}
+
+export interface BlockchainClientOptions {
+  client: Client;
+  blockchain: BlockchainType;
+}
+
+export class BlockchainClient implements Client {
+  private readonly client: Client;
+  private readonly blockchain: BlockchainType;
+
+  constructor(options: BlockchainClientOptions) {
+    this.client = options.client;
+    this.blockchain = options.blockchain;
+  }
+
+  public get(url: string) {
+    return this.client.get(
+      `${url}${makePrefixPathByBlockchainType(this.blockchain)}`
+    );
+  }
+
+  public delete(url: string) {
+    return this.client.delete(
+      `${url}${makePrefixPathByBlockchainType(this.blockchain)}`
+    );
+  }
+
+  public options(url: string) {
+    return this.client.options(
+      `${url}${makePrefixPathByBlockchainType(this.blockchain)}`
+    );
+  }
+
+  public post(url: string, data?: any) {
+    return this.client.post(
+      `${url}${makePrefixPathByBlockchainType(this.blockchain)}`,
+      data
+    );
+  }
+
+  public put(url: string, data?: any) {
+    return this.client.put(
+      `${url}${makePrefixPathByBlockchainType(this.blockchain)}`,
+      data
+    );
+  }
+
+  public patch(url: string, data?: any) {
+    return this.client.patch(
+      `${url}${makePrefixPathByBlockchainType(this.blockchain)}`,
+      data
+    );
+  }
 }
 
 export class SDK {
@@ -66,15 +121,24 @@ export class SDK {
     this.organizations = new Organizations(this.client);
     this.klay = new KlayModule({
       env: env,
-      client: this.client
+      client: new BlockchainClient({
+        blockchain: BlockchainType.Klaytn,
+        client: this.client,
+      }),
     });
     this.eth = new EthModule({
       env: env,
-      client: this.client
+      client: new BlockchainClient({
+        blockchain: BlockchainType.Ethereum,
+        client: this.client,
+      }),
     });
     this.btc = new BtcModule({
       env: env,
-      client: this.client
+      client: new BlockchainClient({
+        blockchain: BlockchainType.BITCOIN,
+        client: this.client,
+      }),
     });
   }
 }
