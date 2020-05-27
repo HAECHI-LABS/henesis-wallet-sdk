@@ -3,6 +3,8 @@ import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
 
 import { ObjectConverter } from './utils';
+import { BlockchainType } from "./blockchain";
+import { makePrefixPathByBlockchainType } from "./url";
 
 export interface ClientOptions {
   accessToken: string;
@@ -89,6 +91,31 @@ export class HttpClient {
     return Base64.stringify(hmacSHA256(message, this.secret));
   }
 }
+
+export const enhancedBlockchainClient = (client: Client, blockchain: BlockchainType): Client => {
+  const prefixPath = makePrefixPathByBlockchainType(blockchain);
+  return {
+    get<T = any>(url: string): Promise<T> {
+      return client.get(`${url}${prefixPath}`);
+    },
+    delete<T = any>(url: string): Promise<T> {
+      return client.delete(`${url}${prefixPath}`);
+    },
+    options<T = any>(url: string): Promise<T> {
+      return client.delete(`${url}${prefixPath}`);
+    },
+    post<T = any>(url: string, data?: any): Promise<T> {
+      return client.post(`${url}${prefixPath}`, data);
+    },
+    put<T = any>(url: string, data?: any): Promise<T> {
+      return client.put(`${url}${prefixPath}`, data);
+    },
+    patch<T = any>(url: string, data?: any): Promise<T> {
+      return client.patch(`${url}${prefixPath}`, data);
+    },
+  };
+};
+
 
 class AxiosMethodProxy {
   constructor(target, axiosInstance: AxiosInstance) {
