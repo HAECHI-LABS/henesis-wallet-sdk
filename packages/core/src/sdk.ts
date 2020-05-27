@@ -61,7 +61,7 @@ export class SDK {
     });
     this.btc = new BtcModule({
       env: env,
-      client: enhancedBlockchainClient(this.client, BlockchainType.BITCOIN)
+      client: enhancedBlockchainClient(this.client, BlockchainType.BitCoin)
     });
   }
 }
