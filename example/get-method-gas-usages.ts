@@ -1,6 +1,5 @@
 import { SDK } from "../src";
 import "dotenv/config";
-import { BlockchainType } from "../src/blockchain";
 import { MethodName } from "../src/gasusages";
 
 async function main() {
@@ -11,13 +10,13 @@ async function main() {
   });
 
   console.log(await sdk.gasusages
-    .getMethodGasUsages(BlockchainType.Klaytn, MethodName.CREATE_MASTER_WALLET));
+    .getMethodGasUsages(MethodName.CREATE_MASTER_WALLET));
 
   console.log(await sdk.gasusages
-    .getMethodGasUsages(BlockchainType.Klaytn, MethodName.TRANSFER));
+    .getMethodGasUsages(MethodName.TRANSFER));
 
   console.log(await sdk.gasusages
-    .getMethodGasUsages(BlockchainType.Klaytn, MethodName.TRANSFER_ERC20));
+    .getMethodGasUsages(MethodName.TRANSFER_ERC20));
 }
 
 main().catch((e) => console.error(e));

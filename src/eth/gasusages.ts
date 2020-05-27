@@ -28,8 +28,8 @@ export class Gasusages extends SubModule {
     this.baseUrl = this.getBaseUrl() + '/method-gas-usages';
   }
 
-  public async getMethodGasUsages(blockchain: BlockchainType, methodName: MethodName): Promise<Method> {
-    const balance = await this.client.get(`${this.baseUrl}/?blockchain=${blockchain}&name=${methodName}`);
+  public async getMethodGasUsages(methodName: MethodName): Promise<Method> {
+    const balance = await this.client.get(`${this.baseUrl}/?name=${methodName}`);
     balance.estimatedGasConsumption = BNConverter.hexStringToBN(balance.estimatedGasConsumption);
     return balance;
   }
