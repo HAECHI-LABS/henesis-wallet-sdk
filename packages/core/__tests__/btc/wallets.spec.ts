@@ -9,16 +9,16 @@ describe("BTCWallets", () => {
         new HttpClient({
           accessToken: "accessToken",
           secret: "secret",
-          url: "http://localhost:8080/api/v1"
+          url: "http://localhost:8080/api/v2"
         }) as any,
         new DefaultBTCKeyChains()
       );
 
       const masterWallet = await wallets.createMasterWallet(
-        "wallet-name3",
+        "wallet-test2",
         "passphrase"
       );
-      
+
       console.log(masterWallet.getData());
     });
   });
