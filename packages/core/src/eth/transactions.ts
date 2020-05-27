@@ -65,17 +65,17 @@ export class Transactions extends SubModule {
     this.baseUrl = this.getBaseUrl() + '/transactions';
   }
 
-  public async getTransaction(blockchain: BlockchainType, transactionId: string): Promise<Transaction> {
-    return await this.client.get<Transaction>(`${this.baseUrl}/${transactionId}?blockchain=${blockchain}`);
+  public async getTransaction(transactionId: string): Promise<Transaction> {
+    return await this.client.get<Transaction>(`${this.baseUrl}/${transactionId}`);
   }
 
-  public async getTransactions(blockchain: BlockchainType, options?: TransactionPaginationOptions): Promise<Pagination<Transaction>> {
+  public async getTransactions(options?: TransactionPaginationOptions): Promise<Pagination<Transaction>> {
     const queryString: string = options ? Object.keys(options)
       .filter((key) => !!options[key])
       .map((key) => `${toSnakeCase(key)}=${options[key]}`).join("&") : "";
 
     const data: Pagination<Transaction> = await this.client
-      .get<Pagination<Transaction>>(`${this.baseUrl}${queryString ? `?${queryString}` : "?"}&blockchain=${blockchain}`);
+      .get<Pagination<Transaction>>(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
     return {
       pagination: data.pagination,
       results: data.results

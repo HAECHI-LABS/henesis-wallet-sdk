@@ -358,11 +358,10 @@ export abstract class EthLikeWallet extends Wallet {
   }
 
   protected async getCoin(ticker: string): Promise<Coin> {
-    const blockchain = this.getChain();
     const coin: {
       symbol: string,
       address: string,
-    } = await this.client.get(`/coins/${ticker.toUpperCase()}?blockchain=${blockchain}`);
+    } = await this.client.get(`/coins/${ticker.toUpperCase()}`);
 
     switch (coin.symbol.toUpperCase()) {
       case 'ETH':

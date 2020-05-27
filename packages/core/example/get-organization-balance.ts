@@ -9,7 +9,7 @@ async function main() {
     url: "http://localhost:8080/api/v1"
   });
 
-  console.log(await sdk.organizations.getOrganizationBalance(BlockchainType.Klaytn));
+  console.log(await sdk.organizations.getOrganizationBalance());
 }
 
 main().catch((e) => console.error(e));
