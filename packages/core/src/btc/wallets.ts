@@ -1,4 +1,4 @@
-import { Client } from "../sdk";
+import { Client } from "../httpClient";
 import { BTCMasterWallet, BTCMasterWalletData } from "./wallet";
 import { BtcSubModule } from "./module";
 import Web3 from "web3";

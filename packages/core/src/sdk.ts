@@ -1,6 +1,6 @@
 import { Accounts } from './accounts';
 import { Organizations } from './organizations';
-import { HttpClient } from './httpClient';
+import { HttpClient, Client } from './httpClient';
 import { EthModule, KlayModule } from './eth';
 import { baseUrls, makePrefixPathByBlockchainType } from './url';
 import { BtcModule } from './btc';
@@ -18,20 +18,6 @@ export interface SDKOptions {
   secret: string;
   url?: string;
   env?: Env;
-}
-
-export interface Client {
-  get<T = any>(url: string): Promise<T>;
-
-  delete<T = any>(url: string): Promise<T>;
-
-  options<T = any>(url: string): Promise<T>;
-
-  post<T = any>(url: string, data?: any): Promise<T>;
-
-  put<T = any>(url: string, data?: any): Promise<T>;
-
-  patch<T = any>(url: string, data?: any): Promise<T>;
 }
 
 const enhancedBlockchainClient = (client: Client, blockchain: BlockchainType): Client => {

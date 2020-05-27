@@ -1,4 +1,4 @@
-import { Client } from './sdk';
+import { Client } from './httpClient';
 import {
   Balance, Secret, Key,
 } from './types';

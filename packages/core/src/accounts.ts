@@ -1,4 +1,4 @@
-import { Client } from './sdk';
+import { Client } from './httpClient';
 import { Key, Token } from './types';
 
 export interface AccountWithOTP extends Account {
@@ -23,7 +23,7 @@ export interface OTP {
 export enum Role {
   VIEWER = 'VIEWER',
   ADMIN = 'ADMIN',
-  HAECHI = 'HAECHI'
+  HAECHI = 'HAECHI',
 }
 
 export class Accounts {
@@ -38,17 +38,19 @@ export class Accounts {
   }
 
   public me(): Promise<Account> {
-    return this.client
-      .get<Account>(`${this.baseUrl}/me`);
+    return this.client.get<Account>(`${this.baseUrl}/me`);
   }
 
-  public login(email: string, password: string, otpCode?: string): Promise<AccountWithOTP> {
-    return this.client
-      .post<AccountWithOTP>(`${this.baseUrl}/login`, {
-        email,
-        password,
-        otpCode,
-      });
+  public login(
+    email: string,
+    password: string,
+    otpCode?: string
+  ): Promise<AccountWithOTP> {
+    return this.client.post<AccountWithOTP>(`${this.baseUrl}/login`, {
+      email,
+      password,
+      otpCode,
+    });
   }
 
   public changeName(firstName: string, lastName: string): Promise<void> {
@@ -58,7 +60,11 @@ export class Accounts {
     });
   }
 
-  public changePassword(password: string, newPassword: string, otpCode?: string): Promise<void> {
+  public changePassword(
+    password: string,
+    newPassword: string,
+    otpCode?: string
+  ): Promise<void> {
     return this.client.patch(`${this.baseUrl}/password`, {
       newPassword,
       password,
@@ -68,7 +74,9 @@ export class Accounts {
 
   public async createAccessToken(expiresIn?: number): Promise<Token> {
     const requestExpiresIn = expiresIn || this.DEFAULT_TOKEN_EXPIRED_TIME;
-    return this.client.post<Token>(`${this.baseUrl}/token`, { expiresIn: requestExpiresIn });
+    return this.client.post<Token>(`${this.baseUrl}/token`, {
+      expiresIn: requestExpiresIn,
+    });
   }
 
   public async getAccessToken(): Promise<Token> {
