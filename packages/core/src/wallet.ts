@@ -1,7 +1,7 @@
 import BN from 'bn.js';
 import { Client } from './httpClient';
 import { BlockchainType } from './blockchain';
-import { Keychains, Balance } from "./types";
+import { Keychains, Balance } from './types';
 
 export interface WalletData {
   id: string;

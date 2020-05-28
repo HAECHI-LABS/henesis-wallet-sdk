@@ -22,7 +22,7 @@ import wallet from '../contracts/MasterWallet.json';
 import Bytes from './eth-core-lib/bytes';
 import { keccak256s } from './eth-core-lib/hash';
 import { BNConverter, ObjectConverter } from '../utils';
-import { WalletData, Wallet } from "../wallet";
+import { WalletData, Wallet } from '../wallet';
 
 export interface EthTransaction {
   id: string;
@@ -268,7 +268,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     gasLimit?: BN,
   ): Promise<EthTransaction[]> {
     const signedMultiSigPayloadDTOs = signedMultiSigPayloads.map(
-      signedMultiSigPayload =>
+      (signedMultiSigPayload) =>
         convertSignedMultiSigPayloadToDTO(signedMultiSigPayload),
     );
     return this.client.post<EthTransaction[]>(
@@ -487,7 +487,7 @@ export class EthMasterWallet extends EthLikeWallet {
       `${this.baseUrl}/${this.masterWalletData.id}/balance`,
     );
 
-    return balances.map(balance => ({
+    return balances.map((balance) => ({
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(balance.amount),
       coinType: balance.coinType,
@@ -508,8 +508,8 @@ export class EthMasterWallet extends EthLikeWallet {
   ): Promise<Pagination<EthUserWallet>> {
     const queryString: string = options
       ? Object.keys(ObjectConverter.toSnakeCase(options))
-          .filter(key => !!options[key])
-          .map(key => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`)
+          .filter((key) => !!options[key])
+          .map((key) => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`)
           .join('&')
       : '';
 
@@ -522,7 +522,7 @@ export class EthMasterWallet extends EthLikeWallet {
     return {
       pagination: data.pagination,
       results: data.results.map(
-        data =>
+        (data) =>
           new EthUserWallet(
             this.client,
             this.masterWalletData,
@@ -579,7 +579,7 @@ export class EthUserWallet extends EthLikeWallet {
       `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/balance`,
     );
 
-    return balances.map(balance => ({
+    return balances.map((balance) => ({
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(balance.amount),
       coinType: balance.coinType,

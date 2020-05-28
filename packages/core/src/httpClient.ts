@@ -47,7 +47,7 @@ export class HttpClient {
       },
     });
 
-    this.client.interceptors.request.use(config => {
+    this.client.interceptors.request.use((config) => {
       config.headers['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
       if (this.accessToken) {
         config.headers.Authorization = `Bearer ${this.accessToken}`;
@@ -68,19 +68,19 @@ export class HttpClient {
       return config;
     });
 
-    this.client.interceptors.request.use(config => {
+    this.client.interceptors.request.use((config) => {
       config.data = ObjectConverter.toSnakeCase(config.data);
       return config;
     });
 
     this.client.interceptors.response.use(
-      response => {
+      (response) => {
         if (response.data) {
           return ObjectConverter.toCamelCase(response.data);
         }
         return response;
       },
-      error => {
+      (error) => {
         if (error.response) {
           return Promise.reject(
             ObjectConverter.toCamelCase(error.response.data),
@@ -139,7 +139,7 @@ class AxiosMethodProxy {
         }
 
         ProxyMethod.method = method;
-        ProxyMethod.request = function() {
+        ProxyMethod.request = function () {
           return method;
         };
 
