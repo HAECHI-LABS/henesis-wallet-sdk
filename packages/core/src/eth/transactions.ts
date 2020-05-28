@@ -3,7 +3,6 @@ import { BlockchainType } from '../blockchain';
 import { Pagination, PaginationOptions } from '../types';
 import { Client } from '../httpClient';
 import { toSnakeCase } from '../utils';
-import { SubModule } from './module';
 
 export interface Transaction {
   id: string;
@@ -54,15 +53,14 @@ export enum TransactionStatus {
   REPLACED = 'REPLACED',
 }
 
-export class Transactions extends SubModule {
+export class Transactions {
   private readonly client: Client;
 
   private readonly baseUrl;
 
   constructor(client: Client) {
-    super();
     this.client = client;
-    this.baseUrl = this.getBaseUrl() + '/transactions';
+    this.baseUrl = '/transactions';
   }
 
   public async getTransaction(transactionId: string): Promise<Transaction> {
