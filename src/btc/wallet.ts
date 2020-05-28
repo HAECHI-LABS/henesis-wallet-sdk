@@ -1,6 +1,6 @@
 import { Client } from '../httpClient';
 import { BtcSubModule } from './module';
-import { BTCKeychains } from './keychains';
+import { BTCKeychains as BtcKeychains } from './keychains';
 import BN from 'bn.js';
 import { Key } from '../types';
 import {
@@ -13,6 +13,7 @@ import {
 } from 'bitcoinjs-lib';
 import { BNConverter } from '../utils';
 import { bitcoin } from 'bitcoinjs-lib/types/networks';
+import { WalletData } from "../wallet";
 
 export abstract class BTCWallet {
   protected readonly client: Client;
@@ -46,10 +47,7 @@ export interface CreateRawTransaction {
   outputs: RawTransactionOutput[];
 }
 
-export interface BTCMasterWalletData {
-  id: string;
-  name: string;
-  address: string;
+export interface BtcMasterWalletData extends WalletData {
   orgId: string;
   accountKey: Key;
   redeemScript: string;
@@ -62,19 +60,19 @@ export interface Transaction {
   outputs: TransactionOutput[];
 }
 
-export class BTCMasterWallet extends BtcSubModule {
+export class BtcMasterWallet extends BtcSubModule {
   protected readonly client: Client;
 
-  private readonly keychains: BTCKeychains;
+  private readonly keychains: BtcKeychains;
 
-  private readonly data: BTCMasterWalletData;
+  private readonly data: BtcMasterWalletData;
 
   private readonly baseUrl: string;
 
   public constructor(
-    data: BTCMasterWalletData,
+    data: BtcMasterWalletData,
     client: Client,
-    keychains: BTCKeychains,
+    keychains: BtcKeychains,
   ) {
     super();
     this.data = data;
@@ -83,7 +81,7 @@ export class BTCMasterWallet extends BtcSubModule {
     this.baseUrl = this.getBaseUrl() + '/wallets';
   }
 
-  public getData(): BTCMasterWalletData {
+  public getData(): BtcMasterWalletData {
     return this.data;
   }
 
