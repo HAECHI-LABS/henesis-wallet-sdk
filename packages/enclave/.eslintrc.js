@@ -2,30 +2,19 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint"],
   extends: [
-    // Airbnb style guide 적용
-    "airbnb-base",
-    // TypeScript ESLint recommanded style 적용
-    "plugin:@typescript-eslint/eslint-recommended"
+    "google",
+    "plugin:@typescript-eslint/eslint-recommended",
+    'plugin:prettier/recommended',
   ],
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        moduleDirectory: ['node_modules', 'src/'],
-      },
-    }
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: "module",
+    tsconfigRootDir: './',
   },
-  rules: {
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "js": "never",
-        "mjs": "never",
-        "jsx": "never",
-        "ts": "never",
-        "tsx": "never"
-      }
-    ]
-  },
+  "rules": {
+    'require-jsdoc': 'off',
+    'no-unused-vars': 'warn',
+    'new-cap': 'off',
+    'prefer-rest-params': 'off',
+  }
 };
