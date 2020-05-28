@@ -1,6 +1,6 @@
 #!/bin/bash
 # core unit test
-cd ../packages/core
+cd ./packages/core
 npm install
 npm run test
 
