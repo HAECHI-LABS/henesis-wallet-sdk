@@ -1,7 +1,14 @@
 #!/bin/bash
+# lerna bootstrap
+npm run bootstrap
+
+if [ $? -ne 0 ]; then
+    echo "lerna bootstrap failed" >&2
+    exit 1
+fi
+
 # core unit test
 cd ./packages/core
-npm install
 npm run test
 
 if [ $? -ne 0 ]; then
@@ -11,7 +18,6 @@ fi
 
 # enclave build
 cd ../../packages/enclave
-npm install
 npm run build
 
 if [ $? -ne 0 ]; then
