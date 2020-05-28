@@ -6,18 +6,17 @@ import pbkdf2 from 'pbkdf2';
 import { Env } from '../sdk';
 import { Client } from '../httpClient';
 import { Key, Keychains, KeyWithPriv } from '../types';
-import { EthMasterWallet, EthMasterWalletData } from './wallet';
 import { BNConverter, toSnakeCase } from '../utils';
 import { BlockchainType } from '../blockchain';
 import { RecoveryKit } from '../recoverykit';
-import { SubModule } from './module';
+import { EthMasterWallet, EthMasterWalletData } from "./wallet";
 
 export interface MasterWalletSearchOptions {
   name?: string;
   orgId?: string;
 }
 
-export class Wallets extends SubModule {
+export class Wallets {
   private readonly client: Client;
 
   private readonly keychains: Keychains;
@@ -27,11 +26,10 @@ export class Wallets extends SubModule {
   private readonly baseUrl;
 
   constructor(client: Client, keychains: Keychains, env: Env) {
-    super();
     this.client = client;
     this.keychains = keychains;
     this.env = env;
-    this.baseUrl = this.getBaseUrl() + '/wallets';
+    this.baseUrl = '/wallets';
   }
 
   public async getMasterWallet(id: string): Promise<EthMasterWallet> {

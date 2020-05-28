@@ -20,12 +20,6 @@ export class Organizations {
     this.client = client;
   }
 
-  public async getOrganizationBalance(): Promise<Balance> {
-    const balance = await this.client.get(`${this.baseUrl}/balance`);
-    balance.amount = BNConverter.hexStringToBN(balance.amount);
-    return balance;
-  }
-
   public async getOrganization(): Promise<Organization> {
     return await this.client.get<Organization>(`${this.baseUrl}/me`);
   }

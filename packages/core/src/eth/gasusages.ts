@@ -2,7 +2,6 @@ import BN from 'bn.js';
 import { BlockchainType } from '../blockchain';
 import { Client } from '../httpClient';
 import { BNConverter } from '../utils';
-import { SubModule } from './module';
 
 export enum MethodName {
   TRANSFER = 'transfer',
@@ -17,15 +16,14 @@ export interface Method {
   estimatedGasConsumption: BN;
 }
 
-export class Gasusages extends SubModule {
+export class Gasusages {
   private readonly client: Client;
 
   private readonly baseUrl;
 
   constructor(client: Client) {
-    super();
     this.client = client;
-    this.baseUrl = this.getBaseUrl() + '/method-gas-usages';
+    this.baseUrl = '/method-gas-usages';
   }
 
   public async getMethodGasUsages(methodName: MethodName): Promise<Method> {

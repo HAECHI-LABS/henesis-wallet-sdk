@@ -105,22 +105,22 @@ export const enhancedBlockchainClient = (
   const prefixPath = makePrefixPathByBlockchainType(blockchain);
   return {
     get<T = any>(url: string): Promise<T> {
-      return client.get(`${url}${prefixPath}`);
+      return client.get(`${prefixPath}${url}`);
     },
     delete<T = any>(url: string): Promise<T> {
-      return client.delete(`${url}${prefixPath}`);
+      return client.delete(`${prefixPath}${url}`);
     },
     options<T = any>(url: string): Promise<T> {
-      return client.delete(`${url}${prefixPath}`);
+      return client.delete(`${prefixPath}${url}`);
     },
     post<T = any>(url: string, data?: any): Promise<T> {
-      return client.post(`${url}${prefixPath}`, data);
+      return client.post(`${prefixPath}${url}`, data);
     },
     put<T = any>(url: string, data?: any): Promise<T> {
-      return client.put(`${url}${prefixPath}`, data);
+      return client.put(`${prefixPath}${url}`, data);
     },
     patch<T = any>(url: string, data?: any): Promise<T> {
-      return client.patch(`${url}${prefixPath}`, data);
+      return client.patch(`${prefixPath}${url}`, data);
     },
   };
 };
