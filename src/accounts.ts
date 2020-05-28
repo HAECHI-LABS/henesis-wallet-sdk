@@ -44,7 +44,7 @@ export class Accounts {
   public login(
     email: string,
     password: string,
-    otpCode?: string
+    otpCode?: string,
   ): Promise<AccountWithOTP> {
     return this.client.post<AccountWithOTP>(`${this.baseUrl}/login`, {
       email,
@@ -63,7 +63,7 @@ export class Accounts {
   public changePassword(
     password: string,
     newPassword: string,
-    otpCode?: string
+    otpCode?: string,
   ): Promise<void> {
     return this.client.patch(`${this.baseUrl}/password`, {
       newPassword,

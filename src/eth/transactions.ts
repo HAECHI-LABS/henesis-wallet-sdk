@@ -1,9 +1,9 @@
-import * as BN from "bn.js";
-import { BlockchainType } from "../blockchain";
-import { Pagination, PaginationOptions } from "../types";
-import { Client } from "../httpClient";
-import { toSnakeCase } from "../utils";
-import { SubModule } from "./module";
+import * as BN from 'bn.js';
+import { BlockchainType } from '../blockchain';
+import { Pagination, PaginationOptions } from '../types';
+import { Client } from '../httpClient';
+import { toSnakeCase } from '../utils';
+import { SubModule } from './module';
 
 export interface Transaction {
   id: string;
@@ -45,13 +45,13 @@ export interface RawTransaction {
 }
 
 export enum TransactionStatus {
-  REQUESTED = "REQUESTED",
-  PENDING = "PENDING",
-  FAILED = "FAILED",
-  MINED = "MINED",
-  REVERTED = "REVERTED",
-  CONFIRMED = "CONFIRMED",
-  REPLACED = "REPLACED"
+  REQUESTED = 'REQUESTED',
+  PENDING = 'PENDING',
+  FAILED = 'FAILED',
+  MINED = 'MINED',
+  REVERTED = 'REVERTED',
+  CONFIRMED = 'CONFIRMED',
+  REPLACED = 'REPLACED',
 }
 
 export class Transactions extends SubModule {
@@ -66,19 +66,27 @@ export class Transactions extends SubModule {
   }
 
   public async getTransaction(transactionId: string): Promise<Transaction> {
-    return await this.client.get<Transaction>(`${this.baseUrl}/${transactionId}`);
+    return await this.client.get<Transaction>(
+      `${this.baseUrl}/${transactionId}`,
+    );
   }
 
-  public async getTransactions(options?: TransactionPaginationOptions): Promise<Pagination<Transaction>> {
-    const queryString: string = options ? Object.keys(options)
-      .filter((key) => !!options[key])
-      .map((key) => `${toSnakeCase(key)}=${options[key]}`).join("&") : "";
+  public async getTransactions(
+    options?: TransactionPaginationOptions,
+  ): Promise<Pagination<Transaction>> {
+    const queryString: string = options
+      ? Object.keys(options)
+          .filter(key => !!options[key])
+          .map(key => `${toSnakeCase(key)}=${options[key]}`)
+          .join('&')
+      : '';
 
-    const data: Pagination<Transaction> = await this.client
-      .get<Pagination<Transaction>>(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
+    const data: Pagination<Transaction> = await this.client.get<
+      Pagination<Transaction>
+    >(`${this.baseUrl}${queryString ? `?${queryString}` : ''}`);
     return {
       pagination: data.pagination,
-      results: data.results
+      results: data.results,
     };
   }
 }

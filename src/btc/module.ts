@@ -1,9 +1,9 @@
-import { Client } from "../httpClient";
-import { ModuleOptions } from "../module";
+import { Client } from '../httpClient';
+import { ModuleOptions } from '../module';
 
 export abstract class BtcSubModule {
   protected getBaseUrl(): string {
-    return "/btc"
+    return '/btc';
   }
 }
 

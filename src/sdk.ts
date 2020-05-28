@@ -53,15 +53,15 @@ export class SDK {
     this.organizations = new Organizations(this.client);
     this.klay = new KlayModule({
       env: env,
-      client: enhancedBlockchainClient(this.client, BlockchainType.Klaytn)
+      client: enhancedBlockchainClient(this.client, BlockchainType.Klaytn),
     });
     this.eth = new EthModule({
       env: env,
-      client: enhancedBlockchainClient(this.client, BlockchainType.Ethereum)
+      client: enhancedBlockchainClient(this.client, BlockchainType.Ethereum),
     });
     this.btc = new BtcModule({
       env: env,
-      client: enhancedBlockchainClient(this.client, BlockchainType.BitCoin)
+      client: enhancedBlockchainClient(this.client, BlockchainType.BitCoin),
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Env } from "./sdk";
+import { Env } from './sdk';
 import { Client } from './httpClient';
 
 export interface ModuleOptions {
@@ -7,5 +7,5 @@ export interface ModuleOptions {
 }
 
 export abstract class SubModule {
-  abstract getBaseUrl(): string
+  abstract getBaseUrl(): string;
 }
