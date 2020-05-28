@@ -26,13 +26,13 @@ export class App {
   }
 
   private routeController(controllers?: Controller[]) {
-    controllers.forEach((controller) => {
+    controllers.forEach(controller => {
       this.application.use('/', controller.getRoutes());
     });
   }
 
   private applyMiddleWares(middleWares: MiddleWare[]) {
-    middleWares.forEach((middleWare) => {
+    middleWares.forEach(middleWare => {
       this.application.use(middleWare);
     });
   }

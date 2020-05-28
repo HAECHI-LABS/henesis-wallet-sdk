@@ -3,8 +3,8 @@ import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
 
 import { ObjectConverter } from './utils';
-import { BlockchainType } from "./blockchain";
-import { makePrefixPathByBlockchainType } from "./url";
+import { BlockchainType } from './blockchain';
+import { makePrefixPathByBlockchainType } from './url';
 
 export interface ClientOptions {
   accessToken: string;
@@ -47,7 +47,7 @@ export class HttpClient {
       },
     });
 
-    this.client.interceptors.request.use((config) => {
+    this.client.interceptors.request.use(config => {
       config.headers['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
       if (this.accessToken) {
         config.headers.Authorization = `Bearer ${this.accessToken}`;
@@ -59,7 +59,8 @@ export class HttpClient {
         if (config.data) {
           body = JSON.stringify(config.data);
         }
-        const path = config.baseURL + config.url + (config.params ? config.params : '');
+        const path =
+          config.baseURL + config.url + (config.params ? config.params : '');
         const message = config.method.toUpperCase() + path + body + timestamp;
         config.headers['X-Henesis-Signature'] = this.createSig(message);
       }
@@ -67,22 +68,27 @@ export class HttpClient {
       return config;
     });
 
-    this.client.interceptors.request.use((config) => {
+    this.client.interceptors.request.use(config => {
       config.data = ObjectConverter.toSnakeCase(config.data);
       return config;
     });
 
-    this.client.interceptors.response.use((response) => {
-      if (response.data) {
-        return ObjectConverter.toCamelCase(response.data);
-      }
-      return response;
-    }, (error) => {
-      if (error.response) {
-        return Promise.reject(ObjectConverter.toCamelCase(error.response.data));
-      }
-      return Promise.reject(error);
-    });
+    this.client.interceptors.response.use(
+      response => {
+        if (response.data) {
+          return ObjectConverter.toCamelCase(response.data);
+        }
+        return response;
+      },
+      error => {
+        if (error.response) {
+          return Promise.reject(
+            ObjectConverter.toCamelCase(error.response.data),
+          );
+        }
+        return Promise.reject(error);
+      },
+    );
 
     return new AxiosMethodProxy(this, this.client) as any;
   }
@@ -92,7 +98,10 @@ export class HttpClient {
   }
 }
 
-export const enhancedBlockchainClient = (client: Client, blockchain: BlockchainType): Client => {
+export const enhancedBlockchainClient = (
+  client: Client,
+  blockchain: BlockchainType,
+): Client => {
   const prefixPath = makePrefixPathByBlockchainType(blockchain);
   return {
     get<T = any>(url: string): Promise<T> {
@@ -116,7 +125,6 @@ export const enhancedBlockchainClient = (client: Client, blockchain: BlockchainT
   };
 };
 
-
 class AxiosMethodProxy {
   constructor(target, axiosInstance: AxiosInstance) {
     return new Proxy(target, {
@@ -131,7 +139,7 @@ class AxiosMethodProxy {
         }
 
         ProxyMethod.method = method;
-        ProxyMethod.request = function () {
+        ProxyMethod.request = function() {
           return method;
         };
 

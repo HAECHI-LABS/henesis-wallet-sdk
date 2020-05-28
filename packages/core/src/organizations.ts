@@ -1,7 +1,5 @@
 import { Client } from './httpClient';
-import {
-  Balance, Secret, Key,
-} from './types';
+import { Balance, Secret, Key } from './types';
 import { Account, Role } from './accounts';
 import { BNConverter } from './utils';
 
@@ -40,7 +38,11 @@ export class Organizations {
     return this.client.post<Secret>(`${this.baseUrl}/secret`);
   }
 
-  public async changeAccountRole(accountId: string, role: Role, otpCode?: string): Promise<Account> {
+  public async changeAccountRole(
+    accountId: string,
+    role: Role,
+    otpCode?: string,
+  ): Promise<Account> {
     return this.client.patch<Account>(`${this.baseUrl}/accounts/${accountId}`, {
       role,
       otpCode,

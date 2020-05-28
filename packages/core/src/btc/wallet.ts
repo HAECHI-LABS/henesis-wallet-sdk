@@ -1,19 +1,26 @@
-import { Client } from "../httpClient";
-import { BtcSubModule } from "./module";
-import { BTCKeychains } from "./keychains";
-import BN from "bn.js";
-import { Key } from "../types";
-import { address, Transaction as BitcoinTransaction, script, networks, Psbt, TransactionBuilder } from "bitcoinjs-lib";
-import { BNConverter } from "../utils";
-import { bitcoin } from "bitcoinjs-lib/types/networks";
+import { Client } from '../httpClient';
+import { BtcSubModule } from './module';
+import { BTCKeychains } from './keychains';
+import BN from 'bn.js';
+import { Key } from '../types';
+import {
+  address,
+  Transaction as BitcoinTransaction,
+  script,
+  networks,
+  Psbt,
+  TransactionBuilder,
+} from 'bitcoinjs-lib';
+import { BNConverter } from '../utils';
+import { bitcoin } from 'bitcoinjs-lib/types/networks';
 
 export abstract class BTCWallet {
   protected readonly client: Client;
 }
 
 export interface RawTransaction {
-  inputs: TransactionOutput[],
-  outputs: RawTransactionOutput[]
+  inputs: TransactionOutput[];
+  outputs: RawTransactionOutput[];
 }
 
 export interface TransactionOutput {
@@ -33,9 +40,9 @@ export interface RawTransactionOutput {
 
 export interface CreateRawTransaction {
   inputs: {
-    transactionOutput: TransactionOutput,
-    accountSignature: string
-  }[],
+    transactionOutput: TransactionOutput;
+    accountSignature: string;
+  }[];
   outputs: RawTransactionOutput[];
 }
 
@@ -51,8 +58,8 @@ export interface BTCMasterWalletData {
 export interface Transaction {
   id: string;
   hex: string;
-  inputs: TransactionOutput[],
-  outputs: TransactionOutput[]
+  inputs: TransactionOutput[];
+  outputs: TransactionOutput[];
 }
 
 export class BTCMasterWallet extends BtcSubModule {
@@ -64,12 +71,16 @@ export class BTCMasterWallet extends BtcSubModule {
 
   private readonly baseUrl: string;
 
-  public constructor(data: BTCMasterWalletData, client: Client, keychains: BTCKeychains) {
+  public constructor(
+    data: BTCMasterWalletData,
+    client: Client,
+    keychains: BTCKeychains,
+  ) {
     super();
     this.data = data;
     this.client = client;
     this.keychains = keychains;
-    this.baseUrl = this.getBaseUrl() + "/wallets";
+    this.baseUrl = this.getBaseUrl() + '/wallets';
   }
 
   public getData(): BTCMasterWalletData {
@@ -77,19 +88,22 @@ export class BTCMasterWallet extends BtcSubModule {
   }
 
   public async transfer(to: string, amount: BN, passphrase: string) {
-    const rawTransaction: RawTransaction = await this.createRawTransaction(to, amount);
+    const rawTransaction: RawTransaction = await this.createRawTransaction(
+      to,
+      amount,
+    );
     const tx = new BitcoinTransaction();
     rawTransaction.inputs.forEach(input => {
       tx.addInput(
-        new Buffer(new Buffer(input.transactionId.slice(2), "hex").reverse()),
-        input.outputIndex
+        new Buffer(new Buffer(input.transactionId.slice(2), 'hex').reverse()),
+        input.outputIndex,
       );
     });
 
-    rawTransaction.outputs.forEach(output =>{
+    rawTransaction.outputs.forEach(output => {
       tx.addOutput(
         address.toOutputScript(output.to, networks.testnet),
-        new BN(output.amount.slice(2), "hex").toNumber()
+        new BN(output.amount.slice(2), 'hex').toNumber(),
       );
     });
 
@@ -97,23 +111,29 @@ export class BTCMasterWallet extends BtcSubModule {
     for (let i = 0; i < rawTransaction.inputs.length; i++) {
       const sigHash: Buffer = tx.hashForSignature(
         i,
-        new Buffer(this.data.redeemScript.slice(2),"hex"),
-        BitcoinTransaction.SIGHASH_ALL
+        new Buffer(this.data.redeemScript.slice(2), 'hex'),
+        BitcoinTransaction.SIGHASH_ALL,
       );
-      const hash: Buffer = this.keychains.sign(this.data.accountKey, passphrase, sigHash);
-      const accountSig = script.signature.encode(hash, BitcoinTransaction.SIGHASH_ALL).toString("hex");
+      const hash: Buffer = this.keychains.sign(
+        this.data.accountKey,
+        passphrase,
+        sigHash,
+      );
+      const accountSig = script.signature
+        .encode(hash, BitcoinTransaction.SIGHASH_ALL)
+        .toString('hex');
       accountSigs.push(accountSig);
     }
 
     const payload: CreateRawTransaction = {
       inputs: [],
-      outputs: []
+      outputs: [],
     };
 
     for (let i = 0; i < rawTransaction.inputs.length; i++) {
       payload.inputs.push({
         transactionOutput: rawTransaction.inputs[i],
-        accountSignature: accountSigs[i]
+        accountSignature: accountSigs[i],
       });
     }
 
@@ -123,14 +143,20 @@ export class BTCMasterWallet extends BtcSubModule {
 
     return await this.client.post<Transaction>(
       `${this.baseUrl}/${this.data.id}/transactions`,
-      payload
+      payload,
     );
   }
 
-  private async createRawTransaction(to: string, amount: BN): Promise<RawTransaction> {
-    return await this.client.post<RawTransaction>(`${this.baseUrl}/${this.data.id}/raw-transactions`, {
-      to,
-      amount: BNConverter.bnToHexString(amount)
-    });
+  private async createRawTransaction(
+    to: string,
+    amount: BN,
+  ): Promise<RawTransaction> {
+    return await this.client.post<RawTransaction>(
+      `${this.baseUrl}/${this.data.id}/raw-transactions`,
+      {
+        to,
+        amount: BNConverter.bnToHexString(amount),
+      },
+    );
   }
 }

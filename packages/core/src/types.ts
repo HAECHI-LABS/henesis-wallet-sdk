@@ -4,13 +4,26 @@ import { BlockchainType } from './blockchain';
 export interface Keychains {
   create(password: string): KeyWithPriv;
 
-  changePassword(keyFile: string, password: string, newPassword: string): KeyWithPriv;
+  changePassword(
+    keyFile: string,
+    password: string,
+    newPassword: string,
+  ): KeyWithPriv;
 
   decryptKeyFile(keyFile: string, password: string): string;
 
-  signPayload(blockchain: BlockchainType, hexPayload: string, keyFile: string, password: string): string;
+  signPayload(
+    blockchain: BlockchainType,
+    hexPayload: string,
+    keyFile: string,
+    password: string,
+  ): string;
 
-  recoverAddressFromSignature(blockchain: BlockchainType, hexPayload: string, signature: string): string;
+  recoverAddressFromSignature(
+    blockchain: BlockchainType,
+    hexPayload: string,
+    signature: string,
+  ): string;
 }
 
 export interface Balance {
@@ -40,7 +53,7 @@ export interface SearchOptions {
   end?: Timestamp;
 }
 
-export interface PaginationOptions extends SearchOptions{
+export interface PaginationOptions extends SearchOptions {
   page?: number;
   size?: number;
   sort?: string;
@@ -51,7 +64,7 @@ export interface Pagination<T> {
     nextUrl: string;
     previousUrl: string;
     totalCount: number;
-  }
+  };
   results: T[];
 }
 
