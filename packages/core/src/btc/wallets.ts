@@ -1,12 +1,11 @@
 import { Client } from '../httpClient';
 import { BtcMasterWallet, BtcMasterWalletData } from './wallet';
-import { BtcSubModule } from './module';
 import Web3 from 'web3';
 import pbkdf2 from 'pbkdf2';
 import { BtcKeychains } from './keychains';
 import aesjs from 'aes-js';
 
-export class BTCWallets extends BtcSubModule {
+export class BTCWallets {
   protected readonly client: Client;
 
   private readonly baseUrl: string;
@@ -14,9 +13,8 @@ export class BTCWallets extends BtcSubModule {
   private readonly keychains: BtcKeychains;
 
   public constructor(client: Client, keychains: BtcKeychains) {
-    super();
     this.client = client;
-    this.baseUrl = this.getBaseUrl() + '/wallets';
+    this.baseUrl = '/wallets';
     this.keychains = keychains;
   }
 

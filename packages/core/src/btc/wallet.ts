@@ -1,5 +1,4 @@
 import { Client } from '../httpClient';
-import { BtcSubModule } from './module';
 import { BtcKeychains } from './keychains';
 import BN from 'bn.js';
 import { Balance, Key, Pagination } from '../types';
@@ -65,7 +64,7 @@ export interface Transaction {
   outputs: TransactionOutput[];
 }
 
-export class BtcMasterWallet extends BtcSubModule {
+export class BtcMasterWallet {
   protected readonly client: Client;
 
   private readonly keychains: BtcKeychains;
@@ -79,11 +78,10 @@ export class BtcMasterWallet extends BtcSubModule {
     client: Client,
     keychains: BtcKeychains,
   ) {
-    super();
     this.data = data;
     this.client = client;
     this.keychains = keychains;
-    this.baseUrl = this.getBaseUrl() + '/wallets';
+    this.baseUrl = '/wallets';
   }
 
   public getData(): BtcMasterWalletData {
