@@ -31,5 +31,9 @@ addons:
   apt:
     update: true
 
+install:
+  - npm run bootstrap
+
 script:
-  - bash ./scripts/travis.sh
+  - bash ./scripts/core.sh
+  - bash ./scripts/enclave.sh
