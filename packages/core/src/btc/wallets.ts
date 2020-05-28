@@ -1,37 +1,35 @@
 import { Client } from '../httpClient';
-import { BTCMasterWallet, BTCMasterWalletData } from './wallet';
-import { BtcSubModule } from './module';
+import { BtcMasterWallet, BtcMasterWalletData } from './wallet';
 import Web3 from 'web3';
 import pbkdf2 from 'pbkdf2';
-import { BTCKeychains } from './keychains';
+import { BtcKeychains } from './keychains';
 import aesjs from 'aes-js';
 
-export class BTCWallets extends BtcSubModule {
+export class BTCWallets {
   protected readonly client: Client;
 
   private readonly baseUrl: string;
 
-  private readonly keychains: BTCKeychains;
+  private readonly keychains: BtcKeychains;
 
-  public constructor(client: Client, keychains: BTCKeychains) {
-    super();
+  public constructor(client: Client, keychains: BtcKeychains) {
     this.client = client;
-    this.baseUrl = this.getBaseUrl() + '/wallets';
+    this.baseUrl = '/wallets';
     this.keychains = keychains;
   }
 
   public async createMasterWallet(
     name: string,
     passphrase: string,
-  ): Promise<BTCMasterWallet> {
+  ): Promise<BtcMasterWallet> {
     const accountKeyWithPriv = this.keychains.create(passphrase);
     const backupKetWithPriv = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
 
     // todo remove static orgId
     const orgId = 'orgId';
-    const data: BTCMasterWalletData = await this.client.post<
-      BTCMasterWalletData
+    const data: BtcMasterWalletData = await this.client.post<
+      BtcMasterWalletData
     >(this.baseUrl, {
       name,
       encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
@@ -46,14 +44,14 @@ export class BTCWallets extends BtcSubModule {
       },
     });
 
-    return new BTCMasterWallet(data, this.client, this.keychains);
+    return new BtcMasterWallet(data, this.client, this.keychains);
   }
 
   public async getWallet(id: string) {
-    const data: BTCMasterWalletData = await this.client.get<
-      BTCMasterWalletData
+    const data: BtcMasterWalletData = await this.client.get<
+      BtcMasterWalletData
     >(`${this.baseUrl}/${id}`);
-    return new BTCMasterWallet(data, this.client, this.keychains);
+    return new BtcMasterWallet(data, this.client, this.keychains);
   }
 
   private createEncryptionKey(p: string): Buffer {

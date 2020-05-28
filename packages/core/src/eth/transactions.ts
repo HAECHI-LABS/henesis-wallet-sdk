@@ -76,8 +76,8 @@ export class Transactions extends SubModule {
   ): Promise<Pagination<Transaction>> {
     const queryString: string = options
       ? Object.keys(options)
-          .filter(key => !!options[key])
-          .map(key => `${toSnakeCase(key)}=${options[key]}`)
+          .filter((key) => !!options[key])
+          .map((key) => `${toSnakeCase(key)}=${options[key]}`)
           .join('&')
       : '';
 
