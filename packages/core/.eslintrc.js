@@ -14,7 +14,7 @@ module.exports = {
   "rules": {
     'require-jsdoc': 'off',
     'no-unused-vars': 'warn',
-    'new-cap': 'off',
-    'prefer-rest-params': 'off',
+    'new-cap': 'warn',
+    'prefer-rest-params': 'warn',
   }
 };
