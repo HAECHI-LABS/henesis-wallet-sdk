@@ -2,21 +2,26 @@ import { Client } from '../httpClient';
 import { BtcSubModule } from './module';
 import { BtcKeychains } from './keychains';
 import BN from 'bn.js';
-import { Key } from '../types';
+import { Balance, Key, Pagination } from "../types";
 import {
   address,
   Transaction as BitcoinTransaction,
   script,
   networks,
-  Psbt,
-  TransactionBuilder,
 } from 'bitcoinjs-lib';
 import { BNConverter } from '../utils';
-import { bitcoin } from 'bitcoinjs-lib/types/networks';
 import { WalletData } from "../wallet";
 
-export abstract class BTCWallet {
-  protected readonly client: Client;
+export interface Transaction {
+  id: string;
+  hex: string;
+  inputs: TransactionOutput[];
+  output: TransactionOutput[];
+  createdAt: number;
+}
+
+export interface BtcBalance {
+ balance: string;
 }
 
 export interface RawTransaction {
@@ -156,5 +161,15 @@ export class BtcMasterWallet extends BtcSubModule {
         amount: BNConverter.bnToHexString(amount),
       },
     );
+  }
+
+  public async getTransactions(): Promise<Pagination<Transaction[]>>{
+    return await this.client
+      .get<Pagination<Transaction[]>>(`${this.baseUrl}/${this.data.id}/transactions`)
+  }
+
+  public async getBalance(): Promise<BtcBalance>{
+    return await this.client
+      .get<BtcBalance>(`${this.baseUrl}/${this.data.id}/balance`)
   }
 }
