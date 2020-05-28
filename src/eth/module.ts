@@ -12,12 +12,6 @@ export interface ModuleOptions {
   env: Env;
 }
 
-export abstract class SubModule {
-  protected getBaseUrl(): string {
-    return '/eth';
-  }
-}
-
 export class EthModule {
   public readonly wallets: Wallets;
 

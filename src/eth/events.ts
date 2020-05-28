@@ -3,7 +3,6 @@ import { Pagination, PaginationOptions } from '../types';
 import { BlockchainType } from '../blockchain';
 import { Client } from '../httpClient';
 import { BNConverter, toSnakeCase } from '../utils';
-import { SubModule } from './module';
 
 export interface Event {
   createdAt: string;
@@ -39,11 +38,10 @@ export interface EventPaginationOptions extends PaginationOptions {
   blockchain?: BlockchainType;
 }
 
-export class Events extends SubModule {
+export class Events {
   private readonly client: Client;
 
   constructor(client: Client) {
-    super();
     this.client = client;
   }
 
@@ -59,7 +57,6 @@ export class Events extends SubModule {
       : '';
 
     const data: Pagination<Event> = await this.client.get<Pagination<Event>>(
-      this.getBaseUrl() +
         `/call-events${
           queryString ? `?${queryString}&` : '?'
         }wallet_id=${walletId}`,
@@ -81,7 +78,6 @@ export class Events extends SubModule {
           .join('&')
       : '';
     const data = await this.client.get(
-      this.getBaseUrl() +
         `/value-transfer-events${
           queryString ? `?${queryString}&` : '?'
         }wallet_id=${walletId}`,
