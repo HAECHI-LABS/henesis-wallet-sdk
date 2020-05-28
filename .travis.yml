@@ -32,4 +32,4 @@ addons:
     update: true
 
 script:
-  - ./scripts/travis.sh
+  - bash ./scripts/travis.sh
