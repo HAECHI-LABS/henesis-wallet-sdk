@@ -1,6 +1,6 @@
 import { Client } from '../httpClient';
 import { BtcSubModule } from './module';
-import { BTCKeychains as BtcKeychains } from './keychains';
+import { BtcKeychains } from './keychains';
 import BN from 'bn.js';
 import { Key } from '../types';
 import {
