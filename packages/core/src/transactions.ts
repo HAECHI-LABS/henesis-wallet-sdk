@@ -16,7 +16,7 @@ export interface Transaction {
   status: TransactionStatus;
 }
 
-export interface TransactionPaginationOptions extends PaginationOptions{
+export interface TransactionPaginationOptions extends PaginationOptions {
   status?: TransactionStatus;
   keyId?: string;
 }
@@ -50,9 +50,8 @@ export enum TransactionStatus {
   MINED = 'MINED',
   REVERTED = 'REVERTED',
   CONFIRMED = 'CONFIRMED',
-  REPLACED = 'REPLACED'
+  REPLACED = 'REPLACED',
 }
-
 
 export class Transactions {
   private readonly client: Client;
@@ -63,15 +62,32 @@ export class Transactions {
     this.client = client;
   }
 
-  public async getTransaction(blockchain: BlockchainType, transactionId: string): Promise<Transaction> {
-    return await this.client.get<Transaction>(`${this.baseUrl}/${transactionId}?blockchain=${blockchain}`);
+  public async getTransaction(
+    blockchain: BlockchainType,
+    transactionId: string,
+  ): Promise<Transaction> {
+    return await this.client.get<Transaction>(
+      `${this.baseUrl}/${transactionId}?blockchain=${blockchain}`,
+    );
   }
 
-  public async getTransactions(blockchain: BlockchainType, options?: PaginationOptions): Promise<Pagination<Transaction>> {
-    const queryString: string = options ? Object.keys(options)
-      .filter((key) => !!options[key])
-      .map((key) => `${toSnakeCase(key)}=${options[key]}`).join('&') : '';
-    const data: Pagination<Transaction> = await this.client.get<Pagination<Transaction>>(`${this.baseUrl}${queryString ? `?${queryString}` : '?'}&blockchain=${blockchain}`);
+  public async getTransactions(
+    blockchain: BlockchainType,
+    options?: PaginationOptions,
+  ): Promise<Pagination<Transaction>> {
+    const queryString: string = options
+      ? Object.keys(options)
+          .filter((key) => !!options[key])
+          .map((key) => `${toSnakeCase(key)}=${options[key]}`)
+          .join('&')
+      : '';
+    const data: Pagination<Transaction> = await this.client.get<
+      Pagination<Transaction>
+    >(
+      `${this.baseUrl}${
+        queryString ? `?${queryString}` : '?'
+      }&blockchain=${blockchain}`,
+    );
     return {
       pagination: data.pagination,
       results: data.results,

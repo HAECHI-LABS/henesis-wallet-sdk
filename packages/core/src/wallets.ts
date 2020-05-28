@@ -35,27 +35,26 @@ export class Wallets {
       `${this.baseUrl}/${id}`,
     );
 
-    return new MasterWallet(
-      this.client,
-      walletData,
-      this.keychains,
-    );
+    return new MasterWallet(this.client, walletData, this.keychains);
   }
 
-  public async getMasterWallets(options?: MasterWalletSearchOptions): Promise<MasterWallet[]> {
-    const queryString: string = options ? Object.keys(options)
-      .filter((key) => !!options[key])
-      .map((key) => `${toSnakeCase(key)}=${options[key]}`).join('&') : '';
+  public async getMasterWallets(
+    options?: MasterWalletSearchOptions,
+  ): Promise<MasterWallet[]> {
+    const queryString: string = options
+      ? Object.keys(options)
+          .filter((key) => !!options[key])
+          .map((key) => `${toSnakeCase(key)}=${options[key]}`)
+          .join('&')
+      : '';
 
     const walletDatas = await this.client.get<MasterWalletData[]>(
       `${this.baseUrl}${queryString ? `?${queryString}` : ''}`,
     );
 
-    return walletDatas.map((x) => new MasterWallet(
-      this.client,
-      x,
-      this.keychains,
-    ));
+    return walletDatas.map(
+      (x) => new MasterWallet(this.client, x, this.keychains),
+    );
   }
 
   public async createRecoveryKit(
@@ -66,10 +65,8 @@ export class Wallets {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const henesisKeys = await this.client.get<any>(
-      '/organizations/me',
-    );
-    let henesisKey : Key;
+    const henesisKeys = await this.client.get<any>('/organizations/me');
+    let henesisKey: Key;
     switch (blockchain) {
       case BlockchainType.Ethereum:
         henesisKey = henesisKeys.henesisEthKey;
@@ -98,22 +95,15 @@ export class Wallets {
   public async createMasterWalletWithKit(
     recoveryKit: RecoveryKit,
   ): Promise<MasterWallet> {
-    const walletData = await this.client.post<MasterWalletData>(
-      this.baseUrl,
-      {
-        name: recoveryKit.getName(),
-        blockchain: recoveryKit.getBlockchain(),
-        accountKey: recoveryKit.getAccountKey(),
-        backupKey: recoveryKit.getBackupKey(),
-        encryptionKey: recoveryKit.getEncryptionKey(),
-      },
-    );
+    const walletData = await this.client.post<MasterWalletData>(this.baseUrl, {
+      name: recoveryKit.getName(),
+      blockchain: recoveryKit.getBlockchain(),
+      accountKey: recoveryKit.getAccountKey(),
+      backupKey: recoveryKit.getBackupKey(),
+      encryptionKey: recoveryKit.getEncryptionKey(),
+    });
 
-    return new MasterWallet(
-      this.client,
-      walletData,
-      this.keychains,
-    );
+    return new MasterWallet(this.client, walletData, this.keychains);
   }
 
   public async createMasterWallet(
@@ -125,23 +115,16 @@ export class Wallets {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const walletData = await this.client.post<MasterWalletData>(
-      this.baseUrl,
-      {
-        name,
-        blockchain,
-        accountKey: this.removePrivateKey(accountKey),
-        backupKey: this.removePrivateKey(backupKey),
-        encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
-        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
-      },
-    );
+    const walletData = await this.client.post<MasterWalletData>(this.baseUrl, {
+      name,
+      blockchain,
+      accountKey: this.removePrivateKey(accountKey),
+      backupKey: this.removePrivateKey(backupKey),
+      encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+    });
 
-    return new MasterWallet(
-      this.client,
-      walletData,
-      this.keychains,
-    );
+    return new MasterWallet(this.client, walletData, this.keychains);
   }
 
   // generates 256bit key

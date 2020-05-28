@@ -1,8 +1,6 @@
 import BN from 'bn.js';
 import { Client } from './sdk';
-import {
-  Balance, Secret, Token, Key,
-} from './types';
+import { Balance, Secret, Token, Key } from './types';
 
 import { Account, Role } from './accounts';
 import { BlockchainType } from './blockchain';
@@ -25,8 +23,12 @@ export class Organizations {
     this.client = client;
   }
 
-  public async getOrganizationBalance(blockchain: BlockchainType): Promise<Balance> {
-    const balance = await this.client.get(`${this.baseUrl}/balance?blockchain=${blockchain}`);
+  public async getOrganizationBalance(
+    blockchain: BlockchainType,
+  ): Promise<Balance> {
+    const balance = await this.client.get(
+      `${this.baseUrl}/balance?blockchain=${blockchain}`,
+    );
     balance.amount = BNConverter.hexStringToBN(balance.amount);
     return balance;
   }
@@ -43,7 +45,11 @@ export class Organizations {
     return this.client.post<Secret>(`${this.baseUrl}/secret`);
   }
 
-  public async changeAccountRole(accountId: string, role: Role, otpCode?: string): Promise<Account> {
+  public async changeAccountRole(
+    accountId: string,
+    role: Role,
+    otpCode?: string,
+  ): Promise<Account> {
     return this.client.patch<Account>(`${this.baseUrl}/accounts/${accountId}`, {
       role,
       otpCode,

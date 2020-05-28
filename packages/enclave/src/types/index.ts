@@ -7,8 +7,12 @@ declare module 'express-serve-static-core' {
   }
 }
 
-export type MiddleWare = (req: express.Request, resp: express.Response, next: express.NextFunction) => void;
+export type MiddleWare = (
+  req: express.Request,
+  resp: express.Response,
+  next: express.NextFunction,
+) => void;
 
 export interface Controller {
-  getRoutes(): express.Router
+  getRoutes(): express.Router;
 }
