@@ -2,7 +2,7 @@ import { BTCWallets } from '../../src/btc/wallets';
 import { HttpClient } from '../../src/httpClient';
 import BN from 'bn.js';
 import { Transaction } from '../../src/btc/wallet';
-import { DefaultBtcKeyChains } from "../../src/btc/keychains";
+import { DefaultBtcKeyChains } from '../../src/btc/keychains';
 
 describe('BTCMasterWallet', () => {
   jest.setTimeout(50000);
@@ -60,7 +60,7 @@ describe('BTCMasterWallet', () => {
         'a3c2f4128427658ec4dcb668ec799c65',
       );
       const txs = await wallet.getTransactions();
-      txs.results.forEach(tx =>{
+      txs.results.forEach((tx) => {
         console.log(tx);
       });
     });
