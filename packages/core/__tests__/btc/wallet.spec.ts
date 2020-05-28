@@ -5,6 +5,7 @@ import BN from "bn.js";
 import { Transaction } from "../../src/btc/wallet";
 
 describe("BTCMasterWallet", () => {
+  jest.setTimeout(50000);
   describe("#transfer()", () => {
     it("should create master wallet", async () => {
       const wallets = new BTCWallets(
@@ -15,10 +16,10 @@ describe("BTCMasterWallet", () => {
         }) as any,
         new DefaultBTCKeyChains()
       );
-      const wallet = await wallets.getWallet('8cee843c6547af471bdcd134ba546dfd');
+      const wallet = await wallets.getWallet('a3c2f4128427658ec4dcb668ec799c65');
       const tx: Transaction = await wallet.transfer(
         "n4QVq9cL2FjAJzJ9ZTUJ6W5toF37ux2aN2",
-        new BN("100", "hex"),
+        new BN(100, "hex"),
         "passphrase"
       );
 

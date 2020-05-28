@@ -3,8 +3,9 @@ import { BtcSubModule } from "./module";
 import { BTCKeychains } from "./keychains";
 import BN from "bn.js";
 import { Key } from "../types";
-import { address, Transaction as BitcoinTransaction, script, networks } from "bitcoinjs-lib";
+import { address, Transaction as BitcoinTransaction, script, networks, Psbt, TransactionBuilder } from "bitcoinjs-lib";
 import { BNConverter } from "../utils";
+import { bitcoin } from "bitcoinjs-lib/types/networks";
 import { WalletData } from "../wallet";
 
 export abstract class BTCWallet {
@@ -27,7 +28,7 @@ export interface TransactionOutput {
 }
 
 export interface RawTransactionOutput {
-  address: string;
+  to: string;
   amount: string;
 }
 
@@ -42,6 +43,7 @@ export interface CreateRawTransaction {
 export interface BtcMasterWalletData extends WalletData {
   orgId: string;
   accountKey: Key;
+  redeemScript: string;
 }
 
 export interface Transaction {
@@ -77,21 +79,23 @@ export class BtcMasterWallet extends BtcSubModule {
     const tx = new BitcoinTransaction();
     rawTransaction.inputs.forEach(input => {
       tx.addInput(
-        new Buffer(input.transactionId.slice(2), "hex"),
+        new Buffer(new Buffer(input.transactionId.slice(2), "hex").reverse()),
         input.outputIndex
       );
     });
 
-    tx.addOutput(
-      address.toOutputScript(to, networks.testnet),
-      amount.toNumber()
-    );
+    rawTransaction.outputs.forEach(output =>{
+      tx.addOutput(
+        address.toOutputScript(output.to, networks.testnet),
+        new BN(output.amount.slice(2), "hex").toNumber()
+      );
+    });
 
     const accountSigs = [];
     for (let i = 0; i < rawTransaction.inputs.length; i++) {
       const sigHash: Buffer = tx.hashForSignature(
         i,
-        new Buffer(rawTransaction.inputs[i].scriptPubKey, "hex"),
+        new Buffer(this.data.redeemScript.slice(2),"hex"),
         BitcoinTransaction.SIGHASH_ALL
       );
       const hash: Buffer = this.keychains.sign(this.data.accountKey, passphrase, sigHash);
