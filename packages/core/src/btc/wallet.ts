@@ -5,6 +5,7 @@ import BN from "bn.js";
 import { Key } from "../types";
 import { address, Transaction as BitcoinTransaction, script, networks } from "bitcoinjs-lib";
 import { BNConverter } from "../utils";
+import { WalletData } from "../wallet";
 
 export abstract class BTCWallet {
   protected readonly client: Client;
@@ -38,10 +39,7 @@ export interface CreateRawTransaction {
   outputs: RawTransactionOutput[];
 }
 
-export interface BTCMasterWalletData {
-  id: string;
-  name: string;
-  address: string;
+export interface BtcMasterWalletData extends WalletData {
   orgId: string;
   accountKey: Key;
 }
@@ -53,16 +51,16 @@ export interface Transaction {
   outputs: TransactionOutput[]
 }
 
-export class BTCMasterWallet extends BtcSubModule {
+export class BtcMasterWallet extends BtcSubModule {
   protected readonly client: Client;
 
   private readonly keychains: BTCKeychains;
 
-  private readonly data: BTCMasterWalletData;
+  private readonly data: BtcMasterWalletData;
 
   private readonly baseUrl: string;
 
-  public constructor(data: BTCMasterWalletData, client: Client, keychains: BTCKeychains) {
+  public constructor(data: BtcMasterWalletData, client: Client, keychains: BTCKeychains) {
     super();
     this.data = data;
     this.client = client;
@@ -70,7 +68,7 @@ export class BTCMasterWallet extends BtcSubModule {
     this.baseUrl = this.getBaseUrl() + "/wallets";
   }
 
-  public getData(): BTCMasterWalletData {
+  public getData(): BtcMasterWalletData {
     return this.data;
   }
 

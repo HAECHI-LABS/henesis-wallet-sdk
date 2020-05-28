@@ -6,7 +6,7 @@ import pbkdf2 from 'pbkdf2';
 import { Env } from '../sdk';
 import { Client } from "../httpClient";
 import { Key, Keychains, KeyWithPriv } from '../types';
-import { MasterWallet, MasterWalletData } from './wallet';
+import { EthMasterWallet, EthMasterWalletData } from './wallet';
 import { BNConverter, toSnakeCase } from '../utils';
 import { BlockchainType } from '../blockchain';
 import { RecoveryKit } from '../recoverykit';
@@ -34,28 +34,28 @@ export class Wallets extends SubModule {
     this.baseUrl = this.getBaseUrl() + '/wallets';
   }
 
-  public async getMasterWallet(id: string): Promise<MasterWallet> {
-    const walletData = await this.client.get<MasterWalletData>(
+  public async getMasterWallet(id: string): Promise<EthMasterWallet> {
+    const walletData = await this.client.get<EthMasterWalletData>(
       `${this.baseUrl}/${id}`,
     );
 
-    return new MasterWallet(
+    return new EthMasterWallet(
       this.client,
       walletData,
       this.keychains,
     );
   }
 
-  public async getMasterWallets(options?: MasterWalletSearchOptions): Promise<MasterWallet[]> {
+  public async getMasterWallets(options?: MasterWalletSearchOptions): Promise<EthMasterWallet[]> {
     const queryString: string = options ? Object.keys(options)
       .filter((key) => !!options[key])
       .map((key) => `${toSnakeCase(key)}=${options[key]}`).join('&') : '';
 
-    const walletDatas = await this.client.get<MasterWalletData[]>(
+    const walletDatas = await this.client.get<EthMasterWalletData[]>(
       `${this.baseUrl}${queryString ? `?${queryString}` : ''}`,
     );
 
-    return walletDatas.map((x) => new MasterWallet(
+    return walletDatas.map((x) => new EthMasterWallet(
       this.client,
       x,
       this.keychains,
@@ -101,8 +101,8 @@ export class Wallets extends SubModule {
 
   public async createMasterWalletWithKit(
     recoveryKit: RecoveryKit,
-  ): Promise<MasterWallet> {
-    const walletData = await this.client.post<MasterWalletData>(
+  ): Promise<EthMasterWallet> {
+    const walletData = await this.client.post<EthMasterWalletData>(
       this.baseUrl,
       {
         name: recoveryKit.getName(),
@@ -113,7 +113,7 @@ export class Wallets extends SubModule {
       },
     );
 
-    return new MasterWallet(
+    return new EthMasterWallet(
       this.client,
       walletData,
       this.keychains,
@@ -125,11 +125,11 @@ export class Wallets extends SubModule {
     blockchain: BlockchainType,
     passphrase: string,
     gasPrice?: BN,
-  ): Promise<MasterWallet> {
+  ): Promise<EthMasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const walletData = await this.client.post<MasterWalletData>(
+    const walletData = await this.client.post<EthMasterWalletData>(
       this.baseUrl,
       {
         name,
@@ -141,7 +141,7 @@ export class Wallets extends SubModule {
       },
     );
 
-    return new MasterWallet(
+    return new EthMasterWallet(
       this.client,
       walletData,
       this.keychains,

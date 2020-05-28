@@ -1,5 +1,5 @@
 import { Client } from "../httpClient";
-import { BTCMasterWallet, BTCMasterWalletData } from "./wallet";
+import { BtcMasterWallet, BtcMasterWalletData } from "./wallet";
 import { BtcSubModule } from "./module";
 import Web3 from "web3";
 import pbkdf2 from "pbkdf2";
@@ -20,14 +20,14 @@ export class BTCWallets extends BtcSubModule {
     this.keychains = keychains;
   }
 
-  public async createMasterWallet(name: string, passphrase: string): Promise<BTCMasterWallet> {
+  public async createMasterWallet(name: string, passphrase: string): Promise<BtcMasterWallet> {
     const accountKeyWithPriv = this.keychains.create(passphrase);
     const backupKetWithPriv = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
 
     // todo remove static orgId
     const orgId = "orgId";
-    const data: BTCMasterWalletData = await this.client.post<BTCMasterWalletData>(
+    const data: BtcMasterWalletData = await this.client.post<BtcMasterWalletData>(
       this.baseUrl, {
         name,
         encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
@@ -43,7 +43,7 @@ export class BTCWallets extends BtcSubModule {
       }
     );
 
-    return new BTCMasterWallet(
+    return new BtcMasterWallet(
       data,
       this.client,
       this.keychains
@@ -51,9 +51,9 @@ export class BTCWallets extends BtcSubModule {
   }
 
   public async getWallet(id: string) {
-    const data: BTCMasterWalletData = await this.client.get<BTCMasterWalletData>(
+    const data: BtcMasterWalletData = await this.client.get<BtcMasterWalletData>(
       `${this.baseUrl}/${id}`);
-    return new BTCMasterWallet(
+    return new BtcMasterWallet(
       data,
       this.client,
       this.keychains
