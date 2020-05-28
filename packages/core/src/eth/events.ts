@@ -53,8 +53,8 @@ export class Events extends SubModule {
   ): Promise<Pagination<Event>> {
     const queryString: string = options
       ? Object.keys(options)
-          .filter(key => !!options[key])
-          .map(key => `${toSnakeCase(key)}=${options[key]}`)
+          .filter((key) => !!options[key])
+          .map((key) => `${toSnakeCase(key)}=${options[key]}`)
           .join('&')
       : '';
 
@@ -76,8 +76,8 @@ export class Events extends SubModule {
   ): Promise<Pagination<ValueTransferEvent>> {
     const queryString: string = options
       ? Object.keys(options)
-          .filter(key => !!options[key])
-          .map(key => `${toSnakeCase(key)}=${options[key]}`)
+          .filter((key) => !!options[key])
+          .map((key) => `${toSnakeCase(key)}=${options[key]}`)
           .join('&')
       : '';
     const data = await this.client.get(
@@ -89,7 +89,7 @@ export class Events extends SubModule {
 
     return {
       pagination: data.pagination,
-      results: data.results.map(e => {
+      results: data.results.map((e) => {
         e.amount = BNConverter.hexStringToBN(e.amount);
         return e;
       }),

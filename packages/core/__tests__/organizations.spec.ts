@@ -39,9 +39,7 @@ describe('Organizations', () => {
             '0x00867c08c6d1b1335c22d2bb79fa1bff14c6485c33431d773f55325d683c8b9d243c783dc3b35cef99ea0b9181c33981586f1461b2b6d5458441a485e0c038350a',
         },
       };
-      nock(baseUrl)
-        .get('/api/v1/organizations/me')
-        .reply(200, response);
+      nock(baseUrl).get('/api/v1/organizations/me').reply(200, response);
       const sdk = new SDK({
         accessToken:
           'eyJhbGciOiJIUzUxMiJ9.eyJlbWFpbCI6ImhhZWNoaUBoYWVjaGkuaW8iLCJpZCI6IjQ5ODAzZmJmMGEyYTJjM2FiM2EwYWJhOGI5OGRiYjJhIiwidHlwZSI6IlNIT1JUIiwiaXNzIjoid2FsbGV0LWRldiIsImlhdCI6MTU4NTcxODU0NiwiZXhwIjoxNTg2MDc4NTQ2fQ.Ixk0uUUIMnZLVyDA9BRPy_zyqoqtza7m-cNalbhVqlzv2ZDhh4FvPI6NOOHo_rlJYgd9iXkkoZGfJqD5DMfNng',
@@ -72,9 +70,7 @@ describe('Organizations', () => {
           lastName: 'haechi',
         },
       ];
-      nock(baseUrl)
-        .get('/api/v1/organizations/accounts')
-        .reply(200, response);
+      nock(baseUrl).get('/api/v1/organizations/accounts').reply(200, response);
       const sdk = new SDK({
         accessToken:
           'eyJhbGciOiJIUzUxMiJ9.eyJlbWFpbCI6ImhhZWNoaUBoYWVjaGkuaW8iLCJpZCI6IjQ5ODAzZmJmMGEyYTJjM2FiM2EwYWJhOGI5OGRiYjJhIiwidHlwZSI6IlNIT1JUIiwiaXNzIjoid2FsbGV0LWRldiIsImlhdCI6MTU4NTcxODU0NiwiZXhwIjoxNTg2MDc4NTQ2fQ.Ixk0uUUIMnZLVyDA9BRPy_zyqoqtza7m-cNalbhVqlzv2ZDhh4FvPI6NOOHo_rlJYgd9iXkkoZGfJqD5DMfNng',
@@ -91,9 +87,7 @@ describe('Organizations', () => {
       const response = {
         secret: '111',
       };
-      nock(baseUrl)
-        .post('/api/v1/organizations/secret')
-        .reply(200, response);
+      nock(baseUrl).post('/api/v1/organizations/secret').reply(200, response);
       const sdk = new SDK({
         accessToken:
           'eyJhbGciOiJIUzUxMiJ9.eyJlbWFpbCI6ImhhZWNoaUBoYWVjaGkuaW8iLCJpZCI6IjQ5ODAzZmJmMGEyYTJjM2FiM2EwYWJhOGI5OGRiYjJhIiwidHlwZSI6IlNIT1JUIiwiaXNzIjoid2FsbGV0LWRldiIsImlhdCI6MTU4NTcxODU0NiwiZXhwIjoxNTg2MDc4NTQ2fQ.Ixk0uUUIMnZLVyDA9BRPy_zyqoqtza7m-cNalbhVqlzv2ZDhh4FvPI6NOOHo_rlJYgd9iXkkoZGfJqD5DMfNng',

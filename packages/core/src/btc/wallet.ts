@@ -1,21 +1,26 @@
 import { Client } from '../httpClient';
-import { BtcSubModule } from './module';
-import { BTCKeychains } from './keychains';
+import { BtcKeychains } from './keychains';
 import BN from 'bn.js';
-import { Key } from '../types';
+import { Balance, Key, Pagination } from '../types';
 import {
   address,
   Transaction as BitcoinTransaction,
   script,
   networks,
-  Psbt,
-  TransactionBuilder,
 } from 'bitcoinjs-lib';
 import { BNConverter } from '../utils';
-import { bitcoin } from 'bitcoinjs-lib/types/networks';
+import { WalletData } from '../wallet';
 
-export abstract class BTCWallet {
-  protected readonly client: Client;
+export interface Transaction {
+  id: string;
+  hex: string;
+  inputs: TransactionOutput[];
+  output: TransactionOutput[];
+  createdAt: number;
+}
+
+export interface BtcBalance {
+  balance: string;
 }
 
 export interface RawTransaction {
@@ -46,10 +51,7 @@ export interface CreateRawTransaction {
   outputs: RawTransactionOutput[];
 }
 
-export interface BTCMasterWalletData {
-  id: string;
-  name: string;
-  address: string;
+export interface BtcMasterWalletData extends WalletData {
   orgId: string;
   accountKey: Key;
   redeemScript: string;
@@ -62,28 +64,27 @@ export interface Transaction {
   outputs: TransactionOutput[];
 }
 
-export class BTCMasterWallet extends BtcSubModule {
+export class BtcMasterWallet {
   protected readonly client: Client;
 
-  private readonly keychains: BTCKeychains;
+  private readonly keychains: BtcKeychains;
 
-  private readonly data: BTCMasterWalletData;
+  private readonly data: BtcMasterWalletData;
 
   private readonly baseUrl: string;
 
   public constructor(
-    data: BTCMasterWalletData,
+    data: BtcMasterWalletData,
     client: Client,
-    keychains: BTCKeychains,
+    keychains: BtcKeychains,
   ) {
-    super();
     this.data = data;
     this.client = client;
     this.keychains = keychains;
-    this.baseUrl = this.getBaseUrl() + '/wallets';
+    this.baseUrl = '/wallets';
   }
 
-  public getData(): BTCMasterWalletData {
+  public getData(): BtcMasterWalletData {
     return this.data;
   }
 
@@ -93,14 +94,14 @@ export class BTCMasterWallet extends BtcSubModule {
       amount,
     );
     const tx = new BitcoinTransaction();
-    rawTransaction.inputs.forEach(input => {
+    rawTransaction.inputs.forEach((input) => {
       tx.addInput(
         new Buffer(new Buffer(input.transactionId.slice(2), 'hex').reverse()),
         input.outputIndex,
       );
     });
 
-    rawTransaction.outputs.forEach(output => {
+    rawTransaction.outputs.forEach((output) => {
       tx.addOutput(
         address.toOutputScript(output.to, networks.testnet),
         new BN(output.amount.slice(2), 'hex').toNumber(),
@@ -157,6 +158,18 @@ export class BTCMasterWallet extends BtcSubModule {
         to,
         amount: BNConverter.bnToHexString(amount),
       },
+    );
+  }
+
+  public async getTransactions(): Promise<Pagination<Transaction[]>> {
+    return await this.client.get<Pagination<Transaction[]>>(
+      `${this.baseUrl}/${this.data.id}/transactions`,
+    );
+  }
+
+  public async getBalance(): Promise<BtcBalance> {
+    return await this.client.get<BtcBalance>(
+      `${this.baseUrl}/${this.data.id}/balance`,
     );
   }
 }

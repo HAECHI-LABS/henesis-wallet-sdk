@@ -3,13 +3,13 @@ import { ECPair } from 'bitcoinjs-lib';
 import { networks } from 'bitcoinjs-lib';
 import bip38 from 'bip38';
 
-export interface BTCKeychains {
+export interface BtcKeychains {
   create(password: string): KeyWithPriv;
 
   sign(key: Key, passphrase: string, payload: Buffer): Buffer;
 }
 
-export class DefaultBTCKeyChains implements BTCKeychains {
+export class DefaultBtcKeyChains implements BtcKeychains {
   create(passphrase: string): KeyWithPriv {
     const ecPair = ECPair.makeRandom({
       network: networks.testnet,
