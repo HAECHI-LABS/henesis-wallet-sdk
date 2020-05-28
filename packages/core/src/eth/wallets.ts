@@ -47,8 +47,8 @@ export class Wallets extends SubModule {
   ): Promise<EthMasterWallet[]> {
     const queryString: string = options
       ? Object.keys(options)
-          .filter(key => !!options[key])
-          .map(key => `${toSnakeCase(key)}=${options[key]}`)
+          .filter((key) => !!options[key])
+          .map((key) => `${toSnakeCase(key)}=${options[key]}`)
           .join('&')
       : '';
 
@@ -57,7 +57,7 @@ export class Wallets extends SubModule {
     );
 
     return walletDatas.map(
-      x => new EthMasterWallet(this.client, x, this.keychains),
+      (x) => new EthMasterWallet(this.client, x, this.keychains),
     );
   }
 
@@ -99,13 +99,16 @@ export class Wallets extends SubModule {
   public async createMasterWalletWithKit(
     recoveryKit: RecoveryKit,
   ): Promise<EthMasterWallet> {
-    const walletData = await this.client.post<EthMasterWalletData>(this.baseUrl, {
-      name: recoveryKit.getName(),
-      blockchain: recoveryKit.getBlockchain(),
-      accountKey: recoveryKit.getAccountKey(),
-      backupKey: recoveryKit.getBackupKey(),
-      encryptionKey: recoveryKit.getEncryptionKey(),
-    });
+    const walletData = await this.client.post<EthMasterWalletData>(
+      this.baseUrl,
+      {
+        name: recoveryKit.getName(),
+        blockchain: recoveryKit.getBlockchain(),
+        accountKey: recoveryKit.getAccountKey(),
+        backupKey: recoveryKit.getBackupKey(),
+        encryptionKey: recoveryKit.getEncryptionKey(),
+      },
+    );
 
     return new EthMasterWallet(this.client, walletData, this.keychains);
   }
@@ -119,14 +122,17 @@ export class Wallets extends SubModule {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const walletData = await this.client.post<EthMasterWalletData>(this.baseUrl, {
-      name,
-      blockchain,
-      accountKey: this.removePrivateKey(accountKey),
-      backupKey: this.removePrivateKey(backupKey),
-      encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
-      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
-    });
+    const walletData = await this.client.post<EthMasterWalletData>(
+      this.baseUrl,
+      {
+        name,
+        blockchain,
+        accountKey: this.removePrivateKey(accountKey),
+        backupKey: this.removePrivateKey(backupKey),
+        encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      },
+    );
 
     return new EthMasterWallet(this.client, walletData, this.keychains);
   }

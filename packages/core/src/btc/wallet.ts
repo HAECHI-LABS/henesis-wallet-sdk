@@ -2,7 +2,7 @@ import { Client } from '../httpClient';
 import { BtcSubModule } from './module';
 import { BtcKeychains } from './keychains';
 import BN from 'bn.js';
-import { Balance, Key, Pagination } from "../types";
+import { Balance, Key, Pagination } from '../types';
 import {
   address,
   Transaction as BitcoinTransaction,
@@ -10,7 +10,7 @@ import {
   networks,
 } from 'bitcoinjs-lib';
 import { BNConverter } from '../utils';
-import { WalletData } from "../wallet";
+import { WalletData } from '../wallet';
 
 export interface Transaction {
   id: string;
@@ -21,7 +21,7 @@ export interface Transaction {
 }
 
 export interface BtcBalance {
- balance: string;
+  balance: string;
 }
 
 export interface RawTransaction {
@@ -96,14 +96,14 @@ export class BtcMasterWallet extends BtcSubModule {
       amount,
     );
     const tx = new BitcoinTransaction();
-    rawTransaction.inputs.forEach(input => {
+    rawTransaction.inputs.forEach((input) => {
       tx.addInput(
         new Buffer(new Buffer(input.transactionId.slice(2), 'hex').reverse()),
         input.outputIndex,
       );
     });
 
-    rawTransaction.outputs.forEach(output => {
+    rawTransaction.outputs.forEach((output) => {
       tx.addOutput(
         address.toOutputScript(output.to, networks.testnet),
         new BN(output.amount.slice(2), 'hex').toNumber(),
@@ -163,13 +163,15 @@ export class BtcMasterWallet extends BtcSubModule {
     );
   }
 
-  public async getTransactions(): Promise<Pagination<Transaction[]>>{
-    return await this.client
-      .get<Pagination<Transaction[]>>(`${this.baseUrl}/${this.data.id}/transactions`)
+  public async getTransactions(): Promise<Pagination<Transaction[]>> {
+    return await this.client.get<Pagination<Transaction[]>>(
+      `${this.baseUrl}/${this.data.id}/transactions`,
+    );
   }
 
-  public async getBalance(): Promise<BtcBalance>{
-    return await this.client
-      .get<BtcBalance>(`${this.baseUrl}/${this.data.id}/balance`)
+  public async getBalance(): Promise<BtcBalance> {
+    return await this.client.get<BtcBalance>(
+      `${this.baseUrl}/${this.data.id}/balance`,
+    );
   }
 }
