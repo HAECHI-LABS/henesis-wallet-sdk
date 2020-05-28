@@ -9,15 +9,19 @@ export default abstract class AbstractController {
   protected promiseWrapper(promiseRequestHandler: Function): MiddleWare {
     const self = this;
 
-    return function (req: express.Request, res: express.Response, next: express.NextFunction) {
+    return function(
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction,
+    ) {
       Promise.resolve(promiseRequestHandler.bind(self, req, res, next)())
-        .then((result) => {
+        .then(result => {
           if (result) {
             return res.status(200).send(result);
           }
           return res.sendStatus(200);
         })
-        .catch((error) => {
+        .catch(error => {
           const err = self.parseError(error);
           const result = self.parseErrorMessage(err.message);
           const status = err.status || 500;
@@ -35,7 +39,8 @@ export default abstract class AbstractController {
   private parseError(error: any): any {
     if (error instanceof Error) {
       return error;
-    } if (typeof error === 'string') {
+    }
+    if (typeof error === 'string') {
       return new Error(error);
     }
     return new Error(JSON.stringify(error));

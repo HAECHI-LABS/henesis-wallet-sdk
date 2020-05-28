@@ -11,30 +11,38 @@ const secp256k1 = new (elliptic.ec)("secp256k1"); // eslint-disable-line
 const BASE_V_VALUE = 27;
 
 export const encodeSignature = ([v, r, s]) => Bytes.flatten([r, s, v]);
-export const decodeSignature = (hex) => [
+export const decodeSignature = hex => [
   Bytes.slice(64, Bytes.length(hex), hex),
   Bytes.slice(0, 32, hex),
-  Bytes.slice(32, 64, hex)];
+  Bytes.slice(32, 64, hex),
+];
 
-export const toChecksum = (address) => {
+export const toChecksum = address => {
   const addressHash = keccak256s(address.slice(2));
   let checksumAddress = '0x';
   for (let i = 0; i < 40; i++) {
-    checksumAddress += parseInt(addressHash[i + 2], 16) > 7
-      ? address[i + 2].toUpperCase()
-      : address[i + 2];
+    checksumAddress +=
+      parseInt(addressHash[i + 2], 16) > 7
+        ? address[i + 2].toUpperCase()
+        : address[i + 2];
   }
   return checksumAddress;
 };
 
-export const bytesToWord = (bytes?: Uint8Array): number => bytes.reduce((num, byte) => num * 0x100 + byte, 0);
+export const bytesToWord = (bytes?: Uint8Array): number =>
+  bytes.reduce((num, byte) => num * 0x100 + byte, 0);
 
 export class EthKeychains implements Keychains {
   public create(password: string): KeyWithPriv {
     const entropy = crypto.randomBytes(512 / 8);
 
-    const innerHex = keccak256(Bytes.concat(Bytes.random(32), entropy || Bytes.random(32)));
-    const middleHex = Bytes.concat(Bytes.concat(Bytes.random(32), innerHex), Bytes.random(32));
+    const innerHex = keccak256(
+      Bytes.concat(Bytes.random(32), entropy || Bytes.random(32)),
+    );
+    const middleHex = Bytes.concat(
+      Bytes.concat(Bytes.random(32), innerHex),
+      Bytes.random(32),
+    );
     const privateKey = keccak256(middleHex);
 
     const buffer = Buffer.from(privateKey.slice(2), 'hex');
@@ -52,7 +60,11 @@ export class EthKeychains implements Keychains {
     };
   }
 
-  public changePassword(keyFile: string, password: string, newPassword: string): KeyWithPriv {
+  public changePassword(
+    keyFile: string,
+    password: string,
+    newPassword: string,
+  ): KeyWithPriv {
     const priv = this.decryptKeyFile(keyFile, password);
     const ecKey = secp256k1.keyFromPrivate(Buffer.from(priv.slice(2), 'hex'));
     const publicKey = `0x${ecKey.getPublic(false, 'hex').slice(2)}`;
@@ -71,25 +83,31 @@ export class EthKeychains implements Keychains {
     try {
       return sjcl.decrypt(password, keyFile);
     } catch (error) {
-      if (error.message.includes('ccm: tag doesn\'t match')) {
+      if (error.message.includes("ccm: tag doesn't match")) {
         error.message = `password error - ${error.message}`;
-      } else if (error.message === 'sjcl.exception.corrupt is not a constructor') {
+      } else if (
+        error.message === 'sjcl.exception.corrupt is not a constructor'
+      ) {
         error.message = 'password error';
       }
       throw error;
     }
   }
 
-  public signPayload(blockchain: BlockchainType, hexPayload: string, keyFile: string, password: string): string {
-    const hashedMessage = keccak256(this.payloadToPrefixedMessage(blockchain, hexPayload));
+  public signPayload(
+    blockchain: BlockchainType,
+    hexPayload: string,
+    keyFile: string,
+    password: string,
+  ): string {
+    const hashedMessage = keccak256(
+      this.payloadToPrefixedMessage(blockchain, hexPayload),
+    );
 
     const priv = this.decryptKeyFile(keyFile, password);
     const signature = secp256k1
       .keyFromPrivate(Buffer.from(priv.slice(2), 'hex'))
-      .sign(
-        Buffer.from(hashedMessage.slice(2), 'hex'),
-        { canonical: true },
-      );
+      .sign(Buffer.from(hashedMessage.slice(2), 'hex'), { canonical: true });
 
     return encodeSignature([
       fromString(Bytes.fromNumber(BASE_V_VALUE + signature.recoveryParam)),
@@ -98,7 +116,11 @@ export class EthKeychains implements Keychains {
     ]);
   }
 
-  public recoverAddressFromSignature(blockchain: BlockchainType, hexPayload: string, signature: string) {
+  public recoverAddressFromSignature(
+    blockchain: BlockchainType,
+    hexPayload: string,
+    signature: string,
+  ) {
     const vals = decodeSignature(signature);
     const vrs = {
       v: Bytes.toNumber(vals[0]),
@@ -106,7 +128,12 @@ export class EthKeychains implements Keychains {
       s: vals[2].slice(2),
     };
     const ecPublicKey = secp256k1.recoverPubKey(
-      Buffer.from(keccak256(this.payloadToPrefixedMessage(blockchain, hexPayload)).slice(2), 'hex'),
+      Buffer.from(
+        keccak256(this.payloadToPrefixedMessage(blockchain, hexPayload)).slice(
+          2,
+        ),
+        'hex',
+      ),
       vrs,
       vrs.v < 2 ? vrs.v : 1 - (vrs.v % 2),
     );
@@ -135,15 +162,24 @@ export class EthKeychains implements Keychains {
     return sjcl.encrypt(password, privateKey, encryptOptions);
   }
 
-  private payloadToPrefixedMessage(blockchain: BlockchainType, hexPayload: string): Buffer {
+  private payloadToPrefixedMessage(
+    blockchain: BlockchainType,
+    hexPayload: string,
+  ): Buffer {
     const hashedPayload = keccak256(hexPayload);
     const payloadBuffer = Buffer.from(hashedPayload.slice(2), 'hex');
-    const preambleBuffer = Buffer.from(`\u0019${this.blockchainPrefix(blockchain)} Signed Message:\n${payloadBuffer.length}`);
+    const preambleBuffer = Buffer.from(
+      `\u0019${this.blockchainPrefix(blockchain)} Signed Message:\n${
+        payloadBuffer.length
+      }`,
+    );
     return Buffer.concat([preambleBuffer, payloadBuffer]);
   }
 
   private blockchainPrefix(blockchain: BlockchainType): string {
-    const keys = Object.keys(BlockchainType).filter((x) => BlockchainType[x] == blockchain);
+    const keys = Object.keys(BlockchainType).filter(
+      x => BlockchainType[x] == blockchain,
+    );
     return keys.length > 0 ? keys[0] : null;
   }
 }
