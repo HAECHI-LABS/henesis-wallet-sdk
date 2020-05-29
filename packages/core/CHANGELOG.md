@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.8...v1.1.0) (2020-05-29)
+
+
+### Bug Fixes
+
+* change test description ([d1b1b25](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d1b1b25836242267580ac67e5e0c1d2e8cb2b3b5))
+* fix dependency security vulnerabilities ([ec5848f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ec5848feb0de758a8a66bc4fca89e720d830ac7d))
+* test error / change variable name ([2fee91a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2fee91a00fa771533f96d577d990f374601cac33))
+
+
+### Features
+
+* add Core Package Wallet Transaction Test Case ([10d9d33](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/10d9d3376c0a09bf4da3e99d96891dc6c9d731c9))
+* add getCoinData(), getCoinsData() ([60ef274](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/60ef27474acc912f93eff614cfac649bf678f478))
+* implements changing wallet name ([c251368](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c251368e6daca920506b3519908f0b99bee93191))
+
+
+
+
+
 ## [1.0.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.7...v1.0.8) (2020-05-13)
 
 
