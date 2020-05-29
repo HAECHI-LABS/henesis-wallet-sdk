@@ -1,15 +1,14 @@
 import express, { request } from 'express';
-import {
-  MasterWalletData,
-  Transaction,
-  UserWallet,
-  UserWalletData,
-} from '@haechi-labs/henesis-wallet-core/lib/wallet';
 import { SDK } from '@haechi-labs/henesis-wallet-core';
 import { BNConverter } from '@haechi-labs/henesis-wallet-core/lib/utils';
 import BN from 'bn.js';
 import { Controller } from '../types';
 import AbstractController from './controller';
+import {
+  EthMasterWalletData,
+  EthTransaction, EthUserWallet,
+  EthUserWalletData
+} from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 
 export interface NonceResponse {
   nonce: string;
@@ -134,16 +133,16 @@ export default class WalletController extends AbstractController
 
   private async getMasterWallets(
     req: express.Request,
-  ): Promise<MasterWalletData[]> {
-    const wallets = await req.sdk.wallets.getMasterWallets();
+  ): Promise<EthMasterWalletData[]> {
+    const wallets = await req.sdk.eth.wallets.getMasterWallets();
     return wallets.map(x => x.getData());
   }
 
   private async createMasterWallet(
     req: express.Request,
-  ): Promise<MasterWalletData> {
+  ): Promise<EthMasterWalletData> {
     return (
-      await req.sdk.wallets.createMasterWallet(
+      await req.sdk.eth.wallets.createMasterWallet(
         req.body.name,
         req.body.blockchain,
         req.body.passphrase,
@@ -155,7 +154,7 @@ export default class WalletController extends AbstractController
   }
 
   private async changePassphrase(req: express.Request): Promise<void> {
-    const masterWallet = await req.sdk.wallets.getMasterWallet(
+    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId,
     );
     return await masterWallet.changePassphrase(
@@ -167,8 +166,8 @@ export default class WalletController extends AbstractController
 
   private async createUserWallet(
     req: express.Request,
-  ): Promise<UserWalletData> {
-    const masterWallet = await req.sdk.wallets.getMasterWallet(
+  ): Promise<EthUserWalletData> {
+    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId,
     );
 
@@ -186,8 +185,8 @@ export default class WalletController extends AbstractController
 
   private async getMasterWallet(
     req: express.Request,
-  ): Promise<MasterWalletData> {
-    const masterWallet = await req.sdk.wallets.getMasterWallet(
+  ): Promise<EthMasterWalletData> {
+    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId,
     );
     return masterWallet.getData();
@@ -196,7 +195,7 @@ export default class WalletController extends AbstractController
   private async getMasterWalletBalance(
     req: express.Request,
   ): Promise<BalanceResponse[]> {
-    const masterWallet = await req.sdk.wallets.getMasterWallet(
+    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId,
     );
 
@@ -229,7 +228,7 @@ export default class WalletController extends AbstractController
   private async getMasterWalletNonce(
     req: express.Request,
   ): Promise<NonceResponse> {
-    const masterWallet = await req.sdk.wallets.getMasterWallet(
+    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId,
     );
     return {
@@ -252,8 +251,8 @@ export default class WalletController extends AbstractController
 
   private async replaceMasterWalletTransaction(
     req: express.Request,
-  ): Promise<Transaction> {
-    const masterWallet = await req.sdk.wallets.getMasterWallet(
+  ): Promise<EthTransaction> {
+    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId,
     );
 
@@ -262,7 +261,7 @@ export default class WalletController extends AbstractController
 
   private async replaceUserWalletTransaction(
     req: express.Request,
-  ): Promise<Transaction> {
+  ): Promise<EthTransaction> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
@@ -274,8 +273,8 @@ export default class WalletController extends AbstractController
 
   private async sendMasterWalletContractCall(
     req: express.Request,
-  ): Promise<Transaction> {
-    const masterWallet = await req.sdk.wallets.getMasterWallet(
+  ): Promise<EthTransaction> {
+    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId,
     );
 
@@ -298,7 +297,7 @@ export default class WalletController extends AbstractController
 
   private async sendUserWalletContractCall(
     req: express.Request,
-  ): Promise<Transaction> {
+  ): Promise<EthTransaction> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
@@ -322,8 +321,8 @@ export default class WalletController extends AbstractController
 
   private async sendMasterWalletCoin(
     req: express.Request,
-  ): Promise<Transaction> {
-    const masterWallet = await req.sdk.wallets.getMasterWallet(
+  ): Promise<EthTransaction> {
+    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId,
     );
 
@@ -342,7 +341,7 @@ export default class WalletController extends AbstractController
     );
   }
 
-  private async sendUserWalletCoin(req: express.Request): Promise<Transaction> {
+  private async sendUserWalletCoin(req: express.Request): Promise<EthTransaction> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
@@ -363,7 +362,7 @@ export default class WalletController extends AbstractController
     );
   }
 
-  private async getUserWallet(req: express.Request): Promise<UserWalletData> {
+  private async getUserWallet(req: express.Request): Promise<EthUserWalletData> {
     return (
       await this.getUserWalletByContext(
         req.sdk,
@@ -377,16 +376,16 @@ export default class WalletController extends AbstractController
     sdk: SDK,
     masterWalletId: string,
     userWalletId: string,
-  ): Promise<UserWallet> {
-    return (await sdk.wallets.getMasterWallet(masterWalletId)).getUserWallet(
+  ): Promise<EthUserWallet> {
+    return (await sdk.eth.wallets.getMasterWallet(masterWalletId)).getUserWallet(
       userWalletId,
     );
   }
 
   private async getUserWallets(
     req: express.Request,
-  ): Promise<UserWalletData[]> {
-    const masterWallet = await req.sdk.wallets.getMasterWallet(
+  ): Promise<EthUserWalletData[]> {
+    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId,
     );
     const wallets = (
@@ -403,8 +402,8 @@ export default class WalletController extends AbstractController
 
   private async sendMasterWalletBatchTransactions(
     req: express.Request,
-  ): Promise<Transaction[]> {
-    const masterWallet = await req.sdk.wallets.getMasterWallet(
+  ): Promise<EthTransaction[]> {
+    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId,
     );
 
