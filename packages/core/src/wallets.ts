@@ -99,7 +99,7 @@ export class Wallets {
       name: recoveryKit.getName(),
       blockchain: recoveryKit.getBlockchain(),
       accountKey: recoveryKit.getAccountKey(),
-      backupKey: recoveryKit.getBackupKey(),
+      backupKeyPub: recoveryKit.getBackupKey().pub,
       encryptionKey: recoveryKit.getEncryptionKey(),
     });
 
@@ -119,7 +119,7 @@ export class Wallets {
       name,
       blockchain,
       accountKey: this.removePrivateKey(accountKey),
-      backupKey: this.removePrivateKey(backupKey),
+      backupKeyPub: backupKey.pub,
       encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
     });
