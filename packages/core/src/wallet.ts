@@ -52,7 +52,7 @@ export interface WalletData {
 }
 
 export interface MasterWalletData extends WalletData {
-  backupKey: Key;
+  backupKeyPub: string;
   accountKey: Key;
   encryptionKey: string;
 }
