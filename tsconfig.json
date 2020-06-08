@@ -10,13 +10,8 @@
     "target": "es6",
     "sourceMap": true,
     "esModuleInterop": true,
-    "lib": [
-      "es6"
-    ]
+    "lib": ["es6"],
+    "typeRoots": ["typings", "node_modules/@types"]
   },
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "**/__mocks__"
-  ]
+  "exclude": ["node_modules", "**/*.spec.ts", "**/__mocks__"]
 }
