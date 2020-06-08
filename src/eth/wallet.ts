@@ -21,7 +21,7 @@ import BatchRequest from './batch';
 import wallet from '../contracts/MasterWallet.json';
 import Bytes from './eth-core-lib/bytes';
 import { keccak256s } from './eth-core-lib/hash';
-import { BNConverter, ObjectConverter } from '../utils';
+import { BNConverter, ObjectConverter, verifyCommonAddress } from '../utils';
 import { WalletData, Wallet } from '../wallet';
 
 export interface EthTransaction {
@@ -65,7 +65,7 @@ function convertSignedMultiSigPayloadToDTO(
     },
   };
 }
-export abstract class EthLikeWallet extends Wallet<EthTransaction> {
+export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
   protected masterWalletData: EthMasterWalletData;
 
   protected constructor(
@@ -78,25 +78,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   }
 
   verifyAddress(address: string): boolean {
-    if (!/^(0x|0X)?[0-9a-fA-F]{40}$/i.test(address)) {
-      return false;
-    }
-
-    const lowerCaseAddress = address.toLowerCase();
-    const checksumAddress = toChecksum(lowerCaseAddress);
-    const addressHash = keccak256s(lowerCaseAddress.slice(2));
-    for (let i = 0; i < 40; i++) {
-      if (
-        (parseInt(addressHash[i + 2], 16) > 7 &&
-          lowerCaseAddress[i + 2].toUpperCase() !== checksumAddress[i + 2]) ||
-        (parseInt(addressHash[i + 2], 16) <= 7 &&
-          lowerCaseAddress[i + 2].toLowerCase() !== checksumAddress[i + 2])
-      ) {
-        return false;
-      }
-    }
-
-    return true;
+    return verifyCommonAddress(address);
   }
 
   getChain(): BlockchainType {

@@ -17,14 +17,14 @@ export enum WalletStatus {
   Active = 'ACTIVE',
 }
 
-export abstract class Wallet<T> {
+export abstract class Wallet<T, K> {
   protected readonly client: Client;
 
   protected readonly baseUrl = '/wallets';
 
-  protected readonly keychains: Keychains;
+  protected readonly keychains: K;
 
-  protected constructor(client: Client, keychains: Keychains) {
+  protected constructor(client: Client, keychains: K) {
     this.client = client;
     this.keychains = keychains;
   }
