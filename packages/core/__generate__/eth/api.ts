@@ -106,10 +106,10 @@ export interface AccountDTO {
     accessToken?: string;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof AccountDTO
      */
-    createdAt?: Date;
+    createdAt?: string;
     /**
      * 
      * @type {string}
@@ -246,10 +246,10 @@ export interface CallEventDTO {
     blockchain?: string;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof CallEventDTO
      */
-    createdAt?: Date;
+    createdAt?: string;
     /**
      * 
      * @type {string}
@@ -624,10 +624,10 @@ export interface CreateUserResponse {
     blockchain?: CreateUserResponse.BlockchainEnum;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof CreateUserResponse
      */
-    createdAt?: Date;
+    createdAt?: string;
     /**
      * 
      * @type {string}
@@ -654,10 +654,10 @@ export interface CreateUserResponse {
     transactionId?: string;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof CreateUserResponse
      */
-    updatedAt?: Date;
+    updatedAt?: string;
 }
 
 /**
@@ -907,10 +907,10 @@ export interface MasterWalletDTO {
     blockchain?: MasterWalletDTO.BlockchainEnum;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof MasterWalletDTO
      */
-    createdAt?: Date;
+    createdAt?: string;
     /**
      * 
      * @type {string}
@@ -937,10 +937,10 @@ export interface MasterWalletDTO {
     status?: MasterWalletDTO.StatusEnum;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof MasterWalletDTO
      */
-    updatedAt?: Date;
+    updatedAt?: string;
 }
 
 /**
@@ -1600,10 +1600,10 @@ export interface TransactionDTO {
     blockchain?: TransactionDTO.BlockchainEnum;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof TransactionDTO
      */
-    createdAt?: Date;
+    createdAt?: string;
     /**
      * 
      * @type {string}
@@ -1748,10 +1748,10 @@ export interface UserWalletDTO {
     blockchain?: UserWalletDTO.BlockchainEnum;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof UserWalletDTO
      */
-    createdAt?: Date;
+    createdAt?: string;
     /**
      * 
      * @type {string}
@@ -1772,10 +1772,10 @@ export interface UserWalletDTO {
     status?: UserWalletDTO.StatusEnum;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof UserWalletDTO
      */
-    updatedAt?: Date;
+    updatedAt?: string;
 }
 
 /**
@@ -1827,10 +1827,10 @@ export interface ValueTransferEventDTO {
     coinSymbol?: string;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    createdAt?: Date;
+    createdAt?: string;
     /**
      * 
      * @type {string}
