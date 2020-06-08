@@ -9,14 +9,17 @@ import { Key, Keychains, KeyWithPriv } from '../types';
 import { BNConverter, toSnakeCase } from '../utils';
 import { BlockchainType } from '../blockchain';
 import { RecoveryKit } from '../recoverykit';
-import { EthMasterWallet, EthMasterWalletData } from "./wallet";
+import { EthMasterWallet, EthMasterWalletData } from './wallet';
+import { Wallets } from '../wallets';
+import { toChecksum } from './keychains';
+import { keccak256s } from './eth-core-lib/hash';
 
 export interface MasterWalletSearchOptions {
   name?: string;
   orgId?: string;
 }
 
-export class EthWallets {
+export class EthWallets implements Wallets {
   private readonly client: Client;
 
   private readonly keychains: Keychains;
@@ -133,6 +136,28 @@ export class EthWallets {
     );
 
     return new EthMasterWallet(this.client, walletData, this.keychains);
+  }
+
+  public verifyAddress(address: string): boolean {
+    if (!/^(0x|0X)?[0-9a-fA-F]{40}$/i.test(address)) {
+      return false;
+    }
+
+    const lowerCaseAddress = address.toLowerCase();
+    const checksumAddress = toChecksum(lowerCaseAddress);
+    const addressHash = keccak256s(lowerCaseAddress.slice(2));
+    for (let i = 0; i < 40; i++) {
+      if (
+        (parseInt(addressHash[i + 2], 16) > 7 &&
+          lowerCaseAddress[i + 2].toUpperCase() !== checksumAddress[i + 2]) ||
+        (parseInt(addressHash[i + 2], 16) <= 7 &&
+          lowerCaseAddress[i + 2].toLowerCase() !== checksumAddress[i + 2])
+      ) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   private createEncryptionKey(p: string): Buffer {
