@@ -157,36 +157,12 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
       `${this.baseUrl}/${this.data.id}/transactions`,
     );
   }
-  
+
   getChain(): BlockchainType {
     return this.data.blockchain;
   }
 
-  replaceTransaction(
-    transactionId: string,
-    otpCode?: string,
-  ): Promise<BtcTransaction> {
-    const walletId = this.getId();
-    const blockchain = this.getChain();
-    return this.client.post<BtcTransaction>(`${this.baseUrl}/transactions`, {
-      walletId,
-      transactionId,
-      blockchain,
-      otpCode,
-    });
-  }
-
-  contractCall(
-    contractAddress: string,
-    value: BN,
-    data: string,
-    passphrase: string,
-    otpCode?: string,
-  ): Promise<BtcTransaction> {
-    throw new Error('Method not implemented.');
-  }
-
-  async getBalance(): Promise<Balance[]> {
+  async getBalance(): Promise<Balance[]> { // FIXED
     const balances = await this.client.get(
       `${this.baseUrl}/${this.data.id}/balance`,
     );
