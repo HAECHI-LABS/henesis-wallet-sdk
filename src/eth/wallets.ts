@@ -16,7 +16,7 @@ export interface MasterWalletSearchOptions {
   orgId?: string;
 }
 
-export class Wallets {
+export class EthWallets {
   private readonly client: Client;
 
   private readonly keychains: Keychains;
