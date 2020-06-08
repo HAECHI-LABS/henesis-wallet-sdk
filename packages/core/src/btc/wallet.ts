@@ -8,7 +8,7 @@ import {
   script,
   networks,
 } from 'bitcoinjs-lib';
-import { BNConverter, verifyCommonAddress } from '../utils';
+import { BNConverter } from '../utils';
 import { WalletData, Wallet } from '../wallet';
 import { BlockchainType } from '../blockchain';
 
@@ -159,7 +159,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
   }
 
   verifyAddress(address: string): boolean {
-    return verifyCommonAddress(address);
+    return true;
   }
 
   getChain(): BlockchainType {
