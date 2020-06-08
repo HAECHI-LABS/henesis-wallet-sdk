@@ -20,6 +20,10 @@ export interface BtcTransaction {
   createdAt: number;
 }
 
+export interface BtcBalance {
+  balance: string;
+}
+
 export interface BtcRawTransaction {
   inputs: BtcTransactionOutput[];
   outputs: BtcRawTransactionOutput[];
@@ -162,16 +166,18 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
     return this.data.blockchain;
   }
 
-  async getBalance(): Promise<Balance[]> { // FIXED
-    const balances = await this.client.get(
+  async getBalance(): Promise<Balance[]> {
+    const response: BtcBalance = await this.client.get(
       `${this.baseUrl}/${this.data.id}/balance`,
     );
-    return balances.map((balance) => ({
-      symbol: balance.symbol,
-      amount: BNConverter.hexStringToBN(balance.amount),
-      coinType: balance.coinType,
-      name: balance.name,
-    }));
+    return [
+      {
+        symbol: 'BTC',
+        amount: BNConverter.hexStringToBN(response.balance),
+        coinType: 'BTC',
+        name: '비트코인',
+      },
+    ];
   }
 
   getAddress(): string {
