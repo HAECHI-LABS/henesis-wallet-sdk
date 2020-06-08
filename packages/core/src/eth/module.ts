@@ -1,4 +1,4 @@
-import { Wallets } from './wallets';
+import { EthWallets } from './wallets';
 import { Keychains } from '../types';
 import { Events } from './events';
 import { Gasusages } from './gasusages';
@@ -13,7 +13,7 @@ export interface ModuleOptions {
 }
 
 export class EthModule {
-  public readonly wallets: Wallets;
+  public readonly wallets: EthWallets;
 
   public readonly keychains: Keychains;
 
@@ -28,7 +28,7 @@ export class EthModule {
   constructor(options: ModuleOptions) {
     this.client = options.client;
     this.keychains = new EthKeychains();
-    this.wallets = new Wallets(this.client, this.keychains, options.env);
+    this.wallets = new EthWallets(this.client, this.keychains, options.env);
     this.events = new Events(this.client);
     this.gasusages = new Gasusages(this.client);
     this.transactions = new Transactions(this.client);

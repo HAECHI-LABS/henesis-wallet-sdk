@@ -1,12 +1,12 @@
 import { Client } from '../httpClient';
 import { ModuleOptions } from '../module';
-import { BTCWallets } from "./wallets";
+import { BtcWallets } from "./wallets";
 import { BtcKeychains, DefaultBtcKeyChains } from "./keychains";
 
 export class BtcModule {
   private readonly client: Client;
 
-  private readonly wallets: BTCWallets;
+  private readonly wallets: BtcWallets;
 
   private readonly keychains: BtcKeychains;
 
@@ -14,6 +14,6 @@ export class BtcModule {
     this.client = options.client;
 
     this.keychains = new DefaultBtcKeyChains();
-    this.wallets = new BTCWallets(this.client, this.keychains);
+    this.wallets = new BtcWallets(this.client, this.keychains);
   }
 }
