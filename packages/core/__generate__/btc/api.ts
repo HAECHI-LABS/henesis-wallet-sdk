@@ -244,10 +244,10 @@ export interface DepositAddressDTO {
     address?: string;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof DepositAddressDTO
      */
-    createdAt?: Date;
+    createdAt?: string;
     /**
      * 
      * @type {string}
@@ -338,10 +338,10 @@ export interface MasterWalletDTO {
     address?: string;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof MasterWalletDTO
      */
-    createdAt?: Date;
+    createdAt?: string;
     /**
      * 
      * @type {string}
@@ -618,10 +618,10 @@ export interface RawTransactionOutputDTO {
 export interface TransactionDTO {
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof TransactionDTO
      */
-    createdAt?: Date;
+    createdAt?: string;
     /**
      * 
      * @type {string}
@@ -648,10 +648,10 @@ export interface TransactionDTO {
     status?: TransactionDTO.StatusEnum;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof TransactionDTO
      */
-    updatedAt?: Date;
+    updatedAt?: string;
 }
 
 /**
@@ -731,10 +731,10 @@ export interface ValueTransferEventDTO {
     amount?: number;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    createdAt?: Date;
+    createdAt?: string;
     /**
      * 
      * @type {string}
@@ -1593,19 +1593,19 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
         /**
          * 
          * @summary createDepositAddress
-         * @param {string} walletId walletId
          * @param {CreateDepositAddressDTO} createDepositAddressDTO createDepositAddressDTO
+         * @param {string} walletId walletId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createDepositAddressUsingPOST(walletId: string, createDepositAddressDTO: CreateDepositAddressDTO, options: any = {}): FetchArgs {
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling createDepositAddressUsingPOST.');
-            }
+        createDepositAddressUsingPOST(createDepositAddressDTO: CreateDepositAddressDTO, walletId: string, options: any = {}): FetchArgs {
             // verify required parameter 'createDepositAddressDTO' is not null or undefined
             if (createDepositAddressDTO === null || createDepositAddressDTO === undefined) {
                 throw new RequiredError('createDepositAddressDTO','Required parameter createDepositAddressDTO was null or undefined when calling createDepositAddressUsingPOST.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling createDepositAddressUsingPOST.');
             }
             const localVarPath = `/api/v2/btc/wallets/{walletId}/deposit-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1663,19 +1663,19 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
         /**
          * 
          * @summary createRawTransaction
-         * @param {string} walletId walletId
          * @param {CreateRawTransactionDTO} createRawTransactionDTO createRawTransactionDTO
+         * @param {string} walletId walletId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRawTransactionUsingPOST(walletId: string, createRawTransactionDTO: CreateRawTransactionDTO, options: any = {}): FetchArgs {
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling createRawTransactionUsingPOST.');
-            }
+        createRawTransactionUsingPOST(createRawTransactionDTO: CreateRawTransactionDTO, walletId: string, options: any = {}): FetchArgs {
             // verify required parameter 'createRawTransactionDTO' is not null or undefined
             if (createRawTransactionDTO === null || createRawTransactionDTO === undefined) {
                 throw new RequiredError('createRawTransactionDTO','Required parameter createRawTransactionDTO was null or undefined when calling createRawTransactionUsingPOST.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling createRawTransactionUsingPOST.');
             }
             const localVarPath = `/api/v2/btc/wallets/{walletId}/raw-transactions`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1730,23 +1730,23 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
         /**
          * 
          * @summary getDepositAddress
-         * @param {string} walletId walletId
          * @param {string} depositAddressId depositAddressId
+         * @param {string} walletId walletId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDepositAddressUsingGET(walletId: string, depositAddressId: string, options: any = {}): FetchArgs {
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getDepositAddressUsingGET.');
-            }
+        getDepositAddressUsingGET(depositAddressId: string, walletId: string, options: any = {}): FetchArgs {
             // verify required parameter 'depositAddressId' is not null or undefined
             if (depositAddressId === null || depositAddressId === undefined) {
                 throw new RequiredError('depositAddressId','Required parameter depositAddressId was null or undefined when calling getDepositAddressUsingGET.');
             }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getDepositAddressUsingGET.');
+            }
             const localVarPath = `/api/v2/btc/wallets/{walletId}/deposit-addresses/{depositAddressId}`
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
-                .replace(`{${"depositAddressId"}}`, encodeURIComponent(String(depositAddressId)));
+                .replace(`{${"depositAddressId"}}`, encodeURIComponent(String(depositAddressId)))
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -1766,10 +1766,17 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
          * 
          * @summary getDepositAddress
          * @param {string} walletId walletId
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDepositAddressUsingGET1(walletId: string, options: any = {}): FetchArgs {
+        getDepositAddressUsingGET1(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
                 throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getDepositAddressUsingGET1.');
@@ -1780,6 +1787,34 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (paged !== undefined) {
+                localVarQueryParameter['paged'] = paged;
+            }
+
+            if (sortSorted !== undefined) {
+                localVarQueryParameter['sort.sorted'] = sortSorted;
+            }
+
+            if (sortUnsorted !== undefined) {
+                localVarQueryParameter['sort.unsorted'] = sortUnsorted;
+            }
+
+            if (unpaged !== undefined) {
+                localVarQueryParameter['unpaged'] = unpaged;
+            }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -1824,10 +1859,17 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
          * 
          * @summary getTransactions
          * @param {string} walletId walletId
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionsUsingGET(walletId: string, options: any = {}): FetchArgs {
+        getTransactionsUsingGET(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
                 throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getTransactionsUsingGET.');
@@ -1838,6 +1880,34 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (paged !== undefined) {
+                localVarQueryParameter['paged'] = paged;
+            }
+
+            if (sortSorted !== undefined) {
+                localVarQueryParameter['sort.sorted'] = sortSorted;
+            }
+
+            if (sortUnsorted !== undefined) {
+                localVarQueryParameter['sort.unsorted'] = sortUnsorted;
+            }
+
+            if (unpaged !== undefined) {
+                localVarQueryParameter['unpaged'] = unpaged;
+            }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -1852,19 +1922,19 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
         /**
          * 
          * @summary sendTransaction
-         * @param {string} walletId walletId
          * @param {CreateTransactionDTO} createTransactionDTO createTransactionDTO
+         * @param {string} walletId walletId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sendTransactionUsingPOST(walletId: string, createTransactionDTO: CreateTransactionDTO, options: any = {}): FetchArgs {
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling sendTransactionUsingPOST.');
-            }
+        sendTransactionUsingPOST(createTransactionDTO: CreateTransactionDTO, walletId: string, options: any = {}): FetchArgs {
             // verify required parameter 'createTransactionDTO' is not null or undefined
             if (createTransactionDTO === null || createTransactionDTO === undefined) {
                 throw new RequiredError('createTransactionDTO','Required parameter createTransactionDTO was null or undefined when calling sendTransactionUsingPOST.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling sendTransactionUsingPOST.');
             }
             const localVarPath = `/api/v2/btc/wallets/{walletId}/transactions`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1899,13 +1969,13 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary createDepositAddress
-         * @param {string} walletId walletId
          * @param {CreateDepositAddressDTO} createDepositAddressDTO createDepositAddressDTO
+         * @param {string} walletId walletId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createDepositAddressUsingPOST(walletId: string, createDepositAddressDTO: CreateDepositAddressDTO, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DepositAddressDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).createDepositAddressUsingPOST(walletId, createDepositAddressDTO, options);
+        createDepositAddressUsingPOST(createDepositAddressDTO: CreateDepositAddressDTO, walletId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DepositAddressDTO> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).createDepositAddressUsingPOST(createDepositAddressDTO, walletId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1938,13 +2008,13 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary createRawTransaction
-         * @param {string} walletId walletId
          * @param {CreateRawTransactionDTO} createRawTransactionDTO createRawTransactionDTO
+         * @param {string} walletId walletId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRawTransactionUsingPOST(walletId: string, createRawTransactionDTO: CreateRawTransactionDTO, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<RawTransactionDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).createRawTransactionUsingPOST(walletId, createRawTransactionDTO, options);
+        createRawTransactionUsingPOST(createRawTransactionDTO: CreateRawTransactionDTO, walletId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<RawTransactionDTO> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).createRawTransactionUsingPOST(createRawTransactionDTO, walletId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1977,13 +2047,13 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary getDepositAddress
-         * @param {string} walletId walletId
          * @param {string} depositAddressId depositAddressId
+         * @param {string} walletId walletId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDepositAddressUsingGET(walletId: string, depositAddressId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DepositAddressDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getDepositAddressUsingGET(walletId, depositAddressId, options);
+        getDepositAddressUsingGET(depositAddressId: string, walletId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DepositAddressDTO> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getDepositAddressUsingGET(depositAddressId, walletId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1998,11 +2068,18 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * 
          * @summary getDepositAddress
          * @param {string} walletId walletId
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDepositAddressUsingGET1(walletId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationValueTransferEventDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getDepositAddressUsingGET1(walletId, options);
+        getDepositAddressUsingGET1(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationValueTransferEventDTO> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getDepositAddressUsingGET1(walletId, offset, pageNumber, pageSize, paged, sortSorted, sortUnsorted, unpaged, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2036,11 +2113,18 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * 
          * @summary getTransactions
          * @param {string} walletId walletId
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionsUsingGET(walletId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationTransactionDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getTransactionsUsingGET(walletId, options);
+        getTransactionsUsingGET(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationTransactionDTO> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getTransactionsUsingGET(walletId, offset, pageNumber, pageSize, paged, sortSorted, sortUnsorted, unpaged, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2054,13 +2138,13 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary sendTransaction
-         * @param {string} walletId walletId
          * @param {CreateTransactionDTO} createTransactionDTO createTransactionDTO
+         * @param {string} walletId walletId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sendTransactionUsingPOST(walletId: string, createTransactionDTO: CreateTransactionDTO, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).sendTransactionUsingPOST(walletId, createTransactionDTO, options);
+        sendTransactionUsingPOST(createTransactionDTO: CreateTransactionDTO, walletId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).sendTransactionUsingPOST(createTransactionDTO, walletId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2083,13 +2167,13 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
         /**
          * 
          * @summary createDepositAddress
-         * @param {string} walletId walletId
          * @param {CreateDepositAddressDTO} createDepositAddressDTO createDepositAddressDTO
+         * @param {string} walletId walletId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createDepositAddressUsingPOST(walletId: string, createDepositAddressDTO: CreateDepositAddressDTO, options?: any) {
-            return WalletControllerApiFp(configuration).createDepositAddressUsingPOST(walletId, createDepositAddressDTO, options)(fetch, basePath);
+        createDepositAddressUsingPOST(createDepositAddressDTO: CreateDepositAddressDTO, walletId: string, options?: any) {
+            return WalletControllerApiFp(configuration).createDepositAddressUsingPOST(createDepositAddressDTO, walletId, options)(fetch, basePath);
         },
         /**
          * 
@@ -2104,13 +2188,13 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
         /**
          * 
          * @summary createRawTransaction
-         * @param {string} walletId walletId
          * @param {CreateRawTransactionDTO} createRawTransactionDTO createRawTransactionDTO
+         * @param {string} walletId walletId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRawTransactionUsingPOST(walletId: string, createRawTransactionDTO: CreateRawTransactionDTO, options?: any) {
-            return WalletControllerApiFp(configuration).createRawTransactionUsingPOST(walletId, createRawTransactionDTO, options)(fetch, basePath);
+        createRawTransactionUsingPOST(createRawTransactionDTO: CreateRawTransactionDTO, walletId: string, options?: any) {
+            return WalletControllerApiFp(configuration).createRawTransactionUsingPOST(createRawTransactionDTO, walletId, options)(fetch, basePath);
         },
         /**
          * 
@@ -2125,23 +2209,30 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
         /**
          * 
          * @summary getDepositAddress
-         * @param {string} walletId walletId
          * @param {string} depositAddressId depositAddressId
+         * @param {string} walletId walletId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDepositAddressUsingGET(walletId: string, depositAddressId: string, options?: any) {
-            return WalletControllerApiFp(configuration).getDepositAddressUsingGET(walletId, depositAddressId, options)(fetch, basePath);
+        getDepositAddressUsingGET(depositAddressId: string, walletId: string, options?: any) {
+            return WalletControllerApiFp(configuration).getDepositAddressUsingGET(depositAddressId, walletId, options)(fetch, basePath);
         },
         /**
          * 
          * @summary getDepositAddress
          * @param {string} walletId walletId
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDepositAddressUsingGET1(walletId: string, options?: any) {
-            return WalletControllerApiFp(configuration).getDepositAddressUsingGET1(walletId, options)(fetch, basePath);
+        getDepositAddressUsingGET1(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+            return WalletControllerApiFp(configuration).getDepositAddressUsingGET1(walletId, offset, pageNumber, pageSize, paged, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
         },
         /**
          * 
@@ -2157,22 +2248,29 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * 
          * @summary getTransactions
          * @param {string} walletId walletId
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionsUsingGET(walletId: string, options?: any) {
-            return WalletControllerApiFp(configuration).getTransactionsUsingGET(walletId, options)(fetch, basePath);
+        getTransactionsUsingGET(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+            return WalletControllerApiFp(configuration).getTransactionsUsingGET(walletId, offset, pageNumber, pageSize, paged, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
         },
         /**
          * 
          * @summary sendTransaction
-         * @param {string} walletId walletId
          * @param {CreateTransactionDTO} createTransactionDTO createTransactionDTO
+         * @param {string} walletId walletId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sendTransactionUsingPOST(walletId: string, createTransactionDTO: CreateTransactionDTO, options?: any) {
-            return WalletControllerApiFp(configuration).sendTransactionUsingPOST(walletId, createTransactionDTO, options)(fetch, basePath);
+        sendTransactionUsingPOST(createTransactionDTO: CreateTransactionDTO, walletId: string, options?: any) {
+            return WalletControllerApiFp(configuration).sendTransactionUsingPOST(createTransactionDTO, walletId, options)(fetch, basePath);
         },
     };
 };
@@ -2187,14 +2285,14 @@ export class WalletControllerApi extends BaseAPI {
     /**
      * 
      * @summary createDepositAddress
-     * @param {string} walletId walletId
      * @param {CreateDepositAddressDTO} createDepositAddressDTO createDepositAddressDTO
+     * @param {string} walletId walletId
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public createDepositAddressUsingPOST(walletId: string, createDepositAddressDTO: CreateDepositAddressDTO, options?: any) {
-        return WalletControllerApiFp(this.configuration).createDepositAddressUsingPOST(walletId, createDepositAddressDTO, options)(this.fetch, this.basePath);
+    public createDepositAddressUsingPOST(createDepositAddressDTO: CreateDepositAddressDTO, walletId: string, options?: any) {
+        return WalletControllerApiFp(this.configuration).createDepositAddressUsingPOST(createDepositAddressDTO, walletId, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2212,14 +2310,14 @@ export class WalletControllerApi extends BaseAPI {
     /**
      * 
      * @summary createRawTransaction
-     * @param {string} walletId walletId
      * @param {CreateRawTransactionDTO} createRawTransactionDTO createRawTransactionDTO
+     * @param {string} walletId walletId
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public createRawTransactionUsingPOST(walletId: string, createRawTransactionDTO: CreateRawTransactionDTO, options?: any) {
-        return WalletControllerApiFp(this.configuration).createRawTransactionUsingPOST(walletId, createRawTransactionDTO, options)(this.fetch, this.basePath);
+    public createRawTransactionUsingPOST(createRawTransactionDTO: CreateRawTransactionDTO, walletId: string, options?: any) {
+        return WalletControllerApiFp(this.configuration).createRawTransactionUsingPOST(createRawTransactionDTO, walletId, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2237,26 +2335,33 @@ export class WalletControllerApi extends BaseAPI {
     /**
      * 
      * @summary getDepositAddress
-     * @param {string} walletId walletId
      * @param {string} depositAddressId depositAddressId
+     * @param {string} walletId walletId
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getDepositAddressUsingGET(walletId: string, depositAddressId: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).getDepositAddressUsingGET(walletId, depositAddressId, options)(this.fetch, this.basePath);
+    public getDepositAddressUsingGET(depositAddressId: string, walletId: string, options?: any) {
+        return WalletControllerApiFp(this.configuration).getDepositAddressUsingGET(depositAddressId, walletId, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary getDepositAddress
      * @param {string} walletId walletId
+     * @param {number} [offset] 
+     * @param {number} [pageNumber] 
+     * @param {number} [pageSize] 
+     * @param {boolean} [paged] 
+     * @param {boolean} [sortSorted] 
+     * @param {boolean} [sortUnsorted] 
+     * @param {boolean} [unpaged] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getDepositAddressUsingGET1(walletId: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).getDepositAddressUsingGET1(walletId, options)(this.fetch, this.basePath);
+    public getDepositAddressUsingGET1(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+        return WalletControllerApiFp(this.configuration).getDepositAddressUsingGET1(walletId, offset, pageNumber, pageSize, paged, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2275,25 +2380,32 @@ export class WalletControllerApi extends BaseAPI {
      * 
      * @summary getTransactions
      * @param {string} walletId walletId
+     * @param {number} [offset] 
+     * @param {number} [pageNumber] 
+     * @param {number} [pageSize] 
+     * @param {boolean} [paged] 
+     * @param {boolean} [sortSorted] 
+     * @param {boolean} [sortUnsorted] 
+     * @param {boolean} [unpaged] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getTransactionsUsingGET(walletId: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).getTransactionsUsingGET(walletId, options)(this.fetch, this.basePath);
+    public getTransactionsUsingGET(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+        return WalletControllerApiFp(this.configuration).getTransactionsUsingGET(walletId, offset, pageNumber, pageSize, paged, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary sendTransaction
-     * @param {string} walletId walletId
      * @param {CreateTransactionDTO} createTransactionDTO createTransactionDTO
+     * @param {string} walletId walletId
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public sendTransactionUsingPOST(walletId: string, createTransactionDTO: CreateTransactionDTO, options?: any) {
-        return WalletControllerApiFp(this.configuration).sendTransactionUsingPOST(walletId, createTransactionDTO, options)(this.fetch, this.basePath);
+    public sendTransactionUsingPOST(createTransactionDTO: CreateTransactionDTO, walletId: string, options?: any) {
+        return WalletControllerApiFp(this.configuration).sendTransactionUsingPOST(createTransactionDTO, walletId, options)(this.fetch, this.basePath);
     }
 
 }
