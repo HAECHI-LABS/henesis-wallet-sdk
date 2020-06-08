@@ -13,6 +13,8 @@
   ],
   "scripts": {
     "lint:fix": "eslint 'src/**/*.ts' '__tests__/**/*.ts' --fix",
+    "codegen:btc": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i http://localhost:8080/v2/api-docs -l typescript-fetch -o ./__generate__/btc",
+    "codegen:eth": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i https://dev.wallet.henesis.io/v2/api-docs -l typescript-fetch -o ./__generate__/eth",
     "test": "jest",
     "build": "rm -rf ./lib && tsc",
     "preBootstrap": "rm -rf ./node_modules"
@@ -37,6 +39,7 @@
     "js-base64": "^2.5.2",
     "path": "^0.12.7",
     "pdfkit": "^0.11.0",
+    "portable-fetch": "^3.0.0",
     "qrcode": "^1.4.4",
     "svg-to-pdfkit": "^0.1.8",
     "ts-jest": "^24.0.2",
