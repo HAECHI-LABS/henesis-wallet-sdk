@@ -157,11 +157,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
       `${this.baseUrl}/${this.data.id}/transactions`,
     );
   }
-
-  verifyAddress(address: string): boolean {
-    return true;
-  }
-
+  
   getChain(): BlockchainType {
     return this.data.blockchain;
   }

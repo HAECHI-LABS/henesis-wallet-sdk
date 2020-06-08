@@ -77,28 +77,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
     this.masterWalletData = masterWalletData;
   }
 
-  verifyAddress(address: string): boolean {
-    if (!/^(0x|0X)?[0-9a-fA-F]{40}$/i.test(address)) {
-      return false;
-    }
-  
-    const lowerCaseAddress = address.toLowerCase();
-    const checksumAddress = toChecksum(lowerCaseAddress);
-    const addressHash = keccak256s(lowerCaseAddress.slice(2));
-    for (let i = 0; i < 40; i++) {
-      if (
-        (parseInt(addressHash[i + 2], 16) > 7 &&
-          lowerCaseAddress[i + 2].toUpperCase() !== checksumAddress[i + 2]) ||
-        (parseInt(addressHash[i + 2], 16) <= 7 &&
-          lowerCaseAddress[i + 2].toLowerCase() !== checksumAddress[i + 2])
-      ) {
-        return false;
-      }
-    }
-  
-    return true;
-  }
-
   getChain(): BlockchainType {
     return this.masterWalletData.blockchain;
   }

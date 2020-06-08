@@ -3,9 +3,10 @@ import { BtcMasterWallet, BtcMasterWalletData } from './wallet';
 import Web3 from 'web3';
 import pbkdf2 from 'pbkdf2';
 import { BtcKeychains } from './keychains';
+import { Wallets } from '../wallets';
 import aesjs from 'aes-js';
 
-export class BtcWallets {
+export class BtcWallets implements Wallets {
   protected readonly client: Client;
 
   private readonly baseUrl: string;
@@ -52,6 +53,10 @@ export class BtcWallets {
       BtcMasterWalletData
     >(`${this.baseUrl}/${id}`);
     return new BtcMasterWallet(data, this.client, this.keychains);
+  }
+
+  public verifyAddress(address: string): boolean {
+    return true;
   }
 
   private createEncryptionKey(p: string): Buffer {

@@ -31,8 +31,6 @@ export abstract class Wallet<T, K> {
 
   abstract getChain(): BlockchainType;
 
-  abstract verifyAddress(address: string): boolean;
-
   abstract transfer(
     ticker: string,
     to: string,
