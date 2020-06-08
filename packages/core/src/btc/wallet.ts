@@ -10,22 +10,22 @@ import {
 } from 'bitcoinjs-lib';
 import { BNConverter, verifyCommonAddress } from '../utils';
 import { WalletData, Wallet } from '../wallet';
-import { BlockchainType } from "../blockchain";
+import { BlockchainType } from '../blockchain';
 
-export interface Transaction {
+export interface BtcTransaction {
   id: string;
   hex: string;
-  inputs: TransactionOutput[];
-  output: TransactionOutput[];
+  inputs: BtcTransactionOutput[];
+  output: BtcTransactionOutput[];
   createdAt: number;
 }
 
-export interface RawTransaction {
-  inputs: TransactionOutput[];
-  outputs: RawTransactionOutput[];
+export interface BtcRawTransaction {
+  inputs: BtcTransactionOutput[];
+  outputs: BtcRawTransactionOutput[];
 }
 
-export interface TransactionOutput {
+export interface BtcTransactionOutput {
   transactionId: string;
   outputIndex: number;
   address: string;
@@ -35,17 +35,17 @@ export interface TransactionOutput {
   spentInputIndex: number;
 }
 
-export interface RawTransactionOutput {
+export interface BtcRawTransactionOutput {
   to: string;
   amount: string;
 }
 
-export interface CreateRawTransaction {
+export interface BtcCreateRawTransaction {
   inputs: {
-    transactionOutput: TransactionOutput;
+    transactionOutput: BtcTransactionOutput;
     accountSignature: string;
   }[];
-  outputs: RawTransactionOutput[];
+  outputs: BtcRawTransactionOutput[];
 }
 
 export interface BtcMasterWalletData extends WalletData {
@@ -54,14 +54,14 @@ export interface BtcMasterWalletData extends WalletData {
   redeemScript: string;
 }
 
-export interface Transaction {
+export interface BtcTransaction {
   id: string;
   hex: string;
-  inputs: TransactionOutput[];
-  outputs: TransactionOutput[];
+  inputs: BtcTransactionOutput[];
+  outputs: BtcTransactionOutput[];
 }
 
-export class BtcMasterWallet extends Wallet<Transaction, BtcKeychains> {
+export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
   private readonly data: BtcMasterWalletData;
 
   public constructor(
@@ -80,7 +80,7 @@ export class BtcMasterWallet extends Wallet<Transaction, BtcKeychains> {
     passphrase: string,
     otpCode?: string,
   ) {
-    const rawTransaction: RawTransaction = await this.createRawTransaction(
+    const rawTransaction: BtcRawTransaction = await this.createRawTransaction(
       to,
       amount,
     );
@@ -117,7 +117,7 @@ export class BtcMasterWallet extends Wallet<Transaction, BtcKeychains> {
       accountSigs.push(accountSig);
     }
 
-    const payload: CreateRawTransaction = {
+    const payload: BtcCreateRawTransaction = {
       inputs: [],
       outputs: [],
     };
@@ -133,7 +133,7 @@ export class BtcMasterWallet extends Wallet<Transaction, BtcKeychains> {
       payload.outputs.push(rawTransaction.outputs[i]);
     }
 
-    return await this.client.post<Transaction>(
+    return await this.client.post<BtcTransaction>(
       `${this.baseUrl}/${this.data.id}/transactions`,
       payload,
     );
@@ -142,8 +142,8 @@ export class BtcMasterWallet extends Wallet<Transaction, BtcKeychains> {
   private async createRawTransaction(
     to: string,
     amount: BN,
-  ): Promise<RawTransaction> {
-    return await this.client.post<RawTransaction>(
+  ): Promise<BtcRawTransaction> {
+    return await this.client.post<BtcRawTransaction>(
       `${this.baseUrl}/${this.data.id}/raw-transactions`,
       {
         to,
@@ -152,8 +152,8 @@ export class BtcMasterWallet extends Wallet<Transaction, BtcKeychains> {
     );
   }
 
-  public async getTransactions(): Promise<Pagination<Transaction[]>> {
-    return await this.client.get<Pagination<Transaction[]>>(
+  public async getTransactions(): Promise<Pagination<BtcTransaction[]>> {
+    return await this.client.get<Pagination<BtcTransaction[]>>(
       `${this.baseUrl}/${this.data.id}/transactions`,
     );
   }
@@ -169,10 +169,10 @@ export class BtcMasterWallet extends Wallet<Transaction, BtcKeychains> {
   replaceTransaction(
     transactionId: string,
     otpCode?: string,
-  ): Promise<Transaction> {
+  ): Promise<BtcTransaction> {
     const walletId = this.getId();
     const blockchain = this.getChain();
-    return this.client.post<Transaction>(`${this.baseUrl}/transactions`, {
+    return this.client.post<BtcTransaction>(`${this.baseUrl}/transactions`, {
       walletId,
       transactionId,
       blockchain,
@@ -186,7 +186,7 @@ export class BtcMasterWallet extends Wallet<Transaction, BtcKeychains> {
     data: string,
     passphrase: string,
     otpCode?: string,
-  ): Promise<Transaction> {
+  ): Promise<BtcTransaction> {
     throw new Error('Method not implemented.');
   }
 
