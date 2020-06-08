@@ -52,6 +52,9 @@ export interface BtcCreateRawTransaction {
   outputs: BtcRawTransactionOutput[];
 }
 
+// deposit address 생성, 조회
+// 이벤트 조회 이더랑 똑같이
+
 export interface BtcMasterWalletData extends WalletData {
   orgId: string;
   accountKey: Key;
