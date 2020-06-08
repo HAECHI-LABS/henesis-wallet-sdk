@@ -38,33 +38,11 @@ export interface EventPaginationOptions extends PaginationOptions {
   blockchain?: BlockchainType;
 }
 
-export class EthEvents {
+export class BtcEvents {
   private readonly client: Client;
 
   constructor(client: Client) {
     this.client = client;
-  }
-
-  public async getCallEvents(
-    walletId: string,
-    options?: EventPaginationOptions,
-  ): Promise<Pagination<Event>> {
-    const queryString: string = options
-      ? Object.keys(options)
-          .filter((key) => !!options[key])
-          .map((key) => `${toSnakeCase(key)}=${options[key]}`)
-          .join('&')
-      : '';
-
-    const data: Pagination<Event> = await this.client.get<Pagination<Event>>(
-        `/call-events${
-          queryString ? `?${queryString}&` : '?'
-        }wallet_id=${walletId}`,
-    );
-    return {
-      pagination: data.pagination,
-      results: data.results,
-    };
   }
 
   public async getValueTransferEvents(
