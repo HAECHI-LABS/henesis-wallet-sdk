@@ -39,19 +39,6 @@ export abstract class Wallet<T, K> {
     otpCode?: string,
   ): Promise<T>;
 
-  abstract replaceTransaction(
-    transactionId: string,
-    otpCode?: string,
-  ): Promise<T>;
-
-  abstract contractCall(
-    contractAddress: string,
-    value: BN,
-    data: string,
-    passphrase: string,
-    otpCode?: string,
-  ): Promise<T>;
-
   abstract getBalance(): Promise<Balance[]>;
 
   abstract getAddress(): string;
