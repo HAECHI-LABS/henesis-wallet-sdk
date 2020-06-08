@@ -5,7 +5,7 @@ import pbkdf2 from 'pbkdf2';
 import { BtcKeychains } from './keychains';
 import aesjs from 'aes-js';
 
-export class BTCWallets {
+export class BtcWallets {
   protected readonly client: Client;
 
   private readonly baseUrl: string;
