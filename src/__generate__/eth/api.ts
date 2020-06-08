@@ -18,7 +18,7 @@ import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
 
 const BASE_PATH = "https://dev.wallet.henesis.io".replace(/\/+$/, "");
-
+type Response = any;
 /**
  *
  * @export
