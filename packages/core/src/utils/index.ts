@@ -1,4 +1,28 @@
 import BN from 'bn.js';
+import { toChecksum } from "../eth/keychains";
+import { keccak256s } from "../eth/eth-core-lib/hash";
+
+export const verifyCommonAddress = (address: string) => {
+  if (!/^(0x|0X)?[0-9a-fA-F]{40}$/i.test(address)) {
+    return false;
+  }
+
+  const lowerCaseAddress = address.toLowerCase();
+  const checksumAddress = toChecksum(lowerCaseAddress);
+  const addressHash = keccak256s(lowerCaseAddress.slice(2));
+  for (let i = 0; i < 40; i++) {
+    if (
+      (parseInt(addressHash[i + 2], 16) > 7 &&
+        lowerCaseAddress[i + 2].toUpperCase() !== checksumAddress[i + 2]) ||
+      (parseInt(addressHash[i + 2], 16) <= 7 &&
+        lowerCaseAddress[i + 2].toLowerCase() !== checksumAddress[i + 2])
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
 
 export const toSnakeCase = (s) =>
   s.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toLowerCase();

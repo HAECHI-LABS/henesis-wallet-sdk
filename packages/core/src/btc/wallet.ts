@@ -8,8 +8,9 @@ import {
   script,
   networks,
 } from 'bitcoinjs-lib';
-import { BNConverter } from '../utils';
-import { WalletData } from '../wallet';
+import { BNConverter, verifyCommonAddress } from '../utils';
+import { WalletData, Wallet } from '../wallet';
+import { BlockchainType } from "../blockchain";
 
 export interface Transaction {
   id: string;
@@ -17,10 +18,6 @@ export interface Transaction {
   inputs: TransactionOutput[];
   output: TransactionOutput[];
   createdAt: number;
-}
-
-export interface BtcBalance {
-  balance: string;
 }
 
 export interface RawTransaction {
@@ -64,31 +61,25 @@ export interface Transaction {
   outputs: TransactionOutput[];
 }
 
-export class BtcMasterWallet {
-  protected readonly client: Client;
-
-  private readonly keychains: BtcKeychains;
-
+export class BtcMasterWallet extends Wallet<Transaction, BtcKeychains> {
   private readonly data: BtcMasterWalletData;
-
-  private readonly baseUrl: string;
 
   public constructor(
     data: BtcMasterWalletData,
     client: Client,
     keychains: BtcKeychains,
   ) {
+    super(client, keychains);
     this.data = data;
-    this.client = client;
-    this.keychains = keychains;
-    this.baseUrl = '/wallets';
   }
 
-  public getData(): BtcMasterWalletData {
-    return this.data;
-  }
-
-  public async transfer(to: string, amount: BN, passphrase: string) {
+  public async transfer(
+    ticker: string,
+    to: string,
+    amount: BN,
+    passphrase: string,
+    otpCode?: string,
+  ) {
     const rawTransaction: RawTransaction = await this.createRawTransaction(
       to,
       amount,
@@ -167,9 +158,68 @@ export class BtcMasterWallet {
     );
   }
 
-  public async getBalance(): Promise<BtcBalance> {
-    return await this.client.get<BtcBalance>(
+  verifyAddress(address: string): boolean {
+    return verifyCommonAddress(address);
+  }
+
+  getChain(): BlockchainType {
+    return this.data.blockchain;
+  }
+
+  replaceTransaction(
+    transactionId: string,
+    otpCode?: string,
+  ): Promise<Transaction> {
+    const walletId = this.getId();
+    const blockchain = this.getChain();
+    return this.client.post<Transaction>(`${this.baseUrl}/transactions`, {
+      walletId,
+      transactionId,
+      blockchain,
+      otpCode,
+    });
+  }
+
+  contractCall(
+    contractAddress: string,
+    value: BN,
+    data: string,
+    passphrase: string,
+    otpCode?: string,
+  ): Promise<Transaction> {
+    throw new Error('Method not implemented.');
+  }
+
+  async getBalance(): Promise<Balance[]> {
+    const balances = await this.client.get(
       `${this.baseUrl}/${this.data.id}/balance`,
     );
+    return balances.map((balance) => ({
+      symbol: balance.symbol,
+      amount: BNConverter.hexStringToBN(balance.amount),
+      coinType: balance.coinType,
+      name: balance.name,
+    }));
+  }
+
+  getAddress(): string {
+    return this.data.address;
+  }
+
+  getData(): BtcMasterWalletData {
+    return this.data;
+  }
+
+  getId(): string {
+    return this.data.id;
+  }
+
+  async changeName(name: string) {
+    const btcWalletData: BtcMasterWalletData = await this.client.patch<
+      BtcMasterWalletData
+    >(`${this.baseUrl}/${this.data.id}/name`, {
+      name,
+    });
+    this.data.name = btcWalletData.name;
   }
 }
