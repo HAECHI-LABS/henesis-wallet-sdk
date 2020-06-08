@@ -8,11 +8,6 @@
     "allowJs": true,
     "resolveJsonModule": true
   },
-  "include": [
-    "./src"
-  ],
-  "exclude": [
-    "./example",
-    "./__tests__"
-  ]
+  "include": ["./src"],
+  "exclude": ["./example", "./__tests__"]
 }
