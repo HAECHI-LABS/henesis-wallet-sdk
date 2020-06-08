@@ -1,42 +1,8 @@
 import * as BN from 'bn.js';
-import { Pagination, PaginationOptions } from '../types';
-import { BlockchainType } from '../blockchain';
+import { Pagination } from '../types';
 import { Client } from '../httpClient';
 import { BNConverter, toSnakeCase } from '../utils';
-
-export interface Event {
-  createdAt: string;
-  status: EventStatusType;
-  toAddress: string;
-  transactionHash: string;
-  walletId: string;
-}
-
-export enum EventStatusType {
-  PENDING = 'PENDING',
-  FAILED = 'FAILED',
-  MINED = 'MINED',
-  CONFIRMED = 'CONFIRMED',
-}
-
-export enum TransferType {
-  WITHDRAWAL = 'WITHDRAWAL',
-  DEPOSIT = 'DEPOSIT',
-}
-
-export interface ValueTransferEvent extends Event {
-  amount: BN;
-  coinSymbol: string;
-  from: string;
-  to: string;
-  transferType: TransferType;
-}
-
-export interface EventPaginationOptions extends PaginationOptions {
-  transactionHash?: string;
-  status?: EventStatusType;
-  blockchain?: BlockchainType;
-}
+import { EventPaginationOptions, ValueTransferEvent } from "../events";
 
 export class BtcEvents {
   private readonly client: Client;
