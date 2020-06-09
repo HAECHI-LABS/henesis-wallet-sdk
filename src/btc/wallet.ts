@@ -8,7 +8,7 @@ import {
   script,
   networks,
 } from 'bitcoinjs-lib';
-import { BNConverter } from '../utils';
+import { BNConverter } from '../utils/common';
 import { WalletData, Wallet } from '../wallet';
 import { BlockchainType } from '../blockchain';
 import {

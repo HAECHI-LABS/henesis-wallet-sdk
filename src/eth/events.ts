@@ -1,7 +1,7 @@
 import * as BN from 'bn.js';
 import { Pagination } from '../types';
 import { Client } from '../httpClient';
-import { BNConverter, toSnakeCase } from '../utils';
+import { BNConverter, toSnakeCase } from '../utils/common';
 import {
   EthEvent,
   EthEventPaginationOptions,
