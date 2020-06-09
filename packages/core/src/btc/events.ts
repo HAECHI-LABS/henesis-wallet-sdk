@@ -33,7 +33,7 @@ export class BtcEvents {
       results: data.results.map((e) => {
         return {
           createdAt: e.createdAt,
-          status: e.status,
+          status: null,
           transactionHash: e.transactionHash,
           walletId: e.id,
           amount: BNConverter.hexStringToBN(String(e.amount)),
