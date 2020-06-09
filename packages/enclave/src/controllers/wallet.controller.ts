@@ -135,7 +135,7 @@ export default class WalletController extends AbstractController
     req: express.Request,
   ): Promise<EthMasterWalletData[]> {
     const wallets = await req.sdk.eth.wallets.getMasterWallets();
-    return wallets.map(x => x.getData());
+    return wallets.map((x) => x.getData());
   }
 
   private async createMasterWallet(
@@ -200,7 +200,7 @@ export default class WalletController extends AbstractController
     );
 
     const balances = await masterWallet.getBalance();
-    return balances.map(x => ({
+    return balances.map((x) => ({
       coinType: x.coinType,
       amount: BNConverter.bnToHexString(x.amount),
       name: x.name,
@@ -217,7 +217,7 @@ export default class WalletController extends AbstractController
       req.params.userWalletId,
     );
     const balances = await userWallet.getBalance();
-    return balances.map(x => ({
+    return balances.map((x) => ({
       coinType: x.coinType,
       amount: BNConverter.bnToHexString(x.amount),
       name: x.name,
@@ -397,7 +397,7 @@ export default class WalletController extends AbstractController
         address: req.query.address as string,
       })
     ).results;
-    return wallets.map(x => x.getData());
+    return wallets.map((x) => x.getData());
   }
 
   private async sendMasterWalletBatchTransactions(

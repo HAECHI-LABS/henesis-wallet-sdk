@@ -9,19 +9,19 @@ export default abstract class AbstractController {
   protected promiseWrapper(promiseRequestHandler: Function): MiddleWare {
     const self = this;
 
-    return function(
+    return function (
       req: express.Request,
       res: express.Response,
       next: express.NextFunction,
     ) {
       Promise.resolve(promiseRequestHandler.bind(self, req, res, next)())
-        .then(result => {
+        .then((result) => {
           if (result) {
             return res.status(200).send(result);
           }
           return res.sendStatus(200);
         })
-        .catch(error => {
+        .catch((error) => {
           try {
             const err = self.parseError(error.response.data);
             const result = self.parseErrorMessage(err.message);
