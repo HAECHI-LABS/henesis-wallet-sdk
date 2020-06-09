@@ -1,7 +1,7 @@
 import BN from 'bn.js';
 import { BlockchainType } from '../blockchain';
 import { Client } from '../httpClient';
-import { BNConverter } from '../utils';
+import { BNConverter } from '../utils/common';
 
 export enum MethodName {
   TRANSFER = 'transfer',

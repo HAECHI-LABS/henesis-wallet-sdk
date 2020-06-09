@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
 
-import { ObjectConverter } from './utils';
+import { ObjectConverter } from './utils/common';
 import { BlockchainType } from './blockchain';
 import { makePrefixPathByBlockchainType } from './url';
 

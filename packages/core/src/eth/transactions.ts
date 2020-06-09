@@ -2,7 +2,7 @@ import * as BN from 'bn.js';
 import { BlockchainType } from '../blockchain';
 import { Pagination, PaginationOptions } from '../types';
 import { Client } from '../httpClient';
-import { toSnakeCase } from '../utils';
+import { toSnakeCase } from '../utils/common';
 
 export interface Transaction {
   id: string;

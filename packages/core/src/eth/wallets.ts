@@ -6,7 +6,7 @@ import pbkdf2 from 'pbkdf2';
 import { Env } from '../sdk';
 import { Client } from '../httpClient';
 import { Key, Keychains, KeyWithPriv } from '../types';
-import { BNConverter, toSnakeCase } from '../utils';
+import { BNConverter, toSnakeCase } from '../utils/common';
 import { BlockchainType } from '../blockchain';
 import { RecoveryKit } from '../recoverykit';
 import { EthMasterWallet, EthMasterWalletData } from './wallet';
