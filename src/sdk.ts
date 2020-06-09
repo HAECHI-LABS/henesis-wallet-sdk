@@ -2,7 +2,7 @@ import { Accounts } from './accounts';
 import { Organizations } from './organizations';
 import { HttpClient, Client, enhancedBlockchainClient } from './httpClient';
 import { EthModule, KlayModule } from './eth';
-import { baseUrls } from './url';
+import { baseUrls } from './utils/url';
 import { BtcModule } from './btc';
 import { BlockchainType } from './blockchain';
 
