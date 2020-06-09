@@ -1,30 +1,48 @@
 import * as BN from 'bn.js';
 import { PaginationOptions } from './types';
 import { BlockchainType } from './blockchain';
-import { ValueTransferEventDTO as BtcValueTransferEventDTO } from "./__generate__/btc";
-import { ValueTransferEventDTO as EthValueTransferEventDTO } from "./__generate__/eth";
+import { ValueTransferEventDTO as BtcValueTransferEventDTO } from './__generate__/btc';
+import { ValueTransferEventDTO as EthValueTransferEventDTO } from './__generate__/eth';
 
-export type EventStatusType = BtcValueTransferEventDTO.StatusEnum | EthValueTransferEventDTO.StatusEnum;
-
-export type TransferType = BtcValueTransferEventDTO.TransferTypeEnum | EthValueTransferEventDTO.TransferTypeEnum;
-
-export interface Event {
+export interface Event<S> {
   createdAt: string;
-  status: EventStatusType;
+  status: S;
   transactionHash: string;
   walletId: string;
 }
 
-export interface ValueTransferEvent extends Event {
+export type BtcEvent = Event<BtcValueTransferEventDTO.StatusEnum>;
+
+export type EthEvent = Event<EthValueTransferEventDTO.StatusEnum>;
+
+export interface ValueTransferEvent<S, T> extends Event<S> {
   amount: BN;
   coinSymbol: string;
   from: string;
   to: string;
-  transferType: TransferType;
+  transferType: T;
 }
 
-export interface EventPaginationOptions extends PaginationOptions {
+export type BtcValueTransferEvent = ValueTransferEvent<
+  BtcValueTransferEventDTO.StatusEnum,
+  BtcValueTransferEventDTO.TransferTypeEnum
+>;
+
+export type EthValueTransferEvent = ValueTransferEvent<
+  EthValueTransferEventDTO.StatusEnum,
+  EthValueTransferEventDTO.TransferTypeEnum
+>;
+
+export interface EventPaginationOptions<S> extends PaginationOptions {
   transactionHash?: string;
-  status?: EventStatusType;
+  status?: S;
   blockchain?: BlockchainType;
 }
+
+export type BtcEventPaginationOptions = EventPaginationOptions<
+  BtcValueTransferEventDTO.StatusEnum
+>;
+
+export type EthEventPaginationOptions = EventPaginationOptions<
+  EthValueTransferEventDTO.StatusEnum
+>;

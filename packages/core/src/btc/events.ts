@@ -2,7 +2,7 @@ import * as BN from 'bn.js';
 import { Pagination } from '../types';
 import { Client } from '../httpClient';
 import { BNConverter, toSnakeCase } from '../utils';
-import { EventPaginationOptions, ValueTransferEvent } from '../events';
+import { BtcEventPaginationOptions, BtcValueTransferEvent } from '../events';
 import { PaginationValueTransferEventDTO } from '../__generate__/btc';
 
 export class BtcEvents {
@@ -14,8 +14,8 @@ export class BtcEvents {
 
   public async getValueTransferEvents(
     walletId: string,
-    options?: EventPaginationOptions,
-  ): Promise<Pagination<ValueTransferEvent>> {
+    options?: BtcEventPaginationOptions,
+  ): Promise<Pagination<BtcValueTransferEvent>> {
     const queryString: string = options
       ? Object.keys(options)
           .filter((key) => !!options[key])
