@@ -2,7 +2,8 @@ import * as BN from 'bn.js';
 import { Pagination } from '../types';
 import { Client } from '../httpClient';
 import { BNConverter, toSnakeCase } from '../utils';
-import { EventPaginationOptions, Event, ValueTransferEvent } from "../events";
+import { EventPaginationOptions, Event, ValueTransferEvent } from '../events';
+import { PaginationValueTransferEventDTO } from '../__generate__/eth';
 
 export class EthEvents {
   private readonly client: Client;
@@ -23,9 +24,9 @@ export class EthEvents {
       : '';
 
     const data: Pagination<Event> = await this.client.get<Pagination<Event>>(
-        `/call-events${
-          queryString ? `?${queryString}&` : '?'
-        }wallet_id=${walletId}`,
+      `/call-events${
+        queryString ? `?${queryString}&` : '?'
+      }wallet_id=${walletId}`,
     );
     return {
       pagination: data.pagination,
@@ -43,17 +44,19 @@ export class EthEvents {
           .map((key) => `${toSnakeCase(key)}=${options[key]}`)
           .join('&')
       : '';
-    const data = await this.client.get(
-        `/value-transfer-events${
-          queryString ? `?${queryString}&` : '?'
-        }wallet_id=${walletId}`,
+    const data: NoUndefinedField<PaginationValueTransferEventDTO> = await this.client.get(
+      `/value-transfer-events${
+        queryString ? `?${queryString}&` : '?'
+      }wallet_id=${walletId}`,
     );
 
     return {
       pagination: data.pagination,
       results: data.results.map((e) => {
-        e.amount = BNConverter.hexStringToBN(e.amount);
-        return e;
+        return {
+          ...e,
+          amount: BNConverter.hexStringToBN(String(e.amount)),
+        };
       }),
     };
   }
