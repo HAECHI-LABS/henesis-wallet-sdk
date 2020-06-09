@@ -2,9 +2,9 @@ import { BtcWallets } from '../../src/btc/wallets';
 import { HttpClient } from '../../src/httpClient';
 import { DefaultBtcKeyChains } from '../../src/btc/keychains';
 
-describe('BtcWallets', () => {
+describe.skip('BtcWallets', () => {
   describe('#createMasterWallet()', () => {
-    it.skip('should create master wallet', async () => {
+    it('should create master wallet', async () => {
       const wallets = new BtcWallets(
         new HttpClient({
           accessToken: 'accessToken',
