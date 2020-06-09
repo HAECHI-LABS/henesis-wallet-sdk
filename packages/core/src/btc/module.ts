@@ -5,11 +5,11 @@ import { BtcKeychains, DefaultBtcKeyChains } from "./keychains";
 import { BtcEvents } from "./events";
 
 export class BtcModule {
-  private readonly wallets: BtcWallets;
+  public readonly wallets: BtcWallets;
+
+  public readonly keychains: BtcKeychains;
 
   public readonly events: BtcEvents;
-  
-  private readonly keychains: BtcKeychains;
   
   private readonly client: Client;
 
