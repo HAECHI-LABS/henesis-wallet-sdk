@@ -1,25 +1,18 @@
 import * as BN from 'bn.js';
 import { PaginationOptions } from './types';
 import { BlockchainType } from './blockchain';
+import { ValueTransferEventDTO as BtcValueTransferEventDTO } from "./__generate__/btc";
+import { ValueTransferEventDTO as EthValueTransferEventDTO } from "./__generate__/eth";
+
+export type EventStatusType = BtcValueTransferEventDTO.StatusEnum | EthValueTransferEventDTO.StatusEnum;
+
+export type TransferType = BtcValueTransferEventDTO.TransferTypeEnum | EthValueTransferEventDTO.TransferTypeEnum;
 
 export interface Event {
   createdAt: string;
   status: EventStatusType;
-  toAddress: string;
   transactionHash: string;
   walletId: string;
-}
-
-export enum EventStatusType {
-  PENDING = 'PENDING',
-  FAILED = 'FAILED',
-  MINED = 'MINED',
-  CONFIRMED = 'CONFIRMED',
-}
-
-export enum TransferType {
-  WITHDRAWAL = 'WITHDRAWAL',
-  DEPOSIT = 'DEPOSIT',
 }
 
 export interface ValueTransferEvent extends Event {
