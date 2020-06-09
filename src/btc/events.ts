@@ -24,7 +24,7 @@ export class BtcEvents {
       : '';
     const data: PaginationValueTransferEventDTO = await this.client.get(
       `/${walletId}/value-transfer-events${
-        queryString ? `?${queryString}&` : '?'
+        queryString ? `?${queryString}` : ''
       }`,
     );
 
