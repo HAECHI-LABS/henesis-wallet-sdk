@@ -1,4 +1,4 @@
-declare module 'moment/min/moment-with-locales';
+declare type Response = any;
 
 type Subtract<T, V> = Pick<T, Exclude<keyof T, keyof V>>;
 type RetrieveAsyncFunc<T extends (...args: any[]) => any> = ReturnType<
