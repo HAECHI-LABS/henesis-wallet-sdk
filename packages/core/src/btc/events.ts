@@ -22,7 +22,7 @@ export class BtcEvents {
           .map((key) => `${toSnakeCase(key)}=${options[key]}`)
           .join('&')
       : '';
-    const data: NoUndefinedField<PaginationValueTransferEventDTO> = await this.client.get(
+    const data: PaginationValueTransferEventDTO = await this.client.get(
       `/${walletId}/value-transfer-events${
         queryString ? `?${queryString}&` : '?'
       }`,
