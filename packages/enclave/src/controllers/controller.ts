@@ -38,7 +38,6 @@ ${err.message}`);
             res.status(500).json(self.parseErrorMessage(error.toString()));
           }
         });
-
     };
   }
 
