@@ -6,7 +6,10 @@ export default abstract class AbstractController {
 
   protected abstract initRoutes();
 
-  protected promiseWrapper(promiseRequestHandler: Function): MiddleWare {
+  protected promiseWrapper(
+    promiseRequestHandler: Function,
+    successStatusCode?: number,
+  ): MiddleWare {
     const self = this;
 
     return function (
