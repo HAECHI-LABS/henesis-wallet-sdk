@@ -23,9 +23,9 @@ export class BtcEvents {
           .join('&')
       : '';
     const data: NoUndefinedField<PaginationValueTransferEventDTO> = await this.client.get(
-      `/value-transfer-events${
+      `/${walletId}/value-transfer-events${
         queryString ? `?${queryString}&` : '?'
-      }wallet_id=${walletId}`,
+      }`,
     );
 
     return {

@@ -1,12 +1,12 @@
-import { Client } from "../src/sdk";
-import { Balance, Keychains } from "../src/types";
-import { EthLikeWallet, MasterWalletData } from "../src/eth/wallet";
+import { Client } from '../src/httpClient';
+import { Balance, Keychains } from '../src/types';
+import { EthLikeWallet, EthMasterWalletData } from '../src/eth/wallet';
 
 export class MockEthLikeWallet extends EthLikeWallet {
   public constructor(
     client: Client,
-    walletData: MasterWalletData,
-    keychains: Keychains
+    walletData: EthMasterWalletData,
+    keychains: Keychains,
   ) {
     super(client, walletData, keychains);
   }
@@ -16,13 +16,12 @@ export class MockEthLikeWallet extends EthLikeWallet {
   }
 
   getAddress(): string {
-    return "";
+    return '';
   }
 
   getId(): string {
-    return "id";
+    return 'id';
   }
 
-  changeName(name: string) {
-  }
+  changeName(name: string) {}
 }
