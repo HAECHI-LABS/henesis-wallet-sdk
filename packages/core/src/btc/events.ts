@@ -1,9 +1,10 @@
 import * as BN from 'bn.js';
 import { Pagination } from '../types';
 import { Client } from '../httpClient';
-import { BNConverter, toSnakeCase } from '../utils/common';
+import { BNConverter } from '../utils/common';
 import { BtcEventPaginationOptions, BtcValueTransferEvent } from '../events';
 import { PaginationValueTransferEventDTO } from '../__generate__/btc';
+import { makeQueryString } from "../utils/url";
 
 export class BtcEvents {
   private readonly client: Client;
@@ -16,12 +17,7 @@ export class BtcEvents {
     walletId: string,
     options?: BtcEventPaginationOptions,
   ): Promise<Pagination<BtcValueTransferEvent>> {
-    const queryString: string = options
-      ? Object.keys(options)
-          .filter((key) => !!options[key])
-          .map((key) => `${toSnakeCase(key)}=${options[key]}`)
-          .join('&')
-      : '';
+    const queryString: string = makeQueryString(options);
     const data: PaginationValueTransferEventDTO = await this.client.get(
       `/${walletId}/value-transfer-events${
         queryString ? `?${queryString}` : ''

@@ -23,6 +23,7 @@ import Bytes from './eth-core-lib/bytes';
 import { keccak256s } from './eth-core-lib/hash';
 import { BNConverter, ObjectConverter } from '../utils/common';
 import { WalletData, Wallet } from '../wallet';
+import { makeQueryString } from "../utils/url";
 
 export interface EthTransaction {
   id: string;
@@ -484,12 +485,7 @@ export class EthMasterWallet extends EthLikeWallet {
   async getUserWallets(
     options?: UserWalletPaginationOptions,
   ): Promise<Pagination<EthUserWallet>> {
-    const queryString: string = options
-      ? Object.keys(ObjectConverter.toSnakeCase(options))
-          .filter((key) => !!options[key])
-          .map((key) => `${key}=${ObjectConverter.toSnakeCase(options)[key]}`)
-          .join('&')
-      : '';
+    const queryString: string = makeQueryString(options);
 
     const data: Pagination<EthUserWalletData> = await this.client.get<
       Pagination<EthUserWalletData>

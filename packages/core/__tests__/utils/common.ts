@@ -1,5 +1,5 @@
 import BN from 'bn.js';
-import { BNConverter } from '../../src/utils';
+import { BNConverter } from '../../src/utils/common';
 
 describe('BNConverter', () => {
   describe('#add0x()', () => {
