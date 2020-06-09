@@ -4,7 +4,7 @@ import BN from 'bn.js';
 import { BtcTransaction } from '../../src/btc/wallet';
 import { DefaultBtcKeyChains } from '../../src/btc/keychains';
 
-describe('BtcMasterWallet', () => {
+describe.skip('BtcMasterWallet', () => {
   jest.setTimeout(50000);
   describe('#transfer()', () => {
     it('should transfer btc', async () => {
@@ -31,7 +31,7 @@ describe('BtcMasterWallet', () => {
   });
 
   describe('#depositAddress()', () => {
-    it.skip('should create depositAddress', async () => {
+    it('should create depositAddress', async () => {
       const wallets = new BtcWallets(
         new HttpClient({
           accessToken: 'accessToken',
@@ -47,7 +47,7 @@ describe('BtcMasterWallet', () => {
       console.log(createDeposit);
     });
 
-    it.skip('should get depositAddress', async () => {
+    it('should get depositAddress', async () => {
       const wallets = new BtcWallets(
         new HttpClient({
           accessToken: 'accessToken',
