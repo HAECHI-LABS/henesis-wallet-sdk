@@ -20,7 +20,7 @@ describe('BtcMasterWallet', () => {
         'a3c2f4128427658ec4dcb668ec799c65',
       );
       const tx: BtcTransaction = await wallet.transfer(
-        "BTC",
+        'BTC',
         'n4QVq9cL2FjAJzJ9ZTUJ6W5toF37ux2aN2',
         new BN(100, 'hex'),
         'passphrase',
@@ -29,6 +29,41 @@ describe('BtcMasterWallet', () => {
       console.log(tx);
     });
   });
+
+  describe('#depositAddress()', () => {
+    it.skip('should create depositAddress', async () => {
+      const wallets = new BtcWallets(
+        new HttpClient({
+          accessToken: 'accessToken',
+          secret: 'secret',
+          url: 'http://localhost:8080/api/v2/btc',
+        }) as any,
+        new DefaultBtcKeyChains(),
+      );
+      const wallet = await wallets.getWallet(
+        'a3c2f4128427658ec4dcb668ec799c65',
+      );
+      const createDeposit = await wallet.createDepositAddress('abcd');
+      console.log(createDeposit);
+    });
+
+    it.skip('should get depositAddress', async () => {
+      const wallets = new BtcWallets(
+        new HttpClient({
+          accessToken: 'accessToken',
+          secret: 'secret',
+          url: 'http://localhost:8080/api/v2/btc',
+        }) as any,
+        new DefaultBtcKeyChains(),
+      );
+      const wallet = await wallets.getWallet(
+        'a3c2f4128427658ec4dcb668ec799c65',
+      );
+      const depositAddress = await wallet.getDepositAddress('abcd');
+      console.log(depositAddress);
+    });
+  });
+
   describe('#getBalance()', () => {
     it('should get balance of wallet', async () => {
       const wallets = new BtcWallets(
