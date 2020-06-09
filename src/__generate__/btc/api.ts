@@ -18,6 +18,7 @@ import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
 
 const BASE_PATH = "https://localhost:8080".replace(/\/+$/, "");
+
 /**
  *
  * @export
@@ -88,7 +89,7 @@ export interface BalanceDTO {
      * @type {number}
      * @memberof BalanceDTO
      */
-    balance?: number;
+    balance: number;
 }
 
 /**
@@ -102,7 +103,7 @@ export interface CreateDepositAddressDTO {
      * @type {string}
      * @memberof CreateDepositAddressDTO
      */
-    name?: string;
+    name: string;
 }
 
 /**
@@ -116,25 +117,25 @@ export interface CreateMasterWalletDTO {
      * @type {KeyDTO}
      * @memberof CreateMasterWalletDTO
      */
-    accountKey?: KeyDTO;
+    accountKey: KeyDTO;
     /**
      * 
      * @type {KeyDTO}
      * @memberof CreateMasterWalletDTO
      */
-    backupKey?: KeyDTO;
+    backupKey: KeyDTO;
     /**
      * 
      * @type {string}
      * @memberof CreateMasterWalletDTO
      */
-    encryptionKey?: string;
+    encryptionKey: string;
     /**
      * 
      * @type {string}
      * @memberof CreateMasterWalletDTO
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
@@ -154,13 +155,13 @@ export interface CreateRawTransactionDTO {
      * @type {number}
      * @memberof CreateRawTransactionDTO
      */
-    amount?: number;
+    amount: number;
     /**
      * 
      * @type {string}
      * @memberof CreateRawTransactionDTO
      */
-    to?: string;
+    to: string;
 }
 
 /**
@@ -174,13 +175,13 @@ export interface CreateTransactionDTO {
      * @type {Array<CreateTransactionInputDTO>}
      * @memberof CreateTransactionDTO
      */
-    inputs?: Array<CreateTransactionInputDTO>;
+    inputs: Array<CreateTransactionInputDTO>;
     /**
      * 
      * @type {Array<CreateTransactionOutputDTO>}
      * @memberof CreateTransactionDTO
      */
-    outputs?: Array<CreateTransactionOutputDTO>;
+    outputs: Array<CreateTransactionOutputDTO>;
 }
 
 /**
@@ -194,13 +195,13 @@ export interface CreateTransactionInputDTO {
      * @type {string}
      * @memberof CreateTransactionInputDTO
      */
-    accountSignature?: string;
+    accountSignature: string;
     /**
      * 
      * @type {TransactionOutputDTO}
      * @memberof CreateTransactionInputDTO
      */
-    transactionOutput?: TransactionOutputDTO;
+    transactionOutput: TransactionOutputDTO;
 }
 
 /**
@@ -214,19 +215,19 @@ export interface CreateTransactionOutputDTO {
      * @type {number}
      * @memberof CreateTransactionOutputDTO
      */
-    amount?: number;
+    amount: number;
     /**
      * 
      * @type {boolean}
      * @memberof CreateTransactionOutputDTO
      */
-    isChange?: boolean;
+    isChange: boolean;
     /**
      * 
      * @type {string}
      * @memberof CreateTransactionOutputDTO
      */
-    to?: string;
+    to: string;
 }
 
 /**
@@ -240,31 +241,31 @@ export interface DepositAddressDTO {
      * @type {string}
      * @memberof DepositAddressDTO
      */
-    address?: string;
+    address: string;
     /**
      * 
      * @type {string}
      * @memberof DepositAddressDTO
      */
-    createdAt?: string;
+    createdAt: string;
     /**
      * 
      * @type {string}
      * @memberof DepositAddressDTO
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof DepositAddressDTO
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof DepositAddressDTO
      */
-    pub?: string;
+    pub: string;
 }
 
 /**
@@ -278,13 +279,13 @@ export interface KeyDTO {
      * @type {string}
      * @memberof KeyDTO
      */
-    keyFile?: string;
+    keyFile: string;
     /**
      * 
      * @type {string}
      * @memberof KeyDTO
      */
-    pub?: string;
+    pub: string;
 }
 
 /**
@@ -328,43 +329,43 @@ export interface MasterWalletDTO {
      * @type {KeyDTO}
      * @memberof MasterWalletDTO
      */
-    accountKey?: KeyDTO;
+    accountKey: KeyDTO;
     /**
      * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    address?: string;
+    address: string;
     /**
      * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    createdAt?: string;
+    createdAt: string;
     /**
      * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    orgId?: string;
+    orgId: string;
     /**
      * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    redeemScript?: string;
+    redeemScript: string;
 }
 
 /**
@@ -574,13 +575,13 @@ export interface RawTransactionDTO {
      * @type {Array<TransactionOutputDTO>}
      * @memberof RawTransactionDTO
      */
-    inputs?: Array<TransactionOutputDTO>;
+    inputs: Array<TransactionOutputDTO>;
     /**
      * 
      * @type {Array<RawTransactionOutputDTO>}
      * @memberof RawTransactionDTO
      */
-    outputs?: Array<RawTransactionOutputDTO>;
+    outputs: Array<RawTransactionOutputDTO>;
 }
 
 /**
@@ -594,19 +595,19 @@ export interface RawTransactionOutputDTO {
      * @type {number}
      * @memberof RawTransactionOutputDTO
      */
-    amount?: number;
+    amount: number;
     /**
      * 
      * @type {boolean}
      * @memberof RawTransactionOutputDTO
      */
-    isChange?: boolean;
+    isChange: boolean;
     /**
      * 
      * @type {string}
      * @memberof RawTransactionOutputDTO
      */
-    to?: string;
+    to: string;
 }
 
 /**
@@ -620,56 +621,31 @@ export interface TransactionDTO {
      * @type {string}
      * @memberof TransactionDTO
      */
-    createdAt?: string;
+    createdAt: string;
     /**
      * 
      * @type {string}
      * @memberof TransactionDTO
      */
-    hex?: string;
+    hex: string;
     /**
      * 
      * @type {string}
      * @memberof TransactionDTO
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {Array<TransactionOutputDTO>}
      * @memberof TransactionDTO
      */
-    outputs?: Array<TransactionOutputDTO>;
+    outputs: Array<TransactionOutputDTO>;
     /**
      * 
      * @type {string}
      * @memberof TransactionDTO
      */
-    status?: TransactionDTO.StatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof TransactionDTO
-     */
-    updatedAt?: string;
-}
-
-/**
- * @export
- * @namespace TransactionDTO
- */
-export namespace TransactionDTO {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum StatusEnum {
-        REQUESTED = <any> 'REQUESTED',
-        PENDING = <any> 'PENDING',
-        FAILED = <any> 'FAILED',
-        MINED = <any> 'MINED',
-        CONFIRMED = <any> 'CONFIRMED',
-        REPLACED = <any> 'REPLACED'
-    }
+    updatedAt: string;
 }
 
 /**
@@ -683,37 +659,37 @@ export interface TransactionOutputDTO {
      * @type {string}
      * @memberof TransactionOutputDTO
      */
-    address?: string;
+    address: string;
     /**
      * 
      * @type {number}
      * @memberof TransactionOutputDTO
      */
-    amount?: number;
+    amount: number;
     /**
      * 
      * @type {boolean}
      * @memberof TransactionOutputDTO
      */
-    isChange?: boolean;
+    isChange: boolean;
     /**
      * 
      * @type {number}
      * @memberof TransactionOutputDTO
      */
-    outputIndex?: number;
+    outputIndex: number;
     /**
      * 
      * @type {string}
      * @memberof TransactionOutputDTO
      */
-    scriptPubKey?: string;
+    scriptPubKey: string;
     /**
      * 
      * @type {string}
      * @memberof TransactionOutputDTO
      */
-    transactionId?: string;
+    transactionId: string;
 }
 
 /**
@@ -727,43 +703,37 @@ export interface ValueTransferEventDTO {
      * @type {number}
      * @memberof ValueTransferEventDTO
      */
-    amount?: number;
+    amount: number;
     /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    createdAt?: string;
+    createdAt: string;
     /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    status?: ValueTransferEventDTO.StatusEnum;
+    to: string;
     /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    to?: string;
+    transactionHash: string;
     /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    transactionHash?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ValueTransferEventDTO
-     */
-    transferType?: ValueTransferEventDTO.TransferTypeEnum;
+    transferType: ValueTransferEventDTO.TransferTypeEnum;
 }
 
 /**
@@ -771,18 +741,6 @@ export interface ValueTransferEventDTO {
  * @namespace ValueTransferEventDTO
  */
 export namespace ValueTransferEventDTO {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum StatusEnum {
-        REQUESTED = <any> 'REQUESTED',
-        PENDING = <any> 'PENDING',
-        FAILED = <any> 'FAILED',
-        MINED = <any> 'MINED',
-        CONFIRMED = <any> 'CONFIRMED',
-        REPLACED = <any> 'REPLACED'
-    }
     /**
      * @export
      * @enum {string}
@@ -816,11 +774,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
     return {
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingDELETE(options: any = {}): FetchArgs {
+        errorUsingDELETE(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
@@ -839,11 +797,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingGET(options: any = {}): FetchArgs {
+        errorUsingGET(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -862,11 +820,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingHEAD(options: any = {}): FetchArgs {
+        errorUsingHEAD(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'HEAD' }, options);
@@ -885,11 +843,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingOPTIONS(options: any = {}): FetchArgs {
+        errorUsingOPTIONS(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'OPTIONS' }, options);
@@ -908,11 +866,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPATCH(options: any = {}): FetchArgs {
+        errorUsingPATCH(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
@@ -931,11 +889,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPOST(options: any = {}): FetchArgs {
+        errorUsingPOST(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -954,11 +912,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPUT(options: any = {}): FetchArgs {
+        errorUsingPUT(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
@@ -986,12 +944,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
     return {
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingDELETE(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingDELETE(options);
+        errorUsingDELETE(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingDELETE(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1004,12 +962,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingGET(options);
+        errorUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingGET(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1022,12 +980,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingHEAD(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingHEAD(options);
+        errorUsingHEAD(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingHEAD(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1040,12 +998,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingOPTIONS(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingOPTIONS(options);
+        errorUsingOPTIONS(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingOPTIONS(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1058,12 +1016,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPATCH(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPATCH(options);
+        errorUsingPATCH(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPATCH(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1076,12 +1034,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPOST(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPOST(options);
+        errorUsingPOST(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPOST(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1094,12 +1052,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPUT(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPUT(options);
+        errorUsingPUT(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPUT(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1121,66 +1079,66 @@ export const BasicErrorControllerApiFactory = function (configuration?: Configur
     return {
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingDELETE(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingDELETE(options)(fetch, basePath);
+        errorUsingDELETE(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingDELETE(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingGET(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingGET(options)(fetch, basePath);
+        errorUsingGET(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingGET(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingHEAD(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingHEAD(options)(fetch, basePath);
+        errorUsingHEAD(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingHEAD(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingOPTIONS(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingOPTIONS(options)(fetch, basePath);
+        errorUsingOPTIONS(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingOPTIONS(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPATCH(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPATCH(options)(fetch, basePath);
+        errorUsingPATCH(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingPATCH(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPOST(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPOST(options)(fetch, basePath);
+        errorUsingPOST(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingPOST(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPUT(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPUT(options)(fetch, basePath);
+        errorUsingPUT(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingPUT(options)(fetch, basePath);
         },
     };
 };
@@ -1194,79 +1152,79 @@ export const BasicErrorControllerApiFactory = function (configuration?: Configur
 export class BasicErrorControllerApi extends BaseAPI {
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingDELETE(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingDELETE(options)(this.fetch, this.basePath);
+    public errorUsingDELETE(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingDELETE(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingGET(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingGET(options)(this.fetch, this.basePath);
+    public errorUsingGET(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingGET(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingHEAD(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingHEAD(options)(this.fetch, this.basePath);
+    public errorUsingHEAD(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingHEAD(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingOPTIONS(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingOPTIONS(options)(this.fetch, this.basePath);
+    public errorUsingOPTIONS(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingOPTIONS(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingPATCH(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPATCH(options)(this.fetch, this.basePath);
+    public errorUsingPATCH(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingPATCH(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingPOST(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPOST(options)(this.fetch, this.basePath);
+    public errorUsingPOST(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingPOST(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingPUT(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPUT(options)(this.fetch, this.basePath);
+    public errorUsingPUT(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingPUT(options)(this.fetch, this.basePath);
     }
 
 }
@@ -1856,45 +1814,7 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary sendTransaction
-         * @param {CreateTransactionDTO} createTransactionDTO createTransactionDTO
-         * @param {string} walletId walletId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sendTransactionUsingPOST(createTransactionDTO: CreateTransactionDTO, walletId: string, options: any = {}): FetchArgs {
-            // verify required parameter 'createTransactionDTO' is not null or undefined
-            if (createTransactionDTO === null || createTransactionDTO === undefined) {
-                throw new RequiredError('createTransactionDTO','Required parameter createTransactionDTO was null or undefined when calling sendTransactionUsingPOST.');
-            }
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling sendTransactionUsingPOST.');
-            }
-            const localVarPath = `/api/v2/btc/wallets/{walletId}/transactions`
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreateTransactionDTO" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(createTransactionDTO || {}) : (createTransactionDTO || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary valueTransferEvents
+         * @summary getValueTransferEvents
          * @param {string} walletId walletId
          * @param {number} [offset] 
          * @param {number} [pageNumber] 
@@ -1906,10 +1826,10 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        valueTransferEventsUsingGET(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+        getValueTransferEventsUsingGET(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling valueTransferEventsUsingGET.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getValueTransferEventsUsingGET.');
             }
             const localVarPath = `/api/v2/btc/wallets/{walletId}/value-transfer-events`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1950,6 +1870,44 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary sendTransaction
+         * @param {CreateTransactionDTO} createTransactionDTO createTransactionDTO
+         * @param {string} walletId walletId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendTransactionUsingPOST(createTransactionDTO: CreateTransactionDTO, walletId: string, options: any = {}): FetchArgs {
+            // verify required parameter 'createTransactionDTO' is not null or undefined
+            if (createTransactionDTO === null || createTransactionDTO === undefined) {
+                throw new RequiredError('createTransactionDTO','Required parameter createTransactionDTO was null or undefined when calling sendTransactionUsingPOST.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling sendTransactionUsingPOST.');
+            }
+            const localVarPath = `/api/v2/btc/wallets/{walletId}/transactions`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateTransactionDTO" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(createTransactionDTO || {}) : (createTransactionDTO || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -2110,14 +2068,20 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary sendTransaction
-         * @param {CreateTransactionDTO} createTransactionDTO createTransactionDTO
+         * @summary getValueTransferEvents
          * @param {string} walletId walletId
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sendTransactionUsingPOST(createTransactionDTO: CreateTransactionDTO, walletId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).sendTransactionUsingPOST(createTransactionDTO, walletId, options);
+        getValueTransferEventsUsingGET(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationValueTransferEventDTO> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getValueTransferEventsUsingGET(walletId, offset, pageNumber, pageSize, paged, sortSorted, sortUnsorted, unpaged, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2130,20 +2094,14 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary valueTransferEvents
+         * @summary sendTransaction
+         * @param {CreateTransactionDTO} createTransactionDTO createTransactionDTO
          * @param {string} walletId walletId
-         * @param {number} [offset] 
-         * @param {number} [pageNumber] 
-         * @param {number} [pageSize] 
-         * @param {boolean} [paged] 
-         * @param {boolean} [sortSorted] 
-         * @param {boolean} [sortUnsorted] 
-         * @param {boolean} [unpaged] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        valueTransferEventsUsingGET(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationValueTransferEventDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).valueTransferEventsUsingGET(walletId, offset, pageNumber, pageSize, paged, sortSorted, sortUnsorted, unpaged, options);
+        sendTransactionUsingPOST(createTransactionDTO: CreateTransactionDTO, walletId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).sendTransactionUsingPOST(createTransactionDTO, walletId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2245,18 +2203,7 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary sendTransaction
-         * @param {CreateTransactionDTO} createTransactionDTO createTransactionDTO
-         * @param {string} walletId walletId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sendTransactionUsingPOST(createTransactionDTO: CreateTransactionDTO, walletId: string, options?: any) {
-            return WalletControllerApiFp(configuration).sendTransactionUsingPOST(createTransactionDTO, walletId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary valueTransferEvents
+         * @summary getValueTransferEvents
          * @param {string} walletId walletId
          * @param {number} [offset] 
          * @param {number} [pageNumber] 
@@ -2268,8 +2215,19 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        valueTransferEventsUsingGET(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-            return WalletControllerApiFp(configuration).valueTransferEventsUsingGET(walletId, offset, pageNumber, pageSize, paged, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        getValueTransferEventsUsingGET(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+            return WalletControllerApiFp(configuration).getValueTransferEventsUsingGET(walletId, offset, pageNumber, pageSize, paged, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary sendTransaction
+         * @param {CreateTransactionDTO} createTransactionDTO createTransactionDTO
+         * @param {string} walletId walletId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendTransactionUsingPOST(createTransactionDTO: CreateTransactionDTO, walletId: string, options?: any) {
+            return WalletControllerApiFp(configuration).sendTransactionUsingPOST(createTransactionDTO, walletId, options)(fetch, basePath);
         },
     };
 };
@@ -2377,20 +2335,7 @@ export class WalletControllerApi extends BaseAPI {
 
     /**
      * 
-     * @summary sendTransaction
-     * @param {CreateTransactionDTO} createTransactionDTO createTransactionDTO
-     * @param {string} walletId walletId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public sendTransactionUsingPOST(createTransactionDTO: CreateTransactionDTO, walletId: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).sendTransactionUsingPOST(createTransactionDTO, walletId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary valueTransferEvents
+     * @summary getValueTransferEvents
      * @param {string} walletId walletId
      * @param {number} [offset] 
      * @param {number} [pageNumber] 
@@ -2403,8 +2348,21 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public valueTransferEventsUsingGET(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-        return WalletControllerApiFp(this.configuration).valueTransferEventsUsingGET(walletId, offset, pageNumber, pageSize, paged, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    public getValueTransferEventsUsingGET(walletId: string, offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+        return WalletControllerApiFp(this.configuration).getValueTransferEventsUsingGET(walletId, offset, pageNumber, pageSize, paged, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary sendTransaction
+     * @param {CreateTransactionDTO} createTransactionDTO createTransactionDTO
+     * @param {string} walletId walletId
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WalletControllerApi
+     */
+    public sendTransactionUsingPOST(createTransactionDTO: CreateTransactionDTO, walletId: string, options?: any) {
+        return WalletControllerApiFp(this.configuration).sendTransactionUsingPOST(createTransactionDTO, walletId, options)(this.fetch, this.basePath);
     }
 
 }
