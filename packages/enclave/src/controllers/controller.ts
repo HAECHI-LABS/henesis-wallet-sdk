@@ -22,16 +22,21 @@ export default abstract class AbstractController {
           return res.sendStatus(200);
         })
         .catch(error => {
-          const err = self.parseError(error);
-          const result = self.parseErrorMessage(err.message);
-          const status = err.status || 500;
-          if (status === 500) {
-            console.log(err.stack);
-          } else if (!(status >= 200 && status < 300)) {
-            console.log('error %s: %s', status, err.message);
+          try {
+            const err = self.parseError(error.response.data);
+            const result = self.parseErrorMessage(err.message);
+            const status = error.response.status || 500;
+            if (status === 500) {
+              console.log(err.stack);
+            } else if (status <= 200 && status > 300) {
+              console.log(`Error : status ${status}
+${err.message}`);
+            }
+            res.status(status).json(result);
+          } catch (e) {
+            console.log(error);
+            res.status(500).json(self.parseErrorMessage(error.toString()));
           }
-
-          res.status(status).json(result);
         });
     };
   }
