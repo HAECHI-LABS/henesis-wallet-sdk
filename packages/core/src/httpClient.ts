@@ -4,7 +4,7 @@ import Base64 from 'crypto-js/enc-base64';
 
 import { ObjectConverter } from './utils/common';
 import { BlockchainType } from './blockchain';
-import { makePrefixPathByBlockchainType } from './url';
+import { makePrefixPathByBlockchainType } from './utils/url';
 
 export interface ClientOptions {
   accessToken: string;

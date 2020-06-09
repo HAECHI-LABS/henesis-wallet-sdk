@@ -1,5 +1,5 @@
 import express from 'express';
-import { ObjectConverter } from '@haechi-labs/henesis-wallet-core/lib/utils';
+import { ObjectConverter } from '@haechi-labs/henesis-wallet-core/lib/utils/common';
 
 export default (
   req: express.Request,

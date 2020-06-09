@@ -1,22 +1,14 @@
 import BN from 'bn.js';
 
-export const toSnakeCase = (s) =>
-  s.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toLowerCase();
+import { toSnakeCase as toStringSnakeCase, toCamelCase as toStringCamelCase } from "./string";
+
 export class ObjectConverter {
   static toSnakeCase(obj: any) {
-    const toSnake = (s) =>
-      s.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toLowerCase();
-
-    return this.changeObjectProperty(obj, toSnake);
+    return this.changeObjectProperty(obj, toStringSnakeCase);
   }
 
   static toCamelCase(obj: any) {
-    const toCamel = (s) =>
-      s.replace(/([-_][a-z])/gi, ($1) =>
-        $1.toUpperCase().replace('-', '').replace('_', ''),
-      );
-
-    return this.changeObjectProperty(obj, toCamel);
+    return this.changeObjectProperty(obj, toStringCamelCase);
   }
 
   static changeObjectProperty(o, converter: (obj: any) => any) {

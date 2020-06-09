@@ -6,13 +6,14 @@ import pbkdf2 from 'pbkdf2';
 import { Env } from '../sdk';
 import { Client } from '../httpClient';
 import { Key, Keychains, KeyWithPriv } from '../types';
-import { BNConverter, toSnakeCase } from '../utils/common';
+import { BNConverter } from '../utils/common';
 import { BlockchainType } from '../blockchain';
 import { RecoveryKit } from '../recoverykit';
 import { EthMasterWallet, EthMasterWalletData } from './wallet';
 import { Wallets } from '../wallets';
 import { toChecksum } from './keychains';
 import { keccak256s } from './eth-core-lib/hash';
+import { makeQueryString } from '../utils/url';
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -46,12 +47,7 @@ export class EthWallets implements Wallets {
   public async getMasterWallets(
     options?: MasterWalletSearchOptions,
   ): Promise<EthMasterWallet[]> {
-    const queryString: string = options
-      ? Object.keys(options)
-          .filter((key) => !!options[key])
-          .map((key) => `${toSnakeCase(key)}=${options[key]}`)
-          .join('&')
-      : '';
+    const queryString: string = makeQueryString(options);
 
     const walletDatas = await this.client.get<EthMasterWalletData[]>(
       `${this.baseUrl}${queryString ? `?${queryString}` : ''}`,
