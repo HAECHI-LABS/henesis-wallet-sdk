@@ -188,9 +188,9 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
   }
 
   async createDepositAddress(
-    params: NoUndefinedField<CreateDepositAddressDTO>,
-  ): Promise<NoUndefinedField<DepositAddressDTO>> {
-    const response: NoUndefinedField<DepositAddressDTO> = await this.client.post(
+    params: CreateDepositAddressDTO,
+  ): Promise<DepositAddressDTO> {
+    const response: DepositAddressDTO = await this.client.post(
       `${this.baseUrl}/${this.data.id}/deposit-addresses`,
       params,
     );
@@ -199,8 +199,8 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
 
   async getDepositAddress(
     depositAddressId: string,
-  ): Promise<NoUndefinedField<DepositAddressDTO>> {
-    const response: NoUndefinedField<DepositAddressDTO> = await this.client.get(
+  ): Promise<DepositAddressDTO> {
+    const response: DepositAddressDTO = await this.client.get(
       `${this.baseUrl}/${this.data.id}/deposit-addresses/${depositAddressId}`,
     );
     return response;

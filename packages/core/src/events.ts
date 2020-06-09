@@ -11,7 +11,7 @@ export interface Event<S> {
   walletId: string;
 }
 
-export type BtcEvent = Event<BtcValueTransferEventDTO.StatusEnum>;
+export type BtcEvent = Event<null>;
 
 export type EthEvent = Event<EthValueTransferEventDTO.StatusEnum>;
 
@@ -24,7 +24,7 @@ export interface ValueTransferEvent<S, T> extends Event<S> {
 }
 
 export type BtcValueTransferEvent = ValueTransferEvent<
-  BtcValueTransferEventDTO.StatusEnum,
+  null,
   BtcValueTransferEventDTO.TransferTypeEnum
 >;
 
@@ -39,9 +39,7 @@ export interface EventPaginationOptions<S> extends PaginationOptions {
   blockchain?: BlockchainType;
 }
 
-export type BtcEventPaginationOptions = EventPaginationOptions<
-  BtcValueTransferEventDTO.StatusEnum
->;
+export type BtcEventPaginationOptions = EventPaginationOptions<null>;
 
 export type EthEventPaginationOptions = EventPaginationOptions<
   EthValueTransferEventDTO.StatusEnum
