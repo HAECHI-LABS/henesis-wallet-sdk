@@ -1,8 +1,8 @@
-import { DefaultBTCKeyChains } from '../../src/btc/keychains';
+import { DefaultBtcKeyChains } from '../../src/btc/keychains';
 import { KeyWithPriv } from '../../src/types';
 
-describe('DefaultBTCKeyChains', () => {
-  const keychains = new DefaultBTCKeyChains();
+describe('DefaultBtcKeyChains', () => {
+  const keychains = new DefaultBtcKeyChains();
 
   describe('#create()', () => {
     it('should create key correctly', () => {
