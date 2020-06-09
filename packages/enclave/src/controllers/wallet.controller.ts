@@ -48,7 +48,7 @@ export default class WalletController extends AbstractController
 
     this.router.post(
       `${this.path}`,
-      this.promiseWrapper(this.createMasterWallet),
+      this.promiseWrapper(this.createMasterWallet, 201),
     );
 
     this.router.get(
@@ -108,7 +108,7 @@ export default class WalletController extends AbstractController
 
     this.router.post(
       `${this.path}/:masterWalletId/transactions`,
-      this.promiseWrapper(this.replaceMasterWalletTransaction),
+      this.promiseWrapper(this.replaceMasterWalletTransaction, 201),
     );
 
     this.router.get(
@@ -158,7 +158,7 @@ export default class WalletController extends AbstractController
 
     this.router.post(
       `${this.path}/:masterWalletId/batch-transactions`,
-      this.promiseWrapper(this.sendMasterWalletBatchTransactions),
+      this.promiseWrapper(this.sendMasterWalletBatchTransactions, 201),
     );
   }
 
