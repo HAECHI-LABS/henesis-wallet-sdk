@@ -9,7 +9,7 @@ describe('BTCWallets', () => {
         new HttpClient({
           accessToken: 'accessToken',
           secret: 'secret',
-          url: 'http://localhost:8080/api/v2',
+          url: 'http://localhost:8080/api/v2/btc',
         }) as any,
         new DefaultBtcKeyChains(),
       );

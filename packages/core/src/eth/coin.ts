@@ -56,7 +56,7 @@ export class Eth extends Coin {
   }
 
   getName(): string {
-    return 'eth';
+    return 'ethereum';
   }
 
   buildData(to: string, amount: BN): string {
