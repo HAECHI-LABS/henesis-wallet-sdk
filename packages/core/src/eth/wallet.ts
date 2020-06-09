@@ -21,7 +21,7 @@ import BatchRequest from './batch';
 import wallet from '../contracts/MasterWallet.json';
 import Bytes from './eth-core-lib/bytes';
 import { keccak256s } from './eth-core-lib/hash';
-import { BNConverter, ObjectConverter } from '../utils';
+import { BNConverter, ObjectConverter } from '../utils/common';
 import { WalletData, Wallet } from '../wallet';
 
 export interface EthTransaction {

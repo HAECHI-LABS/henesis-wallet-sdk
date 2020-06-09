@@ -1,7 +1,7 @@
 import { Client } from './httpClient';
 import { Balance, Secret, Key } from './types';
 import { Account, Role } from './accounts';
-import { BNConverter } from './utils';
+import { BNConverter } from './utils/common';
 
 export interface Organization {
   henesisEthKey: Key;
