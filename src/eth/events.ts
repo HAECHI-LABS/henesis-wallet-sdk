@@ -2,7 +2,11 @@ import * as BN from 'bn.js';
 import { Pagination } from '../types';
 import { Client } from '../httpClient';
 import { BNConverter, toSnakeCase } from '../utils';
-import { EventPaginationOptions, Event, ValueTransferEvent } from '../events';
+import {
+  EthEvent,
+  EthEventPaginationOptions,
+  EthValueTransferEvent,
+} from '../events';
 import { PaginationValueTransferEventDTO } from '../__generate__/eth';
 
 export class EthEvents {
@@ -14,8 +18,8 @@ export class EthEvents {
 
   public async getCallEvents(
     walletId: string,
-    options?: EventPaginationOptions,
-  ): Promise<Pagination<Event>> {
+    options?: EthEventPaginationOptions,
+  ): Promise<Pagination<EthEvent>> {
     const queryString: string = options
       ? Object.keys(options)
           .filter((key) => !!options[key])
@@ -23,7 +27,9 @@ export class EthEvents {
           .join('&')
       : '';
 
-    const data: Pagination<Event> = await this.client.get<Pagination<Event>>(
+    const data: Pagination<EthEvent> = await this.client.get<
+      Pagination<EthEvent>
+    >(
       `/call-events${
         queryString ? `?${queryString}&` : '?'
       }wallet_id=${walletId}`,
@@ -36,8 +42,8 @@ export class EthEvents {
 
   public async getValueTransferEvents(
     walletId: string,
-    options?: EventPaginationOptions,
-  ): Promise<Pagination<ValueTransferEvent>> {
+    options?: EthEventPaginationOptions,
+  ): Promise<Pagination<EthValueTransferEvent>> {
     const queryString: string = options
       ? Object.keys(options)
           .filter((key) => !!options[key])
