@@ -56,7 +56,6 @@ export interface BtcCreateRawTransaction {
   outputs: BtcRawTransactionOutput[];
 }
 
-
 export interface BtcMasterWalletData extends WalletData {
   orgId: string;
   accountKey: Key;
@@ -69,6 +68,8 @@ export interface BtcTransaction {
   inputs: BtcTransactionOutput[];
   outputs: BtcTransactionOutput[];
 }
+
+export type DepositAddress = DepositAddressDTO;
 
 export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
   private readonly data: BtcMasterWalletData;
@@ -185,9 +186,8 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
     ];
   }
 
-  async createDepositAddress(
-    params: CreateDepositAddressDTO,
-  ): Promise<DepositAddressDTO> {
+  async createDepositAddress(name: string): Promise<DepositAddress> {
+    const params: CreateDepositAddressDTO = { name };
     const response: DepositAddressDTO = await this.client.post(
       `${this.baseUrl}/${this.data.id}/deposit-addresses`,
       params,
@@ -197,7 +197,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
 
   async getDepositAddress(
     depositAddressId: string,
-  ): Promise<DepositAddressDTO> {
+  ): Promise<DepositAddress> {
     const response: DepositAddressDTO = await this.client.get(
       `${this.baseUrl}/${this.data.id}/deposit-addresses/${depositAddressId}`,
     );
