@@ -29,7 +29,7 @@ export interface BtcBalance {
 }
 
 export interface BtcRawTransaction {
-  inputs: BtcTransactionOutput[];
+  inputs: BtcRawTransactionInput[];
   outputs: BtcRawTransactionOutput[];
 }
 
@@ -41,6 +41,11 @@ export interface BtcTransactionOutput {
   amount: string;
   spentTransactionId: string;
   spentInputIndex: number;
+}
+
+export interface BtcRawTransactionInput {
+  redeemScript: string;
+  transactionOutput: BtcTransactionOutput;
 }
 
 export interface BtcRawTransactionOutput {
@@ -59,7 +64,6 @@ export interface BtcCreateRawTransaction {
 export interface BtcMasterWalletData extends WalletData {
   orgId: string;
   accountKey: Key;
-  redeemScript: string;
 }
 
 export interface BtcTransaction {
@@ -97,8 +101,13 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
     const tx = new BitcoinTransaction();
     rawTransaction.inputs.forEach((input) => {
       tx.addInput(
-        new Buffer(new Buffer(input.transactionId.slice(2), 'hex').reverse()),
-        input.outputIndex,
+        new Buffer(
+          new Buffer(
+            input.transactionOutput.transactionId.slice(2),
+            'hex',
+          ).reverse(),
+        ),
+        input.transactionOutput.outputIndex,
       );
     });
 
@@ -113,7 +122,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
     for (let i = 0; i < rawTransaction.inputs.length; i++) {
       const sigHash: Buffer = tx.hashForSignature(
         i,
-        new Buffer(this.data.redeemScript.slice(2), 'hex'),
+        new Buffer(rawTransaction.inputs[i].redeemScript.slice(2), 'hex'),
         BitcoinTransaction.SIGHASH_ALL,
       );
       const hash: Buffer = this.keychains.sign(
@@ -134,7 +143,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
 
     for (let i = 0; i < rawTransaction.inputs.length; i++) {
       payload.inputs.push({
-        transactionOutput: rawTransaction.inputs[i],
+        transactionOutput: rawTransaction.inputs[i].transactionOutput,
         accountSignature: accountSigs[i],
       });
     }

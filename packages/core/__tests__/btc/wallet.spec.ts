@@ -21,8 +21,8 @@ describe.skip('BtcMasterWallet', () => {
       );
       const tx: BtcTransaction = await wallet.transfer(
         'BTC',
-        'n4QVq9cL2FjAJzJ9ZTUJ6W5toF37ux2aN2',
-        new BN(100, 'hex'),
+        'muc44mqyMmztJUPQ6YEKcj87EqqJdmbeiq',
+        new BN(50000),
         'passphrase',
       );
 
