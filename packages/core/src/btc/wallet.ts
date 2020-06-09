@@ -11,6 +11,10 @@ import {
 import { BNConverter } from '../utils';
 import { WalletData, Wallet } from '../wallet';
 import { BlockchainType } from '../blockchain';
+import {
+  CreateDepositAddressDTO,
+  DepositAddressDTO,
+} from '../__generate__/btc';
 
 export interface BtcTransaction {
   id: string;
@@ -181,6 +185,25 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
         name: '비트코인',
       },
     ];
+  }
+
+  async createDepositAddress(
+    params: NoUndefinedField<CreateDepositAddressDTO>,
+  ): Promise<NoUndefinedField<DepositAddressDTO>> {
+    const response: NoUndefinedField<DepositAddressDTO> = await this.client.post(
+      `${this.baseUrl}/${this.data.id}/deposit-addresses`,
+      params,
+    );
+    return response;
+  }
+
+  async getDepositAddress(
+    depositAddressId: string,
+  ): Promise<NoUndefinedField<DepositAddressDTO>> {
+    const response: NoUndefinedField<DepositAddressDTO> = await this.client.get(
+      `${this.baseUrl}/${this.data.id}/deposit-addresses/${depositAddressId}`,
+    );
+    return response;
   }
 
   getAddress(): string {
