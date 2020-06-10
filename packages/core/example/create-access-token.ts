@@ -6,7 +6,7 @@ async function main() {
   const sdk = new SDK({
     accessToken: process.env.ACCESS_TOKEN,
     secret: process.env.SECRET,
-    url: 'http://localhost:8080/api/v1',
+    url: process.env.URL,
   });
 
   const token: Token = await sdk.accounts.createAccessToken(36000000000);
