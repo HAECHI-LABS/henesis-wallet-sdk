@@ -1,19 +1,19 @@
-import { SDK } from "../src";
-import { Account } from "../src/accounts";
-import 'dotenv/config'
+import { SDK } from '../src';
+import { Account } from '../src/accounts';
+import 'dotenv/config';
 
 async function main() {
   const sdk = new SDK({
     accessToken: process.env.ACCESS_TOKEN,
     secret: process.env.SECRET,
-    url: "http://localhost:8080/api/v1"
+    url: 'http://localhost:8080/api/v1',
   });
 
   const account: Account = await sdk.accounts.login(
-    "haechi@haechi.io",
-    "password",
+    'haechi@haechi.io',
+    'password',
   );
   console.log(account);
 }
 
-main().catch((e) => console.error(e));
+main().catch(e => console.error(e));
