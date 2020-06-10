@@ -9,6 +9,7 @@ import { Keychains, RecoveryKit } from './keychains';
 import { BlockchainType } from './blockchain';
 import { Key, KeyWithPriv } from './types';
 import { BNConverter, toSnakeCase } from './utils';
+import _ from 'lodash';
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -99,7 +100,7 @@ export class Wallets {
       name: recoveryKit.getName(),
       blockchain: recoveryKit.getBlockchain(),
       accountKey: recoveryKit.getAccountKey(),
-      backupKeyPub: recoveryKit.getBackupKey().pub,
+      backupKey: this.removeKeyFile(recoveryKit.getBackupKey()),
       encryptionKey: recoveryKit.getEncryptionKey(),
     });
 
@@ -119,7 +120,7 @@ export class Wallets {
       name,
       blockchain,
       accountKey: this.removePrivateKey(accountKey),
-      backupKeyPub: backupKey.pub,
+      backupKey: this.removeKeyFile(this.removePrivateKey(backupKey)),
       encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
     });
@@ -139,5 +140,9 @@ export class Wallets {
       pub: key.pub,
       keyFile: key.keyFile,
     };
+  }
+
+  private removeKeyFile(key: KeyWithPriv | Key): KeyWithPriv | Key {
+    return _.omit(key, 'keyFile');
   }
 }

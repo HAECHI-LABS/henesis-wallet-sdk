@@ -1,6 +1,4 @@
 import BN from 'bn.js';
-import { BlockchainType } from './blockchain';
-import { TransactionStatus } from './transactions';
 
 export interface Balance {
   coinType: string;
@@ -12,7 +10,7 @@ export interface Balance {
 export interface Key {
   address: string;
   pub: string;
-  keyFile: string;
+  keyFile?: string;
 }
 
 export interface KeyWithPriv extends Key {
