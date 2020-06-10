@@ -19,10 +19,11 @@ export default abstract class AbstractController {
     ) {
       Promise.resolve(promiseRequestHandler.bind(self, req, res, next)())
         .then((result) => {
+          const status: number = successStatusCode || 200;
           if (result) {
-            return res.status(200).send(result);
+            return res.status(status).send(result);
           }
-          return res.sendStatus(200);
+          return res.sendStatus(status);
         })
         .catch((error) => {
           try {
