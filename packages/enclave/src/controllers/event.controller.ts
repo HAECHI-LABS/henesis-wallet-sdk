@@ -32,7 +32,6 @@ export default class EventController extends AbstractController
     req: express.Request,
   ): Promise<Pagination<Event>> {
     return await req.sdk.events.getCallEvents(
-      req.query.walletId as string,
       req.query,
     );
   }
@@ -41,7 +40,6 @@ export default class EventController extends AbstractController
     req: express.Request,
   ): Promise<Pagination<ValueTransferEvent>> {
     return await req.sdk.events.getValueTransferEvents(
-      req.query.walletId as string,
       req.query,
     );
   }

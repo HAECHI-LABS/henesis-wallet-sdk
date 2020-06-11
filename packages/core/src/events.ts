@@ -51,7 +51,6 @@ export class Events {
   }
 
   public async getCallEvents(
-    walletId: string,
     options?: EventPaginationOptions,
   ): Promise<Pagination<Event>> {
     const queryString: string = options
@@ -71,7 +70,6 @@ export class Events {
   }
 
   public async getValueTransferEvents(
-    walletId: string,
     options?: EventPaginationOptions,
   ): Promise<Pagination<ValueTransferEvent>> {
     const queryString: string = options

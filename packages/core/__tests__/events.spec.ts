@@ -41,9 +41,9 @@ describe('Events', () => {
         url: 'http://localhost:8080/api/v1',
       });
 
-      const eventsWithPagination = await sdk.events.getCallEvents(
-        'e6f6a6dd37d73ea0a506e6b669017d3f',
-      );
+      const eventsWithPagination = await sdk.events.getCallEvents({
+        walletId: 'e6f6a6dd37d73ea0a506e6b669017d3f',
+      });
       expect(eventsWithPagination.results.length).toEqual(2);
       eventsWithPagination.results.forEach((item, index) => {
         expect(item).toEqual(response.results[index]);
@@ -98,9 +98,9 @@ describe('Events', () => {
         secret: 'secret',
         url: 'http://localhost:8080/api/v1',
       });
-      const eventsWithPagination = await sdk.events.getValueTransferEvents(
-        'e6f6a6dd37d73ea0a506e6b669017d3f',
-      );
+      const eventsWithPagination = await sdk.events.getValueTransferEvents({
+        walletId: 'e6f6a6dd37d73ea0a506e6b669017d3f',
+      });
       expect(eventsWithPagination.results.length).toEqual(2);
       eventsWithPagination.results.forEach((item, index) => {
         response.results[index].amount = BNConverter.hexStringToBN(
