@@ -12,7 +12,6 @@ async function main() {
 
   const wallet: EthMasterWallet = await sdk.eth.wallets.createMasterWallet(
     "wallet1",
-    BlockchainType.Klaytn,
     "passphrase"
   );
 

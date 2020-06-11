@@ -211,7 +211,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
     ).slice(2)}${multiSigPayload.hexData.slice(2)}`;
 
     return this.keychains.signPayload(
-      this.masterWalletData.blockchain,
       payload,
       this.masterWalletData.accountKey.keyFile,
       passphrase
