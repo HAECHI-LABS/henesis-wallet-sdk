@@ -1,5 +1,5 @@
-import { Client } from './httpClient';
-import { Key, Token } from './types';
+import { Client } from "./httpClient";
+import { Key, Token } from "./types";
 
 export interface AccountWithOTP extends Account {
   otp?: OTP;
@@ -21,15 +21,15 @@ export interface OTP {
 }
 
 export enum Role {
-  VIEWER = 'VIEWER',
-  ADMIN = 'ADMIN',
-  HAECHI = 'HAECHI',
+  VIEWER = "VIEWER",
+  ADMIN = "ADMIN",
+  HAECHI = "HAECHI",
 }
 
 export class Accounts {
   private readonly client: Client;
 
-  private readonly baseUrl = '/accounts';
+  private readonly baseUrl = "/accounts";
 
   private readonly DEFAULT_TOKEN_EXPIRED_TIME = 3600;
 
@@ -44,7 +44,7 @@ export class Accounts {
   public login(
     email: string,
     password: string,
-    otpCode?: string,
+    otpCode?: string
   ): Promise<AccountWithOTP> {
     return this.client.post<AccountWithOTP>(`${this.baseUrl}/login`, {
       email,
@@ -63,7 +63,7 @@ export class Accounts {
   public changePassword(
     password: string,
     newPassword: string,
-    otpCode?: string,
+    otpCode?: string
   ): Promise<void> {
     return this.client.patch(`${this.baseUrl}/password`, {
       newPassword,

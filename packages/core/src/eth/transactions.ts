@@ -1,7 +1,7 @@
-import * as BN from 'bn.js';
-import { BlockchainType } from '../blockchain';
-import { Pagination, PaginationOptions } from '../types';
-import { Client } from '../httpClient';
+import * as BN from "bn.js";
+import { BlockchainType } from "../blockchain";
+import { Pagination, PaginationOptions } from "../types";
+import { Client } from "../httpClient";
 import { makeQueryString } from "../utils/url";
 
 export interface Transaction {
@@ -44,13 +44,13 @@ export interface RawTransaction {
 }
 
 export enum TransactionStatus {
-  REQUESTED = 'REQUESTED',
-  PENDING = 'PENDING',
-  FAILED = 'FAILED',
-  MINED = 'MINED',
-  REVERTED = 'REVERTED',
-  CONFIRMED = 'CONFIRMED',
-  REPLACED = 'REPLACED',
+  REQUESTED = "REQUESTED",
+  PENDING = "PENDING",
+  FAILED = "FAILED",
+  MINED = "MINED",
+  REVERTED = "REVERTED",
+  CONFIRMED = "CONFIRMED",
+  REPLACED = "REPLACED",
 }
 
 export class Transactions {
@@ -60,23 +60,23 @@ export class Transactions {
 
   constructor(client: Client) {
     this.client = client;
-    this.baseUrl = '/transactions';
+    this.baseUrl = "/transactions";
   }
 
   public async getTransaction(transactionId: string): Promise<Transaction> {
     return await this.client.get<Transaction>(
-      `${this.baseUrl}/${transactionId}`,
+      `${this.baseUrl}/${transactionId}`
     );
   }
 
   public async getTransactions(
-    options?: TransactionPaginationOptions,
+    options?: TransactionPaginationOptions
   ): Promise<Pagination<Transaction>> {
     const queryString: string = makeQueryString(options);
 
     const data: Pagination<Transaction> = await this.client.get<
       Pagination<Transaction>
-    >(`${this.baseUrl}${queryString ? `?${queryString}` : ''}`);
+    >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
     return {
       pagination: data.pagination,
       results: data.results,

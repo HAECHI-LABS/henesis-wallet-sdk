@@ -1,6 +1,6 @@
-import { SDK } from '../src';
-import 'dotenv/config';
-import { Token } from '../src/types';
+import { SDK } from "../src";
+import "dotenv/config";
+import { Token } from "../src/types";
 
 async function main() {
   const sdk = new SDK({
@@ -13,4 +13,4 @@ async function main() {
   console.log(token);
 }
 
-main().catch(e => console.error(e));
+main().catch((e) => console.error(e));

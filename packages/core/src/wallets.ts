@@ -1,3 +1,3 @@
 export interface Wallets {
-   verifyAddress(address: string): boolean;
+  verifyAddress(address: string): boolean;
 }
