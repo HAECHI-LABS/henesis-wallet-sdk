@@ -13,6 +13,7 @@ export interface Event {
 }
 
 export enum EventStatusType {
+  REQUESTED = 'REQUESTED',
   PENDING = 'PENDING',
   FAILED = 'FAILED',
   MINED = 'MINED',
