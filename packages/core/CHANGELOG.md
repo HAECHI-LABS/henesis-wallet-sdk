@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.4...v1.1.5) (2020-06-11)
+
+
+### Features
+
+* add default gas limit ([4e58832](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4e58832b72804ed6eeca059b751655dec316183d))
+
+
+
+
+
 ## [1.1.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.3...v1.1.4) (2020-06-11)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-core
