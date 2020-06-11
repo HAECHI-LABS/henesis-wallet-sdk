@@ -1,6 +1,6 @@
-import { SDK } from '../src';
-import { EthMasterWallet, EthUserWallet } from '../src/eth/wallet';
-import 'dotenv/config';
+import { SDK } from "../src";
+import { EthMasterWallet, EthUserWallet } from "../src/eth/wallet";
+import "dotenv/config";
 
 async function main() {
   const sdk = new SDK({
@@ -10,14 +10,14 @@ async function main() {
   });
 
   const wallet: EthMasterWallet = await sdk.eth.wallets.getMasterWallet(
-    '3be5351bd52626108326f9ec44b7b633',
+    "3be5351bd52626108326f9ec44b7b633"
   );
   const userWallet: EthUserWallet = await wallet.createUserWallet(
-    'wallet',
-    'passphrase',
+    "wallet",
+    "passphrase"
   );
 
   console.log(userWallet.getData());
 }
 
-main().catch(e => console.error(e));
+main().catch((e) => console.error(e));

@@ -1,9 +1,9 @@
-import * as BN from 'bn.js';
-import { Pagination } from '../types';
-import { Client } from '../httpClient';
-import { BNConverter } from '../utils/common';
-import { BtcEventPaginationOptions, BtcValueTransferEvent } from '../events';
-import { PaginationValueTransferEventDTO } from '../__generate__/btc';
+import * as BN from "bn.js";
+import { Pagination } from "../types";
+import { Client } from "../httpClient";
+import { BNConverter } from "../utils/common";
+import { BtcEventPaginationOptions, BtcValueTransferEvent } from "../events";
+import { PaginationValueTransferEventDTO } from "../__generate__/btc";
 import { makeQueryString } from "../utils/url";
 
 export class BtcEvents {
@@ -15,13 +15,13 @@ export class BtcEvents {
 
   public async getValueTransferEvents(
     walletId: string,
-    options?: BtcEventPaginationOptions,
+    options?: BtcEventPaginationOptions
   ): Promise<Pagination<BtcValueTransferEvent>> {
     const queryString: string = makeQueryString(options);
     const data: PaginationValueTransferEventDTO = await this.client.get(
       `/${walletId}/value-transfer-events${
-        queryString ? `?${queryString}` : ''
-      }`,
+        queryString ? `?${queryString}` : ""
+      }`
     );
 
     return {
@@ -33,8 +33,8 @@ export class BtcEvents {
           transactionHash: e.transactionHash,
           walletId: e.id,
           amount: BNConverter.hexStringToBN(String(e.amount)),
-          coinSymbol: 'BTC',
-          from: '',
+          coinSymbol: "BTC",
+          from: "",
           to: e.to,
           transferType: e.transferType,
         };

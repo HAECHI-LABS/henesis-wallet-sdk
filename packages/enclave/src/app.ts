@@ -1,5 +1,5 @@
-import express from 'express';
-import { Controller, MiddleWare } from './types';
+import express from "express";
+import { Controller, MiddleWare } from "./types";
 
 export interface AppOption {
   port?: number;
@@ -27,7 +27,7 @@ export class App {
 
   private routeController(controllers?: Controller[]) {
     controllers.forEach((controller) => {
-      this.application.use('/', controller.getRoutes());
+      this.application.use("/", controller.getRoutes());
     });
   }
 

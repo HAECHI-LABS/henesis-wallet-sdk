@@ -1,5 +1,5 @@
-import { SDK } from '../src';
-import 'dotenv/config';
+import { SDK } from "../src";
+import "dotenv/config";
 
 async function main() {
   const sdk = new SDK({
@@ -9,10 +9,10 @@ async function main() {
   });
 
   console.log(
-    await sdk.eth.events.getCallEvents('3be5351bd52626108326f9ec44b7b633', {
-      transactionHash: '0x123',
-    }),
+    await sdk.eth.events.getCallEvents("3be5351bd52626108326f9ec44b7b633", {
+      transactionHash: "0x123",
+    })
   );
 }
 
-main().catch(e => console.error(e));
+main().catch((e) => console.error(e));

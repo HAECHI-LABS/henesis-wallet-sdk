@@ -1,17 +1,18 @@
 module.exports = {
-  parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint"],
+  parser: '@typescript-eslint/parser',
   extends: [
-    "google",
-    "plugin:@typescript-eslint/eslint-recommended",
-    'plugin:prettier/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:prettier/recommended'
   ],
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: "module",
+    sourceType: 'module',
+    project: './tsconfig.json',
     tsconfigRootDir: './',
   },
-  "rules": {
+  ignorePatterns: ['node_modules/'],
+  plugins: ['@typescript-eslint'],
+  rules: {
     'require-jsdoc': 'off',
     'no-unused-vars': 'warn',
     'new-cap': 'warn',

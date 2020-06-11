@@ -1,6 +1,9 @@
-import BN from 'bn.js';
+import BN from "bn.js";
 
-import { toSnakeCase as toStringSnakeCase, toCamelCase as toStringCamelCase } from "./string";
+import {
+  toSnakeCase as toStringSnakeCase,
+  toCamelCase as toStringCamelCase,
+} from "./string";
 
 export class ObjectConverter {
   static toSnakeCase(obj: any) {
@@ -16,7 +19,7 @@ export class ObjectConverter {
       return o.map((i) => this.changeObjectProperty(i, converter));
     }
 
-    if (typeof o === 'object') {
+    if (typeof o === "object") {
       if (!o) {
         return null;
       }
@@ -33,14 +36,14 @@ export class ObjectConverter {
 
 export class BNConverter {
   static add0x(hexString: string): string {
-    if (hexString.length > 2 && hexString.substring(0, 2) == '0x') {
+    if (hexString.length > 2 && hexString.substring(0, 2) == "0x") {
       return hexString;
     }
     return `0x${hexString}`;
   }
 
   static remove0x(hexString: string): string {
-    if (hexString.length > 2 && hexString.substring(0, 2) == '0x') {
+    if (hexString.length > 2 && hexString.substring(0, 2) == "0x") {
       return hexString.substring(2);
     }
     return hexString;
@@ -51,7 +54,7 @@ export class BNConverter {
   }
 
   static hexStringToBN(hexString: string) {
-    if (!hexString.startsWith('0x')) {
+    if (!hexString.startsWith("0x")) {
       throw new Error(`invalid hex string format: ${hexString}`);
     }
     return new BN(this.remove0x(hexString), 16);

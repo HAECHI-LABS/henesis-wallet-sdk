@@ -1,15 +1,15 @@
-import express, { request } from 'express';
+import express, { request } from "express";
 import {
   EthMasterWalletData,
   EthTransaction,
   EthUserWallet,
   EthUserWalletData,
-} from '@haechi-labs/henesis-wallet-core/lib/eth/wallet';
-import { SDK } from '@haechi-labs/henesis-wallet-core';
-import { BNConverter } from '@haechi-labs/henesis-wallet-core/lib/utils/common';
-import BN from 'bn.js';
-import { Controller } from '../types';
-import AbstractController from './controller';
+} from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
+import { SDK } from "@haechi-labs/henesis-wallet-core";
+import { BNConverter } from "@haechi-labs/henesis-wallet-core/lib/utils/common";
+import BN from "bn.js";
+import { Controller } from "../types";
+import AbstractController from "./controller";
 
 export interface NonceResponse {
   nonce: string;
@@ -36,7 +36,7 @@ interface ContractCallRequest {
 
 export default class WalletController extends AbstractController
   implements Controller {
-  private path = '/api/v1/wallets';
+  private path = "/api/v1/wallets";
 
   constructor() {
     super();
@@ -48,99 +48,99 @@ export default class WalletController extends AbstractController
 
     this.router.post(
       `${this.path}`,
-      this.promiseWrapper(this.createMasterWallet, 201),
+      this.promiseWrapper(this.createMasterWallet, 201)
     );
 
     this.router.get(
       `${this.path}/:masterWalletId/user-wallets`,
-      this.promiseWrapper(this.getUserWallets),
+      this.promiseWrapper(this.getUserWallets)
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets`,
-      this.promiseWrapper(this.createUserWallet),
+      this.promiseWrapper(this.createUserWallet)
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/contract-call`,
-      this.promiseWrapper(this.sendMasterWalletContractCall),
+      this.promiseWrapper(this.sendMasterWalletContractCall)
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/contract-call`,
-      this.promiseWrapper(this.sendUserWalletContractCall),
+      this.promiseWrapper(this.sendUserWalletContractCall)
     );
 
     this.router.get(
       `${this.path}/:masterWalletId`,
-      this.promiseWrapper(this.getMasterWallet),
+      this.promiseWrapper(this.getMasterWallet)
     );
 
     this.router.put(
       `${this.path}/:masterWalletId/passphrase`,
-      this.promiseWrapper(this.changePassphrase),
+      this.promiseWrapper(this.changePassphrase)
     );
 
     this.router.get(
       `${this.path}/:masterWalletId/nonce`,
-      this.promiseWrapper(this.getMasterWalletNonce),
+      this.promiseWrapper(this.getMasterWalletNonce)
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/transactions`,
-      this.promiseWrapper(this.replaceMasterWalletTransaction, 201),
+      this.promiseWrapper(this.replaceMasterWalletTransaction, 201)
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/transactions`,
-      this.promiseWrapper(this.replaceUserWalletTransaction),
+      this.promiseWrapper(this.replaceUserWalletTransaction)
     );
 
     this.router.get(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/nonce`,
-      this.promiseWrapper(this.getUserWalletNonce),
+      this.promiseWrapper(this.getUserWalletNonce)
     );
 
     this.router.get(
       `${this.path}/:masterWalletId/balance`,
-      this.promiseWrapper(this.getMasterWalletBalance),
+      this.promiseWrapper(this.getMasterWalletBalance)
     );
 
     this.router.get(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId`,
-      this.promiseWrapper(this.getUserWallet),
+      this.promiseWrapper(this.getUserWallet)
     );
 
     this.router.get(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/balance`,
-      this.promiseWrapper(this.getUserWalletBalance),
+      this.promiseWrapper(this.getUserWalletBalance)
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/transfer`,
-      this.promiseWrapper(this.sendMasterWalletCoin),
+      this.promiseWrapper(this.sendMasterWalletCoin)
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/transfer`,
-      this.promiseWrapper(this.sendUserWalletCoin),
+      this.promiseWrapper(this.sendUserWalletCoin)
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/batch-transactions`,
-      this.promiseWrapper(this.sendMasterWalletBatchTransactions, 201),
+      this.promiseWrapper(this.sendMasterWalletBatchTransactions, 201)
     );
   }
 
   private async getMasterWallets(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthMasterWalletData[]> {
     const wallets = await req.sdk.eth.wallets.getMasterWallets();
     return wallets.map((x) => x.getData());
   }
 
   private async createMasterWallet(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthMasterWalletData> {
     return (
       await req.sdk.eth.wallets.createMasterWallet(
@@ -149,27 +149,27 @@ export default class WalletController extends AbstractController
         req.body.passphrase,
         req.body.gasPrice
           ? BNConverter.hexStringToBN(req.body.gasPrice)
-          : undefined,
+          : undefined
       )
     ).getData();
   }
 
   private async changePassphrase(req: express.Request): Promise<void> {
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
-      req.params.masterWalletId,
+      req.params.masterWalletId
     );
     return await masterWallet.changePassphrase(
       req.body.passphrase,
       req.body.newPassphrase,
-      req.body.otpCode,
+      req.body.otpCode
     );
   }
 
   private async createUserWallet(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthUserWalletData> {
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
-      req.params.masterWalletId,
+      req.params.masterWalletId
     );
 
     return (
@@ -179,25 +179,25 @@ export default class WalletController extends AbstractController
         req.body.gasPrice
           ? BNConverter.hexStringToBN(req.body.gasPrice)
           : undefined,
-        req.body.salt ? BNConverter.hexStringToBN(req.body.salt) : undefined,
+        req.body.salt ? BNConverter.hexStringToBN(req.body.salt) : undefined
       )
     ).getData();
   }
 
   private async getMasterWallet(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthMasterWalletData> {
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
-      req.params.masterWalletId,
+      req.params.masterWalletId
     );
     return masterWallet.getData();
   }
 
   private async getMasterWalletBalance(
-    req: express.Request,
+    req: express.Request
   ): Promise<BalanceResponse[]> {
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
-      req.params.masterWalletId,
+      req.params.masterWalletId
     );
 
     const balances = await masterWallet.getBalance();
@@ -210,12 +210,12 @@ export default class WalletController extends AbstractController
   }
 
   private async getUserWalletBalance(
-    req: express.Request,
+    req: express.Request
   ): Promise<BalanceResponse[]> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
-      req.params.userWalletId,
+      req.params.userWalletId
     );
     const balances = await userWallet.getBalance();
     return balances.map((x) => ({
@@ -227,10 +227,10 @@ export default class WalletController extends AbstractController
   }
 
   private async getMasterWalletNonce(
-    req: express.Request,
+    req: express.Request
   ): Promise<NonceResponse> {
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
-      req.params.masterWalletId,
+      req.params.masterWalletId
     );
     return {
       nonce: BNConverter.bnToHexString(await masterWallet.getNonce()),
@@ -238,12 +238,12 @@ export default class WalletController extends AbstractController
   }
 
   private async getUserWalletNonce(
-    req: express.Request,
+    req: express.Request
   ): Promise<NonceResponse> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
-      req.params.userWalletId,
+      req.params.userWalletId
     );
     return {
       nonce: BNConverter.bnToHexString(await userWallet.getNonce()),
@@ -251,32 +251,32 @@ export default class WalletController extends AbstractController
   }
 
   private async replaceMasterWalletTransaction(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthTransaction> {
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
-      req.params.masterWalletId,
+      req.params.masterWalletId
     );
 
     return await masterWallet.replaceTransaction(req.body.transactionId);
   }
 
   private async replaceUserWalletTransaction(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthTransaction> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
-      req.params.userWalletId,
+      req.params.userWalletId
     );
 
     return await userWallet.replaceTransaction(req.body.transactionId);
   }
 
   private async sendMasterWalletContractCall(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthTransaction> {
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
-      req.params.masterWalletId,
+      req.params.masterWalletId
     );
 
     const transaction = await masterWallet.contractCall(
@@ -290,19 +290,19 @@ export default class WalletController extends AbstractController
         : undefined,
       req.body.gasLimit
         ? BNConverter.hexStringToBN(req.body.gasLimit)
-        : undefined,
+        : undefined
     );
 
     return transaction;
   }
 
   private async sendUserWalletContractCall(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthTransaction> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
-      req.params.userWalletId,
+      req.params.userWalletId
     );
 
     return await userWallet.contractCall(
@@ -316,15 +316,15 @@ export default class WalletController extends AbstractController
         : undefined,
       req.body.gasLimit
         ? BNConverter.hexStringToBN(req.body.gasLimit)
-        : undefined,
+        : undefined
     );
   }
 
   private async sendMasterWalletCoin(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthTransaction> {
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
-      req.params.masterWalletId,
+      req.params.masterWalletId
     );
 
     return await masterWallet.transfer(
@@ -338,17 +338,17 @@ export default class WalletController extends AbstractController
         : undefined,
       req.body.gasLimit
         ? BNConverter.hexStringToBN(req.body.gasLimit)
-        : undefined,
+        : undefined
     );
   }
 
   private async sendUserWalletCoin(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthTransaction> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
-      req.params.userWalletId,
+      req.params.userWalletId
     );
     return await userWallet.transfer(
       req.body.ticker,
@@ -361,18 +361,18 @@ export default class WalletController extends AbstractController
         : undefined,
       req.body.gasLimit
         ? BNConverter.hexStringToBN(req.body.gasLimit)
-        : undefined,
+        : undefined
     );
   }
 
   private async getUserWallet(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthUserWalletData> {
     return (
       await this.getUserWalletByContext(
         req.sdk,
         req.params.masterWalletId,
-        req.params.userWalletId,
+        req.params.userWalletId
       )
     ).getData();
   }
@@ -380,7 +380,7 @@ export default class WalletController extends AbstractController
   private async getUserWalletByContext(
     sdk: SDK,
     masterWalletId: string,
-    userWalletId: string,
+    userWalletId: string
   ): Promise<EthUserWallet> {
     return (
       await sdk.eth.wallets.getMasterWallet(masterWalletId)
@@ -388,10 +388,10 @@ export default class WalletController extends AbstractController
   }
 
   private async getUserWallets(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthUserWalletData[]> {
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
-      req.params.masterWalletId,
+      req.params.masterWalletId
     );
     const wallets = (
       await masterWallet.getUserWallets({
@@ -406,10 +406,10 @@ export default class WalletController extends AbstractController
   }
 
   private async sendMasterWalletBatchTransactions(
-    req: express.Request,
+    req: express.Request
   ): Promise<EthTransaction[]> {
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
-      req.params.masterWalletId,
+      req.params.masterWalletId
     );
 
     const batch = masterWallet.createBatchRequest(req.body.otpCode);
@@ -421,7 +421,7 @@ export default class WalletController extends AbstractController
           request.contractAddress,
           BNConverter.hexStringToBN(request.value),
           request.data,
-          req.body.passphrase,
+          req.body.passphrase
         );
       }
 
@@ -431,12 +431,12 @@ export default class WalletController extends AbstractController
           request.ticker,
           request.to,
           BNConverter.hexStringToBN(request.amount),
-          req.body.passphrase,
+          req.body.passphrase
         );
       }
 
       if (!payload) {
-        throw new Error('invalid batch transactions request format');
+        throw new Error("invalid batch transactions request format");
       }
       batch.add(payload);
     }
