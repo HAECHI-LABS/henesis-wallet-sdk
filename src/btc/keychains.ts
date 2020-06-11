@@ -1,7 +1,7 @@
-import { Key, KeyWithPriv } from '../types';
-import { ECPair } from 'bitcoinjs-lib';
-import { networks } from 'bitcoinjs-lib';
-import bip38 from 'bip38';
+import { Key, KeyWithPriv } from "../types";
+import { ECPair } from "bitcoinjs-lib";
+import { networks } from "bitcoinjs-lib";
+import bip38 from "bip38";
 
 export interface BtcKeychains {
   create(password: string): KeyWithPriv;
@@ -18,8 +18,8 @@ export class DefaultBtcKeyChains implements BtcKeychains {
 
     return {
       keyFile: bip38.encrypt(ecPair.privateKey, ecPair.compressed, passphrase),
-      priv: `0x${ecPair.privateKey.toString('hex')}`,
-      pub: `0x${ecPair.publicKey.toString('hex')}`,
+      priv: `0x${ecPair.privateKey.toString("hex")}`,
+      pub: `0x${ecPair.publicKey.toString("hex")}`,
     };
   }
 

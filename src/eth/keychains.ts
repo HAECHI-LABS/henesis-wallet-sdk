@@ -1,13 +1,13 @@
-import crypto from 'crypto';
-import elliptic from 'elliptic';
-import { Keychains, KeyWithPriv } from '../types';
-import { keccak256, keccak256s } from './eth-core-lib/hash';
-import Bytes from './eth-core-lib/bytes';
-import sjcl from './eth-core-lib/sjcl';
-import { fromString } from './eth-core-lib/nat';
-import { BlockchainType } from '../blockchain';
+import crypto from "crypto";
+import elliptic from "elliptic";
+import { Keychains, KeyWithPriv } from "../types";
+import { keccak256, keccak256s } from "./eth-core-lib/hash";
+import Bytes from "./eth-core-lib/bytes";
+import sjcl from "./eth-core-lib/sjcl";
+import { fromString } from "./eth-core-lib/nat";
+import { BlockchainType } from "../blockchain";
 
-const secp256k1 = new (elliptic.ec)("secp256k1"); // eslint-disable-line
+const secp256k1 = new elliptic.ec("secp256k1"); // eslint-disable-line
 const BASE_V_VALUE = 27;
 
 export const encodeSignature = ([v, r, s]) => Bytes.flatten([r, s, v]);
@@ -19,7 +19,7 @@ export const decodeSignature = (hex) => [
 
 export const toChecksum = (address) => {
   const addressHash = keccak256s(address.slice(2));
-  let checksumAddress = '0x';
+  let checksumAddress = "0x";
   for (let i = 0; i < 40; i++) {
     checksumAddress +=
       parseInt(addressHash[i + 2], 16) > 7
@@ -37,17 +37,17 @@ export class EthKeychains implements Keychains {
     const entropy = crypto.randomBytes(512 / 8);
 
     const innerHex = keccak256(
-      Bytes.concat(Bytes.random(32), entropy || Bytes.random(32)),
+      Bytes.concat(Bytes.random(32), entropy || Bytes.random(32))
     );
     const middleHex = Bytes.concat(
       Bytes.concat(Bytes.random(32), innerHex),
-      Bytes.random(32),
+      Bytes.random(32)
     );
     const privateKey = keccak256(middleHex);
 
-    const buffer = Buffer.from(privateKey.slice(2), 'hex');
+    const buffer = Buffer.from(privateKey.slice(2), "hex");
     const ecKey = secp256k1.keyFromPrivate(buffer);
-    const publicKey = `0x${ecKey.getPublic(false, 'hex').slice(2)}`;
+    const publicKey = `0x${ecKey.getPublic(false, "hex").slice(2)}`;
     const publicHash = keccak256(publicKey);
     const address = toChecksum(`0x${publicHash.slice(-40)}`);
 
@@ -63,11 +63,11 @@ export class EthKeychains implements Keychains {
   public changePassword(
     keyFile: string,
     password: string,
-    newPassword: string,
+    newPassword: string
   ): KeyWithPriv {
     const priv = this.decryptKeyFile(keyFile, password);
-    const ecKey = secp256k1.keyFromPrivate(Buffer.from(priv.slice(2), 'hex'));
-    const publicKey = `0x${ecKey.getPublic(false, 'hex').slice(2)}`;
+    const ecKey = secp256k1.keyFromPrivate(Buffer.from(priv.slice(2), "hex"));
+    const publicKey = `0x${ecKey.getPublic(false, "hex").slice(2)}`;
     const publicHash = keccak256(publicKey);
     const address = toChecksum(`0x${publicHash.slice(-40)}`);
     const newKeyFile = this.encryptPrivToKeyFile(priv, newPassword);
@@ -86,9 +86,9 @@ export class EthKeychains implements Keychains {
       if (error.message.includes("ccm: tag doesn't match")) {
         error.message = `password error - ${error.message}`;
       } else if (
-        error.message === 'sjcl.exception.corrupt is not a constructor'
+        error.message === "sjcl.exception.corrupt is not a constructor"
       ) {
-        error.message = 'password error';
+        error.message = "password error";
       }
       throw error;
     }
@@ -98,16 +98,16 @@ export class EthKeychains implements Keychains {
     blockchain: BlockchainType,
     hexPayload: string,
     keyFile: string,
-    password: string,
+    password: string
   ): string {
     const hashedMessage = keccak256(
-      this.payloadToPrefixedMessage(blockchain, hexPayload),
+      this.payloadToPrefixedMessage(blockchain, hexPayload)
     );
 
     const priv = this.decryptKeyFile(keyFile, password);
     const signature = secp256k1
-      .keyFromPrivate(Buffer.from(priv.slice(2), 'hex'))
-      .sign(Buffer.from(hashedMessage.slice(2), 'hex'), { canonical: true });
+      .keyFromPrivate(Buffer.from(priv.slice(2), "hex"))
+      .sign(Buffer.from(hashedMessage.slice(2), "hex"), { canonical: true });
 
     return encodeSignature([
       fromString(Bytes.fromNumber(BASE_V_VALUE + signature.recoveryParam)),
@@ -119,7 +119,7 @@ export class EthKeychains implements Keychains {
   public recoverAddressFromSignature(
     blockchain: BlockchainType,
     hexPayload: string,
-    signature: string,
+    signature: string
   ) {
     const vals = decodeSignature(signature);
     const vrs = {
@@ -130,14 +130,14 @@ export class EthKeychains implements Keychains {
     const ecPublicKey = secp256k1.recoverPubKey(
       Buffer.from(
         keccak256(this.payloadToPrefixedMessage(blockchain, hexPayload)).slice(
-          2,
+          2
         ),
-        'hex',
+        "hex"
       ),
       vrs,
-      vrs.v < 2 ? vrs.v : 1 - (vrs.v % 2),
+      vrs.v < 2 ? vrs.v : 1 - (vrs.v % 2)
     );
-    const publicKey = `0x${ecPublicKey.encode('hex', false).slice(2)}`;
+    const publicKey = `0x${ecPublicKey.encode("hex", false).slice(2)}`;
     const publicHash = keccak256(publicKey);
     return toChecksum(`0x${publicHash.slice(-40)}`);
   }
@@ -164,21 +164,21 @@ export class EthKeychains implements Keychains {
 
   private payloadToPrefixedMessage(
     blockchain: BlockchainType,
-    hexPayload: string,
+    hexPayload: string
   ): Buffer {
     const hashedPayload = keccak256(hexPayload);
-    const payloadBuffer = Buffer.from(hashedPayload.slice(2), 'hex');
+    const payloadBuffer = Buffer.from(hashedPayload.slice(2), "hex");
     const preambleBuffer = Buffer.from(
       `\u0019${this.blockchainPrefix(blockchain)} Signed Message:\n${
         payloadBuffer.length
-      }`,
+      }`
     );
     return Buffer.concat([preambleBuffer, payloadBuffer]);
   }
 
   private blockchainPrefix(blockchain: BlockchainType): string {
     const keys = Object.keys(BlockchainType).filter(
-      (x) => BlockchainType[x] == blockchain,
+      (x) => BlockchainType[x] == blockchain
     );
     return keys.length > 0 ? keys[0] : null;
   }

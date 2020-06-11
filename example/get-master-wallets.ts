@@ -1,6 +1,6 @@
-import { SDK } from '../src';
-import { EthMasterWallet } from '../src/eth/wallet';
-import 'dotenv/config';
+import { SDK } from "../src";
+import { EthMasterWallet } from "../src/eth/wallet";
+import "dotenv/config";
 
 async function main() {
   const sdk = new SDK({
@@ -14,4 +14,4 @@ async function main() {
   console.log(ethWallets, klayWallets);
 }
 
-main().catch(e => console.error(e));
+main().catch((e) => console.error(e));

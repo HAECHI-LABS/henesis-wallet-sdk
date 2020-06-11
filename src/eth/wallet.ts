@@ -1,11 +1,11 @@
-import { Contract } from 'web3-eth-contract';
-import Web3 from 'web3';
-import { AbiItem } from 'web3-utils';
-import BN from 'bn.js';
-import aesjs from 'aes-js';
-import { Base64 } from 'js-base64';
-import { Coin, Eth, Klay, Erc20 } from './coin';
-import { BlockchainType } from '../blockchain';
+import { Contract } from "web3-eth-contract";
+import Web3 from "web3";
+import { AbiItem } from "web3-utils";
+import BN from "bn.js";
+import aesjs from "aes-js";
+import { Base64 } from "js-base64";
+import { Coin, Eth, Klay, Erc20 } from "./coin";
+import { BlockchainType } from "../blockchain";
 import {
   Balance,
   Key,
@@ -13,16 +13,16 @@ import {
   KeyWithPriv,
   Pagination,
   PaginationOptions,
-} from '../types';
-import { MultiSigPayload, SignedMultiSigPayload } from './transactions';
-import { Client } from '../httpClient';
-import { toChecksum } from './keychains';
-import BatchRequest from './batch';
-import wallet from '../contracts/MasterWallet.json';
-import Bytes from './eth-core-lib/bytes';
-import { keccak256s } from './eth-core-lib/hash';
-import { BNConverter, ObjectConverter } from '../utils/common';
-import { WalletData, Wallet } from '../wallet';
+} from "../types";
+import { MultiSigPayload, SignedMultiSigPayload } from "./transactions";
+import { Client } from "../httpClient";
+import { toChecksum } from "./keychains";
+import BatchRequest from "./batch";
+import wallet from "../contracts/MasterWallet.json";
+import Bytes from "./eth-core-lib/bytes";
+import { keccak256s } from "./eth-core-lib/hash";
+import { BNConverter, ObjectConverter } from "../utils/common";
+import { WalletData, Wallet } from "../wallet";
 import { makeQueryString } from "../utils/url";
 
 export interface EthTransaction {
@@ -49,17 +49,17 @@ export interface UserWalletPaginationOptions extends PaginationOptions {
 }
 
 function convertSignedMultiSigPayloadToDTO(
-  signedMultiSigPayload: SignedMultiSigPayload,
+  signedMultiSigPayload: SignedMultiSigPayload
 ) {
   return {
     signature: signedMultiSigPayload.signature,
     multiSigPayload: {
       hexData: signedMultiSigPayload.multiSigPayload.hexData,
       walletNonce: BNConverter.bnToHexString(
-        signedMultiSigPayload.multiSigPayload.walletNonce,
+        signedMultiSigPayload.multiSigPayload.walletNonce
       ),
       value: BNConverter.bnToHexString(
-        signedMultiSigPayload.multiSigPayload.value,
+        signedMultiSigPayload.multiSigPayload.value
       ),
       toAddress: signedMultiSigPayload.multiSigPayload.toAddress,
       walletAddress: signedMultiSigPayload.multiSigPayload.walletAddress,
@@ -72,7 +72,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
   protected constructor(
     client: Client,
     masterWalletData: EthMasterWalletData,
-    keychains: Keychains,
+    keychains: Keychains
   ) {
     super(client, keychains);
     this.masterWalletData = masterWalletData;
@@ -84,7 +84,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
 
   async replaceTransaction(
     transactionId: string,
-    otpCode?: string,
+    otpCode?: string
   ): Promise<EthTransaction> {
     const walletId = this.getId();
     const blockchain = this.getChain();
@@ -103,7 +103,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
     passphrase: string,
     otpCode?: string,
     gasPrice?: BN,
-    gasLimit?: BN,
+    gasLimit?: BN
   ): Promise<EthTransaction> {
     return this.sendTransaction(
       this.getChain(),
@@ -111,12 +111,12 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
         contractAddress,
         value,
         data,
-        passphrase,
+        passphrase
       ),
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit,
+      gasLimit
     );
   }
 
@@ -124,7 +124,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
     contractAddress: string,
     value: BN,
     data: string,
-    passphrase: string,
+    passphrase: string
   ): Promise<SignedMultiSigPayload> {
     const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
@@ -150,7 +150,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
     passphrase: string,
     otpCode?: string,
     gasPrice?: BN,
-    gasLimit?: BN,
+    gasLimit?: BN
   ): Promise<EthTransaction> {
     return this.sendTransaction(
       this.getChain(),
@@ -158,7 +158,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit,
+      gasLimit
     );
   }
 
@@ -166,7 +166,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
     ticker: string,
     to: string,
     amount: BN,
-    passphrase: string,
+    passphrase: string
   ): Promise<SignedMultiSigPayload> {
     const coin: Coin = await this.getCoin(ticker);
     const hexData = coin.buildData(to, amount);
@@ -174,7 +174,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
     const multiSigPayload: MultiSigPayload = {
       hexData,
       walletNonce: nonce,
-      value: BNConverter.hexStringToBN('0x0'),
+      value: BNConverter.hexStringToBN("0x0"),
       toAddress: this.getAddress(),
       walletAddress: this.getAddress(),
     };
@@ -194,8 +194,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
           this.getChain(),
           signedMultiSigPayloads,
           this.getId(),
-          otpCode,
-        ),
+          otpCode
+        )
     );
   }
 
@@ -204,17 +204,17 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
       .toLowerCase()
       .slice(2)}${multiSigPayload.toAddress.toLowerCase().slice(2)}${Bytes.pad(
       32,
-      Bytes.fromNat(`0x${multiSigPayload.value.toString(16)}`),
+      Bytes.fromNat(`0x${multiSigPayload.value.toString(16)}`)
     ).slice(2)}${Bytes.pad(
       32,
-      Bytes.fromNat(`0x${multiSigPayload.walletNonce.toString(16)}`),
+      Bytes.fromNat(`0x${multiSigPayload.walletNonce.toString(16)}`)
     ).slice(2)}${multiSigPayload.hexData.slice(2)}`;
 
     return this.keychains.signPayload(
       this.masterWalletData.blockchain,
       payload,
       this.masterWalletData.accountKey.keyFile,
-      passphrase,
+      passphrase
     );
   }
 
@@ -224,13 +224,13 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
     walletId: string,
     otpCode?: string,
     gasPrice?: BN,
-    gasLimit?: BN,
+    gasLimit?: BN
   ) {
     return this.client.post<EthTransaction>(`${this.baseUrl}/transactions`, {
       walletId,
       blockchain,
       signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
-        signedMultiSigPayload,
+        signedMultiSigPayload
       ),
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
       gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
@@ -244,11 +244,11 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
     walletId: string,
     otpCode?: string,
     gasPrice?: BN,
-    gasLimit?: BN,
+    gasLimit?: BN
   ): Promise<EthTransaction[]> {
     const signedMultiSigPayloadDTOs = signedMultiSigPayloads.map(
       (signedMultiSigPayload) =>
-        convertSignedMultiSigPayloadToDTO(signedMultiSigPayload),
+        convertSignedMultiSigPayloadToDTO(signedMultiSigPayload)
     );
     return this.client.post<EthTransaction[]>(
       `${this.baseUrl}/batch-transactions`,
@@ -259,7 +259,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
         gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
         gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
         otpCode,
-      },
+      }
     );
   }
 
@@ -267,7 +267,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
     const nonce: {
       nonce: string;
     } = await this.client.get(
-      `${this.baseUrl}/${this.masterWalletData.id}/nonce`,
+      `${this.baseUrl}/${this.masterWalletData.id}/nonce`
     );
     return BNConverter.hexStringToBN(nonce.nonce);
   }
@@ -279,9 +279,9 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
     } = await this.client.get(`/coins/${ticker.toUpperCase()}`);
 
     switch (coin.symbol.toUpperCase()) {
-      case 'ETH':
+      case "ETH":
         return new Eth();
-      case 'KLAY':
+      case "KLAY":
         return new Klay();
       default:
         return new Erc20(coin.symbol, coin.address);
@@ -295,7 +295,7 @@ export class EthMasterWallet extends EthLikeWallet {
   public constructor(
     client: Client,
     walletData: EthMasterWalletData,
-    keychains: Keychains,
+    keychains: Keychains
   ) {
     super(client, walletData, keychains);
     this.wallet = new new Web3().eth.Contract(wallet as AbiItem[]);
@@ -304,37 +304,37 @@ export class EthMasterWallet extends EthLikeWallet {
   async restorePassphrase(
     encryptedPassphrase: string,
     newPassphrase: string,
-    otpCode?: string,
+    otpCode?: string
   ): Promise<void> {
     const passphrase = this.recoverPassphrase(encryptedPassphrase);
     const initialKey: Key = await this.client.get<Key>(
-      `${this.baseUrl}/${this.masterWalletData.id}/initial-key`,
+      `${this.baseUrl}/${this.masterWalletData.id}/initial-key`
     );
     await this.changePassphraseWithKeyFile(
       passphrase,
       newPassphrase,
       initialKey,
-      otpCode,
+      otpCode
     );
   }
 
   private recoverPassphrase(encryptedPassphrase: string): string {
     const { encryptionKey } = this.masterWalletData;
     const aesCtr = new aesjs.ModeOfOperation.ctr(
-      aesjs.utils.hex.toBytes(encryptionKey),
+      aesjs.utils.hex.toBytes(encryptionKey)
     );
     const decryptedBytes = aesCtr.decrypt(
-      aesjs.utils.hex.toBytes(Base64.decode(encryptedPassphrase)),
+      aesjs.utils.hex.toBytes(Base64.decode(encryptedPassphrase))
     );
     return aesjs.utils.utf8.fromBytes(decryptedBytes);
   }
 
   async verifyEncryptedPassphrase(
-    encryptedPassphrase: string,
+    encryptedPassphrase: string
   ): Promise<boolean> {
     const passphrase = this.recoverPassphrase(encryptedPassphrase);
     const initialKey: Key = await this.client.get<Key>(
-      `${this.baseUrl}/${this.masterWalletData.id}/initial-key`,
+      `${this.baseUrl}/${this.masterWalletData.id}/initial-key`
     );
     return await this.verifyPassphraseWithKeyFile(passphrase, initialKey);
   }
@@ -345,14 +345,14 @@ export class EthMasterWallet extends EthLikeWallet {
 
   private async verifyPassphraseWithKeyFile(
     passphrase: string,
-    initialKey?: Key,
+    initialKey?: Key
   ): Promise<boolean> {
     try {
       this.keychains.decryptKeyFile(
         initialKey
           ? initialKey.keyFile
           : this.masterWalletData.accountKey.keyFile,
-        passphrase,
+        passphrase
       );
       return true;
     } catch (e) {
@@ -363,13 +363,13 @@ export class EthMasterWallet extends EthLikeWallet {
   async changePassphrase(
     passphrase: string,
     newPassphrase: string,
-    otpCode?: string,
+    otpCode?: string
   ): Promise<void> {
     return this.changePassphraseWithKeyFile(
       passphrase,
       newPassphrase,
       undefined,
-      otpCode,
+      otpCode
     );
   }
 
@@ -377,14 +377,14 @@ export class EthMasterWallet extends EthLikeWallet {
     passphrase: string,
     newPassphrase: string,
     initialKey?: Key,
-    otpCode?: string,
+    otpCode?: string
   ): Promise<void> {
     const newKey: KeyWithPriv = this.keychains.changePassword(
       initialKey
         ? initialKey.keyFile
         : this.masterWalletData.accountKey.keyFile,
       passphrase,
-      newPassphrase,
+      newPassphrase
     );
 
     this.masterWalletData.accountKey = await this.client.patch<Key>(
@@ -392,7 +392,7 @@ export class EthMasterWallet extends EthLikeWallet {
       {
         keyFile: newKey.keyFile,
         otpCode,
-      },
+      }
     );
   }
 
@@ -400,7 +400,7 @@ export class EthMasterWallet extends EthLikeWallet {
     name: string,
     passphrase: string,
     gasPrice?: BN,
-    salt?: BN,
+    salt?: BN
   ): Promise<EthUserWallet> {
     const nonce = await this.getNonce();
     // generates 32byte(256 bit) randoma hex string and converts to BN when salt is not defined
@@ -411,7 +411,7 @@ export class EthMasterWallet extends EthLikeWallet {
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
       walletNonce: nonce,
-      value: BNConverter.hexStringToBN('0x0'),
+      value: BNConverter.hexStringToBN("0x0"),
       toAddress: this.getAddress(),
       walletAddress: this.getAddress(),
     };
@@ -430,29 +430,29 @@ export class EthMasterWallet extends EthLikeWallet {
         salt: BNConverter.bnToHexString(salt),
         blockchain: this.getChain(),
         signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
-          signedMultiSigPayload,
+          signedMultiSigPayload
         ),
         gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
-      },
+      }
     );
 
     return new EthUserWallet(
       this.client,
       this.masterWalletData,
       this.keychains,
-      userWalletData,
+      userWalletData
     );
   }
 
   async getUserWallet(walletId: string): Promise<EthUserWallet> {
     const userWalletData = await this.client.get<EthUserWalletData>(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${walletId}`,
+      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${walletId}`
     );
     return new EthUserWallet(
       this.client,
       this.masterWalletData,
       this.keychains,
-      userWalletData,
+      userWalletData
     );
   }
 
@@ -463,7 +463,7 @@ export class EthMasterWallet extends EthLikeWallet {
       name: string;
       symbol: string;
     }[] = await this.client.get(
-      `${this.baseUrl}/${this.masterWalletData.id}/balance`,
+      `${this.baseUrl}/${this.masterWalletData.id}/balance`
     );
 
     return balances.map((balance) => ({
@@ -483,14 +483,14 @@ export class EthMasterWallet extends EthLikeWallet {
   }
 
   async getUserWallets(
-    options?: UserWalletPaginationOptions,
+    options?: UserWalletPaginationOptions
   ): Promise<Pagination<EthUserWallet>> {
     const queryString: string = makeQueryString(options);
 
     const data: Pagination<EthUserWalletData> = await this.client.get<
       Pagination<EthUserWalletData>
     >(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets?${queryString}`,
+      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets?${queryString}`
     );
 
     return {
@@ -501,8 +501,8 @@ export class EthMasterWallet extends EthLikeWallet {
             this.client,
             this.masterWalletData,
             this.keychains,
-            data,
-          ),
+            data
+          )
       ),
     } as Pagination<EthUserWallet>;
   }
@@ -528,7 +528,7 @@ export class EthUserWallet extends EthLikeWallet {
     client: Client,
     walletData: EthMasterWalletData,
     keychains: Keychains,
-    userWalletData: EthUserWalletData,
+    userWalletData: EthUserWalletData
   ) {
     super(client, walletData, keychains);
     this.userWalletData = userWalletData;
@@ -538,7 +538,7 @@ export class EthUserWallet extends EthLikeWallet {
     const nonce: {
       nonce: string;
     } = await this.client.get(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/nonce`,
+      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/nonce`
     );
     return BNConverter.hexStringToBN(nonce.nonce);
   }
@@ -550,7 +550,7 @@ export class EthUserWallet extends EthLikeWallet {
       name: string;
       symbol: string;
     }[] = await this.client.get(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/balance`,
+      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/balance`
     );
 
     return balances.map((balance) => ({
@@ -580,7 +580,7 @@ export class EthUserWallet extends EthLikeWallet {
       `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/name`,
       {
         name,
-      },
+      }
     );
     this.userWalletData.name = userWalletData.name;
   }

@@ -1,19 +1,19 @@
-import aesjs from 'aes-js';
-import { Base64 } from 'js-base64';
-import * as BN from 'bn.js';
-import Web3 from 'web3';
-import pbkdf2 from 'pbkdf2';
-import { Env } from '../sdk';
-import { Client } from '../httpClient';
-import { Key, Keychains, KeyWithPriv } from '../types';
-import { BNConverter } from '../utils/common';
-import { BlockchainType } from '../blockchain';
-import { RecoveryKit } from '../recoverykit';
-import { EthMasterWallet, EthMasterWalletData } from './wallet';
-import { Wallets } from '../wallets';
-import { toChecksum } from './keychains';
-import { keccak256s } from './eth-core-lib/hash';
-import { makeQueryString } from '../utils/url';
+import aesjs from "aes-js";
+import { Base64 } from "js-base64";
+import * as BN from "bn.js";
+import Web3 from "web3";
+import pbkdf2 from "pbkdf2";
+import { Env } from "../sdk";
+import { Client } from "../httpClient";
+import { Key, Keychains, KeyWithPriv } from "../types";
+import { BNConverter } from "../utils/common";
+import { BlockchainType } from "../blockchain";
+import { RecoveryKit } from "../recoverykit";
+import { EthMasterWallet, EthMasterWalletData } from "./wallet";
+import { Wallets } from "../wallets";
+import { toChecksum } from "./keychains";
+import { keccak256s } from "./eth-core-lib/hash";
+import { makeQueryString } from "../utils/url";
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -33,40 +33,40 @@ export class EthWallets implements Wallets {
     this.client = client;
     this.keychains = keychains;
     this.env = env;
-    this.baseUrl = '/wallets';
+    this.baseUrl = "/wallets";
   }
 
   public async getMasterWallet(id: string): Promise<EthMasterWallet> {
     const walletData = await this.client.get<EthMasterWalletData>(
-      `${this.baseUrl}/${id}`,
+      `${this.baseUrl}/${id}`
     );
 
     return new EthMasterWallet(this.client, walletData, this.keychains);
   }
 
   public async getMasterWallets(
-    options?: MasterWalletSearchOptions,
+    options?: MasterWalletSearchOptions
   ): Promise<EthMasterWallet[]> {
     const queryString: string = makeQueryString(options);
 
     const walletDatas = await this.client.get<EthMasterWalletData[]>(
-      `${this.baseUrl}${queryString ? `?${queryString}` : ''}`,
+      `${this.baseUrl}${queryString ? `?${queryString}` : ""}`
     );
 
     return walletDatas.map(
-      (x) => new EthMasterWallet(this.client, x, this.keychains),
+      (x) => new EthMasterWallet(this.client, x, this.keychains)
     );
   }
 
   public async createRecoveryKit(
     name: string,
     blockchain: BlockchainType,
-    passphrase: string,
+    passphrase: string
   ): Promise<RecoveryKit> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const henesisKeys = await this.client.get<any>('/organizations/me');
+    const henesisKeys = await this.client.get<any>("/organizations/me");
     let henesisKey: Key;
     switch (blockchain) {
       case BlockchainType.Ethereum:
@@ -78,7 +78,7 @@ export class EthWallets implements Wallets {
 
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
-      aes.encrypt(aesjs.utils.utf8.toBytes(passphrase)),
+      aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))
     );
 
     return new RecoveryKit(
@@ -89,12 +89,12 @@ export class EthWallets implements Wallets {
       backupKey,
       Base64.encode(encryptedPassphrase),
       aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
-      this.env,
+      this.env
     );
   }
 
   public async createMasterWalletWithKit(
-    recoveryKit: RecoveryKit,
+    recoveryKit: RecoveryKit
   ): Promise<EthMasterWallet> {
     const walletData = await this.client.post<EthMasterWalletData>(
       this.baseUrl,
@@ -104,7 +104,7 @@ export class EthWallets implements Wallets {
         accountKey: recoveryKit.getAccountKey(),
         backupKey: recoveryKit.getBackupKey(),
         encryptionKey: recoveryKit.getEncryptionKey(),
-      },
+      }
     );
 
     return new EthMasterWallet(this.client, walletData, this.keychains);
@@ -114,7 +114,7 @@ export class EthWallets implements Wallets {
     name: string,
     blockchain: BlockchainType,
     passphrase: string,
-    gasPrice?: BN,
+    gasPrice?: BN
   ): Promise<EthMasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
@@ -128,7 +128,7 @@ export class EthWallets implements Wallets {
         backupKey: this.removePrivateKey(backupKey),
         encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
         gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
-      },
+      }
     );
 
     return new EthMasterWallet(this.client, walletData, this.keychains);
@@ -158,7 +158,7 @@ export class EthWallets implements Wallets {
 
   private createEncryptionKey(p: string): Buffer {
     const randomHex = Web3.utils.randomHex(32);
-    return pbkdf2.pbkdf2Sync(p, randomHex, 1, 256 / 8, 'sha512');
+    return pbkdf2.pbkdf2Sync(p, randomHex, 1, 256 / 8, "sha512");
   }
 
   private removePrivateKey(key: KeyWithPriv): Key {

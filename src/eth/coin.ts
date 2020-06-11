@@ -1,10 +1,10 @@
-import BN from 'bn.js';
-import { Contract } from 'web3-eth-contract';
-import Web3 from 'web3';
-import { AbiItem } from 'web3-utils';
-import erc20 from '../contracts/ERC20.json';
-import eth from '../contracts/Eth.json';
-import klay from '../contracts/Klay.json';
+import BN from "bn.js";
+import { Contract } from "web3-eth-contract";
+import Web3 from "web3";
+import { AbiItem } from "web3-utils";
+import erc20 from "../contracts/ERC20.json";
+import eth from "../contracts/Eth.json";
+import klay from "../contracts/Klay.json";
 
 export abstract class Coin {
   abstract getName(): string;
@@ -56,7 +56,7 @@ export class Eth extends Coin {
   }
 
   getName(): string {
-    return 'ethereum';
+    return "ethereum";
   }
 
   buildData(to: string, amount: BN): string {
@@ -77,7 +77,7 @@ export class Klay extends Coin {
   }
 
   getName(): string {
-    return 'klay';
+    return "klay";
   }
 
   buildData(to: string, amount: BN): string {

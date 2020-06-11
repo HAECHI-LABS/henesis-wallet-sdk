@@ -1,10 +1,10 @@
-import PDFDocument from 'pdfkit';
-import QRCode from 'qrcode';
-import SVGtoPDF from 'svg-to-pdfkit';
-import { BlockchainType } from './blockchain';
-import { Key, KeyWithPriv } from './types';
-import { logo } from './resources/logo';
-import { Env } from './sdk';
+import PDFDocument from "pdfkit";
+import QRCode from "qrcode";
+import SVGtoPDF from "svg-to-pdfkit";
+import { BlockchainType } from "./blockchain";
+import { Key, KeyWithPriv } from "./types";
+import { logo } from "./resources/logo";
+import { Env } from "./sdk";
 
 export class RecoveryKit {
   private readonly name: string;
@@ -31,7 +31,7 @@ export class RecoveryKit {
     backupKey: KeyWithPriv,
     encryptedPassphrase: string,
     encryptionKey: string,
-    env: Env,
+    env: Env
   ) {
     this.name = name;
     this.blockchain = blockchain;
@@ -44,72 +44,72 @@ export class RecoveryKit {
   }
 
   async generatePdf(): Promise<PDFDocument> {
-    const docs = new PDFDocument({ size: 'A4' });
+    const docs = new PDFDocument({ size: "A4" });
     docs
-      .font('Helvetica')
+      .font("Helvetica")
       .fontSize(24)
-      .fillColor('#060607')
+      .fillColor("#060607")
       .text(this.name, 36, 36);
     // write wallet description
     docs
-      .font('Helvetica')
+      .font("Helvetica")
       .fontSize(10)
-      .fillColor('#3A4044')
+      .fillColor("#3A4044")
       .text(
-        `Platform : ${this.env == Env.Test ? 'Testnet' : ''} ${this.camelize(
-          this.blockchain,
+        `Platform : ${this.env == Env.Test ? "Testnet" : ""} ${this.camelize(
+          this.blockchain
         )}`,
         36,
-        76,
+        76
       )
       .text(`Created Time : ${this.getFormattedDate(new Date())}`, 36, 91);
     // write note
     docs
-      .font('Helvetica')
+      .font("Helvetica")
       .fontSize(9)
-      .fillColor('#F5405B')
+      .fillColor("#F5405B")
       .text(
-        'This is a Recovery Kit to recover your keys when you lost them. Print this document, or keep it securely offline.',
+        "This is a Recovery Kit to recover your keys when you lost them. Print this document, or keep it securely offline.",
         36,
         134,
-        { width: 305 },
+        { width: 305 }
       );
     // draw logo
     SVGtoPDF(docs, logo, 468, 36, {
       width: 91,
-      preserveAspectRatio: 'xMinYMin',
+      preserveAspectRatio: "xMinYMin",
     });
     await this.setQRCode(
       docs,
-      'A. Account Key',
-      'This is your private key, encrypted with your passphrase.',
+      "A. Account Key",
+      "This is your private key, encrypted with your passphrase.",
       this.accountKey.keyFile,
       36,
-      224,
+      224
     );
     await this.setQRCode(
       docs,
-      'B. Backup Key',
-      'This is your backup private key, encrypted with your passphrase.',
+      "B. Backup Key",
+      "This is your backup private key, encrypted with your passphrase.",
       this.backupKey.keyFile,
       36,
-      382,
+      382
     );
     await this.setQRCode(
       docs,
-      'C. Henesis Key',
-      'This is the public part of the key that Henesis will use to co-sign transactions with you on your wallet.',
+      "C. Henesis Key",
+      "This is the public part of the key that Henesis will use to co-sign transactions with you on your wallet.",
       this.henesisKey.address,
       36,
-      540,
+      540
     );
     await this.setQRCode(
       docs,
-      'D. Encrypted Wallet Passphrase',
-      'This is the wallet password, encrypted client-side with a key held by Henesis.',
+      "D. Encrypted Wallet Passphrase",
+      "This is the wallet password, encrypted client-side with a key held by Henesis.",
       this.encryptedPassphrase,
       36,
-      681,
+      681
     );
     docs.end();
     return docs;
@@ -121,29 +121,29 @@ export class RecoveryKit {
     desc: string,
     data: string,
     x: number,
-    y: number,
+    y: number
   ): Promise<void> {
     const qr = await QRCode.toString(data, {
-      type: 'svg',
-      color: { light: '0000' },
+      type: "svg",
+      color: { light: "0000" },
       margin: 0,
     });
     docs
-      .font('Helvetica')
+      .font("Helvetica")
       .fontSize(13)
-      .fillColor('#060607')
+      .fillColor("#060607")
       .text(name, x, y)
       .fontSize(9)
-      .fillColor('#748089')
+      .fillColor("#748089")
       .text(desc, x, docs.y + 3, { width: 340 })
-      .fillColor('#465365')
-      .text('Data : ', x, docs.y + 12)
-      .fillColor('#465365')
-      .text(data, x, docs.y + 5, { width: 390, align: 'justify' });
+      .fillColor("#465365")
+      .text("Data : ", x, docs.y + 12)
+      .fillColor("#465365")
+      .text(data, x, docs.y + 5, { width: 390, align: "justify" });
     SVGtoPDF(docs, qr, 453, y, {
       width: 105,
       height: 105,
-      preserveAspectRatio: 'xMinYMin',
+      preserveAspectRatio: "xMinYMin",
     });
   }
 

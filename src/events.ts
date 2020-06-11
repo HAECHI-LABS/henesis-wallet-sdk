@@ -1,8 +1,8 @@
-import * as BN from 'bn.js';
-import { PaginationOptions } from './types';
-import { BlockchainType } from './blockchain';
-import { ValueTransferEventDTO as BtcValueTransferEventDTO } from './__generate__/btc';
-import { ValueTransferEventDTO as EthValueTransferEventDTO } from './__generate__/eth';
+import * as BN from "bn.js";
+import { PaginationOptions } from "./types";
+import { BlockchainType } from "./blockchain";
+import { ValueTransferEventDTO as BtcValueTransferEventDTO } from "./__generate__/btc";
+import { ValueTransferEventDTO as EthValueTransferEventDTO } from "./__generate__/eth";
 
 export interface Event<S> {
   createdAt: string;
