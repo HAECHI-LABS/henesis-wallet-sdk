@@ -12,6 +12,7 @@
     "resources"
   ],
   "scripts": {
+    "node:example": "ts-node --files ./example/change-account-role.ts",
     "lint:fix": "eslint 'src/**/*.ts' '__tests__/**/*.ts' --fix",
     "codegen:btc": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i http://localhost:8080/v2/api-docs -l typescript-fetch -o ./src/__generate__/btc --type-mappings Date=string",
     "codegen:eth": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i https://dev.wallet.henesis.io/v2/api-docs -l typescript-fetch -o ./src/__generate__/eth --type-mappings Date=string",
@@ -79,7 +80,8 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.3",
     "nock": "^12.0.3",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "ts-node": "^8.10.2"
   },
   "gitHead": "ca83cd8dcac533beb9e12d76ed1047fb29d8aea7"
 }
