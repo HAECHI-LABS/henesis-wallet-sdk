@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.1...v1.1.2) (2020-06-11)
+
+
+### Bug Fixes
+
+* masterwalletdata interface ([6a9189b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6a9189b8b29b3f5ffbd8ed42a0bbaf0ac8302dc7))
+
+
+### Features
+
+* backup key pub to backup key without keyfile ([c3da14b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c3da14bb895b171c68478ad967e9d40e510797cc))
+* change backup key used to generate the masterwallet to backupkeypub ([fc13417](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/fc13417bf37f1e91c56ac9e570e84e0995b8b768))
+
+
+
+
+
 ## [1.1.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.0...v1.1.1) (2020-06-11)
 
 
