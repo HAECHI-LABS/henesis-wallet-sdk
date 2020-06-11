@@ -1,10 +1,10 @@
-import axios, { AxiosInstance } from 'axios';
-import hmacSHA256 from 'crypto-js/hmac-sha256';
-import Base64 from 'crypto-js/enc-base64';
+import axios, { AxiosInstance } from "axios";
+import hmacSHA256 from "crypto-js/hmac-sha256";
+import Base64 from "crypto-js/enc-base64";
 
-import { ObjectConverter } from './utils/common';
-import { BlockchainType } from './blockchain';
-import { makePrefixPathByBlockchainType } from './utils/url';
+import { ObjectConverter } from "./utils/common";
+import { BlockchainType } from "./blockchain";
+import { makePrefixPathByBlockchainType } from "./utils/url";
 
 export interface ClientOptions {
   accessToken: string;
@@ -48,23 +48,23 @@ export class HttpClient {
     });
 
     this.client.interceptors.request.use((config) => {
-      config.headers['If-Modified-Since'] = 'Mon, 26 Jul 1997 05:00:00 GMT';
+      config.headers["If-Modified-Since"] = "Mon, 26 Jul 1997 05:00:00 GMT";
       if (this.accessToken) {
         config.headers.Authorization = `Bearer ${this.accessToken}`;
       }
 
       const timestamp = Date.now();
       if (this.secret) {
-        let body = '';
+        let body = "";
         if (config.data) {
           body = JSON.stringify(config.data);
         }
         const path =
-          config.baseURL + config.url + (config.params ? config.params : '');
+          config.baseURL + config.url + (config.params ? config.params : "");
         const message = config.method.toUpperCase() + path + body + timestamp;
-        config.headers['X-Henesis-Signature'] = this.createSig(message);
+        config.headers["X-Henesis-Signature"] = this.createSig(message);
       }
-      config.headers['X-Henesis-Timestamp'] = timestamp;
+      config.headers["X-Henesis-Timestamp"] = timestamp;
       return config;
     });
 
@@ -82,10 +82,12 @@ export class HttpClient {
       },
       (error) => {
         if (error.response) {
-          error.response.data = ObjectConverter.toCamelCase(error.response.data)
+          error.response.data = ObjectConverter.toCamelCase(
+            error.response.data
+          );
         }
         return Promise.reject(error);
-      },
+      }
     );
 
     return new AxiosMethodProxy(this, this.client) as any;
@@ -98,7 +100,7 @@ export class HttpClient {
 
 export const enhancedBlockchainClient = (
   client: Client,
-  blockchain: BlockchainType,
+  blockchain: BlockchainType
 ): Client => {
   const prefixPath = makePrefixPathByBlockchainType(blockchain);
   return {

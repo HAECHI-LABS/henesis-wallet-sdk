@@ -1,5 +1,5 @@
-import express from 'express';
-import { MiddleWare } from '../types';
+import express from "express";
+import { MiddleWare } from "../types";
 
 export default abstract class AbstractController {
   protected router = express.Router();
@@ -8,14 +8,14 @@ export default abstract class AbstractController {
 
   protected promiseWrapper(
     promiseRequestHandler: Function,
-    successStatusCode?: number,
+    successStatusCode?: number
   ): MiddleWare {
     const self = this;
 
     return function (
       req: express.Request,
       res: express.Response,
-      next: express.NextFunction,
+      next: express.NextFunction
     ) {
       Promise.resolve(promiseRequestHandler.bind(self, req, res, next)())
         .then((result) => {
@@ -49,7 +49,7 @@ ${err.message}`);
     if (error instanceof Error) {
       return error;
     }
-    if (typeof error === 'string') {
+    if (typeof error === "string") {
       return new Error(error);
     }
     return new Error(JSON.stringify(error));

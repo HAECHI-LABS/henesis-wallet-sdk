@@ -1,5 +1,5 @@
-import { SDK } from '../src';
-import 'dotenv/config';
+import { SDK } from "../src";
+import "dotenv/config";
 
 async function main() {
   const sdk = new SDK({
@@ -8,7 +8,7 @@ async function main() {
     url: process.env.URL,
   });
 
-  await sdk.accounts.changePassword('password', 'password2');
+  await sdk.accounts.changePassword("password", "password2");
 }
 
-main().catch(e => console.error(e));
+main().catch((e) => console.error(e));

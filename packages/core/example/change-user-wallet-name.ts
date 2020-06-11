@@ -1,6 +1,6 @@
-import { SDK } from '../src';
-import { EthMasterWallet } from '../src/eth/wallet';
-import 'dotenv/config';
+import { SDK } from "../src";
+import { EthMasterWallet } from "../src/eth/wallet";
+import "dotenv/config";
 
 async function main() {
   const sdk = new SDK({
@@ -10,10 +10,10 @@ async function main() {
   });
 
   const wallet: EthMasterWallet = await sdk.eth.wallets.getMasterWallet(
-    '9efbb37b3cc2e78c389ad389ce9d05ef',
+    "9efbb37b3cc2e78c389ad389ce9d05ef"
   );
-  await wallet.changeName('name-changed');
+  await wallet.changeName("name-changed");
   console.log(wallet.getData());
 }
 
-main().catch(e => console.error(e));
+main().catch((e) => console.error(e));

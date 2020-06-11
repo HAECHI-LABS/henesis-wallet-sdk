@@ -1,7 +1,7 @@
-import { SDK } from '../src';
-import 'dotenv/config';
-import { BlockchainType } from '../src/blockchain';
-import { EthMasterWallet } from '../src/eth/wallet';
+import { SDK } from "../src";
+import "dotenv/config";
+import { BlockchainType } from "../src/blockchain";
+import { EthMasterWallet } from "../src/eth/wallet";
 
 async function main() {
   const sdk = new SDK({
@@ -11,12 +11,12 @@ async function main() {
   });
 
   const wallet: EthMasterWallet = await sdk.eth.wallets.createMasterWallet(
-    'wallet1',
+    "wallet1",
     BlockchainType.Klaytn,
-    'passphrase',
+    "passphrase"
   );
 
   console.log(wallet.getData());
 }
 
-main().catch(e => console.error(e));
+main().catch((e) => console.error(e));

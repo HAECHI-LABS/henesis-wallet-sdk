@@ -1,11 +1,11 @@
-import { EthWallets } from './wallets';
-import { Keychains } from '../types';
-import { EthEvents } from './events';
-import { Gasusages } from './gasusages';
-import { Transactions } from './transactions';
-import { Env } from '../sdk';
-import { Client } from '../httpClient';
-import { EthKeychains } from './keychains';
+import { EthWallets } from "./wallets";
+import { Keychains } from "../types";
+import { EthEvents } from "./events";
+import { Gasusages } from "./gasusages";
+import { Transactions } from "./transactions";
+import { Env } from "../sdk";
+import { Client } from "../httpClient";
+import { EthKeychains } from "./keychains";
 
 export interface ModuleOptions {
   client: Client;

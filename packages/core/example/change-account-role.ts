@@ -1,6 +1,6 @@
-import { SDK } from '../src';
-import 'dotenv/config';
-import { Role, Account } from '../src/accounts';
+import { SDK } from "../src";
+import "dotenv/config";
+import { Role, Account } from "../src/accounts";
 
 async function main() {
   const sdk = new SDK({
@@ -10,8 +10,8 @@ async function main() {
   });
 
   const account: Account = await sdk.organizations.changeAccountRole(
-    '9efbb37b3cc2e78c389ad389ce9d05ef',
-    Role.ADMIN,
+    "9efbb37b3cc2e78c389ad389ce9d05ef",
+    Role.ADMIN
   );
   console.log(account);
 }
