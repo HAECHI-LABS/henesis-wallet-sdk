@@ -34,6 +34,10 @@ export interface ValueTransferEvent extends Event {
 }
 
 export interface EventPaginationOptions extends PaginationOptions {
+  walletId?: string;
+  orgId?: string;
+  masterWalletId?: string;
+  transactionId?: string;
   transactionHash?: string;
   status?: EventStatusType;
   blockchain?: BlockchainType;
@@ -58,9 +62,7 @@ export class Events {
       : '';
 
     const data: Pagination<Event> = await this.client.get<Pagination<Event>>(
-      `/call-events${
-        queryString ? `?${queryString}&` : '?'
-      }wallet_id=${walletId}`,
+      `/call-events${queryString ? `?${queryString}` : ''}`,
     );
     return {
       pagination: data.pagination,
@@ -79,9 +81,7 @@ export class Events {
           .join('&')
       : '';
     const data = await this.client.get(
-      `/value-transfer-events${
-        queryString ? `?${queryString}&` : '?'
-      }wallet_id=${walletId}`,
+      `/value-transfer-events${queryString ? `?${queryString}` : ''}`,
     );
 
     return {

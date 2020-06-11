@@ -31,6 +31,7 @@ export interface PaginationOptions extends SearchOptions {
   page?: number;
   size?: number;
   sort?: string;
+  direction?: string;
 }
 
 export interface Pagination<T> {
