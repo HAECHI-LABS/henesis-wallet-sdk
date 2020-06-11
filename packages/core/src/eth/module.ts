@@ -6,10 +6,12 @@ import { Transactions } from "./transactions";
 import { Env } from "../sdk";
 import { Client } from "../httpClient";
 import { EthKeychains } from "./keychains";
+import { BlockchainType } from "../blockchain";
 
 export interface ModuleOptions {
   client: Client;
   env: Env;
+  blockchain: BlockchainType;
 }
 
 export class EthModule {
@@ -27,8 +29,13 @@ export class EthModule {
 
   constructor(options: ModuleOptions) {
     this.client = options.client;
-    this.keychains = new EthKeychains();
-    this.wallets = new EthWallets(this.client, this.keychains, options.env);
+    this.keychains = new EthKeychains(options.blockchain);
+    this.wallets = new EthWallets(
+      this.client,
+      this.keychains,
+      options.env,
+      options.blockchain
+    );
     this.events = new EthEvents(this.client);
     this.gasusages = new Gasusages(this.client);
     this.transactions = new Transactions(this.client);

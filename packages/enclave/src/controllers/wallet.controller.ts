@@ -145,7 +145,6 @@ export default class WalletController extends AbstractController
     return (
       await req.sdk.eth.wallets.createMasterWallet(
         req.body.name,
-        req.body.blockchain,
         req.body.passphrase,
         req.body.gasPrice
           ? BNConverter.hexStringToBN(req.body.gasPrice)

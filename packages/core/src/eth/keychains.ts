@@ -33,6 +33,12 @@ export const bytesToWord = (bytes?: Uint8Array): number =>
   bytes.reduce((num, byte) => num * 0x100 + byte, 0);
 
 export class EthKeychains implements Keychains {
+  private readonly blockchain: BlockchainType;
+
+  constructor(blockchain: BlockchainType) {
+    this.blockchain = blockchain;
+  }
+
   public create(password: string): KeyWithPriv {
     const entropy = crypto.randomBytes(512 / 8);
 
@@ -95,14 +101,11 @@ export class EthKeychains implements Keychains {
   }
 
   public signPayload(
-    blockchain: BlockchainType,
     hexPayload: string,
     keyFile: string,
     password: string
   ): string {
-    const hashedMessage = keccak256(
-      this.payloadToPrefixedMessage(blockchain, hexPayload)
-    );
+    const hashedMessage = keccak256(this.payloadToPrefixedMessage(hexPayload));
 
     const priv = this.decryptKeyFile(keyFile, password);
     const signature = secp256k1
@@ -116,11 +119,7 @@ export class EthKeychains implements Keychains {
     ]);
   }
 
-  public recoverAddressFromSignature(
-    blockchain: BlockchainType,
-    hexPayload: string,
-    signature: string
-  ) {
+  public recoverAddressFromSignature(hexPayload: string, signature: string) {
     const vals = decodeSignature(signature);
     const vrs = {
       v: Bytes.toNumber(vals[0]),
@@ -129,9 +128,7 @@ export class EthKeychains implements Keychains {
     };
     const ecPublicKey = secp256k1.recoverPubKey(
       Buffer.from(
-        keccak256(this.payloadToPrefixedMessage(blockchain, hexPayload)).slice(
-          2
-        ),
+        keccak256(this.payloadToPrefixedMessage(hexPayload)).slice(2),
         "hex"
       ),
       vrs,
@@ -162,14 +159,11 @@ export class EthKeychains implements Keychains {
     return sjcl.encrypt(password, privateKey, encryptOptions);
   }
 
-  private payloadToPrefixedMessage(
-    blockchain: BlockchainType,
-    hexPayload: string
-  ): Buffer {
+  private payloadToPrefixedMessage(hexPayload: string): Buffer {
     const hashedPayload = keccak256(hexPayload);
     const payloadBuffer = Buffer.from(hashedPayload.slice(2), "hex");
     const preambleBuffer = Buffer.from(
-      `\u0019${this.blockchainPrefix(blockchain)} Signed Message:\n${
+      `\u0019${this.blockchainPrefix(this.blockchain)} Signed Message:\n${
         payloadBuffer.length
       }`
     );

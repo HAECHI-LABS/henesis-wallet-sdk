@@ -29,11 +29,19 @@ export class EthWallets implements Wallets {
 
   private readonly baseUrl;
 
-  constructor(client: Client, keychains: Keychains, env: Env) {
+  private readonly blockchain: BlockchainType;
+
+  constructor(
+    client: Client,
+    keychains: Keychains,
+    env: Env,
+    blockchain: BlockchainType
+  ) {
     this.client = client;
     this.keychains = keychains;
     this.env = env;
     this.baseUrl = "/wallets";
+    this.blockchain = blockchain;
   }
 
   public async getMasterWallet(id: string): Promise<EthMasterWallet> {
@@ -60,7 +68,6 @@ export class EthWallets implements Wallets {
 
   public async createRecoveryKit(
     name: string,
-    blockchain: BlockchainType,
     passphrase: string
   ): Promise<RecoveryKit> {
     const accountKey = this.keychains.create(passphrase);
@@ -68,7 +75,7 @@ export class EthWallets implements Wallets {
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
     const henesisKeys = await this.client.get<any>("/organizations/me");
     let henesisKey: Key;
-    switch (blockchain) {
+    switch (this.blockchain) {
       case BlockchainType.Ethereum:
         henesisKey = henesisKeys.henesisEthKey;
         break;
@@ -83,7 +90,7 @@ export class EthWallets implements Wallets {
 
     return new RecoveryKit(
       name,
-      blockchain,
+      this.blockchain,
       henesisKey,
       accountKey,
       backupKey,
@@ -112,7 +119,6 @@ export class EthWallets implements Wallets {
 
   public async createMasterWallet(
     name: string,
-    blockchain: BlockchainType,
     passphrase: string,
     gasPrice?: BN
   ): Promise<EthMasterWallet> {
@@ -123,7 +129,7 @@ export class EthWallets implements Wallets {
       this.baseUrl,
       {
         name,
-        blockchain,
+        blockchain: this.blockchain,
         accountKey: this.removePrivateKey(accountKey),
         backupKey: this.removePrivateKey(backupKey),
         encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
