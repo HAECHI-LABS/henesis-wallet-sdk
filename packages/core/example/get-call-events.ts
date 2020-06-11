@@ -8,7 +8,8 @@ async function main() {
     url: "http://localhost:8080/api/v1"
   });
 
-  console.log(await sdk.events.getCallEvents("3be5351bd52626108326f9ec44b7b633",{
+  console.log(await sdk.events.getCallEvents({
+    walletId: "3be5351bd52626108326f9ec44b7b633",
     transactionHash: "0x123"
   }));
 }

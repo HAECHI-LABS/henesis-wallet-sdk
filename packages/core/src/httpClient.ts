@@ -76,7 +76,9 @@ export class HttpClient {
       },
       (error) => {
         if (error.response) {
-          error.response.data = ObjectConverter.toCamelCase(error.response.data);
+          error.response.data = ObjectConverter.toCamelCase(
+            error.response.data,
+          );
         }
         return Promise.reject(error);
       },
