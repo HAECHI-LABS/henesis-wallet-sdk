@@ -135,6 +135,9 @@ export abstract class Wallet {
 
 export abstract class EthLikeWallet extends Wallet {
   protected masterWalletData: MasterWalletData;
+  protected readonly DEFAULT_CONTRACT_CALL_GAS_LIMIT: BN = new BN(1000000);
+  protected readonly DEFAULT_COIN_TRANSFER_GAS_LIMIT: BN = new BN(150000);
+  protected readonly DEFAULT_TOKEN_TRANSFER_GAS_LIMIT: BN = new BN(500000);
 
   protected constructor(
     client: Client,
@@ -205,7 +208,7 @@ export abstract class EthLikeWallet extends Wallet {
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit,
+      gasLimit || this.DEFAULT_CONTRACT_CALL_GAS_LIMIT,
     );
   }
 
@@ -247,7 +250,7 @@ export abstract class EthLikeWallet extends Wallet {
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit,
+      gasLimit || this.getGasLimitByTicker(ticker),
     );
   }
 
@@ -359,6 +362,13 @@ export abstract class EthLikeWallet extends Wallet {
       `${this.baseUrl}/${this.masterWalletData.id}/nonce`,
     );
     return BNConverter.hexStringToBN(nonce.nonce);
+  }
+
+  protected getGasLimitByTicker(ticker: string): BN {
+    if (ticker.toUpperCase() === 'ETH' || ticker.toUpperCase() === 'KLAY') {
+      return this.DEFAULT_COIN_TRANSFER_GAS_LIMIT;
+    }
+    return this.DEFAULT_TOKEN_TRANSFER_GAS_LIMIT;
   }
 }
 
