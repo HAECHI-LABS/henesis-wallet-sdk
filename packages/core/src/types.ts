@@ -1,5 +1,5 @@
-import BN from 'bn.js';
-import { BlockchainType } from './blockchain';
+import BN from "bn.js";
+import { BlockchainType } from "./blockchain";
 
 export interface Keychains {
   create(password: string): KeyWithPriv;
@@ -7,7 +7,7 @@ export interface Keychains {
   changePassword(
     keyFile: string,
     password: string,
-    newPassword: string,
+    newPassword: string
   ): KeyWithPriv;
 
   decryptKeyFile(keyFile: string, password: string): string;
@@ -16,13 +16,13 @@ export interface Keychains {
     blockchain: BlockchainType,
     hexPayload: string,
     keyFile: string,
-    password: string,
+    password: string
   ): string;
 
   recoverAddressFromSignature(
     blockchain: BlockchainType,
     hexPayload: string,
-    signature: string,
+    signature: string
   ): string;
 }
 

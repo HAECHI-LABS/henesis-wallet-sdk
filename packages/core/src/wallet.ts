@@ -1,7 +1,7 @@
-import BN from 'bn.js';
-import { Client } from './httpClient';
-import { BlockchainType } from './blockchain';
-import { Keychains, Balance } from './types';
+import BN from "bn.js";
+import { Client } from "./httpClient";
+import { BlockchainType } from "./blockchain";
+import { Keychains, Balance } from "./types";
 
 export interface WalletData {
   id: string;
@@ -13,14 +13,14 @@ export interface WalletData {
 }
 
 export enum WalletStatus {
-  Inactive = 'INACTIVE',
-  Active = 'ACTIVE',
+  Inactive = "INACTIVE",
+  Active = "ACTIVE",
 }
 
 export abstract class Wallet<T, K> {
   protected readonly client: Client;
 
-  protected readonly baseUrl = '/wallets';
+  protected readonly baseUrl = "/wallets";
 
   protected readonly keychains: K;
 
@@ -36,7 +36,7 @@ export abstract class Wallet<T, K> {
     to: string,
     amount: BN,
     passphrase: string,
-    otpCode?: string,
+    otpCode?: string
   ): Promise<T>;
 
   abstract getBalance(): Promise<Balance[]>;

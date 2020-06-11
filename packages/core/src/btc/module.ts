@@ -1,5 +1,5 @@
-import { Client } from '../httpClient';
-import { ModuleOptions } from '../module';
+import { Client } from "../httpClient";
+import { ModuleOptions } from "../module";
 import { BtcWallets } from "./wallets";
 import { BtcKeychains, DefaultBtcKeyChains } from "./keychains";
 import { BtcEvents } from "./events";
@@ -10,7 +10,7 @@ export class BtcModule {
   public readonly keychains: BtcKeychains;
 
   public readonly events: BtcEvents;
-  
+
   private readonly client: Client;
 
   constructor(options: ModuleOptions) {

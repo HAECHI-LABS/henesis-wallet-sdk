@@ -1,6 +1,6 @@
-import { SDK } from '../src';
-import { AccountWithOTP } from '../src/accounts';
-import 'dotenv/config';
+import { SDK } from "../src";
+import { AccountWithOTP } from "../src/accounts";
+import "dotenv/config";
 
 async function main() {
   const sdk = new SDK({
@@ -13,4 +13,4 @@ async function main() {
   console.log(accountWithOTP);
 }
 
-main().catch(e => console.error(e));
+main().catch((e) => console.error(e));

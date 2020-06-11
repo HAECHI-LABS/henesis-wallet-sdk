@@ -1,4 +1,4 @@
-import { SignedMultiSigPayload } from './transactions';
+import { SignedMultiSigPayload } from "./transactions";
 
 export default class BatchRequest {
   private readonly batchRequest: Function;

@@ -1,5 +1,5 @@
-import { Env } from './sdk';
-import { Client } from './httpClient';
+import { Env } from "./sdk";
+import { Client } from "./httpClient";
 
 export interface ModuleOptions {
   client: Client;
