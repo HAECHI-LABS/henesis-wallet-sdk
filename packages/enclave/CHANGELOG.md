@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.5...v1.1.6) (2020-06-12)
+
+
+### Bug Fixes
+
+* delete events wallet id query param ([798677d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/798677d79c0382af478170c237b4064b52c8a18d))
+
+
+
+
+
 ## [1.1.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.4...v1.1.5) (2020-06-11)
 
 
