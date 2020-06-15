@@ -99,7 +99,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
       amount
     );
     const tx = new BitcoinTransaction();
-    rawTransaction.inputs.forEach((input) => {
+    rawTransaction.inputs.forEach(input => {
       tx.addInput(
         new Buffer(
           new Buffer(
@@ -111,7 +111,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
       );
     });
 
-    rawTransaction.outputs.forEach((output) => {
+    rawTransaction.outputs.forEach(output => {
       tx.addOutput(
         address.toOutputScript(output.to, networks.testnet),
         new BN(output.amount.slice(2), "hex").toNumber()

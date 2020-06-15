@@ -10,9 +10,9 @@ describe('string', () => {
     });
 
     it('should make toCamelCase', () => {
-        expect(toSnakeCase('to_camel_case')).toEqual('toCamelCase');
-        expect(toSnakeCase('toCamelCase')).toEqual('toCamelCase');
-        expect(toSnakeCase('tocamelcase')).toEqual('tocamelcase');
-      });
+      expect(toSnakeCase('to_camel_case')).toEqual('toCamelCase');
+      expect(toSnakeCase('toCamelCase')).toEqual('toCamelCase');
+      expect(toSnakeCase('tocamelcase')).toEqual('tocamelcase');
+    });
   });
 });

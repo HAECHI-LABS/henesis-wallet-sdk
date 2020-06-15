@@ -466,7 +466,7 @@ export class EthMasterWallet extends EthLikeWallet {
       `${this.baseUrl}/${this.masterWalletData.id}/balance`
     );
 
-    return balances.map((balance) => ({
+    return balances.map(balance => ({
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(balance.amount),
       coinType: balance.coinType,
@@ -486,7 +486,6 @@ export class EthMasterWallet extends EthLikeWallet {
     options?: UserWalletPaginationOptions
   ): Promise<Pagination<EthUserWallet>> {
     const queryString: string = makeQueryString(options);
-
     const data: Pagination<EthUserWalletData> = await this.client.get<
       Pagination<EthUserWalletData>
     >(
@@ -496,7 +495,7 @@ export class EthMasterWallet extends EthLikeWallet {
     return {
       pagination: data.pagination,
       results: data.results.map(
-        (data) =>
+        data =>
           new EthUserWallet(
             this.client,
             this.masterWalletData,
@@ -553,7 +552,7 @@ export class EthUserWallet extends EthLikeWallet {
       `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/balance`
     );
 
-    return balances.map((balance) => ({
+    return balances.map(balance => ({
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(balance.amount),
       coinType: balance.coinType,
