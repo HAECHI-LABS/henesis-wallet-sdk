@@ -14,6 +14,7 @@ import { Wallets } from "../wallets";
 import { toChecksum } from "./keychains";
 import { keccak256s } from "./eth-core-lib/hash";
 import { makeQueryString } from "../utils/url";
+import _ from "lodash";
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -102,7 +103,7 @@ export class EthWallets implements Wallets {
         name: recoveryKit.getName(),
         blockchain: recoveryKit.getBlockchain(),
         accountKey: recoveryKit.getAccountKey(),
-        backupKey: recoveryKit.getBackupKey(),
+        backupKey: this.removeKeyFile(recoveryKit.getBackupKey()),
         encryptionKey: recoveryKit.getEncryptionKey(),
       }
     );
@@ -125,7 +126,7 @@ export class EthWallets implements Wallets {
         name,
         blockchain,
         accountKey: this.removePrivateKey(accountKey),
-        backupKey: this.removePrivateKey(backupKey),
+        backupKey: this.removeKeyFile(this.removePrivateKey(backupKey)),
         encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
         gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
       }
@@ -167,5 +168,9 @@ export class EthWallets implements Wallets {
       pub: key.pub,
       keyFile: key.keyFile,
     };
+  }
+
+  private removeKeyFile(key: KeyWithPriv | Key): KeyWithPriv | Key {
+    return _.omit(key, 'keyFile');
   }
 }
