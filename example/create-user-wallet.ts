@@ -10,7 +10,7 @@ async function main() {
   });
 
   const wallet: EthMasterWallet = await sdk.eth.wallets.getMasterWallet(
-    "3be5351bd52626108326f9ec44b7b633"
+    "4b0945c3e21d6fba4703d56c94a786de"
   );
   const userWallet: EthUserWallet = await wallet.createUserWallet(
     "wallet",

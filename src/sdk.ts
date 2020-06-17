@@ -29,7 +29,7 @@ export class SDK {
 
   public readonly klay: KlayModule;
 
-  private readonly btc: BtcModule;
+  public readonly btc: BtcModule;
 
   private readonly client: Client;
 
