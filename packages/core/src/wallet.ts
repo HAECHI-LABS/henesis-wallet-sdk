@@ -10,6 +10,8 @@ export interface WalletData {
   blockchain: BlockchainType;
   createdAt: string;
   status: WalletStatus;
+  transactionId: string;
+  error: string | null;
 }
 
 export enum WalletStatus {
