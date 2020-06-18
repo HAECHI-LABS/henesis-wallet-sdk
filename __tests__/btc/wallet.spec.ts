@@ -96,7 +96,7 @@ describe.skip('BtcMasterWallet', () => {
         'a3c2f4128427658ec4dcb668ec799c65',
       );
       const txs = await wallet.getTransactions();
-      txs.results.forEach((tx) => {
+      txs.results.forEach(tx => {
         console.log(tx);
       });
     });

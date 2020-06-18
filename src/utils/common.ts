@@ -16,7 +16,7 @@ export class ObjectConverter {
 
   static changeObjectProperty(o, converter: (obj: any) => any) {
     if (Array.isArray(o)) {
-      return o.map((i) => this.changeObjectProperty(i, converter));
+      return o.map(i => this.changeObjectProperty(i, converter));
     }
 
     if (typeof o === "object") {
@@ -25,7 +25,7 @@ export class ObjectConverter {
       }
       const n = {};
 
-      Object.keys(o).forEach((k) => {
+      Object.keys(o).forEach(k => {
         n[converter(k)] = this.changeObjectProperty(o[k], converter);
       });
       return n;

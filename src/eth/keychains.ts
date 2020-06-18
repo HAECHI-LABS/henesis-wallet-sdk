@@ -11,13 +11,13 @@ const secp256k1 = new elliptic.ec("secp256k1"); // eslint-disable-line
 const BASE_V_VALUE = 27;
 
 export const encodeSignature = ([v, r, s]) => Bytes.flatten([r, s, v]);
-export const decodeSignature = (hex) => [
+export const decodeSignature = hex => [
   Bytes.slice(64, Bytes.length(hex), hex),
   Bytes.slice(0, 32, hex),
   Bytes.slice(32, 64, hex),
 ];
 
-export const toChecksum = (address) => {
+export const toChecksum = address => {
   const addressHash = keccak256s(address.slice(2));
   let checksumAddress = "0x";
   for (let i = 0; i < 40; i++) {

@@ -22,7 +22,6 @@ export class EthEvents {
     options?: EthEventPaginationOptions
   ): Promise<Pagination<EthEvent>> {
     const queryString: string = makeQueryString(options);
-
     const data: Pagination<EthEvent> = await this.client.get<
       Pagination<EthEvent>
     >(
@@ -41,7 +40,6 @@ export class EthEvents {
     options?: EthEventPaginationOptions
   ): Promise<Pagination<EthValueTransferEvent>> {
     const queryString: string = makeQueryString(options);
-
     const data: NoUndefinedField<PaginationValueTransferEventDTO> = await this.client.get(
       `/value-transfer-events${
         queryString ? `?${queryString}&` : "?"
@@ -50,7 +48,7 @@ export class EthEvents {
 
     return {
       pagination: data.pagination,
-      results: data.results.map((e) => {
+      results: data.results.map(e => {
         return {
           ...e,
           amount: BNConverter.hexStringToBN(String(e.amount)),
