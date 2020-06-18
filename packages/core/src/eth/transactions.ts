@@ -73,7 +73,6 @@ export class Transactions {
     options?: TransactionPaginationOptions
   ): Promise<Pagination<Transaction>> {
     const queryString: string = makeQueryString(options);
-
     const data: Pagination<Transaction> = await this.client.get<
       Pagination<Transaction>
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);

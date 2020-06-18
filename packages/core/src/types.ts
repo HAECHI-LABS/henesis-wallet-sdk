@@ -36,7 +36,7 @@ export interface Balance {
 export interface Key {
   address?: string;
   pub: string;
-  keyFile: string;
+  keyFile?: string;
 }
 
 export interface KeyWithPriv extends Key {
