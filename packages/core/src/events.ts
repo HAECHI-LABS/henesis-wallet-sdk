@@ -5,6 +5,8 @@ import { BNConverter, toSnakeCase } from './utils';
 import { BlockchainType } from './blockchain';
 
 export interface Event {
+  id: number;
+  transactionId: string;
   createdAt: string;
   status: EventStatusType;
   toAddress: string;
