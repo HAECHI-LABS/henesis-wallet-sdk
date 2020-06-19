@@ -48,4 +48,24 @@ export abstract class Wallet<T, K> {
   abstract getId(): string;
 
   abstract changeName(name: string);
+
+  abstract restorePassphrase(
+    encryptedPassphrase: string,
+    newPassphrase: string,
+    otpCode?: string
+  ): Promise<void>
+
+  abstract changePassphrase(
+    passphrase: string,
+    newPassphrase: string,
+    otpCode?: string
+  ): Promise<void>;
+
+  abstract verifyPassphrase(
+    passphrase: string
+  ): Promise<boolean>;
+
+  abstract verifyEncryptedPassphrase(
+    encryptedPassphrase: string
+  ): Promise<boolean>;
 }

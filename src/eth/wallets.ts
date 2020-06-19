@@ -6,29 +6,23 @@ import pbkdf2 from "pbkdf2";
 import { Env } from "../sdk";
 import { Client } from "../httpClient";
 import { Key, Keychains, KeyWithPriv } from "../types";
-import { BNConverter } from "../utils/common";
 import { BlockchainType } from "../blockchain";
 import { RecoveryKit } from "../recoverykit";
 import { EthMasterWallet, EthMasterWalletData } from "./wallet";
 import { Wallets } from "../wallets";
-import { toChecksum } from "./keychains";
+import { EthKeychains, toChecksum } from "./keychains";
 import { keccak256s } from "./eth-core-lib/hash";
 import { makeQueryString } from "../utils/url";
 import _ from "lodash";
+import { BNConverter } from "../utils/common";
 
 export interface MasterWalletSearchOptions {
   name?: string;
   orgId?: string;
 }
 
-export class EthWallets implements Wallets {
-  private readonly client: Client;
-
-  private readonly keychains: Keychains;
-
+export class EthWallets extends Wallets<EthMasterWallet, Keychains> {
   private readonly env: Env;
-
-  private readonly baseUrl;
 
   private readonly blockchain: BlockchainType;
 
@@ -38,10 +32,8 @@ export class EthWallets implements Wallets {
     env: Env,
     blockchain: BlockchainType
   ) {
-    this.client = client;
-    this.keychains = keychains;
+    super(client, keychains);
     this.env = env;
-    this.baseUrl = "/wallets";
     this.blockchain = blockchain;
   }
 
@@ -100,7 +92,6 @@ export class EthWallets implements Wallets {
       this.baseUrl,
       {
         name: recoveryKit.getName(),
-        blockchain: recoveryKit.getBlockchain(),
         accountKey: recoveryKit.getAccountKey(),
         backupKey: this.removeKeyFile(recoveryKit.getBackupKey()),
         encryptionKey: recoveryKit.getEncryptionKey(),
@@ -126,7 +117,7 @@ export class EthWallets implements Wallets {
         accountKey: this.removePrivateKey(accountKey),
         backupKey: this.removeKeyFile(this.removePrivateKey(backupKey)),
         encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
-        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined
       }
     );
 
@@ -164,7 +155,7 @@ export class EthWallets implements Wallets {
     return {
       address: key.address,
       pub: key.pub,
-      keyFile: key.keyFile,
+      keyFile: key.keyFile
     };
   }
 

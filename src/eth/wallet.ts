@@ -1,4 +1,4 @@
-import { Contract } from "web3-eth-contract";
+import { Contract } from "web3-eth-contract/";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import BN from "bn.js";
@@ -16,11 +16,9 @@ import {
 } from "../types";
 import { MultiSigPayload, SignedMultiSigPayload } from "./transactions";
 import { Client } from "../httpClient";
-import { toChecksum } from "./keychains";
 import BatchRequest from "./batch";
 import wallet from "../contracts/MasterWallet.json";
 import Bytes from "./eth-core-lib/bytes";
-import { keccak256s } from "./eth-core-lib/hash";
 import { BNConverter, ObjectConverter } from "../utils/common";
 import { WalletData, Wallet } from "../wallet";
 import { makeQueryString } from "../utils/url";
@@ -66,6 +64,7 @@ function convertSignedMultiSigPayloadToDTO(
     },
   };
 }
+
 export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
   protected masterWalletData: EthMasterWalletData;
 
@@ -372,7 +371,7 @@ export class EthMasterWallet extends EthLikeWallet {
     );
   }
 
-  async changePassphraseWithKeyFile(
+  private async changePassphraseWithKeyFile(
     passphrase: string,
     newPassphrase: string,
     initialKey?: Key,
@@ -581,5 +580,21 @@ export class EthUserWallet extends EthLikeWallet {
       }
     );
     this.userWalletData.name = userWalletData.name;
+  }
+
+  changePassphrase(passphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
+    throw new Error("unimplemented method");
+  }
+
+  restorePassphrase(encryptedPassphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
+    throw new Error("unimplemented method");
+  }
+
+  verifyEncryptedPassphrase(encryptedPassphrase: string): Promise<boolean> {
+    throw new Error("unimplemented method");
+  }
+
+  verifyPassphrase(passphrase: string): Promise<boolean> {
+    throw new Error("unimplemented method");
   }
 }
