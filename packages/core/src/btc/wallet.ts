@@ -231,4 +231,20 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
     });
     this.data.name = btcWalletData.name;
   }
+
+  changePassphrase(passphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
+    return undefined;
+  }
+
+  restorePassphrase(encryptedPassphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
+    return undefined;
+  }
+
+  verifyEncryptedPassphrase(encryptedPassphrase: string): Promise<boolean> {
+    return undefined;
+  }
+
+  verifyPassphrase(passphrase: string): Promise<boolean> {
+    return undefined;
+  }
 }

@@ -4,7 +4,7 @@ import BN from 'bn.js';
 import { BtcTransaction } from '../../src/btc/wallet';
 import { DefaultBtcKeyChains } from '../../src/btc/keychains';
 
-describe.skip('BtcMasterWallet', () => {
+describe('BtcMasterWallet', () => {
   jest.setTimeout(50000);
   describe('#transfer()', () => {
     it('should transfer btc', async () => {
@@ -21,8 +21,8 @@ describe.skip('BtcMasterWallet', () => {
       );
       const tx: BtcTransaction = await wallet.transfer(
         'BTC',
-        'muc44mqyMmztJUPQ6YEKcj87EqqJdmbeiq',
-        new BN(50000),
+        '2MvPC2ir2mxwjL3cc4LUosPQqu45YnQknSt',
+        new BN(1000),
         'passphrase',
       );
 
