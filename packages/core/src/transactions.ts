@@ -14,6 +14,7 @@ export interface Transaction {
   signedMultiSigPayload: SignedMultiSigPayload;
   rawTransaction: RawTransaction;
   status: TransactionStatus;
+  createdAt: string;
 }
 
 export interface TransactionPaginationOptions extends PaginationOptions {
