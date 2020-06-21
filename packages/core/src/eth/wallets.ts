@@ -21,7 +21,7 @@ export interface MasterWalletSearchOptions {
   orgId?: string;
 }
 
-export class EthWallets extends Wallets<EthMasterWallet, Keychains> {
+export class EthWallets extends Wallets<EthMasterWallet> {
   private readonly env: Env;
 
   private readonly blockchain: BlockchainType;

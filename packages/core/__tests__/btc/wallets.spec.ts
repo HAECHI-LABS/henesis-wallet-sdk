@@ -1,6 +1,6 @@
 import { BtcWallets } from '../../src/btc/wallets';
 import { HttpClient } from '../../src/httpClient';
-import { DefaultBtcKeyChains } from '../../src/btc/keychains';
+import { BtcKeyChains } from '../../src/btc/keychains';
 
 describe.skip('BtcWallets', () => {
   describe('#createMasterWallet()', () => {
@@ -11,7 +11,7 @@ describe.skip('BtcWallets', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new DefaultBtcKeyChains(),
+        new BtcKeyChains(),
       );
 
       const masterWallet = await wallets.createMasterWallet(

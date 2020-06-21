@@ -65,7 +65,7 @@ function convertSignedMultiSigPayloadToDTO(
   };
 }
 
-export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
+export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   protected masterWalletData: EthMasterWalletData;
 
   protected constructor(
@@ -209,10 +209,10 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction, Keychains> {
       Bytes.fromNat(`0x${multiSigPayload.walletNonce.toString(16)}`)
     ).slice(2)}${multiSigPayload.hexData.slice(2)}`;
 
-    return this.keychains.signPayload(
-      payload,
-      this.masterWalletData.accountKey.keyFile,
-      passphrase
+    return this.keychains.sign(
+      this.masterWalletData.accountKey,
+      passphrase,
+      payload
     );
   }
 
@@ -346,12 +346,9 @@ export class EthMasterWallet extends EthLikeWallet {
     initialKey?: Key
   ): Promise<boolean> {
     try {
-      this.keychains.decryptKeyFile(
-        initialKey
-          ? initialKey.keyFile
-          : this.masterWalletData.accountKey.keyFile,
-        passphrase
-      );
+      this.keychains.decrypt(initialKey
+        ? initialKey
+        : this.masterWalletData.accountKey, passphrase);
       return true;
     } catch (e) {
       return false;
@@ -377,13 +374,9 @@ export class EthMasterWallet extends EthLikeWallet {
     initialKey?: Key,
     otpCode?: string
   ): Promise<void> {
-    const newKey: KeyWithPriv = this.keychains.changePassword(
-      initialKey
-        ? initialKey.keyFile
-        : this.masterWalletData.accountKey.keyFile,
-      passphrase,
-      newPassphrase
-    );
+    const newKey: KeyWithPriv = this.keychains.changePassword(initialKey
+      ? initialKey
+      : this.masterWalletData.accountKey, passphrase, newPassphrase);
 
     this.masterWalletData.accountKey = await this.client.patch<Key>(
       `${this.baseUrl}/${this.masterWalletData.id}/account-key`,

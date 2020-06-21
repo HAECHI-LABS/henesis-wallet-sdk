@@ -30,7 +30,7 @@
     "@types/bip38": "^2.0.1",
     "@types/bitcoinjs-lib": "^5.0.0",
     "@types/crypto-js": "^3.1.45",
-    "@types/jest": "^24.0.15",
+    "@types/jest": "^24.9.1",
     "@types/lodash": "^4.14.155",
     "@types/wif": "^2.0.1",
     "aes-js": "^3.1.2",
