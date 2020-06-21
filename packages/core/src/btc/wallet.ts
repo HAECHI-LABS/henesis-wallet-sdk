@@ -1,7 +1,6 @@
 import { Client } from "../httpClient";
-import { BtcKeychains } from "./keychains";
 import BN from "bn.js";
-import { Balance, Key, Pagination } from "../types";
+import { Balance, Key, Keychains, Pagination } from "../types";
 import {
   address,
   Transaction as BitcoinTransaction,
@@ -75,13 +74,13 @@ export interface BtcTransaction {
 
 export type DepositAddress = DepositAddressDTO;
 
-export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
+export class BtcMasterWallet extends Wallet<BtcTransaction> {
   private readonly data: BtcMasterWalletData;
 
   public constructor(
     data: BtcMasterWalletData,
     client: Client,
-    keychains: BtcKeychains
+    keychains: Keychains
   ) {
     super(client, keychains);
     this.data = data;
@@ -125,13 +124,13 @@ export class BtcMasterWallet extends Wallet<BtcTransaction, BtcKeychains> {
         new Buffer(rawTransaction.inputs[i].redeemScript.slice(2), "hex"),
         BitcoinTransaction.SIGHASH_ALL
       );
-      const hash: Buffer = this.keychains.sign(
+      const hexHash: string = this.keychains.sign(
         this.data.accountKey,
         passphrase,
-        sigHash
+        sigHash.toString('hex')
       );
       const accountSig = script.signature
-        .encode(hash, BitcoinTransaction.SIGHASH_ALL)
+        .encode(Buffer.from(hexHash, "hex"), BitcoinTransaction.SIGHASH_ALL)
         .toString("hex");
       accountSigs.push(accountSig);
     }

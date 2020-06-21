@@ -2,15 +2,16 @@ import { MasterWalletSearchOptions } from "./eth";
 import { RecoveryKit } from "./recoverykit";
 import { EthMasterWallet } from "./eth/wallet";
 import { Client } from "./httpClient";
+import { Keychains } from "./types";
 
-export abstract class Wallets<T, K> {
+export abstract class Wallets<T> {
   protected readonly baseUrl = "/wallets";
 
   protected readonly client: Client;
 
-  protected readonly keychains: K;
+  protected readonly keychains: Keychains;
 
-  protected constructor(client: Client, keychains: K) {
+  protected constructor(client: Client, keychains: Keychains) {
     this.client = client;
     this.keychains = keychains;
   }
