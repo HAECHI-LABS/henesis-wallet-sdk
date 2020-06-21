@@ -4,16 +4,14 @@ export interface Keychains {
   create(password: string): KeyWithPriv;
 
   changePassword(
-    keyFile: string,
+    key: Key,
     password: string,
     newPassword: string
   ): KeyWithPriv;
 
-  decryptKeyFile(keyFile: string, password: string): string;
+  decrypt(key: Key, password: string): string;
 
-  signPayload(hexPayload: string, keyFile: string, password: string): string;
-
-  recoverAddressFromSignature(hexPayload: string, signature: string): string;
+  sign(key: Key, password: string, hexPayload: string): string;
 }
 
 export interface Balance {

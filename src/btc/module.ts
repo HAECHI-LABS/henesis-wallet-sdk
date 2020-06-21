@@ -1,13 +1,13 @@
 import { Client } from "../httpClient";
 import { ModuleOptions } from "../module";
 import { BtcWallets } from "./wallets";
-import { BtcKeychains, DefaultBtcKeyChains } from "./keychains";
+import { BtcKeyChains } from "./keychains";
 import { BtcEvents } from "./events";
 
 export class BtcModule {
   public readonly wallets: BtcWallets;
 
-  public readonly keychains: BtcKeychains;
+  public readonly keychains: BtcKeyChains;
 
   public readonly events: BtcEvents;
 
@@ -15,7 +15,7 @@ export class BtcModule {
 
   constructor(options: ModuleOptions) {
     this.client = options.client;
-    this.keychains = new DefaultBtcKeyChains();
+    this.keychains = new BtcKeyChains();
     this.wallets = new BtcWallets(this.client, this.keychains);
     this.events = new BtcEvents(this.client);
   }

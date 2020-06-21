@@ -2,7 +2,7 @@ import { BtcWallets } from '../../src/btc/wallets';
 import { HttpClient } from '../../src/httpClient';
 import BN from 'bn.js';
 import { BtcTransaction } from '../../src/btc/wallet';
-import { DefaultBtcKeyChains } from '../../src/btc/keychains';
+import { BtcKeyChains } from '../../src/btc/keychains';
 
 describe('BtcMasterWallet', () => {
   jest.setTimeout(50000);
@@ -14,7 +14,7 @@ describe('BtcMasterWallet', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new DefaultBtcKeyChains(),
+        new BtcKeyChains(),
       );
       const wallet = await wallets.getWallet(
         'a3c2f4128427658ec4dcb668ec799c65',
@@ -38,7 +38,7 @@ describe('BtcMasterWallet', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new DefaultBtcKeyChains(),
+        new BtcKeyChains(),
       );
       const wallet = await wallets.getWallet(
         'a3c2f4128427658ec4dcb668ec799c65',
@@ -54,7 +54,7 @@ describe('BtcMasterWallet', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new DefaultBtcKeyChains(),
+        new BtcKeyChains(),
       );
       const wallet = await wallets.getWallet(
         'a3c2f4128427658ec4dcb668ec799c65',
@@ -72,7 +72,7 @@ describe('BtcMasterWallet', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new DefaultBtcKeyChains(),
+        new BtcKeyChains(),
       );
       const wallet = await wallets.getWallet(
         'a3c2f4128427658ec4dcb668ec799c65',
@@ -90,7 +90,7 @@ describe('BtcMasterWallet', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new DefaultBtcKeyChains(),
+        new BtcKeyChains(),
       );
       const wallet = await wallets.getWallet(
         'a3c2f4128427658ec4dcb668ec799c65',
