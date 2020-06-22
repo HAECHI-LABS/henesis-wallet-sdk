@@ -1,9 +1,8 @@
-import * as BN from "bn.js";
 import { Pagination } from "../types";
 import { Client } from "../httpClient";
 import { BNConverter } from "../utils/common";
 import {
-  EthEvent,
+  EthCallEvent,
   EthEventPaginationOptions,
   EthValueTransferEvent,
 } from "../events";
@@ -18,17 +17,12 @@ export class EthEvents {
   }
 
   public async getCallEvents(
-    walletId: string,
     options?: EthEventPaginationOptions
-  ): Promise<Pagination<EthEvent>> {
+  ): Promise<Pagination<EthCallEvent>> {
     const queryString: string = makeQueryString(options);
-    const data: Pagination<EthEvent> = await this.client.get<
-      Pagination<EthEvent>
-    >(
-      `/call-events${
-        queryString ? `?${queryString}&` : "?"
-      }wallet_id=${walletId}`
-    );
+    const data: Pagination<EthCallEvent> = await this.client.get<
+      Pagination<EthCallEvent>
+    >(`/call-events${queryString ? `?${queryString}` : ""}`);
     return {
       pagination: data.pagination,
       results: data.results,
@@ -36,14 +30,11 @@ export class EthEvents {
   }
 
   public async getValueTransferEvents(
-    walletId: string,
     options?: EthEventPaginationOptions
   ): Promise<Pagination<EthValueTransferEvent>> {
     const queryString: string = makeQueryString(options);
     const data: NoUndefinedField<PaginationValueTransferEventDTO> = await this.client.get(
-      `/value-transfer-events${
-        queryString ? `?${queryString}&` : "?"
-      }wallet_id=${walletId}`
+      `/value-transfer-events${queryString ? `?${queryString}` : ""}`
     );
 
     return {
