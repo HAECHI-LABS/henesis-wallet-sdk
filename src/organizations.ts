@@ -1,11 +1,8 @@
 import { Client } from "./httpClient";
-import { Balance, Secret, Key } from "./types";
+import { Secret } from "./types";
 import { Account, Role } from "./accounts";
-import { BNConverter } from "./utils/common";
 
 export interface Organization {
-  henesisEthKey: Key;
-  henesisKlayKey: Key;
   id: string;
   name: string;
   secret: string;
@@ -18,12 +15,6 @@ export class Organizations {
 
   constructor(client: Client) {
     this.client = client;
-  }
-
-  public async getOrganizationBalance(): Promise<Balance> {
-    const balance = await this.client.get(`${this.baseUrl}/balance`);
-    balance.amount = BNConverter.hexStringToBN(balance.amount);
-    return balance;
   }
 
   public async getOrganization(): Promise<Organization> {

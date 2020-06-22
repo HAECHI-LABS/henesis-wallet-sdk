@@ -5,6 +5,7 @@ import { EthModule, KlayModule } from "./eth";
 import { baseUrls } from "./utils/url";
 import { BtcModule } from "./btc";
 import { BlockchainType } from "./blockchain";
+import {HenesisKeys} from "./eth/henesisKeys";
 
 export const enum Env {
   Local,
