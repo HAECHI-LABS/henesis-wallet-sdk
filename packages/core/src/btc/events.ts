@@ -26,7 +26,7 @@ export class BtcEvents {
 
     return {
       pagination: data.pagination,
-      results: data.results.map(e => {
+      results: data.results.map((e) => {
         return {
           createdAt: e.createdAt,
           status: null,

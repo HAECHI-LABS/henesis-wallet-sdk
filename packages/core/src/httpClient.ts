@@ -68,19 +68,19 @@ export class HttpClient {
       return config;
     });
 
-    this.client.interceptors.request.use(config => {
+    this.client.interceptors.request.use((config) => {
       config.data = ObjectConverter.toSnakeCase(config.data);
       return config;
     });
 
     this.client.interceptors.response.use(
-      response => {
+      (response) => {
         if (response.data) {
           return ObjectConverter.toCamelCase(response.data);
         }
         return response;
       },
-      error => {
+      (error) => {
         if (error.response) {
           error.response.data = ObjectConverter.toCamelCase(
             error.response.data
@@ -139,7 +139,7 @@ class AxiosMethodProxy {
         }
 
         ProxyMethod.method = method;
-        ProxyMethod.request = function() {
+        ProxyMethod.request = function () {
           return method;
         };
 

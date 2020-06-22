@@ -1,5 +1,9 @@
 import { Client } from "../httpClient";
-import { BtcMasterWallet, BtcMasterWalletData, CreateMasterWalletResponse } from "./wallet";
+import {
+  BtcMasterWallet,
+  BtcMasterWalletData,
+  CreateMasterWalletResponse,
+} from "./wallet";
 import { Wallets } from "../wallets";
 import aesjs from "aes-js";
 import { Key, Keychains } from "../types";
@@ -9,9 +13,7 @@ import { Env } from "../sdk";
 import { BlockchainType } from "../blockchain";
 import { Base64 } from "js-base64";
 import { BtcRecoveryKit } from "./recoveryKit";
-import {
-  address as BitcoinAddress,
-} from "bitcoinjs-lib";
+import { address as BitcoinAddress } from "bitcoinjs-lib";
 
 export class BtcWallets extends Wallets<BtcMasterWallet> {
   public constructor(env: Env, client: Client, keychains: Keychains) {
@@ -52,9 +54,9 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
   public verifyAddress(address: string): boolean {
     try {
       BitcoinAddress.toOutputScript(address);
-      return true
+      return true;
     } catch (e) {
-      return false
+      return false;
     }
   }
 
@@ -71,11 +73,16 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     );
   }
 
-  async createRecoveryKit(name: string, passphrase: string): Promise<BtcRecoveryKit> {
+  async createRecoveryKit(
+    name: string,
+    passphrase: string
+  ): Promise<BtcRecoveryKit> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const masterWalletResponse: CreateMasterWalletResponse = await this.client.post<CreateMasterWalletResponse>(`${this.baseUrl}?type=inactive`, {
+    const masterWalletResponse: CreateMasterWalletResponse = await this.client.post<
+      CreateMasterWalletResponse
+    >(`${this.baseUrl}?type=inactive`, {
       name,
       encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
     });
@@ -97,7 +104,9 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     );
   }
 
-  async createMasterWalletWithKit(recoveryKit: BtcRecoveryKit): Promise<BtcMasterWallet> {
+  async createMasterWalletWithKit(
+    recoveryKit: BtcRecoveryKit
+  ): Promise<BtcMasterWallet> {
     const walletData = await this.client.post<BtcMasterWalletData>(
       `${this.baseUrl}/${recoveryKit.getWalletId}/activate`,
       {
