@@ -13,7 +13,7 @@ import _ from 'lodash';
 
 export interface MasterWalletSearchOptions {
   name?: string;
-  orgId?: string;
+  sort?: string;
 }
 
 export class Wallets {
