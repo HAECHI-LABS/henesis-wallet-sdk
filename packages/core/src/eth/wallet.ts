@@ -2,15 +2,12 @@ import { Contract } from "web3-eth-contract/";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import BN from "bn.js";
-import aesjs from "aes-js";
-import { Base64 } from "js-base64";
 import { Coin, Eth, Klay, Erc20 } from "./coin";
 import { BlockchainType } from "../blockchain";
 import {
   Balance,
   Key,
   Keychains,
-  KeyWithPriv,
   Pagination,
   PaginationOptions,
 } from "../types";
@@ -66,19 +63,19 @@ function convertSignedMultiSigPayloadToDTO(
 }
 
 export abstract class EthLikeWallet extends Wallet<EthTransaction> {
-  protected masterWalletData: EthMasterWalletData;
+  protected data: EthMasterWalletData;
 
   protected constructor(
     client: Client,
-    masterWalletData: EthMasterWalletData,
+    data: EthMasterWalletData,
     keychains: Keychains
   ) {
     super(client, keychains);
-    this.masterWalletData = masterWalletData;
+    this.data = data;
   }
 
   getChain(): BlockchainType {
-    return this.masterWalletData.blockchain;
+    return this.data.blockchain;
   }
 
   async replaceTransaction(
@@ -135,7 +132,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     };
 
     const signature = this.signPayload(multiSigPayload, passphrase);
-
     return {
       signature,
       multiSigPayload,
@@ -210,7 +206,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     ).slice(2)}${multiSigPayload.hexData.slice(2)}`;
 
     return this.keychains.sign(
-      this.masterWalletData.accountKey,
+      this.data.accountKey,
       passphrase,
       payload
     );
@@ -265,7 +261,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     const nonce: {
       nonce: string;
     } = await this.client.get(
-      `${this.baseUrl}/${this.masterWalletData.id}/nonce`
+      `${this.baseUrl}/${this.getId()}/nonce`
     );
     return BNConverter.hexStringToBN(nonce.nonce);
   }
@@ -299,92 +295,16 @@ export class EthMasterWallet extends EthLikeWallet {
     this.wallet = new new Web3().eth.Contract(wallet as AbiItem[]);
   }
 
-  async restorePassphrase(
-    encryptedPassphrase: string,
-    newPassphrase: string,
-    otpCode?: string
-  ): Promise<void> {
-    const passphrase = this.recoverPassphrase(encryptedPassphrase);
-    const initialKey: Key = await this.client.get<Key>(
-      `${this.baseUrl}/${this.masterWalletData.id}/initial-key`
-    );
-    await this.changePassphraseWithKeyFile(
-      passphrase,
-      newPassphrase,
-      initialKey,
-      otpCode
-    );
+  getEncryptionKey(): string {
+    return this.data.encryptionKey
   }
 
-  private recoverPassphrase(encryptedPassphrase: string): string {
-    const { encryptionKey } = this.masterWalletData;
-    const aesCtr = new aesjs.ModeOfOperation.ctr(
-      aesjs.utils.hex.toBytes(encryptionKey)
-    );
-    const decryptedBytes = aesCtr.decrypt(
-      aesjs.utils.hex.toBytes(Base64.decode(encryptedPassphrase))
-    );
-    return aesjs.utils.utf8.fromBytes(decryptedBytes);
+  getAccountKey(): Key {
+    return this.data.accountKey;
   }
 
-  async verifyEncryptedPassphrase(
-    encryptedPassphrase: string
-  ): Promise<boolean> {
-    const passphrase = this.recoverPassphrase(encryptedPassphrase);
-    const initialKey: Key = await this.client.get<Key>(
-      `${this.baseUrl}/${this.masterWalletData.id}/initial-key`
-    );
-    return await this.verifyPassphraseWithKeyFile(passphrase, initialKey);
-  }
-
-  async verifyPassphrase(passphrase: string): Promise<boolean> {
-    return this.verifyPassphraseWithKeyFile(passphrase);
-  }
-
-  private async verifyPassphraseWithKeyFile(
-    passphrase: string,
-    initialKey?: Key
-  ): Promise<boolean> {
-    try {
-      this.keychains.decrypt(initialKey
-        ? initialKey
-        : this.masterWalletData.accountKey, passphrase);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  async changePassphrase(
-    passphrase: string,
-    newPassphrase: string,
-    otpCode?: string
-  ): Promise<void> {
-    return this.changePassphraseWithKeyFile(
-      passphrase,
-      newPassphrase,
-      undefined,
-      otpCode
-    );
-  }
-
-  private async changePassphraseWithKeyFile(
-    passphrase: string,
-    newPassphrase: string,
-    initialKey?: Key,
-    otpCode?: string
-  ): Promise<void> {
-    const newKey: KeyWithPriv = this.keychains.changePassword(initialKey
-      ? initialKey
-      : this.masterWalletData.accountKey, passphrase, newPassphrase);
-
-    this.masterWalletData.accountKey = await this.client.patch<Key>(
-      `${this.baseUrl}/${this.masterWalletData.id}/account-key`,
-      {
-        keyFile: newKey.keyFile,
-        otpCode,
-      }
-    );
+  updateAccountKey(key: Key) {
+    this.data.accountKey = key;
   }
 
   async createUserWallet(
@@ -415,7 +335,7 @@ export class EthMasterWallet extends EthLikeWallet {
     };
 
     const userWalletData = await this.client.post<EthUserWalletData>(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets`,
+      `${this.baseUrl}/${this.getId()}/user-wallets`,
       {
         name,
         salt: BNConverter.bnToHexString(salt),
@@ -429,7 +349,7 @@ export class EthMasterWallet extends EthLikeWallet {
 
     return new EthUserWallet(
       this.client,
-      this.masterWalletData,
+      this.data,
       this.keychains,
       userWalletData
     );
@@ -437,11 +357,11 @@ export class EthMasterWallet extends EthLikeWallet {
 
   async getUserWallet(walletId: string): Promise<EthUserWallet> {
     const userWalletData = await this.client.get<EthUserWalletData>(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${walletId}`
+      `${this.baseUrl}/${this.getId()}/user-wallets/${walletId}`
     );
     return new EthUserWallet(
       this.client,
-      this.masterWalletData,
+      this.data,
       this.keychains,
       userWalletData
     );
@@ -454,7 +374,7 @@ export class EthMasterWallet extends EthLikeWallet {
       name: string;
       symbol: string;
     }[] = await this.client.get(
-      `${this.baseUrl}/${this.masterWalletData.id}/balance`
+      `${this.baseUrl}/${this.data.id}/balance`
     );
 
     return balances.map(balance => ({
@@ -466,11 +386,11 @@ export class EthMasterWallet extends EthLikeWallet {
   }
 
   getAddress(): string {
-    return this.masterWalletData.address;
+    return this.data.address;
   }
 
   getData(): EthMasterWalletData {
-    return this.masterWalletData;
+    return this.data;
   }
 
   async getUserWallets(
@@ -480,7 +400,7 @@ export class EthMasterWallet extends EthLikeWallet {
     const data: Pagination<EthUserWalletData> = await this.client.get<
       Pagination<EthUserWalletData>
     >(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets?${queryString}`
+      `${this.baseUrl}/${this.data.id}/user-wallets?${queryString}`
     );
 
     return {
@@ -489,7 +409,7 @@ export class EthMasterWallet extends EthLikeWallet {
         data =>
           new EthUserWallet(
             this.client,
-            this.masterWalletData,
+            this.data,
             this.keychains,
             data
           )
@@ -498,16 +418,16 @@ export class EthMasterWallet extends EthLikeWallet {
   }
 
   getId(): string {
-    return this.masterWalletData.id;
+    return this.data.id;
   }
 
   async changeName(name: string) {
     const masterWalletData: EthMasterWalletData = await this.client.patch<
       EthMasterWalletData
-    >(`${this.baseUrl}/${this.masterWalletData.id}/name`, {
+    >(`${this.baseUrl}/${this.data.id}/name`, {
       name,
     });
-    this.masterWalletData.name = masterWalletData.name;
+    this.data.name = masterWalletData.name;
   }
 }
 
@@ -516,11 +436,11 @@ export class EthUserWallet extends EthLikeWallet {
 
   public constructor(
     client: Client,
-    walletData: EthMasterWalletData,
+    data: EthMasterWalletData,
     keychains: Keychains,
     userWalletData: EthUserWalletData
   ) {
-    super(client, walletData, keychains);
+    super(client, data, keychains);
     this.userWalletData = userWalletData;
   }
 
@@ -528,7 +448,7 @@ export class EthUserWallet extends EthLikeWallet {
     const nonce: {
       nonce: string;
     } = await this.client.get(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/nonce`
+      `${this.baseUrl}/${this.data.id}/user-wallets/${this.userWalletData.id}/nonce`
     );
     return BNConverter.hexStringToBN(nonce.nonce);
   }
@@ -540,7 +460,7 @@ export class EthUserWallet extends EthLikeWallet {
       name: string;
       symbol: string;
     }[] = await this.client.get(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/balance`
+      `${this.baseUrl}/${this.data.id}/user-wallets/${this.userWalletData.id}/balance`
     );
 
     return balances.map(balance => ({
@@ -567,7 +487,7 @@ export class EthUserWallet extends EthLikeWallet {
     const userWalletData: EthUserWalletData = await this.client.patch<
       EthUserWalletData
     >(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/name`,
+      `${this.baseUrl}/${this.data.id}/user-wallets/${this.userWalletData.id}/name`,
       {
         name,
       }
@@ -588,6 +508,18 @@ export class EthUserWallet extends EthLikeWallet {
   }
 
   verifyPassphrase(passphrase: string): Promise<boolean> {
+    throw new Error("unimplemented method");
+  }
+
+  getEncryptionKey(): string {
+    return "";
+  }
+
+  getAccountKey(): Key {
+    throw new Error("unimplemented method");
+  }
+
+  updateAccountKey(key: Key) {
     throw new Error("unimplemented method");
   }
 }
