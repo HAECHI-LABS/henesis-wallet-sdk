@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.7...v2.0.0-alpha.0) (2020-06-22)
+
+
+### Bug Fixes
+
+* add eslint, prettier ignore ([3d08ac1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3d08ac146d43553f80340a57254a8b2e5578589d))
+* fixed build fail ([2396267](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/23962678d7be31c2689b8aeacd19e38ac18b9b47))
+* status code is not returned normally ([05ef87b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/05ef87bb04e19298e17fcf338e6c6f9babeca448))
+* success status code ([c5ba66a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c5ba66af13a21773fac53d6bdb365e55535f897b))
+* update eslint, prettier ([49b69c1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/49b69c1e51acf7aa28558f38eccefe8641a9707b))
+
+
+### Features
+
+* add eslint, prettier config ([caf7fda](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/caf7fda13675d403213cd4e8ec38db5f6cb52d67))
+* add member var blockchain ([f8b09dc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f8b09dcb392fa3bdfb9305bfbad0b91e58766be3))
+* add promiseWrapper parameter success status code ([9d63bd6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9d63bd65402e31d22955fe261d621a46b3e500ef))
+
+
+
+
+
 ## [1.0.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.6...v1.0.7) (2020-05-11)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave

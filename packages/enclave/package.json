@@ -1,6 +1,6 @@
 {
   "name": "@haechi-labs/henesis-wallet-enclave",
-  "version": "1.0.7",
+  "version": "2.0.0-alpha.0",
   "description": "henesis wallet enclave module",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
@@ -20,7 +20,7 @@
     "preBootstrap": "rm -rf ./node_modules"
   },
   "dependencies": {
-    "@haechi-labs/henesis-wallet-core": "^1.0.7",
+    "@haechi-labs/henesis-wallet-core": "^2.0.0-alpha.0",
     "express": "^4.17.1",
     "ts-node": "^8.6.2"
   },
@@ -31,13 +31,13 @@
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
     "eslint": "^6.8.0",
-    "nock": "^12.0.3",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.3",
     "jest": "^24.8.0",
     "jest-extended": "^0.11.1",
+    "nock": "^12.0.3",
     "nodemon": "^2.0.2",
     "prettier": "^2.0.5",
     "ts-jest": "^24.0.2",

@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.7...v2.0.0-alpha.0) (2020-06-22)
+
+
+### Bug Fixes
+
+* add deposit address test ([b882f1d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b882f1d1e13644c1754ac7b4533d7c45a83a95ec))
+* add eslint, prettier ignore ([3d08ac1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3d08ac146d43553f80340a57254a8b2e5578589d))
+* add org balance ([7e9f968](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7e9f968119b8281ad1c961286e2a7cbbb81053ce))
+* add reponse type any ([a16c3c2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a16c3c2e09ad5f6f3e1bfc655171f0880c2e9642))
+* add skip test ([5691fa3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5691fa3088b4d741c998d4b84c32171dd96d6494))
+* add string test ([9f63bbf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9f63bbf893caf06341d3d810ba5ea9e42ae86a7f))
+* add URL env ([2ab5af2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2ab5af2b4ed263de88ac9a602ca3ba97aa393dcc))
+* add value transfer ([1058051](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/10580519a540282299b14271a9c044b8ba86fa35))
+* change blockchaintype naming ([7a27aee](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7a27aeeef169d5f36eeff6e7c09bfa1dd95f2fd7))
+* change env ([bb0b266](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/bb0b266c5a96c72dfd09ba2ba6cd7ee338c95ec5))
+* change private btc ([a723c38](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a723c386cc0685381dc7935f3a6e56b3a9af57f0))
+* change public btc module ([975f1a6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/975f1a635afea8421a9182cd9c9b81087f113b58))
+* change v1 to v2 ([271f3a6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/271f3a62c63ac3c7106b1f8c6ee330369b016ab7))
+* fix restore and change passphrase bug ([0f636cd](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0f636cd72bce9aecf29c5a34024bf24141ca480b))
+* fixed btc test ([023fdc5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/023fdc54bda6ee19046b35903e5c2360b162e299))
+* fixed build fail ([2396267](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/23962678d7be31c2689b8aeacd19e38ac18b9b47))
+* fixed examples ([f91d503](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f91d503a38e164bec3442d305b24eefc97cec7cf))
+* fixed getBalance ([2ee040c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2ee040c91ee0da80febb9a6ec25eafa44f459912))
+* fixed queryString ([efcdd89](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/efcdd89f3258543feb265d4a4c96114dd947bd9e))
+* fixed test ([f50d8ce](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f50d8ce8f33c007b7114eacc44079b9791151961))
+* fixed test code ([e4c3faa](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e4c3faaf465ca2000932182537335b12fa99788d))
+* fixed type error ([a0be7bb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a0be7bba3076945c0790ca2bbfa0608968cc7413))
+* gen Date to string ([69c7ec9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/69c7ec962a443a6fa9558b281adb99ec6d8f37d1))
+* remove eth sub module and fix prefix bug ([9020668](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9020668cef705e0277e59560eb95d0ab22522091))
+* remove noundefined ([bd9e57c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/bd9e57c20c34bd02280798f30404166f6035551b))
+* remove noundefined code ([f3b70d9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f3b70d9b307bf9627c6c4fc735b296f4daf2ac84))
+* rollback verifyaddress ([c4b81a3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c4b81a39f91fdcecbad2ca2eb22b4530bcc4b3cc))
+* status code is not returned normally ([05ef87b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/05ef87bb04e19298e17fcf338e6c6f9babeca448))
+* success status code ([c5ba66a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c5ba66af13a21773fac53d6bdb365e55535f897b))
+* update eslint, prettier ([49b69c1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/49b69c1e51acf7aa28558f38eccefe8641a9707b))
+* update gen apis ([0d663e3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0d663e34eb09abab08d9bd77279f8de17da3510a))
+* update transaction dto and redeemscript ([01c20ef](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/01c20ef6f1d581c616653fb05363def952dba502))
+
+
+### Features
+
+* add blockchain client ([5016c0f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5016c0f55b99b39d3bb4e54553351a3ce8c0c922))
+* add btc address, id, change name, balances ([da17b2c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/da17b2c5eab6360540a48db121aac28b0f4d7d38))
+* add create, get deposit address ([735503d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/735503d04cbd2dc28a0c759fd1794a710c7b242e))
+* add eslint, prettier config ([caf7fda](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/caf7fda13675d403213cd4e8ec38db5f6cb52d67))
+* add generate codegen ([cd16482](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/cd1648224afcca814199f088907605f57c98c435))
+* add member var blockchain ([f8b09dc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f8b09dcb392fa3bdfb9305bfbad0b91e58766be3))
+* add promiseWrapper parameter success status code ([9d63bd6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9d63bd65402e31d22955fe261d621a46b3e500ef))
+* add sub module base url ([9cbadb9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9cbadb9a128f8625d109f36379e11f26ac83aef7))
+* add typings d.ts ([0b19280](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0b192805f0172f770cd7c6b1c6a7f37241615563))
+* add walletData interface transactionId, error ([caa0feb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/caa0feb6c8aacd71e2fc9187172f3ea9b81b77bb))
+* change backup key used to generate the masterwallet to backupkeypub ([176d4be](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/176d4beadaa95a99cdd4267deefd0cdf02c372ad))
+* change keychains signature ([c583482](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c583482e41ee18e8078930a9420c3e20e39b3f49))
+* get henesis key when create recovery kit ([35530a1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/35530a116b8bc236d0ee75e2798983b86dde1ccc))
+* implement create, get btc master wallet and transfer ([38e615c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/38e615c96ac00e1f7e355a965ef8a616a4cc1af1))
+* implement get balance, transactions ([d792ef6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d792ef63bf7b3a5c6419959275911409bdac8b31))
+* implement transfer ([f186d72](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f186d7258f9ccb2d1a0f02d9932fa5d9ffdbd78c))
+* implement wallets, wallet btc module method ([ec960fa](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ec960fac4d80277b9405ff5644bf51a6a9c95ec9))
+* init bitcoin module ([9838683](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9838683a140df92e78a71a493692e6dc026c77ae))
+* move verifyaddress wallet to wallets ([8f6a922](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8f6a92210a5b45dd62a1562a7e7be2de1644ed0d))
+* split eth package ([61b2acc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/61b2accb1b052ec09436ca5fb1901a2269ff6a35))
+
+
+
+
+
 ## [1.0.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.6...v1.0.7) (2020-05-11)
 
 **Note:** Version bump only for package henesis-wallet-sdk
