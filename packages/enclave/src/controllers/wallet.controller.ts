@@ -160,7 +160,8 @@ export default class WalletController extends AbstractController
   private async getMasterWallets(
     req: express.Request,
   ): Promise<MasterWalletData[]> {
-    const wallets = await req.sdk.wallets.getMasterWallets();
+    const options = req.query;
+    const wallets = await req.sdk.wallets.getMasterWallets(options);
     return wallets.map((x) => x.getData());
   }
 
