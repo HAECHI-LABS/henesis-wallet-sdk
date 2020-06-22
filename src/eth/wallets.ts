@@ -12,7 +12,7 @@ import { toChecksum } from "./keychains";
 import { keccak256s } from "./eth-core-lib/hash";
 import { makeQueryString } from "../utils/url";
 import { BNConverter } from "../utils/common";
-import {HenesisKeys} from "./henesisKeys";
+import { HenesisKeys } from "./henesisKeys";
 
 export interface MasterWalletSearchOptions {
   name?: string;

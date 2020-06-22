@@ -13,7 +13,11 @@ export interface Event<S> {
 
 export type BtcEvent = Event<null>;
 
-export type EthEvent = Event<EthValueTransferEventDTO.StatusEnum>;
+export type EthCallEvent = CallEvent<EthValueTransferEventDTO.StatusEnum>;
+
+export interface CallEvent<T> extends Event<T> {
+  toAddress: string;
+}
 
 export interface ValueTransferEvent<S, T> extends Event<S> {
   amount: BN;
@@ -34,6 +38,10 @@ export type EthValueTransferEvent = ValueTransferEvent<
 >;
 
 export interface EventPaginationOptions<S> extends PaginationOptions {
+  walletId?: string;
+  orgId?: string;
+  masterWalletId?: string;
+  transactionId?: string;
   transactionHash?: string;
   status?: S;
   blockchain?: BlockchainType;

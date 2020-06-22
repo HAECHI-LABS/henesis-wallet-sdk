@@ -7,7 +7,7 @@ import { Env } from "../sdk";
 import { Client } from "../httpClient";
 import { EthKeychains } from "./keychains";
 import { BlockchainType } from "../blockchain";
-import {HenesisKeys} from "./henesisKeys";
+import { HenesisKeys } from "./henesisKeys";
 
 export interface ModuleOptions {
   client: Client;
@@ -38,6 +38,7 @@ export class EthModule {
       this.client,
       this.keychains,
       options.env,
+      this.henesisKeys,
       options.blockchain
     );
     this.events = new EthEvents(this.client);
