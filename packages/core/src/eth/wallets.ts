@@ -12,6 +12,7 @@ import { toChecksum } from "./keychains";
 import { keccak256s } from "./eth-core-lib/hash";
 import { makeQueryString } from "../utils/url";
 import { BNConverter } from "../utils/common";
+import {HenesisKeys} from "./henesisKeys";
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -19,15 +20,19 @@ export interface MasterWalletSearchOptions {
 }
 
 export class EthWallets extends Wallets<EthMasterWallet> {
+  private readonly henesisKey: HenesisKeys;
+
   private readonly blockchain: BlockchainType;
 
   constructor(
     client: Client,
     keychains: Keychains,
     env: Env,
+    henesisKey: HenesisKeys,
     blockchain: BlockchainType
   ) {
     super(env, client, keychains);
+    this.henesisKey = henesisKey;
     this.blockchain = blockchain;
   }
 
@@ -59,7 +64,8 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const henesisKey: Key = await this.client.get<any>("/henesis-keys/me");
+    const henesisKey: Key = await this.henesisKey.getHenesisKey();
+
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
       aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))

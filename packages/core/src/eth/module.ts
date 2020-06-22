@@ -7,6 +7,7 @@ import { Env } from "../sdk";
 import { Client } from "../httpClient";
 import { EthKeychains } from "./keychains";
 import { BlockchainType } from "../blockchain";
+import {HenesisKeys} from "./henesisKeys";
 
 export interface ModuleOptions {
   client: Client;
@@ -19,6 +20,8 @@ export class EthModule {
 
   public readonly keychains: Keychains;
 
+  public readonly henesisKeys: HenesisKeys;
+
   public readonly events: EthEvents;
 
   public readonly gasusages: Gasusages;
@@ -30,6 +33,7 @@ export class EthModule {
   constructor(options: ModuleOptions) {
     this.client = options.client;
     this.keychains = new EthKeychains(options.blockchain);
+    this.henesisKeys = new HenesisKeys(this.client);
     this.wallets = new EthWallets(
       this.client,
       this.keychains,
