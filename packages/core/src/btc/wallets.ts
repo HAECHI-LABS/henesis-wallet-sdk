@@ -1,16 +1,21 @@
 import { Client } from "../httpClient";
-import { BtcMasterWallet, BtcMasterWalletData } from "./wallet";
-import Web3 from "web3";
-import pbkdf2 from "pbkdf2";
+import { BtcMasterWallet, BtcMasterWalletData, CreateMasterWalletResponse } from "./wallet";
 import { Wallets } from "../wallets";
 import aesjs from "aes-js";
-import { Keychains } from "../types";
+import { Key, Keychains } from "../types";
 import { MasterWalletSearchOptions } from "../eth";
-import { RecoveryKit } from "../recoverykit";
+import { makeQueryString } from "../utils/url";
+import { Env } from "../sdk";
+import { BlockchainType } from "../blockchain";
+import { Base64 } from "js-base64";
+import { BtcRecoveryKit } from "./recoveryKit";
+import {
+  address as BitcoinAddress,
+} from "bitcoinjs-lib";
 
 export class BtcWallets extends Wallets<BtcMasterWallet> {
-  public constructor(client: Client, keychains: Keychains) {
-    super(client, keychains);
+  public constructor(env: Env, client: Client, keychains: Keychains) {
+    super(env, client, keychains);
   }
 
   public async createMasterWallet(
@@ -30,7 +35,6 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
         pub: accountKeyWithPriv.pub,
       },
       backupKey: {
-        keyFile: backupKetWithPriv.keyFile,
         pub: backupKetWithPriv.pub,
       },
     });
@@ -46,21 +50,64 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
   }
 
   public verifyAddress(address: string): boolean {
-    return true;
+    try {
+      BitcoinAddress.toOutputScript(address);
+      return true
+    } catch (e) {
+      return false
+    }
   }
 
-  private createEncryptionKey(p: string): Buffer {
-    const randomHex = Web3.utils.randomHex(32);
-    return pbkdf2.pbkdf2Sync(p, randomHex, 1, 256 / 8, "sha512");
+  async getMasterWallets(
+    options?: MasterWalletSearchOptions
+  ): Promise<BtcMasterWallet[]> {
+    const queryString: string = makeQueryString(options);
+    const walletDatas = await this.client.get<BtcMasterWalletData[]>(
+      `${this.baseUrl}${queryString ? `?${queryString}` : ""}`
+    );
+
+    return walletDatas.map(
+      (x) => new BtcMasterWallet(x, this.client, this.keychains)
+    );
   }
 
-  getMasterWallets(options?: MasterWalletSearchOptions): Promise<BtcMasterWallet[]> {
-    throw new Error("Method not implemented.");
+  async createRecoveryKit(name: string, passphrase: string): Promise<BtcRecoveryKit> {
+    const accountKey = this.keychains.create(passphrase);
+    const backupKey = this.keychains.create(passphrase);
+    const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
+    const masterWalletResponse: CreateMasterWalletResponse = await this.client.post<CreateMasterWalletResponse>(`${this.baseUrl}?type=inactive`, {
+      name,
+      encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
+    });
+    const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
+    const encryptedPassphrase = aesjs.utils.hex.fromBytes(
+      aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))
+    );
+
+    return new BtcRecoveryKit(
+      name,
+      BlockchainType.BitCoin,
+      masterWalletResponse.henesisKey,
+      accountKey,
+      backupKey,
+      Base64.encode(encryptedPassphrase),
+      aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
+      this.env,
+      masterWalletResponse.id
+    );
   }
-  createRecoveryKit(name: string, passphrase: string): Promise<import("../recoverykit").RecoveryKit> {
-    throw new Error("Method not implemented.");
-  }
-  createMasterWalletWithKit(recoveryKit: RecoveryKit): Promise<import("../eth/wallet").EthMasterWallet> {
-    throw new Error("Method not implemented.");
+
+  async createMasterWalletWithKit(recoveryKit: BtcRecoveryKit): Promise<BtcMasterWallet> {
+    const walletData = await this.client.post<BtcMasterWalletData>(
+      `${this.baseUrl}/${recoveryKit.getWalletId}/activate`,
+      {
+        name: recoveryKit.getName(),
+        accountKey: recoveryKit.getAccountKey(),
+        backupKey: this.removeKeyFile(recoveryKit.getBackupKey()),
+        encryptionKey: recoveryKit.getEncryptionKey(),
+      }
+    );
+
+    return new BtcMasterWallet(walletData, this.client, this.keychains);
   }
 }

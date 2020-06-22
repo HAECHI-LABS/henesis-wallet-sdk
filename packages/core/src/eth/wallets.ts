@@ -1,8 +1,6 @@
 import aesjs from "aes-js";
 import { Base64 } from "js-base64";
 import * as BN from "bn.js";
-import Web3 from "web3";
-import pbkdf2 from "pbkdf2";
 import { Env } from "../sdk";
 import { Client } from "../httpClient";
 import { Key, Keychains, KeyWithPriv } from "../types";
@@ -10,10 +8,9 @@ import { BlockchainType } from "../blockchain";
 import { RecoveryKit } from "../recoverykit";
 import { EthMasterWallet, EthMasterWalletData } from "./wallet";
 import { Wallets } from "../wallets";
-import { EthKeychains, toChecksum } from "./keychains";
+import { toChecksum } from "./keychains";
 import { keccak256s } from "./eth-core-lib/hash";
 import { makeQueryString } from "../utils/url";
-import _ from "lodash";
 import { BNConverter } from "../utils/common";
 
 export interface MasterWalletSearchOptions {
@@ -22,8 +19,6 @@ export interface MasterWalletSearchOptions {
 }
 
 export class EthWallets extends Wallets<EthMasterWallet> {
-  private readonly env: Env;
-
   private readonly blockchain: BlockchainType;
 
   constructor(
@@ -32,8 +27,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     env: Env,
     blockchain: BlockchainType
   ) {
-    super(client, keychains);
-    this.env = env;
+    super(env, client, keychains);
     this.blockchain = blockchain;
   }
 
@@ -49,7 +43,6 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     options?: MasterWalletSearchOptions
   ): Promise<EthMasterWallet[]> {
     const queryString: string = makeQueryString(options);
-
     const walletDatas = await this.client.get<EthMasterWalletData[]>(
       `${this.baseUrl}${queryString ? `?${queryString}` : ""}`
     );
@@ -58,7 +51,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       (x) => new EthMasterWallet(this.client, x, this.keychains)
     );
   }
-
+  // todo: henesis-keys
   public async createRecoveryKit(
     name: string,
     passphrase: string
@@ -67,7 +60,6 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
     const henesisKey: Key = await this.client.get<any>("/henesis-keys/me");
-
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
       aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))
@@ -144,22 +136,5 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     }
 
     return true;
-  }
-
-  private createEncryptionKey(p: string): Buffer {
-    const randomHex = Web3.utils.randomHex(32);
-    return pbkdf2.pbkdf2Sync(p, randomHex, 1, 256 / 8, "sha512");
-  }
-
-  private removePrivateKey(key: KeyWithPriv): Key {
-    return {
-      address: key.address,
-      pub: key.pub,
-      keyFile: key.keyFile
-    };
-  }
-
-  private removeKeyFile(key: KeyWithPriv | Key): KeyWithPriv | Key {
-    return _.omit(key, 'keyFile');
   }
 }

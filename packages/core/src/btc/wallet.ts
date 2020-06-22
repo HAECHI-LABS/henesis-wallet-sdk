@@ -1,18 +1,18 @@
 import { Client } from "../httpClient";
 import BN from "bn.js";
-import { Balance, Key, Keychains, Pagination } from "../types";
+import { Balance, Key, Keychains, Pagination, Timestamp } from "../types";
 import {
   address,
   Transaction as BitcoinTransaction,
   script,
-  networks,
+  networks
 } from "bitcoinjs-lib";
 import { BNConverter } from "../utils/common";
 import { WalletData, Wallet } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import {
   CreateDepositAddressDTO,
-  DepositAddressDTO,
+  DepositAddressDTO
 } from "../__generate__/btc";
 
 export interface BtcTransaction {
@@ -63,6 +63,15 @@ export interface BtcCreateRawTransaction {
 export interface BtcMasterWalletData extends WalletData {
   orgId: string;
   accountKey: Key;
+}
+
+export interface CreateMasterWalletResponse {
+  id: string;
+  name: string;
+  orgId: string;
+  henesisKey: Key;
+  encryptionKey: string;
+  createdAt: Timestamp
 }
 
 export interface BtcTransaction {
@@ -165,7 +174,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       `${this.baseUrl}/${this.data.id}/raw-transactions`,
       {
         to,
-        amount: BNConverter.bnToHexString(amount),
+        amount: BNConverter.bnToHexString(amount)
       }
     );
   }
@@ -189,8 +198,8 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
         symbol: "BTC",
         amount: BNConverter.hexStringToBN(response.balance),
         coinType: "BTC",
-        name: "비트코인",
-      },
+        name: "비트코인"
+      }
     ];
   }
 
@@ -222,28 +231,22 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     return this.data.id;
   }
 
+  getEncryptionKey(): string {
+    return this.data.encryptionKey;
+  }
+
+  getAccountKey(): Key {
+    return this.data.accountKey;
+  }
+
+  updateAccountKey(key: Key) {
+    this.data.accountKey = key;
+  }
+
   async changeName(name: string) {
-    const btcWalletData: BtcMasterWalletData = await this.client.patch<
-      BtcMasterWalletData
-    >(`${this.baseUrl}/${this.data.id}/name`, {
-      name,
+    const btcWalletData: BtcMasterWalletData = await this.client.patch<BtcMasterWalletData>(`${this.baseUrl}/${this.data.id}/name`, {
+      name
     });
     this.data.name = btcWalletData.name;
-  }
-
-  changePassphrase(passphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
-    return undefined;
-  }
-
-  restorePassphrase(encryptedPassphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
-    return undefined;
-  }
-
-  verifyEncryptedPassphrase(encryptedPassphrase: string): Promise<boolean> {
-    return undefined;
-  }
-
-  verifyPassphrase(passphrase: string): Promise<boolean> {
-    return undefined;
   }
 }
