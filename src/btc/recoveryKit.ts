@@ -17,7 +17,16 @@ export class BtcRecoveryKit extends RecoveryKit {
     env: Env,
     walletId: string
   ) {
-    super(name, blockchain, henesisKey, accountKey, backupKey, encryptedPassphrase, encryptionKey, env);
+    super(
+      name,
+      blockchain,
+      henesisKey,
+      accountKey,
+      backupKey,
+      encryptedPassphrase,
+      encryptionKey,
+      env
+    );
     this.walletId = walletId;
   }
 

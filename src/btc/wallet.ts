@@ -5,14 +5,14 @@ import {
   address,
   Transaction as BitcoinTransaction,
   script,
-  networks
+  networks,
 } from "bitcoinjs-lib";
 import { BNConverter } from "../utils/common";
 import { WalletData, Wallet } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import {
   CreateDepositAddressDTO,
-  DepositAddressDTO
+  DepositAddressDTO,
 } from "../__generate__/btc";
 
 export interface BtcTransaction {
@@ -71,7 +71,7 @@ export interface CreateMasterWalletResponse {
   orgId: string;
   henesisKey: Key;
   encryptionKey: string;
-  createdAt: Timestamp
+  createdAt: Timestamp;
 }
 
 export interface BtcTransaction {
@@ -107,7 +107,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       amount
     );
     const tx = new BitcoinTransaction();
-    rawTransaction.inputs.forEach(input => {
+    rawTransaction.inputs.forEach((input) => {
       tx.addInput(
         new Buffer(
           new Buffer(
@@ -119,7 +119,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       );
     });
 
-    rawTransaction.outputs.forEach(output => {
+    rawTransaction.outputs.forEach((output) => {
       tx.addOutput(
         address.toOutputScript(output.to, networks.testnet),
         new BN(output.amount.slice(2), "hex").toNumber()
@@ -136,7 +136,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       const hexHash: string = this.keychains.sign(
         this.data.accountKey,
         passphrase,
-        sigHash.toString('hex')
+        sigHash.toString("hex")
       );
       const accountSig = script.signature
         .encode(Buffer.from(hexHash, "hex"), BitcoinTransaction.SIGHASH_ALL)
@@ -174,7 +174,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       `${this.baseUrl}/${this.data.id}/raw-transactions`,
       {
         to,
-        amount: BNConverter.bnToHexString(amount)
+        amount: BNConverter.bnToHexString(amount),
       }
     );
   }
@@ -198,8 +198,8 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
         symbol: "BTC",
         amount: BNConverter.hexStringToBN(response.balance),
         coinType: "BTC",
-        name: "비트코인"
-      }
+        name: "비트코인",
+      },
     ];
   }
 
@@ -244,8 +244,10 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   async changeName(name: string) {
-    const btcWalletData: BtcMasterWalletData = await this.client.patch<BtcMasterWalletData>(`${this.baseUrl}/${this.data.id}/name`, {
-      name
+    const btcWalletData: BtcMasterWalletData = await this.client.patch<
+      BtcMasterWalletData
+    >(`${this.baseUrl}/${this.data.id}/name`, {
+      name,
     });
     this.data.name = btcWalletData.name;
   }

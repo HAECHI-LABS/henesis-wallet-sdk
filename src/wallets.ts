@@ -24,18 +24,14 @@ export abstract class Wallets<T> {
 
   abstract verifyAddress(address: string): boolean;
 
-  abstract getMasterWallets(
-    options?: MasterWalletSearchOptions
-  ): Promise<T[]>
+  abstract getMasterWallets(options?: MasterWalletSearchOptions): Promise<T[]>;
 
   abstract createRecoveryKit(
     name: string,
     passphrase: string
-  ): Promise<RecoveryKit>
+  ): Promise<RecoveryKit>;
 
-  abstract createMasterWalletWithKit(
-    recoveryKit: RecoveryKit
-  ): Promise<T>
+  abstract createMasterWalletWithKit(recoveryKit: RecoveryKit): Promise<T>;
 
   protected createEncryptionKey(p: string): Buffer {
     const randomHex = Web3.utils.randomHex(32);
@@ -46,11 +42,11 @@ export abstract class Wallets<T> {
     return {
       address: key.address,
       pub: key.pub,
-      keyFile: key.keyFile
+      keyFile: key.keyFile,
     };
   }
 
   protected removeKeyFile(key: KeyWithPriv | Key): KeyWithPriv | Key {
-    return _.omit(key, 'keyFile');
+    return _.omit(key, "keyFile");
   }
 }
