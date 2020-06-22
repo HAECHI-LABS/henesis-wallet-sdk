@@ -37,7 +37,6 @@ export interface Transaction {
   id: string;
   blockchain: BlockchainType;
   walletId: string;
-  accountId: string;
   hash: string;
   status: string;
 }
@@ -49,6 +48,8 @@ export interface WalletData {
   blockchain: BlockchainType;
   createdAt: string;
   status: WalletStatus;
+  transactionId: string;
+  error: string | null;
 }
 
 export interface MasterWalletData extends WalletData {
