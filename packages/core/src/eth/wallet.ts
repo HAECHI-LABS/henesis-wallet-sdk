@@ -205,11 +205,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       Bytes.fromNat(`0x${multiSigPayload.walletNonce.toString(16)}`)
     ).slice(2)}${multiSigPayload.hexData.slice(2)}`;
 
-    return this.keychains.sign(
-      this.data.accountKey,
-      passphrase,
-      payload
-    );
+    return this.keychains.sign(this.data.accountKey, passphrase, payload);
   }
 
   protected sendTransaction(
@@ -260,9 +256,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   async getNonce(): Promise<BN> {
     const nonce: {
       nonce: string;
-    } = await this.client.get(
-      `${this.baseUrl}/${this.getId()}/nonce`
-    );
+    } = await this.client.get(`${this.baseUrl}/${this.getId()}/nonce`);
     return BNConverter.hexStringToBN(nonce.nonce);
   }
 
@@ -296,7 +290,7 @@ export class EthMasterWallet extends EthLikeWallet {
   }
 
   getEncryptionKey(): string {
-    return this.data.encryptionKey
+    return this.data.encryptionKey;
   }
 
   getAccountKey(): Key {
@@ -373,11 +367,9 @@ export class EthMasterWallet extends EthLikeWallet {
       amount: string;
       name: string;
       symbol: string;
-    }[] = await this.client.get(
-      `${this.baseUrl}/${this.data.id}/balance`
-    );
+    }[] = await this.client.get(`${this.baseUrl}/${this.data.id}/balance`);
 
-    return balances.map(balance => ({
+    return balances.map((balance) => ({
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(balance.amount),
       coinType: balance.coinType,
@@ -399,20 +391,13 @@ export class EthMasterWallet extends EthLikeWallet {
     const queryString: string = makeQueryString(options);
     const data: Pagination<EthUserWalletData> = await this.client.get<
       Pagination<EthUserWalletData>
-    >(
-      `${this.baseUrl}/${this.data.id}/user-wallets?${queryString}`
-    );
+    >(`${this.baseUrl}/${this.data.id}/user-wallets?${queryString}`);
 
     return {
       pagination: data.pagination,
       results: data.results.map(
-        data =>
-          new EthUserWallet(
-            this.client,
-            this.data,
-            this.keychains,
-            data
-          )
+        (data) =>
+          new EthUserWallet(this.client, this.data, this.keychains, data)
       ),
     } as Pagination<EthUserWallet>;
   }
@@ -463,7 +448,7 @@ export class EthUserWallet extends EthLikeWallet {
       `${this.baseUrl}/${this.data.id}/user-wallets/${this.userWalletData.id}/balance`
     );
 
-    return balances.map(balance => ({
+    return balances.map((balance) => ({
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(balance.amount),
       coinType: balance.coinType,
@@ -495,11 +480,19 @@ export class EthUserWallet extends EthLikeWallet {
     this.userWalletData.name = userWalletData.name;
   }
 
-  changePassphrase(passphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
+  changePassphrase(
+    passphrase: string,
+    newPassphrase: string,
+    otpCode?: string
+  ): Promise<void> {
     throw new Error("unimplemented method");
   }
 
-  restorePassphrase(encryptedPassphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
+  restorePassphrase(
+    encryptedPassphrase: string,
+    newPassphrase: string,
+    otpCode?: string
+  ): Promise<void> {
     throw new Error("unimplemented method");
   }
 

@@ -1,14 +1,16 @@
-import { BtcWallets } from '../../src/btc/wallets';
-import { HttpClient } from '../../src/httpClient';
-import BN from 'bn.js';
-import { BtcTransaction } from '../../src/btc/wallet';
-import { BtcKeyChains } from '../../src/btc/keychains';
+import { BtcWallets } from "../../src/btc/wallets";
+import { HttpClient } from "../../src/httpClient";
+import BN from "bn.js";
+import { BtcTransaction } from "../../src/btc/wallet";
+import { BtcKeyChains } from "../../src/btc/keychains";
+import { Env } from "../../src";
 
-describe('BtcMasterWallet', () => {
+describe.skip('BtcMasterWallet', () => {
   jest.setTimeout(50000);
   describe('#transfer()', () => {
     it('should transfer btc', async () => {
       const wallets = new BtcWallets(
+        Env.Local,
         new HttpClient({
           accessToken: 'accessToken',
           secret: 'secret',
@@ -33,6 +35,7 @@ describe('BtcMasterWallet', () => {
   describe('#depositAddress()', () => {
     it('should create depositAddress', async () => {
       const wallets = new BtcWallets(
+        Env.Local,
         new HttpClient({
           accessToken: 'accessToken',
           secret: 'secret',
@@ -49,6 +52,7 @@ describe('BtcMasterWallet', () => {
 
     it('should get depositAddress', async () => {
       const wallets = new BtcWallets(
+        Env.Local,
         new HttpClient({
           accessToken: 'accessToken',
           secret: 'secret',
@@ -67,6 +71,7 @@ describe('BtcMasterWallet', () => {
   describe('#getBalance()', () => {
     it('should get balance of wallet', async () => {
       const wallets = new BtcWallets(
+        Env.Local,
         new HttpClient({
           accessToken: 'accessToken',
           secret: 'secret',
@@ -85,6 +90,7 @@ describe('BtcMasterWallet', () => {
   describe('#getTransactions()', () => {
     it('should get transactions of wallet', async () => {
       const wallets = new BtcWallets(
+        Env.Local,
         new HttpClient({
           accessToken: 'accessToken',
           secret: 'secret',

@@ -48,7 +48,7 @@ export class EthEvents {
 
     return {
       pagination: data.pagination,
-      results: data.results.map(e => {
+      results: data.results.map((e) => {
         return {
           ...e,
           amount: BNConverter.hexStringToBN(String(e.amount)),

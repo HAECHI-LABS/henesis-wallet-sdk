@@ -59,7 +59,7 @@ export abstract class Wallet<T> {
   abstract updateAccountKey(key: Key);
 
   protected recoverPassphrase(encryptedPassphrase: string): string {
-    try{
+    try {
       const aesCtr = new aesjs.ModeOfOperation.ctr(
         aesjs.utils.hex.toBytes(this.getEncryptionKey())
       );
@@ -67,12 +67,16 @@ export abstract class Wallet<T> {
         aesjs.utils.hex.toBytes(Base64.decode(encryptedPassphrase))
       );
       return aesjs.utils.utf8.fromBytes(decryptedBytes);
-    }catch (e) {
-      throw new Error('failed to recover passphrase')
+    } catch (e) {
+      throw new Error("failed to recover passphrase");
     }
   }
 
-  async changePassphrase(passphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
+  async changePassphrase(
+    passphrase: string,
+    newPassphrase: string,
+    otpCode?: string
+  ): Promise<void> {
     return await this.changePassphraseWithKeyFile(
       passphrase,
       newPassphrase,
@@ -87,9 +91,10 @@ export abstract class Wallet<T> {
     initialKey?: Key,
     otpCode?: string
   ): Promise<void> {
-    const newKey: KeyWithPriv = this.keychains.changePassword(initialKey
-      ? initialKey
-      : this.getAccountKey(), passphrase, newPassphrase
+    const newKey: KeyWithPriv = this.keychains.changePassword(
+      initialKey ? initialKey : this.getAccountKey(),
+      passphrase,
+      newPassphrase
     );
 
     const key: Key = await this.client.patch<Key>(
@@ -104,7 +109,11 @@ export abstract class Wallet<T> {
     this.updateAccountKey(key);
   }
 
-  async restorePassphrase(encryptedPassphrase: string, newPassphrase: string, otpCode?: string): Promise<void> {
+  async restorePassphrase(
+    encryptedPassphrase: string,
+    newPassphrase: string,
+    otpCode?: string
+  ): Promise<void> {
     const passphrase = this.recoverPassphrase(encryptedPassphrase);
     const initialKey: Key = await this.client.get<Key>(
       `${this.baseUrl}/${this.getId()}/initial-key`
@@ -121,9 +130,9 @@ export abstract class Wallet<T> {
     encryptedPassphrase: string
   ): Promise<boolean> {
     let passphrase;
-    try{
+    try {
       passphrase = this.recoverPassphrase(encryptedPassphrase);
-    }catch (e) {
+    } catch (e) {
       return false;
     }
 
@@ -142,9 +151,10 @@ export abstract class Wallet<T> {
     initialKey?: Key
   ): Promise<boolean> {
     try {
-      this.keychains.decrypt(initialKey
-        ? initialKey
-        : this.getAccountKey(), passphrase);
+      this.keychains.decrypt(
+        initialKey ? initialKey : this.getAccountKey(),
+        passphrase
+      );
       return true;
     } catch (e) {
       return false;

@@ -109,7 +109,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
         accountKey: this.removePrivateKey(accountKey),
         backupKey: this.removeKeyFile(this.removePrivateKey(backupKey)),
         encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
-        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
       }
     );
 
