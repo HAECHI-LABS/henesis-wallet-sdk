@@ -74,15 +74,7 @@ export class EthWallets implements Wallets {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const henesisKeys = await this.client.get<any>("/organizations/me");
-    let henesisKey: Key;
-    switch (this.blockchain) {
-      case BlockchainType.Ethereum:
-        henesisKey = henesisKeys.henesisEthKey;
-        break;
-      case BlockchainType.Klaytn:
-        henesisKey = henesisKeys.henesisKlayKey;
-    }
+    const henesisKey: Key = await this.client.get<any>("/henesis-keys/me");
 
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
