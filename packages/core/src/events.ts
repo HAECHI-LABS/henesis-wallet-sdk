@@ -1,5 +1,5 @@
 import * as BN from "bn.js";
-import { EthPaginationOptions } from "./types";
+import { PaginationOptions, Timestamp } from "./types";
 import { BlockchainType } from "./blockchain";
 import { ValueTransferEventDTO as BtcValueTransferEventDTO } from "./__generate__/btc";
 import { ValueTransferEventDTO as EthValueTransferEventDTO } from "./__generate__/eth";
@@ -37,14 +37,18 @@ export type EthValueTransferEvent = ValueTransferEvent<
   EthValueTransferEventDTO.TransferTypeEnum
 >;
 
-export interface EventPaginationOptions<S> extends EthPaginationOptions {
+export interface EventPaginationOptions<S> extends PaginationOptions {
+  address?: string;
+  toAddress?: string;
+  fromAddress?: string;
+  transactionHash?: string;
+  start?: Timestamp;
+  end?: Timestamp;
+  status?: S;
   walletId?: string;
   orgId?: string;
   masterWalletId?: string;
   transactionId?: string;
-  transactionHash?: string;
-  status?: S;
-  blockchain?: BlockchainType;
 }
 
 export type BtcEventPaginationOptions = EventPaginationOptions<null>;
