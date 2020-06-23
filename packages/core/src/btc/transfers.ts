@@ -5,6 +5,7 @@ import { BNConverter } from "../utils/common";
 import { makeQueryString } from "../utils/url";
 
 export interface TransferPaginationOptions extends PaginationOptions {
+  walletId?: string;
   type?: TransferType;
   address?: string;
   transactionHash?: string;
@@ -44,12 +45,11 @@ export class BtcTransfers {
   }
 
   public async getTransfers(
-    walletId: string,
     options?: TransferPaginationOptions
   ): Promise<Pagination<Transfer>> {
     const queryString: string = makeQueryString(options);
     const data: Pagination<Transfer> = await this.client.get(
-      `/wallets/${walletId}/transfers${queryString ? `?${queryString}` : ""}`
+      `/transfers${queryString ? `?${queryString}` : ""}`
     );
 
     return {

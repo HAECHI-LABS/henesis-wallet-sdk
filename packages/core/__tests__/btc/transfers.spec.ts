@@ -13,9 +13,9 @@ describe.skip('BtcTransfer', () => {
         }) as any,
       );
 
-      const transferPagination = await transfers.getTransfers(
-        'a3c2f4128427658ec4dcb668ec799c65',
-      );
+      const transferPagination = await transfers.getTransfers({
+        walletId: 'a3c2f4128427658ec4dcb668ec799c65'
+      });
 
       console.log(transferPagination.pagination);
       console.log(transferPagination.results);
