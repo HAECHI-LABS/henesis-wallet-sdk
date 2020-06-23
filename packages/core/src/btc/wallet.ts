@@ -1,19 +1,28 @@
 import { Client } from "../httpClient";
 import BN from "bn.js";
-import { Balance, Key, Keychains, Pagination, Timestamp } from "../types";
+import {
+  Balance,
+  Key,
+  Keychains,
+  Pagination,
+  PaginationOptions,
+  Timestamp,
+} from "../types";
 import {
   address,
-  Transaction as BitcoinTransaction,
-  script,
   networks,
+  script,
+  Transaction as BitcoinTransaction,
 } from "bitcoinjs-lib";
 import { BNConverter } from "../utils/common";
-import { WalletData, Wallet } from "../wallet";
+import { Wallet, WalletData } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import {
   CreateDepositAddressDTO,
   DepositAddressDTO,
 } from "../__generate__/btc";
+import { MasterWalletSearchOptions } from "../eth";
+import { makeQueryString } from "../utils/url";
 
 export interface BtcTransaction {
   id: string;
@@ -82,6 +91,14 @@ export interface BtcTransaction {
 }
 
 export type DepositAddress = DepositAddressDTO;
+
+export interface DepositAddressPaginationOptions extends PaginationOptions {
+  start?: Timestamp;
+  end?: Timestamp;
+  name?: string;
+  id?: string;
+  address?: string;
+}
 
 export class BtcMasterWallet extends Wallet<BtcTransaction> {
   private readonly data: BtcMasterWalletData;
@@ -186,7 +203,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   getChain(): BlockchainType {
-    return this.data.blockchain;
+    return BlockchainType.BitCoin;
   }
 
   async getBalance(): Promise<Balance[]> {
@@ -217,6 +234,15 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       `${this.baseUrl}/${this.data.id}/deposit-addresses/${depositAddressId}`
     );
     return response;
+  }
+
+  async getDepositAddresses(
+    options?: DepositAddressPaginationOptions
+  ): Promise<Pagination<DepositAddress>> {
+    const queryString: string = makeQueryString(options);
+    return await this.client.get<Pagination<DepositAddressDTO>>(
+      `${this.baseUrl}/${this.getId()}/deposit-addresses?${queryString}`
+    );
   }
 
   getAddress(): string {
