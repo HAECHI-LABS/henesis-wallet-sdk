@@ -2,14 +2,14 @@ import { Client } from "../httpClient";
 import { ModuleOptions } from "../module";
 import { BtcWallets } from "./wallets";
 import { BtcKeyChains } from "./keychains";
-import { BtcEvents } from "./events";
+import { BtcTransfers } from "./transfers";
 
 export class BtcModule {
   public readonly wallets: BtcWallets;
 
   public readonly keychains: BtcKeyChains;
 
-  public readonly events: BtcEvents;
+  public readonly transfers: BtcTransfers;
 
   private readonly client: Client;
 
@@ -17,6 +17,6 @@ export class BtcModule {
     this.client = options.client;
     this.keychains = new BtcKeyChains();
     this.wallets = new BtcWallets(options.env, this.client, this.keychains);
-    this.events = new BtcEvents(this.client);
+    this.transfers = new BtcTransfers(this.client);
   }
 }
