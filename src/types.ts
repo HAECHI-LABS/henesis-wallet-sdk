@@ -29,7 +29,7 @@ export interface KeyWithPriv extends Key {
 
 export type Timestamp = number;
 
-export interface SearchOptions {
+export interface EthSearchOptions {
   toAddress?: string;
   fromAddress?: string;
   transactionHash?: string;
@@ -37,7 +37,9 @@ export interface SearchOptions {
   end?: Timestamp;
 }
 
-export interface PaginationOptions extends SearchOptions {
+export type EthPaginationOptions = EthSearchOptions & PaginationOptions;
+
+export interface PaginationOptions {
   page?: number;
   size?: number;
   sort?: string;
