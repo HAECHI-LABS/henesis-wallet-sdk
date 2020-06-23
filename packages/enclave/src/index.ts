@@ -2,13 +2,14 @@ import { App } from "./app";
 import logger from "./middlewares/logger";
 import sdkInjector from "./middlewares/sdkInjector";
 import converter from "./middlewares/converter";
-import WalletController from "./controllers/wallet.controller";
+import WalletsController from "./controllers/btc/wallets.controller";
+import TransfersController from "./controllers/btc/transfers.controller";
 
 function main() {
   try {
     const app = new App({
       middleWares: [logger, sdkInjector, converter],
-      controllers: [new WalletController()],
+      controllers: [new WalletsController(), new TransfersController()],
       port: 3000,
     });
 

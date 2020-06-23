@@ -27,6 +27,10 @@ export default (
   if (process.env.NODE_ENV === "test") {
     env = Env.Test;
   }
+  if (process.env.NODE_ENV === "local") {
+    env = Env.Local;
+  }
+
   req.sdk = new SDK({
     accessToken,
     secret,
