@@ -1,19 +1,15 @@
 import { Client } from "../httpClient";
-import {
-  BtcMasterWallet,
-  BtcMasterWalletData,
-  CreateMasterWalletResponse,
-} from "./wallet";
+import { BtcMasterWallet, BtcMasterWalletData, CreateMasterWalletResponse } from "./wallet";
 import { Wallets } from "../wallets";
 import aesjs from "aes-js";
-import { Key, Keychains } from "../types";
+import { Keychains } from "../types";
 import { MasterWalletSearchOptions } from "../eth";
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
 import { BlockchainType } from "../blockchain";
 import { Base64 } from "js-base64";
 import { BtcRecoveryKit } from "./recoveryKit";
-import { address as BitcoinAddress } from "bitcoinjs-lib";
+import { address as BitcoinAddress, networks } from "bitcoinjs-lib";
 
 export class BtcWallets extends Wallets<BtcMasterWallet> {
   public constructor(env: Env, client: Client, keychains: Keychains) {
@@ -53,7 +49,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
 
   public verifyAddress(address: string): boolean {
     try {
-      BitcoinAddress.toOutputScript(address);
+      BitcoinAddress.toOutputScript(address, this.env === Env.Prod ? networks.bitcoin : networks.testnet);
       return true;
     } catch (e) {
       return false;
