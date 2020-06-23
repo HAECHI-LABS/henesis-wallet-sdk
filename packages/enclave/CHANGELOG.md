@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.0...v2.0.0-alpha.1) (2020-06-23)
+
+
+### Features
+
+* add getMasterWallets sort query ([8fe91f6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8fe91f6c2cab12976f7b7ee951aacafd6212e495))
+
+
+
+
+
 # [2.0.0-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.7...v2.0.0-alpha.0) (2020-06-22)
 
 

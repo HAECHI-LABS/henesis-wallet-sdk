@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.0...v2.0.0-alpha.1) (2020-06-23)
+
+
+### Bug Fixes
+
+* add chain and status to btc wallet data ([90738a6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/90738a671d13ef0e968fd2ba096f2380d0967e7b))
+* fixed module path ([f8357e8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f8357e80788e1a0445063417da5f70cde23e5e04))
+* remove module path ([9af6c3f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9af6c3fbe3bec1ba931631b4f0349953110d7fb4))
+
+
+### Features
+
+* add getMasterWallets sort query ([8fe91f6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8fe91f6c2cab12976f7b7ee951aacafd6212e495))
+* add henesisKeys ([39d193d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/39d193d3c5c036c3982d8cdcb897a50ee4cea09a))
+* modify events ([9e0c695](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9e0c695fa4e8a9e0c10514999c7eaad74304adbc))
+
+
+
+
+
 # [2.0.0-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.0.7...v2.0.0-alpha.0) (2020-06-22)
 
 
