@@ -1,5 +1,9 @@
 import { Client } from "../httpClient";
-import { BtcMasterWallet, BtcMasterWalletData, CreateMasterWalletResponse } from "./wallet";
+import {
+  BtcMasterWallet,
+  BtcMasterWalletData,
+  CreateMasterWalletResponse,
+} from "./wallet";
 import { Wallets } from "../wallets";
 import aesjs from "aes-js";
 import { Keychains } from "../types";
@@ -49,7 +53,10 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
 
   public verifyAddress(address: string): boolean {
     try {
-      BitcoinAddress.toOutputScript(address, this.env === Env.Prod ? networks.bitcoin : networks.testnet);
+      BitcoinAddress.toOutputScript(
+        address,
+        this.env === Env.Prod ? networks.bitcoin : networks.testnet
+      );
       return true;
     } catch (e) {
       return false;
