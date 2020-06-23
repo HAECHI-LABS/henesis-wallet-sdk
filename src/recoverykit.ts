@@ -99,7 +99,7 @@ export class RecoveryKit {
       docs,
       "C. Henesis Key",
       "This is the public part of the key that Henesis will use to co-sign transactions with you on your wallet.",
-      this.henesisKey.address,
+      this.henesisKey.pub,
       36,
       540
     );
