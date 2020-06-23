@@ -29,16 +29,6 @@ export interface KeyWithPriv extends Key {
 
 export type Timestamp = number;
 
-export interface EthSearchOptions {
-  toAddress?: string;
-  fromAddress?: string;
-  transactionHash?: string;
-  start?: Timestamp;
-  end?: Timestamp;
-}
-
-export type EthPaginationOptions = EthSearchOptions & PaginationOptions;
-
 export interface PaginationOptions {
   page?: number;
   size?: number;
