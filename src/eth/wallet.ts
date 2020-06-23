@@ -9,7 +9,7 @@ import {
   Key,
   Keychains,
   Pagination,
-  EthPaginationOptions,
+  PaginationOptions,
 } from "../types";
 import { MultiSigPayload, SignedMultiSigPayload } from "./transactions";
 import { Client } from "../httpClient";
@@ -42,7 +42,7 @@ export interface EthMasterWalletData extends EthWalletData {
 
 export interface EthUserWalletData extends EthWalletData {}
 
-export interface UserWalletPaginationOptions extends EthPaginationOptions {
+export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;
   id?: string;
   address?: string;
