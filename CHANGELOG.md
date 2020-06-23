@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.2...v2.0.0-alpha.3) (2020-06-23)
+
+
+### Bug Fixes
+
+* fix verify address bug and add test cases ([97537a9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/97537a932e0bfb561a63242fc2d05b22bd2ff642))
+* make extend paginationOptions ([813f1ea](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/813f1eaeb2a90138bfef7de5230d59244d582c29))
+
+
+### Features
+
+* add get btc transfers ([b0e4a2b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b0e4a2be280091a7bf0775703f14f735bfd905e3))
+* move transfers from /wallets ([177f7db](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/177f7db09234309d4e6bf95b3bc703f64552cee8))
+
+
+
+
+
 # [2.0.0-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.1...v2.0.0-alpha.2) (2020-06-23)
 
 
