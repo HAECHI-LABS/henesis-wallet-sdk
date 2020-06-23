@@ -15,7 +15,7 @@ import { BNConverter } from "../utils/common";
 
 export interface MasterWalletSearchOptions {
   name?: string;
-  orgId?: string;
+  sort?: string;
 }
 
 export class EthWallets extends Wallets<EthMasterWallet> {
