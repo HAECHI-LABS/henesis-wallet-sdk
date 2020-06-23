@@ -1,6 +1,6 @@
 import * as BN from "bn.js";
 import { BlockchainType } from "../blockchain";
-import { Pagination, PaginationOptions } from "../types";
+import { Pagination, EthPaginationOptions } from "../types";
 import { Client } from "../httpClient";
 import { makeQueryString } from "../utils/url";
 
@@ -16,7 +16,7 @@ export interface Transaction {
   status: TransactionStatus;
 }
 
-export interface TransactionPaginationOptions extends PaginationOptions {
+export interface TransactionPaginationOptions extends EthPaginationOptions {
   status?: TransactionStatus;
   keyId?: string;
 }

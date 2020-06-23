@@ -9,7 +9,7 @@ import {
   Key,
   Keychains,
   Pagination,
-  PaginationOptions,
+  EthPaginationOptions,
 } from "../types";
 import { MultiSigPayload, SignedMultiSigPayload } from "./transactions";
 import { Client } from "../httpClient";
@@ -29,15 +29,20 @@ export interface EthTransaction {
   status: string;
 }
 
-export interface EthMasterWalletData extends WalletData {
-  backupKey: Key;
+export interface EthWalletData extends WalletData {
+  blockchain: BlockchainType;
+  transactionId: string;
+  error: string | null;
+}
+
+export interface EthMasterWalletData extends EthWalletData {
   accountKey: Key;
   encryptionKey: string;
 }
 
-export interface EthUserWalletData extends WalletData {}
+export interface EthUserWalletData extends EthWalletData {}
 
-export interface UserWalletPaginationOptions extends PaginationOptions {
+export interface UserWalletPaginationOptions extends EthPaginationOptions {
   name?: string;
   id?: string;
   address?: string;
@@ -65,17 +70,21 @@ function convertSignedMultiSigPayloadToDTO(
 export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   protected data: EthMasterWalletData;
 
+  protected readonly blockchain: BlockchainType;
+
   protected constructor(
     client: Client,
     data: EthMasterWalletData,
-    keychains: Keychains
+    keychains: Keychains,
+    blockchain: BlockchainType
   ) {
     super(client, keychains);
     this.data = data;
+    this.blockchain = blockchain;
   }
 
   getChain(): BlockchainType {
-    return this.data.blockchain;
+    return this.blockchain;
   }
 
   async replaceTransaction(
@@ -283,9 +292,10 @@ export class EthMasterWallet extends EthLikeWallet {
   public constructor(
     client: Client,
     walletData: EthMasterWalletData,
-    keychains: Keychains
+    keychains: Keychains,
+    blockchain: BlockchainType
   ) {
-    super(client, walletData, keychains);
+    super(client, walletData, keychains, blockchain);
     this.wallet = new new Web3().eth.Contract(wallet as AbiItem[]);
   }
 
@@ -345,7 +355,8 @@ export class EthMasterWallet extends EthLikeWallet {
       this.client,
       this.data,
       this.keychains,
-      userWalletData
+      userWalletData,
+      this.blockchain
     );
   }
 
@@ -357,7 +368,8 @@ export class EthMasterWallet extends EthLikeWallet {
       this.client,
       this.data,
       this.keychains,
-      userWalletData
+      userWalletData,
+      this.blockchain
     );
   }
 
@@ -397,7 +409,13 @@ export class EthMasterWallet extends EthLikeWallet {
       pagination: data.pagination,
       results: data.results.map(
         (data) =>
-          new EthUserWallet(this.client, this.data, this.keychains, data)
+          new EthUserWallet(
+            this.client,
+            this.data,
+            this.keychains,
+            data,
+            this.blockchain
+          )
       ),
     } as Pagination<EthUserWallet>;
   }
@@ -423,9 +441,10 @@ export class EthUserWallet extends EthLikeWallet {
     client: Client,
     data: EthMasterWalletData,
     keychains: Keychains,
-    userWalletData: EthUserWalletData
+    userWalletData: EthUserWalletData,
+    blockchain: BlockchainType
   ) {
-    super(client, data, keychains);
+    super(client, data, keychains, blockchain);
     this.userWalletData = userWalletData;
   }
 

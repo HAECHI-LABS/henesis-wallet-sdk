@@ -41,7 +41,12 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       `${this.baseUrl}/${id}`
     );
 
-    return new EthMasterWallet(this.client, walletData, this.keychains);
+    return new EthMasterWallet(
+      this.client,
+      walletData,
+      this.keychains,
+      this.blockchain
+    );
   }
 
   public async getMasterWallets(
@@ -53,7 +58,8 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     );
 
     return walletDatas.map(
-      (x) => new EthMasterWallet(this.client, x, this.keychains)
+      (x) =>
+        new EthMasterWallet(this.client, x, this.keychains, this.blockchain)
     );
   }
   // todo: henesis-keys
@@ -96,7 +102,12 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       }
     );
 
-    return new EthMasterWallet(this.client, walletData, this.keychains);
+    return new EthMasterWallet(
+      this.client,
+      walletData,
+      this.keychains,
+      this.blockchain
+    );
   }
 
   public async createMasterWallet(
@@ -119,7 +130,12 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       }
     );
 
-    return new EthMasterWallet(this.client, walletData, this.keychains);
+    return new EthMasterWallet(
+      this.client,
+      walletData,
+      this.keychains,
+      this.blockchain
+    );
   }
 
   public verifyAddress(address: string): boolean {
