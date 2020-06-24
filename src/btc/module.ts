@@ -15,7 +15,7 @@ export class BtcModule {
 
   constructor(options: ModuleOptions) {
     this.client = options.client;
-    this.keychains = new BtcKeyChains();
+    this.keychains = new BtcKeyChains(options.env);
     this.wallets = new BtcWallets(options.env, this.client, this.keychains);
     this.transfers = new BtcTransfers(this.client);
   }
