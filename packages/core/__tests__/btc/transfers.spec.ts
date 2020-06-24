@@ -3,8 +3,9 @@ import {BtcTransfers} from "../../src/btc/transfers";
 
 describe.skip('BtcTransfer', () => {
   jest.setTimeout(50000);
-  describe('#', () => {
+  describe('#getTransfers()', () => {
     it('should get transfers', async () => {
+
       const transfers = new BtcTransfers(
         new HttpClient({
           accessToken: 'accessToken',
@@ -14,11 +15,17 @@ describe.skip('BtcTransfer', () => {
       );
 
       const transferPagination = await transfers.getTransfers({
-        walletId: 'a3c2f4128427658ec4dcb668ec799c65'
+        walletId: '61898f8d5b4c69bbd7f7b9216e5d5bff'
       });
 
       console.log(transferPagination.pagination);
-      console.log(transferPagination.results);
+      console.log(transferPagination.results.map(result=> {
+        return {
+          ...result,
+          amount: result.amount.toNumber(),
+          feeAmount: result.feeAmount ? result.feeAmount.toNumber() : null,
+        }
+      }));
     });
   });
 });

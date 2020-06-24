@@ -23,8 +23,8 @@ describe.skip('BtcMasterWallet', () => {
       );
       const tx: BtcTransaction = await wallet.transfer(
         'BTC',
-        '2MvPC2ir2mxwjL3cc4LUosPQqu45YnQknSt',
-        new BN(1000),
+        '2MuNo2ZeuAnzztUL1UAbGxjdW1oYAWvrqnX',
+        new BN(10000),
         'passphrase',
       );
 
@@ -80,10 +80,10 @@ describe.skip('BtcMasterWallet', () => {
         new BtcKeyChains(Env.Local),
       );
       const wallet = await wallets.getWallet(
-        'a3c2f4128427658ec4dcb668ec799c65',
+        '61898f8d5b4c69bbd7f7b9216e5d5bff',
       );
       const response = await wallet.getBalance();
-      console.log(response);
+      console.log(response[0].amount.toNumber());
     });
   });
 
@@ -99,7 +99,7 @@ describe.skip('BtcMasterWallet', () => {
         new BtcKeyChains(Env.Local),
       );
       const wallet = await wallets.getWallet(
-        'a3c2f4128427658ec4dcb668ec799c65',
+        '61898f8d5b4c69bbd7f7b9216e5d5bff',
       );
       const txs = await wallet.getTransactions();
       txs.results.forEach(tx => {
