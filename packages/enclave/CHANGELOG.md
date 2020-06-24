@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.2...v2.0.0-alpha.4) (2020-06-24)
+
+
+### Features
+
+* implement btc enclave api ([cc396ec](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/cc396ecc193c083140ecbbde409fc7dded1d7da5))
+
+
+
+
+
 # [2.0.0-alpha.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.2...v2.0.0-alpha.3) (2020-06-23)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
