@@ -1,10 +1,19 @@
 import BN from 'bn.js';
-import { Klay } from '../../src/eth/coin';
+import { CoinDTO, Klay } from "../../src/eth/coin";
+import { BlockchainType } from "../../src/blockchain";
 
 describe('Klay', () => {
   let klay: Klay;
+  const coinData: CoinDTO = {
+    id: 1,
+    name: '클레이튼',
+    symbol: 'KLAY',
+    address: null,
+    desc: '',
+    blockchain: BlockchainType.Klaytn,
+  };
   beforeEach(() => {
-    klay = new Klay();
+    klay = new Klay(coinData);
   });
 
   describe('#getName()', () => {
