@@ -1,17 +1,27 @@
 import { Key, Keychains, KeyWithPriv } from "../types";
 import { ECPair } from "bitcoinjs-lib";
 import { networks } from "bitcoinjs-lib";
-import bip38 from "bip38";
+import sjcl from "../eth/eth-core-lib/sjcl";
+import crypto from "crypto";
+import { bytesToWord } from "../eth";
+import { BNConverter } from "../utils/common";
+import { Env } from "../sdk";
 
 export class BtcKeyChains implements Keychains {
+  private env: Env;
+
+  constructor(env: Env) {
+    this.env = env;
+  }
+
   create(password: string): KeyWithPriv {
     const ecPair = ECPair.makeRandom({
-      network: networks.testnet,
+      network: Env.Prod ? networks.bitcoin : networks.testnet,
       compressed: true,
     });
 
     return {
-      keyFile: bip38.encrypt(ecPair.privateKey, ecPair.compressed, password),
+      keyFile: this.encryptECPair(ecPair, password),
       priv: `0x${ecPair.privateKey.toString("hex")}`,
       pub: `0x${ecPair.publicKey.toString("hex")}`,
     };
@@ -25,33 +35,65 @@ export class BtcKeyChains implements Keychains {
   changePassword(key: Key, password: string, newPassword: string): KeyWithPriv {
     const ecPair = this.decryptECPair(key, password);
     return {
-      keyFile: bip38.encrypt(ecPair.privateKey, ecPair.compressed, newPassword),
+      keyFile: this.encryptECPair(ecPair, newPassword),
       priv: `0x${ecPair.privateKey.toString("hex")}`,
       pub: `0x${ecPair.publicKey.toString("hex")}`,
     };
   }
 
   decrypt(key: Key, password: string): string {
-    const decryptedKey = this.decryptKeyFile(key.keyFile, password);
-    return `0x${decryptedKey.privateKey.toString("hex")}`;
+    try {
+      return `0x${sjcl.decrypt(password, key.keyFile)}`;
+    } catch (error) {
+      if (
+        error.message.includes("ccm: tag doesn't match") ||
+        error.message.includes("sjcl.exception.invalid is not a constructor")
+      ) {
+        error.message = `password error - ${error.message}`;
+      } else if (
+        error.message === "sjcl.exception.corrupt is not a constructor"
+      ) {
+        error.message = "password error";
+      }
+      throw error;
+    }
+  }
+
+  private encryptECPair(ecPair, password: string): string {
+    return this.encryptRawPrivateKey(
+      ecPair.privateKey.toString("hex"),
+      password
+    );
+  }
+
+  private encryptRawPrivateKey(privateKey: string, password: string): string {
+    const randomSalt = crypto.randomBytes(8);
+    const randomIV = crypto.randomBytes(16);
+    const encryptOptions = {
+      iter: 10000,
+      ks: 256,
+      salt: [
+        bytesToWord(randomSalt.slice(0, 4)),
+        bytesToWord(randomSalt.slice(4)),
+      ],
+      iv: [
+        bytesToWord(randomIV.slice(0, 4)),
+        bytesToWord(randomIV.slice(4, 8)),
+        bytesToWord(randomIV.slice(8, 12)),
+        bytesToWord(randomIV.slice(12, 16)),
+      ],
+    };
+    return sjcl.encrypt(password, privateKey, encryptOptions);
   }
 
   private decryptECPair(key: Key, password: string) {
-    const decryptedKey = this.decryptKeyFile(key.keyFile, password);
-    return ECPair.fromPrivateKey(decryptedKey.privateKey, {
-      compressed: decryptedKey.compressed,
-      network: networks.testnet,
-    });
-  }
-
-  private decryptKeyFile(keyFile: string, password: string) {
-    try {
-      return bip38.decrypt(keyFile, password);
-    } catch (e) {
-      if (e.code === "ERR_ASSERTION") {
-        throw new Error("password error");
+    const decryptedKey = this.decrypt(key, password);
+    return ECPair.fromPrivateKey(
+      Buffer.from(BNConverter.remove0x(decryptedKey), "hex"),
+      {
+        compressed: true,
+        network: Env.Prod ? networks.bitcoin : networks.testnet,
       }
-      throw e;
-    }
+    );
   }
 }

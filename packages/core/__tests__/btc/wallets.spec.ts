@@ -13,7 +13,7 @@ describe('BtcWallets', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new BtcKeyChains(),
+        new BtcKeyChains(Env.Local),
       );
 
       const masterWallet = await wallets.createMasterWallet(
@@ -34,7 +34,7 @@ describe('BtcWallets', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new BtcKeyChains(),
+        new BtcKeyChains(Env.Local),
       );
 
       expect(wallets.verifyAddress('2My2DEuwrF9XGb9vCHN9XQaNYgBya4kQNJo')).toEqual(true);
@@ -48,7 +48,7 @@ describe('BtcWallets', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new BtcKeyChains(),
+        new BtcKeyChains(Env.Local),
       );
 
       expect(wallets.verifyAddress('invalid')).toEqual(false);
@@ -62,7 +62,7 @@ describe('BtcWallets', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new BtcKeyChains(),
+        new BtcKeyChains(Env.Prod),
       );
 
       expect(wallets.verifyAddress('2My2DEuwrF9XGb9vCHN9XQaNYgBya4kQNJo')).toEqual(false);

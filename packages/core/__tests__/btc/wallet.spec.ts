@@ -16,10 +16,10 @@ describe.skip('BtcMasterWallet', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new BtcKeyChains(),
+        new BtcKeyChains(Env.Local),
       );
       const wallet = await wallets.getWallet(
-        'a3c2f4128427658ec4dcb668ec799c65',
+        '61898f8d5b4c69bbd7f7b9216e5d5bff',
       );
       const tx: BtcTransaction = await wallet.transfer(
         'BTC',
@@ -41,12 +41,12 @@ describe.skip('BtcMasterWallet', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new BtcKeyChains(),
+        new BtcKeyChains(Env.Local),
       );
       const wallet = await wallets.getWallet(
-        'a3c2f4128427658ec4dcb668ec799c65',
+        '61898f8d5b4c69bbd7f7b9216e5d5bff',
       );
-      const createDeposit = await wallet.createDepositAddress('abcd');
+      const createDeposit = await wallet.createDepositAddress('deposit-address-btc');
       console.log(createDeposit);
     });
 
@@ -58,10 +58,10 @@ describe.skip('BtcMasterWallet', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new BtcKeyChains(),
+        new BtcKeyChains(Env.Local),
       );
       const wallet = await wallets.getWallet(
-        'a3c2f4128427658ec4dcb668ec799c65',
+        '61898f8d5b4c69bbd7f7b9216e5d5bff',
       );
       const depositAddress = await wallet.getDepositAddress('abcd');
       console.log(depositAddress);
@@ -77,7 +77,7 @@ describe.skip('BtcMasterWallet', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new BtcKeyChains(),
+        new BtcKeyChains(Env.Local),
       );
       const wallet = await wallets.getWallet(
         'a3c2f4128427658ec4dcb668ec799c65',
@@ -96,7 +96,7 @@ describe.skip('BtcMasterWallet', () => {
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
         }) as any,
-        new BtcKeyChains(),
+        new BtcKeyChains(Env.Local),
       );
       const wallet = await wallets.getWallet(
         'a3c2f4128427658ec4dcb668ec799c65',
