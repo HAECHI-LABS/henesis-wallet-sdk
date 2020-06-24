@@ -69,6 +69,9 @@ function convertSignedMultiSigPayloadToDTO(
 
 export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   protected data: EthMasterWalletData;
+  protected readonly DEFAULT_CONTRACT_CALL_GAS_LIMIT: BN = new BN(1000000);
+  protected readonly DEFAULT_COIN_TRANSFER_GAS_LIMIT: BN = new BN(150000);
+  protected readonly DEFAULT_TOKEN_TRANSFER_GAS_LIMIT: BN = new BN(500000);
 
   protected readonly blockchain: BlockchainType;
 
@@ -121,7 +124,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit
+      gasLimit || this.DEFAULT_CONTRACT_CALL_GAS_LIMIT
     );
   }
 
@@ -162,7 +165,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit
+      gasLimit || this.getGasLimitByTicker(ticker)
     );
   }
 
@@ -283,6 +286,13 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       default:
         return new Erc20(coin.symbol, coin.address);
     }
+  }
+
+  protected getGasLimitByTicker(ticker: string): BN {
+    if (ticker.toUpperCase() === 'ETH' || ticker.toUpperCase() === 'KLAY') {
+      return this.DEFAULT_COIN_TRANSFER_GAS_LIMIT;
+    }
+    return this.DEFAULT_TOKEN_TRANSFER_GAS_LIMIT;
   }
 }
 
