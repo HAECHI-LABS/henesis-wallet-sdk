@@ -4,7 +4,8 @@ import express, { request } from "express";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
 
-export default class TransfersController extends AbstractController implements Controller {
+export default class TransfersController extends AbstractController
+  implements Controller {
   private path = "/api/v2/btc/transfers";
 
   constructor() {

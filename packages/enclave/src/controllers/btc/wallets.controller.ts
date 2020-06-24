@@ -1,7 +1,11 @@
 import AbstractController from "../controller";
 import { Controller } from "../../types";
 import express, { request } from "express";
-import { BtcMasterWalletData, BtcTransaction, DepositAddress } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
+import {
+  BtcMasterWalletData,
+  BtcTransaction,
+  DepositAddress,
+} from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 
@@ -13,10 +17,11 @@ export interface BalanceResponse {
 }
 
 export interface Boolean {
-  value: boolean
+  value: boolean;
 }
 
-export default class WalletsController extends AbstractController implements Controller {
+export default class WalletsController extends AbstractController
+  implements Controller {
   private path = "/api/v2/btc/wallets";
 
   constructor() {
@@ -26,14 +31,38 @@ export default class WalletsController extends AbstractController implements Con
 
   protected initRoutes() {
     this.router.get(`${this.path}`, this.promiseWrapper(this.getMasterWallets));
-    this.router.get(`${this.path}/:masterWalletId`, this.promiseWrapper(this.getMasterWallet));
-    this.router.patch(`${this.path}/:masterWalletId/name`, this.promiseWrapper(this.changeMasterWalletName));
-    this.router.get(`${this.path}/:masterWalletId/balance`, this.promiseWrapper(this.getMasterWalletBalance));
-    this.router.post(`${this.path}/:masterWalletId/deposit-addresses`, this.promiseWrapper(this.createDepositAddress));
-    this.router.get(`${this.path}/:masterWalletId/deposit-addresses`, this.promiseWrapper(this.getDepositAddresses));
-    this.router.get(`${this.path}/:masterWalletId/deposit-addresses/:depositAddressId`, this.promiseWrapper(this.getDepositAddressById));
-    this.router.post(`${this.path}/verify-address`, this.promiseWrapper(this.verifyAddress));
-    this.router.post(`${this.path}/:masterWalletId/transactions`, this.promiseWrapper(this.transfer));
+    this.router.get(
+      `${this.path}/:masterWalletId`,
+      this.promiseWrapper(this.getMasterWallet)
+    );
+    this.router.patch(
+      `${this.path}/:masterWalletId/name`,
+      this.promiseWrapper(this.changeMasterWalletName)
+    );
+    this.router.get(
+      `${this.path}/:masterWalletId/balance`,
+      this.promiseWrapper(this.getMasterWalletBalance)
+    );
+    this.router.post(
+      `${this.path}/:masterWalletId/deposit-addresses`,
+      this.promiseWrapper(this.createDepositAddress)
+    );
+    this.router.get(
+      `${this.path}/:masterWalletId/deposit-addresses`,
+      this.promiseWrapper(this.getDepositAddresses)
+    );
+    this.router.get(
+      `${this.path}/:masterWalletId/deposit-addresses/:depositAddressId`,
+      this.promiseWrapper(this.getDepositAddressById)
+    );
+    this.router.post(
+      `${this.path}/verify-address`,
+      this.promiseWrapper(this.verifyAddress)
+    );
+    this.router.post(
+      `${this.path}/:masterWalletId/transactions`,
+      this.promiseWrapper(this.transfer)
+    );
   }
 
   private async getMasterWallets(
@@ -53,18 +82,14 @@ export default class WalletsController extends AbstractController implements Con
     return masterWallet.getData();
   }
 
-  private async verifyAddress(
-    req: express.Request
-  ): Promise<Boolean> {
+  private async verifyAddress(req: express.Request): Promise<Boolean> {
     console.log(req.body.address);
     return {
-      value: req.sdk.btc.wallets.verifyAddress(req.body.address)
-    }
+      value: req.sdk.btc.wallets.verifyAddress(req.body.address),
+    };
   }
 
-  private async transfer(
-    req: express.Request
-  ): Promise<BtcTransaction> {
+  private async transfer(req: express.Request): Promise<BtcTransaction> {
     const masterWallet = await req.sdk.btc.wallets.getWallet(
       req.params.masterWalletId
     );
@@ -108,7 +133,7 @@ export default class WalletsController extends AbstractController implements Con
       id: req.query.id as string,
       name: req.query.name as string,
       address: req.query.address as string,
-    })
+    });
   }
 
   private async getDepositAddressById(
@@ -118,7 +143,7 @@ export default class WalletsController extends AbstractController implements Con
       req.params.masterWalletId
     );
 
-    return await masterWallet.getDepositAddress(req.params.depositAddressId)
+    return await masterWallet.getDepositAddress(req.params.depositAddressId);
   }
 
   private async createDepositAddress(
@@ -128,12 +153,10 @@ export default class WalletsController extends AbstractController implements Con
       req.params.masterWalletId
     );
 
-    return await masterWallet.createDepositAddress(req.body.name)
+    return await masterWallet.createDepositAddress(req.body.name);
   }
 
-  private async changeMasterWalletName(
-    req: express.Request
-  ): Promise<void> {
+  private async changeMasterWalletName(req: express.Request): Promise<void> {
     const masterWallet = await req.sdk.btc.wallets.getWallet(
       req.params.masterWalletId
     );
