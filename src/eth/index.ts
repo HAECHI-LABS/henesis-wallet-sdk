@@ -2,6 +2,7 @@ export * from "./keychains";
 export * from "./gasusages";
 export * from "./batch";
 export * from "./coin";
+export * from "./coins";
 export * from "./events";
 export * from "./transactions";
 export * from "./wallets";

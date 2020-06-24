@@ -19,6 +19,7 @@ import Bytes from "./eth-core-lib/bytes";
 import { BNConverter, ObjectConverter } from "../utils/common";
 import { WalletData, Wallet } from "../wallet";
 import { makeQueryString } from "../utils/url";
+import {Coins} from "./coins";
 
 export interface EthTransaction {
   id: string;
@@ -75,6 +76,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
 
   protected readonly blockchain: BlockchainType;
 
+  protected readonly coins: Coins;
+
   protected constructor(
     client: Client,
     data: EthMasterWalletData,
@@ -84,6 +87,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     super(client, keychains);
     this.data = data;
     this.blockchain = blockchain;
+    this.coins = new Coins(this.client);
   }
 
   getChain(): BlockchainType {
@@ -175,7 +179,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     amount: BN,
     passphrase: string
   ): Promise<SignedMultiSigPayload> {
-    const coin: Coin = await this.getCoin(ticker);
+    const coin: Coin = await this.coins.getCoin(ticker);
     const hexData = coin.buildData(to, amount);
     const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {

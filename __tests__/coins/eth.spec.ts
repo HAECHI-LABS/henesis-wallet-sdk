@@ -1,15 +1,24 @@
 import BN from 'bn.js';
-import { Eth } from "../../src/eth";
+import { CoinDTO, Eth } from "../../src/eth";
+import { BlockchainType } from "../../src/blockchain";
 
 describe('Eth', () => {
   let eth: Eth;
+  const coinData: CoinDTO = {
+    id: 1,
+    name: '이더리움',
+    symbol: 'ETH',
+    address: null,
+    desc: '',
+    blockchain: BlockchainType.Ethereum
+  };
   beforeEach(() => {
-    eth = new Eth();
+    eth = new Eth(coinData);
   });
 
   describe('#getName()', () => {
     it('should return ethereum', () => {
-      expect(eth.getName()).toEqual('ethereum');
+      expect(eth.getName()).toEqual('eth');
     });
   });
 
