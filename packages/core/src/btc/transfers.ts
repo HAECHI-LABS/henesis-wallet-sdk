@@ -32,6 +32,7 @@ export interface Transfer {
   receivedAt: string;
   sendTo: string;
   amount: BN;
+  feeAmount: BN;
   type: TransferType;
   status: TransferStatus;
   createdAt: string;
@@ -65,6 +66,9 @@ export class BtcTransfers {
           receivedAt: t.receivedAt,
           sendTo: t.sendTo,
           amount: BNConverter.hexStringToBN(String(t.amount)),
+          feeAmount: t.feeAmount
+            ? BNConverter.hexStringToBN(String(t.feeAmount))
+            : null,
           type: t.type,
           status: t.status,
           createdAt: t.createdAt,
