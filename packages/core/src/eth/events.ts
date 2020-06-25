@@ -42,6 +42,7 @@ export class EthEvents {
       results: data.results.map((e) => {
         return {
           ...e,
+          id: String(e.id),
           amount: BNConverter.hexStringToBN(String(e.amount)),
         };
       }),
