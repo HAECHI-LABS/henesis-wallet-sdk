@@ -31,6 +31,25 @@ describe.skip('BtcMasterWallet', () => {
     });
   });
 
+  describe('#getEstimatedFee()', () => {
+    it('should get estimated fee', async () => {
+      const wallets = new BtcWallets(
+        Env.Local,
+        new HttpClient({
+          accessToken: 'accessToken',
+          secret: 'secret',
+          url: 'http://localhost:8080/api/v2/btc',
+        }) as any,
+        new BtcKeyChains(Env.Local),
+      );
+      const wallet = await wallets.getWallet(
+        '61898f8d5b4c69bbd7f7b9216e5d5bff',
+      );
+      const response = await wallet.getEstimatedFee(new BN(10000));
+      console.log(parseInt(response.estimatedFee, 16));
+    });
+  });
+
   describe('#depositAddress()', () => {
     it('should create depositAddress', async () => {
       const wallets = new BtcWallets(
