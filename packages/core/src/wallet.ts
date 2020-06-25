@@ -33,14 +33,6 @@ export abstract class Wallet<T> {
 
   abstract getChain(): BlockchainType;
 
-  abstract transfer(
-    ticker: string,
-    to: string,
-    amount: BN,
-    passphrase: string,
-    otpCode?: string
-  ): Promise<T>;
-
   abstract getBalance(): Promise<Balance[]>;
 
   abstract getAddress(): string;
