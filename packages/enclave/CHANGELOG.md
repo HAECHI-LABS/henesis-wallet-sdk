@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.4...v2.0.0-alpha.5) (2020-06-25)
+
+
+### Features
+
+* add 2.x enclave api ([6652076](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/66520766316b224550aedb1ddebdacbbf298ec46))
+* add short token refresh logic ([e64fc49](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e64fc49c559014b9569e306299573c34b46cb153))
+
+
+
+
+
 # [2.0.0-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.2...v2.0.0-alpha.4) (2020-06-24)
 
 
