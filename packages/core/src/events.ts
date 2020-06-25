@@ -8,9 +8,9 @@ export interface Event<S> {
   status: S;
   transactionHash?: string;
   walletId: string;
-  transactionId: string;
-  orgId: string;
-  masterWalletId: string;
+  transactionId?: string;
+  orgId?: string;
+  masterWalletId?: string;
 }
 
 export type BtcEvent = Event<null>;
