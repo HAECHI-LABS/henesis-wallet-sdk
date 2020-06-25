@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.5...v2.0.0-alpha.6) (2020-06-25)
+
+
+### Bug Fixes
+
+* add transactionId null ([ce20e49](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ce20e490adc88886e8d1e535a5efcc6870d7db56))
+* remove ticker from btc transfer ([df31e6b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/df31e6bf326809280101dc40e8e3a78814318d8a))
+
+
+### Features
+
+* add get estimated fee ([dbe9dbf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/dbe9dbf3a581af086cdfe9d023edf05be4681ca4))
+
+
+
+
+
 # [2.0.0-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.4...v2.0.0-alpha.5) (2020-06-25)
 
 
