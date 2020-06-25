@@ -18,7 +18,9 @@ export type BtcEvent = Event<null>;
 export type EthCallEvent = CallEvent<EthValueTransferEventDTO.StatusEnum>;
 
 export interface CallEvent<T> extends Event<T> {
+  fromAddress: string;
   toAddress: string;
+  data: string;
 }
 
 export interface ValueTransferEvent<S, T> extends Event<S> {
