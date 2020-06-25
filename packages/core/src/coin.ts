@@ -29,7 +29,12 @@ export abstract class Coin {
 
   abstract getName(): string;
 
-  abstract buildData(to: string, amount: BN): string;
+  abstract buildTransferData(to: string, amount: BN): string;
+
+  abstract buildFlushData(
+    targetAddresses: string[],
+    tokenAddress?: string,
+  ): string;
 
   abstract isErc20(): boolean;
 }
@@ -50,9 +55,15 @@ export class Erc20 extends Coin {
     return this.coinData.name;
   }
 
-  buildData(to: string, amount: BN): string {
+  buildTransferData(to: string, amount: BN): string {
     return this.erc20.methods
       .transferToken(this.getAddress(), to, amount)
+      .encodeABI();
+  }
+
+  buildFlushData(targetAddresses: string[], tokenAddress: string) {
+    return this.erc20.methods
+      .flushToken(tokenAddress, targetAddresses)
       .encodeABI();
   }
 
@@ -73,8 +84,12 @@ export class Eth extends Coin {
     return 'eth';
   }
 
-  buildData(to: string, amount: BN): string {
+  buildTransferData(to: string, amount: BN): string {
     return this.eth.methods.transferEth(to, amount).encodeABI();
+  }
+
+  buildFlushData(targetAddresses: string[]) {
+    return this.eth.methods.flushEth(targetAddresses).encodeABI();
   }
 
   isErc20(): boolean {
@@ -94,8 +109,12 @@ export class Klay extends Coin {
     return 'klay';
   }
 
-  buildData(to: string, amount: BN): string {
+  buildTransferData(to: string, amount: BN): string {
     return this.klay.methods.transferKlay(to, amount).encodeABI();
+  }
+
+  buildFlushData(targetAddresses: string[]) {
+    return this.klay.methods.flushKlay(targetAddresses).encodeABI();
   }
 
   isErc20(): boolean {

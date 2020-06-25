@@ -81,7 +81,7 @@ export class Accounts {
 
   public async refreshShortAccessToken(otpCode?: string): Promise<Token> {
     return this.client.post<Token>(`${this.baseUrl}/token?type=short`, {
-      otpCode
+      otpCode,
     });
   }
 

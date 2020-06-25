@@ -34,7 +34,7 @@ describe('Erc20', () => {
 
   describe('#buildData()', () => {
     it('should return encoded hex data', () => {
-      const data = erc20.buildData(
+      const data = erc20.buildTransferData(
         '0x280460de5d4488DDA8e29dFb947a8D4574203E3F',
         new BN(5),
       );
