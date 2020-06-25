@@ -25,7 +25,7 @@ describe('Eth', () => {
 
   describe('#buildData()', () => {
     it('should return encoded hex data', () => {
-      const data = eth.buildData(
+      const data = eth.buildTransferData(
         '0x280460de5d4488DDA8e29dFb947a8D4574203E3F',
         new BN(5),
       );

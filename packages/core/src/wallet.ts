@@ -63,6 +63,7 @@ export interface UserWalletData extends WalletData {}
 export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;
   id?: string;
+  ids?: string[];
   address?: string;
 }
 
@@ -262,7 +263,7 @@ export abstract class EthLikeWallet extends Wallet {
     passphrase: string,
   ): Promise<SignedMultiSigPayload> {
     const coin: Coin = await this.coins.getCoin(ticker, this.getChain());
-    const hexData = coin.buildData(to, amount);
+    const hexData = coin.buildTransferData(to, amount);
     const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
       hexData,
@@ -607,6 +608,59 @@ export class MasterWallet extends EthLikeWallet {
       name,
     });
     this.masterWalletData.name = masterWalletData.name;
+  }
+
+  async flush(
+    coinType: string,
+    userWalletIds: string[],
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+  ) {
+    if (userWalletIds.length > 50) {
+      throw new Error(`only 50 accounts can be flushed at a time`);
+    }
+    const coin: Coin = await this.coins.getCoin(coinType, this.getChain());
+    const userWallets: Pagination<UserWallet> = await this.getUserWallets({
+      ids: userWalletIds,
+      size: userWalletIds.length,
+    });
+    const nonce = await this.getNonce();
+    const userWalletAddresses = userWallets.results.map((userWallet) =>
+      userWallet.getAddress(),
+    );
+
+    if (userWalletIds.length != userWalletAddresses.length) {
+      throw new Error(`your input user wallet idd count is ${userWalletIds.length}. but matched user wallet count is ${userWalletAddresses.length}`)
+    }
+
+    const multiSigPayload: MultiSigPayload = {
+      hexData: coin.buildFlushData(
+        userWalletAddresses,
+        coin.getCoinData().address,
+      ),
+      walletNonce: nonce,
+      value: BNConverter.hexStringToBN('0x0'),
+      toAddress: this.getAddress(),
+      walletAddress: this.getAddress(),
+    };
+
+    const signature = this.signPayload(multiSigPayload, passphrase);
+
+    const signedMultiSigPayload = {
+      signature,
+      multiSigPayload,
+    };
+
+    return this.sendTransaction(
+      this.getChain(),
+      signedMultiSigPayload,
+      this.getId(),
+      otpCode,
+      gasPrice,
+      gasLimit || this.DEFAULT_CONTRACT_CALL_GAS_LIMIT,
+    );
   }
 }
 
