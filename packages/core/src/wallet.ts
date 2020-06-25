@@ -48,7 +48,7 @@ export interface WalletData {
   blockchain: BlockchainType;
   createdAt: string;
   status: WalletStatus;
-  transactionId: string;
+  transactionId: string | null;
   error: string | null;
 }
 
