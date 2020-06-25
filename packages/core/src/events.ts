@@ -7,7 +7,7 @@ import { ValueTransferEventDTO as EthValueTransferEventDTO } from "./__generate_
 export interface Event<S> {
   createdAt: string;
   status: S;
-  transactionHash: string;
+  transactionHash?: string;
   walletId: string;
 }
 
