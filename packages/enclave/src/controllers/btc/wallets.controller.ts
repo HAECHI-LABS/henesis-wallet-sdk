@@ -60,7 +60,7 @@ export default class WalletsController extends AbstractController
       this.promiseWrapper(this.verifyAddress)
     );
     this.router.post(
-      `${this.path}/:masterWalletId/transactions`,
+      `${this.path}/:masterWalletId/transfer`,
       this.promiseWrapper(this.transfer)
     );
   }
@@ -95,7 +95,6 @@ export default class WalletsController extends AbstractController
     );
 
     return await masterWallet.transfer(
-      req.body.ticker,
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,

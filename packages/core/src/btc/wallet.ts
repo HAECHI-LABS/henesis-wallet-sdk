@@ -21,7 +21,6 @@ import {
   CreateDepositAddressDTO,
   DepositAddressDTO,
 } from "../__generate__/btc";
-import { MasterWalletSearchOptions } from "../eth";
 import { makeQueryString } from "../utils/url";
 
 export interface BtcTransaction {
@@ -67,6 +66,7 @@ export interface BtcCreateRawTransaction {
     accountSignature: string;
   }[];
   outputs: BtcRawTransactionOutput[];
+  otpCode: string;
 }
 
 export interface BtcMasterWalletData extends WalletData {
@@ -113,7 +113,6 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   public async transfer(
-    ticker: string,
     to: string,
     amount: BN,
     passphrase: string,
@@ -164,6 +163,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     const payload: BtcCreateRawTransaction = {
       inputs: [],
       outputs: [],
+      otpCode: otpCode
     };
 
     for (let i = 0; i < rawTransaction.inputs.length; i++) {
