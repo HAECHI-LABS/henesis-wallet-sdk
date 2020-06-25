@@ -1,5 +1,5 @@
 import { Client } from './sdk';
-import { Key, Token } from './types';
+import { Token } from './types';
 
 export interface AccountWithOTP extends Account {
   otp?: OTP;
@@ -81,7 +81,7 @@ export class Accounts {
 
   public async refreshShortAccessToken(otpCode?: string): Promise<Token> {
     return this.client.post<Token>(`${this.baseUrl}/token?type=short`, {
-      otpCode
+      otpCode,
     });
   }
 
