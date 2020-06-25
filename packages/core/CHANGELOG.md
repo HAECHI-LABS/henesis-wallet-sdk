@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.6...v2.0.0-alpha.7) (2020-06-25)
+
+
+### Bug Fixes
+
+* add transaction id, id to event ([d85935e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d85935ef47193b1df8eddb41a46a52ebd0cec788))
+* add transaction id, id to event ([93c8c80](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/93c8c80cea5b6f2545006b7b5ea5e0c552c8c202))
+* change id number ([1ef5579](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1ef5579c508876ed7a94b990c83bcd83be939838))
+* change id number ([48a10f2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/48a10f2c2de5e470537cfa67db01744304dbb990))
+* fixed value transfer events type ([562d499](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/562d499272bef0a1bc5c797306f739cee61ffc2d))
+
+
+
+
+
 # [2.0.0-alpha.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.5...v2.0.0-alpha.6) (2020-06-25)
 
 
