@@ -7,6 +7,8 @@ import { BlockchainType } from './blockchain';
 export interface Event {
   id: number;
   transactionId: string;
+  masterWalletId: string;
+  orgId: string;
   createdAt: string;
   status: EventStatusType;
   toAddress: string;
@@ -25,6 +27,12 @@ export enum EventStatusType {
 export enum TransferType {
   WITHDRAWAL = 'WITHDRAWAL',
   DEPOSIT = 'DEPOSIT',
+}
+
+export interface CallEvent extends Event {
+  from: string;
+  to: string;
+  data: string;
 }
 
 export interface ValueTransferEvent extends Event {
@@ -54,7 +62,7 @@ export class Events {
 
   public async getCallEvents(
     options?: EventPaginationOptions,
-  ): Promise<Pagination<Event>> {
+  ): Promise<Pagination<CallEvent>> {
     const queryString: string = options
       ? Object.keys(options)
           .filter((key) => !!options[key])
@@ -62,9 +70,9 @@ export class Events {
           .join('&')
       : '';
 
-    const data: Pagination<Event> = await this.client.get<Pagination<Event>>(
-      `/call-events${queryString ? `?${queryString}` : ''}`,
-    );
+    const data: Pagination<CallEvent> = await this.client.get<
+      Pagination<CallEvent>
+    >(`/call-events${queryString ? `?${queryString}` : ''}`);
     return {
       pagination: data.pagination,
       results: data.results,
