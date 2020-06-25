@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.4...v2.0.0-alpha.5) (2020-06-25)
+
+
+### Bug Fixes
+
+* add event transaction hash optional ([e231bd8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e231bd8f300f33852377f0f65b531e9ccfe3efd4))
+* add fee amount to transfer dto ([f96de1e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f96de1e0470cfc84bad8462007b6cceb567b17e3))
+* fix some tests ([8b4b205](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8b4b2056d270b860bf2adaf6f90c7288132aa57b))
+
+
+### Features
+
+* add 2.x enclave api ([6652076](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/66520766316b224550aedb1ddebdacbbf298ec46))
+* add short token refresh logic ([e64fc49](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e64fc49c559014b9569e306299573c34b46cb153))
+
+
+
+
+
 # [2.0.0-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.2...v2.0.0-alpha.4) (2020-06-24)
 
 
