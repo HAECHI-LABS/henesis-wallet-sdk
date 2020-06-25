@@ -13,6 +13,7 @@ export interface Keychains {
 export interface Balance {
   coinType: string;
   amount: BN;
+  spendableAmount?: BN;
   name: string;
   symbol: string;
 }
