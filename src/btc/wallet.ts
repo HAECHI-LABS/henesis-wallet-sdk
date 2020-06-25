@@ -31,6 +31,10 @@ export interface BtcTransaction {
   createdAt: number;
 }
 
+export interface BtcEstimatedFee {
+  estimatedFee: string;
+}
+
 export interface BtcBalance {
   balance: string;
 }
@@ -117,7 +121,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     amount: BN,
     passphrase: string,
     otpCode?: string
-  ) {
+  ): Promise<BtcTransaction> {
     const rawTransaction: BtcRawTransaction = await this.createRawTransaction(
       to,
       amount
@@ -193,6 +197,14 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
         to,
         amount: BNConverter.bnToHexString(amount),
       }
+    );
+  }
+
+  public async getEstimatedFee(amount: BN): Promise<BtcEstimatedFee> {
+    return await this.client.get<BtcEstimatedFee>(
+      `${this.baseUrl}/${
+        this.data.id
+      }/estimated-fee?amount=${BNConverter.bnToHexString(amount)}`
     );
   }
 
