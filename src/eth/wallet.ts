@@ -276,22 +276,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     return BNConverter.hexStringToBN(nonce.nonce);
   }
 
-  protected async getCoin(ticker: string): Promise<Coin> {
-    const coin: {
-      symbol: string;
-      address: string;
-    } = await this.client.get(`/coins/${ticker.toUpperCase()}`);
-
-    switch (coin.symbol.toUpperCase()) {
-      case "ETH":
-        return new Eth();
-      case "KLAY":
-        return new Klay();
-      default:
-        return new Erc20(coin.symbol, coin.address);
-    }
-  }
-
   protected getGasLimitByTicker(ticker: string): BN {
     if (ticker.toUpperCase() === 'ETH' || ticker.toUpperCase() === 'KLAY') {
       return this.DEFAULT_COIN_TRANSFER_GAS_LIMIT;
