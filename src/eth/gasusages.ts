@@ -27,9 +27,7 @@ export class Gasusages {
   }
 
   public async getMethodGasUsages(methodName: MethodName): Promise<Method> {
-    const balance = await this.client.get(
-      `${this.baseUrl}?name=${methodName}`
-    );
+    const balance = await this.client.get(`${this.baseUrl}?name=${methodName}`);
     balance.estimatedGasConsumption = BNConverter.hexStringToBN(
       balance.estimatedGasConsumption
     );

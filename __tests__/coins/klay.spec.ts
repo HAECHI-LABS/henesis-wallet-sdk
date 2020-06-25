@@ -24,7 +24,7 @@ describe('Klay', () => {
 
   describe('#buildData()', () => {
     it('should return encoded hex data', () => {
-      const data = klay.buildData(
+      const data = klay.buildTransferData(
         '0x280460de5d4488DDA8e29dFb947a8D4574203E3F',
         new BN(5),
       );
