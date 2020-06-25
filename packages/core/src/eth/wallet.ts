@@ -32,7 +32,7 @@ export interface EthTransaction {
 
 export interface EthWalletData extends WalletData {
   blockchain: BlockchainType;
-  transactionId: string;
+  transactionId: string | null;
   error: string | null;
 }
 
