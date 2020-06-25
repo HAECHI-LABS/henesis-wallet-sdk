@@ -8,9 +8,7 @@ export class Coins {
     this.client = client;
   }
 
-  public async getCoin(
-    ticker: string
-  ): Promise<Coin> {
+  public async getCoin(ticker: string): Promise<Coin> {
     const coinData = await this.client.get<CoinDTO>(
       `/coins/${ticker.toUpperCase()}`
     );
