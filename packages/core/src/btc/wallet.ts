@@ -168,7 +168,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     const payload: BtcCreateRawTransaction = {
       inputs: [],
       outputs: [],
-      otpCode: otpCode
+      otpCode: otpCode,
     };
 
     for (let i = 0; i < rawTransaction.inputs.length; i++) {
