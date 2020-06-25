@@ -1866,6 +1866,14 @@ export interface ValueTransferEventDTO {
      * @memberof ValueTransferEventDTO
      */
     walletId?: string;
+
+    orgId?: string;
+
+    transactionId?: string;
+
+    id?: string;
+
+    masterWalletId?: string;
 }
 
 /**
