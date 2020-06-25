@@ -14,7 +14,7 @@
   "scripts": {
     "node:example": "ts-node --files ./example/change-account-role.ts",
     "codegen:btc": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i http://localhost:8080/v2/api-docs -l typescript-fetch -o ./src/__generate__/btc --type-mappings Date=string",
-    "codegen:eth": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i https://dev.wallet.henesis.io/v2/api-docs -l typescript-fetch -o ./src/__generate__/eth --type-mappings Date=string",
+    "codegen:eth": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i http://localhost:8080/v2/api-docs -l typescript-fetch -o ./src/__generate__/eth --type-mappings Date=string",
     "test": "jest",
     "build": "rm -rf ./lib && tsc",
     "eslint": "./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src",

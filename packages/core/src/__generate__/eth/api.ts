@@ -17,7 +17,8 @@ import * as url from "url";
 import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
 
-const BASE_PATH = "https://dev.wallet.henesis.io".replace(/\/+$/, "");
+const BASE_PATH = "https://localhost:8080".replace(/\/+$/, "");
+
 /**
  *
  * @export
@@ -74,92 +75,6 @@ export class RequiredError extends Error {
     name: "RequiredError"
     constructor(public field: string, msg?: string) {
         super(msg);
-    }
-}
-
-/**
- * 
- * @export
- * @interface AccessTokenDTO
- */
-export interface AccessTokenDTO {
-    /**
-     * 
-     * @type {string}
-     * @memberof AccessTokenDTO
-     */
-    accessToken?: string;
-}
-
-/**
- * 
- * @export
- * @interface AccountDTO
- */
-export interface AccountDTO {
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountDTO
-     */
-    accessToken?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountDTO
-     */
-    createdAt?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountDTO
-     */
-    email?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountDTO
-     */
-    firstName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountDTO
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountDTO
-     */
-    lastName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountDTO
-     */
-    organizationId?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof AccountDTO
-     */
-    roles?: Array<AccountDTO.RolesEnum>;
-}
-
-/**
- * @export
- * @namespace AccountDTO
- */
-export namespace AccountDTO {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum RolesEnum {
-        VIEWER = <any> 'VIEWER',
-        ADMIN = <any> 'ADMIN',
-        HAECHI = <any> 'HAECHI'
     }
 }
 
@@ -251,6 +166,12 @@ export interface CallEventDTO {
     createdAt?: string;
     /**
      * 
+     * @type {number}
+     * @memberof CallEventDTO
+     */
+    id?: number;
+    /**
+     * 
      * @type {string}
      * @memberof CallEventDTO
      */
@@ -285,31 +206,12 @@ export namespace CallEventDTO {
      * @enum {string}
      */
     export enum StatusEnum {
+        REQUESTED = <any> 'REQUESTED',
         PENDING = <any> 'PENDING',
         FAILED = <any> 'FAILED',
         MINED = <any> 'MINED',
         CONFIRMED = <any> 'CONFIRMED'
     }
-}
-
-/**
- * 
- * @export
- * @interface ChangeAccountNameRequest
- */
-export interface ChangeAccountNameRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ChangeAccountNameRequest
-     */
-    firstName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChangeAccountNameRequest
-     */
-    lastName?: string;
 }
 
 /**
@@ -388,29 +290,9 @@ export namespace CoinDTO {
 /**
  * 
  * @export
- * @interface CreateAccessTokenRequest
- */
-export interface CreateAccessTokenRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof CreateAccessTokenRequest
-     */
-    expiresIn?: number;
-}
-
-/**
- * 
- * @export
  * @interface CreateBatchTransactionRequest
  */
 export interface CreateBatchTransactionRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateBatchTransactionRequest
-     */
-    blockchain?: string;
     /**
      * 
      * @type {number}
@@ -460,12 +342,6 @@ export interface CreateCoinRequest {
      * @type {string}
      * @memberof CreateCoinRequest
      */
-    blockchain?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateCoinRequest
-     */
     desc?: string;
     /**
      * 
@@ -479,6 +355,20 @@ export interface CreateCoinRequest {
      * @memberof CreateCoinRequest
      */
     symbol?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface CreateHenesisKeyRequest
+ */
+export interface CreateHenesisKeyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateHenesisKeyRequest
+     */
+    orgId?: string;
 }
 
 /**
@@ -504,12 +394,6 @@ export interface CreateMasterWalletRequest {
      * @type {string}
      * @memberof CreateMasterWalletRequest
      */
-    blockchain?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateMasterWalletRequest
-     */
     encryptionKey?: string;
     /**
      * 
@@ -528,29 +412,45 @@ export interface CreateMasterWalletRequest {
 /**
  * 
  * @export
- * @interface CreateOrganizationRequest
+ * @interface CreateMultiSigTransactionRequest
  */
-export interface CreateOrganizationRequest {
+export interface CreateMultiSigTransactionRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateMultiSigTransactionRequest
+     */
+    gasLimit?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateMultiSigTransactionRequest
+     */
+    gasPrice?: number;
     /**
      * 
      * @type {string}
-     * @memberof CreateOrganizationRequest
+     * @memberof CreateMultiSigTransactionRequest
      */
-    name?: string;
-}
-
-/**
- * 
- * @export
- * @interface CreateSecretResponse
- */
-export interface CreateSecretResponse {
+    otpCode?: string;
+    /**
+     * 
+     * @type {SignedMultiSigPayloadDTO}
+     * @memberof CreateMultiSigTransactionRequest
+     */
+    signedMultiSigPayload?: SignedMultiSigPayloadDTO;
     /**
      * 
      * @type {string}
-     * @memberof CreateSecretResponse
+     * @memberof CreateMultiSigTransactionRequest
      */
-    secret?: string;
+    transactionId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateMultiSigTransactionRequest
+     */
+    walletId?: string;
 }
 
 /**
@@ -564,7 +464,7 @@ export interface CreateTransactionRequest {
      * @type {string}
      * @memberof CreateTransactionRequest
      */
-    blockchain?: string;
+    data?: string;
     /**
      * 
      * @type {number}
@@ -585,101 +485,16 @@ export interface CreateTransactionRequest {
     otpCode?: string;
     /**
      * 
-     * @type {SignedMultiSigPayloadDTO}
-     * @memberof CreateTransactionRequest
-     */
-    signedMultiSigPayload?: SignedMultiSigPayloadDTO;
-    /**
-     * 
      * @type {string}
      * @memberof CreateTransactionRequest
      */
-    transactionId?: string;
+    toAddress?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof CreateTransactionRequest
      */
-    walletId?: string;
-}
-
-/**
- * 
- * @export
- * @interface CreateUserResponse
- */
-export interface CreateUserResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserResponse
-     */
-    address?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserResponse
-     */
-    blockchain?: CreateUserResponse.BlockchainEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserResponse
-     */
-    createdAt?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserResponse
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserResponse
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserResponse
-     */
-    status?: CreateUserResponse.StatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserResponse
-     */
-    transactionId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserResponse
-     */
-    updatedAt?: string;
-}
-
-/**
- * @export
- * @namespace CreateUserResponse
- */
-export namespace CreateUserResponse {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum BlockchainEnum {
-        ETHEREUM = <any> 'ETHEREUM',
-        KLAYTN = <any> 'KLAYTN'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum StatusEnum {
-        ACTIVE = <any> 'ACTIVE',
-        INACTIVE = <any> 'INACTIVE'
-    }
+    value?: number;
 }
 
 /**
@@ -688,12 +503,6 @@ export namespace CreateUserResponse {
  * @interface CreateUserWalletRequest
  */
 export interface CreateUserWalletRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateUserWalletRequest
-     */
-    blockchain?: string;
     /**
      * 
      * @type {number}
@@ -769,104 +578,6 @@ export interface Link {
 /**
  * 
  * @export
- * @interface LoginRequest
- */
-export interface LoginRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginRequest
-     */
-    email?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginRequest
-     */
-    otpCode?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginRequest
-     */
-    password?: string;
-}
-
-/**
- * 
- * @export
- * @interface LoginResponse
- */
-export interface LoginResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginResponse
-     */
-    accessToken?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginResponse
-     */
-    email?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginResponse
-     */
-    firstName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginResponse
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginResponse
-     */
-    lastName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LoginResponse
-     */
-    organizationId?: string;
-    /**
-     * 
-     * @type {OTPDTO}
-     * @memberof LoginResponse
-     */
-    otp?: OTPDTO;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof LoginResponse
-     */
-    roles?: Array<LoginResponse.RolesEnum>;
-}
-
-/**
- * @export
- * @namespace LoginResponse
- */
-export namespace LoginResponse {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum RolesEnum {
-        VIEWER = <any> 'VIEWER',
-        ADMIN = <any> 'ADMIN',
-        HAECHI = <any> 'HAECHI'
-    }
-}
-
-/**
- * 
- * @export
  * @interface MapstringLink
  */
 export interface MapstringLink {
@@ -921,6 +632,12 @@ export interface MasterWalletDTO {
      * @type {string}
      * @memberof MasterWalletDTO
      */
+    error?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MasterWalletDTO
+     */
     id?: string;
     /**
      * 
@@ -934,6 +651,12 @@ export interface MasterWalletDTO {
      * @memberof MasterWalletDTO
      */
     status?: MasterWalletDTO.StatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MasterWalletDTO
+     */
+    transactionId?: string;
     /**
      * 
      * @type {string}
@@ -1198,118 +921,6 @@ export interface NonceDTO {
 /**
  * 
  * @export
- * @interface OTPDTO
- */
-export interface OTPDTO {
-    /**
-     * 
-     * @type {string}
-     * @memberof OTPDTO
-     */
-    key?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OTPDTO
-     */
-    url?: string;
-}
-
-/**
- * 
- * @export
- * @interface OrgAccountDTO
- */
-export interface OrgAccountDTO {
-    /**
-     * 
-     * @type {string}
-     * @memberof OrgAccountDTO
-     */
-    email?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrgAccountDTO
-     */
-    firstName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrgAccountDTO
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrgAccountDTO
-     */
-    lastName?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof OrgAccountDTO
-     */
-    roles?: Array<OrgAccountDTO.RolesEnum>;
-}
-
-/**
- * @export
- * @namespace OrgAccountDTO
- */
-export namespace OrgAccountDTO {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum RolesEnum {
-        VIEWER = <any> 'VIEWER',
-        ADMIN = <any> 'ADMIN',
-        HAECHI = <any> 'HAECHI'
-    }
-}
-
-/**
- * 
- * @export
- * @interface OrganizationDTO
- */
-export interface OrganizationDTO {
-    /**
-     * 
-     * @type {KeyDTO}
-     * @memberof OrganizationDTO
-     */
-    henesisEthKey?: KeyDTO;
-    /**
-     * 
-     * @type {KeyDTO}
-     * @memberof OrganizationDTO
-     */
-    henesisKlayKey?: KeyDTO;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationDTO
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationDTO
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganizationDTO
-     */
-    secret?: string;
-}
-
-/**
- * 
- * @export
  * @interface PaginationCallEventDTO
  */
 export interface PaginationCallEventDTO {
@@ -1416,26 +1027,6 @@ export interface PaginationValueTransferEventDTO {
 /**
  * 
  * @export
- * @interface PatchAccountRoleRequest
- */
-export interface PatchAccountRoleRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof PatchAccountRoleRequest
-     */
-    otpCode?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PatchAccountRoleRequest
-     */
-    role?: string;
-}
-
-/**
- * 
- * @export
  * @interface RawTransactionDTO
  */
 export interface RawTransactionDTO {
@@ -1475,94 +1066,6 @@ export interface RawTransactionDTO {
      * @memberof RawTransactionDTO
      */
     value?: number;
-}
-
-/**
- * 
- * @export
- * @interface SignUpRequest
- */
-export interface SignUpRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpRequest
-     */
-    email?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpRequest
-     */
-    firstName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpRequest
-     */
-    lastName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpRequest
-     */
-    organizationId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpRequest
-     */
-    password?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpRequest
-     */
-    role?: string;
-}
-
-/**
- * 
- * @export
- * @interface SignUpResponse
- */
-export interface SignUpResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpResponse
-     */
-    accessToken?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpResponse
-     */
-    email?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpResponse
-     */
-    firstName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpResponse
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpResponse
-     */
-    lastName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SignUpResponse
-     */
-    organizationId?: string;
 }
 
 /**
@@ -1704,32 +1207,6 @@ export interface UpdateAccountKeyRequest {
 /**
  * 
  * @export
- * @interface UpdatePasswordRequest
- */
-export interface UpdatePasswordRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePasswordRequest
-     */
-    newPassword?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePasswordRequest
-     */
-    otpCode?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePasswordRequest
-     */
-    password?: string;
-}
-
-/**
- * 
- * @export
  * @interface UserWalletDTO
  */
 export interface UserWalletDTO {
@@ -1756,6 +1233,12 @@ export interface UserWalletDTO {
      * @type {string}
      * @memberof UserWalletDTO
      */
+    error?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserWalletDTO
+     */
     id?: string;
     /**
      * 
@@ -1769,6 +1252,12 @@ export interface UserWalletDTO {
      * @memberof UserWalletDTO
      */
     status?: UserWalletDTO.StatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserWalletDTO
+     */
+    transactionId?: string;
     /**
      * 
      * @type {string}
@@ -1838,6 +1327,12 @@ export interface ValueTransferEventDTO {
     from?: string;
     /**
      * 
+     * @type {number}
+     * @memberof ValueTransferEventDTO
+     */
+    id?: number;
+    /**
+     * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
@@ -1886,6 +1381,7 @@ export namespace ValueTransferEventDTO {
      * @enum {string}
      */
     export enum StatusEnum {
+        REQUESTED = <any> 'REQUESTED',
         PENDING = <any> 'PENDING',
         FAILED = <any> 'FAILED',
         MINED = <any> 'MINED',
@@ -1917,561 +1413,6 @@ export interface View {
 
 
 /**
- * AccountControllerApi - fetch parameter creator
- * @export
- */
-export const AccountControllerApiFetchParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary changeAccountName
-         * @param {ChangeAccountNameRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        changeAccountNameUsingPATCH(request: ChangeAccountNameRequest, accountId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling changeAccountNameUsingPATCH.');
-            }
-            const localVarPath = `/api/v1/accounts/name`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"ChangeAccountNameRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary createAccessToken
-         * @param {string} [accountId] accountId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAccessTokenUsingGET(accountId?: string, options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/accounts/me`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(accountId || {}) : (accountId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary createAccessToken
-         * @param {CreateAccessTokenRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAccessTokenUsingPOST(request: CreateAccessTokenRequest, accountId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling createAccessTokenUsingPOST.');
-            }
-            const localVarPath = `/api/v1/accounts/token`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreateAccessTokenRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getAccessToken
-         * @param {string} [accountId] accountId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAccessTokenUsingGET(accountId?: string, options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/accounts/token`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(accountId || {}) : (accountId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary login
-         * @param {LoginRequest} request request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        loginUsingPOST(request: LoginRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling loginUsingPOST.');
-            }
-            const localVarPath = `/api/v1/accounts/login`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"LoginRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary register
-         * @param {SignUpRequest} request request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        registerUsingPOST(request: SignUpRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling registerUsingPOST.');
-            }
-            const localVarPath = `/api/v1/accounts/signup`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"SignUpRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary updatePassword
-         * @param {UpdatePasswordRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, needOTP?: boolean, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling updatePasswordUsingPATCH.');
-            }
-            const localVarPath = `/api/v1/accounts/password`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"UpdatePasswordRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * AccountControllerApi - functional programming interface
- * @export
- */
-export const AccountControllerApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary changeAccountName
-         * @param {ChangeAccountNameRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        changeAccountNameUsingPATCH(request: ChangeAccountNameRequest, accountId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccountDTO> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).changeAccountNameUsingPATCH(request, accountId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary createAccessToken
-         * @param {string} [accountId] accountId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAccessTokenUsingGET(accountId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccountDTO> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).createAccessTokenUsingGET(accountId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary createAccessToken
-         * @param {CreateAccessTokenRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAccessTokenUsingPOST(request: CreateAccessTokenRequest, accountId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccessTokenDTO> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).createAccessTokenUsingPOST(request, accountId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getAccessToken
-         * @param {string} [accountId] accountId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAccessTokenUsingGET(accountId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccessTokenDTO> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).getAccessTokenUsingGET(accountId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary login
-         * @param {LoginRequest} request request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        loginUsingPOST(request: LoginRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LoginResponse> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).loginUsingPOST(request, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary register
-         * @param {SignUpRequest} request request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        registerUsingPOST(request: SignUpRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<SignUpResponse> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).registerUsingPOST(request, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary updatePassword
-         * @param {UpdatePasswordRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, needOTP?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).updatePasswordUsingPATCH(request, accountId, needOTP, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-    }
-};
-
-/**
- * AccountControllerApi - factory interface
- * @export
- */
-export const AccountControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
-    return {
-        /**
-         * 
-         * @summary changeAccountName
-         * @param {ChangeAccountNameRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        changeAccountNameUsingPATCH(request: ChangeAccountNameRequest, accountId?: string, options?: any) {
-            return AccountControllerApiFp(configuration).changeAccountNameUsingPATCH(request, accountId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary createAccessToken
-         * @param {string} [accountId] accountId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAccessTokenUsingGET(accountId?: string, options?: any) {
-            return AccountControllerApiFp(configuration).createAccessTokenUsingGET(accountId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary createAccessToken
-         * @param {CreateAccessTokenRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAccessTokenUsingPOST(request: CreateAccessTokenRequest, accountId?: string, options?: any) {
-            return AccountControllerApiFp(configuration).createAccessTokenUsingPOST(request, accountId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getAccessToken
-         * @param {string} [accountId] accountId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAccessTokenUsingGET(accountId?: string, options?: any) {
-            return AccountControllerApiFp(configuration).getAccessTokenUsingGET(accountId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary login
-         * @param {LoginRequest} request request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        loginUsingPOST(request: LoginRequest, options?: any) {
-            return AccountControllerApiFp(configuration).loginUsingPOST(request, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary register
-         * @param {SignUpRequest} request request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        registerUsingPOST(request: SignUpRequest, options?: any) {
-            return AccountControllerApiFp(configuration).registerUsingPOST(request, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary updatePassword
-         * @param {UpdatePasswordRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, needOTP?: boolean, options?: any) {
-            return AccountControllerApiFp(configuration).updatePasswordUsingPATCH(request, accountId, needOTP, options)(fetch, basePath);
-        },
-    };
-};
-
-/**
- * AccountControllerApi - object-oriented interface
- * @export
- * @class AccountControllerApi
- * @extends {BaseAPI}
- */
-export class AccountControllerApi extends BaseAPI {
-    /**
-     * 
-     * @summary changeAccountName
-     * @param {ChangeAccountNameRequest} request request
-     * @param {string} [accountId] accountId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountControllerApi
-     */
-    public changeAccountNameUsingPATCH(request: ChangeAccountNameRequest, accountId?: string, options?: any) {
-        return AccountControllerApiFp(this.configuration).changeAccountNameUsingPATCH(request, accountId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary createAccessToken
-     * @param {string} [accountId] accountId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountControllerApi
-     */
-    public createAccessTokenUsingGET(accountId?: string, options?: any) {
-        return AccountControllerApiFp(this.configuration).createAccessTokenUsingGET(accountId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary createAccessToken
-     * @param {CreateAccessTokenRequest} request request
-     * @param {string} [accountId] accountId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountControllerApi
-     */
-    public createAccessTokenUsingPOST(request: CreateAccessTokenRequest, accountId?: string, options?: any) {
-        return AccountControllerApiFp(this.configuration).createAccessTokenUsingPOST(request, accountId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getAccessToken
-     * @param {string} [accountId] accountId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountControllerApi
-     */
-    public getAccessTokenUsingGET(accountId?: string, options?: any) {
-        return AccountControllerApiFp(this.configuration).getAccessTokenUsingGET(accountId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary login
-     * @param {LoginRequest} request request
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountControllerApi
-     */
-    public loginUsingPOST(request: LoginRequest, options?: any) {
-        return AccountControllerApiFp(this.configuration).loginUsingPOST(request, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary register
-     * @param {SignUpRequest} request request
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountControllerApi
-     */
-    public registerUsingPOST(request: SignUpRequest, options?: any) {
-        return AccountControllerApiFp(this.configuration).registerUsingPOST(request, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary updatePassword
-     * @param {UpdatePasswordRequest} request request
-     * @param {string} [accountId] accountId
-     * @param {boolean} [needOTP] needOTP
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountControllerApi
-     */
-    public updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, needOTP?: boolean, options?: any) {
-        return AccountControllerApiFp(this.configuration).updatePasswordUsingPATCH(request, accountId, needOTP, options)(this.fetch, this.basePath);
-    }
-
-}
-
-/**
  * BasicErrorControllerApi - fetch parameter creator
  * @export
  */
@@ -2479,11 +1420,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
     return {
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingDELETE(options: any = {}): FetchArgs {
+        errorHtmlUsingDELETE(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
@@ -2502,11 +1443,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingGET(options: any = {}): FetchArgs {
+        errorHtmlUsingGET(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -2525,11 +1466,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingHEAD(options: any = {}): FetchArgs {
+        errorHtmlUsingHEAD(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'HEAD' }, options);
@@ -2548,11 +1489,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingOPTIONS(options: any = {}): FetchArgs {
+        errorHtmlUsingOPTIONS(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'OPTIONS' }, options);
@@ -2571,11 +1512,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPATCH(options: any = {}): FetchArgs {
+        errorHtmlUsingPATCH(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
@@ -2594,11 +1535,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPOST(options: any = {}): FetchArgs {
+        errorHtmlUsingPOST(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -2617,11 +1558,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPUT(options: any = {}): FetchArgs {
+        errorHtmlUsingPUT(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
@@ -2649,12 +1590,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
     return {
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingDELETE(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingDELETE(options);
+        errorHtmlUsingDELETE(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingDELETE(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2667,12 +1608,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingGET(options);
+        errorHtmlUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingGET(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2685,12 +1626,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingHEAD(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingHEAD(options);
+        errorHtmlUsingHEAD(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingHEAD(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2703,12 +1644,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingOPTIONS(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingOPTIONS(options);
+        errorHtmlUsingOPTIONS(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingOPTIONS(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2721,12 +1662,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPATCH(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPATCH(options);
+        errorHtmlUsingPATCH(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPATCH(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2739,12 +1680,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPOST(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPOST(options);
+        errorHtmlUsingPOST(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPOST(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2757,12 +1698,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPUT(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPUT(options);
+        errorHtmlUsingPUT(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPUT(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2784,66 +1725,66 @@ export const BasicErrorControllerApiFactory = function (configuration?: Configur
     return {
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingDELETE(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingDELETE(options)(fetch, basePath);
+        errorHtmlUsingDELETE(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingDELETE(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingGET(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingGET(options)(fetch, basePath);
+        errorHtmlUsingGET(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingGET(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingHEAD(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingHEAD(options)(fetch, basePath);
+        errorHtmlUsingHEAD(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingHEAD(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingOPTIONS(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingOPTIONS(options)(fetch, basePath);
+        errorHtmlUsingOPTIONS(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingOPTIONS(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPATCH(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingPATCH(options)(fetch, basePath);
+        errorHtmlUsingPATCH(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPATCH(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPOST(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingPOST(options)(fetch, basePath);
+        errorHtmlUsingPOST(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPOST(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPUT(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingPUT(options)(fetch, basePath);
+        errorHtmlUsingPUT(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPUT(options)(fetch, basePath);
         },
     };
 };
@@ -2857,88 +1798,88 @@ export const BasicErrorControllerApiFactory = function (configuration?: Configur
 export class BasicErrorControllerApi extends BaseAPI {
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingDELETE(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingDELETE(options)(this.fetch, this.basePath);
+    public errorHtmlUsingDELETE(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingDELETE(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingGET(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingGET(options)(this.fetch, this.basePath);
+    public errorHtmlUsingGET(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingGET(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingHEAD(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingHEAD(options)(this.fetch, this.basePath);
+    public errorHtmlUsingHEAD(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingHEAD(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingOPTIONS(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingOPTIONS(options)(this.fetch, this.basePath);
+    public errorHtmlUsingOPTIONS(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingOPTIONS(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingPATCH(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingPATCH(options)(this.fetch, this.basePath);
+    public errorHtmlUsingPATCH(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPATCH(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingPOST(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingPOST(options)(this.fetch, this.basePath);
+    public errorHtmlUsingPOST(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPOST(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingPUT(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingPUT(options)(this.fetch, this.basePath);
+    public errorHtmlUsingPUT(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPUT(options)(this.fetch, this.basePath);
     }
 
 }
 
 /**
- * CoinControllerApi - fetch parameter creator
+ * EthCoinControllerApi - fetch parameter creator
  * @export
  */
-export const CoinControllerApiFetchParamCreator = function (configuration?: Configuration) {
+export const EthCoinControllerApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -2952,7 +1893,7 @@ export const CoinControllerApiFetchParamCreator = function (configuration?: Conf
             if (request === null || request === undefined) {
                 throw new RequiredError('request','Required parameter request was null or undefined when calling createCoinUsingPOST.');
             }
-            const localVarPath = `/api/v1/coins`;
+            const localVarPath = `/api/v2/eth/coins`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -2975,30 +1916,21 @@ export const CoinControllerApiFetchParamCreator = function (configuration?: Conf
         /**
          * 
          * @summary deleteCoin
-         * @param {string} blockchain blockchain
          * @param {string} symbol symbol
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCoinUsingDELETE(blockchain: string, symbol: string, options: any = {}): FetchArgs {
-            // verify required parameter 'blockchain' is not null or undefined
-            if (blockchain === null || blockchain === undefined) {
-                throw new RequiredError('blockchain','Required parameter blockchain was null or undefined when calling deleteCoinUsingDELETE.');
-            }
+        deleteCoinUsingDELETE(symbol: string, options: any = {}): FetchArgs {
             // verify required parameter 'symbol' is not null or undefined
             if (symbol === null || symbol === undefined) {
                 throw new RequiredError('symbol','Required parameter symbol was null or undefined when calling deleteCoinUsingDELETE.');
             }
-            const localVarPath = `/api/v1/coins/{symbol}`
+            const localVarPath = `/api/v2/eth/coins/{symbol}`
                 .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (blockchain !== undefined) {
-                localVarQueryParameter['blockchain'] = blockchain;
-            }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -3017,7 +1949,7 @@ export const CoinControllerApiFetchParamCreator = function (configuration?: Conf
          * @throws {RequiredError}
          */
         getAllCoinsUsingGET(options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/coins`;
+            const localVarPath = `/api/v2/eth/coins`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -3036,30 +1968,21 @@ export const CoinControllerApiFetchParamCreator = function (configuration?: Conf
         /**
          * 
          * @summary getCoin
-         * @param {string} blockchain blockchain
          * @param {string} symbol symbol
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoinUsingGET(blockchain: string, symbol: string, options: any = {}): FetchArgs {
-            // verify required parameter 'blockchain' is not null or undefined
-            if (blockchain === null || blockchain === undefined) {
-                throw new RequiredError('blockchain','Required parameter blockchain was null or undefined when calling getCoinUsingGET.');
-            }
+        getCoinUsingGET(symbol: string, options: any = {}): FetchArgs {
             // verify required parameter 'symbol' is not null or undefined
             if (symbol === null || symbol === undefined) {
                 throw new RequiredError('symbol','Required parameter symbol was null or undefined when calling getCoinUsingGET.');
             }
-            const localVarPath = `/api/v1/coins/{symbol}`
+            const localVarPath = `/api/v2/eth/coins/{symbol}`
                 .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (blockchain !== undefined) {
-                localVarQueryParameter['blockchain'] = blockchain;
-            }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -3075,10 +1998,10 @@ export const CoinControllerApiFetchParamCreator = function (configuration?: Conf
 };
 
 /**
- * CoinControllerApi - functional programming interface
+ * EthCoinControllerApi - functional programming interface
  * @export
  */
-export const CoinControllerApiFp = function(configuration?: Configuration) {
+export const EthCoinControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -3088,7 +2011,7 @@ export const CoinControllerApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         createCoinUsingPOST(request: CreateCoinRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CoinDTO> {
-            const localVarFetchArgs = CoinControllerApiFetchParamCreator(configuration).createCoinUsingPOST(request, options);
+            const localVarFetchArgs = EthCoinControllerApiFetchParamCreator(configuration).createCoinUsingPOST(request, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3102,13 +2025,12 @@ export const CoinControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary deleteCoin
-         * @param {string} blockchain blockchain
          * @param {string} symbol symbol
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCoinUsingDELETE(blockchain: string, symbol: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = CoinControllerApiFetchParamCreator(configuration).deleteCoinUsingDELETE(blockchain, symbol, options);
+        deleteCoinUsingDELETE(symbol: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = EthCoinControllerApiFetchParamCreator(configuration).deleteCoinUsingDELETE(symbol, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3126,7 +2048,7 @@ export const CoinControllerApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getAllCoinsUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<CoinDTO>> {
-            const localVarFetchArgs = CoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET(options);
+            const localVarFetchArgs = EthCoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3140,13 +2062,12 @@ export const CoinControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary getCoin
-         * @param {string} blockchain blockchain
          * @param {string} symbol symbol
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoinUsingGET(blockchain: string, symbol: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CoinDTO> {
-            const localVarFetchArgs = CoinControllerApiFetchParamCreator(configuration).getCoinUsingGET(blockchain, symbol, options);
+        getCoinUsingGET(symbol: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CoinDTO> {
+            const localVarFetchArgs = EthCoinControllerApiFetchParamCreator(configuration).getCoinUsingGET(symbol, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3161,10 +2082,10 @@ export const CoinControllerApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * CoinControllerApi - factory interface
+ * EthCoinControllerApi - factory interface
  * @export
  */
-export const CoinControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const EthCoinControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
@@ -3174,18 +2095,17 @@ export const CoinControllerApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         createCoinUsingPOST(request: CreateCoinRequest, options?: any) {
-            return CoinControllerApiFp(configuration).createCoinUsingPOST(request, options)(fetch, basePath);
+            return EthCoinControllerApiFp(configuration).createCoinUsingPOST(request, options)(fetch, basePath);
         },
         /**
          * 
          * @summary deleteCoin
-         * @param {string} blockchain blockchain
          * @param {string} symbol symbol
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCoinUsingDELETE(blockchain: string, symbol: string, options?: any) {
-            return CoinControllerApiFp(configuration).deleteCoinUsingDELETE(blockchain, symbol, options)(fetch, basePath);
+        deleteCoinUsingDELETE(symbol: string, options?: any) {
+            return EthCoinControllerApiFp(configuration).deleteCoinUsingDELETE(symbol, options)(fetch, basePath);
         },
         /**
          * 
@@ -3194,52 +2114,50 @@ export const CoinControllerApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         getAllCoinsUsingGET(options?: any) {
-            return CoinControllerApiFp(configuration).getAllCoinsUsingGET(options)(fetch, basePath);
+            return EthCoinControllerApiFp(configuration).getAllCoinsUsingGET(options)(fetch, basePath);
         },
         /**
          * 
          * @summary getCoin
-         * @param {string} blockchain blockchain
          * @param {string} symbol symbol
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoinUsingGET(blockchain: string, symbol: string, options?: any) {
-            return CoinControllerApiFp(configuration).getCoinUsingGET(blockchain, symbol, options)(fetch, basePath);
+        getCoinUsingGET(symbol: string, options?: any) {
+            return EthCoinControllerApiFp(configuration).getCoinUsingGET(symbol, options)(fetch, basePath);
         },
     };
 };
 
 /**
- * CoinControllerApi - object-oriented interface
+ * EthCoinControllerApi - object-oriented interface
  * @export
- * @class CoinControllerApi
+ * @class EthCoinControllerApi
  * @extends {BaseAPI}
  */
-export class CoinControllerApi extends BaseAPI {
+export class EthCoinControllerApi extends BaseAPI {
     /**
      * 
      * @summary createCoin
      * @param {CreateCoinRequest} request request
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CoinControllerApi
+     * @memberof EthCoinControllerApi
      */
     public createCoinUsingPOST(request: CreateCoinRequest, options?: any) {
-        return CoinControllerApiFp(this.configuration).createCoinUsingPOST(request, options)(this.fetch, this.basePath);
+        return EthCoinControllerApiFp(this.configuration).createCoinUsingPOST(request, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary deleteCoin
-     * @param {string} blockchain blockchain
      * @param {string} symbol symbol
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CoinControllerApi
+     * @memberof EthCoinControllerApi
      */
-    public deleteCoinUsingDELETE(blockchain: string, symbol: string, options?: any) {
-        return CoinControllerApiFp(this.configuration).deleteCoinUsingDELETE(blockchain, symbol, options)(this.fetch, this.basePath);
+    public deleteCoinUsingDELETE(symbol: string, options?: any) {
+        return EthCoinControllerApiFp(this.configuration).deleteCoinUsingDELETE(symbol, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -3247,32 +2165,31 @@ export class CoinControllerApi extends BaseAPI {
      * @summary getAllCoins
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CoinControllerApi
+     * @memberof EthCoinControllerApi
      */
     public getAllCoinsUsingGET(options?: any) {
-        return CoinControllerApiFp(this.configuration).getAllCoinsUsingGET(options)(this.fetch, this.basePath);
+        return EthCoinControllerApiFp(this.configuration).getAllCoinsUsingGET(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary getCoin
-     * @param {string} blockchain blockchain
      * @param {string} symbol symbol
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CoinControllerApi
+     * @memberof EthCoinControllerApi
      */
-    public getCoinUsingGET(blockchain: string, symbol: string, options?: any) {
-        return CoinControllerApiFp(this.configuration).getCoinUsingGET(blockchain, symbol, options)(this.fetch, this.basePath);
+    public getCoinUsingGET(symbol: string, options?: any) {
+        return EthCoinControllerApiFp(this.configuration).getCoinUsingGET(symbol, options)(this.fetch, this.basePath);
     }
 
 }
 
 /**
- * EventControllerApi - fetch parameter creator
+ * EthEventControllerApi - fetch parameter creator
  * @export
  */
-export const EventControllerApiFetchParamCreator = function (configuration?: Configuration) {
+export const EthEventControllerApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -3289,7 +2206,7 @@ export const EventControllerApiFetchParamCreator = function (configuration?: Con
          * @throws {RequiredError}
          */
         getCallEventsUsingGET(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/call-events`;
+            const localVarPath = `/api/v2/eth/call-events`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -3352,7 +2269,7 @@ export const EventControllerApiFetchParamCreator = function (configuration?: Con
          * @throws {RequiredError}
          */
         getValueTransferEventsUsingGET(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/value-transfer-events`;
+            const localVarPath = `/api/v2/eth/value-transfer-events`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -3404,10 +2321,10 @@ export const EventControllerApiFetchParamCreator = function (configuration?: Con
 };
 
 /**
- * EventControllerApi - functional programming interface
+ * EthEventControllerApi - functional programming interface
  * @export
  */
-export const EventControllerApiFp = function(configuration?: Configuration) {
+export const EthEventControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -3424,7 +2341,7 @@ export const EventControllerApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getCallEventsUsingGET(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationCallEventDTO> {
-            const localVarFetchArgs = EventControllerApiFetchParamCreator(configuration).getCallEventsUsingGET(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options);
+            const localVarFetchArgs = EthEventControllerApiFetchParamCreator(configuration).getCallEventsUsingGET(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3450,7 +2367,7 @@ export const EventControllerApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getValueTransferEventsUsingGET(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationValueTransferEventDTO> {
-            const localVarFetchArgs = EventControllerApiFetchParamCreator(configuration).getValueTransferEventsUsingGET(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options);
+            const localVarFetchArgs = EthEventControllerApiFetchParamCreator(configuration).getValueTransferEventsUsingGET(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3465,10 +2382,10 @@ export const EventControllerApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * EventControllerApi - factory interface
+ * EthEventControllerApi - factory interface
  * @export
  */
-export const EventControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const EthEventControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
@@ -3485,7 +2402,7 @@ export const EventControllerApiFactory = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         getCallEventsUsingGET(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-            return EventControllerApiFp(configuration).getCallEventsUsingGET(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+            return EthEventControllerApiFp(configuration).getCallEventsUsingGET(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
         },
         /**
          * 
@@ -3502,18 +2419,18 @@ export const EventControllerApiFactory = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         getValueTransferEventsUsingGET(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-            return EventControllerApiFp(configuration).getValueTransferEventsUsingGET(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+            return EthEventControllerApiFp(configuration).getValueTransferEventsUsingGET(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
         },
     };
 };
 
 /**
- * EventControllerApi - object-oriented interface
+ * EthEventControllerApi - object-oriented interface
  * @export
- * @class EventControllerApi
+ * @class EthEventControllerApi
  * @extends {BaseAPI}
  */
-export class EventControllerApi extends BaseAPI {
+export class EthEventControllerApi extends BaseAPI {
     /**
      * 
      * @summary getCallEvents
@@ -3527,10 +2444,10 @@ export class EventControllerApi extends BaseAPI {
      * @param {boolean} [unpaged] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof EventControllerApi
+     * @memberof EthEventControllerApi
      */
     public getCallEventsUsingGET(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-        return EventControllerApiFp(this.configuration).getCallEventsUsingGET(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+        return EthEventControllerApiFp(this.configuration).getCallEventsUsingGET(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -3546,38 +2463,417 @@ export class EventControllerApi extends BaseAPI {
      * @param {boolean} [unpaged] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof EventControllerApi
+     * @memberof EthEventControllerApi
      */
     public getValueTransferEventsUsingGET(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-        return EventControllerApiFp(this.configuration).getValueTransferEventsUsingGET(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+        return EthEventControllerApiFp(this.configuration).getValueTransferEventsUsingGET(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
     }
 
 }
 
 /**
- * MethodGasUsageControllerApi - fetch parameter creator
+ * EthHenesisKeyControllerApi - fetch parameter creator
  * @export
  */
-export const MethodGasUsageControllerApiFetchParamCreator = function (configuration?: Configuration) {
+export const EthHenesisKeyControllerApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary getMethodGasUsages
-         * @param {string} [blockchain] blockchain
-         * @param {string} [name] name
+         * @summary createHenesisKey
+         * @param {CreateHenesisKeyRequest} createHenesisKeyRequest createHenesisKeyRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMethodGasUsagesUsingGET(blockchain?: string, name?: string, options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/method-gas-usages`;
+        createHenesisKeyUsingPOST(createHenesisKeyRequest: CreateHenesisKeyRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'createHenesisKeyRequest' is not null or undefined
+            if (createHenesisKeyRequest === null || createHenesisKeyRequest === undefined) {
+                throw new RequiredError('createHenesisKeyRequest','Required parameter createHenesisKeyRequest was null or undefined when calling createHenesisKeyUsingPOST.');
+            }
+            const localVarPath = `/api/v2/eth/henesis-keys`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateHenesisKeyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(createHenesisKeyRequest || {}) : (createHenesisKeyRequest || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary createTransaction
+         * @param {CreateTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTransactionUsingPOST(request: CreateTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling createTransactionUsingPOST.');
+            }
+            const localVarPath = `/api/v2/eth/henesis-keys/transactions`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateTransactionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getHenesisKeyBalance
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHenesisKeyBalanceUsingGET(accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/eth/henesis-keys/balance`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (blockchain !== undefined) {
-                localVarQueryParameter['blockchain'] = blockchain;
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
             }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getHenesisKey
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHenesisKeyUsingGET(accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/eth/henesis-keys/me`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * EthHenesisKeyControllerApi - functional programming interface
+ * @export
+ */
+export const EthHenesisKeyControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary createHenesisKey
+         * @param {CreateHenesisKeyRequest} createHenesisKeyRequest createHenesisKeyRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createHenesisKeyUsingPOST(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
+            const localVarFetchArgs = EthHenesisKeyControllerApiFetchParamCreator(configuration).createHenesisKeyUsingPOST(createHenesisKeyRequest, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary createTransaction
+         * @param {CreateTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTransactionUsingPOST(request: CreateTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
+            const localVarFetchArgs = EthHenesisKeyControllerApiFetchParamCreator(configuration).createTransactionUsingPOST(request, accountId, needOTP, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getHenesisKeyBalance
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHenesisKeyBalanceUsingGET(accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BalanceDTO> {
+            const localVarFetchArgs = EthHenesisKeyControllerApiFetchParamCreator(configuration).getHenesisKeyBalanceUsingGET(accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getHenesisKey
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHenesisKeyUsingGET(accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
+            const localVarFetchArgs = EthHenesisKeyControllerApiFetchParamCreator(configuration).getHenesisKeyUsingGET(accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * EthHenesisKeyControllerApi - factory interface
+ * @export
+ */
+export const EthHenesisKeyControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary createHenesisKey
+         * @param {CreateHenesisKeyRequest} createHenesisKeyRequest createHenesisKeyRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createHenesisKeyUsingPOST(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any) {
+            return EthHenesisKeyControllerApiFp(configuration).createHenesisKeyUsingPOST(createHenesisKeyRequest, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary createTransaction
+         * @param {CreateTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTransactionUsingPOST(request: CreateTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+            return EthHenesisKeyControllerApiFp(configuration).createTransactionUsingPOST(request, accountId, needOTP, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getHenesisKeyBalance
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHenesisKeyBalanceUsingGET(accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthHenesisKeyControllerApiFp(configuration).getHenesisKeyBalanceUsingGET(accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getHenesisKey
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHenesisKeyUsingGET(accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthHenesisKeyControllerApiFp(configuration).getHenesisKeyUsingGET(accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * EthHenesisKeyControllerApi - object-oriented interface
+ * @export
+ * @class EthHenesisKeyControllerApi
+ * @extends {BaseAPI}
+ */
+export class EthHenesisKeyControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary createHenesisKey
+     * @param {CreateHenesisKeyRequest} createHenesisKeyRequest createHenesisKeyRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthHenesisKeyControllerApi
+     */
+    public createHenesisKeyUsingPOST(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any) {
+        return EthHenesisKeyControllerApiFp(this.configuration).createHenesisKeyUsingPOST(createHenesisKeyRequest, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary createTransaction
+     * @param {CreateTransactionRequest} request request
+     * @param {string} [accountId] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthHenesisKeyControllerApi
+     */
+    public createTransactionUsingPOST(request: CreateTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+        return EthHenesisKeyControllerApiFp(this.configuration).createTransactionUsingPOST(request, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getHenesisKeyBalance
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthHenesisKeyControllerApi
+     */
+    public getHenesisKeyBalanceUsingGET(accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthHenesisKeyControllerApiFp(this.configuration).getHenesisKeyBalanceUsingGET(accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getHenesisKey
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthHenesisKeyControllerApi
+     */
+    public getHenesisKeyUsingGET(accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthHenesisKeyControllerApiFp(this.configuration).getHenesisKeyUsingGET(accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * EthMethodGasUsageControllerApi - fetch parameter creator
+ * @export
+ */
+export const EthMethodGasUsageControllerApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary getMethodGasUsages
+         * @param {string} name name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMethodGasUsagesUsingGET(name: string, options: any = {}): FetchArgs {
+            // verify required parameter 'name' is not null or undefined
+            if (name === null || name === undefined) {
+                throw new RequiredError('name','Required parameter name was null or undefined when calling getMethodGasUsagesUsingGET.');
+            }
+            const localVarPath = `/api/v2/eth/method-gas-usages`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
             if (name !== undefined) {
                 localVarQueryParameter['name'] = name;
@@ -3597,21 +2893,20 @@ export const MethodGasUsageControllerApiFetchParamCreator = function (configurat
 };
 
 /**
- * MethodGasUsageControllerApi - functional programming interface
+ * EthMethodGasUsageControllerApi - functional programming interface
  * @export
  */
-export const MethodGasUsageControllerApiFp = function(configuration?: Configuration) {
+export const EthMethodGasUsageControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
          * @summary getMethodGasUsages
-         * @param {string} [blockchain] blockchain
-         * @param {string} [name] name
+         * @param {string} name name
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMethodGasUsagesUsingGET(blockchain?: string, name?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MethodGasUsageDTO> {
-            const localVarFetchArgs = MethodGasUsageControllerApiFetchParamCreator(configuration).getMethodGasUsagesUsingGET(blockchain, name, options);
+        getMethodGasUsagesUsingGET(name: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MethodGasUsageDTO> {
+            const localVarFetchArgs = EthMethodGasUsageControllerApiFetchParamCreator(configuration).getMethodGasUsagesUsingGET(name, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3626,43 +2921,5170 @@ export const MethodGasUsageControllerApiFp = function(configuration?: Configurat
 };
 
 /**
- * MethodGasUsageControllerApi - factory interface
+ * EthMethodGasUsageControllerApi - factory interface
  * @export
  */
-export const MethodGasUsageControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const EthMethodGasUsageControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
          * @summary getMethodGasUsages
-         * @param {string} [blockchain] blockchain
-         * @param {string} [name] name
+         * @param {string} name name
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMethodGasUsagesUsingGET(blockchain?: string, name?: string, options?: any) {
-            return MethodGasUsageControllerApiFp(configuration).getMethodGasUsagesUsingGET(blockchain, name, options)(fetch, basePath);
+        getMethodGasUsagesUsingGET(name: string, options?: any) {
+            return EthMethodGasUsageControllerApiFp(configuration).getMethodGasUsagesUsingGET(name, options)(fetch, basePath);
         },
     };
 };
 
 /**
- * MethodGasUsageControllerApi - object-oriented interface
+ * EthMethodGasUsageControllerApi - object-oriented interface
  * @export
- * @class MethodGasUsageControllerApi
+ * @class EthMethodGasUsageControllerApi
  * @extends {BaseAPI}
  */
-export class MethodGasUsageControllerApi extends BaseAPI {
+export class EthMethodGasUsageControllerApi extends BaseAPI {
     /**
      * 
      * @summary getMethodGasUsages
-     * @param {string} [blockchain] blockchain
-     * @param {string} [name] name
+     * @param {string} name name
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MethodGasUsageControllerApi
+     * @memberof EthMethodGasUsageControllerApi
      */
-    public getMethodGasUsagesUsingGET(blockchain?: string, name?: string, options?: any) {
-        return MethodGasUsageControllerApiFp(this.configuration).getMethodGasUsagesUsingGET(blockchain, name, options)(this.fetch, this.basePath);
+    public getMethodGasUsagesUsingGET(name: string, options?: any) {
+        return EthMethodGasUsageControllerApiFp(this.configuration).getMethodGasUsagesUsingGET(name, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * EthTransactionControllerApi - fetch parameter creator
+ * @export
+ */
+export const EthTransactionControllerApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary getAllTransactions
+         * @param {string} [accountId] 
+         * @param {number} [offset] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllTransactionsUsingGET(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/eth/transactions`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (paged !== undefined) {
+                localVarQueryParameter['paged'] = paged;
+            }
+
+            if (sortSorted !== undefined) {
+                localVarQueryParameter['sort.sorted'] = sortSorted;
+            }
+
+            if (sortUnsorted !== undefined) {
+                localVarQueryParameter['sort.unsorted'] = sortUnsorted;
+            }
+
+            if (unpaged !== undefined) {
+                localVarQueryParameter['unpaged'] = unpaged;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"any" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(searchKeys || {}) : (searchKeys || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getTransactionById
+         * @param {string} transactionId transactionId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransactionByIdUsingGET(transactionId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'transactionId' is not null or undefined
+            if (transactionId === null || transactionId === undefined) {
+                throw new RequiredError('transactionId','Required parameter transactionId was null or undefined when calling getTransactionByIdUsingGET.');
+            }
+            const localVarPath = `/api/v2/eth/transactions/{transactionId}`
+                .replace(`{${"transactionId"}}`, encodeURIComponent(String(transactionId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * EthTransactionControllerApi - functional programming interface
+ * @export
+ */
+export const EthTransactionControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary getAllTransactions
+         * @param {string} [accountId] 
+         * @param {number} [offset] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllTransactionsUsingGET(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationTransactionDTO> {
+            const localVarFetchArgs = EthTransactionControllerApiFetchParamCreator(configuration).getAllTransactionsUsingGET(accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getTransactionById
+         * @param {string} transactionId transactionId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransactionByIdUsingGET(transactionId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
+            const localVarFetchArgs = EthTransactionControllerApiFetchParamCreator(configuration).getTransactionByIdUsingGET(transactionId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * EthTransactionControllerApi - factory interface
+ * @export
+ */
+export const EthTransactionControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary getAllTransactions
+         * @param {string} [accountId] 
+         * @param {number} [offset] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllTransactionsUsingGET(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+            return EthTransactionControllerApiFp(configuration).getAllTransactionsUsingGET(accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getTransactionById
+         * @param {string} transactionId transactionId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransactionByIdUsingGET(transactionId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthTransactionControllerApiFp(configuration).getTransactionByIdUsingGET(transactionId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * EthTransactionControllerApi - object-oriented interface
+ * @export
+ * @class EthTransactionControllerApi
+ * @extends {BaseAPI}
+ */
+export class EthTransactionControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary getAllTransactions
+     * @param {string} [accountId] 
+     * @param {number} [offset] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {number} [pageNumber] 
+     * @param {number} [pageSize] 
+     * @param {boolean} [paged] 
+     * @param {any} [searchKeys] searchKeys
+     * @param {boolean} [sortSorted] 
+     * @param {boolean} [sortUnsorted] 
+     * @param {boolean} [unpaged] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthTransactionControllerApi
+     */
+    public getAllTransactionsUsingGET(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+        return EthTransactionControllerApiFp(this.configuration).getAllTransactionsUsingGET(accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getTransactionById
+     * @param {string} transactionId transactionId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthTransactionControllerApi
+     */
+    public getTransactionByIdUsingGET(transactionId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthTransactionControllerApiFp(this.configuration).getTransactionByIdUsingGET(transactionId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * EthWalletControllerApi - fetch parameter creator
+ * @export
+ */
+export const EthWalletControllerApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary createMasterWallet
+         * @param {CreateMasterWalletRequest} request request
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createMasterWalletUsingPOST(request: CreateMasterWalletRequest, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling createMasterWalletUsingPOST.');
+            }
+            const localVarPath = `/api/v2/eth/wallets`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateMasterWalletRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary createUserWallet
+         * @param {CreateUserWalletRequest} request request
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUserWalletUsingPOST(request: CreateUserWalletRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling createUserWalletUsingPOST.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling createUserWalletUsingPOST.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateUserWalletRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletAccountKey
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletAccountKeyUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletAccountKeyUsingGET.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/account-key`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletBalance
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletBalanceUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletBalanceUsingGET.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/balance`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletInitialKey
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletInitialKeyUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletInitialKeyUsingGET.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/initial-key`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletNonce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletNonceUsingGET(options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/nonce`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWallet
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletUsingGET.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWallets
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sorted] 
+         * @param {boolean} [unsorted] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletsUsingGET(accountId?: string, organizationId?: string, otpKey?: string, searchKeys?: any, sorted?: boolean, unsorted?: boolean, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/eth/wallets`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            if (sorted !== undefined) {
+                localVarQueryParameter['sorted'] = sorted;
+            }
+
+            if (unsorted !== undefined) {
+                localVarQueryParameter['unsorted'] = unsorted;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"any" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(searchKeys || {}) : (searchKeys || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getUserWalletBalance
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'userWalletId' is not null or undefined
+            if (userWalletId === null || userWalletId === undefined) {
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletBalanceUsingGET.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletBalanceUsingGET.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets/{userWalletId}/balance`
+                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getUserWalletNonce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletNonceUsingGET(options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets/{userWalletId}/nonce`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getUserWallet
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'userWalletId' is not null or undefined
+            if (userWalletId === null || userWalletId === undefined) {
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletUsingGET.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletUsingGET.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets/{userWalletId}`
+                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getUserWallets
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {number} [offset] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletsUsingGET(walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletsUsingGET.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (paged !== undefined) {
+                localVarQueryParameter['paged'] = paged;
+            }
+
+            if (sortSorted !== undefined) {
+                localVarQueryParameter['sort.sorted'] = sortSorted;
+            }
+
+            if (sortUnsorted !== undefined) {
+                localVarQueryParameter['sort.unsorted'] = sortUnsorted;
+            }
+
+            if (unpaged !== undefined) {
+                localVarQueryParameter['unpaged'] = unpaged;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"any" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(searchKeys || {}) : (searchKeys || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary patchAccountKey
+         * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAccountKeyUsingPATCH(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'updateAccountKeyRequest' is not null or undefined
+            if (updateAccountKeyRequest === null || updateAccountKeyRequest === undefined) {
+                throw new RequiredError('updateAccountKeyRequest','Required parameter updateAccountKeyRequest was null or undefined when calling patchAccountKeyUsingPATCH.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchAccountKeyUsingPATCH.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/account-key`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"UpdateAccountKeyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(updateAccountKeyRequest || {}) : (updateAccountKeyRequest || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary patchMasterWalletName
+         * @param {ChangeWalletNameRequest} request request
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMasterWalletNameUsingPATCH(request: ChangeWalletNameRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling patchMasterWalletNameUsingPATCH.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchMasterWalletNameUsingPATCH.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/name`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"ChangeWalletNameRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary patchUserWalletName
+         * @param {ChangeWalletNameRequest} request request
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchUserWalletNameUsingPATCH(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling patchUserWalletNameUsingPATCH.');
+            }
+            // verify required parameter 'userWalletId' is not null or undefined
+            if (userWalletId === null || userWalletId === undefined) {
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling patchUserWalletNameUsingPATCH.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchUserWalletNameUsingPATCH.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets/{userWalletId}/name`
+                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"ChangeWalletNameRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary sendBatchTransaction
+         * @param {CreateBatchTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendBatchTransactionUsingPOST(request: CreateBatchTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling sendBatchTransactionUsingPOST.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/batch-transactions`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateBatchTransactionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary sendTransaction
+         * @param {CreateMultiSigTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendTransactionUsingPOST(request: CreateMultiSigTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling sendTransactionUsingPOST.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/transactions`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateMultiSigTransactionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * EthWalletControllerApi - functional programming interface
+ * @export
+ */
+export const EthWalletControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary createMasterWallet
+         * @param {CreateMasterWalletRequest} request request
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createMasterWalletUsingPOST(request: CreateMasterWalletRequest, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MasterWalletDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).createMasterWalletUsingPOST(request, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary createUserWallet
+         * @param {CreateUserWalletRequest} request request
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUserWalletUsingPOST(request: CreateUserWalletRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserWalletDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).createUserWalletUsingPOST(request, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletAccountKey
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletAccountKeyUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getMasterWalletAccountKeyUsingGET(walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletBalance
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletBalanceUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getMasterWalletBalanceUsingGET(walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletInitialKey
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletInitialKeyUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getMasterWalletInitialKeyUsingGET(walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletNonce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletNonceUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<NonceDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getMasterWalletNonceUsingGET(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWallet
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MasterWalletDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getMasterWalletUsingGET(walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWallets
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sorted] 
+         * @param {boolean} [unsorted] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletsUsingGET(accountId?: string, organizationId?: string, otpKey?: string, searchKeys?: any, sorted?: boolean, unsorted?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<MasterWalletDTO>> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getMasterWalletsUsingGET(accountId, organizationId, otpKey, searchKeys, sorted, unsorted, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getUserWalletBalance
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getUserWalletBalanceUsingGET(userWalletId, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getUserWalletNonce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletNonceUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<NonceDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getUserWalletNonceUsingGET(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getUserWallet
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserWalletDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getUserWalletUsingGET(userWalletId, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getUserWallets
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {number} [offset] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletsUsingGET(walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationUserWalletDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getUserWalletsUsingGET(walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary patchAccountKey
+         * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAccountKeyUsingPATCH(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).patchAccountKeyUsingPATCH(updateAccountKeyRequest, walletId, accountId, needOTP, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary patchMasterWalletName
+         * @param {ChangeWalletNameRequest} request request
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMasterWalletNameUsingPATCH(request: ChangeWalletNameRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MasterWalletDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).patchMasterWalletNameUsingPATCH(request, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary patchUserWalletName
+         * @param {ChangeWalletNameRequest} request request
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchUserWalletNameUsingPATCH(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserWalletDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).patchUserWalletNameUsingPATCH(request, userWalletId, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary sendBatchTransaction
+         * @param {CreateBatchTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendBatchTransactionUsingPOST(request: CreateBatchTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BatchTransactionDTO>> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).sendBatchTransactionUsingPOST(request, accountId, needOTP, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary sendTransaction
+         * @param {CreateMultiSigTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendTransactionUsingPOST(request: CreateMultiSigTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).sendTransactionUsingPOST(request, accountId, needOTP, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * EthWalletControllerApi - factory interface
+ * @export
+ */
+export const EthWalletControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary createMasterWallet
+         * @param {CreateMasterWalletRequest} request request
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createMasterWalletUsingPOST(request: CreateMasterWalletRequest, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).createMasterWalletUsingPOST(request, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary createUserWallet
+         * @param {CreateUserWalletRequest} request request
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUserWalletUsingPOST(request: CreateUserWalletRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).createUserWalletUsingPOST(request, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getMasterWalletAccountKey
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletAccountKeyUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).getMasterWalletAccountKeyUsingGET(walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getMasterWalletBalance
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletBalanceUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).getMasterWalletBalanceUsingGET(walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getMasterWalletInitialKey
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletInitialKeyUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).getMasterWalletInitialKeyUsingGET(walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getMasterWalletNonce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletNonceUsingGET(options?: any) {
+            return EthWalletControllerApiFp(configuration).getMasterWalletNonceUsingGET(options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getMasterWallet
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).getMasterWalletUsingGET(walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getMasterWallets
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sorted] 
+         * @param {boolean} [unsorted] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletsUsingGET(accountId?: string, organizationId?: string, otpKey?: string, searchKeys?: any, sorted?: boolean, unsorted?: boolean, options?: any) {
+            return EthWalletControllerApiFp(configuration).getMasterWalletsUsingGET(accountId, organizationId, otpKey, searchKeys, sorted, unsorted, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getUserWalletBalance
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).getUserWalletBalanceUsingGET(userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getUserWalletNonce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletNonceUsingGET(options?: any) {
+            return EthWalletControllerApiFp(configuration).getUserWalletNonceUsingGET(options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getUserWallet
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).getUserWalletUsingGET(userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getUserWallets
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {number} [offset] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletsUsingGET(walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+            return EthWalletControllerApiFp(configuration).getUserWalletsUsingGET(walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary patchAccountKey
+         * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAccountKeyUsingPATCH(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).patchAccountKeyUsingPATCH(updateAccountKeyRequest, walletId, accountId, needOTP, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary patchMasterWalletName
+         * @param {ChangeWalletNameRequest} request request
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMasterWalletNameUsingPATCH(request: ChangeWalletNameRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).patchMasterWalletNameUsingPATCH(request, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary patchUserWalletName
+         * @param {ChangeWalletNameRequest} request request
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchUserWalletNameUsingPATCH(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).patchUserWalletNameUsingPATCH(request, userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary sendBatchTransaction
+         * @param {CreateBatchTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendBatchTransactionUsingPOST(request: CreateBatchTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).sendBatchTransactionUsingPOST(request, accountId, needOTP, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary sendTransaction
+         * @param {CreateMultiSigTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendTransactionUsingPOST(request: CreateMultiSigTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).sendTransactionUsingPOST(request, accountId, needOTP, organizationId, otpKey, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * EthWalletControllerApi - object-oriented interface
+ * @export
+ * @class EthWalletControllerApi
+ * @extends {BaseAPI}
+ */
+export class EthWalletControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary createMasterWallet
+     * @param {CreateMasterWalletRequest} request request
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public createMasterWalletUsingPOST(request: CreateMasterWalletRequest, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).createMasterWalletUsingPOST(request, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary createUserWallet
+     * @param {CreateUserWalletRequest} request request
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public createUserWalletUsingPOST(request: CreateUserWalletRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).createUserWalletUsingPOST(request, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getMasterWalletAccountKey
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public getMasterWalletAccountKeyUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getMasterWalletAccountKeyUsingGET(walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getMasterWalletBalance
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public getMasterWalletBalanceUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getMasterWalletBalanceUsingGET(walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getMasterWalletInitialKey
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public getMasterWalletInitialKeyUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getMasterWalletInitialKeyUsingGET(walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getMasterWalletNonce
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public getMasterWalletNonceUsingGET(options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getMasterWalletNonceUsingGET(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getMasterWallet
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public getMasterWalletUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getMasterWalletUsingGET(walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getMasterWallets
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {any} [searchKeys] searchKeys
+     * @param {boolean} [sorted] 
+     * @param {boolean} [unsorted] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public getMasterWalletsUsingGET(accountId?: string, organizationId?: string, otpKey?: string, searchKeys?: any, sorted?: boolean, unsorted?: boolean, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getMasterWalletsUsingGET(accountId, organizationId, otpKey, searchKeys, sorted, unsorted, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getUserWalletBalance
+     * @param {string} userWalletId userWalletId
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getUserWalletBalanceUsingGET(userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getUserWalletNonce
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public getUserWalletNonceUsingGET(options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getUserWalletNonceUsingGET(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getUserWallet
+     * @param {string} userWalletId userWalletId
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public getUserWalletUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getUserWalletUsingGET(userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getUserWallets
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {number} [offset] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {number} [pageNumber] 
+     * @param {number} [pageSize] 
+     * @param {boolean} [paged] 
+     * @param {any} [searchKeys] searchKeys
+     * @param {boolean} [sortSorted] 
+     * @param {boolean} [sortUnsorted] 
+     * @param {boolean} [unpaged] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public getUserWalletsUsingGET(walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getUserWalletsUsingGET(walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary patchAccountKey
+     * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public patchAccountKeyUsingPATCH(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).patchAccountKeyUsingPATCH(updateAccountKeyRequest, walletId, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary patchMasterWalletName
+     * @param {ChangeWalletNameRequest} request request
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public patchMasterWalletNameUsingPATCH(request: ChangeWalletNameRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).patchMasterWalletNameUsingPATCH(request, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary patchUserWalletName
+     * @param {ChangeWalletNameRequest} request request
+     * @param {string} userWalletId userWalletId
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public patchUserWalletNameUsingPATCH(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).patchUserWalletNameUsingPATCH(request, userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary sendBatchTransaction
+     * @param {CreateBatchTransactionRequest} request request
+     * @param {string} [accountId] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public sendBatchTransactionUsingPOST(request: CreateBatchTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).sendBatchTransactionUsingPOST(request, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary sendTransaction
+     * @param {CreateMultiSigTransactionRequest} request request
+     * @param {string} [accountId] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public sendTransactionUsingPOST(request: CreateMultiSigTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).sendTransactionUsingPOST(request, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * KlayCoinControllerApi - fetch parameter creator
+ * @export
+ */
+export const KlayCoinControllerApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary createCoin
+         * @param {CreateCoinRequest} request request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createCoinUsingPOST1(request: CreateCoinRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling createCoinUsingPOST1.');
+            }
+            const localVarPath = `/api/v2/klay/coins`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateCoinRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary deleteCoin
+         * @param {string} symbol symbol
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCoinUsingDELETE1(symbol: string, options: any = {}): FetchArgs {
+            // verify required parameter 'symbol' is not null or undefined
+            if (symbol === null || symbol === undefined) {
+                throw new RequiredError('symbol','Required parameter symbol was null or undefined when calling deleteCoinUsingDELETE1.');
+            }
+            const localVarPath = `/api/v2/klay/coins/{symbol}`
+                .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getAllCoins
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllCoinsUsingGET1(options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/klay/coins`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getCoin
+         * @param {string} symbol symbol
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinUsingGET1(symbol: string, options: any = {}): FetchArgs {
+            // verify required parameter 'symbol' is not null or undefined
+            if (symbol === null || symbol === undefined) {
+                throw new RequiredError('symbol','Required parameter symbol was null or undefined when calling getCoinUsingGET1.');
+            }
+            const localVarPath = `/api/v2/klay/coins/{symbol}`
+                .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KlayCoinControllerApi - functional programming interface
+ * @export
+ */
+export const KlayCoinControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary createCoin
+         * @param {CreateCoinRequest} request request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createCoinUsingPOST1(request: CreateCoinRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CoinDTO> {
+            const localVarFetchArgs = KlayCoinControllerApiFetchParamCreator(configuration).createCoinUsingPOST1(request, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary deleteCoin
+         * @param {string} symbol symbol
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCoinUsingDELETE1(symbol: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = KlayCoinControllerApiFetchParamCreator(configuration).deleteCoinUsingDELETE1(symbol, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getAllCoins
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllCoinsUsingGET1(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<CoinDTO>> {
+            const localVarFetchArgs = KlayCoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET1(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getCoin
+         * @param {string} symbol symbol
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinUsingGET1(symbol: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CoinDTO> {
+            const localVarFetchArgs = KlayCoinControllerApiFetchParamCreator(configuration).getCoinUsingGET1(symbol, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * KlayCoinControllerApi - factory interface
+ * @export
+ */
+export const KlayCoinControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary createCoin
+         * @param {CreateCoinRequest} request request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createCoinUsingPOST1(request: CreateCoinRequest, options?: any) {
+            return KlayCoinControllerApiFp(configuration).createCoinUsingPOST1(request, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary deleteCoin
+         * @param {string} symbol symbol
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteCoinUsingDELETE1(symbol: string, options?: any) {
+            return KlayCoinControllerApiFp(configuration).deleteCoinUsingDELETE1(symbol, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getAllCoins
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllCoinsUsingGET1(options?: any) {
+            return KlayCoinControllerApiFp(configuration).getAllCoinsUsingGET1(options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getCoin
+         * @param {string} symbol symbol
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinUsingGET1(symbol: string, options?: any) {
+            return KlayCoinControllerApiFp(configuration).getCoinUsingGET1(symbol, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * KlayCoinControllerApi - object-oriented interface
+ * @export
+ * @class KlayCoinControllerApi
+ * @extends {BaseAPI}
+ */
+export class KlayCoinControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary createCoin
+     * @param {CreateCoinRequest} request request
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayCoinControllerApi
+     */
+    public createCoinUsingPOST1(request: CreateCoinRequest, options?: any) {
+        return KlayCoinControllerApiFp(this.configuration).createCoinUsingPOST1(request, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary deleteCoin
+     * @param {string} symbol symbol
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayCoinControllerApi
+     */
+    public deleteCoinUsingDELETE1(symbol: string, options?: any) {
+        return KlayCoinControllerApiFp(this.configuration).deleteCoinUsingDELETE1(symbol, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getAllCoins
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayCoinControllerApi
+     */
+    public getAllCoinsUsingGET1(options?: any) {
+        return KlayCoinControllerApiFp(this.configuration).getAllCoinsUsingGET1(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getCoin
+     * @param {string} symbol symbol
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayCoinControllerApi
+     */
+    public getCoinUsingGET1(symbol: string, options?: any) {
+        return KlayCoinControllerApiFp(this.configuration).getCoinUsingGET1(symbol, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * KlayEventControllerApi - fetch parameter creator
+ * @export
+ */
+export const KlayEventControllerApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary getCallEvents
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCallEventsUsingGET1(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/klay/call-events`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (paged !== undefined) {
+                localVarQueryParameter['paged'] = paged;
+            }
+
+            if (sortSorted !== undefined) {
+                localVarQueryParameter['sort.sorted'] = sortSorted;
+            }
+
+            if (sortUnsorted !== undefined) {
+                localVarQueryParameter['sort.unsorted'] = sortUnsorted;
+            }
+
+            if (unpaged !== undefined) {
+                localVarQueryParameter['unpaged'] = unpaged;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"any" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(searchKeys || {}) : (searchKeys || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getValueTransferEvents
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getValueTransferEventsUsingGET1(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/klay/value-transfer-events`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (paged !== undefined) {
+                localVarQueryParameter['paged'] = paged;
+            }
+
+            if (sortSorted !== undefined) {
+                localVarQueryParameter['sort.sorted'] = sortSorted;
+            }
+
+            if (sortUnsorted !== undefined) {
+                localVarQueryParameter['sort.unsorted'] = sortUnsorted;
+            }
+
+            if (unpaged !== undefined) {
+                localVarQueryParameter['unpaged'] = unpaged;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"any" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(searchKeys || {}) : (searchKeys || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KlayEventControllerApi - functional programming interface
+ * @export
+ */
+export const KlayEventControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary getCallEvents
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCallEventsUsingGET1(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationCallEventDTO> {
+            const localVarFetchArgs = KlayEventControllerApiFetchParamCreator(configuration).getCallEventsUsingGET1(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getValueTransferEvents
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getValueTransferEventsUsingGET1(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationValueTransferEventDTO> {
+            const localVarFetchArgs = KlayEventControllerApiFetchParamCreator(configuration).getValueTransferEventsUsingGET1(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * KlayEventControllerApi - factory interface
+ * @export
+ */
+export const KlayEventControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary getCallEvents
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCallEventsUsingGET1(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+            return KlayEventControllerApiFp(configuration).getCallEventsUsingGET1(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getValueTransferEvents
+         * @param {number} [offset] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getValueTransferEventsUsingGET1(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+            return KlayEventControllerApiFp(configuration).getValueTransferEventsUsingGET1(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * KlayEventControllerApi - object-oriented interface
+ * @export
+ * @class KlayEventControllerApi
+ * @extends {BaseAPI}
+ */
+export class KlayEventControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary getCallEvents
+     * @param {number} [offset] 
+     * @param {number} [pageNumber] 
+     * @param {number} [pageSize] 
+     * @param {boolean} [paged] 
+     * @param {any} [searchKeys] searchKeys
+     * @param {boolean} [sortSorted] 
+     * @param {boolean} [sortUnsorted] 
+     * @param {boolean} [unpaged] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayEventControllerApi
+     */
+    public getCallEventsUsingGET1(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+        return KlayEventControllerApiFp(this.configuration).getCallEventsUsingGET1(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getValueTransferEvents
+     * @param {number} [offset] 
+     * @param {number} [pageNumber] 
+     * @param {number} [pageSize] 
+     * @param {boolean} [paged] 
+     * @param {any} [searchKeys] searchKeys
+     * @param {boolean} [sortSorted] 
+     * @param {boolean} [sortUnsorted] 
+     * @param {boolean} [unpaged] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayEventControllerApi
+     */
+    public getValueTransferEventsUsingGET1(offset?: number, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+        return KlayEventControllerApiFp(this.configuration).getValueTransferEventsUsingGET1(offset, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * KlayHenesisKeyControllerApi - fetch parameter creator
+ * @export
+ */
+export const KlayHenesisKeyControllerApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary createHenesisKey
+         * @param {CreateHenesisKeyRequest} createHenesisKeyRequest createHenesisKeyRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createHenesisKeyUsingPOST1(createHenesisKeyRequest: CreateHenesisKeyRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'createHenesisKeyRequest' is not null or undefined
+            if (createHenesisKeyRequest === null || createHenesisKeyRequest === undefined) {
+                throw new RequiredError('createHenesisKeyRequest','Required parameter createHenesisKeyRequest was null or undefined when calling createHenesisKeyUsingPOST1.');
+            }
+            const localVarPath = `/api/v2/klay/henesis-keys`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateHenesisKeyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(createHenesisKeyRequest || {}) : (createHenesisKeyRequest || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary createTransaction
+         * @param {CreateTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTransactionUsingPOST1(request: CreateTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling createTransactionUsingPOST1.');
+            }
+            const localVarPath = `/api/v2/klay/henesis-keys/transactions`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateTransactionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getHenesisKeyBalance
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHenesisKeyBalanceUsingGET1(accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/klay/henesis-keys/balance`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getHenesisKey
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHenesisKeyUsingGET1(accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/klay/henesis-keys/me`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KlayHenesisKeyControllerApi - functional programming interface
+ * @export
+ */
+export const KlayHenesisKeyControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary createHenesisKey
+         * @param {CreateHenesisKeyRequest} createHenesisKeyRequest createHenesisKeyRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createHenesisKeyUsingPOST1(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
+            const localVarFetchArgs = KlayHenesisKeyControllerApiFetchParamCreator(configuration).createHenesisKeyUsingPOST1(createHenesisKeyRequest, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary createTransaction
+         * @param {CreateTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTransactionUsingPOST1(request: CreateTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
+            const localVarFetchArgs = KlayHenesisKeyControllerApiFetchParamCreator(configuration).createTransactionUsingPOST1(request, accountId, needOTP, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getHenesisKeyBalance
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHenesisKeyBalanceUsingGET1(accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BalanceDTO> {
+            const localVarFetchArgs = KlayHenesisKeyControllerApiFetchParamCreator(configuration).getHenesisKeyBalanceUsingGET1(accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getHenesisKey
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHenesisKeyUsingGET1(accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
+            const localVarFetchArgs = KlayHenesisKeyControllerApiFetchParamCreator(configuration).getHenesisKeyUsingGET1(accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * KlayHenesisKeyControllerApi - factory interface
+ * @export
+ */
+export const KlayHenesisKeyControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary createHenesisKey
+         * @param {CreateHenesisKeyRequest} createHenesisKeyRequest createHenesisKeyRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createHenesisKeyUsingPOST1(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any) {
+            return KlayHenesisKeyControllerApiFp(configuration).createHenesisKeyUsingPOST1(createHenesisKeyRequest, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary createTransaction
+         * @param {CreateTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTransactionUsingPOST1(request: CreateTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayHenesisKeyControllerApiFp(configuration).createTransactionUsingPOST1(request, accountId, needOTP, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getHenesisKeyBalance
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHenesisKeyBalanceUsingGET1(accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayHenesisKeyControllerApiFp(configuration).getHenesisKeyBalanceUsingGET1(accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getHenesisKey
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHenesisKeyUsingGET1(accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayHenesisKeyControllerApiFp(configuration).getHenesisKeyUsingGET1(accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * KlayHenesisKeyControllerApi - object-oriented interface
+ * @export
+ * @class KlayHenesisKeyControllerApi
+ * @extends {BaseAPI}
+ */
+export class KlayHenesisKeyControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary createHenesisKey
+     * @param {CreateHenesisKeyRequest} createHenesisKeyRequest createHenesisKeyRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayHenesisKeyControllerApi
+     */
+    public createHenesisKeyUsingPOST1(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any) {
+        return KlayHenesisKeyControllerApiFp(this.configuration).createHenesisKeyUsingPOST1(createHenesisKeyRequest, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary createTransaction
+     * @param {CreateTransactionRequest} request request
+     * @param {string} [accountId] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayHenesisKeyControllerApi
+     */
+    public createTransactionUsingPOST1(request: CreateTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayHenesisKeyControllerApiFp(this.configuration).createTransactionUsingPOST1(request, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getHenesisKeyBalance
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayHenesisKeyControllerApi
+     */
+    public getHenesisKeyBalanceUsingGET1(accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayHenesisKeyControllerApiFp(this.configuration).getHenesisKeyBalanceUsingGET1(accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getHenesisKey
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayHenesisKeyControllerApi
+     */
+    public getHenesisKeyUsingGET1(accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayHenesisKeyControllerApiFp(this.configuration).getHenesisKeyUsingGET1(accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * KlayMethodGasUsageControllerApi - fetch parameter creator
+ * @export
+ */
+export const KlayMethodGasUsageControllerApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary getMethodGasUsages
+         * @param {string} name name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMethodGasUsagesUsingGET1(name: string, options: any = {}): FetchArgs {
+            // verify required parameter 'name' is not null or undefined
+            if (name === null || name === undefined) {
+                throw new RequiredError('name','Required parameter name was null or undefined when calling getMethodGasUsagesUsingGET1.');
+            }
+            const localVarPath = `/api/v2/klay/method-gas-usages`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KlayMethodGasUsageControllerApi - functional programming interface
+ * @export
+ */
+export const KlayMethodGasUsageControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary getMethodGasUsages
+         * @param {string} name name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMethodGasUsagesUsingGET1(name: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MethodGasUsageDTO> {
+            const localVarFetchArgs = KlayMethodGasUsageControllerApiFetchParamCreator(configuration).getMethodGasUsagesUsingGET1(name, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * KlayMethodGasUsageControllerApi - factory interface
+ * @export
+ */
+export const KlayMethodGasUsageControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary getMethodGasUsages
+         * @param {string} name name
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMethodGasUsagesUsingGET1(name: string, options?: any) {
+            return KlayMethodGasUsageControllerApiFp(configuration).getMethodGasUsagesUsingGET1(name, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * KlayMethodGasUsageControllerApi - object-oriented interface
+ * @export
+ * @class KlayMethodGasUsageControllerApi
+ * @extends {BaseAPI}
+ */
+export class KlayMethodGasUsageControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary getMethodGasUsages
+     * @param {string} name name
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayMethodGasUsageControllerApi
+     */
+    public getMethodGasUsagesUsingGET1(name: string, options?: any) {
+        return KlayMethodGasUsageControllerApiFp(this.configuration).getMethodGasUsagesUsingGET1(name, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * KlayTransactionControllerApi - fetch parameter creator
+ * @export
+ */
+export const KlayTransactionControllerApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary getAllTransactions
+         * @param {string} [accountId] 
+         * @param {number} [offset] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllTransactionsUsingGET1(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/klay/transactions`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (paged !== undefined) {
+                localVarQueryParameter['paged'] = paged;
+            }
+
+            if (sortSorted !== undefined) {
+                localVarQueryParameter['sort.sorted'] = sortSorted;
+            }
+
+            if (sortUnsorted !== undefined) {
+                localVarQueryParameter['sort.unsorted'] = sortUnsorted;
+            }
+
+            if (unpaged !== undefined) {
+                localVarQueryParameter['unpaged'] = unpaged;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"any" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(searchKeys || {}) : (searchKeys || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getTransactionById
+         * @param {string} transactionId transactionId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransactionByIdUsingGET1(transactionId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'transactionId' is not null or undefined
+            if (transactionId === null || transactionId === undefined) {
+                throw new RequiredError('transactionId','Required parameter transactionId was null or undefined when calling getTransactionByIdUsingGET1.');
+            }
+            const localVarPath = `/api/v2/klay/transactions/{transactionId}`
+                .replace(`{${"transactionId"}}`, encodeURIComponent(String(transactionId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KlayTransactionControllerApi - functional programming interface
+ * @export
+ */
+export const KlayTransactionControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary getAllTransactions
+         * @param {string} [accountId] 
+         * @param {number} [offset] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllTransactionsUsingGET1(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationTransactionDTO> {
+            const localVarFetchArgs = KlayTransactionControllerApiFetchParamCreator(configuration).getAllTransactionsUsingGET1(accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getTransactionById
+         * @param {string} transactionId transactionId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransactionByIdUsingGET1(transactionId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
+            const localVarFetchArgs = KlayTransactionControllerApiFetchParamCreator(configuration).getTransactionByIdUsingGET1(transactionId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * KlayTransactionControllerApi - factory interface
+ * @export
+ */
+export const KlayTransactionControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary getAllTransactions
+         * @param {string} [accountId] 
+         * @param {number} [offset] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllTransactionsUsingGET1(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+            return KlayTransactionControllerApiFp(configuration).getAllTransactionsUsingGET1(accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getTransactionById
+         * @param {string} transactionId transactionId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransactionByIdUsingGET1(transactionId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayTransactionControllerApiFp(configuration).getTransactionByIdUsingGET1(transactionId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * KlayTransactionControllerApi - object-oriented interface
+ * @export
+ * @class KlayTransactionControllerApi
+ * @extends {BaseAPI}
+ */
+export class KlayTransactionControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary getAllTransactions
+     * @param {string} [accountId] 
+     * @param {number} [offset] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {number} [pageNumber] 
+     * @param {number} [pageSize] 
+     * @param {boolean} [paged] 
+     * @param {any} [searchKeys] searchKeys
+     * @param {boolean} [sortSorted] 
+     * @param {boolean} [sortUnsorted] 
+     * @param {boolean} [unpaged] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayTransactionControllerApi
+     */
+    public getAllTransactionsUsingGET1(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+        return KlayTransactionControllerApiFp(this.configuration).getAllTransactionsUsingGET1(accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getTransactionById
+     * @param {string} transactionId transactionId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayTransactionControllerApi
+     */
+    public getTransactionByIdUsingGET1(transactionId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayTransactionControllerApiFp(this.configuration).getTransactionByIdUsingGET1(transactionId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * KlayWalletControllerApi - fetch parameter creator
+ * @export
+ */
+export const KlayWalletControllerApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary createMasterWallet
+         * @param {CreateMasterWalletRequest} request request
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createMasterWalletUsingPOST1(request: CreateMasterWalletRequest, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling createMasterWalletUsingPOST1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateMasterWalletRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary createUserWallet
+         * @param {CreateUserWalletRequest} request request
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUserWalletUsingPOST1(request: CreateUserWalletRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling createUserWalletUsingPOST1.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling createUserWalletUsingPOST1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateUserWalletRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletAccountKey
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletAccountKeyUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletAccountKeyUsingGET1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/account-key`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletBalance
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletBalanceUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletBalanceUsingGET1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/balance`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletInitialKey
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletInitialKeyUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletInitialKeyUsingGET1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/initial-key`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletNonce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletNonceUsingGET1(options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/nonce`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWallet
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletUsingGET1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWallets
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sorted] 
+         * @param {boolean} [unsorted] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletsUsingGET1(accountId?: string, organizationId?: string, otpKey?: string, searchKeys?: any, sorted?: boolean, unsorted?: boolean, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/klay/wallets`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            if (sorted !== undefined) {
+                localVarQueryParameter['sorted'] = sorted;
+            }
+
+            if (unsorted !== undefined) {
+                localVarQueryParameter['unsorted'] = unsorted;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"any" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(searchKeys || {}) : (searchKeys || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getUserWalletBalance
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletBalanceUsingGET1(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'userWalletId' is not null or undefined
+            if (userWalletId === null || userWalletId === undefined) {
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletBalanceUsingGET1.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletBalanceUsingGET1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}/balance`
+                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getUserWalletNonce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletNonceUsingGET1(options: any = {}): FetchArgs {
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}/nonce`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getUserWallet
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletUsingGET1(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'userWalletId' is not null or undefined
+            if (userWalletId === null || userWalletId === undefined) {
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletUsingGET1.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletUsingGET1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}`
+                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary getUserWallets
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {number} [offset] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletsUsingGET1(walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletsUsingGET1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (paged !== undefined) {
+                localVarQueryParameter['paged'] = paged;
+            }
+
+            if (sortSorted !== undefined) {
+                localVarQueryParameter['sort.sorted'] = sortSorted;
+            }
+
+            if (sortUnsorted !== undefined) {
+                localVarQueryParameter['sort.unsorted'] = sortUnsorted;
+            }
+
+            if (unpaged !== undefined) {
+                localVarQueryParameter['unpaged'] = unpaged;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"any" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(searchKeys || {}) : (searchKeys || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary patchAccountKey
+         * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAccountKeyUsingPATCH1(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'updateAccountKeyRequest' is not null or undefined
+            if (updateAccountKeyRequest === null || updateAccountKeyRequest === undefined) {
+                throw new RequiredError('updateAccountKeyRequest','Required parameter updateAccountKeyRequest was null or undefined when calling patchAccountKeyUsingPATCH1.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchAccountKeyUsingPATCH1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/account-key`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"UpdateAccountKeyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(updateAccountKeyRequest || {}) : (updateAccountKeyRequest || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary patchMasterWalletName
+         * @param {ChangeWalletNameRequest} request request
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMasterWalletNameUsingPATCH1(request: ChangeWalletNameRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling patchMasterWalletNameUsingPATCH1.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchMasterWalletNameUsingPATCH1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/name`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"ChangeWalletNameRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary patchUserWalletName
+         * @param {ChangeWalletNameRequest} request request
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchUserWalletNameUsingPATCH1(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling patchUserWalletNameUsingPATCH1.');
+            }
+            // verify required parameter 'userWalletId' is not null or undefined
+            if (userWalletId === null || userWalletId === undefined) {
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling patchUserWalletNameUsingPATCH1.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchUserWalletNameUsingPATCH1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}/name`
+                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"ChangeWalletNameRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary sendBatchTransaction
+         * @param {CreateBatchTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendBatchTransactionUsingPOST1(request: CreateBatchTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling sendBatchTransactionUsingPOST1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/batch-transactions`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateBatchTransactionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary sendTransaction
+         * @param {CreateMultiSigTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendTransactionUsingPOST1(request: CreateMultiSigTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling sendTransactionUsingPOST1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/transactions`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateMultiSigTransactionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KlayWalletControllerApi - functional programming interface
+ * @export
+ */
+export const KlayWalletControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary createMasterWallet
+         * @param {CreateMasterWalletRequest} request request
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createMasterWalletUsingPOST1(request: CreateMasterWalletRequest, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MasterWalletDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).createMasterWalletUsingPOST1(request, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary createUserWallet
+         * @param {CreateUserWalletRequest} request request
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUserWalletUsingPOST1(request: CreateUserWalletRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserWalletDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).createUserWalletUsingPOST1(request, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletAccountKey
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletAccountKeyUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getMasterWalletAccountKeyUsingGET1(walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletBalance
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletBalanceUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getMasterWalletBalanceUsingGET1(walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletInitialKey
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletInitialKeyUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getMasterWalletInitialKeyUsingGET1(walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWalletNonce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletNonceUsingGET1(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<NonceDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getMasterWalletNonceUsingGET1(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWallet
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MasterWalletDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getMasterWalletUsingGET1(walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getMasterWallets
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sorted] 
+         * @param {boolean} [unsorted] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletsUsingGET1(accountId?: string, organizationId?: string, otpKey?: string, searchKeys?: any, sorted?: boolean, unsorted?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<MasterWalletDTO>> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getMasterWalletsUsingGET1(accountId, organizationId, otpKey, searchKeys, sorted, unsorted, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getUserWalletBalance
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletBalanceUsingGET1(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getUserWalletBalanceUsingGET1(userWalletId, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getUserWalletNonce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletNonceUsingGET1(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<NonceDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getUserWalletNonceUsingGET1(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getUserWallet
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletUsingGET1(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserWalletDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getUserWalletUsingGET1(userWalletId, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary getUserWallets
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {number} [offset] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletsUsingGET1(walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationUserWalletDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getUserWalletsUsingGET1(walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary patchAccountKey
+         * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAccountKeyUsingPATCH1(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).patchAccountKeyUsingPATCH1(updateAccountKeyRequest, walletId, accountId, needOTP, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary patchMasterWalletName
+         * @param {ChangeWalletNameRequest} request request
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMasterWalletNameUsingPATCH1(request: ChangeWalletNameRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MasterWalletDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).patchMasterWalletNameUsingPATCH1(request, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary patchUserWalletName
+         * @param {ChangeWalletNameRequest} request request
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchUserWalletNameUsingPATCH1(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserWalletDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).patchUserWalletNameUsingPATCH1(request, userWalletId, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary sendBatchTransaction
+         * @param {CreateBatchTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendBatchTransactionUsingPOST1(request: CreateBatchTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BatchTransactionDTO>> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).sendBatchTransactionUsingPOST1(request, accountId, needOTP, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary sendTransaction
+         * @param {CreateMultiSigTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendTransactionUsingPOST1(request: CreateMultiSigTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).sendTransactionUsingPOST1(request, accountId, needOTP, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * KlayWalletControllerApi - factory interface
+ * @export
+ */
+export const KlayWalletControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary createMasterWallet
+         * @param {CreateMasterWalletRequest} request request
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createMasterWalletUsingPOST1(request: CreateMasterWalletRequest, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).createMasterWalletUsingPOST1(request, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary createUserWallet
+         * @param {CreateUserWalletRequest} request request
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUserWalletUsingPOST1(request: CreateUserWalletRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).createUserWalletUsingPOST1(request, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getMasterWalletAccountKey
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletAccountKeyUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getMasterWalletAccountKeyUsingGET1(walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getMasterWalletBalance
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletBalanceUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getMasterWalletBalanceUsingGET1(walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getMasterWalletInitialKey
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletInitialKeyUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getMasterWalletInitialKeyUsingGET1(walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getMasterWalletNonce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletNonceUsingGET1(options?: any) {
+            return KlayWalletControllerApiFp(configuration).getMasterWalletNonceUsingGET1(options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getMasterWallet
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getMasterWalletUsingGET1(walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getMasterWallets
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sorted] 
+         * @param {boolean} [unsorted] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWalletsUsingGET1(accountId?: string, organizationId?: string, otpKey?: string, searchKeys?: any, sorted?: boolean, unsorted?: boolean, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getMasterWalletsUsingGET1(accountId, organizationId, otpKey, searchKeys, sorted, unsorted, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getUserWalletBalance
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletBalanceUsingGET1(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getUserWalletBalanceUsingGET1(userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getUserWalletNonce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletNonceUsingGET1(options?: any) {
+            return KlayWalletControllerApiFp(configuration).getUserWalletNonceUsingGET1(options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getUserWallet
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletUsingGET1(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getUserWalletUsingGET1(userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary getUserWallets
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {number} [offset] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {boolean} [paged] 
+         * @param {any} [searchKeys] searchKeys
+         * @param {boolean} [sortSorted] 
+         * @param {boolean} [sortUnsorted] 
+         * @param {boolean} [unpaged] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletsUsingGET1(walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getUserWalletsUsingGET1(walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary patchAccountKey
+         * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchAccountKeyUsingPATCH1(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).patchAccountKeyUsingPATCH1(updateAccountKeyRequest, walletId, accountId, needOTP, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary patchMasterWalletName
+         * @param {ChangeWalletNameRequest} request request
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchMasterWalletNameUsingPATCH1(request: ChangeWalletNameRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).patchMasterWalletNameUsingPATCH1(request, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary patchUserWalletName
+         * @param {ChangeWalletNameRequest} request request
+         * @param {string} userWalletId userWalletId
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchUserWalletNameUsingPATCH1(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).patchUserWalletNameUsingPATCH1(request, userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary sendBatchTransaction
+         * @param {CreateBatchTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendBatchTransactionUsingPOST1(request: CreateBatchTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).sendBatchTransactionUsingPOST1(request, accountId, needOTP, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary sendTransaction
+         * @param {CreateMultiSigTransactionRequest} request request
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendTransactionUsingPOST1(request: CreateMultiSigTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).sendTransactionUsingPOST1(request, accountId, needOTP, organizationId, otpKey, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * KlayWalletControllerApi - object-oriented interface
+ * @export
+ * @class KlayWalletControllerApi
+ * @extends {BaseAPI}
+ */
+export class KlayWalletControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary createMasterWallet
+     * @param {CreateMasterWalletRequest} request request
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public createMasterWalletUsingPOST1(request: CreateMasterWalletRequest, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).createMasterWalletUsingPOST1(request, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary createUserWallet
+     * @param {CreateUserWalletRequest} request request
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public createUserWalletUsingPOST1(request: CreateUserWalletRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).createUserWalletUsingPOST1(request, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getMasterWalletAccountKey
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public getMasterWalletAccountKeyUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getMasterWalletAccountKeyUsingGET1(walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getMasterWalletBalance
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public getMasterWalletBalanceUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getMasterWalletBalanceUsingGET1(walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getMasterWalletInitialKey
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public getMasterWalletInitialKeyUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getMasterWalletInitialKeyUsingGET1(walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getMasterWalletNonce
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public getMasterWalletNonceUsingGET1(options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getMasterWalletNonceUsingGET1(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getMasterWallet
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public getMasterWalletUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getMasterWalletUsingGET1(walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getMasterWallets
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {any} [searchKeys] searchKeys
+     * @param {boolean} [sorted] 
+     * @param {boolean} [unsorted] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public getMasterWalletsUsingGET1(accountId?: string, organizationId?: string, otpKey?: string, searchKeys?: any, sorted?: boolean, unsorted?: boolean, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getMasterWalletsUsingGET1(accountId, organizationId, otpKey, searchKeys, sorted, unsorted, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getUserWalletBalance
+     * @param {string} userWalletId userWalletId
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public getUserWalletBalanceUsingGET1(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getUserWalletBalanceUsingGET1(userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getUserWalletNonce
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public getUserWalletNonceUsingGET1(options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getUserWalletNonceUsingGET1(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getUserWallet
+     * @param {string} userWalletId userWalletId
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public getUserWalletUsingGET1(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getUserWalletUsingGET1(userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary getUserWallets
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {number} [offset] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {number} [pageNumber] 
+     * @param {number} [pageSize] 
+     * @param {boolean} [paged] 
+     * @param {any} [searchKeys] searchKeys
+     * @param {boolean} [sortSorted] 
+     * @param {boolean} [sortUnsorted] 
+     * @param {boolean} [unpaged] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public getUserWalletsUsingGET1(walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getUserWalletsUsingGET1(walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary patchAccountKey
+     * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public patchAccountKeyUsingPATCH1(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).patchAccountKeyUsingPATCH1(updateAccountKeyRequest, walletId, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary patchMasterWalletName
+     * @param {ChangeWalletNameRequest} request request
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public patchMasterWalletNameUsingPATCH1(request: ChangeWalletNameRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).patchMasterWalletNameUsingPATCH1(request, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary patchUserWalletName
+     * @param {ChangeWalletNameRequest} request request
+     * @param {string} userWalletId userWalletId
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public patchUserWalletNameUsingPATCH1(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).patchUserWalletNameUsingPATCH1(request, userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary sendBatchTransaction
+     * @param {CreateBatchTransactionRequest} request request
+     * @param {string} [accountId] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public sendBatchTransactionUsingPOST1(request: CreateBatchTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).sendBatchTransactionUsingPOST1(request, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary sendTransaction
+     * @param {CreateMultiSigTransactionRequest} request request
+     * @param {string} [accountId] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public sendTransactionUsingPOST1(request: CreateMultiSigTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).sendTransactionUsingPOST1(request, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
 }
@@ -3906,2215 +8328,6 @@ export class OperationHandlerApi extends BaseAPI {
      */
     public handleUsingGET2(body?: any, options?: any) {
         return OperationHandlerApiFp(this.configuration).handleUsingGET2(body, options)(this.fetch, this.basePath);
-    }
-
-}
-
-/**
- * OrganizationControllerApi - fetch parameter creator
- * @export
- */
-export const OrganizationControllerApiFetchParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary createOrganization
-         * @param {CreateOrganizationRequest} request request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createOrganizationUsingPOST(request: CreateOrganizationRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling createOrganizationUsingPOST.');
-            }
-            const localVarPath = `/api/v1/organizations`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreateOrganizationRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary createSecret
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createSecretUsingPOST(orgId?: string, options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/organizations/secret`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(orgId || {}) : (orgId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getAccountByOrganizationId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAccountByOrganizationIdUsingGET(orgId?: string, options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/organizations/accounts`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(orgId || {}) : (orgId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getOrganizationBalance
-         * @param {string} blockchain blockchain
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationBalanceUsingGET(blockchain: string, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'blockchain' is not null or undefined
-            if (blockchain === null || blockchain === undefined) {
-                throw new RequiredError('blockchain','Required parameter blockchain was null or undefined when calling getOrganizationBalanceUsingGET.');
-            }
-            const localVarPath = `/api/v1/organizations/balance`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (blockchain !== undefined) {
-                localVarQueryParameter['blockchain'] = blockchain;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(orgId || {}) : (orgId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getOrganization
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationUsingGET(orgId?: string, options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/organizations/me`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(orgId || {}) : (orgId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary patchAccountRole
-         * @param {string} accountId accountId
-         * @param {PatchAccountRoleRequest} patchAccountRoleRequest patchAccountRoleRequest
-         * @param {string} [myAccountId] myAccountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAccountRoleUsingPATCH(accountId: string, patchAccountRoleRequest: PatchAccountRoleRequest, myAccountId?: string, needOTP?: boolean, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'accountId' is not null or undefined
-            if (accountId === null || accountId === undefined) {
-                throw new RequiredError('accountId','Required parameter accountId was null or undefined when calling patchAccountRoleUsingPATCH.');
-            }
-            // verify required parameter 'patchAccountRoleRequest' is not null or undefined
-            if (patchAccountRoleRequest === null || patchAccountRoleRequest === undefined) {
-                throw new RequiredError('patchAccountRoleRequest','Required parameter patchAccountRoleRequest was null or undefined when calling patchAccountRoleUsingPATCH.');
-            }
-            const localVarPath = `/api/v1/organizations/accounts/{accountId}`
-                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"PatchAccountRoleRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(patchAccountRoleRequest || {}) : (patchAccountRoleRequest || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * OrganizationControllerApi - functional programming interface
- * @export
- */
-export const OrganizationControllerApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary createOrganization
-         * @param {CreateOrganizationRequest} request request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createOrganizationUsingPOST(request: CreateOrganizationRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrganizationDTO> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).createOrganizationUsingPOST(request, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary createSecret
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createSecretUsingPOST(orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CreateSecretResponse> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).createSecretUsingPOST(orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getAccountByOrganizationId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAccountByOrganizationIdUsingGET(orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<OrgAccountDTO>> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).getAccountByOrganizationIdUsingGET(orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getOrganizationBalance
-         * @param {string} blockchain blockchain
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationBalanceUsingGET(blockchain: string, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BalanceDTO> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).getOrganizationBalanceUsingGET(blockchain, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getOrganization
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationUsingGET(orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrganizationDTO> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).getOrganizationUsingGET(orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary patchAccountRole
-         * @param {string} accountId accountId
-         * @param {PatchAccountRoleRequest} patchAccountRoleRequest patchAccountRoleRequest
-         * @param {string} [myAccountId] myAccountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAccountRoleUsingPATCH(accountId: string, patchAccountRoleRequest: PatchAccountRoleRequest, myAccountId?: string, needOTP?: boolean, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccountDTO> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).patchAccountRoleUsingPATCH(accountId, patchAccountRoleRequest, myAccountId, needOTP, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-    }
-};
-
-/**
- * OrganizationControllerApi - factory interface
- * @export
- */
-export const OrganizationControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
-    return {
-        /**
-         * 
-         * @summary createOrganization
-         * @param {CreateOrganizationRequest} request request
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createOrganizationUsingPOST(request: CreateOrganizationRequest, options?: any) {
-            return OrganizationControllerApiFp(configuration).createOrganizationUsingPOST(request, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary createSecret
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createSecretUsingPOST(orgId?: string, options?: any) {
-            return OrganizationControllerApiFp(configuration).createSecretUsingPOST(orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getAccountByOrganizationId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAccountByOrganizationIdUsingGET(orgId?: string, options?: any) {
-            return OrganizationControllerApiFp(configuration).getAccountByOrganizationIdUsingGET(orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getOrganizationBalance
-         * @param {string} blockchain blockchain
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationBalanceUsingGET(blockchain: string, orgId?: string, options?: any) {
-            return OrganizationControllerApiFp(configuration).getOrganizationBalanceUsingGET(blockchain, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getOrganization
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationUsingGET(orgId?: string, options?: any) {
-            return OrganizationControllerApiFp(configuration).getOrganizationUsingGET(orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary patchAccountRole
-         * @param {string} accountId accountId
-         * @param {PatchAccountRoleRequest} patchAccountRoleRequest patchAccountRoleRequest
-         * @param {string} [myAccountId] myAccountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAccountRoleUsingPATCH(accountId: string, patchAccountRoleRequest: PatchAccountRoleRequest, myAccountId?: string, needOTP?: boolean, orgId?: string, options?: any) {
-            return OrganizationControllerApiFp(configuration).patchAccountRoleUsingPATCH(accountId, patchAccountRoleRequest, myAccountId, needOTP, orgId, options)(fetch, basePath);
-        },
-    };
-};
-
-/**
- * OrganizationControllerApi - object-oriented interface
- * @export
- * @class OrganizationControllerApi
- * @extends {BaseAPI}
- */
-export class OrganizationControllerApi extends BaseAPI {
-    /**
-     * 
-     * @summary createOrganization
-     * @param {CreateOrganizationRequest} request request
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationControllerApi
-     */
-    public createOrganizationUsingPOST(request: CreateOrganizationRequest, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).createOrganizationUsingPOST(request, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary createSecret
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationControllerApi
-     */
-    public createSecretUsingPOST(orgId?: string, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).createSecretUsingPOST(orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getAccountByOrganizationId
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationControllerApi
-     */
-    public getAccountByOrganizationIdUsingGET(orgId?: string, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).getAccountByOrganizationIdUsingGET(orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getOrganizationBalance
-     * @param {string} blockchain blockchain
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationControllerApi
-     */
-    public getOrganizationBalanceUsingGET(blockchain: string, orgId?: string, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).getOrganizationBalanceUsingGET(blockchain, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getOrganization
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationControllerApi
-     */
-    public getOrganizationUsingGET(orgId?: string, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).getOrganizationUsingGET(orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary patchAccountRole
-     * @param {string} accountId accountId
-     * @param {PatchAccountRoleRequest} patchAccountRoleRequest patchAccountRoleRequest
-     * @param {string} [myAccountId] myAccountId
-     * @param {boolean} [needOTP] needOTP
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationControllerApi
-     */
-    public patchAccountRoleUsingPATCH(accountId: string, patchAccountRoleRequest: PatchAccountRoleRequest, myAccountId?: string, needOTP?: boolean, orgId?: string, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).patchAccountRoleUsingPATCH(accountId, patchAccountRoleRequest, myAccountId, needOTP, orgId, options)(this.fetch, this.basePath);
-    }
-
-}
-
-/**
- * TransactionControllerApi - fetch parameter creator
- * @export
- */
-export const TransactionControllerApiFetchParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary getAllTransactions
-         * @param {number} [offset] 
-         * @param {string} [orgId] orgId
-         * @param {number} [pageNumber] 
-         * @param {number} [pageSize] 
-         * @param {boolean} [paged] 
-         * @param {any} [searchKeys] searchKeys
-         * @param {boolean} [sortSorted] 
-         * @param {boolean} [sortUnsorted] 
-         * @param {boolean} [unpaged] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllTransactionsUsingGET(offset?: number, orgId?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/transactions`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
-            }
-
-            if (pageNumber !== undefined) {
-                localVarQueryParameter['pageNumber'] = pageNumber;
-            }
-
-            if (pageSize !== undefined) {
-                localVarQueryParameter['pageSize'] = pageSize;
-            }
-
-            if (paged !== undefined) {
-                localVarQueryParameter['paged'] = paged;
-            }
-
-            if (sortSorted !== undefined) {
-                localVarQueryParameter['sort.sorted'] = sortSorted;
-            }
-
-            if (sortUnsorted !== undefined) {
-                localVarQueryParameter['sort.unsorted'] = sortUnsorted;
-            }
-
-            if (unpaged !== undefined) {
-                localVarQueryParameter['unpaged'] = unpaged;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"any" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(searchKeys || {}) : (searchKeys || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getTransactionById
-         * @param {string} blockchain blockchain
-         * @param {string} transactionId transactionId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTransactionByIdUsingGET(blockchain: string, transactionId: string, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'blockchain' is not null or undefined
-            if (blockchain === null || blockchain === undefined) {
-                throw new RequiredError('blockchain','Required parameter blockchain was null or undefined when calling getTransactionByIdUsingGET.');
-            }
-            // verify required parameter 'transactionId' is not null or undefined
-            if (transactionId === null || transactionId === undefined) {
-                throw new RequiredError('transactionId','Required parameter transactionId was null or undefined when calling getTransactionByIdUsingGET.');
-            }
-            const localVarPath = `/api/v1/transactions/{transactionId}`
-                .replace(`{${"transactionId"}}`, encodeURIComponent(String(transactionId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (blockchain !== undefined) {
-                localVarQueryParameter['blockchain'] = blockchain;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(orgId || {}) : (orgId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * TransactionControllerApi - functional programming interface
- * @export
- */
-export const TransactionControllerApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary getAllTransactions
-         * @param {number} [offset] 
-         * @param {string} [orgId] orgId
-         * @param {number} [pageNumber] 
-         * @param {number} [pageSize] 
-         * @param {boolean} [paged] 
-         * @param {any} [searchKeys] searchKeys
-         * @param {boolean} [sortSorted] 
-         * @param {boolean} [sortUnsorted] 
-         * @param {boolean} [unpaged] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllTransactionsUsingGET(offset?: number, orgId?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationTransactionDTO> {
-            const localVarFetchArgs = TransactionControllerApiFetchParamCreator(configuration).getAllTransactionsUsingGET(offset, orgId, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getTransactionById
-         * @param {string} blockchain blockchain
-         * @param {string} transactionId transactionId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTransactionByIdUsingGET(blockchain: string, transactionId: string, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
-            const localVarFetchArgs = TransactionControllerApiFetchParamCreator(configuration).getTransactionByIdUsingGET(blockchain, transactionId, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-    }
-};
-
-/**
- * TransactionControllerApi - factory interface
- * @export
- */
-export const TransactionControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
-    return {
-        /**
-         * 
-         * @summary getAllTransactions
-         * @param {number} [offset] 
-         * @param {string} [orgId] orgId
-         * @param {number} [pageNumber] 
-         * @param {number} [pageSize] 
-         * @param {boolean} [paged] 
-         * @param {any} [searchKeys] searchKeys
-         * @param {boolean} [sortSorted] 
-         * @param {boolean} [sortUnsorted] 
-         * @param {boolean} [unpaged] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllTransactionsUsingGET(offset?: number, orgId?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-            return TransactionControllerApiFp(configuration).getAllTransactionsUsingGET(offset, orgId, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getTransactionById
-         * @param {string} blockchain blockchain
-         * @param {string} transactionId transactionId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTransactionByIdUsingGET(blockchain: string, transactionId: string, orgId?: string, options?: any) {
-            return TransactionControllerApiFp(configuration).getTransactionByIdUsingGET(blockchain, transactionId, orgId, options)(fetch, basePath);
-        },
-    };
-};
-
-/**
- * TransactionControllerApi - object-oriented interface
- * @export
- * @class TransactionControllerApi
- * @extends {BaseAPI}
- */
-export class TransactionControllerApi extends BaseAPI {
-    /**
-     * 
-     * @summary getAllTransactions
-     * @param {number} [offset] 
-     * @param {string} [orgId] orgId
-     * @param {number} [pageNumber] 
-     * @param {number} [pageSize] 
-     * @param {boolean} [paged] 
-     * @param {any} [searchKeys] searchKeys
-     * @param {boolean} [sortSorted] 
-     * @param {boolean} [sortUnsorted] 
-     * @param {boolean} [unpaged] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TransactionControllerApi
-     */
-    public getAllTransactionsUsingGET(offset?: number, orgId?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-        return TransactionControllerApiFp(this.configuration).getAllTransactionsUsingGET(offset, orgId, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getTransactionById
-     * @param {string} blockchain blockchain
-     * @param {string} transactionId transactionId
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TransactionControllerApi
-     */
-    public getTransactionByIdUsingGET(blockchain: string, transactionId: string, orgId?: string, options?: any) {
-        return TransactionControllerApiFp(this.configuration).getTransactionByIdUsingGET(blockchain, transactionId, orgId, options)(this.fetch, this.basePath);
-    }
-
-}
-
-/**
- * WalletControllerApi - fetch parameter creator
- * @export
- */
-export const WalletControllerApiFetchParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary createMasterWallet
-         * @param {CreateMasterWalletRequest} request request
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createMasterWalletUsingPOST(request: CreateMasterWalletRequest, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling createMasterWalletUsingPOST.');
-            }
-            const localVarPath = `/api/v1/wallets`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreateMasterWalletRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary createUserWallet
-         * @param {CreateUserWalletRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createUserWalletUsingPOST(request: CreateUserWalletRequest, walletId: string, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling createUserWalletUsingPOST.');
-            }
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling createUserWalletUsingPOST.');
-            }
-            const localVarPath = `/api/v1/wallets/{walletId}/user-wallets`
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreateUserWalletRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getMasterWalletAccountKey
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletAccountKeyUsingGET(walletId: string, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletAccountKeyUsingGET.');
-            }
-            const localVarPath = `/api/v1/wallets/{walletId}/account-key`
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(orgId || {}) : (orgId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getMasterWalletBalance
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletBalanceUsingGET(walletId: string, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletBalanceUsingGET.');
-            }
-            const localVarPath = `/api/v1/wallets/{walletId}/balance`
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(orgId || {}) : (orgId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getMasterWalletInitialKey
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletInitialKeyUsingGET(walletId: string, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletInitialKeyUsingGET.');
-            }
-            const localVarPath = `/api/v1/wallets/{walletId}/initial-key`
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(orgId || {}) : (orgId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getMasterWalletNonce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletNonceUsingGET(options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/wallets/{walletId}/nonce`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getMasterWallet
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletUsingGET(walletId: string, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletUsingGET.');
-            }
-            const localVarPath = `/api/v1/wallets/{walletId}`
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(orgId || {}) : (orgId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getMasterWallets
-         * @param {string} [orgId] orgId
-         * @param {any} [searchKeys] searchKeys
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletsUsingGET(orgId?: string, searchKeys?: any, options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/wallets`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"any" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(searchKeys || {}) : (searchKeys || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getUserWalletBalance
-         * @param {string} userWalletId userWalletId
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'userWalletId' is not null or undefined
-            if (userWalletId === null || userWalletId === undefined) {
-                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletBalanceUsingGET.');
-            }
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletBalanceUsingGET.');
-            }
-            const localVarPath = `/api/v1/wallets/{walletId}/user-wallets/{userWalletId}/balance`
-                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(orgId || {}) : (orgId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getUserWalletNonce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserWalletNonceUsingGET(options: any = {}): FetchArgs {
-            const localVarPath = `/api/v1/wallets/{walletId}/user-wallets/{userWalletId}/nonce`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getUserWallet
-         * @param {string} userWalletId userWalletId
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserWalletUsingGET(userWalletId: string, walletId: string, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'userWalletId' is not null or undefined
-            if (userWalletId === null || userWalletId === undefined) {
-                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletUsingGET.');
-            }
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletUsingGET.');
-            }
-            const localVarPath = `/api/v1/wallets/{walletId}/user-wallets/{userWalletId}`
-                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(orgId || {}) : (orgId || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary getUserWallets
-         * @param {string} walletId walletId
-         * @param {number} [offset] 
-         * @param {string} [orgId] orgId
-         * @param {number} [pageNumber] 
-         * @param {number} [pageSize] 
-         * @param {boolean} [paged] 
-         * @param {any} [searchKeys] searchKeys
-         * @param {boolean} [sortSorted] 
-         * @param {boolean} [sortUnsorted] 
-         * @param {boolean} [unpaged] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserWalletsUsingGET(walletId: string, offset?: number, orgId?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletsUsingGET.');
-            }
-            const localVarPath = `/api/v1/wallets/{walletId}/user-wallets`
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
-            }
-
-            if (pageNumber !== undefined) {
-                localVarQueryParameter['pageNumber'] = pageNumber;
-            }
-
-            if (pageSize !== undefined) {
-                localVarQueryParameter['pageSize'] = pageSize;
-            }
-
-            if (paged !== undefined) {
-                localVarQueryParameter['paged'] = paged;
-            }
-
-            if (sortSorted !== undefined) {
-                localVarQueryParameter['sort.sorted'] = sortSorted;
-            }
-
-            if (sortUnsorted !== undefined) {
-                localVarQueryParameter['sort.unsorted'] = sortUnsorted;
-            }
-
-            if (unpaged !== undefined) {
-                localVarQueryParameter['unpaged'] = unpaged;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"any" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(searchKeys || {}) : (searchKeys || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary patchAccountKey
-         * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
-         * @param {string} walletId walletId
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAccountKeyUsingPATCH(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'updateAccountKeyRequest' is not null or undefined
-            if (updateAccountKeyRequest === null || updateAccountKeyRequest === undefined) {
-                throw new RequiredError('updateAccountKeyRequest','Required parameter updateAccountKeyRequest was null or undefined when calling patchAccountKeyUsingPATCH.');
-            }
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchAccountKeyUsingPATCH.');
-            }
-            const localVarPath = `/api/v1/wallets/{walletId}/account-key`
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"UpdateAccountKeyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(updateAccountKeyRequest || {}) : (updateAccountKeyRequest || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary patchMasterWalletName
-         * @param {ChangeWalletNameRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchMasterWalletNameUsingPATCH(request: ChangeWalletNameRequest, walletId: string, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling patchMasterWalletNameUsingPATCH.');
-            }
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchMasterWalletNameUsingPATCH.');
-            }
-            const localVarPath = `/api/v1/wallets/{walletId}/name`
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"ChangeWalletNameRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary patchUserWalletName
-         * @param {ChangeWalletNameRequest} request request
-         * @param {string} userWalletId userWalletId
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchUserWalletNameUsingPATCH(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling patchUserWalletNameUsingPATCH.');
-            }
-            // verify required parameter 'userWalletId' is not null or undefined
-            if (userWalletId === null || userWalletId === undefined) {
-                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling patchUserWalletNameUsingPATCH.');
-            }
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchUserWalletNameUsingPATCH.');
-            }
-            const localVarPath = `/api/v1/wallets/{walletId}/user-wallets/{userWalletId}/name`
-                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"ChangeWalletNameRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary sendBatchTransaction
-         * @param {CreateBatchTransactionRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sendBatchTransactionUsingPOST(request: CreateBatchTransactionRequest, accountId?: string, needOTP?: boolean, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling sendBatchTransactionUsingPOST.');
-            }
-            const localVarPath = `/api/v1/wallets/batch-transactions`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreateBatchTransactionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary sendTransaction
-         * @param {CreateTransactionRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sendTransactionUsingPOST(request: CreateTransactionRequest, accountId?: string, needOTP?: boolean, orgId?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling sendTransactionUsingPOST.');
-            }
-            const localVarPath = `/api/v1/wallets/transactions`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreateTransactionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * WalletControllerApi - functional programming interface
- * @export
- */
-export const WalletControllerApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary createMasterWallet
-         * @param {CreateMasterWalletRequest} request request
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createMasterWalletUsingPOST(request: CreateMasterWalletRequest, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MasterWalletDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).createMasterWalletUsingPOST(request, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary createUserWallet
-         * @param {CreateUserWalletRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createUserWalletUsingPOST(request: CreateUserWalletRequest, walletId: string, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CreateUserResponse> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).createUserWalletUsingPOST(request, walletId, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getMasterWalletAccountKey
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletAccountKeyUsingGET(walletId: string, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getMasterWalletAccountKeyUsingGET(walletId, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getMasterWalletBalance
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletBalanceUsingGET(walletId: string, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getMasterWalletBalanceUsingGET(walletId, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getMasterWalletInitialKey
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletInitialKeyUsingGET(walletId: string, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getMasterWalletInitialKeyUsingGET(walletId, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getMasterWalletNonce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletNonceUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<NonceDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getMasterWalletNonceUsingGET(options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getMasterWallet
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletUsingGET(walletId: string, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MasterWalletDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getMasterWalletUsingGET(walletId, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getMasterWallets
-         * @param {string} [orgId] orgId
-         * @param {any} [searchKeys] searchKeys
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletsUsingGET(orgId?: string, searchKeys?: any, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<MasterWalletDTO>> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getMasterWalletsUsingGET(orgId, searchKeys, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getUserWalletBalance
-         * @param {string} userWalletId userWalletId
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getUserWalletBalanceUsingGET(userWalletId, walletId, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getUserWalletNonce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserWalletNonceUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<NonceDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getUserWalletNonceUsingGET(options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getUserWallet
-         * @param {string} userWalletId userWalletId
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserWalletUsingGET(userWalletId: string, walletId: string, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserWalletDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getUserWalletUsingGET(userWalletId, walletId, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary getUserWallets
-         * @param {string} walletId walletId
-         * @param {number} [offset] 
-         * @param {string} [orgId] orgId
-         * @param {number} [pageNumber] 
-         * @param {number} [pageSize] 
-         * @param {boolean} [paged] 
-         * @param {any} [searchKeys] searchKeys
-         * @param {boolean} [sortSorted] 
-         * @param {boolean} [sortUnsorted] 
-         * @param {boolean} [unpaged] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserWalletsUsingGET(walletId: string, offset?: number, orgId?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationUserWalletDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getUserWalletsUsingGET(walletId, offset, orgId, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary patchAccountKey
-         * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
-         * @param {string} walletId walletId
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAccountKeyUsingPATCH(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).patchAccountKeyUsingPATCH(updateAccountKeyRequest, walletId, accountId, needOTP, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary patchMasterWalletName
-         * @param {ChangeWalletNameRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchMasterWalletNameUsingPATCH(request: ChangeWalletNameRequest, walletId: string, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<MasterWalletDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).patchMasterWalletNameUsingPATCH(request, walletId, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary patchUserWalletName
-         * @param {ChangeWalletNameRequest} request request
-         * @param {string} userWalletId userWalletId
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchUserWalletNameUsingPATCH(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserWalletDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).patchUserWalletNameUsingPATCH(request, userWalletId, walletId, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary sendBatchTransaction
-         * @param {CreateBatchTransactionRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sendBatchTransactionUsingPOST(request: CreateBatchTransactionRequest, accountId?: string, needOTP?: boolean, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BatchTransactionDTO>> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).sendBatchTransactionUsingPOST(request, accountId, needOTP, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary sendTransaction
-         * @param {CreateTransactionRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sendTransactionUsingPOST(request: CreateTransactionRequest, accountId?: string, needOTP?: boolean, orgId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).sendTransactionUsingPOST(request, accountId, needOTP, orgId, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-    }
-};
-
-/**
- * WalletControllerApi - factory interface
- * @export
- */
-export const WalletControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
-    return {
-        /**
-         * 
-         * @summary createMasterWallet
-         * @param {CreateMasterWalletRequest} request request
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createMasterWalletUsingPOST(request: CreateMasterWalletRequest, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).createMasterWalletUsingPOST(request, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary createUserWallet
-         * @param {CreateUserWalletRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createUserWalletUsingPOST(request: CreateUserWalletRequest, walletId: string, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).createUserWalletUsingPOST(request, walletId, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getMasterWalletAccountKey
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletAccountKeyUsingGET(walletId: string, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).getMasterWalletAccountKeyUsingGET(walletId, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getMasterWalletBalance
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletBalanceUsingGET(walletId: string, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).getMasterWalletBalanceUsingGET(walletId, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getMasterWalletInitialKey
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletInitialKeyUsingGET(walletId: string, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).getMasterWalletInitialKeyUsingGET(walletId, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getMasterWalletNonce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletNonceUsingGET(options?: any) {
-            return WalletControllerApiFp(configuration).getMasterWalletNonceUsingGET(options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getMasterWallet
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletUsingGET(walletId: string, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).getMasterWalletUsingGET(walletId, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getMasterWallets
-         * @param {string} [orgId] orgId
-         * @param {any} [searchKeys] searchKeys
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMasterWalletsUsingGET(orgId?: string, searchKeys?: any, options?: any) {
-            return WalletControllerApiFp(configuration).getMasterWalletsUsingGET(orgId, searchKeys, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getUserWalletBalance
-         * @param {string} userWalletId userWalletId
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).getUserWalletBalanceUsingGET(userWalletId, walletId, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getUserWalletNonce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserWalletNonceUsingGET(options?: any) {
-            return WalletControllerApiFp(configuration).getUserWalletNonceUsingGET(options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getUserWallet
-         * @param {string} userWalletId userWalletId
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserWalletUsingGET(userWalletId: string, walletId: string, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).getUserWalletUsingGET(userWalletId, walletId, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary getUserWallets
-         * @param {string} walletId walletId
-         * @param {number} [offset] 
-         * @param {string} [orgId] orgId
-         * @param {number} [pageNumber] 
-         * @param {number} [pageSize] 
-         * @param {boolean} [paged] 
-         * @param {any} [searchKeys] searchKeys
-         * @param {boolean} [sortSorted] 
-         * @param {boolean} [sortUnsorted] 
-         * @param {boolean} [unpaged] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserWalletsUsingGET(walletId: string, offset?: number, orgId?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-            return WalletControllerApiFp(configuration).getUserWalletsUsingGET(walletId, offset, orgId, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary patchAccountKey
-         * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
-         * @param {string} walletId walletId
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAccountKeyUsingPATCH(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).patchAccountKeyUsingPATCH(updateAccountKeyRequest, walletId, accountId, needOTP, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary patchMasterWalletName
-         * @param {ChangeWalletNameRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchMasterWalletNameUsingPATCH(request: ChangeWalletNameRequest, walletId: string, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).patchMasterWalletNameUsingPATCH(request, walletId, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary patchUserWalletName
-         * @param {ChangeWalletNameRequest} request request
-         * @param {string} userWalletId userWalletId
-         * @param {string} walletId walletId
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchUserWalletNameUsingPATCH(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).patchUserWalletNameUsingPATCH(request, userWalletId, walletId, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary sendBatchTransaction
-         * @param {CreateBatchTransactionRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sendBatchTransactionUsingPOST(request: CreateBatchTransactionRequest, accountId?: string, needOTP?: boolean, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).sendBatchTransactionUsingPOST(request, accountId, needOTP, orgId, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary sendTransaction
-         * @param {CreateTransactionRequest} request request
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {string} [orgId] orgId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sendTransactionUsingPOST(request: CreateTransactionRequest, accountId?: string, needOTP?: boolean, orgId?: string, options?: any) {
-            return WalletControllerApiFp(configuration).sendTransactionUsingPOST(request, accountId, needOTP, orgId, options)(fetch, basePath);
-        },
-    };
-};
-
-/**
- * WalletControllerApi - object-oriented interface
- * @export
- * @class WalletControllerApi
- * @extends {BaseAPI}
- */
-export class WalletControllerApi extends BaseAPI {
-    /**
-     * 
-     * @summary createMasterWallet
-     * @param {CreateMasterWalletRequest} request request
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public createMasterWalletUsingPOST(request: CreateMasterWalletRequest, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).createMasterWalletUsingPOST(request, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary createUserWallet
-     * @param {CreateUserWalletRequest} request request
-     * @param {string} walletId walletId
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public createUserWalletUsingPOST(request: CreateUserWalletRequest, walletId: string, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).createUserWalletUsingPOST(request, walletId, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getMasterWalletAccountKey
-     * @param {string} walletId walletId
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public getMasterWalletAccountKeyUsingGET(walletId: string, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).getMasterWalletAccountKeyUsingGET(walletId, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getMasterWalletBalance
-     * @param {string} walletId walletId
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public getMasterWalletBalanceUsingGET(walletId: string, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).getMasterWalletBalanceUsingGET(walletId, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getMasterWalletInitialKey
-     * @param {string} walletId walletId
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public getMasterWalletInitialKeyUsingGET(walletId: string, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).getMasterWalletInitialKeyUsingGET(walletId, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getMasterWalletNonce
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public getMasterWalletNonceUsingGET(options?: any) {
-        return WalletControllerApiFp(this.configuration).getMasterWalletNonceUsingGET(options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getMasterWallet
-     * @param {string} walletId walletId
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public getMasterWalletUsingGET(walletId: string, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).getMasterWalletUsingGET(walletId, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getMasterWallets
-     * @param {string} [orgId] orgId
-     * @param {any} [searchKeys] searchKeys
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public getMasterWalletsUsingGET(orgId?: string, searchKeys?: any, options?: any) {
-        return WalletControllerApiFp(this.configuration).getMasterWalletsUsingGET(orgId, searchKeys, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getUserWalletBalance
-     * @param {string} userWalletId userWalletId
-     * @param {string} walletId walletId
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).getUserWalletBalanceUsingGET(userWalletId, walletId, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getUserWalletNonce
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public getUserWalletNonceUsingGET(options?: any) {
-        return WalletControllerApiFp(this.configuration).getUserWalletNonceUsingGET(options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getUserWallet
-     * @param {string} userWalletId userWalletId
-     * @param {string} walletId walletId
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public getUserWalletUsingGET(userWalletId: string, walletId: string, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).getUserWalletUsingGET(userWalletId, walletId, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary getUserWallets
-     * @param {string} walletId walletId
-     * @param {number} [offset] 
-     * @param {string} [orgId] orgId
-     * @param {number} [pageNumber] 
-     * @param {number} [pageSize] 
-     * @param {boolean} [paged] 
-     * @param {any} [searchKeys] searchKeys
-     * @param {boolean} [sortSorted] 
-     * @param {boolean} [sortUnsorted] 
-     * @param {boolean} [unpaged] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public getUserWalletsUsingGET(walletId: string, offset?: number, orgId?: string, pageNumber?: number, pageSize?: number, paged?: boolean, searchKeys?: any, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-        return WalletControllerApiFp(this.configuration).getUserWalletsUsingGET(walletId, offset, orgId, pageNumber, pageSize, paged, searchKeys, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary patchAccountKey
-     * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
-     * @param {string} walletId walletId
-     * @param {string} [accountId] accountId
-     * @param {boolean} [needOTP] needOTP
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public patchAccountKeyUsingPATCH(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).patchAccountKeyUsingPATCH(updateAccountKeyRequest, walletId, accountId, needOTP, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary patchMasterWalletName
-     * @param {ChangeWalletNameRequest} request request
-     * @param {string} walletId walletId
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public patchMasterWalletNameUsingPATCH(request: ChangeWalletNameRequest, walletId: string, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).patchMasterWalletNameUsingPATCH(request, walletId, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary patchUserWalletName
-     * @param {ChangeWalletNameRequest} request request
-     * @param {string} userWalletId userWalletId
-     * @param {string} walletId walletId
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public patchUserWalletNameUsingPATCH(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).patchUserWalletNameUsingPATCH(request, userWalletId, walletId, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary sendBatchTransaction
-     * @param {CreateBatchTransactionRequest} request request
-     * @param {string} [accountId] accountId
-     * @param {boolean} [needOTP] needOTP
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public sendBatchTransactionUsingPOST(request: CreateBatchTransactionRequest, accountId?: string, needOTP?: boolean, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).sendBatchTransactionUsingPOST(request, accountId, needOTP, orgId, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary sendTransaction
-     * @param {CreateTransactionRequest} request request
-     * @param {string} [accountId] accountId
-     * @param {boolean} [needOTP] needOTP
-     * @param {string} [orgId] orgId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public sendTransactionUsingPOST(request: CreateTransactionRequest, accountId?: string, needOTP?: boolean, orgId?: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).sendTransactionUsingPOST(request, accountId, needOTP, orgId, options)(this.fetch, this.basePath);
     }
 
 }

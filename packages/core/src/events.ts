@@ -1,6 +1,5 @@
 import * as BN from "bn.js";
 import { PaginationOptions, Timestamp } from "./types";
-import { ValueTransferEventDTO as BtcValueTransferEventDTO } from "./__generate__/btc";
 import { ValueTransferEventDTO as EthValueTransferEventDTO } from "./__generate__/eth";
 
 export interface Event<S> {
@@ -29,11 +28,6 @@ export interface ValueTransferEvent<S, T> extends Event<S> {
   to: string;
   transferType: T;
 }
-
-export type BtcValueTransferEvent = ValueTransferEvent<
-  null,
-  BtcValueTransferEventDTO.TransferTypeEnum
->;
 
 export type EthValueTransferEvent = ValueTransferEvent<
   EthValueTransferEventDTO.StatusEnum,
