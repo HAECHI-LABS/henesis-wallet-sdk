@@ -10,6 +10,7 @@ import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
 
 import AbstractController from "../controller";
 import { Controller } from "../../types";
+import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 
 interface Balance {
   coinType: string;
@@ -58,7 +59,7 @@ export default class WalletsController extends AbstractController
 
     this.router.post(
       `${this.path}/:masterWalletId/contract-call`,
-      this.promiseWrapper(this.sendMasterWalletContractCall)
+      this.promiseWrapper(this.sendMasterWalletContractCall, 201)
     );
 
     this.router.patch(
@@ -78,7 +79,7 @@ export default class WalletsController extends AbstractController
 
     this.router.post(
       `${this.path}/:masterWalletId/transfer`,
-      this.promiseWrapper(this.sendMasterWalletCoin)
+      this.promiseWrapper(this.sendMasterWalletCoin, 201)
     );
 
     this.router.post(
@@ -108,7 +109,7 @@ export default class WalletsController extends AbstractController
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/contract-call`,
-      this.promiseWrapper(this.sendUserWalletContractCall)
+      this.promiseWrapper(this.sendUserWalletContractCall, 201)
     );
 
     this.router.patch(
@@ -128,7 +129,7 @@ export default class WalletsController extends AbstractController
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/transfer`,
-      this.promiseWrapper(this.sendUserWalletCoin)
+      this.promiseWrapper(this.sendUserWalletCoin, 201)
     );
 
     this.router.post(
@@ -313,21 +314,23 @@ export default class WalletsController extends AbstractController
 
   private async getUserWallets(
     req: express.Request
-  ): Promise<EthUserWalletData[]> {
+  ): Promise<Pagination<EthUserWalletData>> {
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId
     );
 
-    const wallets = (
-      await masterWallet.getUserWallets({
-        page: +req.query.page,
-        size: +req.query.size,
-        sort: req.query.sort as string,
-        name: req.query.name as string,
-        address: req.query.address as string,
-      })
-    ).results;
-    return wallets.map((c) => c.getData());
+    const userWallets = await masterWallet.getUserWallets({
+      page: +req.query.page,
+      size: +req.query.size,
+      sort: req.query.sort as string,
+      name: req.query.name as string,
+      address: req.query.address as string,
+    });
+
+    return {
+      pagination: userWallets.pagination,
+      results: userWallets.results.map((c) => c.getData()),
+    };
   }
 
   private async createUserWallet(

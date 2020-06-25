@@ -79,6 +79,12 @@ export class Accounts {
     });
   }
 
+  public async refreshShortAccessToken(otpCode?: string): Promise<Token> {
+    return this.client.post<Token>(`${this.baseUrl}/token?type=short`, {
+      otpCode
+    });
+  }
+
   public async getAccessToken(): Promise<Token> {
     return this.client.get<Token>(`${this.baseUrl}/token`);
   }
