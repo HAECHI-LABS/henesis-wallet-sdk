@@ -3,7 +3,7 @@ import { PaginationOptions, Timestamp } from "./types";
 import { ValueTransferEventDTO as EthValueTransferEventDTO } from "./__generate__/eth";
 
 export interface Event<S> {
-  id: string;
+  id: number;
   createdAt: string;
   status: S;
   transactionHash?: string;
