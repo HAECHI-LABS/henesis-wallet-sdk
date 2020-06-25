@@ -37,6 +37,7 @@ export interface BtcEstimatedFee {
 
 export interface BtcBalance {
   balance: string;
+  spendableBalance: string;
 }
 
 export interface BtcRawTransaction {
@@ -226,6 +227,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       {
         symbol: "BTC",
         amount: BNConverter.hexStringToBN(response.balance),
+        spendableAmount: BNConverter.hexStringToBN(response.spendableBalance),
         coinType: "BTC",
         name: "비트코인",
       },
