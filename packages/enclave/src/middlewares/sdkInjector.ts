@@ -30,10 +30,13 @@ export default (
   if (process.env.NODE_ENV === 'local') {
     env = Env.Local;
   }
+
+  const url = process.env.URL;
   req.sdk = new SDK({
     accessToken,
     secret,
     env,
+    url,
   });
   next();
 };
