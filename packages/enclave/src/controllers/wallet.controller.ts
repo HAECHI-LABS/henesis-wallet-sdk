@@ -58,17 +58,17 @@ export default class WalletController extends AbstractController
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets`,
-      this.promiseWrapper(this.createUserWallet),
+      this.promiseWrapper(this.createUserWallet, 201),
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/contract-call`,
-      this.promiseWrapper(this.sendMasterWalletContractCall),
+      this.promiseWrapper(this.sendMasterWalletContractCall, 201),
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/contract-call`,
-      this.promiseWrapper(this.sendUserWalletContractCall),
+      this.promiseWrapper(this.sendUserWalletContractCall, 201),
     );
 
     this.router.get(
@@ -98,17 +98,22 @@ export default class WalletController extends AbstractController
 
     this.router.post(
       `${this.path}/:masterWalletId/transfer`,
-      this.promiseWrapper(this.sendMasterWalletCoin),
+      this.promiseWrapper(this.sendMasterWalletCoin, 201),
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/contract-call`,
-      this.promiseWrapper(this.sendMasterWalletContractCall),
+      this.promiseWrapper(this.sendMasterWalletContractCall, 201),
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/transactions`,
       this.promiseWrapper(this.replaceMasterWalletTransaction, 201),
+    );
+
+    this.router.post(
+      `${this.path}/:masterWalletId/flush`,
+      this.promiseWrapper(this.flush, 201),
     );
 
     this.router.get(
@@ -118,7 +123,7 @@ export default class WalletController extends AbstractController
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets`,
-      this.promiseWrapper(this.createUserWallet),
+      this.promiseWrapper(this.createUserWallet, 201),
     );
 
     this.router.get(
@@ -128,7 +133,7 @@ export default class WalletController extends AbstractController
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/transactions`,
-      this.promiseWrapper(this.replaceUserWalletTransaction),
+      this.promiseWrapper(this.replaceUserWalletTransaction, 201),
     );
 
     this.router.get(
@@ -148,12 +153,12 @@ export default class WalletController extends AbstractController
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/contract-call`,
-      this.promiseWrapper(this.sendUserWalletContractCall),
+      this.promiseWrapper(this.sendUserWalletContractCall, 201),
     );
 
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/transfer`,
-      this.promiseWrapper(this.sendUserWalletCoin),
+      this.promiseWrapper(this.sendUserWalletCoin, 201),
     );
 
     this.router.post(
@@ -318,6 +323,25 @@ export default class WalletController extends AbstractController
     );
 
     return await userWallet.replaceTransaction(req.body.transactionId);
+  }
+
+  private async flush(req: express.Request): Promise<Transaction> {
+    const masterWallet = await req.sdk.wallets.getMasterWallet(
+      req.params.masterWalletId,
+    );
+
+    return await masterWallet.flush(
+      req.body.coinType,
+      req.body.userWalletIds,
+      req.body.passphrase,
+      req.body.otpCode,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+      req.body.gasLimit
+        ? BNConverter.hexStringToBN(req.body.gasLimit)
+        : undefined,
+    );
   }
 
   private async sendMasterWalletContractCall(
