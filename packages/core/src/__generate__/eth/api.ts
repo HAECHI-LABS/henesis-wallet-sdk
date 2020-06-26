@@ -684,7 +684,7 @@ export namespace MasterWalletDTO {
      */
     export enum StatusEnum {
         ACTIVE = <any> 'ACTIVE',
-        INACTIVE = <any> 'INACTIVE'
+        CREATING = <any> 'CREATING'
     }
 }
 
@@ -1285,7 +1285,7 @@ export namespace UserWalletDTO {
      */
     export enum StatusEnum {
         ACTIVE = <any> 'ACTIVE',
-        INACTIVE = <any> 'INACTIVE'
+        CREATING = <any> 'CREATING'
     }
 }
 
