@@ -18,7 +18,7 @@ import wallet from './contracts/MasterWallet.json';
 import { BNConverter, ObjectConverter, toChecksum } from './utils';
 import { MultiSigPayload, SignedMultiSigPayload } from './transactions';
 import BatchRequest from './batch';
-import { Coin, Eth, Klay, Erc20 } from './coin';
+import { Coin } from './coin';
 import { Coins } from './coins';
 
 const Bytes = require('./vendor/eth-lib/bytes');
@@ -29,7 +29,7 @@ export interface Nonce {
 }
 
 export enum WalletStatus {
-  Inactive = 'INACTIVE',
+  Creating = 'CREATING',
   Active = 'ACTIVE',
 }
 
