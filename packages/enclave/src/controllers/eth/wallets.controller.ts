@@ -92,6 +92,11 @@ export default class WalletsController extends AbstractController
       this.promiseWrapper(this.sendMasterWalletBatchTransactions, 201)
     );
 
+    this.router.post(
+      `${this.path}/:masterWalletId/flush`,
+      this.promiseWrapper(this.flush, 201)
+    );
+
     this.router.get(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId`,
       this.promiseWrapper(this.getUserWallet)
@@ -298,6 +303,25 @@ export default class WalletsController extends AbstractController
     }
 
     return batch.execute();
+  }
+
+  private async flush(req: express.Request): Promise<EthTransaction> {
+    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
+      req.params.masterWalletId
+    );
+
+    return await masterWallet.flush(
+      req.body.coinType,
+      req.body.userWalletIds,
+      req.body.passphrase,
+      req.body.otpCode,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+      req.body.gasLimit
+        ? BNConverter.hexStringToBN(req.body.gasLimit)
+        : undefined
+    );
   }
 
   private async getUserWallet(
