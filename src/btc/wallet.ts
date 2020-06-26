@@ -134,7 +134,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       tx.addInput(
         new Buffer(
           new Buffer(
-            input.transactionOutput.transactionId.slice(2),
+            input.transactionOutput.transactionId,
             "hex"
           ).reverse()
         ),
