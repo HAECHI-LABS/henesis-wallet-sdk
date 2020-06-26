@@ -15,8 +15,9 @@ export interface WalletData {
 }
 
 export enum WalletStatus {
-  Inactive = "INACTIVE",
+  Creating = "CREATING",
   Active = "ACTIVE",
+  Inactive = "INACTIVE",
 }
 
 export abstract class Wallet<T> {
