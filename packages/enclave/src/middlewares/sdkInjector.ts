@@ -31,10 +31,12 @@ export default (
     env = Env.Local;
   }
 
+  const url = process.env.URL;
   req.sdk = new SDK({
     accessToken,
     secret,
     env,
+    url,
   });
   next();
 };
