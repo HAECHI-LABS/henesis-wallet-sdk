@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.8...v2.0.0-alpha.9) (2020-06-27)
+
+
+### Features
+
+* add fee amount and amount to transaction dto ([ea50ecb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ea50ecb10b15ddce8c5c9eb78c286dfe971c0b76))
+* add flush endpoint ([d8f9a7a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d8f9a7a0368c29a7d10e7c03ed3973cfac7e4dd3))
+* change wallet status ([9fb4080](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9fb4080595abd3632fa8a934345c01cfb3dde970))
+* implements flush ([8fef111](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8fef1114cb7a194f581920b8ac9df4ee2702572d))
+
+
+
+
+
 # [2.0.0-alpha.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.7...v2.0.0-alpha.8) (2020-06-25)
 
 

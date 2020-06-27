@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.8...v2.0.0-alpha.9) (2020-06-27)
+
+
+### Features
+
+* add flush endpoint ([d8f9a7a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d8f9a7a0368c29a7d10e7c03ed3973cfac7e4dd3))
+
+
+
+
+
 # [2.0.0-alpha.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.7...v2.0.0-alpha.8) (2020-06-25)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
