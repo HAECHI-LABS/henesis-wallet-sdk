@@ -45,7 +45,7 @@ describe.skip('BtcMasterWallet', () => {
       const wallet = await wallets.getWallet(
         '61898f8d5b4c69bbd7f7b9216e5d5bff',
       );
-      const response = await wallet.getEstimatedFee(new BN(10000));
+      const response = await wallet.getEstimatedFee();
       console.log(parseInt(response.estimatedFee, 16));
     });
   });
