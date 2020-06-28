@@ -7,6 +7,7 @@ import { makeQueryString } from "../utils/url";
 export interface TransferPaginationOptions extends PaginationOptions {
   walletId?: string;
   type?: TransferType;
+  status?: TransferStatus;
   address?: string;
   transactionHash?: string;
   start?: Timestamp;
