@@ -203,11 +203,9 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     );
   }
 
-  public async getEstimatedFee(amount: BN): Promise<BtcEstimatedFee> {
+  public async getEstimatedFee(): Promise<BtcEstimatedFee> {
     return await this.client.get<BtcEstimatedFee>(
-      `${this.baseUrl}/${
-        this.data.id
-      }/estimated-fee?amount=${BNConverter.bnToHexString(amount)}`
+      `${this.baseUrl}/${this.data.id}/estimated-fee`
     );
   }
 
