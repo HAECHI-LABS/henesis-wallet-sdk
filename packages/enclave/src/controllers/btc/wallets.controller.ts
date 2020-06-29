@@ -1,6 +1,6 @@
 import AbstractController from "../controller";
 import { Controller } from "../../types";
-import express, { request } from "express";
+import express from "express";
 import {
   BtcMasterWalletData,
   BtcTransaction,
@@ -100,27 +100,7 @@ export default class WalletsController extends AbstractController
       req.body.otpCode
     );
 
-    return {
-      id: t.id,
-      transactionHash: t.transactionHash,
-      amount: BNConverter.bnToHexString(t.amount),
-      blockNumber: t.blockNumber
-        ? BNConverter.bnToHexString(t.blockNumber)
-        : null,
-      feeAmount: t.feeAmount ? BNConverter.bnToHexString(t.feeAmount) : null,
-      createdAt: t.createdAt,
-      hex: t.hex,
-      outputs: t.outputs.map((o) => {
-        return {
-          transactionId: o.transactionId,
-          outputIndex: o.outputIndex,
-          address: o.address,
-          scriptPubKey: o.scriptPubKey,
-          amount: BNConverter.bnToHexString(o.amount),
-          isChange: o.isChange,
-        };
-      }),
-    };
+    return this.bnToHexString(t);
   }
 
   private async getMasterWalletBalance(
@@ -131,12 +111,7 @@ export default class WalletsController extends AbstractController
     );
 
     const balances = await masterWallet.getBalance();
-    return balances.map((x) => ({
-      coinType: x.coinType,
-      amount: BNConverter.bnToHexString(x.amount),
-      name: x.name,
-      symbol: x.symbol,
-    }));
+    return this.bnToHexString(balances);
   }
 
   private async getDepositAddresses(

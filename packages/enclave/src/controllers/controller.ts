@@ -2,6 +2,8 @@ import express from "express";
 import { MiddleWare } from "../types";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 import url, { UrlWithStringQuery } from "url";
+import {BNConverter} from "@haechi-labs/henesis-wallet-core";
+import BN from "bn.js";
 
 export default abstract class AbstractController {
   protected router = express.Router();
@@ -81,6 +83,37 @@ ${err.message}`);
       },
       results: paginationObject.results,
     };
+  }
+
+  protected bnToHexString<T>(convertObj: T): any {
+    if (Array.isArray(convertObj)) {
+      return convertObj.map((i) => this.bnToHexString(i));
+    }
+
+    if (typeof convertObj === "object") {
+      if (!convertObj) {
+        return null;
+      }
+      const n = {};
+
+      Object.keys(convertObj).forEach((k) => {
+        if (!convertObj[k]) {
+          n[k] = convertObj[k];
+          return;
+        }
+        if (convertObj[k].constructor['name'] === "BN") {
+          n[k] = BNConverter.bnToHexString(convertObj[k]);
+          return;
+        }
+        if (typeof convertObj[k] === "object") {
+          n[k] = this.bnToHexString(convertObj[k]);
+          return;
+        }
+        n[k] = convertObj[k];
+      });
+      return n;
+    }
+    return convertObj;
   }
 
   private parseErrorMessage(message: string): any {
