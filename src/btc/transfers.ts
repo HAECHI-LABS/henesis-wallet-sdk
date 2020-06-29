@@ -1,8 +1,8 @@
-import * as BN from "bn.js";
 import { Pagination, PaginationOptions, Timestamp } from "../types";
 import { Client } from "../httpClient";
 import { BNConverter } from "../utils/common";
 import { makeQueryString } from "../utils/url";
+import { BtcTransaction, BtcTransactionOutput } from "./wallet";
 
 export interface TransferPaginationOptions extends PaginationOptions {
   walletId?: string;
@@ -26,14 +26,12 @@ export enum TransferStatus {
 }
 
 export interface Transfer {
+  id: string;
   walletId: string;
-  transactionId: string;
-  transactionHash: string;
-  blockNumber: BN;
+  outputIndex: number;
+  transaction: BtcTransaction;
   receivedAt: string;
   sendTo: string;
-  amount: BN;
-  feeAmount: BN;
   type: TransferType;
   status: TransferStatus;
   createdAt: string;
@@ -50,7 +48,7 @@ export class BtcTransfers {
     options?: TransferPaginationOptions
   ): Promise<Pagination<Transfer>> {
     const queryString: string = makeQueryString(options);
-    const data: Pagination<Transfer> = await this.client.get(
+    const data: Pagination<any> = await this.client.get(
       `/transfers${queryString ? `?${queryString}` : ""}`
     );
 
@@ -58,18 +56,34 @@ export class BtcTransfers {
       pagination: data.pagination,
       results: data.results.map((t) => {
         return {
+          id: t.id,
           walletId: t.walletId,
-          transactionId: t.transactionId,
-          transactionHash: t.transactionHash,
-          blockNumber: t.blockNumber
-            ? BNConverter.hexStringToBN(String(t.blockNumber))
-            : null,
+          outputIndex: t.outputIndex,
+          transaction: {
+            id: t.transaction.id,
+            amount: BNConverter.hexStringToBN(t.transaction.amount),
+            blockNumber: t.transaction.blockNumber
+              ? BNConverter.hexStringToBN(t.transaction.blockNumber)
+              : null,
+            feeAmount: t.transaction.feeAmount
+              ? BNConverter.hexStringToBN(t.transaction.feeAmount)
+              : null,
+            createdAt: t.transaction.createdAt,
+            hex: t.transaction.hex,
+            outputs: t.transaction.outputs.map((o) => {
+              return {
+                transactionId: o.transactionId,
+                outputIndex: o.outputIndex,
+                address: o.address,
+                scriptPubKey: o.scriptPubKey,
+                amount: BNConverter.hexStringToBN(o.amount),
+                isChange: o.isChange,
+              } as BtcTransactionOutput;
+            }),
+            inputs: [],
+          } as BtcTransaction,
           receivedAt: t.receivedAt,
           sendTo: t.sendTo,
-          amount: BNConverter.hexStringToBN(String(t.amount)),
-          feeAmount: t.feeAmount
-            ? BNConverter.hexStringToBN(String(t.feeAmount))
-            : null,
           type: t.type,
           status: t.status,
           createdAt: t.createdAt,

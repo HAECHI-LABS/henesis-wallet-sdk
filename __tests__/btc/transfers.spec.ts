@@ -5,7 +5,6 @@ describe.skip('BtcTransfer', () => {
   jest.setTimeout(50000);
   describe('#getTransfers()', () => {
     it('should get transfers', async () => {
-
       const transfers = new BtcTransfers(
         new HttpClient({
           accessToken: 'accessToken',
@@ -18,14 +17,7 @@ describe.skip('BtcTransfer', () => {
         walletId: '61898f8d5b4c69bbd7f7b9216e5d5bff'
       });
 
-      console.log(transferPagination.pagination);
-      console.log(transferPagination.results.map(result=> {
-        return {
-          ...result,
-          amount: result.amount.toNumber(),
-          feeAmount: result.feeAmount ? result.feeAmount.toNumber() : null,
-        }
-      }));
+      console.log(transferPagination);
     });
   });
 });
