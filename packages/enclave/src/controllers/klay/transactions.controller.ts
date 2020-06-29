@@ -29,7 +29,10 @@ export default class TransactionsController extends AbstractController
   private async getAllTransactions(
     req: express.Request
   ): Promise<Pagination<Transaction>> {
-    return await req.sdk.klay.transactions.getTransactions(req.query);
+    return this.pagination<Transaction>(
+      req,
+      await req.sdk.klay.transactions.getTransactions(req.query)
+    );
   }
 
   private async getTransaction(req: express.Request): Promise<Transaction> {

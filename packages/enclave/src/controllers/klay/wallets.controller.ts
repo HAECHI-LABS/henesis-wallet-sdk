@@ -351,10 +351,10 @@ export default class WalletsController extends AbstractController
       address: req.query.address as string,
     });
 
-    return {
+    return this.pagination<EthUserWalletData>(req, {
       pagination: userWallets.pagination,
       results: userWallets.results.map((c) => c.getData()),
-    };
+    });
   }
 
   private async createUserWallet(

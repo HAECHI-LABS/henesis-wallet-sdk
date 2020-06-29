@@ -6,11 +6,11 @@ import {
   EthUserWallet,
   EthUserWalletData,
 } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
+import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
 
 import AbstractController from "../controller";
 import { Controller } from "../../types";
-import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 
 interface Balance {
   coinType: string;
@@ -351,10 +351,10 @@ export default class WalletsController extends AbstractController
       address: req.query.address as string,
     });
 
-    return {
+    return this.pagination<EthUserWalletData>(req, {
       pagination: userWallets.pagination,
       results: userWallets.results.map((c) => c.getData()),
-    };
+    });
   }
 
   private async createUserWallet(

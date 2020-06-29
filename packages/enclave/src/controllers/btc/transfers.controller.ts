@@ -34,7 +34,7 @@ export default class TransfersController extends AbstractController
       end: +req.query.end
     });
 
-    return {
+    return this.pagination<any>(req, {
       pagination: data.pagination,
       results: data.results.map((t) => {
         return {
@@ -71,6 +71,6 @@ export default class TransfersController extends AbstractController
           createdAt: t.createdAt
         };
       })
-    };
+    });
   }
 }

@@ -31,12 +31,18 @@ export default class EventsController extends AbstractController
   private async getCallEvents(
     req: express.Request
   ): Promise<Pagination<EthCallEvent>> {
-    return await req.sdk.klay.events.getCallEvents(req.query);
+    return this.pagination<EthCallEvent>(
+      req,
+      await req.sdk.klay.events.getCallEvents(req.query)
+    );
   }
 
   private async getValueTransferEvents(
     req: express.Request
   ): Promise<Pagination<EthValueTransferEvent>> {
-    return await req.sdk.klay.events.getValueTransferEvents(req.query);
+    return this.pagination<EthValueTransferEvent>(
+      req,
+      await req.sdk.klay.events.getValueTransferEvents(req.query)
+    );
   }
 }
