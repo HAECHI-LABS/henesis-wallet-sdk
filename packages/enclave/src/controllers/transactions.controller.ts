@@ -29,9 +29,12 @@ export default class TransactionController extends AbstractController
   private async getAllTransactions(
     req: express.Request,
   ): Promise<Pagination<Transaction>> {
-    return await req.sdk.transactions.getTransactions(
-      req.query.blockchain as BlockchainType,
-      req.query,
+    return this.pagination<Transaction>(
+      req,
+      await req.sdk.transactions.getTransactions(
+        req.query.blockchain as BlockchainType,
+        req.query,
+      ),
     );
   }
 
