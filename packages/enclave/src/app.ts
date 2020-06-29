@@ -3,6 +3,7 @@ import { Controller, MiddleWare } from './types';
 
 export interface AppOption {
   port?: number;
+  hostname?: string;
   controllers?: Controller[];
   middleWares?: MiddleWare[];
 }
@@ -12,11 +13,15 @@ export class App {
 
   public port: number;
 
+  public hostname: string;
+
   constructor(params: AppOption) {
     this.application = express();
     this.application.use(express.json());
     this.application.use(express.urlencoded({ extended: false }));
+    this.application.enable('trust proxy');
     this.port = params.port ? params.port : 3000;
+    this.hostname = params.hostname ? params.hostname : '0.0.0.0';
     if (params.middleWares) {
       this.applyMiddleWares(params.middleWares);
     }
@@ -38,7 +43,7 @@ export class App {
   }
 
   public listen() {
-    this.application.listen(this.port, () => {
+    this.application.listen(this.port, this.hostname, () => {
       console.log(`App listening on the http://localhost:${this.port}`);
     });
   }
