@@ -61,6 +61,7 @@ export class BtcTransfers {
           outputIndex: t.outputIndex,
           transaction: {
             id: t.transaction.id,
+            transactionHash: t.transaction.transactionHash,
             amount: BNConverter.hexStringToBN(t.transaction.amount),
             blockNumber: t.transaction.blockNumber
               ? BNConverter.hexStringToBN(t.transaction.blockNumber)
@@ -80,7 +81,6 @@ export class BtcTransfers {
                 isChange: o.isChange,
               } as BtcTransactionOutput;
             }),
-            inputs: [],
           } as BtcTransaction,
           receivedAt: t.receivedAt,
           sendTo: t.sendTo,
