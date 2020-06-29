@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.9...v2.0.0-alpha.10) (2020-06-29)
+
+
+### Bug Fixes
+
+* update estimated fee api ([41c9036](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/41c9036de1e5d6643e01cec6a12a26b54e12ef99))
+
+
+### Features
+
+* add status to transfer pagination options ([9aebb55](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9aebb55db31427401de362211670b267b08de912))
+* change tranfer ([8a6ca45](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8a6ca4580f17a56ee91b288429ff854159de2b26))
+
+
+
+
+
 # [2.0.0-alpha.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.8...v2.0.0-alpha.9) (2020-06-27)
 
 
