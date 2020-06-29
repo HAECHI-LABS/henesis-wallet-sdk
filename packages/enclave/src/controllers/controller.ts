@@ -53,14 +53,20 @@ ${err.message}`);
   ): Pagination<T | any> {
     return {
       pagination: {
-        nextUrl: this.parsePaginationUrl(
-          req,
-          url.parse(paginationObject.pagination.nextUrl),
-        ),
-        previousUrl: this.parsePaginationUrl(
-          req,
-          url.parse(paginationObject.pagination.previousUrl),
-        ),
+        nextUrl:
+          paginationObject.pagination.nextUrl !== null
+            ? this.parsePaginationUrl(
+                req,
+                url.parse(paginationObject.pagination.nextUrl),
+              )
+            : null,
+        previousUrl:
+          paginationObject.pagination.previousUrl !== null
+            ? this.parsePaginationUrl(
+                req,
+                url.parse(paginationObject.pagination.previousUrl),
+              )
+            : null,
         totalCount: paginationObject.pagination.totalCount,
       },
       results: paginationObject.results,
