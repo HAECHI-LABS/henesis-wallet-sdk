@@ -63,14 +63,20 @@ ${err.message}`);
   ): Pagination<T | any> {
     return {
       pagination: {
-        nextUrl: this.parsePaginationUrl(
-          req,
-          url.parse(paginationObject.pagination.nextUrl)
-        ),
-        previousUrl: this.parsePaginationUrl(
-          req,
-          url.parse(paginationObject.pagination.previousUrl)
-        ),
+        nextUrl:
+          paginationObject.pagination.nextUrl !== null
+            ? this.parsePaginationUrl(
+                req,
+                url.parse(paginationObject.pagination.nextUrl)
+              )
+            : null,
+        previousUrl:
+          paginationObject.pagination.previousUrl !== null
+            ? this.parsePaginationUrl(
+                req,
+                url.parse(paginationObject.pagination.previousUrl)
+              )
+            : null,
         totalCount: paginationObject.pagination.totalCount,
       },
       results: paginationObject.results,
@@ -87,16 +93,16 @@ ${err.message}`);
 
   private parsePaginationUrl(
     req: express.Request,
-    url: UrlWithStringQuery | null,
+    url: UrlWithStringQuery | null
   ): string | null {
     if (!url) {
       return null;
     }
     const host: { name: string; port: string } = {
-      name: req.get('host').split(':')[0],
-      port: req.get('host').split(':')[1] ?? null,
+      name: req.get("host").split(":")[0],
+      port: req.get("host").split(":")[1] ?? null,
     };
-    return `${req.protocol}://${host.name}${!host.port ? '' : `:${host.port}`}${
+    return `${req.protocol}://${host.name}${!host.port ? "" : `:${host.port}`}${
       url.path
     }`;
   }
