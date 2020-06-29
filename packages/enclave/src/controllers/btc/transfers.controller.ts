@@ -1,7 +1,7 @@
 import AbstractController from "../controller";
 import { Controller } from "../../types";
 import express, { request } from "express";
-import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
+import { Pagination, Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { Transfer, TransferStatus } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
 import { TransactionStatus } from "@haechi-labs/henesis-wallet-core";
 
@@ -28,7 +28,9 @@ export default class TransfersController extends AbstractController
       walletId: req.query.walletId as string,
       transactionHash: req.query.transactionHash as string,
       address: req.query.address as string,
-      status: req.query.status as TransferStatus
+      status: req.query.status as TransferStatus,
+      start: +req.query.start,
+      end: +req.query.end
     });
   }
 }
