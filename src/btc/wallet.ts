@@ -89,13 +89,6 @@ export interface CreateMasterWalletResponse {
   createdAt: Timestamp;
 }
 
-export interface BtcTransaction {
-  id: string;
-  hex: string;
-  inputs: BtcTransactionOutput[];
-  outputs: BtcTransactionOutput[];
-}
-
 export type DepositAddress = DepositAddressDTO;
 
 export interface DepositAddressPaginationOptions extends PaginationOptions {
