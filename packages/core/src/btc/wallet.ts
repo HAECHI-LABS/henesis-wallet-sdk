@@ -26,6 +26,7 @@ import { makeQueryString } from "../utils/url";
 export interface BtcTransaction {
   id: string;
   hex: string;
+  transactionHash: string;
   blockNumber: BN;
   feeAmount?: BN;
   amount: BN;

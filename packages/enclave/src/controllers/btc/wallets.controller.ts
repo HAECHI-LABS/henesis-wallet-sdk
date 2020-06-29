@@ -4,7 +4,7 @@ import express, { request } from "express";
 import {
   BtcMasterWalletData,
   BtcTransaction,
-  DepositAddress,
+  DepositAddress
 } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
@@ -83,23 +83,46 @@ export default class WalletsController extends AbstractController
   }
 
   private async verifyAddress(req: express.Request): Promise<Boolean> {
-    console.log(req.body.address);
     return {
-      value: req.sdk.btc.wallets.verifyAddress(req.body.address),
+      value: req.sdk.btc.wallets.verifyAddress(req.body.address)
     };
   }
 
-  private async transfer(req: express.Request): Promise<BtcTransaction> {
+  private async transfer(req: express.Request): Promise<any> {
     const masterWallet = await req.sdk.btc.wallets.getWallet(
       req.params.masterWalletId
     );
 
-    return await masterWallet.transfer(
+    const t: BtcTransaction = await masterWallet.transfer(
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
       req.body.otpCode
     );
+
+    return {
+      id: t.id,
+      transactionHash: t.transactionHash,
+      amount: BNConverter.bnToHexString(t.amount),
+      blockNumber: t.blockNumber
+        ? BNConverter.bnToHexString(t.blockNumber)
+        : null,
+      feeAmount: t.feeAmount
+        ? BNConverter.bnToHexString(t.feeAmount)
+        : null,
+      createdAt: t.createdAt,
+      hex: t.hex,
+      outputs: t.outputs.map((o) => {
+        return {
+          transactionId: o.transactionId,
+          outputIndex: o.outputIndex,
+          address: o.address,
+          scriptPubKey: o.scriptPubKey,
+          amount: BNConverter.bnToHexString(o.amount),
+          isChange: o.isChange
+        };
+      }),
+    };
   }
 
   private async getMasterWalletBalance(
@@ -114,7 +137,7 @@ export default class WalletsController extends AbstractController
       coinType: x.coinType,
       amount: BNConverter.bnToHexString(x.amount),
       name: x.name,
-      symbol: x.symbol,
+      symbol: x.symbol
     }));
   }
 
@@ -124,7 +147,7 @@ export default class WalletsController extends AbstractController
     const masterWallet = await req.sdk.btc.wallets.getWallet(
       req.params.masterWalletId
     );
-
+    
     return this.pagination<DepositAddress>(
       req,
       await masterWallet.getDepositAddresses({
