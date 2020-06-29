@@ -331,7 +331,7 @@ export default class WalletController extends AbstractController
     );
 
     return await masterWallet.flush(
-      req.body.coinType,
+      req.body.ticker,
       req.body.userWalletIds,
       req.body.passphrase,
       req.body.otpCode,

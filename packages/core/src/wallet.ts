@@ -611,7 +611,7 @@ export class MasterWallet extends EthLikeWallet {
   }
 
   async flush(
-    coinType: string,
+    ticker: string,
     userWalletIds: string[],
     passphrase: string,
     otpCode?: string,
@@ -621,7 +621,7 @@ export class MasterWallet extends EthLikeWallet {
     if (userWalletIds.length > 50) {
       throw new Error(`only 50 accounts can be flushed at a time`);
     }
-    const coin: Coin = await this.coins.getCoin(coinType, this.getChain());
+    const coin: Coin = await this.coins.getCoin(ticker, this.getChain());
     const userWallets: Pagination<UserWallet> = await this.getUserWallets({
       ids: userWalletIds,
       size: userWalletIds.length,
