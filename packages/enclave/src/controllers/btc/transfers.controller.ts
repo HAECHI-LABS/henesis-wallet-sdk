@@ -1,10 +1,22 @@
 import AbstractController from "../controller";
 import { Controller } from "../../types";
 import express, { request } from "express";
-import { Pagination, Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
-import { Transfer, TransferStatus } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
-import { BNConverter, TransactionStatus } from "@haechi-labs/henesis-wallet-core";
-import { BtcTransaction, BtcTransactionOutput } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
+import {
+  Pagination,
+  Timestamp,
+} from "@haechi-labs/henesis-wallet-core/lib/types";
+import {
+  Transfer,
+  TransferStatus,
+} from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
+import {
+  BNConverter,
+  TransactionStatus,
+} from "@haechi-labs/henesis-wallet-core";
+import {
+  BtcTransaction,
+  BtcTransactionOutput,
+} from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 
 export default class TransfersController extends AbstractController
   implements Controller {
@@ -19,9 +31,7 @@ export default class TransfersController extends AbstractController
     this.router.get(`${this.path}`, this.promiseWrapper(this.getTransfers));
   }
 
-  private async getTransfers(
-    req: express.Request
-  ): Promise<any> {
+  private async getTransfers(req: express.Request): Promise<any> {
     const data = await req.sdk.btc.transfers.getTransfers({
       page: +req.query.page,
       size: +req.query.size,
@@ -31,7 +41,7 @@ export default class TransfersController extends AbstractController
       address: req.query.address as string,
       status: req.query.status as TransferStatus,
       start: +req.query.start,
-      end: +req.query.end
+      end: +req.query.end,
     });
 
     return this.pagination<any>(req, {
@@ -59,18 +69,18 @@ export default class TransfersController extends AbstractController
                 address: o.address,
                 scriptPubKey: o.scriptPubKey,
                 amount: BNConverter.bnToHexString(o.amount),
-                isChange: o.isChange
+                isChange: o.isChange,
               };
             }),
-            inputs: []
+            inputs: [],
           },
           receivedAt: t.receivedAt,
           sendTo: t.sendTo,
           type: t.type,
           status: t.status,
-          createdAt: t.createdAt
+          createdAt: t.createdAt,
         };
-      })
+      }),
     });
   }
 }

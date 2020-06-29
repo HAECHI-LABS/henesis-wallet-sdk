@@ -4,7 +4,7 @@ import express, { request } from "express";
 import {
   BtcMasterWalletData,
   BtcTransaction,
-  DepositAddress
+  DepositAddress,
 } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
@@ -84,7 +84,7 @@ export default class WalletsController extends AbstractController
 
   private async verifyAddress(req: express.Request): Promise<Boolean> {
     return {
-      value: req.sdk.btc.wallets.verifyAddress(req.body.address)
+      value: req.sdk.btc.wallets.verifyAddress(req.body.address),
     };
   }
 
@@ -107,9 +107,7 @@ export default class WalletsController extends AbstractController
       blockNumber: t.blockNumber
         ? BNConverter.bnToHexString(t.blockNumber)
         : null,
-      feeAmount: t.feeAmount
-        ? BNConverter.bnToHexString(t.feeAmount)
-        : null,
+      feeAmount: t.feeAmount ? BNConverter.bnToHexString(t.feeAmount) : null,
       createdAt: t.createdAt,
       hex: t.hex,
       outputs: t.outputs.map((o) => {
@@ -119,7 +117,7 @@ export default class WalletsController extends AbstractController
           address: o.address,
           scriptPubKey: o.scriptPubKey,
           amount: BNConverter.bnToHexString(o.amount),
-          isChange: o.isChange
+          isChange: o.isChange,
         };
       }),
     };
@@ -137,7 +135,7 @@ export default class WalletsController extends AbstractController
       coinType: x.coinType,
       amount: BNConverter.bnToHexString(x.amount),
       name: x.name,
-      symbol: x.symbol
+      symbol: x.symbol,
     }));
   }
 
@@ -147,7 +145,7 @@ export default class WalletsController extends AbstractController
     const masterWallet = await req.sdk.btc.wallets.getWallet(
       req.params.masterWalletId
     );
-    
+
     return this.pagination<DepositAddress>(
       req,
       await masterWallet.getDepositAddresses({
