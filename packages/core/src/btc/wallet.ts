@@ -26,10 +26,10 @@ import { makeQueryString } from "../utils/url";
 export interface BtcTransaction {
   id: string;
   hex: string;
-  feeAmount?: string;
-  amount: string;
-  inputs: BtcTransactionOutput[];
-  output: BtcTransactionOutput[];
+  blockNumber: BN;
+  feeAmount?: BN;
+  amount: BN;
+  outputs: BtcTransactionOutput[];
   createdAt: number;
 }
 
@@ -52,9 +52,8 @@ export interface BtcTransactionOutput {
   outputIndex: number;
   address: string;
   scriptPubKey: string;
-  amount: string;
-  spentTransactionId: string;
-  spentInputIndex: number;
+  amount: BN;
+  isChange: boolean;
 }
 
 export interface BtcRawTransactionInput {
@@ -133,10 +132,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     rawTransaction.inputs.forEach((input) => {
       tx.addInput(
         new Buffer(
-          new Buffer(
-            input.transactionOutput.transactionId,
-            "hex"
-          ).reverse()
+          new Buffer(input.transactionOutput.transactionId, "hex").reverse()
         ),
         input.transactionOutput.outputIndex
       );
