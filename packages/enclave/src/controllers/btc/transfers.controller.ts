@@ -3,7 +3,8 @@ import { Controller } from "../../types";
 import express, { request } from "express";
 import { Pagination, Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { Transfer, TransferStatus } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
-import { TransactionStatus } from "@haechi-labs/henesis-wallet-core";
+import { BNConverter, TransactionStatus } from "@haechi-labs/henesis-wallet-core";
+import { BtcTransaction, BtcTransactionOutput } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 
 export default class TransfersController extends AbstractController
   implements Controller {
@@ -20,8 +21,8 @@ export default class TransfersController extends AbstractController
 
   private async getTransfers(
     req: express.Request
-  ): Promise<Pagination<Transfer>> {
-    return await req.sdk.btc.transfers.getTransfers({
+  ): Promise<any> {
+    const data = await req.sdk.btc.transfers.getTransfers({
       page: +req.query.page,
       size: +req.query.size,
       sort: req.query.sort as string,
@@ -32,5 +33,44 @@ export default class TransfersController extends AbstractController
       start: +req.query.start,
       end: +req.query.end
     });
+
+    return {
+      pagination: data.pagination,
+      results: data.results.map((t) => {
+        return {
+          id: t.id,
+          walletId: t.walletId,
+          outputIndex: t.outputIndex,
+          transaction: {
+            id: t.transaction.id,
+            amount: BNConverter.bnToHexString(t.transaction.amount),
+            blockNumber: t.transaction.blockNumber
+              ? BNConverter.bnToHexString(t.transaction.blockNumber)
+              : null,
+            feeAmount: t.transaction.feeAmount
+              ? BNConverter.bnToHexString(t.transaction.feeAmount)
+              : null,
+            createdAt: t.transaction.createdAt,
+            hex: t.transaction.hex,
+            outputs: t.transaction.outputs.map((o) => {
+              return {
+                transactionId: o.transactionId,
+                outputIndex: o.outputIndex,
+                address: o.address,
+                scriptPubKey: o.scriptPubKey,
+                amount: BNConverter.bnToHexString(o.amount),
+                isChange: o.isChange
+              };
+            }),
+            inputs: []
+          },
+          receivedAt: t.receivedAt,
+          sendTo: t.sendTo,
+          type: t.type,
+          status: t.status,
+          createdAt: t.createdAt
+        };
+      })
+    };
   }
 }
