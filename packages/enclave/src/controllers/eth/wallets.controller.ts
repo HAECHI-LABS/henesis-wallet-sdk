@@ -218,12 +218,7 @@ export default class WalletsController extends AbstractController
       req.query.flag === "true" ? true : false
     );
 
-    return balances.map((c) => ({
-      symbol: c.symbol,
-      amount: BNConverter.bnToHexString(c.amount),
-      coinType: c.coinType,
-      name: c.name,
-    }));
+    return balances.map((c) => this.bnToHexString(c));
   }
 
   private async getMasterWalletNonce(req: express.Request): Promise<Nonce> {

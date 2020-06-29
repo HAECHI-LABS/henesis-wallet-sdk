@@ -21,8 +21,8 @@ export default class GasUsagesController extends AbstractController
   }
 
   private async getMethodGasUsages(req: express.Request): Promise<Method> {
-    return await req.sdk.klay.gasusages.getMethodGasUsages(
+    return this.bnToHexString(await req.sdk.klay.gasusages.getMethodGasUsages(
       req.query.name as MethodName
-    );
+    ));
   }
 }

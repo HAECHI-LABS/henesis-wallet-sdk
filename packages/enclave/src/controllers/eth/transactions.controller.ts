@@ -29,15 +29,16 @@ export default class TransactionsController extends AbstractController
   private async getAllTransactions(
     req: express.Request
   ): Promise<Pagination<Transaction>> {
-    return this.pagination<Transaction>(
-      req,
-      await req.sdk.eth.transactions.getTransactions(req.query)
-    );
+    const transaction = await req.sdk.eth.transactions.getTransactions(req.query);
+    return this.pagination<Transaction>(req, {
+      pagination: transaction.pagination,
+      results: transaction.results.map((c) => this.bnToHexString(c)),
+    });
   }
 
   private async getTransaction(req: express.Request): Promise<Transaction> {
-    return await req.sdk.eth.transactions.getTransaction(
+    return this.bnToHexString(await req.sdk.eth.transactions.getTransaction(
       req.params.transactionId
-    );
+    ));
   }
 }

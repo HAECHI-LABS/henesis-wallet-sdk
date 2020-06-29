@@ -41,9 +41,10 @@ export default class EventsController extends AbstractController
   private async getValueTransferEvents(
     req: express.Request
   ): Promise<Pagination<EthValueTransferEvent>> {
-    return this.pagination<EthValueTransferEvent>(
-      req,
-      await req.sdk.eth.events.getValueTransferEvents(req.query)
-    );
+    const events = await req.sdk.eth.events.getValueTransferEvents(req.query);
+    return this.pagination<EthValueTransferEvent>(req, {
+      pagination: events.pagination,
+      results: events.results.map(t => this.bnToHexString(t)),
+    });
   }
 }
