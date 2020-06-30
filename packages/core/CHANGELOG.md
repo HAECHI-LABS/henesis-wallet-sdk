@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.12](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.11...v2.0.0-alpha.12) (2020-06-30)
+
+
+### Bug Fixes
+
+* fix address to output script network env ([c6639f2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c6639f212b46ec8caa087940c04b9e29a57c65fb))
+* fix flush parameter coinType to ticker ([5dd41bf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5dd41bfd21153b2bcf13ab903c2fdeb8e341671d))
+
+
+### Features
+
+* add coin flag ([ddf4a39](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ddf4a398c795774079ead012e63625d32e7d087c))
+
+
+
+
+
 # [2.0.0-alpha.11](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.10...v2.0.0-alpha.11) (2020-06-29)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-core
