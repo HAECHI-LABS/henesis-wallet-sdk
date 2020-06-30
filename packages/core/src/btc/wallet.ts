@@ -22,6 +22,7 @@ import {
   DepositAddressDTO,
 } from "../__generate__/btc";
 import { makeQueryString } from "../utils/url";
+import { Env } from "../sdk";
 
 export interface BtcTransaction {
   id: string;
@@ -102,14 +103,17 @@ export interface DepositAddressPaginationOptions extends PaginationOptions {
 
 export class BtcMasterWallet extends Wallet<BtcTransaction> {
   private readonly data: BtcMasterWalletData;
+  private readonly env: Env;
 
   public constructor(
     data: BtcMasterWalletData,
     client: Client,
-    keychains: Keychains
+    keychains: Keychains,
+    env: Env
   ) {
     super(client, keychains);
     this.data = data;
+    this.env = env;
   }
 
   public async transfer(
@@ -134,7 +138,10 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
 
     rawTransaction.outputs.forEach((output) => {
       tx.addOutput(
-        address.toOutputScript(output.to, networks.testnet),
+        address.toOutputScript(
+          output.to,
+          this.env === Env.Prod ? networks.bitcoin : networks.testnet
+        ),
         new BN(output.amount.slice(2), "hex").toNumber()
       );
     });
