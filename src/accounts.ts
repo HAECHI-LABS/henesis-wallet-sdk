@@ -24,6 +24,7 @@ export enum Role {
   VIEWER = "VIEWER",
   ADMIN = "ADMIN",
   HAECHI = "HAECHI",
+  COIN = "COIN",
 }
 
 export class Accounts {
