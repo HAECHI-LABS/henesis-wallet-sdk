@@ -580,7 +580,9 @@ export class MasterWallet extends EthLikeWallet {
     const data: Pagination<UserWalletData> = await this.client.get<
       Pagination<UserWalletData>
     >(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets?${queryString}`,
+      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets${
+        queryString ? `?${queryString}` : ''
+      }`,
     );
 
     return {
@@ -632,7 +634,9 @@ export class MasterWallet extends EthLikeWallet {
     );
 
     if (userWalletIds.length != userWalletAddresses.length) {
-      throw new Error(`your input user wallet idd count is ${userWalletIds.length}. but matched user wallet count is ${userWalletAddresses.length}`)
+      throw new Error(
+        `your input user wallet idd count is ${userWalletIds.length}. but matched user wallet count is ${userWalletAddresses.length}`,
+      );
     }
 
     const multiSigPayload: MultiSigPayload = {
