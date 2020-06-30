@@ -372,13 +372,16 @@ export class EthMasterWallet extends EthLikeWallet {
     );
   }
 
-  async getBalance(): Promise<Balance[]> {
+  async getBalance(flag?: boolean): Promise<Balance[]> {
+    const params = flag ? `?flag=${flag}` : "";
     const balances: {
       coinType: string;
       amount: string;
       name: string;
       symbol: string;
-    }[] = await this.client.get(`${this.baseUrl}/${this.data.id}/balance`);
+    }[] = await this.client.get(
+      `${this.baseUrl}/${this.data.id}/balance${params}`
+    );
 
     return balances.map((balance) => ({
       symbol: balance.symbol,
@@ -455,7 +458,7 @@ export class EthMasterWallet extends EthLikeWallet {
 
     if (userWalletIds.length != userWalletAddresses.length) {
       throw new Error(
-        `your input user wallet idd count is ${userWalletIds.length}. but matched user wallet count is ${userWalletAddresses.length}`
+        `your input user wallet id count is ${userWalletIds.length}. but matched user wallet count is ${userWalletAddresses.length}`
       );
     }
 
@@ -511,14 +514,15 @@ export class EthUserWallet extends EthLikeWallet {
     return BNConverter.hexStringToBN(nonce.nonce);
   }
 
-  async getBalance(): Promise<Balance[]> {
+  async getBalance(flag?: boolean): Promise<Balance[]> {
+    const params = flag ? `?flag=${flag}` : "";
     const balances: {
       coinType: string;
       amount: string;
       name: string;
       symbol: string;
     }[] = await this.client.get(
-      `${this.baseUrl}/${this.data.id}/user-wallets/${this.userWalletData.id}/balance`
+      `${this.baseUrl}/${this.data.id}/user-wallets/${this.userWalletData.id}/balance${params}`
     );
 
     return balances.map((balance) => ({

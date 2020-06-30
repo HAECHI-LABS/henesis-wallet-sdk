@@ -87,16 +87,16 @@ ${err.message}`);
 
   private parsePaginationUrl(
     req: express.Request,
-    url: UrlWithStringQuery | null,
+    url: UrlWithStringQuery | null
   ): string | null {
     if (!url) {
       return null;
     }
     const host: { name: string; port: string } = {
-      name: req.get('host').split(':')[0],
-      port: req.get('host').split(':')[1] ?? null,
+      name: req.get("host").split(":")[0],
+      port: req.get("host").split(":")[1] ?? null,
     };
-    return `${req.protocol}://${host.name}${!host.port ? '' : `:${host.port}`}${
+    return `${req.protocol}://${host.name}${!host.port ? "" : `:${host.port}`}${
       url.path
     }`;
   }
