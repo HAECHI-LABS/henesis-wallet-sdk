@@ -252,7 +252,9 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   ): Promise<Pagination<DepositAddress>> {
     const queryString: string = makeQueryString(options);
     return await this.client.get<Pagination<DepositAddressDTO>>(
-      `${this.baseUrl}/${this.getId()}/deposit-addresses?${queryString}`
+      `${this.baseUrl}/${this.getId()}/deposit-addresses${
+        queryString ? `?${queryString}` : ""
+      }`
     );
   }
 
