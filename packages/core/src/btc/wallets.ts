@@ -41,14 +41,14 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       },
     });
 
-    return new BtcMasterWallet(data, this.client, this.keychains);
+    return new BtcMasterWallet(data, this.client, this.keychains, this.env);
   }
 
   public async getWallet(id: string) {
     const data: BtcMasterWalletData = await this.client.get<
       BtcMasterWalletData
     >(`${this.baseUrl}/${id}`);
-    return new BtcMasterWallet(data, this.client, this.keychains);
+    return new BtcMasterWallet(data, this.client, this.keychains, this.env);
   }
 
   public verifyAddress(address: string): boolean {
@@ -72,7 +72,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     );
 
     return walletDatas.map(
-      (x) => new BtcMasterWallet(x, this.client, this.keychains)
+      (x) => new BtcMasterWallet(x, this.client, this.keychains, this.env)
     );
   }
 
@@ -120,6 +120,11 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       }
     );
 
-    return new BtcMasterWallet(walletData, this.client, this.keychains);
+    return new BtcMasterWallet(
+      walletData,
+      this.client,
+      this.keychains,
+      this.env
+    );
   }
 }
