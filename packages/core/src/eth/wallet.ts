@@ -405,7 +405,11 @@ export class EthMasterWallet extends EthLikeWallet {
     const queryString: string = makeQueryString(options);
     const data: Pagination<EthUserWalletData> = await this.client.get<
       Pagination<EthUserWalletData>
-    >(`${this.baseUrl}/${this.data.id}/user-wallets?${queryString}`);
+    >(
+      `${this.baseUrl}/${this.data.id}/user-wallets${
+        queryString ? `?${queryString}` : ""
+      }`
+    );
 
     return {
       pagination: data.pagination,
