@@ -123,14 +123,7 @@ export default class WalletsController extends AbstractController
 
     return this.pagination<DepositAddress>(
       req,
-      await masterWallet.getDepositAddresses({
-        page: +req.query.page,
-        size: +req.query.size,
-        sort: req.query.sort as string,
-        id: req.query.id as string,
-        name: req.query.name as string,
-        address: req.query.address as string,
-      })
+      await masterWallet.getDepositAddresses(req.query)
     );
   }
 

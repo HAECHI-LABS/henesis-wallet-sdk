@@ -19,18 +19,7 @@ export default class TransfersController extends AbstractController
   }
 
   private async getTransfers(req: express.Request): Promise<any> {
-    const data = await req.sdk.btc.transfers.getTransfers({
-      page: +req.query.page,
-      size: +req.query.size,
-      sort: req.query.sort as string,
-      walletId: req.query.walletId as string,
-      transactionHash: req.query.transactionHash as string,
-      address: req.query.address as string,
-      status: req.query.status as TransferStatus,
-      start: +req.query.start,
-      end: +req.query.end,
-    });
-
+    const data = await req.sdk.btc.transfers.getTransfers(req.query);
     return this.pagination<any>(req, {
       pagination: data.pagination,
       results: data.results.map(t => this.bnToHexString(t))
