@@ -32,6 +32,7 @@ export interface Transfer {
   type: TransferType;
   status: TransferStatus;
   createdAt: string;
+  updatedAt: string;
 }
 
 export class BtcTransfers {

@@ -68,6 +68,7 @@ export const parseResponseToTransfer = (t: any): Transfer => {
     id: t.id,
     walletId: t.walletId,
     outputIndex: t.outputIndex,
+    updatedAt: t.updatedAt,
     transaction: {
       id: t.transaction.id,
       transactionHash: t.transaction.transactionHash,
