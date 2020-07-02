@@ -4,6 +4,7 @@ import BN from "bn.js";
 import { BtcTransaction } from "../../src/btc/wallet";
 import { BtcKeyChains } from "../../src/btc/keychains";
 import { Env } from "../../src";
+import { Transfer } from "../../src/btc/transfers";
 
 describe.skip('BtcMasterWallet', () => {
   jest.setTimeout(50000);
@@ -21,13 +22,13 @@ describe.skip('BtcMasterWallet', () => {
       const wallet = await wallets.getWallet(
         '61898f8d5b4c69bbd7f7b9216e5d5bff',
       );
-      const tx: BtcTransaction = await wallet.transfer(
+      const transfer: Transfer = await wallet.transfer(
         '2MuNo2ZeuAnzztUL1UAbGxjdW1oYAWvrqnX',
         new BN(10000),
         'passphrase',
       );
 
-      console.log(tx);
+      console.log(transfer);
     });
   });
 

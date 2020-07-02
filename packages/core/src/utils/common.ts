@@ -4,6 +4,8 @@ import {
   toSnakeCase as toStringSnakeCase,
   toCamelCase as toStringCamelCase,
 } from "./string";
+import { BtcTransaction, BtcTransactionOutput } from "../btc/wallet";
+import { Transfer } from "../btc/transfers";
 
 export class ObjectConverter {
   static toSnakeCase(obj: any) {
@@ -59,4 +61,40 @@ export class BNConverter {
     }
     return new BN(this.remove0x(hexString), 16);
   }
+}
+
+export const parseResponseToTransfer = (t: any): Transfer => {
+  return {
+    id: t.id,
+    walletId: t.walletId,
+    outputIndex: t.outputIndex,
+    transaction: {
+      id: t.transaction.id,
+      transactionHash: t.transaction.transactionHash,
+      amount: BNConverter.hexStringToBN(t.transaction.amount),
+      blockNumber: t.transaction.blockNumber
+        ? BNConverter.hexStringToBN(t.transaction.blockNumber)
+        : null,
+      feeAmount: t.transaction.feeAmount
+        ? BNConverter.hexStringToBN(t.transaction.feeAmount)
+        : null,
+      createdAt: t.transaction.createdAt,
+      hex: t.transaction.hex,
+      outputs: t.transaction.outputs.map((o) => {
+        return {
+          transactionId: o.transactionId,
+          outputIndex: o.outputIndex,
+          address: o.address,
+          scriptPubKey: o.scriptPubKey,
+          amount: BNConverter.hexStringToBN(o.amount),
+          isChange: o.isChange,
+        } as BtcTransactionOutput;
+      }),
+    } as BtcTransaction,
+    receivedAt: t.receivedAt,
+    sendTo: t.sendTo,
+    type: t.type,
+    status: t.status,
+    createdAt: t.createdAt,
+  };
 }

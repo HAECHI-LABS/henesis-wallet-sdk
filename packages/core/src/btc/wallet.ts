@@ -14,7 +14,7 @@ import {
   script,
   Transaction as BitcoinTransaction,
 } from "bitcoinjs-lib";
-import { BNConverter } from "../utils/common";
+import { BNConverter, parseResponseToTransfer } from "../utils/common";
 import { Wallet, WalletData } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import {
@@ -30,6 +30,7 @@ import {
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
 import _ from "lodash";
+import { Transfer } from "./transfers";
 
 export interface BtcTransaction {
   id: string;
@@ -128,7 +129,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     amount: BN,
     passphrase: string,
     otpCode?: string
-  ): Promise<BtcTransaction> {
+  ): Promise<Transfer> {
     const rawTransaction: BtcRawTransaction = await this.createRawTransaction(
       to,
       amount
@@ -188,23 +189,12 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       payload.outputs.push(rawTransaction.outputs[i]);
     }
 
-    const response = await this.client.post<TransactionDTO>(
+    const transfer = await this.client.post<Transfer>(
       `${this.baseUrl}/${this.data.id}/transactions`,
       payload
     );
-    return {
-      id: response.id,
-      hex: response.hex,
-      transactionHash: response.transactionHash,
-      blockNumber: BNConverter.hexStringToBN(String(response.blockNumber)),
-      feeAmount: BNConverter.hexStringToBN(String(response.feeAmount)),
-      amount: BNConverter.hexStringToBN(String(response.amount)),
-      outputs: _.map(response.outputs, (output) => ({
-        ...output,
-        amount: BNConverter.hexStringToBN(String(output.amount)),
-      })),
-      createdAt: Number(response.createdAt),
-    };
+
+    return parseResponseToTransfer(transfer);
   }
 
   private async createRawTransaction(
