@@ -41,8 +41,8 @@ export interface EventPaginationOptions<S> extends PaginationOptions {
   toAddress?: string;
   fromAddress?: string;
   transactionHash?: string;
-  start?: Timestamp;
-  end?: Timestamp;
+  updatedAtGte?: Timestamp;
+  updatedAtLt?: Timestamp;
   status?: S;
   walletId?: string;
   orgId?: string;
