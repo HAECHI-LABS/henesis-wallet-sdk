@@ -1320,6 +1320,12 @@ export interface ValueTransferEventDTO {
      */
     createdAt?: string;
     /**
+     *
+     * @type {string}
+     * @memberof ValueTransferEventDTO
+     */
+    updatedAt?: string;
+    /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
