@@ -13,8 +13,8 @@ export interface TransferPaginationOptions extends PaginationOptions {
   status?: TransferStatus;
   address?: string;
   transactionHash?: string;
-  start?: Timestamp;
-  end?: Timestamp;
+  updatedAtGte?: Timestamp;
+  updatedAtLt?: Timestamp;
 }
 
 export enum TransferType {
