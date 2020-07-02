@@ -9,6 +9,7 @@ import {
 } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
+import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
 
 export interface BalanceResponse {
   coinType: string;
@@ -92,7 +93,7 @@ export default class WalletsController extends AbstractController
   private async transfer(req: express.Request): Promise<any> {
     const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
 
-    const t: BtcTransaction = await wallet.transfer(
+    const t: Transfer = await wallet.transfer(
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
