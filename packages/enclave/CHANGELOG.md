@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.13](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.12...v2.0.0-alpha.13) (2020-07-02)
+
+
+### Bug Fixes
+
+* add missing endpoints and change var names ([cc39f6a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/cc39f6a50aadae3642f8c230b54d1f8a6daf2f8b))
+* BN error ([0967419](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0967419489700e254ff9f0f16dbfc5f4d5c2222d))
+* change req.query option ([b983cde](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b983cde59ffcef8bec3e1b036e0b7d5235c078b0))
+
+
+### Features
+
+* add change passphrase endpoint to btc wallet ([eb2bbfc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/eb2bbfc8096134bd3d8a6e4820b4d93251848f38))
+
+
+
+
+
 # [2.0.0-alpha.12](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.11...v2.0.0-alpha.12) (2020-06-30)
 
 

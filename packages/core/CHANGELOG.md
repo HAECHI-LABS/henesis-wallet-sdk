@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.13](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.12...v2.0.0-alpha.13) (2020-07-02)
+
+
+### Bug Fixes
+
+* add coin role ([5aa28a2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5aa28a2e34d521b3e76d494905f58534b1e90034))
+* add missing endpoints and change var names ([cc39f6a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/cc39f6a50aadae3642f8c230b54d1f8a6daf2f8b))
+* fix query string ([fa2b22d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/fa2b22de6acb501d57faa6a9d88433f7e41d1fa1))
+* search events by updatedAt ([d9c72b7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d9c72b73b8490e347c6b14157ae7f1b8c5418ca6))
+
+
+
+
+
 # [2.0.0-alpha.12](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.11...v2.0.0-alpha.12) (2020-06-30)
 
 
