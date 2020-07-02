@@ -14,7 +14,7 @@ import {
   script,
   Transaction as BitcoinTransaction,
 } from "bitcoinjs-lib";
-import { BNConverter } from "../utils/common";
+import { BNConverter, parseResponseToTransfer } from "../utils/common";
 import { Wallet, WalletData } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import {
@@ -23,6 +23,7 @@ import {
 } from "../__generate__/btc";
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
+import { Transfer } from "./transfers";
 
 export interface BtcTransaction {
   id: string;
@@ -121,7 +122,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     amount: BN,
     passphrase: string,
     otpCode?: string
-  ): Promise<BtcTransaction> {
+  ): Promise<Transfer> {
     const rawTransaction: BtcRawTransaction = await this.createRawTransaction(
       to,
       amount
@@ -181,10 +182,12 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       payload.outputs.push(rawTransaction.outputs[i]);
     }
 
-    return await this.client.post<BtcTransaction>(
+    const transfer = await this.client.post<Transfer>(
       `${this.baseUrl}/${this.data.id}/transactions`,
       payload
     );
+
+    return parseResponseToTransfer(transfer);
   }
 
   private async createRawTransaction(
