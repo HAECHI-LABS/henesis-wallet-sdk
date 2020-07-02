@@ -40,6 +40,10 @@ export default class WalletsController extends AbstractController
       `${this.path}/:walletId/name`,
       this.promiseWrapper(this.changeWalletName)
     );
+    this.router.patch(
+      `${this.path}/:walletId/passphrase`,
+      this.promiseWrapper(this.changePassphrase)
+    );
     this.router.get(
       `${this.path}/:walletId/balance`,
       this.promiseWrapper(this.getWalletBalance)
@@ -143,6 +147,16 @@ export default class WalletsController extends AbstractController
     const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
 
     return await wallet.createDepositAddress(req.body.name);
+  }
+
+  private async changePassphrase(req: express.Request): Promise<void> {
+    const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
+
+    return wallet.changePassphrase(
+      req.body.passphrase,
+      req.body.newPassphrase,
+      req.body.otpCode
+    );
   }
 
   private async changeWalletName(req: express.Request): Promise<void> {
