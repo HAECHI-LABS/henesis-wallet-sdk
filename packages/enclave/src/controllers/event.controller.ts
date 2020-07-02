@@ -1,5 +1,6 @@
 import { Pagination } from '@haechi-labs/henesis-wallet-core/lib/types';
 import {
+  CallEvent,
   Event,
   ValueTransferEvent,
 } from '@haechi-labs/henesis-wallet-core/lib/events';
@@ -30,8 +31,8 @@ export default class EventController extends AbstractController
 
   private async getCallEvents(
     req: express.Request,
-  ): Promise<Pagination<Event>> {
-    return this.pagination<Event>(
+  ): Promise<Pagination<CallEvent>> {
+    return this.pagination<CallEvent>(
       req,
       await req.sdk.events.getCallEvents(req.query),
     );

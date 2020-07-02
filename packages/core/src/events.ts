@@ -10,6 +10,7 @@ export interface Event {
   masterWalletId: string;
   orgId: string;
   createdAt: string;
+  updatedAt: string;
   status: EventStatusType;
   toAddress: string;
   transactionHash: string;
