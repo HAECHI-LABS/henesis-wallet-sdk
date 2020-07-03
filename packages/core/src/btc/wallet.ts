@@ -248,13 +248,6 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     };
   }
 
-  // FIXED transactions 없음
-  public async getTransactions(): Promise<Pagination<BtcTransaction[]>> {
-    return await this.client.get<Pagination<BtcTransaction[]>>(
-      `${this.baseUrl}/${this.data.id}/transactions`
-    );
-  }
-
   getChain(): BlockchainType {
     return BlockchainType.BitCoin;
   }
