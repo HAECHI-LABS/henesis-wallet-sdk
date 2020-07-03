@@ -5,6 +5,15 @@ import { Keychains, Balance, Key, KeyWithPriv } from "./types";
 import aesjs from "aes-js";
 import { Base64 } from "js-base64";
 
+import {
+  KeyDTO as EthKeyDTO,
+  MasterWalletDTO as EthMasterWalletDTO,
+} from "./__generate__/eth/api";
+import {
+  KeyDTO as BtcKeyDTO,
+  MasterWalletDTO as BtcMasterWalletDTO,
+} from "./__generate__/btc/api";
+
 export interface WalletData {
   id: string;
   name: string;
@@ -19,6 +28,22 @@ export enum WalletStatus {
   Active = "ACTIVE",
   Inactive = "INACTIVE",
 }
+
+export const transformWalletStatus = (
+  status: BtcMasterWalletDTO.StatusEnum | EthMasterWalletDTO.StatusEnum
+): WalletStatus => {
+  const byStatus: Record<
+    BtcMasterWalletDTO.StatusEnum | EthMasterWalletDTO.StatusEnum,
+    WalletStatus
+  > = {
+    [BtcMasterWalletDTO.StatusEnum.ACTIVE]: WalletStatus.Active,
+    [EthMasterWalletDTO.StatusEnum.ACTIVE]: WalletStatus.Active,
+    [BtcMasterWalletDTO.StatusEnum.INACTIVE]: WalletStatus.Inactive,
+    [BtcMasterWalletDTO.StatusEnum.CREATING]: WalletStatus.Creating,
+    [EthMasterWalletDTO.StatusEnum.CREATING]: WalletStatus.Creating,
+  };
+  return byStatus[status];
+};
 
 export abstract class Wallet<T> {
   protected readonly client: Client;
@@ -87,14 +112,13 @@ export abstract class Wallet<T> {
       newPassphrase
     );
 
-    const key: Key = await this.client.patch<Key>(
-      `${this.baseUrl}/${this.getId()}/account-key`,
-      {
-        keyFile: newKey.keyFile,
-        pub: newKey.pub,
-        otpCode,
-      }
-    );
+    const key: Key = await this.client.patch<
+      BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">
+    >(`${this.baseUrl}/${this.getId()}/account-key`, {
+      keyFile: newKey.keyFile,
+      pub: newKey.pub,
+      otpCode,
+    });
 
     this.updateAccountKey(key);
   }
@@ -105,9 +129,9 @@ export abstract class Wallet<T> {
     otpCode?: string
   ): Promise<void> {
     const passphrase = this.recoverPassphrase(encryptedPassphrase);
-    const initialKey: Key = await this.client.get<Key>(
-      `${this.baseUrl}/${this.getId()}/initial-key`
-    );
+    const initialKey: Key = await this.client.get<
+      BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">
+    >(`${this.baseUrl}/${this.getId()}/initial-key`);
     await this.changePassphraseWithKeyFile(
       passphrase,
       newPassphrase,
@@ -126,9 +150,9 @@ export abstract class Wallet<T> {
       return false;
     }
 
-    const initialKey: Key = await this.client.get<Key>(
-      `${this.baseUrl}/${this.getId()}/initial-key`
-    );
+    const initialKey: Key = await this.client.get<
+      BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">
+    >(`${this.baseUrl}/${this.getId()}/initial-key`);
     return await this.verifyPassphraseWithKeyFile(passphrase, initialKey);
   }
 

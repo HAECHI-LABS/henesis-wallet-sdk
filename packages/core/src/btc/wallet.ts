@@ -20,9 +20,16 @@ import { BlockchainType } from "../blockchain";
 import {
   CreateDepositAddressDTO,
   DepositAddressDTO,
+  TransactionDTO,
+  TransactionOutputDTO,
+  RawTransactionDTO,
+  EstimatedFeeDTO,
+  BalanceDTO,
+  MasterWalletDTO,
 } from "../__generate__/btc";
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
+import _ from "lodash";
 
 export interface BtcTransaction {
   id: string;
@@ -181,31 +188,67 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       payload.outputs.push(rawTransaction.outputs[i]);
     }
 
-    return await this.client.post<BtcTransaction>(
+    const response = await this.client.post<TransactionDTO>(
       `${this.baseUrl}/${this.data.id}/transactions`,
       payload
     );
+    return {
+      id: response.id,
+      hex: response.hex,
+      transactionHash: response.transactionHash,
+      blockNumber: BNConverter.hexStringToBN(String(response.blockNumber)),
+      feeAmount: BNConverter.hexStringToBN(String(response.feeAmount)),
+      amount: BNConverter.hexStringToBN(String(response.amount)),
+      outputs: _.map(response.outputs, (output) => ({
+        ...output,
+        amount: BNConverter.hexStringToBN(String(output.amount)),
+      })),
+      createdAt: Number(response.createdAt),
+    };
   }
 
   private async createRawTransaction(
     to: string,
     amount: BN
   ): Promise<BtcRawTransaction> {
-    return await this.client.post<BtcRawTransaction>(
+    const response = await this.client.post<RawTransactionDTO>(
       `${this.baseUrl}/${this.data.id}/raw-transactions`,
       {
         to,
         amount: BNConverter.bnToHexString(amount),
       }
     );
+    return {
+      inputs: _.map(response.inputs, (input) => {
+        return {
+          redeemScript: input.redeemScript,
+          transactionOutput: {
+            ...input.transactionOutput,
+            amount: BNConverter.hexStringToBN(
+              String(input.transactionOutput.amount)
+            ),
+          },
+        };
+      }),
+      outputs: _.map(response.outputs, (output) => {
+        return {
+          to: output.to,
+          amount: String(output.amount),
+        };
+      }),
+    };
   }
 
   public async getEstimatedFee(): Promise<BtcEstimatedFee> {
-    return await this.client.get<BtcEstimatedFee>(
+    const response = await this.client.get<EstimatedFeeDTO>(
       `${this.baseUrl}/${this.data.id}/estimated-fee`
     );
+    return {
+      estimatedFee: String(response.estimatedFee),
+    };
   }
 
+  // FIXED transactions 없음
   public async getTransactions(): Promise<Pagination<BtcTransaction[]>> {
     return await this.client.get<Pagination<BtcTransaction[]>>(
       `${this.baseUrl}/${this.data.id}/transactions`
@@ -217,14 +260,16 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   async getBalance(): Promise<Balance[]> {
-    const response: BtcBalance = await this.client.get(
+    const response = await this.client.get<BalanceDTO>(
       `${this.baseUrl}/${this.data.id}/balance`
     );
     return [
       {
         symbol: "BTC",
-        amount: BNConverter.hexStringToBN(response.balance),
-        spendableAmount: BNConverter.hexStringToBN(response.spendableBalance),
+        amount: BNConverter.hexStringToBN(String(response.balance)),
+        spendableAmount: BNConverter.hexStringToBN(
+          String(response.spendableBalance)
+        ),
         coinType: "BTC",
         name: "비트코인",
       },
@@ -233,7 +278,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
 
   async createDepositAddress(name: string): Promise<DepositAddress> {
     const params: CreateDepositAddressDTO = { name };
-    const response: DepositAddressDTO = await this.client.post(
+    const response = await this.client.post<DepositAddressDTO>(
       `${this.baseUrl}/${this.data.id}/deposit-addresses`,
       params
     );
@@ -241,7 +286,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   async getDepositAddress(depositAddressId: string): Promise<DepositAddress> {
-    const response: DepositAddressDTO = await this.client.get(
+    const response = await this.client.get<DepositAddressDTO>(
       `${this.baseUrl}/${this.data.id}/deposit-addresses/${depositAddressId}`
     );
     return response;
@@ -283,11 +328,12 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   async changeName(name: string) {
-    const btcWalletData: BtcMasterWalletData = await this.client.patch<
-      BtcMasterWalletData
-    >(`${this.baseUrl}/${this.data.id}/name`, {
-      name,
-    });
+    const btcWalletData = await this.client.patch<MasterWalletDTO>(
+      `${this.baseUrl}/${this.data.id}/name`,
+      {
+        name,
+      }
+    );
     this.data.name = btcWalletData.name;
   }
 }
