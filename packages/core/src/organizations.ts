@@ -1,6 +1,13 @@
+import _ from "lodash";
 import { Client } from "./httpClient";
 import { Secret } from "./types";
-import { Account, Role } from "./accounts";
+import { Account, Role, transformRole } from "./accounts";
+import {
+  OrganizationDTO,
+  OrgAccountDTO,
+  CreateSecretResponse,
+  AccountDTO,
+} from "./__generate__/accounts";
 
 export interface Organization {
   id: string;
@@ -18,15 +25,29 @@ export class Organizations {
   }
 
   public async getOrganization(): Promise<Organization> {
-    return await this.client.get<Organization>(`${this.baseUrl}/me`);
+    return await this.client.get<NoUndefinedField<OrganizationDTO>>(
+      `${this.baseUrl}/me`
+    );
   }
 
   public async getAccounts(): Promise<Account[]> {
-    return await this.client.get<Account[]>(`${this.baseUrl}/accounts`);
+    const response = await this.client.get<NoUndefinedField<OrgAccountDTO>[]>(
+      `${this.baseUrl}/accounts`
+    );
+    return _.map(response, (account) => {
+      return {
+        ...account,
+        organizationId: "", // ?
+        roles: _.map(account.roles, (role) => transformRole(role)),
+      };
+    });
   }
 
   public async createSecret(): Promise<Secret> {
-    return this.client.post<Secret>(`${this.baseUrl}/secret`);
+    const response = await this.client.post<
+      NoUndefinedField<CreateSecretResponse>
+    >(`${this.baseUrl}/secret`);
+    return response;
   }
 
   public async changeAccountRole(
@@ -34,9 +55,17 @@ export class Organizations {
     role: Role,
     otpCode?: string
   ): Promise<Account> {
-    return this.client.patch<Account>(`${this.baseUrl}/accounts/${accountId}`, {
-      role,
-      otpCode,
-    });
+    const response = await this.client.patch<NoUndefinedField<AccountDTO>>(
+      `${this.baseUrl}/accounts/${accountId}`,
+      {
+        role,
+        otpCode,
+      }
+    );
+    return {
+      ...response,
+      organizationId: "", // ?
+      roles: _.map(response.roles, (role) => transformRole(role)),
+    };
   }
 }

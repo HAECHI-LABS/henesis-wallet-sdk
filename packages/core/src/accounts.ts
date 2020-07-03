@@ -1,5 +1,13 @@
+import _ from "lodash";
 import { Client } from "./httpClient";
 import { Key, Token } from "./types";
+import {
+  AccountDTO,
+  LoginResponse,
+  ChangeAccountNameRequest,
+  UpdatePasswordRequest,
+  AccessTokenDTO,
+} from "./__generate__/accounts";
 
 export interface AccountWithOTP extends Account {
   otp?: OTP;
@@ -27,6 +35,16 @@ export enum Role {
   COIN = "COIN",
 }
 
+export const transformRole = (role: AccountDTO.RolesEnum) => {
+  const byRole: Record<AccountDTO.RolesEnum, Role> = {
+    [AccountDTO.RolesEnum.VIEWER]: Role.VIEWER,
+    [AccountDTO.RolesEnum.ADMIN]: Role.ADMIN,
+    [AccountDTO.RolesEnum.HAECHI]: Role.HAECHI,
+    [AccountDTO.RolesEnum.COIN]: Role.COIN,
+  };
+  return byRole[role];
+};
+
 export class Accounts {
   private readonly client: Client;
 
@@ -38,55 +56,81 @@ export class Accounts {
     this.client = client;
   }
 
-  public me(): Promise<Account> {
-    return this.client.get<Account>(`${this.baseUrl}/me`);
+  public async me(): Promise<Account> {
+    const response = await this.client.get<NoUndefinedField<AccountDTO>>(
+      `${this.baseUrl}/me`
+    );
+    return {
+      ...response,
+      roles: _.map(response.roles, (role) => transformRole(role)),
+    };
   }
 
-  public login(
+  public async login(
     email: string,
     password: string,
     otpCode?: string
   ): Promise<AccountWithOTP> {
-    return this.client.post<AccountWithOTP>(`${this.baseUrl}/login`, {
-      email,
-      password,
-      otpCode,
-    });
+    const response = await this.client.post<NoUndefinedField<LoginResponse>>(
+      `${this.baseUrl}/login`,
+      {
+        email,
+        password,
+        otpCode,
+      }
+    );
+    return {
+      ...response,
+      roles: _.map(response.roles, (role) => transformRole(role)),
+    };
   }
 
-  public changeName(firstName: string, lastName: string): Promise<void> {
-    return this.client.patch(`${this.baseUrl}/name`, {
+  public async changeName(firstName: string, lastName: string): Promise<void> {
+    const params: NoUndefinedField<ChangeAccountNameRequest> = {
       firstName,
       lastName,
-    });
+    };
+    await this.client.patch<AccountDTO>(`${this.baseUrl}/name`, params);
   }
 
-  public changePassword(
+  public async changePassword(
     password: string,
     newPassword: string,
     otpCode?: string
   ): Promise<void> {
-    return this.client.patch(`${this.baseUrl}/password`, {
+    const params: NoUndefinedField<UpdatePasswordRequest> = {
       newPassword,
       password,
       otpCode,
-    });
+    };
+    await this.client.patch(`${this.baseUrl}/password`, params);
   }
 
   public async createAccessToken(expiresIn?: number): Promise<Token> {
     const requestExpiresIn = expiresIn || this.DEFAULT_TOKEN_EXPIRED_TIME;
-    return this.client.post<Token>(`${this.baseUrl}/token`, {
-      expiresIn: requestExpiresIn,
-    });
+    const response = await this.client.post<NoUndefinedField<AccessTokenDTO>>(
+      `${this.baseUrl}/token`,
+      {
+        expiresIn: requestExpiresIn,
+      }
+    );
+    return response;
   }
 
   public async refreshShortAccessToken(otpCode?: string): Promise<Token> {
-    return this.client.post<Token>(`${this.baseUrl}/token?type=short`, {
-      otpCode,
-    });
+    const response = await this.client.post<NoUndefinedField<AccessTokenDTO>>(
+      `${this.baseUrl}/token?type=short`,
+      {
+        otpCode,
+      }
+    );
+    return response;
   }
 
   public async getAccessToken(): Promise<Token> {
-    return this.client.get<Token>(`${this.baseUrl}/token`);
+    const response = await this.client.get<NoUndefinedField<AccessTokenDTO>>(
+      `${this.baseUrl}/token`
+    );
+    return response;
   }
 }
