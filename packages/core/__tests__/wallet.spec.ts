@@ -102,7 +102,6 @@ describe('Wallet', () => {
             id: '7b7404851d3cc06135b147612b0a1d02',
             blockchain,
             walletId,
-            accountId,
             hash:
               '0xff2526c36b171ae02d0244bf00750a40f44b4a922d5684751ca88a329d837094',
             status: 'REQUESTED',
@@ -171,7 +170,6 @@ describe('Wallet', () => {
               id: 'e4a1e5f66a32dc50b66fb3229aed0202',
               blockchain: BlockchainType.Ethereum,
               walletId,
-              accountId: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
               hash:
                 '0xc36e5acf20f5c09ee4db9608d6e5820db80dbd13e8c0232f7bb503113f365a56',
               status: WalletStatus.Active,
@@ -180,16 +178,14 @@ describe('Wallet', () => {
               id: 'e4a1e5f66a32dc50b66fb3229aed0202',
               blockchain: BlockchainType.Ethereum,
               walletId,
-              accountId: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
               hash:
                 '0xc36e5acf20f5c09ee4db9608d6e5820db80dbd13e8c0232f7bb503113f365a56',
-              status: WalletStatus.Inactive,
+              status: WalletStatus.Creating,
             },
             {
               id: 'e4a1e5f66a32dc50b66fb3229aed0202',
               blockchain: BlockchainType.Ethereum,
               walletId,
-              accountId: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
               hash:
                 '0xc36e5acf20f5c09ee4db9608d6e5820db80dbd13e8c0232f7bb503113f365a56',
               status: WalletStatus.Active,
@@ -222,7 +218,6 @@ describe('Wallet', () => {
             id: '2c08cf4beb195c582535d197aa40c498',
             blockchain: BlockchainType.Ethereum,
             walletId: '39e16b3eab64f4d595a6cd6ca4035703',
-            accountId: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
             hash:
               '0xc36e5acf20f5c09ee4db9608d6e5820db80dbd13e8c0232f7bb503113f365a56',
             status: WalletStatus.Active,

@@ -13,6 +13,7 @@ cache:
 branches:
   only:
     - master
+    - 1.x
 
 before_deploy:
   - cd $TRAVIS_BUILD_DIR
