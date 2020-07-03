@@ -134,8 +134,6 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     const accountKey = recoveryKit.getAccountKey();
     const backupKey = this.removeKeyFile(recoveryKit.getBackupKey());
     const params: ActivateMasterWalletRequestDTO = {
-      // name: recoveryKit.getName(),
-      // encryptionKey: recoveryKit.getEncryptionKey(),
       accountKey: {
         pub: accountKey.pub,
         keyFile: accountKey.keyFile,
