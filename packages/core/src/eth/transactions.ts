@@ -1,8 +1,13 @@
 import * as BN from "bn.js";
-import { BlockchainType } from "../blockchain";
+import { BlockchainType, transformBlockchainType } from "../blockchain";
 import { Pagination, PaginationOptions, Timestamp } from "../types";
 import { Client } from "../httpClient";
 import { makeQueryString } from "../utils/url";
+import { PaginationTransactionDTO, TransactionDTO } from "../__generate__/eth";
+import _ from "lodash";
+
+export import TransactionStatus = TransactionDTO.StatusEnum;
+import { BNConverter } from "../utils/common";
 
 export interface Transaction {
   id: string;
@@ -49,24 +54,13 @@ export interface RawTransaction {
   data: string;
 }
 
-export enum TransactionStatus {
-  REQUESTED = "REQUESTED",
-  PENDING = "PENDING",
-  FAILED = "FAILED",
-  MINED = "MINED",
-  REVERTED = "REVERTED",
-  CONFIRMED = "CONFIRMED",
-  REPLACED = "REPLACED",
-}
-
 export class Transactions {
   private readonly client: Client;
 
-  private readonly baseUrl;
+  private readonly baseUrl = "/transactions";
 
   constructor(client: Client) {
     this.client = client;
-    this.baseUrl = "/transactions";
   }
 
   public async getTransaction(transactionId: string): Promise<Transaction> {
@@ -79,12 +73,42 @@ export class Transactions {
     options?: TransactionPaginationOptions
   ): Promise<Pagination<Transaction>> {
     const queryString: string = makeQueryString(options);
-    const data: Pagination<Transaction> = await this.client.get<
-      Pagination<Transaction>
+    const data = await this.client.get<
+      NoUndefinedField<PaginationTransactionDTO>
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
     return {
       pagination: data.pagination,
-      results: data.results,
+      results: _.map(data.results, (result) => {
+        const rawTransaction = result.rawTransaction;
+        const signedMultiSigPayload = result.signedMultiSigPayload;
+        const multiSigPayload = signedMultiSigPayload.multiSigPayload;
+        return {
+          ...result,
+          blockchain: transformBlockchainType(result.blockchain),
+          signedMultiSigPayload: {
+            ...signedMultiSigPayload,
+            multiSigPayload: {
+              ...multiSigPayload,
+              value: BNConverter.hexStringToBN(String(multiSigPayload.value)),
+              walletNonce: BNConverter.hexStringToBN(
+                String(multiSigPayload.walletNonce)
+              ),
+            },
+          },
+          rawTransaction: {
+            nonce: BNConverter.hexStringToBN(String(rawTransaction.nonce)),
+            gasPrice: BNConverter.hexStringToBN(
+              String(rawTransaction.gasPrice)
+            ),
+            gasLimit: BNConverter.hexStringToBN(
+              String(rawTransaction.gasLimit)
+            ),
+            to: rawTransaction.to,
+            value: BNConverter.hexStringToBN(String(rawTransaction.value)),
+            data: rawTransaction.data,
+          },
+        };
+      }),
     };
   }
 }

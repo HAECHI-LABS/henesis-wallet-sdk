@@ -17,9 +17,7 @@ export class Coins {
 
   public async getCoins(flag?: boolean): Promise<Coin[]> {
     const params = flag ? `?flag=${flag}` : "";
-    const coinData: CoinDTO[] = await this.client.get<CoinDTO[]>(
-      `/coins${params}`
-    );
+    const coinData = await this.client.get<CoinDTO[]>(`/coins${params}`);
     return coinData.map((coinDatum) => this.resolveCoin(coinDatum));
   }
 

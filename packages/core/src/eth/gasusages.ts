@@ -1,7 +1,8 @@
 import BN from "bn.js";
-import { BlockchainType } from "../blockchain";
+import { BlockchainType, transformBlockchainType } from "../blockchain";
 import { Client } from "../httpClient";
 import { BNConverter } from "../utils/common";
+import { MethodGasUsageDTO } from "../__generate__/eth";
 
 export enum MethodName {
   TRANSFER = "transfer",
@@ -27,10 +28,16 @@ export class Gasusages {
   }
 
   public async getMethodGasUsages(methodName: MethodName): Promise<Method> {
-    const balance = await this.client.get(`${this.baseUrl}?name=${methodName}`);
-    balance.estimatedGasConsumption = BNConverter.hexStringToBN(
-      balance.estimatedGasConsumption
+    const balance = await this.client.get<NoUndefinedField<MethodGasUsageDTO>>(
+      `${this.baseUrl}?name=${methodName}`
     );
-    return balance;
+    return {
+      id: balance.id,
+      name: balance.name as MethodName,
+      blockchain: transformBlockchainType(balance.blockchain),
+      estimatedGasConsumption: BNConverter.hexStringToBN(
+        String(balance.estimatedGasConsumption)
+      ),
+    };
   }
 }
