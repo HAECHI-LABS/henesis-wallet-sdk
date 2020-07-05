@@ -23,27 +23,14 @@ export interface WalletData {
   status: WalletStatus;
 }
 
-export enum WalletStatus {
-  Creating = "CREATING",
-  Active = "ACTIVE",
-  Inactive = "INACTIVE",
-}
-
-export const transformWalletStatus = (
-  status: BtcMasterWalletDTO.StatusEnum | EthMasterWalletDTO.StatusEnum
-): WalletStatus => {
-  const byStatus: Record<
-    BtcMasterWalletDTO.StatusEnum | EthMasterWalletDTO.StatusEnum,
-    WalletStatus
-  > = {
-    [BtcMasterWalletDTO.StatusEnum.ACTIVE]: WalletStatus.Active,
-    [EthMasterWalletDTO.StatusEnum.ACTIVE]: WalletStatus.Active,
-    [BtcMasterWalletDTO.StatusEnum.INACTIVE]: WalletStatus.Inactive,
-    [BtcMasterWalletDTO.StatusEnum.CREATING]: WalletStatus.Creating,
-    [EthMasterWalletDTO.StatusEnum.CREATING]: WalletStatus.Creating,
-  };
-  return byStatus[status];
-};
+export const WalletStatus: Record<
+  | keyof typeof EthMasterWalletDTO.StatusEnum
+  | keyof typeof BtcMasterWalletDTO.StatusEnum,
+  EthMasterWalletDTO.StatusEnum | BtcMasterWalletDTO.StatusEnum
+> = { ...EthMasterWalletDTO.StatusEnum, ...BtcMasterWalletDTO.StatusEnum };
+export type WalletStatus =
+  | EthMasterWalletDTO.StatusEnum
+  | BtcMasterWalletDTO.StatusEnum;
 
 export abstract class Wallet<T> {
   protected readonly client: Client;

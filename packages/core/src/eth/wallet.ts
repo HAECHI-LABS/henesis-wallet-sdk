@@ -17,7 +17,7 @@ import BatchRequest from "./batch";
 import wallet from "../contracts/MasterWallet.json";
 import Bytes from "./eth-core-lib/bytes";
 import { BNConverter, ObjectConverter } from "../utils/common";
-import { WalletData, Wallet, transformWalletStatus } from "../wallet";
+import { WalletData, Wallet } from "../wallet";
 import { makeQueryString } from "../utils/url";
 import { Coins } from "./coins";
 import {
@@ -390,7 +390,6 @@ export class EthMasterWallet extends EthLikeWallet {
       {
         ...userWalletData,
         blockchain: transformBlockchainType(userWalletData.blockchain),
-        status: transformWalletStatus(userWalletData.status),
         encryptionKey: "", // ?
       },
       this.blockchain
@@ -408,7 +407,6 @@ export class EthMasterWallet extends EthLikeWallet {
       {
         ...userWalletData,
         blockchain: transformBlockchainType(userWalletData.blockchain),
-        status: transformWalletStatus(userWalletData.status),
         encryptionKey: "", // ?
       },
       this.blockchain

@@ -20,7 +20,6 @@ import {
   CreateMasterWalletResponseDTO,
   ActivateMasterWalletRequestDTO,
 } from "../__generate__/btc";
-import { transformWalletStatus } from "../wallet";
 
 export class BtcWallets extends Wallets<BtcMasterWallet> {
   public constructor(env: Env, client: Client, keychains: Keychains) {
@@ -47,7 +46,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     });
 
     return new BtcMasterWallet(
-      { ...data, status: transformWalletStatus(data.status) },
+      { ...data },
       this.client,
       this.keychains,
       this.env
@@ -59,7 +58,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       `${this.baseUrl}/${id}`
     );
     return new BtcMasterWallet(
-      { ...data, status: transformWalletStatus(data.status) },
+      { ...data },
       this.client,
       this.keychains,
       this.env
@@ -88,7 +87,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     return walletDatas.map(
       (wallet) =>
         new BtcMasterWallet(
-          { ...wallet, status: transformWalletStatus(wallet.status) },
+          { ...wallet },
           this.client,
           this.keychains,
           this.env
@@ -148,7 +147,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       params
     );
     return new BtcMasterWallet(
-      { ...wallet, status: transformWalletStatus(wallet.status) },
+      { ...wallet },
       this.client,
       this.keychains,
       this.env

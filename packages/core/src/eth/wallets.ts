@@ -14,7 +14,6 @@ import { makeQueryString } from "../utils/url";
 import { BNConverter } from "../utils/common";
 import { HenesisKeys } from "./henesisKeys";
 import { MasterWalletDTO } from "../__generate__/eth";
-import { transformWalletStatus } from "../wallet";
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -47,7 +46,6 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       this.client,
       {
         ...walletData,
-        status: transformWalletStatus(walletData.status),
         blockchain: transformBlockchainType(walletData.blockchain),
       },
       this.keychains,
@@ -69,7 +67,6 @@ export class EthWallets extends Wallets<EthMasterWallet> {
           this.client,
           {
             ...wallet,
-            status: transformWalletStatus(wallet.status),
             blockchain: transformBlockchainType(wallet.blockchain),
           },
           this.keychains,
@@ -121,7 +118,6 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       this.client,
       {
         ...walletData,
-        status: transformWalletStatus(walletData.status),
         blockchain: transformBlockchainType(walletData.blockchain),
       },
       this.keychains,
@@ -152,7 +148,6 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       this.client,
       {
         ...walletData,
-        status: transformWalletStatus(walletData.status),
         blockchain: transformBlockchainType(walletData.blockchain),
       },
       this.keychains,
