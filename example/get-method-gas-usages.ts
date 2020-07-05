@@ -1,3 +1,4 @@
+/// <reference path="../src/typings/index.d.ts" />
 import { SDK } from "../src";
 import "dotenv/config";
 import { MethodName } from "../src/eth/gasusages";
