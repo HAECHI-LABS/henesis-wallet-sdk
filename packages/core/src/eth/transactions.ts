@@ -63,10 +63,41 @@ export class Transactions {
     this.client = client;
   }
 
+  private mappingTransactionDTOToTransaction(
+    transcationDTO: NoUndefinedField<TransactionDTO>
+  ): Transaction {
+    const rawTransaction = transcationDTO.rawTransaction;
+    const signedMultiSigPayload = transcationDTO.signedMultiSigPayload;
+    const multiSigPayload = signedMultiSigPayload.multiSigPayload;
+    return {
+      ...transcationDTO,
+      blockchain: transcationDTO.blockchain,
+      signedMultiSigPayload: {
+        ...signedMultiSigPayload,
+        multiSigPayload: {
+          ...multiSigPayload,
+          value: BNConverter.hexStringToBN(String(multiSigPayload.value)),
+          walletNonce: BNConverter.hexStringToBN(
+            String(multiSigPayload.walletNonce)
+          ),
+        },
+      },
+      rawTransaction: {
+        nonce: BNConverter.hexStringToBN(String(rawTransaction.nonce)),
+        gasPrice: BNConverter.hexStringToBN(String(rawTransaction.gasPrice)),
+        gasLimit: BNConverter.hexStringToBN(String(rawTransaction.gasLimit)),
+        to: rawTransaction.to,
+        value: BNConverter.hexStringToBN(String(rawTransaction.value)),
+        data: rawTransaction.data,
+      },
+    };
+  }
+
   public async getTransaction(transactionId: string): Promise<Transaction> {
-    return await this.client.get<Transaction>(
+    const response = await this.client.get<NoUndefinedField<TransactionDTO>>(
       `${this.baseUrl}/${transactionId}`
     );
+    return this.mappingTransactionDTOToTransaction(response);
   }
 
   public async getTransactions(
@@ -78,37 +109,9 @@ export class Transactions {
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
     return {
       pagination: data.pagination,
-      results: _.map(data.results, (result) => {
-        const rawTransaction = result.rawTransaction;
-        const signedMultiSigPayload = result.signedMultiSigPayload;
-        const multiSigPayload = signedMultiSigPayload.multiSigPayload;
-        return {
-          ...result,
-          blockchain: result.blockchain,
-          signedMultiSigPayload: {
-            ...signedMultiSigPayload,
-            multiSigPayload: {
-              ...multiSigPayload,
-              value: BNConverter.hexStringToBN(String(multiSigPayload.value)),
-              walletNonce: BNConverter.hexStringToBN(
-                String(multiSigPayload.walletNonce)
-              ),
-            },
-          },
-          rawTransaction: {
-            nonce: BNConverter.hexStringToBN(String(rawTransaction.nonce)),
-            gasPrice: BNConverter.hexStringToBN(
-              String(rawTransaction.gasPrice)
-            ),
-            gasLimit: BNConverter.hexStringToBN(
-              String(rawTransaction.gasLimit)
-            ),
-            to: rawTransaction.to,
-            value: BNConverter.hexStringToBN(String(rawTransaction.value)),
-            data: rawTransaction.data,
-          },
-        };
-      }),
+      results: _.map(data.results, (result) =>
+        this.mappingTransactionDTOToTransaction(result)
+      ),
     };
   }
 }
