@@ -1,3 +1,4 @@
+/// <reference path="../src/typings/index.d.ts" />
 import { SDK } from "../src";
 import { EthMasterWallet } from "../src/eth/wallet";
 import "dotenv/config";
