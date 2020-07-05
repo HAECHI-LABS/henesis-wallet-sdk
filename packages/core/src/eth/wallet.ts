@@ -3,7 +3,7 @@ import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import BN from "bn.js";
 import { Coin } from "./coin";
-import { BlockchainType, transformBlockchainType } from "../blockchain";
+import { BlockchainType } from "../blockchain";
 import {
   Balance,
   Key,
@@ -120,7 +120,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
     return {
       id: response.id,
-      blockchain: transformBlockchainType(response.blockchain),
+      blockchain: response.blockchain,
       hash: response.hash,
       status: response.status as any, // ?
     };
@@ -243,7 +243,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   }
 
   protected async sendTransaction(
-    blockchain: string,
+    blockchain: BlockchainType,
     signedMultiSigPayload: SignedMultiSigPayload,
     walletId: string,
     otpCode?: string,
@@ -265,14 +265,14 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
     return {
       id: response.id,
-      blockchain: transformBlockchainType(response.blockchain),
+      blockchain: response.blockchain,
       hash: response.hash,
       status: response.status as any, // ?
     };
   }
 
   protected async sendBatchTransaction(
-    blockchain: string,
+    blockchain: BlockchainType,
     signedMultiSigPayloads: SignedMultiSigPayload[],
     walletId: string,
     otpCode?: string,
@@ -297,7 +297,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       const transaction = batchTransaction.transaction;
       return {
         id: transaction.id,
-        blockchain: transformBlockchainType(transaction.blockchain),
+        blockchain: transaction.blockchain,
         hash: transaction.hash,
         status: transaction.status as any, // ?
       };
@@ -389,7 +389,7 @@ export class EthMasterWallet extends EthLikeWallet {
       this.keychains,
       {
         ...userWalletData,
-        blockchain: transformBlockchainType(userWalletData.blockchain),
+        blockchain: userWalletData.blockchain,
         encryptionKey: "", // ?
       },
       this.blockchain
@@ -406,7 +406,7 @@ export class EthMasterWallet extends EthLikeWallet {
       this.keychains,
       {
         ...userWalletData,
-        blockchain: transformBlockchainType(userWalletData.blockchain),
+        blockchain: userWalletData.blockchain,
         encryptionKey: "", // ?
       },
       this.blockchain
@@ -459,8 +459,8 @@ export class EthMasterWallet extends EthLikeWallet {
             this.keychains,
             {
               ...data,
-              blockchain: transformBlockchainType(data.blockchain),
-              status: transformWalletStatus(data.status),
+              blockchain: data.blockchain,
+              status: data.status,
               encryptionKey: "", // ?
             },
             this.blockchain

@@ -249,7 +249,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   getChain(): BlockchainType {
-    return BlockchainType.BitCoin;
+    return BlockchainType.BITCOIN;
   }
 
   async getBalance(): Promise<Balance[]> {
