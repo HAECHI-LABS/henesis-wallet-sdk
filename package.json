@@ -5,6 +5,7 @@
     "bootstrap": "rm -rf ./**./node_modules && npm install && npm run lerna:bootstrap && npm run build",
     "publish:patch": "lerna version patch && lerna publish from-git",
     "publish:prerelease": "lerna version prerelease && lerna publish from-git",
+    "codegen": "lerna run --scope=\"@haechi-labs/henesis-wallet-core\" codegen",
     "build": "lerna run build",
     "test": "lerna run test"
   },
