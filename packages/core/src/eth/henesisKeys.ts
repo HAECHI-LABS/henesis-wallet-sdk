@@ -25,7 +25,7 @@ export class HenesisKeys {
     );
     const { coinType, amount, name, symbol } = response;
     return {
-      coinType: coinType as any, // ?
+      coinType: coinType as any,
       amount: BNConverter.hexStringToBN(String(amount)),
       name,
       symbol,

@@ -35,7 +35,7 @@ export interface EthTransaction {
   id: string;
   blockchain: BlockchainType;
   hash: string;
-  status: string;
+  status: TransactionDTO.StatusEnum;
 }
 
 export interface EthWalletData extends WalletData {
@@ -122,7 +122,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       id: response.id,
       blockchain: response.blockchain,
       hash: response.hash,
-      status: response.status as any, // ?
+      status: response.status,
     };
   }
 
@@ -267,7 +267,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       id: response.id,
       blockchain: response.blockchain,
       hash: response.hash,
-      status: response.status as any, // ?
+      status: response.status,
     };
   }
 
@@ -299,7 +299,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
         id: transaction.id,
         blockchain: transaction.blockchain,
         hash: transaction.hash,
-        status: transaction.status as any, // ?
+        status: transaction.status,
       };
     });
   }
@@ -424,7 +424,7 @@ export class EthMasterWallet extends EthLikeWallet {
     return balances.map((balance) => ({
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(String(balance.amount)),
-      coinType: balance.coinType as any, // ?
+      coinType: balance.coinType as any,
       name: balance.name,
     }));
   }
@@ -569,7 +569,7 @@ export class EthUserWallet extends EthLikeWallet {
     return balances.map((balance) => ({
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(String(balance.amount)),
-      coinType: balance.coinType as any, // ?
+      coinType: balance.coinType as any,
       name: balance.name,
     }));
   }
