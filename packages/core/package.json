@@ -32,7 +32,6 @@
     "@types/bip38": "^2.0.1",
     "@types/bitcoinjs-lib": "^5.0.0",
     "@types/crypto-js": "^3.1.45",
-    "@types/jest": "^24.9.1",
     "@types/lodash": "^4.14.155",
     "@types/wif": "^2.0.1",
     "aes-js": "^3.1.2",
@@ -69,13 +68,14 @@
     ],
     "globals": {
       "ts-jest": {
-        "tsConfigFile": "tsconfig.jest.json",
+        "tsConfig": "tsconfig.jest.json",
         "diagnostics": true
       }
     },
     "testEnvironment": "node"
   },
   "devDependencies": {
+    "@types/jest": "^24.9.1",
     "@types/nock": "^11.1.0",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
