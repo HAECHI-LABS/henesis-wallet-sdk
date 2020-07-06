@@ -43,7 +43,7 @@ export class BtcTransfers {
   }
 
   public async getTransfer(id: string): Promise<Transfer> {
-    const response = await this.client.get(`/transfers/${id}`);
+    const response = await this.client.get<TransferDTO>(`/transfers/${id}`);
     return parseResponseToTransfer(response);
   }
 

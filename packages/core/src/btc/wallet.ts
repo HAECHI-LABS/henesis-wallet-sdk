@@ -26,6 +26,7 @@ import {
   EstimatedFeeDTO,
   BalanceDTO,
   MasterWalletDTO,
+  TransferDTO,
 } from "../__generate__/btc";
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
@@ -40,7 +41,7 @@ export interface BtcTransaction {
   feeAmount?: BN;
   amount: BN;
   outputs: BtcTransactionOutput[];
-  createdAt: number;
+  createdAt: string;
 }
 
 export interface BtcEstimatedFee {
@@ -189,7 +190,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       payload.outputs.push(rawTransaction.outputs[i]);
     }
 
-    const transfer = await this.client.post<Transfer>(
+    const transfer = await this.client.post<TransferDTO>(
       `${this.baseUrl}/${this.data.id}/transactions`,
       payload
     );
