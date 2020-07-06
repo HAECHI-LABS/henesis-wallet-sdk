@@ -27,22 +27,11 @@ export interface OTP {
   url: string;
 }
 
-export enum Role {
-  VIEWER = "VIEWER",
-  ADMIN = "ADMIN",
-  HAECHI = "HAECHI",
-  COIN = "COIN",
-}
-
-export const transformRole = (role: AccountDTO.RolesEnum) => {
-  const byRole: Record<AccountDTO.RolesEnum, Role> = {
-    [AccountDTO.RolesEnum.VIEWER]: Role.VIEWER,
-    [AccountDTO.RolesEnum.ADMIN]: Role.ADMIN,
-    [AccountDTO.RolesEnum.HAECHI]: Role.HAECHI,
-    [AccountDTO.RolesEnum.COIN]: Role.COIN,
-  };
-  return byRole[role];
-};
+export const Role: Record<
+  keyof typeof AccountDTO.RolesEnum,
+  AccountDTO.RolesEnum
+> = { ...AccountDTO.RolesEnum };
+export type Role = AccountDTO.RolesEnum;
 
 export class Accounts {
   private readonly client: Client;
@@ -59,10 +48,7 @@ export class Accounts {
     const response = await this.client.get<NoUndefinedField<AccountDTO>>(
       `${this.baseUrl}/me`
     );
-    return {
-      ...response,
-      roles: _.map(response.roles, (role) => transformRole(role)),
-    };
+    return response;
   }
 
   public async login(
@@ -78,10 +64,7 @@ export class Accounts {
         otpCode,
       }
     );
-    return {
-      ...response,
-      roles: _.map(response.roles, (role) => transformRole(role)),
-    };
+    return response;
   }
 
   public async changeName(firstName: string, lastName: string): Promise<void> {

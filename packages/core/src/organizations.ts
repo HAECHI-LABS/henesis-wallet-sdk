@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { Client } from "./httpClient";
 import { Secret } from "./types";
-import { Account, Role, transformRole } from "./accounts";
+import { Account, Role } from "./accounts";
 import {
   OrganizationDTO,
   OrgAccountDTO,
@@ -34,12 +34,7 @@ export class Organizations {
     const response = await this.client.get<NoUndefinedField<OrgAccountDTO>[]>(
       `${this.baseUrl}/accounts`
     );
-    return _.map(response, (account) => {
-      return {
-        ...account,
-        roles: _.map(account.roles, (role) => transformRole(role)),
-      };
-    });
+    return response;
   }
 
   public async createSecret(): Promise<Secret> {
@@ -61,9 +56,6 @@ export class Organizations {
         otpCode,
       }
     );
-    return {
-      ...response,
-      roles: _.map(response.roles, (role) => transformRole(role)),
-    };
+    return response;
   }
 }
