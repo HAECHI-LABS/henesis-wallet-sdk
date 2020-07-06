@@ -5,7 +5,7 @@ import {
   toCamelCase as toStringCamelCase,
 } from "./string";
 import { BtcTransaction, BtcTransactionOutput } from "../btc/wallet";
-import { Transfer, TransferType } from "../btc/transfers";
+import { Transfer } from "../btc/transfers";
 import { TransferDTO } from "../__generate__/btc";
 
 export class ObjectConverter {
@@ -95,7 +95,7 @@ export const parseResponseToTransfer = (t: TransferDTO): Transfer => {
     } as BtcTransaction,
     receivedAt: t.receivedAt,
     sendTo: t.sendTo,
-    type: t.type as TransferType,
+    type: t.type,
     status: t.status,
     createdAt: t.createdAt,
   };

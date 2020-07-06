@@ -6,6 +6,7 @@ import { BtcTransaction, BtcTransactionOutput } from "./wallet";
 import { PaginationTransferDTO, TransferDTO } from "../__generate__/btc";
 
 export import TransferStatus = TransferDTO.StatusEnum;
+export import TransferType = TransferDTO.TypeEnum;
 
 export interface TransferPaginationOptions extends PaginationOptions {
   walletId?: string;
@@ -15,11 +16,6 @@ export interface TransferPaginationOptions extends PaginationOptions {
   transactionHash?: string;
   updatedAtGte?: Timestamp;
   updatedAtLt?: Timestamp;
-}
-
-export enum TransferType {
-  WITHDRAWAL = "WITHDRAWAL",
-  DEPOSIT = "DEPOSIT",
 }
 
 export interface Transfer {
