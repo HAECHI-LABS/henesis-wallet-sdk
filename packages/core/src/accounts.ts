@@ -19,7 +19,6 @@ export interface Account {
   firstName: string;
   lastName: string;
   accessToken?: string;
-  organizationId: string;
   roles: Role[];
 }
 

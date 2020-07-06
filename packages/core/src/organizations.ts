@@ -37,7 +37,6 @@ export class Organizations {
     return _.map(response, (account) => {
       return {
         ...account,
-        organizationId: "", // ?
         roles: _.map(account.roles, (role) => transformRole(role)),
       };
     });
@@ -64,7 +63,6 @@ export class Organizations {
     );
     return {
       ...response,
-      organizationId: "", // ?
       roles: _.map(response.roles, (role) => transformRole(role)),
     };
   }
