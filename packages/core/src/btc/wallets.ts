@@ -86,12 +86,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     );
     return walletDatas.map(
       (wallet) =>
-        new BtcMasterWallet(
-          { ...wallet },
-          this.client,
-          this.keychains,
-          this.env
-        )
+        new BtcMasterWallet(wallet, this.client, this.keychains, this.env)
     );
   }
 
@@ -146,11 +141,6 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       `${this.baseUrl}/${recoveryKit.getWalletId}/activate`,
       params
     );
-    return new BtcMasterWallet(
-      { ...wallet },
-      this.client,
-      this.keychains,
-      this.env
-    );
+    return new BtcMasterWallet(wallet, this.client, this.keychains, this.env);
   }
 }

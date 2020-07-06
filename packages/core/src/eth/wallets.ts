@@ -44,9 +44,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
 
     return new EthMasterWallet(
       this.client,
-      {
-        ...walletData,
-      },
+      walletData,
       this.keychains,
       this.blockchain
     );
@@ -64,9 +62,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       (wallet) =>
         new EthMasterWallet(
           this.client,
-          {
-            ...wallet,
-          },
+          wallet,
           this.keychains,
           this.blockchain
         )
@@ -114,9 +110,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
 
     return new EthMasterWallet(
       this.client,
-      {
-        ...walletData,
-      },
+      walletData,
       this.keychains,
       this.blockchain
     );
@@ -143,9 +137,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
 
     return new EthMasterWallet(
       this.client,
-      {
-        ...walletData,
-      },
+      walletData,
       this.keychains,
       this.blockchain
     );

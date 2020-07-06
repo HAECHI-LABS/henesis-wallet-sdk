@@ -388,10 +388,7 @@ export class EthMasterWallet extends EthLikeWallet {
       this.client,
       this.data,
       this.keychains,
-      {
-        ...userWalletData,
-        blockchain: userWalletData.blockchain,
-      },
+      userWalletData,
       this.blockchain
     );
   }
@@ -404,10 +401,7 @@ export class EthMasterWallet extends EthLikeWallet {
       this.client,
       this.data,
       this.keychains,
-      {
-        ...userWalletData,
-        blockchain: userWalletData.blockchain,
-      },
+      userWalletData,
       this.blockchain
     );
   }
@@ -456,11 +450,7 @@ export class EthMasterWallet extends EthLikeWallet {
             this.client,
             this.data,
             this.keychains,
-            {
-              ...data,
-              blockchain: data.blockchain,
-              status: data.status,
-            },
+            data,
             this.blockchain
           )
       ),
