@@ -49,7 +49,8 @@ export interface EthMasterWalletData extends EthWalletData {
   encryptionKey: string;
 }
 
-export interface EthUserWalletData extends EthWalletData {}
+export interface EthUserWalletData
+  extends Omit<EthWalletData, "encryptionKey"> {}
 
 export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;
@@ -390,7 +391,6 @@ export class EthMasterWallet extends EthLikeWallet {
       {
         ...userWalletData,
         blockchain: userWalletData.blockchain,
-        encryptionKey: "", // ?
       },
       this.blockchain
     );
@@ -407,7 +407,6 @@ export class EthMasterWallet extends EthLikeWallet {
       {
         ...userWalletData,
         blockchain: userWalletData.blockchain,
-        encryptionKey: "", // ?
       },
       this.blockchain
     );
@@ -461,12 +460,11 @@ export class EthMasterWallet extends EthLikeWallet {
               ...data,
               blockchain: data.blockchain,
               status: data.status,
-              encryptionKey: "", // ?
             },
             this.blockchain
           )
       ),
-    } as Pagination<EthUserWallet>;
+    };
   }
 
   getId(): string {
