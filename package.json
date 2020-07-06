@@ -1,8 +1,10 @@
 {
   "name": "henesis-wallet-sdk",
   "scripts": {
+    "install:reset": "rm -rf ./**./node_modules && npm install",
     "lerna:bootstrap": "lerna run preBootstrap && lerna bootstrap --hoist --no-ci",
-    "bootstrap": "rm -rf ./**./node_modules && npm install && npm run lerna:bootstrap && npm run build",
+    "bootstrap": "npm run install:reset && npm run lerna:bootstrap && npm run build",
+    "travis:bootstrap": "npm run lerna:bootstrap && npm run build",
     "publish:patch": "lerna version patch && lerna publish from-git",
     "publish:prerelease": "lerna version prerelease && lerna publish from-git",
     "codegen": "lerna run --scope=\"@haechi-labs/henesis-wallet-core\" codegen",
