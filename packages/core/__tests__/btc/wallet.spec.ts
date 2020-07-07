@@ -120,10 +120,6 @@ describe.skip('BtcMasterWallet', () => {
       const wallet = await wallets.getWallet(
         '61898f8d5b4c69bbd7f7b9216e5d5bff',
       );
-      const txs = await wallet.getTransactions();
-      txs.results.forEach(tx => {
-        console.log(tx);
-      });
     });
   });
 });

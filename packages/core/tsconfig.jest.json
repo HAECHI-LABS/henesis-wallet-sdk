@@ -1,4 +1,5 @@
 {
   "extends": "../../tsconfig.jest.json",
-  "compilerOptions": {}
+  "compilerOptions": {},
+  "include": ["./__tests__"]
 }

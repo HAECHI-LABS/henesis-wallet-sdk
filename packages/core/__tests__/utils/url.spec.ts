@@ -6,5 +6,8 @@ describe('url.spec.ts', () => {
     it('should make makeQueryString', () => {
       expect(makeQueryString({ a: 1, b: 2 })).toEqual('a=1&b=2');
     });
+    it('should make makeQueryString empty', () => {
+      expect(makeQueryString({})).toEqual('');
+    });
   });
 });

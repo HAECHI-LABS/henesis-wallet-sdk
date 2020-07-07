@@ -1,5 +1,7 @@
 import { Client } from "../httpClient";
 import { Balance, Key } from "../types";
+import { KeyDTO, BalanceDTO } from "../__generate__/eth";
+import { BNConverter } from "../utils/common";
 
 export class HenesisKeys {
   private readonly client: Client;
@@ -11,10 +13,22 @@ export class HenesisKeys {
   }
 
   public async getHenesisKey(): Promise<Key> {
-    return await this.client.get<Key>(`${this.baseUrl}/me`);
+    const response = await this.client.get<RequireProperty<KeyDTO, "pub">>(
+      `${this.baseUrl}/me`
+    );
+    return response;
   }
 
   public async getHenesisKeyBalance(): Promise<Balance> {
-    return await this.client.get<Balance>(`${this.baseUrl}/balance`);
+    const response = await this.client.get<BalanceDTO>(
+      `${this.baseUrl}/balance`
+    );
+    const { coinType, amount, name, symbol } = response;
+    return {
+      coinType: coinType as any,
+      amount: BNConverter.hexStringToBN(String(amount)),
+      name,
+      symbol,
+    };
   }
 }

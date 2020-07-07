@@ -10,7 +10,7 @@ describe('Eth', () => {
     symbol: 'ETH',
     address: null,
     desc: '',
-    blockchain: BlockchainType.Ethereum
+    blockchain: BlockchainType.ETHEREUM
   };
   beforeEach(() => {
     eth = new Eth(coinData);

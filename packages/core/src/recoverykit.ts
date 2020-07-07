@@ -57,7 +57,7 @@ export class RecoveryKit {
       .fillColor("#3A4044")
       .text(
         `Platform : ${this.env == Env.Test ? "Testnet" : ""} ${this.camelize(
-          this.blockchain
+          this.blockchain as any
         )}`,
         36,
         76

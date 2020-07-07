@@ -20,14 +20,22 @@ import { BNConverter, ObjectConverter } from "../utils/common";
 import { WalletData, Wallet } from "../wallet";
 import { makeQueryString } from "../utils/url";
 import { Coins } from "./coins";
+import {
+  TransactionDTO,
+  BatchTransactionDTO,
+  NonceDTO,
+  UserWalletDTO,
+  BalanceDTO,
+  PaginationUserWalletDTO,
+  MasterWalletDTO,
+} from "../__generate__/eth";
+import _ from "lodash";
 
 export interface EthTransaction {
   id: string;
   blockchain: BlockchainType;
-  walletId: string;
-  accountId: string;
   hash: string;
-  status: string;
+  status: TransactionDTO.StatusEnum;
 }
 
 export interface EthWalletData extends WalletData {
@@ -41,7 +49,8 @@ export interface EthMasterWalletData extends EthWalletData {
   encryptionKey: string;
 }
 
-export interface EthUserWalletData extends EthWalletData {}
+export interface EthUserWalletData
+  extends Omit<EthWalletData, "encryptionKey"> {}
 
 export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;
@@ -101,12 +110,21 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   ): Promise<EthTransaction> {
     const walletId = this.getId();
     const blockchain = this.getChain();
-    return this.client.post<EthTransaction>(`${this.baseUrl}/transactions`, {
-      walletId,
-      transactionId,
-      blockchain,
-      otpCode,
-    });
+    const response = await this.client.post<NoUndefinedField<TransactionDTO>>(
+      `${this.baseUrl}/transactions`,
+      {
+        walletId,
+        transactionId,
+        blockchain,
+        otpCode,
+      }
+    );
+    return {
+      id: response.id,
+      blockchain: response.blockchain,
+      hash: response.hash,
+      status: response.status,
+    };
   }
 
   async contractCall(
@@ -225,28 +243,37 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     return this.keychains.sign(this.data.accountKey, passphrase, payload);
   }
 
-  protected sendTransaction(
-    blockchain: string,
+  protected async sendTransaction(
+    blockchain: BlockchainType,
     signedMultiSigPayload: SignedMultiSigPayload,
     walletId: string,
     otpCode?: string,
     gasPrice?: BN,
     gasLimit?: BN
-  ) {
-    return this.client.post<EthTransaction>(`${this.baseUrl}/transactions`, {
-      walletId,
-      blockchain,
-      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
-        signedMultiSigPayload
-      ),
-      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
-      gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
-      otpCode,
-    });
+  ): Promise<EthTransaction> {
+    const response = await this.client.post<TransactionDTO>(
+      `${this.baseUrl}/transactions`,
+      {
+        walletId,
+        blockchain,
+        signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
+          signedMultiSigPayload
+        ),
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+        gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
+        otpCode,
+      }
+    );
+    return {
+      id: response.id,
+      blockchain: response.blockchain,
+      hash: response.hash,
+      status: response.status,
+    };
   }
 
   protected async sendBatchTransaction(
-    blockchain: string,
+    blockchain: BlockchainType,
     signedMultiSigPayloads: SignedMultiSigPayload[],
     walletId: string,
     otpCode?: string,
@@ -257,24 +284,32 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       (signedMultiSigPayload) =>
         convertSignedMultiSigPayloadToDTO(signedMultiSigPayload)
     );
-    return this.client.post<EthTransaction[]>(
-      `${this.baseUrl}/batch-transactions`,
-      {
-        walletId,
-        blockchain,
-        signedMultiSigPayloads: signedMultiSigPayloadDTOs,
-        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
-        gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
-        otpCode,
-      }
-    );
+    const response = await this.client.post<
+      NoUndefinedField<BatchTransactionDTO>[]
+    >(`${this.baseUrl}/batch-transactions`, {
+      walletId,
+      blockchain,
+      signedMultiSigPayloads: signedMultiSigPayloadDTOs,
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
+      otpCode,
+    });
+    return _.map(response, (batchTransaction) => {
+      const transaction = batchTransaction.transaction;
+      return {
+        id: transaction.id,
+        blockchain: transaction.blockchain,
+        hash: transaction.hash,
+        status: transaction.status,
+      };
+    });
   }
 
   async getNonce(): Promise<BN> {
-    const nonce: {
-      nonce: string;
-    } = await this.client.get(`${this.baseUrl}/${this.getId()}/nonce`);
-    return BNConverter.hexStringToBN(nonce.nonce);
+    const nonce = await this.client.get<NonceDTO>(
+      `${this.baseUrl}/${this.getId()}/nonce`
+    );
+    return BNConverter.hexStringToBN(String(nonce.nonce));
   }
 
   protected getGasLimitByTicker(ticker: string): BN {
@@ -337,18 +372,17 @@ export class EthMasterWallet extends EthLikeWallet {
       multiSigPayload,
     };
 
-    const userWalletData = await this.client.post<EthUserWalletData>(
-      `${this.baseUrl}/${this.getId()}/user-wallets`,
-      {
-        name,
-        salt: BNConverter.bnToHexString(salt),
-        blockchain: this.getChain(),
-        signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
-          signedMultiSigPayload
-        ),
-        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
-      }
-    );
+    const userWalletData = await this.client.post<
+      NoUndefinedField<UserWalletDTO>
+    >(`${this.baseUrl}/${this.getId()}/user-wallets`, {
+      name,
+      salt: BNConverter.bnToHexString(salt),
+      blockchain: this.getChain(),
+      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
+        signedMultiSigPayload
+      ),
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+    });
 
     return new EthUserWallet(
       this.client,
@@ -360,9 +394,9 @@ export class EthMasterWallet extends EthLikeWallet {
   }
 
   async getUserWallet(walletId: string): Promise<EthUserWallet> {
-    const userWalletData = await this.client.get<EthUserWalletData>(
-      `${this.baseUrl}/${this.getId()}/user-wallets/${walletId}`
-    );
+    const userWalletData = await this.client.get<
+      NoUndefinedField<UserWalletDTO>
+    >(`${this.baseUrl}/${this.getId()}/user-wallets/${walletId}`);
     return new EthUserWallet(
       this.client,
       this.data,
@@ -373,20 +407,17 @@ export class EthMasterWallet extends EthLikeWallet {
   }
 
   async getBalance(flag?: boolean): Promise<Balance[]> {
-    const params = flag ? `?flag=${flag}` : "";
-    const balances: {
-      coinType: string;
-      amount: string;
-      name: string;
-      symbol: string;
-    }[] = await this.client.get(
-      `${this.baseUrl}/${this.data.id}/balance${params}`
+    const queryString: string = makeQueryString({ flag });
+    const balances = await this.client.get<NoUndefinedField<BalanceDTO>[]>(
+      `${this.baseUrl}/${this.data.id}/balance${
+        queryString ? `?${queryString}` : ""
+      }`
     );
 
     return balances.map((balance) => ({
       symbol: balance.symbol,
-      amount: BNConverter.hexStringToBN(balance.amount),
-      coinType: balance.coinType,
+      amount: BNConverter.hexStringToBN(String(balance.amount)),
+      coinType: balance.coinType as any,
       name: balance.name,
     }));
   }
@@ -403,8 +434,8 @@ export class EthMasterWallet extends EthLikeWallet {
     options?: UserWalletPaginationOptions
   ): Promise<Pagination<EthUserWallet>> {
     const queryString: string = makeQueryString(options);
-    const data: Pagination<EthUserWalletData> = await this.client.get<
-      Pagination<EthUserWalletData>
+    const data = await this.client.get<
+      NoUndefinedField<PaginationUserWalletDTO>
     >(
       `${this.baseUrl}/${this.data.id}/user-wallets${
         queryString ? `?${queryString}` : ""
@@ -423,7 +454,7 @@ export class EthMasterWallet extends EthLikeWallet {
             this.blockchain
           )
       ),
-    } as Pagination<EthUserWallet>;
+    };
   }
 
   getId(): string {
@@ -431,11 +462,12 @@ export class EthMasterWallet extends EthLikeWallet {
   }
 
   async changeName(name: string) {
-    const masterWalletData: EthMasterWalletData = await this.client.patch<
-      EthMasterWalletData
-    >(`${this.baseUrl}/${this.data.id}/name`, {
-      name,
-    });
+    const masterWalletData = await this.client.patch<MasterWalletDTO>(
+      `${this.baseUrl}/${this.data.id}/name`,
+      {
+        name,
+      }
+    );
     this.data.name = masterWalletData.name;
   }
 
@@ -510,29 +542,22 @@ export class EthUserWallet extends EthLikeWallet {
   }
 
   async getNonce(): Promise<BN> {
-    const nonce: {
-      nonce: string;
-    } = await this.client.get(
+    const nonce = await this.client.get<NonceDTO>(
       `${this.baseUrl}/${this.data.id}/user-wallets/${this.userWalletData.id}/nonce`
     );
-    return BNConverter.hexStringToBN(nonce.nonce);
+    return BNConverter.hexStringToBN(String(nonce.nonce));
   }
 
   async getBalance(flag?: boolean): Promise<Balance[]> {
     const params = flag ? `?flag=${flag}` : "";
-    const balances: {
-      coinType: string;
-      amount: string;
-      name: string;
-      symbol: string;
-    }[] = await this.client.get(
+    const balances = await this.client.get<BalanceDTO[]>(
       `${this.baseUrl}/${this.data.id}/user-wallets/${this.userWalletData.id}/balance${params}`
     );
 
     return balances.map((balance) => ({
       symbol: balance.symbol,
-      amount: BNConverter.hexStringToBN(balance.amount),
-      coinType: balance.coinType,
+      amount: BNConverter.hexStringToBN(String(balance.amount)),
+      coinType: balance.coinType as any,
       name: balance.name,
     }));
   }
@@ -550,9 +575,7 @@ export class EthUserWallet extends EthLikeWallet {
   }
 
   async changeName(name: string) {
-    const userWalletData: EthUserWalletData = await this.client.patch<
-      EthUserWalletData
-    >(
+    const userWalletData = await this.client.patch<UserWalletDTO>(
       `${this.baseUrl}/${this.data.id}/user-wallets/${this.userWalletData.id}/name`,
       {
         name,

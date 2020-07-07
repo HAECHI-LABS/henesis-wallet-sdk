@@ -10,7 +10,7 @@ describe('Klay', () => {
     symbol: 'KLAY',
     address: null,
     desc: '',
-    blockchain: BlockchainType.Klaytn,
+    blockchain: BlockchainType.KLAYTN,
   };
   beforeEach(() => {
     klay = new Klay(coinData);

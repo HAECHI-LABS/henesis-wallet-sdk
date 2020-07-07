@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - "10.15"
+  - '10.15'
 
 env:
   global:
@@ -32,7 +32,9 @@ addons:
     update: true
 
 install:
-  - npm run bootstrap
+  - npm run install:reset
+  - npm run codegen
+  - npm run travis:bootstrap
 
 script:
   - bash ./scripts/core.sh
