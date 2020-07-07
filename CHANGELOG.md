@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.14](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.13...v2.0.0-alpha.14) (2020-07-07)
+
+
+### Bug Fixes
+
+* add Triple-Slash Directives ([4d6cf55](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4d6cf55849f0087753e03548906cdd55e8d6b31f))
+* add Triple-Slash Directives ([924d19e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/924d19edcdf1ddaf186a210f6acbca1715d35ddb))
+* add updated at to event ([a1d33f5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a1d33f5dcfdc61317216bf6a55fdad914e553a00))
+* add updated at to event ([203a233](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/203a23398a965da7aa3d9966e81570acd3d393a0))
+
+
+
+
+
 # [2.0.0-alpha.13](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.12...v2.0.0-alpha.13) (2020-07-02)
 
 
