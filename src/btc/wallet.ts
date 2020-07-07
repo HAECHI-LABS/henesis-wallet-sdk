@@ -77,9 +77,14 @@ export interface BtcRawTransactionOutput {
   amount: string;
 }
 
+export interface BtcCreateTransactionOutput
+  extends Omit<BtcTransactionOutput, "amount"> {
+  amount: string;
+}
+
 export interface BtcCreateRawTransaction {
   inputs: {
-    transactionOutput: BtcTransactionOutput;
+    transactionOutput: BtcCreateTransactionOutput;
     accountSignature: string;
   }[];
   outputs: BtcRawTransactionOutput[];
@@ -180,8 +185,12 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     };
 
     for (let i = 0; i < rawTransaction.inputs.length; i++) {
+      const transactionOutput = rawTransaction.inputs[i].transactionOutput;
       payload.inputs.push({
-        transactionOutput: rawTransaction.inputs[i].transactionOutput,
+        transactionOutput: {
+          ...transactionOutput,
+          amount: BNConverter.bnToHexString(transactionOutput.amount),
+        },
         accountSignature: accountSigs[i],
       });
     }
