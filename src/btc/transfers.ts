@@ -3,6 +3,10 @@ import { Client } from "../httpClient";
 import { BNConverter, parseResponseToTransfer } from "../utils/common";
 import { makeQueryString } from "../utils/url";
 import { BtcTransaction, BtcTransactionOutput } from "./wallet";
+import { PaginationTransferDTO, TransferDTO } from "../__generate__/btc";
+
+export import TransferStatus = TransferDTO.StatusEnum;
+export import TransferType = TransferDTO.TypeEnum;
 
 export interface TransferPaginationOptions extends PaginationOptions {
   walletId?: string;
@@ -12,17 +16,6 @@ export interface TransferPaginationOptions extends PaginationOptions {
   transactionHash?: string;
   updatedAtGte?: Timestamp;
   updatedAtLt?: Timestamp;
-}
-
-export enum TransferType {
-  WITHDRAWAL = "WITHDRAWAL",
-  DEPOSIT = "DEPOSIT",
-}
-
-export enum TransferStatus {
-  PENDING = "PENDING",
-  MINED = "MINED",
-  CONFIRMED = "CONFIRMED",
 }
 
 export interface Transfer {
@@ -46,7 +39,7 @@ export class BtcTransfers {
   }
 
   public async getTransfer(id: string): Promise<Transfer> {
-    const response = await this.client.get(`/transfers/${id}`);
+    const response = await this.client.get<TransferDTO>(`/transfers/${id}`);
     return parseResponseToTransfer(response);
   }
 
@@ -54,7 +47,7 @@ export class BtcTransfers {
     options?: TransferPaginationOptions
   ): Promise<Pagination<Transfer>> {
     const queryString: string = makeQueryString(options);
-    const data: Pagination<any> = await this.client.get(
+    const data = await this.client.get<PaginationTransferDTO>(
       `/transfers${queryString ? `?${queryString}` : ""}`
     );
 

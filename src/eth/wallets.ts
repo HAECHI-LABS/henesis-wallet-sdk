@@ -13,6 +13,7 @@ import { keccak256s } from "./eth-core-lib/hash";
 import { makeQueryString } from "../utils/url";
 import { BNConverter } from "../utils/common";
 import { HenesisKeys } from "./henesisKeys";
+import { MasterWalletDTO } from "../__generate__/eth";
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -37,7 +38,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
   }
 
   public async getMasterWallet(id: string): Promise<EthMasterWallet> {
-    const walletData = await this.client.get<EthMasterWalletData>(
+    const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
 
@@ -53,15 +54,21 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     options?: MasterWalletSearchOptions
   ): Promise<EthMasterWallet[]> {
     const queryString: string = makeQueryString(options);
-    const walletDatas = await this.client.get<EthMasterWalletData[]>(
-      `${this.baseUrl}${queryString ? `?${queryString}` : ""}`
-    );
+    const walletDatas = await this.client.get<
+      NoUndefinedField<MasterWalletDTO>[]
+    >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
     return walletDatas.map(
-      (x) =>
-        new EthMasterWallet(this.client, x, this.keychains, this.blockchain)
+      (wallet) =>
+        new EthMasterWallet(
+          this.client,
+          wallet,
+          this.keychains,
+          this.blockchain
+        )
     );
   }
+
   // todo: henesis-keys
   public async createRecoveryKit(
     name: string,
@@ -92,15 +99,14 @@ export class EthWallets extends Wallets<EthMasterWallet> {
   public async createMasterWalletWithKit(
     recoveryKit: RecoveryKit
   ): Promise<EthMasterWallet> {
-    const walletData = await this.client.post<EthMasterWalletData>(
-      this.baseUrl,
-      {
-        name: recoveryKit.getName(),
-        accountKey: recoveryKit.getAccountKey(),
-        backupKey: this.removeKeyFile(recoveryKit.getBackupKey()),
-        encryptionKey: recoveryKit.getEncryptionKey(),
-      }
-    );
+    const walletData = await this.client.post<
+      NoUndefinedField<MasterWalletDTO>
+    >(this.baseUrl, {
+      name: recoveryKit.getName(),
+      accountKey: recoveryKit.getAccountKey(),
+      backupKey: this.removeKeyFile(recoveryKit.getBackupKey()),
+      encryptionKey: recoveryKit.getEncryptionKey(),
+    });
 
     return new EthMasterWallet(
       this.client,
@@ -118,17 +124,16 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const walletData = await this.client.post<EthMasterWalletData>(
-      this.baseUrl,
-      {
-        name,
-        blockchain: this.blockchain,
-        accountKey: this.removePrivateKey(accountKey),
-        backupKey: this.removeKeyFile(this.removePrivateKey(backupKey)),
-        encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
-        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
-      }
-    );
+    const walletData = await this.client.post<
+      NoUndefinedField<MasterWalletDTO>
+    >(this.baseUrl, {
+      name,
+      blockchain: this.blockchain,
+      accountKey: this.removePrivateKey(accountKey),
+      backupKey: this.removeKeyFile(this.removePrivateKey(backupKey)),
+      encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+    });
 
     return new EthMasterWallet(
       this.client,

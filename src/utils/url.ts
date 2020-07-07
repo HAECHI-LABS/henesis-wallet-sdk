@@ -13,9 +13,9 @@ export const makePrefixPathByBlockchainType = (blockchain?: BlockchainType) => {
     return "";
   }
   const blockchainByType: Record<BlockchainType, string> = {
-    [BlockchainType.Ethereum]: "/eth",
-    [BlockchainType.Klaytn]: "/klay",
-    [BlockchainType.BitCoin]: "/btc",
+    [BlockchainType.ETHEREUM]: "/eth",
+    [BlockchainType.KLAYTN]: "/klay",
+    [BlockchainType.BITCOIN]: "/btc",
   };
   return blockchainByType[blockchain];
 };

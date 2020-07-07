@@ -13,9 +13,12 @@
   ],
   "scripts": {
     "node:example": "ts-node --files ./example/change-account-role.ts",
-    "codegen:btc": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i http://localhost:8080/v2/api-docs -l typescript-fetch -o ./src/__generate__/btc --type-mappings Date=string",
-    "codegen:eth": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i http://localhost:8080/v2/api-docs -l typescript-fetch -o ./src/__generate__/eth --type-mappings Date=string",
+    "codegen": "concurrently \"npm run codegen:btc\" \"npm run codegen:eth\" \"npm run codegen:accounts\"",
+    "codegen:btc": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i https://dev.wallet.henesis.io/docs/v2/btc/v2/api-docs -l typescript-fetch -o ./src/__generate__/btc --type-mappings Date=string",
+    "codegen:eth": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i https://dev.wallet.henesis.io/docs/v2/eth/v2/api-docs -l typescript-fetch -o ./src/__generate__/eth --type-mappings Date=string",
+    "codegen:accounts": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i https://dev.wallet.henesis.io/docs/v2/accounts/v2/api-docs -l typescript-fetch -o ./src/__generate__/accounts --type-mappings Date=string",
     "test": "jest",
+    "type-check": "tsc --noEmit",
     "build": "rm -rf ./lib && tsc",
     "eslint": "./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src",
     "eslint:fix": "./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src --fix",
@@ -29,7 +32,6 @@
     "@types/bip38": "^2.0.1",
     "@types/bitcoinjs-lib": "^5.0.0",
     "@types/crypto-js": "^3.1.45",
-    "@types/jest": "^24.9.1",
     "@types/lodash": "^4.14.155",
     "@types/wif": "^2.0.1",
     "aes-js": "^3.1.2",
@@ -37,6 +39,7 @@
     "bip38": "^3.1.0",
     "bitcoinjs-lib": "^5.1.8",
     "bn.js": "^5.1.1",
+    "concurrently": "^5.2.0",
     "crypto-js": "^3.1.1",
     "dotenv": "^8.2.0",
     "jest": "^24.8.0",
@@ -65,13 +68,13 @@
     ],
     "globals": {
       "ts-jest": {
-        "tsConfigFile": "tsconfig.jest.json",
         "diagnostics": true
       }
     },
     "testEnvironment": "node"
   },
   "devDependencies": {
+    "@types/jest": "^24.9.1",
     "@types/nock": "^11.1.0",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",

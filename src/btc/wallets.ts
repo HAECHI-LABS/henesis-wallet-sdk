@@ -14,6 +14,12 @@ import { BlockchainType } from "../blockchain";
 import { Base64 } from "js-base64";
 import { BtcRecoveryKit } from "./recoveryKit";
 import { address as BitcoinAddress, networks } from "bitcoinjs-lib";
+import {
+  MasterWalletDTO,
+  CreateInactiveMasterWalletRequestDTO,
+  CreateMasterWalletResponseDTO,
+  ActivateMasterWalletRequestDTO,
+} from "../__generate__/btc";
 
 export class BtcWallets extends Wallets<BtcMasterWallet> {
   public constructor(env: Env, client: Client, keychains: Keychains) {
@@ -27,9 +33,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     const accountKeyWithPriv = this.keychains.create(passphrase);
     const backupKetWithPriv = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const data: BtcMasterWalletData = await this.client.post<
-      BtcMasterWalletData
-    >(this.baseUrl, {
+    const data = await this.client.post<MasterWalletDTO>(this.baseUrl, {
       name,
       encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
       accountKey: {
@@ -41,14 +45,24 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       },
     });
 
-    return new BtcMasterWallet(data, this.client, this.keychains, this.env);
+    return new BtcMasterWallet(
+      { ...data },
+      this.client,
+      this.keychains,
+      this.env
+    );
   }
 
   public async getWallet(id: string) {
-    const data: BtcMasterWalletData = await this.client.get<
-      BtcMasterWalletData
-    >(`${this.baseUrl}/${id}`);
-    return new BtcMasterWallet(data, this.client, this.keychains, this.env);
+    const data = await this.client.get<MasterWalletDTO>(
+      `${this.baseUrl}/${id}`
+    );
+    return new BtcMasterWallet(
+      { ...data },
+      this.client,
+      this.keychains,
+      this.env
+    );
   }
 
   public verifyAddress(address: string): boolean {
@@ -67,12 +81,12 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     options?: MasterWalletSearchOptions
   ): Promise<BtcMasterWallet[]> {
     const queryString: string = makeQueryString(options);
-    const walletDatas = await this.client.get<BtcMasterWalletData[]>(
+    const walletDatas = await this.client.get<MasterWalletDTO[]>(
       `${this.baseUrl}${queryString ? `?${queryString}` : ""}`
     );
-
     return walletDatas.map(
-      (x) => new BtcMasterWallet(x, this.client, this.keychains, this.env)
+      (wallet) =>
+        new BtcMasterWallet(wallet, this.client, this.keychains, this.env)
     );
   }
 
@@ -83,12 +97,13 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const masterWalletResponse: CreateMasterWalletResponse = await this.client.post<
-      CreateMasterWalletResponse
-    >(`${this.baseUrl}?type=inactive`, {
+    const params: CreateInactiveMasterWalletRequestDTO = {
       name,
       encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
-    });
+    };
+    const masterWalletResponse = await this.client.post<
+      CreateMasterWalletResponseDTO
+    >(`${this.baseUrl}?type=inactive`, params);
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
       aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))
@@ -96,7 +111,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
 
     return new BtcRecoveryKit(
       name,
-      BlockchainType.BitCoin,
+      BlockchainType.BITCOIN,
       masterWalletResponse.henesisKey,
       accountKey,
       backupKey,
@@ -110,21 +125,22 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
   async createMasterWalletWithKit(
     recoveryKit: BtcRecoveryKit
   ): Promise<BtcMasterWallet> {
-    const walletData = await this.client.post<BtcMasterWalletData>(
+    const accountKey = recoveryKit.getAccountKey();
+    const backupKey = this.removeKeyFile(recoveryKit.getBackupKey());
+    const params: ActivateMasterWalletRequestDTO = {
+      accountKey: {
+        pub: accountKey.pub,
+        keyFile: accountKey.keyFile,
+      },
+      backupKey: {
+        pub: backupKey.pub,
+        keyFile: backupKey.keyFile,
+      },
+    };
+    const wallet = await this.client.post<MasterWalletDTO>(
       `${this.baseUrl}/${recoveryKit.getWalletId}/activate`,
-      {
-        name: recoveryKit.getName(),
-        accountKey: recoveryKit.getAccountKey(),
-        backupKey: this.removeKeyFile(recoveryKit.getBackupKey()),
-        encryptionKey: recoveryKit.getEncryptionKey(),
-      }
+      params
     );
-
-    return new BtcMasterWallet(
-      walletData,
-      this.client,
-      this.keychains,
-      this.env
-    );
+    return new BtcMasterWallet(wallet, this.client, this.keychains, this.env);
   }
 }

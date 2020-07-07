@@ -17,7 +17,7 @@ import * as url from "url";
 import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
 
-const BASE_PATH = "https://localhost:8080".replace(/\/+$/, "");
+const BASE_PATH = "https://dev.wallet.henesis.io/docs/v2/eth".replace(/\/+$/, "");
 
 /**
  *
@@ -86,10 +86,10 @@ export class RequiredError extends Error {
 export interface BalanceDTO {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof BalanceDTO
      */
-    amount?: number;
+    amount?: string;
     /**
      * 
      * @type {string}
@@ -166,10 +166,34 @@ export interface CallEventDTO {
     createdAt?: string;
     /**
      * 
+     * @type {string}
+     * @memberof CallEventDTO
+     */
+    data?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventDTO
+     */
+    fromAddress?: string;
+    /**
+     * 
      * @type {number}
      * @memberof CallEventDTO
      */
     id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventDTO
+     */
+    masterWalletId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventDTO
+     */
+    orgId?: string;
     /**
      * 
      * @type {string}
@@ -188,6 +212,18 @@ export interface CallEventDTO {
      * @memberof CallEventDTO
      */
     transactionHash?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventDTO
+     */
+    transactionId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventDTO
+     */
+    updatedAt?: string;
     /**
      * 
      * @type {string}
@@ -295,16 +331,16 @@ export namespace CoinDTO {
 export interface CreateBatchTransactionRequest {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CreateBatchTransactionRequest
      */
-    gasLimit?: number;
+    gasLimit?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CreateBatchTransactionRequest
      */
-    gasPrice?: number;
+    gasPrice?: string;
     /**
      * 
      * @type {string}
@@ -343,6 +379,12 @@ export interface CreateCoinRequest {
      * @memberof CreateCoinRequest
      */
     desc?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateCoinRequest
+     */
+    flag?: boolean;
     /**
      * 
      * @type {string}
@@ -397,10 +439,10 @@ export interface CreateMasterWalletRequest {
     encryptionKey?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CreateMasterWalletRequest
      */
-    gasPrice?: number;
+    gasPrice?: string;
     /**
      * 
      * @type {string}
@@ -417,16 +459,16 @@ export interface CreateMasterWalletRequest {
 export interface CreateMultiSigTransactionRequest {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CreateMultiSigTransactionRequest
      */
-    gasLimit?: number;
+    gasLimit?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CreateMultiSigTransactionRequest
      */
-    gasPrice?: number;
+    gasPrice?: string;
     /**
      * 
      * @type {string}
@@ -467,16 +509,16 @@ export interface CreateTransactionRequest {
     data?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CreateTransactionRequest
      */
-    gasLimit?: number;
+    gasLimit?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CreateTransactionRequest
      */
-    gasPrice?: number;
+    gasPrice?: string;
     /**
      * 
      * @type {string}
@@ -491,10 +533,10 @@ export interface CreateTransactionRequest {
     toAddress?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CreateTransactionRequest
      */
-    value?: number;
+    value?: string;
 }
 
 /**
@@ -505,10 +547,10 @@ export interface CreateTransactionRequest {
 export interface CreateUserWalletRequest {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CreateUserWalletRequest
      */
-    gasPrice?: number;
+    gasPrice?: string;
     /**
      * 
      * @type {string}
@@ -517,10 +559,10 @@ export interface CreateUserWalletRequest {
     name?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CreateUserWalletRequest
      */
-    salt?: number;
+    salt?: string;
     /**
      * 
      * @type {SignedMultiSigPayloadDTO}
@@ -702,10 +744,10 @@ export interface MethodGasUsageDTO {
     blockchain?: MethodGasUsageDTO.BlockchainEnum;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof MethodGasUsageDTO
      */
-    estimatedGasConsumption?: number;
+    estimatedGasConsumption?: string;
     /**
      * 
      * @type {string}
@@ -886,10 +928,10 @@ export interface MultiSigPayloadDTO {
     toAddress?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof MultiSigPayloadDTO
      */
-    value?: number;
+    value?: string;
     /**
      * 
      * @type {string}
@@ -898,10 +940,10 @@ export interface MultiSigPayloadDTO {
     walletAddress?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof MultiSigPayloadDTO
      */
-    walletNonce?: number;
+    walletNonce?: string;
 }
 
 /**
@@ -912,10 +954,10 @@ export interface MultiSigPayloadDTO {
 export interface NonceDTO {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof NonceDTO
      */
-    nonce?: number;
+    nonce?: string;
 }
 
 /**
@@ -1038,22 +1080,22 @@ export interface RawTransactionDTO {
     data?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RawTransactionDTO
      */
-    gasLimit?: number;
+    gasLimit?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RawTransactionDTO
      */
-    gasPrice?: number;
+    gasPrice?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RawTransactionDTO
      */
-    nonce?: number;
+    nonce?: string;
     /**
      * 
      * @type {string}
@@ -1062,10 +1104,10 @@ export interface RawTransactionDTO {
     to?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof RawTransactionDTO
      */
-    value?: number;
+    value?: string;
 }
 
 /**
@@ -1207,6 +1249,44 @@ export interface UpdateAccountKeyRequest {
 /**
  * 
  * @export
+ * @interface UpdateCoinRequest
+ */
+export interface UpdateCoinRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCoinRequest
+     */
+    address?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCoinRequest
+     */
+    desc?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateCoinRequest
+     */
+    flag?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCoinRequest
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCoinRequest
+     */
+    symbol?: string;
+}
+
+/**
+ * 
+ * @export
  * @interface UserWalletDTO
  */
 export interface UserWalletDTO {
@@ -1297,10 +1377,10 @@ export namespace UserWalletDTO {
 export interface ValueTransferEventDTO {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    amount?: number;
+    amount?: string;
     /**
      * 
      * @type {string}
@@ -1320,12 +1400,6 @@ export interface ValueTransferEventDTO {
      */
     createdAt?: string;
     /**
-     *
-     * @type {string}
-     * @memberof ValueTransferEventDTO
-     */
-    updatedAt?: string;
-    /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
@@ -1337,6 +1411,18 @@ export interface ValueTransferEventDTO {
      * @memberof ValueTransferEventDTO
      */
     id?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValueTransferEventDTO
+     */
+    masterWalletId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValueTransferEventDTO
+     */
+    orgId?: string;
     /**
      * 
      * @type {string}
@@ -1360,7 +1446,19 @@ export interface ValueTransferEventDTO {
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
+    transactionId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValueTransferEventDTO
+     */
     transferType?: ValueTransferEventDTO.TransferTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValueTransferEventDTO
+     */
+    updatedAt?: string;
     /**
      * 
      * @type {string}
@@ -1992,6 +2090,38 @@ export const EthCoinControllerApiFetchParamCreator = function (configuration?: C
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary patchCoin
+         * @param {UpdateCoinRequest} request request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchCoinUsingPATCH(request: UpdateCoinRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling patchCoinUsingPATCH.');
+            }
+            const localVarPath = `/api/v2/eth/coins`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"UpdateCoinRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2076,6 +2206,25 @@ export const EthCoinControllerApiFp = function(configuration?: Configuration) {
                 });
             };
         },
+        /**
+         * 
+         * @summary patchCoin
+         * @param {UpdateCoinRequest} request request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchCoinUsingPATCH(request: UpdateCoinRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = EthCoinControllerApiFetchParamCreator(configuration).patchCoinUsingPATCH(request, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
     }
 };
 
@@ -2123,6 +2272,16 @@ export const EthCoinControllerApiFactory = function (configuration?: Configurati
          */
         getCoinUsingGET(symbol: string, options?: any) {
             return EthCoinControllerApiFp(configuration).getCoinUsingGET(symbol, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary patchCoin
+         * @param {UpdateCoinRequest} request request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchCoinUsingPATCH(request: UpdateCoinRequest, options?: any) {
+            return EthCoinControllerApiFp(configuration).patchCoinUsingPATCH(request, options)(fetch, basePath);
         },
     };
 };
@@ -2179,6 +2338,18 @@ export class EthCoinControllerApi extends BaseAPI {
      */
     public getCoinUsingGET(symbol: string, options?: any) {
         return EthCoinControllerApiFp(this.configuration).getCoinUsingGET(symbol, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary patchCoin
+     * @param {UpdateCoinRequest} request request
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthCoinControllerApi
+     */
+    public patchCoinUsingPATCH(request: UpdateCoinRequest, options?: any) {
+        return EthCoinControllerApiFp(this.configuration).patchCoinUsingPATCH(request, options)(this.fetch, this.basePath);
     }
 
 }
@@ -3390,6 +3561,7 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
         /**
          * 
          * @summary getMasterWalletBalance
+         * @param {'true'} flag flag
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -3397,10 +3569,14 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletBalanceUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+        getMasterWalletBalanceUsingGET1(flag: 'true', walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'flag' is not null or undefined
+            if (flag === null || flag === undefined) {
+                throw new RequiredError('flag','Required parameter flag was null or undefined when calling getMasterWalletBalanceUsingGET1.');
+            }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletBalanceUsingGET.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletBalanceUsingGET1.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/balance`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -3411,6 +3587,10 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (flag !== undefined) {
+                localVarQueryParameter['flag'] = flag;
             }
 
             if (organizationId !== undefined) {
@@ -4143,6 +4323,7 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
         /**
          * 
          * @summary getMasterWalletBalance
+         * @param {'true'} flag flag
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -4150,8 +4331,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletBalanceUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
-            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getMasterWalletBalanceUsingGET(walletId, accountId, organizationId, otpKey, options);
+        getMasterWalletBalanceUsingGET1(flag: 'true', walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getMasterWalletBalanceUsingGET1(flag, walletId, accountId, organizationId, otpKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4511,6 +4692,7 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
         /**
          * 
          * @summary getMasterWalletBalance
+         * @param {'true'} flag flag
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -4518,8 +4700,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletBalanceUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-            return EthWalletControllerApiFp(configuration).getMasterWalletBalanceUsingGET(walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        getMasterWalletBalanceUsingGET1(flag: 'true', walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).getMasterWalletBalanceUsingGET1(flag, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
         },
         /**
          * 
@@ -4760,6 +4942,7 @@ export class EthWalletControllerApi extends BaseAPI {
     /**
      * 
      * @summary getMasterWalletBalance
+     * @param {'true'} flag flag
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -4768,8 +4951,8 @@ export class EthWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthWalletControllerApi
      */
-    public getMasterWalletBalanceUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).getMasterWalletBalanceUsingGET(walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    public getMasterWalletBalanceUsingGET1(flag: 'true', walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getMasterWalletBalanceUsingGET1(flag, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5053,7 +5236,7 @@ export const KlayCoinControllerApiFetchParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET1(options: any = {}): FetchArgs {
+        getAllCoinsUsingGET2(options: any = {}): FetchArgs {
             const localVarPath = `/api/v2/klay/coins`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -5093,6 +5276,38 @@ export const KlayCoinControllerApiFetchParamCreator = function (configuration?: 
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary patchCoin
+         * @param {UpdateCoinRequest} request request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchCoinUsingPATCH1(request: UpdateCoinRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling patchCoinUsingPATCH1.');
+            }
+            const localVarPath = `/api/v2/klay/coins`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"UpdateCoinRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -5152,8 +5367,8 @@ export const KlayCoinControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET1(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<CoinDTO>> {
-            const localVarFetchArgs = KlayCoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET1(options);
+        getAllCoinsUsingGET2(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<CoinDTO>> {
+            const localVarFetchArgs = KlayCoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET2(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -5177,6 +5392,25 @@ export const KlayCoinControllerApiFp = function(configuration?: Configuration) {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary patchCoin
+         * @param {UpdateCoinRequest} request request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchCoinUsingPATCH1(request: UpdateCoinRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = KlayCoinControllerApiFetchParamCreator(configuration).patchCoinUsingPATCH1(request, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
                     } else {
                         throw response;
                     }
@@ -5218,8 +5452,8 @@ export const KlayCoinControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET1(options?: any) {
-            return KlayCoinControllerApiFp(configuration).getAllCoinsUsingGET1(options)(fetch, basePath);
+        getAllCoinsUsingGET2(options?: any) {
+            return KlayCoinControllerApiFp(configuration).getAllCoinsUsingGET2(options)(fetch, basePath);
         },
         /**
          * 
@@ -5230,6 +5464,16 @@ export const KlayCoinControllerApiFactory = function (configuration?: Configurat
          */
         getCoinUsingGET1(symbol: string, options?: any) {
             return KlayCoinControllerApiFp(configuration).getCoinUsingGET1(symbol, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary patchCoin
+         * @param {UpdateCoinRequest} request request
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchCoinUsingPATCH1(request: UpdateCoinRequest, options?: any) {
+            return KlayCoinControllerApiFp(configuration).patchCoinUsingPATCH1(request, options)(fetch, basePath);
         },
     };
 };
@@ -5272,8 +5516,8 @@ export class KlayCoinControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayCoinControllerApi
      */
-    public getAllCoinsUsingGET1(options?: any) {
-        return KlayCoinControllerApiFp(this.configuration).getAllCoinsUsingGET1(options)(this.fetch, this.basePath);
+    public getAllCoinsUsingGET2(options?: any) {
+        return KlayCoinControllerApiFp(this.configuration).getAllCoinsUsingGET2(options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5286,6 +5530,18 @@ export class KlayCoinControllerApi extends BaseAPI {
      */
     public getCoinUsingGET1(symbol: string, options?: any) {
         return KlayCoinControllerApiFp(this.configuration).getCoinUsingGET1(symbol, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary patchCoin
+     * @param {UpdateCoinRequest} request request
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayCoinControllerApi
+     */
+    public patchCoinUsingPATCH1(request: UpdateCoinRequest, options?: any) {
+        return KlayCoinControllerApiFp(this.configuration).patchCoinUsingPATCH1(request, options)(this.fetch, this.basePath);
     }
 
 }
@@ -6497,6 +6753,7 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
         /**
          * 
          * @summary getMasterWalletBalance
+         * @param {'true'} flag flag
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -6504,10 +6761,14 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletBalanceUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+        getMasterWalletBalanceUsingGET3(flag: 'true', walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'flag' is not null or undefined
+            if (flag === null || flag === undefined) {
+                throw new RequiredError('flag','Required parameter flag was null or undefined when calling getMasterWalletBalanceUsingGET3.');
+            }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletBalanceUsingGET1.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletBalanceUsingGET3.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/balance`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -6518,6 +6779,10 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (flag !== undefined) {
+                localVarQueryParameter['flag'] = flag;
             }
 
             if (organizationId !== undefined) {
@@ -6705,6 +6970,7 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
         /**
          * 
          * @summary getUserWalletBalance
+         * @param {'true'} flag flag
          * @param {string} userWalletId userWalletId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -6713,14 +6979,18 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWalletBalanceUsingGET1(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+        getUserWalletBalanceUsingGET3(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'flag' is not null or undefined
+            if (flag === null || flag === undefined) {
+                throw new RequiredError('flag','Required parameter flag was null or undefined when calling getUserWalletBalanceUsingGET3.');
+            }
             // verify required parameter 'userWalletId' is not null or undefined
             if (userWalletId === null || userWalletId === undefined) {
-                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletBalanceUsingGET1.');
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletBalanceUsingGET3.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletBalanceUsingGET1.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletBalanceUsingGET3.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}/balance`
                 .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
@@ -6732,6 +7002,10 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (flag !== undefined) {
+                localVarQueryParameter['flag'] = flag;
             }
 
             if (organizationId !== undefined) {
@@ -7250,6 +7524,7 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
         /**
          * 
          * @summary getMasterWalletBalance
+         * @param {'true'} flag flag
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -7257,8 +7532,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletBalanceUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
-            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getMasterWalletBalanceUsingGET1(walletId, accountId, organizationId, otpKey, options);
+        getMasterWalletBalanceUsingGET3(flag: 'true', walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getMasterWalletBalanceUsingGET3(flag, walletId, accountId, organizationId, otpKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -7358,6 +7633,7 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
         /**
          * 
          * @summary getUserWalletBalance
+         * @param {'true'} flag flag
          * @param {string} userWalletId userWalletId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -7366,8 +7642,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWalletBalanceUsingGET1(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
-            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getUserWalletBalanceUsingGET1(userWalletId, walletId, accountId, organizationId, otpKey, options);
+        getUserWalletBalanceUsingGET3(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getUserWalletBalanceUsingGET3(flag, userWalletId, walletId, accountId, organizationId, otpKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -7618,6 +7894,7 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
         /**
          * 
          * @summary getMasterWalletBalance
+         * @param {'true'} flag flag
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -7625,8 +7902,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletBalanceUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-            return KlayWalletControllerApiFp(configuration).getMasterWalletBalanceUsingGET1(walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        getMasterWalletBalanceUsingGET3(flag: 'true', walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getMasterWalletBalanceUsingGET3(flag, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
         },
         /**
          * 
@@ -7681,6 +7958,7 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
         /**
          * 
          * @summary getUserWalletBalance
+         * @param {'true'} flag flag
          * @param {string} userWalletId userWalletId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -7689,8 +7967,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWalletBalanceUsingGET1(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-            return KlayWalletControllerApiFp(configuration).getUserWalletBalanceUsingGET1(userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        getUserWalletBalanceUsingGET3(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getUserWalletBalanceUsingGET3(flag, userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
         },
         /**
          * 
@@ -7867,6 +8145,7 @@ export class KlayWalletControllerApi extends BaseAPI {
     /**
      * 
      * @summary getMasterWalletBalance
+     * @param {'true'} flag flag
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -7875,8 +8154,8 @@ export class KlayWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayWalletControllerApi
      */
-    public getMasterWalletBalanceUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-        return KlayWalletControllerApiFp(this.configuration).getMasterWalletBalanceUsingGET1(walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    public getMasterWalletBalanceUsingGET3(flag: 'true', walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getMasterWalletBalanceUsingGET3(flag, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -7940,6 +8219,7 @@ export class KlayWalletControllerApi extends BaseAPI {
     /**
      * 
      * @summary getUserWalletBalance
+     * @param {'true'} flag flag
      * @param {string} userWalletId userWalletId
      * @param {string} walletId walletId
      * @param {string} [accountId] 
@@ -7949,8 +8229,8 @@ export class KlayWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayWalletControllerApi
      */
-    public getUserWalletBalanceUsingGET1(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-        return KlayWalletControllerApiFp(this.configuration).getUserWalletBalanceUsingGET1(userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    public getUserWalletBalanceUsingGET3(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getUserWalletBalanceUsingGET3(flag, userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
     /**

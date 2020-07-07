@@ -6,7 +6,10 @@ import {
   EthEventPaginationOptions,
   EthValueTransferEvent,
 } from "../events";
-import { PaginationValueTransferEventDTO } from "../__generate__/eth";
+import {
+  PaginationValueTransferEventDTO,
+  PaginationCallEventDTO,
+} from "../__generate__/eth";
 import { makeQueryString } from "../utils/url";
 
 export class EthEvents {
@@ -20,8 +23,8 @@ export class EthEvents {
     options?: EthEventPaginationOptions
   ): Promise<Pagination<EthCallEvent>> {
     const queryString: string = makeQueryString(options);
-    const data: Pagination<EthCallEvent> = await this.client.get<
-      Pagination<EthCallEvent>
+    const data = await this.client.get<
+      NoUndefinedField<PaginationCallEventDTO>
     >(`/call-events${queryString ? `?${queryString}` : ""}`);
     return {
       pagination: data.pagination,
@@ -33,9 +36,9 @@ export class EthEvents {
     options?: EthEventPaginationOptions
   ): Promise<Pagination<EthValueTransferEvent>> {
     const queryString: string = makeQueryString(options);
-    const data: NoUndefinedField<PaginationValueTransferEventDTO> = await this.client.get(
-      `/value-transfer-events${queryString ? `?${queryString}` : ""}`
-    );
+    const data = await this.client.get<
+      NoUndefinedField<PaginationValueTransferEventDTO>
+    >(`/value-transfer-events${queryString ? `?${queryString}` : ""}`);
 
     return {
       pagination: data.pagination,
