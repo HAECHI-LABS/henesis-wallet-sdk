@@ -46,9 +46,7 @@ export class Accounts {
   }
 
   public async me(): Promise<Account> {
-    const response = await this.client.get<NoUndefinedField<AccountDTO>>(
-      `${this.baseUrl}/me`
-    );
+    const response = await this.client.get<AccountDTO>(`${this.baseUrl}/me`);
     return response;
   }
 
@@ -57,7 +55,7 @@ export class Accounts {
     password: string,
     otpCode?: string
   ): Promise<AccountWithOTP> {
-    const response = await this.client.post<NoUndefinedField<LoginResponse>>(
+    const response = await this.client.post<LoginResponse>(
       `${this.baseUrl}/login`,
       {
         email,
@@ -82,7 +80,7 @@ export class Accounts {
   }
 
   public async changeName(firstName: string, lastName: string): Promise<void> {
-    const params: NoUndefinedField<ChangeAccountNameRequest> = {
+    const params: ChangeAccountNameRequest = {
       firstName,
       lastName,
     };
@@ -94,7 +92,7 @@ export class Accounts {
     newPassword: string,
     otpCode?: string
   ): Promise<void> {
-    const params: NoUndefinedField<UpdatePasswordRequest> = {
+    const params: UpdatePasswordRequest = {
       newPassword,
       password,
       otpCode,
@@ -104,7 +102,7 @@ export class Accounts {
 
   public async createAccessToken(expiresIn?: number): Promise<Token> {
     const requestExpiresIn = expiresIn || this.DEFAULT_TOKEN_EXPIRED_TIME;
-    const response = await this.client.post<NoUndefinedField<AccessTokenDTO>>(
+    const response = await this.client.post<AccessTokenDTO>(
       `${this.baseUrl}/token`,
       {
         expiresIn: requestExpiresIn,
@@ -114,7 +112,7 @@ export class Accounts {
   }
 
   public async refreshShortAccessToken(otpCode?: string): Promise<Token> {
-    const response = await this.client.post<NoUndefinedField<AccessTokenDTO>>(
+    const response = await this.client.post<AccessTokenDTO>(
       `${this.baseUrl}/token?type=short`,
       {
         otpCode,
@@ -124,7 +122,7 @@ export class Accounts {
   }
 
   public async getAccessToken(): Promise<Token> {
-    const response = await this.client.get<NoUndefinedField<AccessTokenDTO>>(
+    const response = await this.client.get<AccessTokenDTO>(
       `${this.baseUrl}/token`
     );
     return response;
