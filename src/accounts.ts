@@ -8,6 +8,7 @@ import {
   UpdatePasswordRequest,
   AccessTokenDTO,
 } from "./__generate__/accounts";
+import { makeQueryString } from "./utils/url";
 
 export interface AccountWithOTP extends Account {
   otp?: OTP;
@@ -65,6 +66,19 @@ export class Accounts {
       }
     );
     return response;
+  }
+
+  public async verify(params: {
+    identifier: string;
+    accountId: string;
+  }): Promise<void> {
+    const queryString: string = makeQueryString({
+      identifier: params.identifier,
+      account_id: params.accountId,
+    });
+    await this.client.get(
+      `${this.baseUrl}/login/verify${queryString ? `?${queryString}` : ""}`
+    );
   }
 
   public async changeName(firstName: string, lastName: string): Promise<void> {
