@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.16](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.15...v2.0.0-alpha.16) (2020-07-08)
+
+
+### Bug Fixes
+
+* remove noundefined type ([9de1d6d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9de1d6dc96629946e505bb36a776517af5c3691e))
+
+
+### Features
+
+* add verify method ([b0bdc11](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b0bdc11b216f9fe14a8bf30ae2e8c3fb1d952f87))
+
+
+
+
+
 # [2.0.0-alpha.15](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.14...v2.0.0-alpha.15) (2020-07-08)
 
 
