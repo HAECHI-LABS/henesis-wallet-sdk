@@ -89,7 +89,7 @@ export interface AccessTokenDTO {
      * @type {string}
      * @memberof AccessTokenDTO
      */
-    accessToken?: string;
+    accessToken: string;
 }
 
 /**
@@ -103,49 +103,49 @@ export interface AccountDTO {
      * @type {string}
      * @memberof AccountDTO
      */
-    accessToken?: string;
+    accessToken: string;
     /**
      * 
      * @type {string}
      * @memberof AccountDTO
      */
-    createdAt?: string;
+    createdAt: string;
     /**
      * 
      * @type {string}
      * @memberof AccountDTO
      */
-    email?: string;
+    email: string;
     /**
      * 
      * @type {string}
      * @memberof AccountDTO
      */
-    firstName?: string;
+    firstName: string;
     /**
      * 
      * @type {string}
      * @memberof AccountDTO
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof AccountDTO
      */
-    lastName?: string;
+    lastName: string;
     /**
      * 
      * @type {string}
      * @memberof AccountDTO
      */
-    organizationId?: string;
+    organizationId: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof AccountDTO
      */
-    roles?: Array<AccountDTO.RolesEnum>;
+    roles: Array<AccountDTO.RolesEnum>;
 }
 
 /**
@@ -176,13 +176,13 @@ export interface ChangeAccountNameRequest {
      * @type {string}
      * @memberof ChangeAccountNameRequest
      */
-    firstName?: string;
+    firstName: string;
     /**
      * 
      * @type {string}
      * @memberof ChangeAccountNameRequest
      */
-    lastName?: string;
+    lastName: string;
 }
 
 /**
@@ -196,7 +196,7 @@ export interface CreateAccessTokenRequest {
      * @type {number}
      * @memberof CreateAccessTokenRequest
      */
-    expiresIn?: number;
+    expiresIn: number;
 }
 
 /**
@@ -210,7 +210,7 @@ export interface CreateOrganizationRequest {
      * @type {string}
      * @memberof CreateOrganizationRequest
      */
-    name?: string;
+    name: string;
 }
 
 /**
@@ -224,7 +224,7 @@ export interface CreateSecretResponse {
      * @type {string}
      * @memberof CreateSecretResponse
      */
-    secret?: string;
+    secret: string;
 }
 
 /**
@@ -238,55 +238,55 @@ export interface IdentityDTO {
      * @type {string}
      * @memberof IdentityDTO
      */
-    accessToken?: string;
+    accessToken: string;
     /**
      * 
      * @type {string}
      * @memberof IdentityDTO
      */
-    accountId?: string;
+    accountId: string;
     /**
      * 
      * @type {string}
      * @memberof IdentityDTO
      */
-    email?: string;
+    email: string;
     /**
      * 
      * @type {string}
      * @memberof IdentityDTO
      */
-    firstName?: string;
+    firstName: string;
     /**
      * 
      * @type {string}
      * @memberof IdentityDTO
      */
-    lastName?: string;
+    lastName: string;
     /**
      * 
      * @type {string}
      * @memberof IdentityDTO
      */
-    organizationId?: string;
+    organizationId: string;
     /**
      * 
      * @type {string}
      * @memberof IdentityDTO
      */
-    organizationSecret?: string;
+    organizationSecret: string;
     /**
      * 
      * @type {string}
      * @memberof IdentityDTO
      */
-    otpKey?: string;
+    otpKey: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof IdentityDTO
      */
-    roles?: Array<IdentityDTO.RolesEnum>;
+    roles: Array<IdentityDTO.RolesEnum>;
 }
 
 /**
@@ -337,7 +337,7 @@ export interface LoginRequest {
      * @type {string}
      * @memberof LoginRequest
      */
-    email?: string;
+    email: string;
     /**
      * 
      * @type {string}
@@ -349,7 +349,7 @@ export interface LoginRequest {
      * @type {string}
      * @memberof LoginRequest
      */
-    password?: string;
+    password: string;
 }
 
 /**
@@ -363,49 +363,49 @@ export interface LoginResponse {
      * @type {string}
      * @memberof LoginResponse
      */
-    accessToken?: string;
+    accessToken: string;
     /**
      * 
      * @type {string}
      * @memberof LoginResponse
      */
-    email?: string;
+    email: string;
     /**
      * 
      * @type {string}
      * @memberof LoginResponse
      */
-    firstName?: string;
+    firstName: string;
     /**
      * 
      * @type {string}
      * @memberof LoginResponse
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof LoginResponse
      */
-    lastName?: string;
+    lastName: string;
     /**
      * 
      * @type {string}
      * @memberof LoginResponse
      */
-    organizationId?: string;
+    organizationId: string;
     /**
      * 
      * @type {OTPDTO}
      * @memberof LoginResponse
      */
-    otp?: OTPDTO;
+    otp: OTPDTO;
     /**
      * 
      * @type {Array<string>}
      * @memberof LoginResponse
      */
-    roles?: Array<LoginResponse.RolesEnum>;
+    roles: Array<LoginResponse.RolesEnum>;
 }
 
 /**
@@ -577,13 +577,13 @@ export interface OTPDTO {
      * @type {string}
      * @memberof OTPDTO
      */
-    key?: string;
+    key: string;
     /**
      * 
      * @type {string}
      * @memberof OTPDTO
      */
-    url?: string;
+    url: string;
 }
 
 /**
@@ -597,31 +597,31 @@ export interface OrgAccountDTO {
      * @type {string}
      * @memberof OrgAccountDTO
      */
-    email?: string;
+    email: string;
     /**
      * 
      * @type {string}
      * @memberof OrgAccountDTO
      */
-    firstName?: string;
+    firstName: string;
     /**
      * 
      * @type {string}
      * @memberof OrgAccountDTO
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof OrgAccountDTO
      */
-    lastName?: string;
+    lastName: string;
     /**
      * 
      * @type {Array<string>}
      * @memberof OrgAccountDTO
      */
-    roles?: Array<OrgAccountDTO.RolesEnum>;
+    roles: Array<OrgAccountDTO.RolesEnum>;
 }
 
 /**
@@ -652,19 +652,19 @@ export interface OrganizationDTO {
      * @type {string}
      * @memberof OrganizationDTO
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationDTO
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof OrganizationDTO
      */
-    secret?: string;
+    secret: string;
 }
 
 /**
@@ -684,7 +684,7 @@ export interface PatchAccountRoleRequest {
      * @type {string}
      * @memberof PatchAccountRoleRequest
      */
-    role?: string;
+    role: string;
 }
 
 /**
@@ -712,37 +712,37 @@ export interface SignUpRequest {
      * @type {string}
      * @memberof SignUpRequest
      */
-    email?: string;
+    email: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpRequest
      */
-    firstName?: string;
+    firstName: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpRequest
      */
-    lastName?: string;
+    lastName: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpRequest
      */
-    organizationId?: string;
+    organizationId: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpRequest
      */
-    password?: string;
+    password: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpRequest
      */
-    role?: string;
+    role: string;
 }
 
 /**
@@ -756,37 +756,37 @@ export interface SignUpResponse {
      * @type {string}
      * @memberof SignUpResponse
      */
-    accessToken?: string;
+    accessToken: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpResponse
      */
-    email?: string;
+    email: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpResponse
      */
-    firstName?: string;
+    firstName: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpResponse
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpResponse
      */
-    lastName?: string;
+    lastName: string;
     /**
      * 
      * @type {string}
      * @memberof SignUpResponse
      */
-    organizationId?: string;
+    organizationId: string;
 }
 
 /**
@@ -800,7 +800,7 @@ export interface UpdateOTPInitializeRequest {
      * @type {boolean}
      * @memberof UpdateOTPInitializeRequest
      */
-    initialize?: boolean;
+    initialize: boolean;
 }
 
 /**
@@ -814,7 +814,7 @@ export interface UpdateOrganizationRequest {
      * @type {string}
      * @memberof UpdateOrganizationRequest
      */
-    newOrgId?: string;
+    newOrgId: string;
 }
 
 /**
@@ -828,7 +828,7 @@ export interface UpdatePasswordRequest {
      * @type {string}
      * @memberof UpdatePasswordRequest
      */
-    newPassword?: string;
+    newPassword: string;
     /**
      * 
      * @type {string}
@@ -840,7 +840,7 @@ export interface UpdatePasswordRequest {
      * @type {string}
      * @memberof UpdatePasswordRequest
      */
-    password?: string;
+    password: string;
 }
 
 /**
@@ -927,6 +927,39 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
         },
         /**
          * 
+         * @summary createAccessToken
+         * @param {CreateAccessTokenRequest} request request
+         * @param {string} [accountId] accountId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAccessTokenUsingPOST(request: CreateAccessTokenRequest, accountId?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling createAccessTokenUsingPOST.');
+            }
+            const localVarPath = `/api/v2/accounts/token`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateAccessTokenRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary deleteAccessToken
          * @param {string} [accountId] accountId
          * @param {*} [options] Override http request option.
@@ -985,10 +1018,12 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
          * 
          * @summary login
          * @param {LoginRequest} request request
+         * @param {string} [browser] 
+         * @param {string} [ip] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginUsingPOST(request: LoginRequest, options: any = {}): FetchArgs {
+        loginUsingPOST(request: LoginRequest, browser?: string, ip?: string, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
                 throw new RequiredError('request','Required parameter request was null or undefined when calling loginUsingPOST.');
@@ -999,6 +1034,14 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            if (browser !== undefined) {
+                localVarQueryParameter['browser'] = browser;
+            }
+
+            if (ip !== undefined) {
+                localVarQueryParameter['ip'] = ip;
+            }
+
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -1006,49 +1049,6 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"LoginRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary refreshShortAccessToken
-         * @param {RefreshAccessTokenRequest} request request
-         * @param {'short'} type 
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        refreshShortAccessTokenUsingPOST(request: RefreshAccessTokenRequest, type: 'short', accountId?: string, needOTP?: boolean, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling refreshShortAccessTokenUsingPOST.');
-            }
-            // verify required parameter 'type' is not null or undefined
-            if (type === null || type === undefined) {
-                throw new RequiredError('type','Required parameter type was null or undefined when calling refreshShortAccessTokenUsingPOST.');
-            }
-            const localVarPath = `/api/v2/accounts/token`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (type !== undefined) {
-                localVarQueryParameter['type'] = type;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"RefreshAccessTokenRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
@@ -1188,6 +1188,57 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary verifyIP
+         * @param {string} accountId account_id
+         * @param {string} identifier identifier
+         * @param {string} [browser] 
+         * @param {string} [ip] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        verifyIPUsingGET(accountId: string, identifier: string, browser?: string, ip?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'accountId' is not null or undefined
+            if (accountId === null || accountId === undefined) {
+                throw new RequiredError('accountId','Required parameter accountId was null or undefined when calling verifyIPUsingGET.');
+            }
+            // verify required parameter 'identifier' is not null or undefined
+            if (identifier === null || identifier === undefined) {
+                throw new RequiredError('identifier','Required parameter identifier was null or undefined when calling verifyIPUsingGET.');
+            }
+            const localVarPath = `/api/v2/accounts/login/verify`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['account_id'] = accountId;
+            }
+
+            if (browser !== undefined) {
+                localVarQueryParameter['browser'] = browser;
+            }
+
+            if (identifier !== undefined) {
+                localVarQueryParameter['identifier'] = identifier;
+            }
+
+            if (ip !== undefined) {
+                localVarQueryParameter['ip'] = ip;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1226,6 +1277,26 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          */
         createAccessTokenUsingGET(accountId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccountDTO> {
             const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).createAccessTokenUsingGET(accountId, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary createAccessToken
+         * @param {CreateAccessTokenRequest} request request
+         * @param {string} [accountId] accountId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAccessTokenUsingPOST(request: CreateAccessTokenRequest, accountId?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccessTokenDTO> {
+            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).createAccessTokenUsingPOST(request, accountId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1278,33 +1349,13 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          * 
          * @summary login
          * @param {LoginRequest} request request
+         * @param {string} [browser] 
+         * @param {string} [ip] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginUsingPOST(request: LoginRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LoginResponse> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).loginUsingPOST(request, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary refreshShortAccessToken
-         * @param {RefreshAccessTokenRequest} request request
-         * @param {'short'} type 
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        refreshShortAccessTokenUsingPOST(request: RefreshAccessTokenRequest, type: 'short', accountId?: string, needOTP?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccessTokenDTO> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).refreshShortAccessTokenUsingPOST(request, type, accountId, needOTP, options);
+        loginUsingPOST(request: LoginRequest, browser?: string, ip?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LoginResponse> {
+            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).loginUsingPOST(request, browser, ip, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1395,6 +1446,28 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
                 });
             };
         },
+        /**
+         * 
+         * @summary verifyIP
+         * @param {string} accountId account_id
+         * @param {string} identifier identifier
+         * @param {string} [browser] 
+         * @param {string} [ip] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        verifyIPUsingGET(accountId: string, identifier: string, browser?: string, ip?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).verifyIPUsingGET(accountId, identifier, browser, ip, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
     }
 };
 
@@ -1427,6 +1500,17 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary createAccessToken
+         * @param {CreateAccessTokenRequest} request request
+         * @param {string} [accountId] accountId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAccessTokenUsingPOST(request: CreateAccessTokenRequest, accountId?: string, options?: any) {
+            return AccountControllerApiFp(configuration).createAccessTokenUsingPOST(request, accountId, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary deleteAccessToken
          * @param {string} [accountId] accountId
          * @param {*} [options] Override http request option.
@@ -1449,24 +1533,13 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
          * 
          * @summary login
          * @param {LoginRequest} request request
+         * @param {string} [browser] 
+         * @param {string} [ip] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginUsingPOST(request: LoginRequest, options?: any) {
-            return AccountControllerApiFp(configuration).loginUsingPOST(request, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary refreshShortAccessToken
-         * @param {RefreshAccessTokenRequest} request request
-         * @param {'short'} type 
-         * @param {string} [accountId] accountId
-         * @param {boolean} [needOTP] needOTP
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        refreshShortAccessTokenUsingPOST(request: RefreshAccessTokenRequest, type: 'short', accountId?: string, needOTP?: boolean, options?: any) {
-            return AccountControllerApiFp(configuration).refreshShortAccessTokenUsingPOST(request, type, accountId, needOTP, options)(fetch, basePath);
+        loginUsingPOST(request: LoginRequest, browser?: string, ip?: string, options?: any) {
+            return AccountControllerApiFp(configuration).loginUsingPOST(request, browser, ip, options)(fetch, basePath);
         },
         /**
          * 
@@ -1512,6 +1585,19 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
         updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, needOTP?: boolean, options?: any) {
             return AccountControllerApiFp(configuration).updatePasswordUsingPATCH(request, accountId, needOTP, options)(fetch, basePath);
         },
+        /**
+         * 
+         * @summary verifyIP
+         * @param {string} accountId account_id
+         * @param {string} identifier identifier
+         * @param {string} [browser] 
+         * @param {string} [ip] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        verifyIPUsingGET(accountId: string, identifier: string, browser?: string, ip?: string, options?: any) {
+            return AccountControllerApiFp(configuration).verifyIPUsingGET(accountId, identifier, browser, ip, options)(fetch, basePath);
+        },
     };
 };
 
@@ -1549,6 +1635,19 @@ export class AccountControllerApi extends BaseAPI {
 
     /**
      * 
+     * @summary createAccessToken
+     * @param {CreateAccessTokenRequest} request request
+     * @param {string} [accountId] accountId
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountControllerApi
+     */
+    public createAccessTokenUsingPOST(request: CreateAccessTokenRequest, accountId?: string, options?: any) {
+        return AccountControllerApiFp(this.configuration).createAccessTokenUsingPOST(request, accountId, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
      * @summary deleteAccessToken
      * @param {string} [accountId] accountId
      * @param {*} [options] Override http request option.
@@ -1575,27 +1674,14 @@ export class AccountControllerApi extends BaseAPI {
      * 
      * @summary login
      * @param {LoginRequest} request request
+     * @param {string} [browser] 
+     * @param {string} [ip] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountControllerApi
      */
-    public loginUsingPOST(request: LoginRequest, options?: any) {
-        return AccountControllerApiFp(this.configuration).loginUsingPOST(request, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary refreshShortAccessToken
-     * @param {RefreshAccessTokenRequest} request request
-     * @param {'short'} type 
-     * @param {string} [accountId] accountId
-     * @param {boolean} [needOTP] needOTP
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountControllerApi
-     */
-    public refreshShortAccessTokenUsingPOST(request: RefreshAccessTokenRequest, type: 'short', accountId?: string, needOTP?: boolean, options?: any) {
-        return AccountControllerApiFp(this.configuration).refreshShortAccessTokenUsingPOST(request, type, accountId, needOTP, options)(this.fetch, this.basePath);
+    public loginUsingPOST(request: LoginRequest, browser?: string, ip?: string, options?: any) {
+        return AccountControllerApiFp(this.configuration).loginUsingPOST(request, browser, ip, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -1648,6 +1734,21 @@ export class AccountControllerApi extends BaseAPI {
      */
     public updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, needOTP?: boolean, options?: any) {
         return AccountControllerApiFp(this.configuration).updatePasswordUsingPATCH(request, accountId, needOTP, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary verifyIP
+     * @param {string} accountId account_id
+     * @param {string} identifier identifier
+     * @param {string} [browser] 
+     * @param {string} [ip] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountControllerApi
+     */
+    public verifyIPUsingGET(accountId: string, identifier: string, browser?: string, ip?: string, options?: any) {
+        return AccountControllerApiFp(this.configuration).verifyIPUsingGET(accountId, identifier, browser, ip, options)(this.fetch, this.basePath);
     }
 
 }
