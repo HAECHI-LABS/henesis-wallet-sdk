@@ -25,22 +25,20 @@ export class Organizations {
   }
 
   public async getOrganization(): Promise<Organization> {
-    return await this.client.get<NoUndefinedField<OrganizationDTO>>(
-      `${this.baseUrl}/me`
-    );
+    return await this.client.get<OrganizationDTO>(`${this.baseUrl}/me`);
   }
 
   public async getAccounts(): Promise<Account[]> {
-    const response = await this.client.get<NoUndefinedField<OrgAccountDTO>[]>(
+    const response = await this.client.get<OrgAccountDTO[]>(
       `${this.baseUrl}/accounts`
     );
     return response;
   }
 
   public async createSecret(): Promise<Secret> {
-    const response = await this.client.post<
-      NoUndefinedField<CreateSecretResponse>
-    >(`${this.baseUrl}/secret`);
+    const response = await this.client.post<CreateSecretResponse>(
+      `${this.baseUrl}/secret`
+    );
     return response;
   }
 
@@ -49,7 +47,7 @@ export class Organizations {
     role: Role,
     otpCode?: string
   ): Promise<Account> {
-    const response = await this.client.patch<NoUndefinedField<AccountDTO>>(
+    const response = await this.client.patch<AccountDTO>(
       `${this.baseUrl}/accounts/${accountId}`,
       {
         role,
