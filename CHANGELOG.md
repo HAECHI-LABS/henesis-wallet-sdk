@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-alpha.15](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.14...v2.0.0-alpha.15) (2020-07-08)
+
+
+### Bug Fixes
+
+* fixed btc transfer ([ddfd5a8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ddfd5a8dca09988600199e922ed4807daaf4e647))
+
+
+
+
+
 # [2.0.0-alpha.14](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.13...v2.0.0-alpha.14) (2020-07-07)
 
 
