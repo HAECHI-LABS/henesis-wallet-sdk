@@ -6,10 +6,13 @@ import { ObjectConverter } from "./utils/common";
 import { BlockchainType } from "./blockchain";
 import { makePrefixPathByBlockchainType } from "./utils/url";
 
+const packageJson = require("../package.json");
+
 export interface ClientOptions {
   accessToken: string;
   secret: string;
   url: string;
+  userAgent?: string;
 }
 
 export interface Client {
@@ -35,10 +38,13 @@ export class HttpClient {
 
   private readonly secret: string;
 
+  private readonly userAgent: string;
+
   constructor(options: ClientOptions) {
     this.baseUrl = options.url;
     this.secret = options.secret;
     this.accessToken = options.accessToken;
+    this.userAgent = options.userAgent;
     this.client = axios.create({
       baseURL: this.baseUrl,
       timeout: 30000,
@@ -65,6 +71,9 @@ export class HttpClient {
         config.headers["X-Henesis-Signature"] = this.createSig(message);
       }
       config.headers["X-Henesis-Timestamp"] = timestamp;
+      config.headers["User-Agent"] =
+        this.userAgent ?? `HenesisWallet/${packageJson.version}`;
+
       return config;
     });
 

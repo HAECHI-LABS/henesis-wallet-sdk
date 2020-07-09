@@ -1,12 +1,18 @@
 import express from "express";
 import { SDK } from "@haechi-labs/henesis-wallet-core";
 import { Env } from "@haechi-labs/henesis-wallet-core/lib/sdk";
+const packageJson = require("../../package.json");
 
 export default (
   req: express.Request,
   resp: express.Response,
   next: express.NextFunction
 ) => {
+  const enclaveAgent = `HenesisWalletEnclave/${packageJson.version} HenesisWallet/${packageJson.version}`;
+  const userAgent = req.headers["user-agent"]
+    ? `${enclaveAgent} ${req.headers["user-agent"]}`
+    : enclaveAgent;
+
   let accessToken;
   let secret;
   if (req.headers.authorization) {
@@ -37,6 +43,7 @@ export default (
     secret,
     env,
     url,
+    userAgent,
   });
   next();
 };

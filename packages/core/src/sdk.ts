@@ -5,7 +5,6 @@ import { EthModule, KlayModule } from "./eth";
 import { baseUrls } from "./utils/url";
 import { BtcModule } from "./btc";
 import { BlockchainType } from "./blockchain";
-import { HenesisKeys } from "./eth/henesisKeys";
 
 export const enum Env {
   Local,
@@ -19,6 +18,7 @@ export interface SDKOptions {
   secret: string;
   url?: string;
   env?: Env;
+  userAgent?: string;
 }
 
 export class SDK {
@@ -49,6 +49,7 @@ export class SDK {
       secret: params.secret,
       accessToken: params.accessToken,
       url: baseUrl,
+      userAgent: params.userAgent,
     }) as any;
     this.accounts = new Accounts(this.client);
     this.organizations = new Organizations(this.client);
