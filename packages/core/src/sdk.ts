@@ -18,7 +18,6 @@ export interface SDKOptions {
   secret: string;
   url?: string;
   env?: Env;
-  userAgent?: string;
 }
 
 export class SDK {
@@ -49,7 +48,6 @@ export class SDK {
       secret: params.secret,
       accessToken: params.accessToken,
       url: baseUrl,
-      userAgent: params.userAgent,
     }) as any;
     this.accounts = new Accounts(this.client);
     this.organizations = new Organizations(this.client);

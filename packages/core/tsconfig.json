@@ -7,8 +7,13 @@
     "rootDir": "./src",
     "allowJs": true,
     "resolveJsonModule": true,
-    "typeRoots": ["typings", "node_modules/@types"]
+    "typeRoots": ["typings", "node_modules/@types"],
+    "lib": [
+      "dom"
+    ]
   },
-  "include": ["./src"],
+  "include": [
+    "./src"
+  ],
   "exclude": ["./__tests__"]
 }
