@@ -9,11 +9,16 @@ import {
 } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 
-export interface BtcTransactionOutputResponse extends Omit<BtcTransactionOutput, "amount"> {
+export interface BtcTransactionOutputResponse
+  extends Omit<BtcTransactionOutput, "amount"> {
   amount: string;
 }
 
-export interface BtcTransactionResponse extends Omit<BtcTransaction, "blockNumber" | "feeAmount" | "amount" | "outputs"> {
+export interface BtcTransactionResponse
+  extends Omit<
+    BtcTransaction,
+    "blockNumber" | "feeAmount" | "amount" | "outputs"
+  > {
   blockNumber: string;
   feeAmount?: string;
   amount: string;
