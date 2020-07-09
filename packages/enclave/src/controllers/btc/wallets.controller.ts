@@ -10,6 +10,7 @@ import {
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
+import { TransferResponse } from "./transfers.controller";
 
 export interface BalanceResponse {
   coinType: string;
@@ -94,17 +95,17 @@ export default class WalletsController extends AbstractController
     };
   }
 
-  private async transfer(req: express.Request): Promise<any> {
+  private async transfer(req: express.Request): Promise<TransferResponse> {
     const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
 
-    const t: Transfer = await wallet.transfer(
+    const transfer: Transfer = await wallet.transfer(
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
       req.body.otpCode
     );
 
-    return this.bnToHexString(t);
+    return this.bnToHexString(transfer);
   }
 
   private async getEstimatedFee(

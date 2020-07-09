@@ -6,6 +6,7 @@ import Bytes from "./eth-core-lib/bytes";
 import sjcl from "./eth-core-lib/sjcl";
 import { fromString } from "./eth-core-lib/nat";
 import { BlockchainType } from "../blockchain";
+import { PasswordInvalidError } from "../error";
 
 const secp256k1 = new elliptic.ec("secp256k1"); // eslint-disable-line
 const BASE_V_VALUE = 27;
@@ -94,7 +95,7 @@ export class EthKeychains implements Keychains {
       } else if (
         error.message === "sjcl.exception.corrupt is not a constructor"
       ) {
-        error.message = "password error";
+        throw new PasswordInvalidError();
       }
       throw error;
     }

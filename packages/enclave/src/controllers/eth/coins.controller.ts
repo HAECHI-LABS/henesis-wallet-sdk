@@ -25,7 +25,7 @@ export default class CoinsController extends AbstractController
 
   private async getAllCoins(req: express.Request): Promise<CoinDTO[]> {
     return (
-      await req.sdk.eth.coins.getCoins(req.query.flag === "true" ? true : false)
+      await req.sdk.eth.coins.getCoins(req.query.flag === "true")
     ).map((c) => c.getCoinData());
   }
 }

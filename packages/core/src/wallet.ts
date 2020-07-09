@@ -13,6 +13,7 @@ import {
   KeyDTO as BtcKeyDTO,
   MasterWalletDTO as BtcMasterWalletDTO,
 } from "./__generate__/btc/api";
+import { checkNullAndUndefinedParameter } from "./utils/common";
 
 export interface WalletData {
   id: string;
@@ -79,6 +80,10 @@ export abstract class Wallet<T> {
     newPassphrase: string,
     otpCode?: string
   ): Promise<void> {
+    checkNullAndUndefinedParameter({
+      passphrase,
+      newPassphrase,
+    });
     return await this.changePassphraseWithKeyFile(
       passphrase,
       newPassphrase,

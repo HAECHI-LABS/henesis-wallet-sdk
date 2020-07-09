@@ -11,6 +11,9 @@
   ],
   "scripts": {
     "start": "nodemon",
+    "start:local": "cross-env NODE_ENV=local nodemon",
+    "start:dev": "cross-env NODE_ENV=development nodemon",
+    "start:test": "cross-env NODE_ENV=testnet nodemon",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
     "test": "jest --passWithNoTests",
     "build": "rm -rf ./lib && tsc",
@@ -24,6 +27,7 @@
   },
   "dependencies": {
     "@haechi-labs/henesis-wallet-core": "^2.0.0-alpha.16",
+    "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "ts-node": "^8.6.2"
   },
