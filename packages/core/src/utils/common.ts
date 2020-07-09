@@ -1,12 +1,14 @@
 import BN from "bn.js";
 
 import {
-  toSnakeCase as toStringSnakeCase,
   toCamelCase as toStringCamelCase,
+  toSnakeCase as toStringSnakeCase,
 } from "./string";
 import { BtcTransaction, BtcTransactionOutput } from "../btc/wallet";
 import { Transfer } from "../btc/transfers";
 import { TransferDTO } from "../__generate__/btc";
+
+const packageJson = require("../../package.json");
 
 export class ObjectConverter {
   static toSnakeCase(obj: any) {
