@@ -8,11 +8,6 @@ export default (
   resp: express.Response,
   next: express.NextFunction
 ) => {
-  const enclaveAgent = `HenesisWalletEnclave/${packageJson.version} HenesisWallet/${packageJson.version}`;
-  const userAgent = req.headers["user-agent"]
-    ? `${enclaveAgent} ${req.headers["user-agent"]}`
-    : enclaveAgent;
-
   let accessToken;
   let secret;
   if (req.headers.authorization) {
@@ -43,7 +38,6 @@ export default (
     secret,
     env,
     url,
-    userAgent,
   });
   next();
 };
