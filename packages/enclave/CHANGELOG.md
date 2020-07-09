@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.16...v2.0.0) (2020-07-09)
+
+
+### Features
+
+* add package.json lerna bootstrap windows os options ([2fb9738](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2fb9738aa698cdc84dc9ef8e8871a2aa13158127))
+* add sdk error handler ([735e44b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/735e44b03a1d31dac050a7e63e5ef1d3d62eaf8d))
+* add user-agent header ([3ed9e8b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3ed9e8bf9d7dcefb0cf40120efaba7fa43fa3818))
+
+
+
+
+
 # [2.0.0-alpha.16](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.0-alpha.15...v2.0.0-alpha.16) (2020-07-08)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
