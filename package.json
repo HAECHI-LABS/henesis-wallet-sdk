@@ -9,9 +9,11 @@
     "publish:prerelease": "lerna version prerelease && lerna publish from-git",
     "codegen": "lerna run --scope=\"@haechi-labs/henesis-wallet-core\" codegen",
     "build": "lerna run build",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "precommit": "lerna run prettier && lerna run eslint:fix"
   },
   "devDependencies": {
+    "husky": "^4.2.5",
     "lerna": "^3.16.4"
   },
   "author": "Haechi labs Team",
@@ -29,8 +31,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "pre-commit": "npm run precommit"
     }
   },
   "prettier": {
