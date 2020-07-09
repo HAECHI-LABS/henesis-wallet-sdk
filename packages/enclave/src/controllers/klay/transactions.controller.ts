@@ -29,7 +29,9 @@ export default class TransactionsController extends AbstractController
   private async getAllTransactions(
     req: express.Request
   ): Promise<Pagination<Transaction>> {
-    const transaction = await req.sdk.klay.transactions.getTransactions(req.query);
+    const transaction = await req.sdk.klay.transactions.getTransactions(
+      req.query
+    );
     return this.pagination<Transaction>(req, {
       pagination: transaction.pagination,
       results: transaction.results.map((c) => this.bnToHexString(c)),
@@ -37,8 +39,8 @@ export default class TransactionsController extends AbstractController
   }
 
   private async getTransaction(req: express.Request): Promise<Transaction> {
-    return this.bnToHexString(await req.sdk.klay.transactions.getTransaction(
-      req.params.transactionId
-    ));
+    return this.bnToHexString(
+      await req.sdk.klay.transactions.getTransaction(req.params.transactionId)
+    );
   }
 }

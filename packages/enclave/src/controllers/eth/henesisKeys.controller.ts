@@ -27,6 +27,8 @@ export default class HenesisKeysController extends AbstractController
   }
 
   private async getHenesisKeyBalance(req: express.Request): Promise<Balance> {
-    return this.bnToHexString(await req.sdk.eth.henesisKeys.getHenesisKeyBalance());
+    return this.bnToHexString(
+      await req.sdk.eth.henesisKeys.getHenesisKeyBalance()
+    );
   }
 }

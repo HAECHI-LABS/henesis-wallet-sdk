@@ -2,7 +2,7 @@ import express from "express";
 import { MiddleWare } from "../types";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 import url, { UrlWithStringQuery } from "url";
-import {BNConverter} from "@haechi-labs/henesis-wallet-core";
+import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 import BN from "bn.js";
 
 export default abstract class AbstractController {
@@ -101,7 +101,7 @@ ${err.message}`);
           n[k] = convertObj[k];
           return;
         }
-        if (convertObj[k].constructor['name'] === "BN") {
+        if (convertObj[k].constructor["name"] === "BN") {
           n[k] = BNConverter.bnToHexString(convertObj[k]);
           return;
         }
