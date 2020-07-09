@@ -4,6 +4,10 @@ import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 import url, { UrlWithStringQuery } from "url";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 import BN from "bn.js";
+import {
+  ErrorCode,
+  HttpStatus,
+} from "@haechi-labs/henesis-wallet-core/lib/error";
 
 export default abstract class AbstractController {
   protected router = express.Router();
@@ -34,16 +38,18 @@ export default abstract class AbstractController {
             const err = self.parseError(error.response.data);
             const result = self.parseErrorMessage(err.message);
             const status = error.response.status || 500;
-            if (status === 500) {
-              console.log(err.stack);
-            } else if (status <= 200 && status > 300) {
-              console.log(`Error : status ${status}
-${err.message}`);
-            }
             res.status(status).json(result);
           } catch (e) {
-            console.log(error);
-            res.status(500).json(self.parseErrorMessage(error.toString()));
+            const errorMessage = error.message;
+            const httpStatus =
+              error.httpStatus || HttpStatus.INTERNAL_SERVER_ERROR;
+            const errorCode = error.errorCode || ErrorCode.INTERNAL_SERVER;
+            res.status(httpStatus).json({
+              error: {
+                message: errorMessage,
+                code: errorCode,
+              },
+            });
           }
         });
     };

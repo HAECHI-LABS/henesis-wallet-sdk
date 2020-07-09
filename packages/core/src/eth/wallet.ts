@@ -16,7 +16,7 @@ import { Client } from "../httpClient";
 import BatchRequest from "./batch";
 import wallet from "../contracts/MasterWallet.json";
 import Bytes from "./eth-core-lib/bytes";
-import { BNConverter, ObjectConverter } from "../utils/common";
+import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import { WalletData, Wallet } from "../wallet";
 import { makeQueryString } from "../utils/url";
 import { Coins } from "./coins";
@@ -108,6 +108,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     transactionId: string,
     otpCode?: string
   ): Promise<EthTransaction> {
+    checkNullAndUndefinedParameter({ transactionId });
     const walletId = this.getId();
     const blockchain = this.getChain();
     const response = await this.client.post<NoUndefinedField<TransactionDTO>>(
@@ -136,6 +137,12 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     gasPrice?: BN,
     gasLimit?: BN
   ): Promise<EthTransaction> {
+    checkNullAndUndefinedParameter({
+      contractAddress,
+      value,
+      data,
+      passphrase,
+    });
     return this.sendTransaction(
       this.getChain(),
       await this.buildContractCallPayload(
@@ -157,6 +164,12 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     data: string,
     passphrase: string
   ): Promise<SignedMultiSigPayload> {
+    checkNullAndUndefinedParameter({
+      contractAddress,
+      value,
+      data,
+      passphrase,
+    });
     const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
@@ -182,6 +195,12 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     gasPrice?: BN,
     gasLimit?: BN
   ): Promise<EthTransaction> {
+    checkNullAndUndefinedParameter({
+      ticker,
+      to,
+      amount,
+      passphrase,
+    });
     return this.sendTransaction(
       this.getChain(),
       await this.buildTransferPayload(ticker, to, amount, passphrase),
@@ -462,6 +481,7 @@ export class EthMasterWallet extends EthLikeWallet {
   }
 
   async changeName(name: string) {
+    checkNullAndUndefinedParameter({ name });
     const masterWalletData = await this.client.patch<MasterWalletDTO>(
       `${this.baseUrl}/${this.data.id}/name`,
       {

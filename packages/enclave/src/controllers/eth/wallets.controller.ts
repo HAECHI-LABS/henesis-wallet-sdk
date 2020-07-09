@@ -214,9 +214,7 @@ export default class WalletsController extends AbstractController
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId
     );
-    const balances = await masterWallet.getBalance(
-      req.query.flag === "true" ? true : false
-    );
+    const balances = await masterWallet.getBalance(req.query.flag === "true");
 
     return balances.map((c) => this.bnToHexString(c));
   }
@@ -414,9 +412,7 @@ export default class WalletsController extends AbstractController
       req.params.userWalletId
     );
 
-    const balances = await userWallet.getBalance(
-      req.query.flag === "true" ? true : false
-    );
+    const balances = await userWallet.getBalance(req.query.flag === "true");
     return balances.map((x) => ({
       coinType: x.coinType,
       amount: BNConverter.bnToHexString(x.amount),

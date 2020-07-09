@@ -11,7 +11,7 @@ import { Wallets } from "../wallets";
 import { toChecksum } from "./keychains";
 import { keccak256s } from "./eth-core-lib/hash";
 import { makeQueryString } from "../utils/url";
-import { BNConverter } from "../utils/common";
+import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import { HenesisKeys } from "./henesisKeys";
 import { MasterWalletDTO } from "../__generate__/eth";
 
@@ -121,6 +121,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     passphrase: string,
     gasPrice?: BN
   ): Promise<EthMasterWallet> {
+    checkNullAndUndefinedParameter({ name, passphrase });
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
