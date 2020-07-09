@@ -7,6 +7,8 @@ import {
 import { BtcTransaction, BtcTransactionOutput } from "../btc/wallet";
 import { Transfer } from "../btc/transfers";
 import { TransferDTO } from "../__generate__/btc";
+import _ from "lodash";
+import { HenesisError, ValidationParameterError } from "../error";
 
 const packageJson = require("../../package.json");
 
@@ -102,3 +104,17 @@ export const parseResponseToTransfer = (t: TransferDTO): Transfer => {
     createdAt: t.createdAt,
   };
 };
+
+export function checkNullAndUndefinedParameter(requiredParams: object): void {
+  Object.entries(requiredParams).forEach((o) => {
+    if (typeof o[1] === "object") {
+      checkNullAndUndefinedParameter(_.fromPairs(o));
+    }
+    if (_.isUndefined(o[1])) {
+      throw new ValidationParameterError(o[0], "undefined");
+    }
+    if (_.isNull(o[1])) {
+      throw new ValidationParameterError(o[0], "null");
+    }
+  });
+}

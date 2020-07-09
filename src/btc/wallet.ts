@@ -14,7 +14,11 @@ import {
   script,
   Transaction as BitcoinTransaction,
 } from "bitcoinjs-lib";
-import { BNConverter, parseResponseToTransfer } from "../utils/common";
+import {
+  BNConverter,
+  parseResponseToTransfer,
+  checkNullAndUndefinedParameter,
+} from "../utils/common";
 import { Wallet, WalletData } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import {
@@ -136,6 +140,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     passphrase: string,
     otpCode?: string
   ): Promise<Transfer> {
+    checkNullAndUndefinedParameter({ to, amount, passphrase });
     const rawTransaction: BtcRawTransaction = await this.createRawTransaction(
       to,
       amount
@@ -270,6 +275,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   async createDepositAddress(name: string): Promise<DepositAddress> {
+    checkNullAndUndefinedParameter({ name });
     const params: CreateDepositAddressDTO = { name };
     const response = await this.client.post<DepositAddressDTO>(
       `${this.baseUrl}/${this.data.id}/deposit-addresses`,
@@ -321,6 +327,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   async changeName(name: string) {
+    checkNullAndUndefinedParameter({ name });
     const btcWalletData = await this.client.patch<MasterWalletDTO>(
       `${this.baseUrl}/${this.data.id}/name`,
       {

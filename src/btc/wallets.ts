@@ -20,6 +20,7 @@ import {
   CreateMasterWalletResponseDTO,
   ActivateMasterWalletRequestDTO,
 } from "../__generate__/btc";
+import { checkNullAndUndefinedParameter } from "..";
 
 export class BtcWallets extends Wallets<BtcMasterWallet> {
   public constructor(env: Env, client: Client, keychains: Keychains) {
@@ -66,6 +67,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
   }
 
   public verifyAddress(address: string): boolean {
+    checkNullAndUndefinedParameter({ address });
     try {
       BitcoinAddress.toOutputScript(
         address,
