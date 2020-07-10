@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.3...v2.0.4) (2020-07-10)
+
+
+### Bug Fixes
+
+* add btc raw transaction ([b4ed827](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b4ed827f05088a1d7c7f1680ca989fe25416bd07))
+
+
+
+
+
 ## [2.0.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.2...v2.0.3) (2020-07-10)
 
 
