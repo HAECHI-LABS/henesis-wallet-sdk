@@ -1,5 +1,5 @@
 import BN from "bn.js";
-import { BlockchainType } from "../blockchain";
+import { BlockchainType, transformBlockchainType } from "../blockchain";
 import { Client } from "../httpClient";
 import { BNConverter } from "../utils/common";
 import { MethodGasUsageDTO } from "../__generate__/eth";
@@ -34,7 +34,7 @@ export class Gasusages {
     return {
       id: balance.id,
       name: balance.name as MethodName,
-      blockchain: balance.blockchain,
+      blockchain: transformBlockchainType(balance.blockchain),
       estimatedGasConsumption: BNConverter.hexStringToBN(
         String(balance.estimatedGasConsumption)
       ),
