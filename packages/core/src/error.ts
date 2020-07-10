@@ -10,7 +10,7 @@ export enum HttpStatus {
 
 export enum ErrorCode {
   BAD_REQUEST = 4000,
-  INVALID_PASSWORD = 4001,
+  INVALID_PASSWORD = 4003,
   INTERNAL_SERVER = 5000,
 }
 
