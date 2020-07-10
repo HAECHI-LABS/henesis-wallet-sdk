@@ -8,9 +8,7 @@ import { BtcTransaction, BtcTransactionOutput } from "../btc/wallet";
 import { Transfer } from "../btc/transfers";
 import { TransferDTO } from "../__generate__/btc";
 import _ from "lodash";
-import { HenesisError, ValidationParameterError } from "../error";
-
-const packageJson = require("../../package.json");
+import { ValidationParameterError } from "../error";
 
 export class ObjectConverter {
   static toSnakeCase(obj: any) {
@@ -60,7 +58,10 @@ export class BNConverter {
     return `0x${bn.toString(16)}`;
   }
 
-  static hexStringToBN(hexString: string) {
+  static hexStringToBN(hexString: string, name?: string) {
+    checkNullAndUndefinedParameter(
+      _.fromPairs([[name ?? "hexString", hexString]])
+    );
     if (!hexString.startsWith("0x")) {
       throw new Error(`invalid hex string format: ${hexString}`);
     }

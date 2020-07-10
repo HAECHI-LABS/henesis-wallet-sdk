@@ -2,7 +2,6 @@ import AbstractController from "../controller";
 import { Controller } from "../../types";
 import express from "express";
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
-import BN from "bn.js";
 import {
   BtcTransaction,
   BtcTransactionOutput,

@@ -4,7 +4,6 @@ import express from "express";
 import {
   BtcEstimatedFee,
   BtcMasterWalletData,
-  BtcTransaction,
   DepositAddress,
 } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
@@ -100,7 +99,7 @@ export default class WalletsController extends AbstractController
 
     const transfer: Transfer = await wallet.transfer(
       req.body.to,
-      BNConverter.hexStringToBN(req.body.amount),
+      BNConverter.hexStringToBN(req.body.amount, "amount"),
       req.body.passphrase,
       req.body.otpCode
     );

@@ -187,7 +187,7 @@ export default class WalletsController extends AbstractController
 
     return await masterWallet.contractCall(
       req.body.contractAddress,
-      BNConverter.hexStringToBN(req.body.value),
+      BNConverter.hexStringToBN(req.body.value, "value"),
       req.body.data,
       req.body.passphrase,
       req.body.otpCode,
@@ -244,7 +244,7 @@ export default class WalletsController extends AbstractController
     return await masterWallet.transfer(
       req.body.ticker,
       req.body.to,
-      BNConverter.hexStringToBN(req.body.amount),
+      BNConverter.hexStringToBN(req.body.amount, "amount"),
       req.body.passphrase,
       req.body.otpCode,
       req.body.gasPrice
@@ -280,7 +280,7 @@ export default class WalletsController extends AbstractController
         request = request as ContractCallRequest;
         payload = await masterWallet.buildContractCallPayload(
           request.contractAddress,
-          BNConverter.hexStringToBN(request.value),
+          BNConverter.hexStringToBN(request.value, "value"),
           request.data,
           req.body.passphrase
         );
@@ -291,7 +291,7 @@ export default class WalletsController extends AbstractController
         payload = await masterWallet.buildTransferPayload(
           request.ticker,
           request.to,
-          BNConverter.hexStringToBN(request.amount),
+          BNConverter.hexStringToBN(request.amount, "amount"),
           req.body.passphrase
         );
       }
@@ -387,7 +387,7 @@ export default class WalletsController extends AbstractController
 
     return await userWallet.contractCall(
       req.body.contractAddress,
-      BNConverter.hexStringToBN(req.body.value),
+      BNConverter.hexStringToBN(req.body.value, "value"),
       req.body.data,
       req.body.passphrase,
       req.body.otpCode,
@@ -450,7 +450,7 @@ export default class WalletsController extends AbstractController
     return await userWallet.transfer(
       req.body.ticker,
       req.body.to,
-      BNConverter.hexStringToBN(req.body.amount),
+      BNConverter.hexStringToBN(req.body.amount, "amount"),
       req.body.passphrase,
       req.body.otpCode,
       req.body.gasPrice
