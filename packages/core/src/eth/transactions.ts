@@ -1,5 +1,5 @@
 import * as BN from "bn.js";
-import { BlockchainType } from "../blockchain";
+import { BlockchainType, transformBlockchainType } from "../blockchain";
 import { Pagination, PaginationOptions, Timestamp } from "../types";
 import { Client } from "../httpClient";
 import { makeQueryString } from "../utils/url";
@@ -71,7 +71,7 @@ export class Transactions {
     const multiSigPayload = signedMultiSigPayload.multiSigPayload;
     return {
       ...transcationDTO,
-      blockchain: transcationDTO.blockchain,
+      blockchain: transformBlockchainType(transcationDTO.blockchain),
       signedMultiSigPayload: {
         ...signedMultiSigPayload,
         multiSigPayload: {
