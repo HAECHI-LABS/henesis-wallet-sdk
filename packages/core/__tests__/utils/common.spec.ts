@@ -1,5 +1,5 @@
 import BN from "bn.js";
-import { BNConverter } from "../../src/utils/common";
+import {BNConverter, checkNullAndUndefinedParameter} from "../../src/utils/common";
 
 describe("BNConverter", () => {
   describe("#add0x()", () => {
@@ -37,6 +37,45 @@ describe("BNConverter", () => {
       expect(
         BNConverter.bnToHexString(BNConverter.hexStringToBN("0x3e8"))
       ).toEqual("0x3e8");
+    });
+  });
+
+  describe("#checkNullAndUndefinedParameter", () => {
+    it("checkNullAndUndefinedParameter - in BN", () => {
+      checkNullAndUndefinedParameter({
+        to: "to",
+        amount: new BN(0),
+        passphrase: "passphrase"
+      });
+    });
+    it("checkNullAndUndefinedParameter - in undefined", () => {
+      try {
+        checkNullAndUndefinedParameter({
+          undefinedT: undefined
+        });
+      } catch (e) {
+        expect(e.message).toEqual("undefinedT is undefined");
+      }
+    });
+    it("checkNullAndUndefinedParameter - in null", () => {
+      try {
+        checkNullAndUndefinedParameter({
+          nullT: null
+        });
+      } catch (e) {
+        expect(e.message).toEqual("nullT is null");
+      }
+    });
+    it("checkNullAndUndefinedParameter - in NaN", () => {
+      try {
+        checkNullAndUndefinedParameter({
+          stringT: "to",
+          nanT: NaN,
+          numberT: 1
+        });
+      } catch (e) {
+        expect(e.message).toEqual("nanT is NaN");
+      }
     });
   });
 });
