@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.2...v2.0.3) (2020-07-10)
+
+
+### Bug Fixes
+
+* checkNullAndUndefinedParameter error ([94d6602](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/94d66029be6ee4b456504284be89977f523b6847))
+
+
+
+
+
 ## [2.0.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.1...v2.0.2) (2020-07-09)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-core
