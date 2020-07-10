@@ -31,12 +31,9 @@ import {
 } from "../__generate__/eth";
 import _ from "lodash";
 
-export interface EthTransaction {
-  id: string;
+export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
-  hash: string;
-  status: TransactionDTO.StatusEnum;
-}
+};
 
 export interface EthWalletData extends WalletData {
   blockchain: BlockchainType;
@@ -281,10 +278,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       }
     );
     return {
-      id: response.id,
-      blockchain: transformBlockchainType(response.blockchain),
-      hash: response.hash,
-      status: response.status,
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain)
     };
   }
 
