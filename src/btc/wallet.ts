@@ -79,6 +79,7 @@ export interface BtcRawTransactionInput {
 export interface BtcRawTransactionOutput {
   to: string;
   amount: string;
+  isChange: boolean;
 }
 
 export interface BtcCreateTransactionOutput
@@ -239,6 +240,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
         return {
           to: output.to,
           amount: String(output.amount),
+          isChange: output.isChange,
         };
       }),
     };
