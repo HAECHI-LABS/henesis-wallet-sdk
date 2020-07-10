@@ -1,5 +1,5 @@
 import BN from "bn.js";
-import { BNConverter } from "../../src/utils/common";
+import { BNConverter, checkNullAndUndefinedParameter } from "../../src/utils/common";
 
 describe("BNConverter", () => {
   describe("#add0x()", () => {
@@ -37,6 +37,16 @@ describe("BNConverter", () => {
       expect(
         BNConverter.bnToHexString(BNConverter.hexStringToBN("0x3e8"))
       ).toEqual("0x3e8");
+    });
+  });
+
+  describe("#hcheckNullAndUndefinedParameter", () => {
+    it("checkNullAndUndefinedParameter", () => {
+      checkNullAndUndefinedParameter({
+        to: "test",
+        amount: new BN(0),
+        passphrase: "123"
+      })
     });
   });
 });
