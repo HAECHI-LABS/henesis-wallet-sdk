@@ -67,7 +67,7 @@ export class HttpClient {
         config.headers["X-Henesis-Signature"] = this.createSig(message);
       }
       config.headers["X-Henesis-Timestamp"] = timestamp;
-      config.headers["User-Agent"] =
+      config.headers["X-Henesis-User-Agent"] =
         typeof window !== "undefined"
           ? window.navigator.userAgent
           : `HenesisWallet/${packageJson.version}`;
