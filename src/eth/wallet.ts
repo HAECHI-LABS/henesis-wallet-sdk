@@ -139,7 +139,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   ): Promise<EthTransaction> {
     checkNullAndUndefinedParameter({
       contractAddress,
-      value,
       data,
       passphrase,
     });
@@ -166,7 +165,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   ): Promise<SignedMultiSigPayload> {
     checkNullAndUndefinedParameter({
       contractAddress,
-      value,
       data,
       passphrase,
     });
@@ -198,7 +196,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     checkNullAndUndefinedParameter({
       ticker,
       to,
-      amount,
       passphrase,
     });
     return this.sendTransaction(

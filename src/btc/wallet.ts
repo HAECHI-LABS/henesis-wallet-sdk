@@ -140,7 +140,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     passphrase: string,
     otpCode?: string
   ): Promise<Transfer> {
-    checkNullAndUndefinedParameter({ to, amount, passphrase });
+    checkNullAndUndefinedParameter({ to, passphrase });
     const rawTransaction: BtcRawTransaction = await this.createRawTransaction(
       to,
       amount

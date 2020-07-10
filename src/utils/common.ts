@@ -107,14 +107,17 @@ export const parseResponseToTransfer = (t: TransferDTO): Transfer => {
 
 export function checkNullAndUndefinedParameter(requiredParams: object): void {
   Object.entries(requiredParams).forEach((o) => {
-    if (typeof o[1] === "object") {
-      checkNullAndUndefinedParameter(_.fromPairs(o));
-    }
     if (_.isUndefined(o[1])) {
       throw new ValidationParameterError(o[0], "undefined");
     }
     if (_.isNull(o[1])) {
       throw new ValidationParameterError(o[0], "null");
+    }
+    if (_.isNaN(o[1])) {
+      throw new ValidationParameterError(o[0], "NaN");
+    }
+    if (_.isPlainObject(o[1])) {
+      checkNullAndUndefinedParameter(_.fromPairs(o));
     }
   });
 }
