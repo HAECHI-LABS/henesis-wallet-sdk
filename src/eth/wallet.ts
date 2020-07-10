@@ -279,7 +279,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
     return {
       ...response,
-      blockchain: transformBlockchainType(response.blockchain)
+      blockchain: transformBlockchainType(response.blockchain),
     };
   }
 
