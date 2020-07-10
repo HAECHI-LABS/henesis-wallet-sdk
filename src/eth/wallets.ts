@@ -4,7 +4,7 @@ import * as BN from "bn.js";
 import { Env } from "../sdk";
 import { Client } from "../httpClient";
 import { Key, Keychains, KeyWithPriv } from "../types";
-import { BlockchainType } from "../blockchain";
+import { BlockchainType, transformBlockchainType } from "../blockchain";
 import { RecoveryKit } from "../recoverykit";
 import { EthMasterWallet, EthMasterWalletData } from "./wallet";
 import { Wallets } from "../wallets";
@@ -44,7 +44,10 @@ export class EthWallets extends Wallets<EthMasterWallet> {
 
     return new EthMasterWallet(
       this.client,
-      walletData,
+      {
+        ...walletData,
+        blockchain: transformBlockchainType(walletData.blockchain),
+      },
       this.keychains,
       this.blockchain
     );
@@ -62,7 +65,10 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       (wallet) =>
         new EthMasterWallet(
           this.client,
-          wallet,
+          {
+            ...wallet,
+            blockchain: transformBlockchainType(wallet.blockchain),
+          },
           this.keychains,
           this.blockchain
         )
@@ -110,7 +116,10 @@ export class EthWallets extends Wallets<EthMasterWallet> {
 
     return new EthMasterWallet(
       this.client,
-      walletData,
+      {
+        ...walletData,
+        blockchain: transformBlockchainType(walletData.blockchain),
+      },
       this.keychains,
       this.blockchain
     );
@@ -138,7 +147,10 @@ export class EthWallets extends Wallets<EthMasterWallet> {
 
     return new EthMasterWallet(
       this.client,
-      walletData,
+      {
+        ...walletData,
+        blockchain: transformBlockchainType(walletData.blockchain),
+      },
       this.keychains,
       this.blockchain
     );

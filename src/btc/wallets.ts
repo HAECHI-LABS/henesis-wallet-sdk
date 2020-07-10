@@ -113,7 +113,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
 
     return new BtcRecoveryKit(
       name,
-      BlockchainType.BITCOIN,
+      BlockchainType.BitCoin,
       masterWalletResponse.henesisKey,
       accountKey,
       backupKey,

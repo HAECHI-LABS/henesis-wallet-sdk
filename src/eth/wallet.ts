@@ -3,7 +3,7 @@ import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import BN from "bn.js";
 import { Coin } from "./coin";
-import { BlockchainType } from "../blockchain";
+import { BlockchainType, transformBlockchainType } from "../blockchain";
 import {
   Balance,
   Key,
@@ -122,7 +122,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
     return {
       id: response.id,
-      blockchain: response.blockchain,
+      blockchain: transformBlockchainType(response.blockchain),
       hash: response.hash,
       status: response.status,
     };
@@ -282,7 +282,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
     return {
       id: response.id,
-      blockchain: response.blockchain,
+      blockchain: transformBlockchainType(response.blockchain),
       hash: response.hash,
       status: response.status,
     };
@@ -314,7 +314,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       const transaction = batchTransaction.transaction;
       return {
         id: transaction.id,
-        blockchain: transaction.blockchain,
+        blockchain: transformBlockchainType(transaction.blockchain),
         hash: transaction.hash,
         status: transaction.status,
       };
@@ -404,7 +404,10 @@ export class EthMasterWallet extends EthLikeWallet {
       this.client,
       this.data,
       this.keychains,
-      userWalletData,
+      {
+        ...userWalletData,
+        blockchain: transformBlockchainType(userWalletData.blockchain),
+      },
       this.blockchain
     );
   }
@@ -417,7 +420,10 @@ export class EthMasterWallet extends EthLikeWallet {
       this.client,
       this.data,
       this.keychains,
-      userWalletData,
+      {
+        ...userWalletData,
+        blockchain: transformBlockchainType(userWalletData.blockchain),
+      },
       this.blockchain
     );
   }
@@ -466,7 +472,10 @@ export class EthMasterWallet extends EthLikeWallet {
             this.client,
             this.data,
             this.keychains,
-            data,
+            {
+              ...data,
+              blockchain: transformBlockchainType(data.blockchain),
+            },
             this.blockchain
           )
       ),

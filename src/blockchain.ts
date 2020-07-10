@@ -1,14 +1,20 @@
 import { MasterWalletDTO as EthMasterWalletDTO } from "./__generate__/eth";
 
-export enum InnerBlockchainType {
-  BITCOIN = <any>"BITCOIN",
-}
+export const transformBlockchainType = (
+  blockchain: EthMasterWalletDTO.BlockchainEnum
+) => {
+  const byBlockchain: Record<
+    EthMasterWalletDTO.BlockchainEnum,
+    BlockchainType
+  > = {
+    [EthMasterWalletDTO.BlockchainEnum.ETHEREUM]: BlockchainType.Ethereum,
+    [EthMasterWalletDTO.BlockchainEnum.KLAYTN]: BlockchainType.Klaytn,
+  };
+  return byBlockchain[blockchain];
+};
 
-export const BlockchainType: Record<
-  | keyof typeof EthMasterWalletDTO.BlockchainEnum
-  | keyof typeof InnerBlockchainType,
-  EthMasterWalletDTO.BlockchainEnum | InnerBlockchainType
-> = { ...EthMasterWalletDTO.BlockchainEnum, ...InnerBlockchainType };
-export type BlockchainType =
-  | EthMasterWalletDTO.BlockchainEnum
-  | InnerBlockchainType;
+export enum BlockchainType {
+  Ethereum = "ETHEREUM",
+  Klaytn = "KLAYTN",
+  BitCoin = "BITCOIN",
+}
