@@ -12,7 +12,8 @@
     "codegen": "lerna run --scope=\"@haechi-labs/henesis-wallet-core\" codegen",
     "build": "lerna run build",
     "test": "lerna run test",
-    "precommit": "lerna run prettier && lerna run eslint:fix"
+    "precommit": "lerna run prettier && lerna run eslint:fix",
+    "prepush": "lerna run type-check"
   },
   "devDependencies": {
     "husky": "^4.2.5",
@@ -33,7 +34,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run precommit"
+      "pre-commit": "npm run precommit",
+      "pre-push": "npm run prepush"
     }
   },
   "prettier": {

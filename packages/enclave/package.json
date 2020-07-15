@@ -16,6 +16,7 @@
     "start:test": "cross-env NODE_ENV=testnet nodemon",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
     "test": "jest --passWithNoTests",
+    "type-check": "tsc --noEmit",
     "build": "rm -rf ./lib && tsc",
     "build:windows": "npm run preBuild:windows && mkdir lib && tsc",
     "eslint": "./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src",

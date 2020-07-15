@@ -14,6 +14,11 @@ export enum ErrorCode {
   INTERNAL_SERVER = 5000,
 }
 
+export interface PropertyErrorParse {
+  name: string;
+  type: string;
+}
+
 export class HenesisError extends Error {
   public readonly httpStatus: HttpStatus;
   public readonly errorCode: ErrorCode;
@@ -27,6 +32,7 @@ export class HenesisError extends Error {
     this.httpStatus = httpStatus ?? HttpStatus.INTERNAL_SERVER_ERROR;
     this.errorCode = errorCode ?? ErrorCode.INTERNAL_SERVER;
     Object.setPrototypeOf(this, HenesisError.prototype);
+    Error.captureStackTrace(this, this.constructor);
   }
 }
 
@@ -41,9 +47,9 @@ export class PasswordInvalidError extends HenesisError {
 }
 
 export class ValidationParameterError extends HenesisError {
-  constructor(parameterName: string, errorType: string) {
+  constructor(message: string) {
     super(
-      `${parameterName} is ${errorType}`,
+      message || "validation error",
       HttpStatus.BAD_REQUEST,
       ErrorCode.BAD_REQUEST
     );

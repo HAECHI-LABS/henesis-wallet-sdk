@@ -30,6 +30,7 @@ import {
   MasterWalletDTO,
 } from "../__generate__/eth";
 import _ from "lodash";
+import { ValidationParameterError } from "../error";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -134,9 +135,11 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     gasPrice?: BN,
     gasLimit?: BN
   ): Promise<EthTransaction> {
+    if (_.isEmpty(data)) {
+      throw new ValidationParameterError("data is empty");
+    }
     checkNullAndUndefinedParameter({
       contractAddress,
-      data,
       passphrase,
     });
     return this.sendTransaction(
