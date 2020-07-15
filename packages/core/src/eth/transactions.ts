@@ -68,28 +68,41 @@ export class Transactions {
   ): Transaction {
     const rawTransaction = transcationDTO.rawTransaction;
     const signedMultiSigPayload = transcationDTO.signedMultiSigPayload;
-    const multiSigPayload = signedMultiSigPayload.multiSigPayload;
+    const multiSigPayload = signedMultiSigPayload?.multiSigPayload;
     return {
       ...transcationDTO,
       blockchain: transformBlockchainType(transcationDTO.blockchain),
-      signedMultiSigPayload: {
-        ...signedMultiSigPayload,
-        multiSigPayload: {
-          ...multiSigPayload,
-          value: BNConverter.hexStringToBN(String(multiSigPayload.value)),
-          walletNonce: BNConverter.hexStringToBN(
-            String(multiSigPayload.walletNonce)
-          ),
-        },
-      },
-      rawTransaction: {
-        nonce: BNConverter.hexStringToBN(String(rawTransaction.nonce)),
-        gasPrice: BNConverter.hexStringToBN(String(rawTransaction.gasPrice)),
-        gasLimit: BNConverter.hexStringToBN(String(rawTransaction.gasLimit)),
-        to: rawTransaction.to,
-        value: BNConverter.hexStringToBN(String(rawTransaction.value)),
-        data: rawTransaction.data,
-      },
+      signedMultiSigPayload: signedMultiSigPayload
+        ? {
+            ...signedMultiSigPayload,
+            multiSigPayload: multiSigPayload
+              ? {
+                  ...multiSigPayload,
+                  value: BNConverter.hexStringToBN(
+                    String(multiSigPayload.value)
+                  ),
+                  walletNonce: BNConverter.hexStringToBN(
+                    String(multiSigPayload.walletNonce)
+                  ),
+                }
+              : null,
+          }
+        : null,
+      rawTransaction: rawTransaction
+        ? {
+            ...rawTransaction,
+            nonce: BNConverter.hexStringToBN(String(rawTransaction.nonce)),
+            gasPrice: BNConverter.hexStringToBN(
+              String(rawTransaction.gasPrice)
+            ),
+            gasLimit: BNConverter.hexStringToBN(
+              String(rawTransaction.gasLimit)
+            ),
+            to: rawTransaction.to,
+            value: BNConverter.hexStringToBN(String(rawTransaction.value)),
+            data: rawTransaction.data,
+          }
+        : null,
     };
   }
 
