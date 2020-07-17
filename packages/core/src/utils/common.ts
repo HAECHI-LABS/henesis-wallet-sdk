@@ -8,7 +8,11 @@ import { BtcTransaction, BtcTransactionOutput } from "../btc/wallet";
 import { Transfer } from "../btc/transfers";
 import { TransferDTO } from "../__generate__/btc";
 import _ from "lodash";
-import { HenesisError, ValidationParameterError } from "../error";
+import {
+  FormatInvalidError,
+  HenesisError,
+  ValidationParameterError,
+} from "../error";
 
 const packageJson = require("../../package.json");
 
@@ -61,8 +65,15 @@ export class BNConverter {
   }
 
   static hexStringToBN(hexString: string) {
+    if (_.isEmpty(hexString)) {
+      throw new ValidationParameterError("hexString is empty");
+    }
     if (!hexString.startsWith("0x")) {
-      throw new Error(`invalid hex string format: ${hexString}`);
+      throw new FormatInvalidError(
+        `invalid hex string format${
+          !_.isEmpty(hexString) ? `: ${hexString}` : ""
+        }`
+      );
     }
     return new BN(this.remove0x(hexString), 16);
   }

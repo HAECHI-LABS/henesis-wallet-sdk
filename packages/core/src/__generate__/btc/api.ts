@@ -1004,7 +1004,8 @@ export namespace TransferDTO {
     export enum StatusEnum {
         PENDING = <any> 'PENDING',
         MINED = <any> 'MINED',
-        CONFIRMED = <any> 'CONFIRMED'
+        CONFIRMED = <any> 'CONFIRMED',
+        REQUESTED = <any> 'REQUESTED'
     }
     /**
      * @export
