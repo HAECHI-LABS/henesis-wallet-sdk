@@ -55,3 +55,13 @@ export class ValidationParameterError extends HenesisError {
     );
   }
 }
+
+export class FormatInvalidError extends HenesisError {
+  constructor(message: string) {
+    super(
+      message || "invalid format",
+      HttpStatus.BAD_REQUEST,
+      ErrorCode.BAD_REQUEST
+    );
+  }
+}
