@@ -81,6 +81,50 @@ export class RequiredError extends Error {
 /**
  * 
  * @export
+ * @interface ApproveWithdrawalApprovalRequest
+ */
+export interface ApproveWithdrawalApprovalRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApproveWithdrawalApprovalRequest
+     */
+    gasLimit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApproveWithdrawalApprovalRequest
+     */
+    gasPrice?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApproveWithdrawalApprovalRequest
+     */
+    otpCode?: string;
+    /**
+     * 
+     * @type {SignedMultiSigPayloadDTO}
+     * @memberof ApproveWithdrawalApprovalRequest
+     */
+    signedMultiSigPayload?: SignedMultiSigPayloadDTO;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApproveWithdrawalApprovalRequest
+     */
+    transactionId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApproveWithdrawalApprovalRequest
+     */
+    walletId?: string;
+}
+
+/**
+ * 
+ * @export
  * @interface BalanceDTO
  */
 export interface BalanceDTO {
@@ -569,6 +613,38 @@ export interface CreateUserWalletRequest {
      * @memberof CreateUserWalletRequest
      */
     signedMultiSigPayload?: SignedMultiSigPayloadDTO;
+}
+
+/**
+ * 
+ * @export
+ * @interface CreateWithdrawalPolicyRequest
+ */
+export interface CreateWithdrawalPolicyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateWithdrawalPolicyRequest
+     */
+    coinSymbol: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateWithdrawalPolicyRequest
+     */
+    limitAmount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateWithdrawalPolicyRequest
+     */
+    policyType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateWithdrawalPolicyRequest
+     */
+    walletType: string;
 }
 
 /**
@@ -1069,6 +1145,46 @@ export interface PaginationValueTransferEventDTO {
 /**
  * 
  * @export
+ * @interface PaginationWalletWithdrawalPolicyDTO
+ */
+export interface PaginationWalletWithdrawalPolicyDTO {
+    /**
+     * 
+     * @type {PaginationMeta}
+     * @memberof PaginationWalletWithdrawalPolicyDTO
+     */
+    pagination?: PaginationMeta;
+    /**
+     * 
+     * @type {Array<WalletWithdrawalPolicyDTO>}
+     * @memberof PaginationWalletWithdrawalPolicyDTO
+     */
+    results?: Array<WalletWithdrawalPolicyDTO>;
+}
+
+/**
+ * 
+ * @export
+ * @interface PatchWithdrawalPolicyRequest
+ */
+export interface PatchWithdrawalPolicyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PatchWithdrawalPolicyRequest
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PatchWithdrawalPolicyRequest
+     */
+    limitAmount: string;
+}
+
+/**
+ * 
+ * @export
  * @interface RawTransactionDTO
  */
 export interface RawTransactionDTO {
@@ -1505,6 +1621,56 @@ export interface View {
      * @memberof View
      */
     contentType?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface WalletWithdrawalPolicyDTO
+ */
+export interface WalletWithdrawalPolicyDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletWithdrawalPolicyDTO
+     */
+    blockchain: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletWithdrawalPolicyDTO
+     */
+    coinSymbol: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletWithdrawalPolicyDTO
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletWithdrawalPolicyDTO
+     */
+    limitAmount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletWithdrawalPolicyDTO
+     */
+    policyType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletWithdrawalPolicyDTO
+     */
+    walletId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletWithdrawalPolicyDTO
+     */
+    walletType: string;
 }
 
 
@@ -3516,6 +3682,59 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
         },
         /**
          * 
+         * @summary createWalletWithdrawalPolicy
+         * @param {CreateWithdrawalPolicyRequest} createWithdrawalPolicyRequest createWithdrawalPolicyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createWalletWithdrawalPolicyUsingPOST(createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'createWithdrawalPolicyRequest' is not null or undefined
+            if (createWithdrawalPolicyRequest === null || createWithdrawalPolicyRequest === undefined) {
+                throw new RequiredError('createWithdrawalPolicyRequest','Required parameter createWithdrawalPolicyRequest was null or undefined when calling createWalletWithdrawalPolicyUsingPOST.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling createWalletWithdrawalPolicyUsingPOST.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/withdrawal-policies`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateWithdrawalPolicyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(createWithdrawalPolicyRequest || {}) : (createWithdrawalPolicyRequest || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary getMasterWalletAccountKey
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -3769,6 +3988,7 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
         /**
          * 
          * @summary getUserWalletBalance
+         * @param {'true'} flag flag
          * @param {string} userWalletId userWalletId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -3777,14 +3997,18 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+        getUserWalletBalanceUsingGET1(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'flag' is not null or undefined
+            if (flag === null || flag === undefined) {
+                throw new RequiredError('flag','Required parameter flag was null or undefined when calling getUserWalletBalanceUsingGET1.');
+            }
             // verify required parameter 'userWalletId' is not null or undefined
             if (userWalletId === null || userWalletId === undefined) {
-                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletBalanceUsingGET.');
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletBalanceUsingGET1.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletBalanceUsingGET.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletBalanceUsingGET1.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets/{userWalletId}/balance`
                 .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
@@ -3796,6 +4020,10 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (flag !== undefined) {
+                localVarQueryParameter['flag'] = flag;
             }
 
             if (organizationId !== undefined) {
@@ -3975,6 +4203,50 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
         },
         /**
          * 
+         * @summary getWalletWithdrawalPolicy
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWalletWithdrawalPolicyUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getWalletWithdrawalPolicyUsingGET.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/withdrawal-policies`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary patchAccountKey
          * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
          * @param {string} walletId walletId
@@ -4141,6 +4413,59 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
         },
         /**
          * 
+         * @summary patchWalletWithdrawalPolicy
+         * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'patchWithdrawalPolicyRequest' is not null or undefined
+            if (patchWithdrawalPolicyRequest === null || patchWithdrawalPolicyRequest === undefined) {
+                throw new RequiredError('patchWithdrawalPolicyRequest','Required parameter patchWithdrawalPolicyRequest was null or undefined when calling patchWalletWithdrawalPolicyUsingPATCH.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchWalletWithdrawalPolicyUsingPATCH.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/withdrawal-policies`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"PatchWithdrawalPolicyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(patchWithdrawalPolicyRequest || {}) : (patchWithdrawalPolicyRequest || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary sendBatchTransaction
          * @param {CreateBatchTransactionRequest} request request
          * @param {string} [accountId] 
@@ -4291,6 +4616,29 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @summary createWalletWithdrawalPolicy
+         * @param {CreateWithdrawalPolicyRequest} createWithdrawalPolicyRequest createWithdrawalPolicyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createWalletWithdrawalPolicyUsingPOST(createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WalletWithdrawalPolicyDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).createWalletWithdrawalPolicyUsingPOST(createWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
          * @summary getMasterWalletAccountKey
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -4422,6 +4770,7 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
         /**
          * 
          * @summary getUserWalletBalance
+         * @param {'true'} flag flag
          * @param {string} userWalletId userWalletId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -4430,8 +4779,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
-            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getUserWalletBalanceUsingGET(userWalletId, walletId, accountId, organizationId, otpKey, options);
+        getUserWalletBalanceUsingGET1(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getUserWalletBalanceUsingGET1(flag, userWalletId, walletId, accountId, organizationId, otpKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4515,6 +4864,28 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @summary getWalletWithdrawalPolicy
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWalletWithdrawalPolicyUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationWalletWithdrawalPolicyDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getWalletWithdrawalPolicyUsingGET(walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
          * @summary patchAccountKey
          * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
          * @param {string} walletId walletId
@@ -4574,6 +4945,29 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          */
         patchUserWalletNameUsingPATCH(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserWalletDTO> {
             const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).patchUserWalletNameUsingPATCH(request, userWalletId, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary patchWalletWithdrawalPolicy
+         * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WalletWithdrawalPolicyDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4668,6 +5062,20 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
         },
         /**
          * 
+         * @summary createWalletWithdrawalPolicy
+         * @param {CreateWithdrawalPolicyRequest} createWithdrawalPolicyRequest createWithdrawalPolicyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createWalletWithdrawalPolicyUsingPOST(createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).createWalletWithdrawalPolicyUsingPOST(createWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary getMasterWalletAccountKey
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -4745,6 +5153,7 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
         /**
          * 
          * @summary getUserWalletBalance
+         * @param {'true'} flag flag
          * @param {string} userWalletId userWalletId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -4753,8 +5162,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-            return EthWalletControllerApiFp(configuration).getUserWalletBalanceUsingGET(userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        getUserWalletBalanceUsingGET1(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).getUserWalletBalanceUsingGET1(flag, userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
         },
         /**
          * 
@@ -4802,6 +5211,19 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
         },
         /**
          * 
+         * @summary getWalletWithdrawalPolicy
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWalletWithdrawalPolicyUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).getWalletWithdrawalPolicyUsingGET(walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary patchAccountKey
          * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
          * @param {string} walletId walletId
@@ -4843,6 +5265,20 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          */
         patchUserWalletNameUsingPATCH(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
             return EthWalletControllerApiFp(configuration).patchUserWalletNameUsingPATCH(request, userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary patchWalletWithdrawalPolicy
+         * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
         },
         /**
          * 
@@ -4911,6 +5347,22 @@ export class EthWalletControllerApi extends BaseAPI {
      */
     public createUserWalletUsingPOST(request: CreateUserWalletRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
         return EthWalletControllerApiFp(this.configuration).createUserWalletUsingPOST(request, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary createWalletWithdrawalPolicy
+     * @param {CreateWithdrawalPolicyRequest} createWithdrawalPolicyRequest createWithdrawalPolicyRequest
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public createWalletWithdrawalPolicyUsingPOST(createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).createWalletWithdrawalPolicyUsingPOST(createWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5004,6 +5456,7 @@ export class EthWalletControllerApi extends BaseAPI {
     /**
      * 
      * @summary getUserWalletBalance
+     * @param {'true'} flag flag
      * @param {string} userWalletId userWalletId
      * @param {string} walletId walletId
      * @param {string} [accountId] 
@@ -5013,8 +5466,8 @@ export class EthWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthWalletControllerApi
      */
-    public getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).getUserWalletBalanceUsingGET(userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    public getUserWalletBalanceUsingGET1(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getUserWalletBalanceUsingGET1(flag, userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5069,6 +5522,21 @@ export class EthWalletControllerApi extends BaseAPI {
 
     /**
      * 
+     * @summary getWalletWithdrawalPolicy
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public getWalletWithdrawalPolicyUsingGET(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getWalletWithdrawalPolicyUsingGET(walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
      * @summary patchAccountKey
      * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
      * @param {string} walletId walletId
@@ -5119,6 +5587,22 @@ export class EthWalletControllerApi extends BaseAPI {
 
     /**
      * 
+     * @summary patchWalletWithdrawalPolicy
+     * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
      * @summary sendBatchTransaction
      * @param {CreateBatchTransactionRequest} request request
      * @param {string} [accountId] 
@@ -5147,6 +5631,254 @@ export class EthWalletControllerApi extends BaseAPI {
      */
     public sendTransactionUsingPOST(request: CreateMultiSigTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
         return EthWalletControllerApiFp(this.configuration).sendTransactionUsingPOST(request, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * EthWithdrawalApprovalControllerApi - fetch parameter creator
+ * @export
+ */
+export const EthWithdrawalApprovalControllerApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary approveWithdrawalApproval
+         * @param {ApproveWithdrawalApprovalRequest} approveWithdrawalApprovalRequest approveWithdrawalApprovalRequest
+         * @param {string} withdrawalApprovalId withdrawalApprovalId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'approveWithdrawalApprovalRequest' is not null or undefined
+            if (approveWithdrawalApprovalRequest === null || approveWithdrawalApprovalRequest === undefined) {
+                throw new RequiredError('approveWithdrawalApprovalRequest','Required parameter approveWithdrawalApprovalRequest was null or undefined when calling approveWithdrawalApprovalUsingPOST.');
+            }
+            // verify required parameter 'withdrawalApprovalId' is not null or undefined
+            if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
+                throw new RequiredError('withdrawalApprovalId','Required parameter withdrawalApprovalId was null or undefined when calling approveWithdrawalApprovalUsingPOST.');
+            }
+            const localVarPath = `/api/v2/eth/withdrawal-approvals/{withdrawalApprovalId}/approve`
+                .replace(`{${"withdrawalApprovalId"}}`, encodeURIComponent(String(withdrawalApprovalId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"boolean" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(needOTP || {}) : (needOTP || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary rejectWithdrawalApproval
+         * @param {string} withdrawalApprovalId withdrawalApprovalId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rejectWithdrawalApprovalUsingPOST(withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'withdrawalApprovalId' is not null or undefined
+            if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
+                throw new RequiredError('withdrawalApprovalId','Required parameter withdrawalApprovalId was null or undefined when calling rejectWithdrawalApprovalUsingPOST.');
+            }
+            const localVarPath = `/api/v2/eth/withdrawal-approvals/{withdrawalApprovalId}/reject`
+                .replace(`{${"withdrawalApprovalId"}}`, encodeURIComponent(String(withdrawalApprovalId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"boolean" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(needOTP || {}) : (needOTP || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * EthWithdrawalApprovalControllerApi - functional programming interface
+ * @export
+ */
+export const EthWithdrawalApprovalControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary approveWithdrawalApproval
+         * @param {ApproveWithdrawalApprovalRequest} approveWithdrawalApprovalRequest approveWithdrawalApprovalRequest
+         * @param {string} withdrawalApprovalId withdrawalApprovalId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
+            const localVarFetchArgs = EthWithdrawalApprovalControllerApiFetchParamCreator(configuration).approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest, withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary rejectWithdrawalApproval
+         * @param {string} withdrawalApprovalId withdrawalApprovalId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rejectWithdrawalApprovalUsingPOST(withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = EthWithdrawalApprovalControllerApiFetchParamCreator(configuration).rejectWithdrawalApprovalUsingPOST(withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * EthWithdrawalApprovalControllerApi - factory interface
+ * @export
+ */
+export const EthWithdrawalApprovalControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary approveWithdrawalApproval
+         * @param {ApproveWithdrawalApprovalRequest} approveWithdrawalApprovalRequest approveWithdrawalApprovalRequest
+         * @param {string} withdrawalApprovalId withdrawalApprovalId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWithdrawalApprovalControllerApiFp(configuration).approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest, withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary rejectWithdrawalApproval
+         * @param {string} withdrawalApprovalId withdrawalApprovalId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rejectWithdrawalApprovalUsingPOST(withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWithdrawalApprovalControllerApiFp(configuration).rejectWithdrawalApprovalUsingPOST(withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * EthWithdrawalApprovalControllerApi - object-oriented interface
+ * @export
+ * @class EthWithdrawalApprovalControllerApi
+ * @extends {BaseAPI}
+ */
+export class EthWithdrawalApprovalControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary approveWithdrawalApproval
+     * @param {ApproveWithdrawalApprovalRequest} approveWithdrawalApprovalRequest approveWithdrawalApprovalRequest
+     * @param {string} withdrawalApprovalId withdrawalApprovalId
+     * @param {string} [accountId] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWithdrawalApprovalControllerApi
+     */
+    public approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWithdrawalApprovalControllerApiFp(this.configuration).approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest, withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary rejectWithdrawalApproval
+     * @param {string} withdrawalApprovalId withdrawalApprovalId
+     * @param {string} [accountId] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWithdrawalApprovalControllerApi
+     */
+    public rejectWithdrawalApprovalUsingPOST(withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWithdrawalApprovalControllerApiFp(this.configuration).rejectWithdrawalApprovalUsingPOST(withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
 }
@@ -5221,24 +5953,15 @@ export const KlayCoinControllerApiFetchParamCreator = function (configuration?: 
         /**
          * 
          * @summary getAllCoins
-         * @param {'true'} flag flag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET3(flag: 'true', options: any = {}): FetchArgs {
-            // verify required parameter 'flag' is not null or undefined
-            if (flag === null || flag === undefined) {
-                throw new RequiredError('flag','Required parameter flag was null or undefined when calling getAllCoinsUsingGET3.');
-            }
+        getAllCoinsUsingGET2(options: any = {}): FetchArgs {
             const localVarPath = `/api/v2/klay/coins`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (flag !== undefined) {
-                localVarQueryParameter['flag'] = flag;
-            }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -5361,12 +6084,11 @@ export const KlayCoinControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary getAllCoins
-         * @param {'true'} flag flag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET3(flag: 'true', options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<CoinDTO>> {
-            const localVarFetchArgs = KlayCoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET3(flag, options);
+        getAllCoinsUsingGET2(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<CoinDTO>> {
+            const localVarFetchArgs = KlayCoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET2(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -5447,12 +6169,11 @@ export const KlayCoinControllerApiFactory = function (configuration?: Configurat
         /**
          * 
          * @summary getAllCoins
-         * @param {'true'} flag flag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET3(flag: 'true', options?: any) {
-            return KlayCoinControllerApiFp(configuration).getAllCoinsUsingGET3(flag, options)(fetch, basePath);
+        getAllCoinsUsingGET2(options?: any) {
+            return KlayCoinControllerApiFp(configuration).getAllCoinsUsingGET2(options)(fetch, basePath);
         },
         /**
          * 
@@ -5511,13 +6232,12 @@ export class KlayCoinControllerApi extends BaseAPI {
     /**
      * 
      * @summary getAllCoins
-     * @param {'true'} flag flag
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KlayCoinControllerApi
      */
-    public getAllCoinsUsingGET3(flag: 'true', options?: any) {
-        return KlayCoinControllerApiFp(this.configuration).getAllCoinsUsingGET3(flag, options)(this.fetch, this.basePath);
+    public getAllCoinsUsingGET2(options?: any) {
+        return KlayCoinControllerApiFp(this.configuration).getAllCoinsUsingGET2(options)(this.fetch, this.basePath);
     }
 
     /**
@@ -6708,6 +7428,59 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
+         * @summary createWalletWithdrawalPolicy
+         * @param {CreateWithdrawalPolicyRequest} createWithdrawalPolicyRequest createWithdrawalPolicyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createWalletWithdrawalPolicyUsingPOST1(createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'createWithdrawalPolicyRequest' is not null or undefined
+            if (createWithdrawalPolicyRequest === null || createWithdrawalPolicyRequest === undefined) {
+                throw new RequiredError('createWithdrawalPolicyRequest','Required parameter createWithdrawalPolicyRequest was null or undefined when calling createWalletWithdrawalPolicyUsingPOST1.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling createWalletWithdrawalPolicyUsingPOST1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/withdrawal-policies`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateWithdrawalPolicyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(createWithdrawalPolicyRequest || {}) : (createWithdrawalPolicyRequest || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary getMasterWalletAccountKey
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -7176,6 +7949,50 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
+         * @summary getWalletWithdrawalPolicy
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWalletWithdrawalPolicyUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getWalletWithdrawalPolicyUsingGET1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/withdrawal-policies`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary patchAccountKey
          * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
          * @param {string} walletId walletId
@@ -7342,6 +8159,59 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
+         * @summary patchWalletWithdrawalPolicy
+         * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'patchWithdrawalPolicyRequest' is not null or undefined
+            if (patchWithdrawalPolicyRequest === null || patchWithdrawalPolicyRequest === undefined) {
+                throw new RequiredError('patchWithdrawalPolicyRequest','Required parameter patchWithdrawalPolicyRequest was null or undefined when calling patchWalletWithdrawalPolicyUsingPATCH1.');
+            }
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchWalletWithdrawalPolicyUsingPATCH1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/withdrawal-policies`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"PatchWithdrawalPolicyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(patchWithdrawalPolicyRequest || {}) : (patchWithdrawalPolicyRequest || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary sendBatchTransaction
          * @param {CreateBatchTransactionRequest} request request
          * @param {string} [accountId] 
@@ -7480,6 +8350,29 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          */
         createUserWalletUsingPOST1(request: CreateUserWalletRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserWalletDTO> {
             const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).createUserWalletUsingPOST1(request, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary createWalletWithdrawalPolicy
+         * @param {CreateWithdrawalPolicyRequest} createWithdrawalPolicyRequest createWithdrawalPolicyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createWalletWithdrawalPolicyUsingPOST1(createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WalletWithdrawalPolicyDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).createWalletWithdrawalPolicyUsingPOST1(createWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -7717,6 +8610,28 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
+         * @summary getWalletWithdrawalPolicy
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWalletWithdrawalPolicyUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationWalletWithdrawalPolicyDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getWalletWithdrawalPolicyUsingGET1(walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
          * @summary patchAccountKey
          * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
          * @param {string} walletId walletId
@@ -7776,6 +8691,29 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          */
         patchUserWalletNameUsingPATCH1(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserWalletDTO> {
             const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).patchUserWalletNameUsingPATCH1(request, userWalletId, walletId, accountId, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary patchWalletWithdrawalPolicy
+         * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WalletWithdrawalPolicyDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -7867,6 +8805,20 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          */
         createUserWalletUsingPOST1(request: CreateUserWalletRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
             return KlayWalletControllerApiFp(configuration).createUserWalletUsingPOST1(request, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary createWalletWithdrawalPolicy
+         * @param {CreateWithdrawalPolicyRequest} createWithdrawalPolicyRequest createWithdrawalPolicyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createWalletWithdrawalPolicyUsingPOST1(createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).createWalletWithdrawalPolicyUsingPOST1(createWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
         },
         /**
          * 
@@ -8005,6 +8957,19 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
         },
         /**
          * 
+         * @summary getWalletWithdrawalPolicy
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWalletWithdrawalPolicyUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getWalletWithdrawalPolicyUsingGET1(walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary patchAccountKey
          * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
          * @param {string} walletId walletId
@@ -8046,6 +9011,20 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          */
         patchUserWalletNameUsingPATCH1(request: ChangeWalletNameRequest, userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
             return KlayWalletControllerApiFp(configuration).patchUserWalletNameUsingPATCH1(request, userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary patchWalletWithdrawalPolicy
+         * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+         * @param {string} walletId walletId
+         * @param {string} [accountId] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
         },
         /**
          * 
@@ -8114,6 +9093,22 @@ export class KlayWalletControllerApi extends BaseAPI {
      */
     public createUserWalletUsingPOST1(request: CreateUserWalletRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
         return KlayWalletControllerApiFp(this.configuration).createUserWalletUsingPOST1(request, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary createWalletWithdrawalPolicy
+     * @param {CreateWithdrawalPolicyRequest} createWithdrawalPolicyRequest createWithdrawalPolicyRequest
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public createWalletWithdrawalPolicyUsingPOST1(createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).createWalletWithdrawalPolicyUsingPOST1(createWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -8273,6 +9268,21 @@ export class KlayWalletControllerApi extends BaseAPI {
 
     /**
      * 
+     * @summary getWalletWithdrawalPolicy
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public getWalletWithdrawalPolicyUsingGET1(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getWalletWithdrawalPolicyUsingGET1(walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
      * @summary patchAccountKey
      * @param {UpdateAccountKeyRequest} updateAccountKeyRequest updateAccountKeyRequest
      * @param {string} walletId walletId
@@ -8323,6 +9333,22 @@ export class KlayWalletControllerApi extends BaseAPI {
 
     /**
      * 
+     * @summary patchWalletWithdrawalPolicy
+     * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+     * @param {string} walletId walletId
+     * @param {string} [accountId] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
      * @summary sendBatchTransaction
      * @param {CreateBatchTransactionRequest} request request
      * @param {string} [accountId] 
@@ -8351,6 +9377,254 @@ export class KlayWalletControllerApi extends BaseAPI {
      */
     public sendTransactionUsingPOST1(request: CreateMultiSigTransactionRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
         return KlayWalletControllerApiFp(this.configuration).sendTransactionUsingPOST1(request, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * KlayWithdrawalApprovalControllerApi - fetch parameter creator
+ * @export
+ */
+export const KlayWithdrawalApprovalControllerApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary approveWithdrawalApproval
+         * @param {ApproveWithdrawalApprovalRequest} approveWithdrawalApprovalRequest approveWithdrawalApprovalRequest
+         * @param {string} withdrawalApprovalId withdrawalApprovalId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveWithdrawalApprovalUsingPOST1(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'approveWithdrawalApprovalRequest' is not null or undefined
+            if (approveWithdrawalApprovalRequest === null || approveWithdrawalApprovalRequest === undefined) {
+                throw new RequiredError('approveWithdrawalApprovalRequest','Required parameter approveWithdrawalApprovalRequest was null or undefined when calling approveWithdrawalApprovalUsingPOST1.');
+            }
+            // verify required parameter 'withdrawalApprovalId' is not null or undefined
+            if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
+                throw new RequiredError('withdrawalApprovalId','Required parameter withdrawalApprovalId was null or undefined when calling approveWithdrawalApprovalUsingPOST1.');
+            }
+            const localVarPath = `/api/v2/klay/withdrawal-approvals/{withdrawalApprovalId}/approve`
+                .replace(`{${"withdrawalApprovalId"}}`, encodeURIComponent(String(withdrawalApprovalId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"boolean" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(needOTP || {}) : (needOTP || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary rejectWithdrawalApproval
+         * @param {string} withdrawalApprovalId withdrawalApprovalId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rejectWithdrawalApprovalUsingPOST1(withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'withdrawalApprovalId' is not null or undefined
+            if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
+                throw new RequiredError('withdrawalApprovalId','Required parameter withdrawalApprovalId was null or undefined when calling rejectWithdrawalApprovalUsingPOST1.');
+            }
+            const localVarPath = `/api/v2/klay/withdrawal-approvals/{withdrawalApprovalId}/reject`
+                .replace(`{${"withdrawalApprovalId"}}`, encodeURIComponent(String(withdrawalApprovalId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"boolean" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(needOTP || {}) : (needOTP || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KlayWithdrawalApprovalControllerApi - functional programming interface
+ * @export
+ */
+export const KlayWithdrawalApprovalControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary approveWithdrawalApproval
+         * @param {ApproveWithdrawalApprovalRequest} approveWithdrawalApprovalRequest approveWithdrawalApprovalRequest
+         * @param {string} withdrawalApprovalId withdrawalApprovalId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveWithdrawalApprovalUsingPOST1(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransactionDTO> {
+            const localVarFetchArgs = KlayWithdrawalApprovalControllerApiFetchParamCreator(configuration).approveWithdrawalApprovalUsingPOST1(approveWithdrawalApprovalRequest, withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary rejectWithdrawalApproval
+         * @param {string} withdrawalApprovalId withdrawalApprovalId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rejectWithdrawalApprovalUsingPOST1(withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = KlayWithdrawalApprovalControllerApiFetchParamCreator(configuration).rejectWithdrawalApprovalUsingPOST1(withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * KlayWithdrawalApprovalControllerApi - factory interface
+ * @export
+ */
+export const KlayWithdrawalApprovalControllerApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary approveWithdrawalApproval
+         * @param {ApproveWithdrawalApprovalRequest} approveWithdrawalApprovalRequest approveWithdrawalApprovalRequest
+         * @param {string} withdrawalApprovalId withdrawalApprovalId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveWithdrawalApprovalUsingPOST1(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWithdrawalApprovalControllerApiFp(configuration).approveWithdrawalApprovalUsingPOST1(approveWithdrawalApprovalRequest, withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary rejectWithdrawalApproval
+         * @param {string} withdrawalApprovalId withdrawalApprovalId
+         * @param {string} [accountId] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rejectWithdrawalApprovalUsingPOST1(withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWithdrawalApprovalControllerApiFp(configuration).rejectWithdrawalApprovalUsingPOST1(withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * KlayWithdrawalApprovalControllerApi - object-oriented interface
+ * @export
+ * @class KlayWithdrawalApprovalControllerApi
+ * @extends {BaseAPI}
+ */
+export class KlayWithdrawalApprovalControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary approveWithdrawalApproval
+     * @param {ApproveWithdrawalApprovalRequest} approveWithdrawalApprovalRequest approveWithdrawalApprovalRequest
+     * @param {string} withdrawalApprovalId withdrawalApprovalId
+     * @param {string} [accountId] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWithdrawalApprovalControllerApi
+     */
+    public approveWithdrawalApprovalUsingPOST1(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWithdrawalApprovalControllerApiFp(this.configuration).approveWithdrawalApprovalUsingPOST1(approveWithdrawalApprovalRequest, withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary rejectWithdrawalApproval
+     * @param {string} withdrawalApprovalId withdrawalApprovalId
+     * @param {string} [accountId] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWithdrawalApprovalControllerApi
+     */
+    public rejectWithdrawalApprovalUsingPOST1(withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWithdrawalApprovalControllerApiFp(this.configuration).rejectWithdrawalApprovalUsingPOST1(withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
 }
