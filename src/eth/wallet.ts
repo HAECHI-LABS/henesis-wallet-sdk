@@ -388,7 +388,7 @@ export class EthMasterWallet extends EthLikeWallet {
 
     const userWalletData = await this.client.post<
       NoUndefinedField<UserWalletDTO>
-    >(`${this.baseUrl}/${this.getId()}/user-wallets`, {
+    >(`${this.getBaseUrl()}/user-wallets`, {
       name,
       salt: BNConverter.bnToHexString(salt),
       blockchain: this.getChain(),
@@ -413,7 +413,7 @@ export class EthMasterWallet extends EthLikeWallet {
   async getUserWallet(walletId: string): Promise<EthUserWallet> {
     const userWalletData = await this.client.get<
       NoUndefinedField<UserWalletDTO>
-    >(`${this.baseUrl}/${this.getId()}/user-wallets/${walletId}`);
+    >(`${this.getBaseUrl()}/user-wallets/${walletId}`);
     return new EthUserWallet(
       this.client,
       this.data,
@@ -429,9 +429,7 @@ export class EthMasterWallet extends EthLikeWallet {
   async getBalance(flag?: boolean): Promise<Balance[]> {
     const queryString: string = makeQueryString({ flag });
     const balances = await this.client.get<NoUndefinedField<BalanceDTO>[]>(
-      `${this.baseUrl}/${this.data.id}/balance${
-        queryString ? `?${queryString}` : ""
-      }`
+      `${this.getBaseUrl()}/balance${queryString ? `?${queryString}` : ""}`
     );
 
     return balances.map((balance) => ({
@@ -457,9 +455,7 @@ export class EthMasterWallet extends EthLikeWallet {
     const data = await this.client.get<
       NoUndefinedField<PaginationUserWalletDTO>
     >(
-      `${this.baseUrl}/${this.data.id}/user-wallets${
-        queryString ? `?${queryString}` : ""
-      }`
+      `${this.getBaseUrl()}/user-wallets${queryString ? `?${queryString}` : ""}`
     );
 
     return {
@@ -487,7 +483,7 @@ export class EthMasterWallet extends EthLikeWallet {
   async changeName(name: string) {
     checkNullAndUndefinedParameter({ name });
     const masterWalletData = await this.client.patch<MasterWalletDTO>(
-      `${this.baseUrl}/${this.data.id}/name`,
+      `${this.getBaseUrl()}/name`,
       {
         name,
       }
@@ -549,6 +545,10 @@ export class EthMasterWallet extends EthLikeWallet {
       gasLimit || this.DEFAULT_CONTRACT_CALL_GAS_LIMIT
     );
   }
+
+  getBaseUrl(): string {
+    return `${this.baseUrl}/${this.data.id}`;
+  }
 }
 
 export class EthUserWallet extends EthLikeWallet {
@@ -575,7 +575,7 @@ export class EthUserWallet extends EthLikeWallet {
   async getBalance(flag?: boolean): Promise<Balance[]> {
     const params = flag ? `?flag=${flag}` : "";
     const balances = await this.client.get<BalanceDTO[]>(
-      `${this.baseUrl}/${this.data.id}/user-wallets/${this.userWalletData.id}/balance${params}`
+      `${this.getBaseUrl()}/balance${params}`
     );
 
     return balances.map((balance) => ({
@@ -600,7 +600,7 @@ export class EthUserWallet extends EthLikeWallet {
 
   async changeName(name: string) {
     const userWalletData = await this.client.patch<UserWalletDTO>(
-      `${this.baseUrl}/${this.data.id}/user-wallets/${this.userWalletData.id}/name`,
+      `${this.getBaseUrl()}/name`,
       {
         name,
       }
@@ -642,5 +642,9 @@ export class EthUserWallet extends EthLikeWallet {
 
   updateAccountKey(key: Key) {
     throw new Error("unimplemented method");
+  }
+
+  getBaseUrl(): string {
+    return `${this.baseUrl}/${this.data.id}/user-wallets/${this.userWalletData.id}`;
   }
 }

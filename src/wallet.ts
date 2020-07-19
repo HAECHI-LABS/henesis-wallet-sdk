@@ -1,19 +1,29 @@
 import BN from "bn.js";
 import { Client } from "./httpClient";
-import { BlockchainType } from "./blockchain";
-import { Keychains, Balance, Key, KeyWithPriv } from "./types";
+import { BlockchainType, transformBlockchainType } from "./blockchain";
+import {
+  Keychains,
+  Balance,
+  Key,
+  KeyWithPriv,
+  Pagination,
+  PaginationOptions,
+} from "./types";
 import aesjs from "aes-js";
 import { Base64 } from "js-base64";
 
 import {
   KeyDTO as EthKeyDTO,
   MasterWalletDTO as EthMasterWalletDTO,
+  PaginationWalletWithdrawalPolicyDTO,
+  WalletWithdrawalPolicyDTO,
 } from "./__generate__/eth/api";
 import {
   KeyDTO as BtcKeyDTO,
   MasterWalletDTO as BtcMasterWalletDTO,
 } from "./__generate__/btc/api";
 import { checkNullAndUndefinedParameter } from "./utils/common";
+import { makeQueryString } from "./utils/url";
 
 export interface WalletData {
   id: string;
@@ -22,6 +32,24 @@ export interface WalletData {
   encryptionKey: string;
   createdAt: string;
   status: WalletStatus;
+}
+
+export enum PolicyType {
+  Daily = "DAILY",
+  Transaction = "TRANSACTION",
+}
+
+export enum WalletType {
+  MasterWallet = "MASTER_WALLET",
+  UserWallet = "USER_WALLET",
+}
+
+export interface WithdrawalPolicy {
+  id: string;
+  limitAmount: BN;
+  walletType: WalletType;
+  policyType: PolicyType;
+  coinSymbol: string;
 }
 
 export const WalletStatus: Record<
@@ -60,6 +88,8 @@ export abstract class Wallet<T> {
   abstract getAccountKey(): Key;
 
   abstract updateAccountKey(key: Key);
+
+  abstract getBaseUrl(): string;
 
   protected recoverPassphrase(encryptedPassphrase: string): string {
     try {
@@ -165,5 +195,68 @@ export abstract class Wallet<T> {
     } catch (e) {
       return false;
     }
+  }
+
+  async createWithdrawalPolicy(
+    limitAmount: BN,
+    walletType: WalletType,
+    policyType: PolicyType,
+    coinSymbol: string
+  ): Promise<WithdrawalPolicy> {
+    const data = await this.client.post<
+      NoUndefinedField<WalletWithdrawalPolicyDTO>
+    >(`${this.getBaseUrl()}/withdrawal-policies`, {
+      limitAmount,
+      walletType,
+      policyType,
+      coinSymbol,
+    });
+    return {
+      ...data,
+      limitAmount: new BN(data.limitAmount),
+    } as WithdrawalPolicy;
+  }
+
+  async patchWithdrawalPolicy(
+    id: string,
+    limitAmount: BN,
+    walletType: WalletType,
+    policyType: PolicyType,
+    coinSymbol: string
+  ) {
+    const data = await this.client.patch<
+      NoUndefinedField<WalletWithdrawalPolicyDTO>
+    >(`${this.getBaseUrl()}/withdrawal-policies/${id}`, {
+      limitAmount,
+      walletType,
+      policyType,
+      coinSymbol,
+    });
+    return {
+      ...data,
+      limitAmount: new BN(data.limitAmount),
+    } as WithdrawalPolicy;
+  }
+
+  async getWithdrawalPolices(
+    options: PaginationOptions
+  ): Promise<Pagination<WithdrawalPolicy>> {
+    const queryString: string = makeQueryString(options);
+    const data = await this.client.get<
+      NoUndefinedField<PaginationWalletWithdrawalPolicyDTO>
+    >(
+      `${this.getBaseUrl()}/withdrawal-policies${
+        queryString ? `?${queryString}` : ""
+      }`
+    );
+    return {
+      pagination: data.pagination,
+      results: data.results.map((data) => {
+        return {
+          ...data,
+          limitAmount: new BN(data.limitAmount),
+        } as WithdrawalPolicy;
+      }),
+    };
   }
 }
