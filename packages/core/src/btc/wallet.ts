@@ -206,7 +206,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     }
 
     const transfer = await this.client.post<TransferDTO>(
-      `${this.baseUrl}/${this.data.id}/transactions`,
+      `${this.getBaseUrl()}/transactions`,
       payload
     );
 
@@ -218,7 +218,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     amount: BN
   ): Promise<BtcRawTransaction> {
     const response = await this.client.post<RawTransactionDTO>(
-      `${this.baseUrl}/${this.data.id}/raw-transactions`,
+      `${this.getBaseUrl()}/raw-transactions`,
       {
         to,
         amount: BNConverter.bnToHexString(amount),
@@ -248,7 +248,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
 
   public async getEstimatedFee(): Promise<BtcEstimatedFee> {
     const response = await this.client.get<EstimatedFeeDTO>(
-      `${this.baseUrl}/${this.data.id}/estimated-fee`
+      `${this.getBaseUrl()}/estimated-fee`
     );
     return {
       estimatedFee: String(response.estimatedFee),
@@ -261,7 +261,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
 
   async getBalance(): Promise<Balance[]> {
     const response = await this.client.get<BalanceDTO>(
-      `${this.baseUrl}/${this.data.id}/balance`
+      `${this.getBaseUrl()}/balance`
     );
     return [
       {
@@ -280,7 +280,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     checkNullAndUndefinedParameter({ name });
     const params: CreateDepositAddressDTO = { name };
     const response = await this.client.post<DepositAddressDTO>(
-      `${this.baseUrl}/${this.data.id}/deposit-addresses`,
+      `${this.getBaseUrl()}/deposit-addresses`,
       params
     );
     return response;
@@ -288,7 +288,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
 
   async getDepositAddress(depositAddressId: string): Promise<DepositAddress> {
     const response = await this.client.get<DepositAddressDTO>(
-      `${this.baseUrl}/${this.data.id}/deposit-addresses/${depositAddressId}`
+      `${this.getBaseUrl()}/deposit-addresses/${depositAddressId}`
     );
     return response;
   }
@@ -298,7 +298,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   ): Promise<Pagination<DepositAddress>> {
     const queryString: string = makeQueryString(options);
     return await this.client.get<Pagination<DepositAddressDTO>>(
-      `${this.baseUrl}/${this.getId()}/deposit-addresses${
+      `${this.getBaseUrl()}/deposit-addresses${
         queryString ? `?${queryString}` : ""
       }`
     );
@@ -331,11 +331,15 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   async changeName(name: string) {
     checkNullAndUndefinedParameter({ name });
     const btcWalletData = await this.client.patch<MasterWalletDTO>(
-      `${this.baseUrl}/${this.data.id}/name`,
+      `${this.getBaseUrl()}/name`,
       {
         name,
       }
     );
     this.data.name = btcWalletData.name;
+  }
+
+  getBaseUrl(): string {
+    return `${this.baseUrl}/${this.data.id}`;
   }
 }

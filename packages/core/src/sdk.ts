@@ -5,6 +5,7 @@ import { EthModule, KlayModule } from "./eth";
 import { baseUrls } from "./utils/url";
 import { BtcModule } from "./btc";
 import { BlockchainType } from "./blockchain";
+import { WithdrawalApprovals } from "./withdrawalApprovals";
 
 export const enum Env {
   Local,
@@ -24,6 +25,8 @@ export class SDK {
   public readonly accounts: Accounts;
 
   public readonly organizations: Organizations;
+
+  public readonly withdrawalApproval: WithdrawalApprovals;
 
   public readonly eth: EthModule;
 
@@ -49,6 +52,7 @@ export class SDK {
       accessToken: params.accessToken,
       url: baseUrl,
     }) as any;
+    this.withdrawalApproval = new WithdrawalApprovals(this.client);
     this.accounts = new Accounts(this.client);
     this.organizations = new Organizations(this.client);
     this.klay = new KlayModule({
