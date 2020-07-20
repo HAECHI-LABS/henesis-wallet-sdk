@@ -6,31 +6,29 @@ import {
   Keychains,
   Pagination,
   PaginationOptions,
-  Timestamp,
+  Timestamp
 } from "../types";
 import {
   address,
   networks,
   script,
-  Transaction as BitcoinTransaction,
+  Transaction as BitcoinTransaction
 } from "bitcoinjs-lib";
 import {
   BNConverter,
   parseResponseToTransfer,
-  checkNullAndUndefinedParameter,
+  checkNullAndUndefinedParameter
 } from "../utils/common";
 import { Wallet, WalletData } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import {
   CreateDepositAddressDTO,
   DepositAddressDTO,
-  TransactionDTO,
-  TransactionOutputDTO,
   RawTransactionDTO,
   EstimatedFeeDTO,
   BalanceDTO,
   MasterWalletDTO,
-  TransferDTO,
+  TransferDTO
 } from "../__generate__/btc";
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
@@ -130,17 +128,17 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     keychains: Keychains,
     env: Env
   ) {
-    super(client, keychains);
+    super(client, keychains, `/wallets/${data.id}`);
     this.data = data;
     this.env = env;
   }
 
-  public async transfer(
+  public async build(
     to: string,
     amount: BN,
     passphrase: string,
     otpCode?: string
-  ): Promise<Transfer> {
+  ): Promise<BtcCreateRawTransaction> {
     checkNullAndUndefinedParameter({ to, passphrase });
     const rawTransaction: BtcRawTransaction = await this.createRawTransaction(
       to,
@@ -187,7 +185,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     const payload: BtcCreateRawTransaction = {
       inputs: [],
       outputs: [],
-      otpCode: otpCode,
+      otpCode: otpCode
     };
 
     for (let i = 0; i < rawTransaction.inputs.length; i++) {
@@ -195,9 +193,9 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       payload.inputs.push({
         transactionOutput: {
           ...transactionOutput,
-          amount: BNConverter.bnToHexString(transactionOutput.amount),
+          amount: BNConverter.bnToHexString(transactionOutput.amount)
         },
-        accountSignature: accountSigs[i],
+        accountSignature: accountSigs[i]
       });
     }
 
@@ -205,9 +203,18 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       payload.outputs.push(rawTransaction.outputs[i]);
     }
 
+    return payload;
+  }
+
+  public async transfer(
+    to: string,
+    amount: BN,
+    passphrase: string,
+    otpCode?: string
+  ): Promise<Transfer> {
     const transfer = await this.client.post<TransferDTO>(
-      `${this.getBaseUrl()}/transactions`,
-      payload
+      `${this.baseUrl}/transactions`,
+      await this.build(to, amount, passphrase, otpCode)
     );
 
     return parseResponseToTransfer(transfer);
@@ -218,10 +225,10 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     amount: BN
   ): Promise<BtcRawTransaction> {
     const response = await this.client.post<RawTransactionDTO>(
-      `${this.getBaseUrl()}/raw-transactions`,
+      `${this.baseUrl}/raw-transactions`,
       {
         to,
-        amount: BNConverter.bnToHexString(amount),
+        amount: BNConverter.bnToHexString(amount)
       }
     );
     return {
@@ -232,26 +239,26 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
             ...input.transactionOutput,
             amount: BNConverter.hexStringToBN(
               String(input.transactionOutput.amount)
-            ),
-          },
+            )
+          }
         };
       }),
       outputs: _.map(response.outputs, (output) => {
         return {
           to: output.to,
           amount: String(output.amount),
-          isChange: output.isChange,
+          isChange: output.isChange
         };
-      }),
+      })
     };
   }
 
   public async getEstimatedFee(): Promise<BtcEstimatedFee> {
     const response = await this.client.get<EstimatedFeeDTO>(
-      `${this.getBaseUrl()}/estimated-fee`
+      `${this.baseUrl}/estimated-fee`
     );
     return {
-      estimatedFee: String(response.estimatedFee),
+      estimatedFee: String(response.estimatedFee)
     };
   }
 
@@ -261,7 +268,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
 
   async getBalance(): Promise<Balance[]> {
     const response = await this.client.get<BalanceDTO>(
-      `${this.getBaseUrl()}/balance`
+      `${this.baseUrl}/balance`
     );
     return [
       {
@@ -271,8 +278,8 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
           String(response.spendableBalance)
         ),
         coinType: "BTC",
-        name: "비트코인",
-      },
+        name: "비트코인"
+      }
     ];
   }
 
@@ -280,7 +287,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     checkNullAndUndefinedParameter({ name });
     const params: CreateDepositAddressDTO = { name };
     const response = await this.client.post<DepositAddressDTO>(
-      `${this.getBaseUrl()}/deposit-addresses`,
+      `${this.baseUrl}/deposit-addresses`,
       params
     );
     return response;
@@ -288,7 +295,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
 
   async getDepositAddress(depositAddressId: string): Promise<DepositAddress> {
     const response = await this.client.get<DepositAddressDTO>(
-      `${this.getBaseUrl()}/deposit-addresses/${depositAddressId}`
+      `${this.baseUrl}/deposit-addresses/${depositAddressId}`
     );
     return response;
   }
@@ -298,9 +305,9 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   ): Promise<Pagination<DepositAddress>> {
     const queryString: string = makeQueryString(options);
     return await this.client.get<Pagination<DepositAddressDTO>>(
-      `${this.getBaseUrl()}/deposit-addresses${
+      `${this.baseUrl}/deposit-addresses${
         queryString ? `?${queryString}` : ""
-      }`
+        }`
     );
   }
 
@@ -331,15 +338,11 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   async changeName(name: string) {
     checkNullAndUndefinedParameter({ name });
     const btcWalletData = await this.client.patch<MasterWalletDTO>(
-      `${this.getBaseUrl()}/name`,
+      `${this.baseUrl}/name`,
       {
-        name,
+        name
       }
     );
     this.data.name = btcWalletData.name;
-  }
-
-  getBaseUrl(): string {
-    return `${this.baseUrl}/${this.data.id}`;
   }
 }
