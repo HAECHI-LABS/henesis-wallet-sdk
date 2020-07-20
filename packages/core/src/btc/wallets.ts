@@ -1,7 +1,5 @@
 import { Client } from "../httpClient";
-import {
-  BtcMasterWallet,
-} from "./wallet";
+import { BtcMasterWallet } from "./wallet";
 import { Wallets } from "../wallets";
 import aesjs from "aes-js";
 import { Keychains } from "../types";
