@@ -106,16 +106,22 @@ export interface ActivateMasterWalletRequestDTO {
 export interface ApproveWithdrawalApprovalRequest {
     /**
      * 
-     * @type {string}
+     * @type {Array<CreateTransactionInputDTO>}
      * @memberof ApproveWithdrawalApprovalRequest
      */
-    amount: string;
+    inputs: Array<CreateTransactionInputDTO>;
     /**
      * 
      * @type {string}
      * @memberof ApproveWithdrawalApprovalRequest
      */
-    to: string;
+    otpCode: string;
+    /**
+     * 
+     * @type {Array<CreateTransactionOutputDTO>}
+     * @memberof ApproveWithdrawalApprovalRequest
+     */
+    outputs: Array<CreateTransactionOutputDTO>;
 }
 
 /**
