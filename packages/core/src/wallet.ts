@@ -7,7 +7,7 @@ import {
   Key,
   KeyWithPriv,
   Pagination,
-  PaginationOptions,
+  PaginationOptions
 } from "./types";
 import aesjs from "aes-js";
 import { Base64 } from "js-base64";
@@ -16,13 +16,19 @@ import {
   KeyDTO as EthKeyDTO,
   MasterWalletDTO as EthMasterWalletDTO,
   PaginationWalletWithdrawalPolicyDTO,
-  WalletWithdrawalPolicyDTO,
+  PatchWithdrawalPolicyRequest as EthPatchWithdrawalPolicyRequest,
+  WalletWithdrawalPolicyDTO
 } from "./__generate__/eth/api";
 import {
+  CreateWithdrawalPolicyRequest as BtcCreateWithdrawalPolicyRequest,
+  PatchWithdrawalPolicyRequest as BtcPatchWithdrawalPolicyRequest,
   KeyDTO as BtcKeyDTO,
-  MasterWalletDTO as BtcMasterWalletDTO,
+  MasterWalletDTO as BtcMasterWalletDTO
 } from "./__generate__/btc/api";
-import { checkNullAndUndefinedParameter } from "./utils/common";
+import {
+  CreateWithdrawalPolicyRequest as EthCreateWithdrawalPolicyRequest
+} from "./__generate__/eth/api";
+import { BNConverter, checkNullAndUndefinedParameter } from "./utils/common";
 import { makeQueryString } from "./utils/url";
 
 export interface WalletData {
@@ -34,15 +40,8 @@ export interface WalletData {
   status: WalletStatus;
 }
 
-export enum PolicyType {
-  Daily = "DAILY",
-  Transaction = "TRANSACTION",
-}
-
-export enum WalletType {
-  MasterWallet = "MASTER_WALLET",
-  UserWallet = "USER_WALLET",
-}
+export type PolicyType = WalletWithdrawalPolicyDTO.PolicyTypeEnum;
+export type WalletType = WalletWithdrawalPolicyDTO.WalletTypeEnum;
 
 export interface WithdrawalPolicy {
   id: string;
@@ -52,11 +51,9 @@ export interface WithdrawalPolicy {
   coinSymbol: string;
 }
 
-export const WalletStatus: Record<
-  | keyof typeof EthMasterWalletDTO.StatusEnum
+export const WalletStatus: Record<| keyof typeof EthMasterWalletDTO.StatusEnum
   | keyof typeof BtcMasterWalletDTO.StatusEnum,
-  EthMasterWalletDTO.StatusEnum | BtcMasterWalletDTO.StatusEnum
-> = { ...EthMasterWalletDTO.StatusEnum, ...BtcMasterWalletDTO.StatusEnum };
+  EthMasterWalletDTO.StatusEnum | BtcMasterWalletDTO.StatusEnum> = { ...EthMasterWalletDTO.StatusEnum, ...BtcMasterWalletDTO.StatusEnum };
 export type WalletStatus =
   | EthMasterWalletDTO.StatusEnum
   | BtcMasterWalletDTO.StatusEnum;
@@ -64,13 +61,14 @@ export type WalletStatus =
 export abstract class Wallet<T> {
   protected readonly client: Client;
 
-  protected readonly baseUrl = "/wallets";
+  protected readonly baseUrl;
 
   protected readonly keychains: Keychains;
 
-  protected constructor(client: Client, keychains: Keychains) {
+  protected constructor(client: Client, keychains: Keychains, baseUrl: string) {
     this.client = client;
     this.keychains = keychains;
+    this.baseUrl = baseUrl;
   }
 
   abstract getChain(): BlockchainType;
@@ -88,8 +86,6 @@ export abstract class Wallet<T> {
   abstract getAccountKey(): Key;
 
   abstract updateAccountKey(key: Key);
-
-  abstract getBaseUrl(): string;
 
   protected recoverPassphrase(encryptedPassphrase: string): string {
     try {
@@ -112,7 +108,7 @@ export abstract class Wallet<T> {
   ): Promise<void> {
     checkNullAndUndefinedParameter({
       passphrase,
-      newPassphrase,
+      newPassphrase
     });
     return await this.changePassphraseWithKeyFile(
       passphrase,
@@ -134,12 +130,10 @@ export abstract class Wallet<T> {
       newPassphrase
     );
 
-    const key: Key = await this.client.patch<
-      BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">
-    >(`${this.baseUrl}/${this.getId()}/account-key`, {
+    const key: Key = await this.client.patch<BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">>(`${this.baseUrl}/account-key`, {
       keyFile: newKey.keyFile,
       pub: newKey.pub,
-      otpCode,
+      otpCode
     });
 
     this.updateAccountKey(key);
@@ -151,9 +145,7 @@ export abstract class Wallet<T> {
     otpCode?: string
   ): Promise<void> {
     const passphrase = this.recoverPassphrase(encryptedPassphrase);
-    const initialKey: Key = await this.client.get<
-      BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">
-    >(`${this.baseUrl}/${this.getId()}/initial-key`);
+    const initialKey: Key = await this.client.get<BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">>(`${this.baseUrl}/initial-key`);
     await this.changePassphraseWithKeyFile(
       passphrase,
       newPassphrase,
@@ -172,9 +164,7 @@ export abstract class Wallet<T> {
       return false;
     }
 
-    const initialKey: Key = await this.client.get<
-      BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">
-    >(`${this.baseUrl}/${this.getId()}/initial-key`);
+    const initialKey: Key = await this.client.get<BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">>(`${this.baseUrl}/initial-key`);
     return await this.verifyPassphraseWithKeyFile(passphrase, initialKey);
   }
 
@@ -203,60 +193,51 @@ export abstract class Wallet<T> {
     policyType: PolicyType,
     coinSymbol: string
   ): Promise<WithdrawalPolicy> {
-    const data = await this.client.post<
-      NoUndefinedField<WalletWithdrawalPolicyDTO>
-    >(`${this.getBaseUrl()}/withdrawal-policies`, {
-      limitAmount,
-      walletType,
-      policyType,
-      coinSymbol,
-    });
+    const request: BtcCreateWithdrawalPolicyRequest | EthCreateWithdrawalPolicyRequest = {
+      limitAmount: BNConverter.bnToHexString(limitAmount),
+      walletType: walletType.toString(),
+      policyType: policyType.toString(),
+      coinSymbol
+    };
+    const data = await this.client
+      .post<NoUndefinedField<WalletWithdrawalPolicyDTO>>(`${this.baseUrl}/withdrawal-policies`, request);
     return {
       ...data,
-      limitAmount: new BN(data.limitAmount),
-    } as WithdrawalPolicy;
+      limitAmount: new BN(data.limitAmount)
+    };
   }
 
   async patchWithdrawalPolicy(
     id: string,
-    limitAmount: BN,
-    walletType: WalletType,
-    policyType: PolicyType,
-    coinSymbol: string
+    limitAmount: BN
   ) {
-    const data = await this.client.patch<
-      NoUndefinedField<WalletWithdrawalPolicyDTO>
-    >(`${this.getBaseUrl()}/withdrawal-policies/${id}`, {
-      limitAmount,
-      walletType,
-      policyType,
-      coinSymbol,
-    });
+    const request: EthPatchWithdrawalPolicyRequest | BtcPatchWithdrawalPolicyRequest = {
+      limitAmount: BNConverter.bnToHexString(limitAmount),
+    };
+    const data = await this.client.patch<WalletWithdrawalPolicyDTO>(`${this.baseUrl}/withdrawal-policies/${id}`, request);
     return {
       ...data,
-      limitAmount: new BN(data.limitAmount),
-    } as WithdrawalPolicy;
+      limitAmount: new BN(data.limitAmount)
+    };
   }
 
   async getWithdrawalPolices(
     options: PaginationOptions
   ): Promise<Pagination<WithdrawalPolicy>> {
     const queryString: string = makeQueryString(options);
-    const data = await this.client.get<
-      NoUndefinedField<PaginationWalletWithdrawalPolicyDTO>
-    >(
-      `${this.getBaseUrl()}/withdrawal-policies${
+    const data = await this.client.get<NoUndefinedField<PaginationWalletWithdrawalPolicyDTO>>(
+      `${this.baseUrl}/withdrawal-policies${
         queryString ? `?${queryString}` : ""
-      }`
+        }`
     );
     return {
       pagination: data.pagination,
       results: data.results.map((data) => {
         return {
           ...data,
-          limitAmount: new BN(data.limitAmount),
-        } as WithdrawalPolicy;
-      }),
+          limitAmount: new BN(data.limitAmount)
+        };
+      })
     };
   }
 }
