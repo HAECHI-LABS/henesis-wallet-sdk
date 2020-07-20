@@ -6,18 +6,18 @@ import {
   Keychains,
   Pagination,
   PaginationOptions,
-  Timestamp
+  Timestamp,
 } from "../types";
 import {
   address,
   networks,
   script,
-  Transaction as BitcoinTransaction
+  Transaction as BitcoinTransaction,
 } from "bitcoinjs-lib";
 import {
   BNConverter,
   parseResponseToTransfer,
-  checkNullAndUndefinedParameter
+  checkNullAndUndefinedParameter,
 } from "../utils/common";
 import { Wallet, WalletData } from "../wallet";
 import { BlockchainType } from "../blockchain";
@@ -28,7 +28,7 @@ import {
   EstimatedFeeDTO,
   BalanceDTO,
   MasterWalletDTO,
-  TransferDTO
+  TransferDTO,
 } from "../__generate__/btc";
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
@@ -185,7 +185,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     const payload: BtcCreateRawTransaction = {
       inputs: [],
       outputs: [],
-      otpCode: otpCode
+      otpCode: otpCode,
     };
 
     for (let i = 0; i < rawTransaction.inputs.length; i++) {
@@ -193,9 +193,9 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       payload.inputs.push({
         transactionOutput: {
           ...transactionOutput,
-          amount: BNConverter.bnToHexString(transactionOutput.amount)
+          amount: BNConverter.bnToHexString(transactionOutput.amount),
         },
-        accountSignature: accountSigs[i]
+        accountSignature: accountSigs[i],
       });
     }
 
@@ -228,7 +228,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       `${this.baseUrl}/raw-transactions`,
       {
         to,
-        amount: BNConverter.bnToHexString(amount)
+        amount: BNConverter.bnToHexString(amount),
       }
     );
     return {
@@ -239,17 +239,17 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
             ...input.transactionOutput,
             amount: BNConverter.hexStringToBN(
               String(input.transactionOutput.amount)
-            )
-          }
+            ),
+          },
         };
       }),
       outputs: _.map(response.outputs, (output) => {
         return {
           to: output.to,
           amount: String(output.amount),
-          isChange: output.isChange
+          isChange: output.isChange,
         };
-      })
+      }),
     };
   }
 
@@ -258,7 +258,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       `${this.baseUrl}/estimated-fee`
     );
     return {
-      estimatedFee: String(response.estimatedFee)
+      estimatedFee: String(response.estimatedFee),
     };
   }
 
@@ -278,8 +278,8 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
           String(response.spendableBalance)
         ),
         coinType: "BTC",
-        name: "비트코인"
-      }
+        name: "비트코인",
+      },
     ];
   }
 
@@ -305,9 +305,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   ): Promise<Pagination<DepositAddress>> {
     const queryString: string = makeQueryString(options);
     return await this.client.get<Pagination<DepositAddressDTO>>(
-      `${this.baseUrl}/deposit-addresses${
-        queryString ? `?${queryString}` : ""
-        }`
+      `${this.baseUrl}/deposit-addresses${queryString ? `?${queryString}` : ""}`
     );
   }
 
@@ -340,7 +338,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     const btcWalletData = await this.client.patch<MasterWalletDTO>(
       `${this.baseUrl}/name`,
       {
-        name
+        name,
       }
     );
     this.data.name = btcWalletData.name;

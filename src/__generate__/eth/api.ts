@@ -107,19 +107,19 @@ export interface ApproveWithdrawalApprovalRequest {
      * @type {SignedMultiSigPayloadDTO}
      * @memberof ApproveWithdrawalApprovalRequest
      */
-    signedMultiSigPayload?: SignedMultiSigPayloadDTO;
+    signedMultiSigPayload: SignedMultiSigPayloadDTO;
     /**
      * 
      * @type {string}
      * @memberof ApproveWithdrawalApprovalRequest
      */
-    transactionId?: string;
+    transactionId: string;
     /**
      * 
      * @type {string}
      * @memberof ApproveWithdrawalApprovalRequest
      */
-    walletId?: string;
+    walletId: string;
 }
 
 /**
@@ -133,25 +133,25 @@ export interface BalanceDTO {
      * @type {string}
      * @memberof BalanceDTO
      */
-    amount?: string;
+    amount: string;
     /**
      * 
      * @type {string}
      * @memberof BalanceDTO
      */
-    coinType?: BalanceDTO.CoinTypeEnum;
+    coinType: BalanceDTO.CoinTypeEnum;
     /**
      * 
      * @type {string}
      * @memberof BalanceDTO
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof BalanceDTO
      */
-    symbol?: string;
+    symbol: string;
 }
 
 /**
@@ -181,13 +181,13 @@ export interface BatchTransactionDTO {
      * @type {string}
      * @memberof BatchTransactionDTO
      */
-    message?: string;
+    message: string;
     /**
      * 
      * @type {TransactionDTO}
      * @memberof BatchTransactionDTO
      */
-    transaction?: TransactionDTO;
+    transaction: TransactionDTO;
 }
 
 /**
@@ -201,31 +201,31 @@ export interface CallEventDTO {
      * @type {string}
      * @memberof CallEventDTO
      */
-    blockchain?: string;
+    blockchain: string;
     /**
      * 
      * @type {string}
      * @memberof CallEventDTO
      */
-    createdAt?: string;
+    createdAt: string;
     /**
      * 
      * @type {string}
      * @memberof CallEventDTO
      */
-    data?: string;
+    data: string;
     /**
      * 
      * @type {string}
      * @memberof CallEventDTO
      */
-    fromAddress?: string;
+    fromAddress: string;
     /**
      * 
      * @type {number}
      * @memberof CallEventDTO
      */
-    id?: number;
+    id: number;
     /**
      * 
      * @type {string}
@@ -243,13 +243,13 @@ export interface CallEventDTO {
      * @type {string}
      * @memberof CallEventDTO
      */
-    status?: CallEventDTO.StatusEnum;
+    status: CallEventDTO.StatusEnum;
     /**
      * 
      * @type {string}
      * @memberof CallEventDTO
      */
-    toAddress?: string;
+    toAddress: string;
     /**
      * 
      * @type {string}
@@ -267,13 +267,13 @@ export interface CallEventDTO {
      * @type {string}
      * @memberof CallEventDTO
      */
-    updatedAt?: string;
+    updatedAt: string;
     /**
      * 
      * @type {string}
      * @memberof CallEventDTO
      */
-    walletId?: string;
+    walletId: string;
 }
 
 /**
@@ -305,7 +305,7 @@ export interface ChangeWalletNameRequest {
      * @type {string}
      * @memberof ChangeWalletNameRequest
      */
-    name?: string;
+    name: string;
 }
 
 /**
@@ -319,37 +319,37 @@ export interface CoinDTO {
      * @type {string}
      * @memberof CoinDTO
      */
-    address?: string;
+    address: string;
     /**
      * 
      * @type {string}
      * @memberof CoinDTO
      */
-    blockchain?: CoinDTO.BlockchainEnum;
+    blockchain: CoinDTO.BlockchainEnum;
     /**
      * 
      * @type {string}
      * @memberof CoinDTO
      */
-    desc?: string;
+    desc: string;
     /**
      * 
      * @type {number}
      * @memberof CoinDTO
      */
-    id?: number;
+    id: number;
     /**
      * 
      * @type {string}
      * @memberof CoinDTO
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof CoinDTO
      */
-    symbol?: string;
+    symbol: string;
 }
 
 /**
@@ -396,13 +396,13 @@ export interface CreateBatchTransactionRequest {
      * @type {Array<SignedMultiSigPayloadDTO>}
      * @memberof CreateBatchTransactionRequest
      */
-    signedMultiSigPayloads?: Array<SignedMultiSigPayloadDTO>;
+    signedMultiSigPayloads: Array<SignedMultiSigPayloadDTO>;
     /**
      * 
      * @type {string}
      * @memberof CreateBatchTransactionRequest
      */
-    walletId?: string;
+    walletId: string;
 }
 
 /**
@@ -416,31 +416,31 @@ export interface CreateCoinRequest {
      * @type {string}
      * @memberof CreateCoinRequest
      */
-    address?: string;
+    address: string;
     /**
      * 
      * @type {string}
      * @memberof CreateCoinRequest
      */
-    desc?: string;
+    desc: string;
     /**
      * 
      * @type {boolean}
      * @memberof CreateCoinRequest
      */
-    flag?: boolean;
+    flag: boolean;
     /**
      * 
      * @type {string}
      * @memberof CreateCoinRequest
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof CreateCoinRequest
      */
-    symbol?: string;
+    symbol: string;
 }
 
 /**
@@ -454,7 +454,7 @@ export interface CreateHenesisKeyRequest {
      * @type {string}
      * @memberof CreateHenesisKeyRequest
      */
-    orgId?: string;
+    orgId: string;
 }
 
 /**
@@ -468,19 +468,19 @@ export interface CreateMasterWalletRequest {
      * @type {KeyDTO}
      * @memberof CreateMasterWalletRequest
      */
-    accountKey?: KeyDTO;
+    accountKey: KeyDTO;
     /**
      * 
      * @type {KeyDTO}
      * @memberof CreateMasterWalletRequest
      */
-    backupKey?: KeyDTO;
+    backupKey: KeyDTO;
     /**
      * 
      * @type {string}
      * @memberof CreateMasterWalletRequest
      */
-    encryptionKey?: string;
+    encryptionKey: string;
     /**
      * 
      * @type {string}
@@ -492,7 +492,7 @@ export interface CreateMasterWalletRequest {
      * @type {string}
      * @memberof CreateMasterWalletRequest
      */
-    name?: string;
+    name: string;
 }
 
 /**
@@ -524,19 +524,19 @@ export interface CreateMultiSigTransactionRequest {
      * @type {SignedMultiSigPayloadDTO}
      * @memberof CreateMultiSigTransactionRequest
      */
-    signedMultiSigPayload?: SignedMultiSigPayloadDTO;
+    signedMultiSigPayload: SignedMultiSigPayloadDTO;
     /**
      * 
      * @type {string}
      * @memberof CreateMultiSigTransactionRequest
      */
-    transactionId?: string;
+    transactionId: string;
     /**
      * 
      * @type {string}
      * @memberof CreateMultiSigTransactionRequest
      */
-    walletId?: string;
+    walletId: string;
 }
 
 /**
@@ -550,7 +550,7 @@ export interface CreateTransactionRequest {
      * @type {string}
      * @memberof CreateTransactionRequest
      */
-    data?: string;
+    data: string;
     /**
      * 
      * @type {string}
@@ -574,13 +574,13 @@ export interface CreateTransactionRequest {
      * @type {string}
      * @memberof CreateTransactionRequest
      */
-    toAddress?: string;
+    toAddress: string;
     /**
      * 
      * @type {string}
      * @memberof CreateTransactionRequest
      */
-    value?: string;
+    value: string;
 }
 
 /**
@@ -600,19 +600,19 @@ export interface CreateUserWalletRequest {
      * @type {string}
      * @memberof CreateUserWalletRequest
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof CreateUserWalletRequest
      */
-    salt?: string;
+    salt: string;
     /**
      * 
      * @type {SignedMultiSigPayloadDTO}
      * @memberof CreateUserWalletRequest
      */
-    signedMultiSigPayload?: SignedMultiSigPayloadDTO;
+    signedMultiSigPayload: SignedMultiSigPayloadDTO;
 }
 
 /**
@@ -658,19 +658,19 @@ export interface KeyDTO {
      * @type {string}
      * @memberof KeyDTO
      */
-    address?: string;
+    address: string;
     /**
      * 
      * @type {string}
      * @memberof KeyDTO
      */
-    keyFile?: string;
+    keyFile: string;
     /**
      * 
      * @type {string}
      * @memberof KeyDTO
      */
-    pub?: string;
+    pub: string;
 }
 
 /**
@@ -714,37 +714,37 @@ export interface MasterWalletDTO {
      * @type {KeyDTO}
      * @memberof MasterWalletDTO
      */
-    accountKey?: KeyDTO;
+    accountKey: KeyDTO;
     /**
      * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    address?: string;
+    address: string;
     /**
      * 
      * @type {KeyDTO}
      * @memberof MasterWalletDTO
      */
-    backupKey?: KeyDTO;
+    backupKey: KeyDTO;
     /**
      * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    blockchain?: MasterWalletDTO.BlockchainEnum;
+    blockchain: MasterWalletDTO.BlockchainEnum;
     /**
      * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    createdAt?: string;
+    createdAt: string;
     /**
      * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    encryptionKey?: string;
+    encryptionKey: string;
     /**
      * 
      * @type {string}
@@ -756,19 +756,19 @@ export interface MasterWalletDTO {
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    status?: MasterWalletDTO.StatusEnum;
+    status: MasterWalletDTO.StatusEnum;
     /**
      * 
      * @type {string}
@@ -780,7 +780,7 @@ export interface MasterWalletDTO {
      * @type {string}
      * @memberof MasterWalletDTO
      */
-    updatedAt?: string;
+    updatedAt: string;
 }
 
 /**
@@ -817,25 +817,25 @@ export interface MethodGasUsageDTO {
      * @type {string}
      * @memberof MethodGasUsageDTO
      */
-    blockchain?: MethodGasUsageDTO.BlockchainEnum;
+    blockchain: MethodGasUsageDTO.BlockchainEnum;
     /**
      * 
      * @type {string}
      * @memberof MethodGasUsageDTO
      */
-    estimatedGasConsumption?: string;
+    estimatedGasConsumption: string;
     /**
      * 
      * @type {string}
      * @memberof MethodGasUsageDTO
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof MethodGasUsageDTO
      */
-    name?: string;
+    name: string;
 }
 
 /**
@@ -995,31 +995,31 @@ export interface MultiSigPayloadDTO {
      * @type {string}
      * @memberof MultiSigPayloadDTO
      */
-    hexData?: string;
+    hexData: string;
     /**
      * 
      * @type {string}
      * @memberof MultiSigPayloadDTO
      */
-    toAddress?: string;
+    toAddress: string;
     /**
      * 
      * @type {string}
      * @memberof MultiSigPayloadDTO
      */
-    value?: string;
+    value: string;
     /**
      * 
      * @type {string}
      * @memberof MultiSigPayloadDTO
      */
-    walletAddress?: string;
+    walletAddress: string;
     /**
      * 
      * @type {string}
      * @memberof MultiSigPayloadDTO
      */
-    walletNonce?: string;
+    walletNonce: string;
 }
 
 /**
@@ -1033,7 +1033,7 @@ export interface NonceDTO {
      * @type {string}
      * @memberof NonceDTO
      */
-    nonce?: string;
+    nonce: string;
 }
 
 /**
@@ -1173,12 +1173,6 @@ export interface PatchWithdrawalPolicyRequest {
      * @type {string}
      * @memberof PatchWithdrawalPolicyRequest
      */
-    id: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PatchWithdrawalPolicyRequest
-     */
     limitAmount: string;
 }
 
@@ -1193,37 +1187,37 @@ export interface RawTransactionDTO {
      * @type {string}
      * @memberof RawTransactionDTO
      */
-    data?: string;
+    data: string;
     /**
      * 
      * @type {string}
      * @memberof RawTransactionDTO
      */
-    gasLimit?: string;
+    gasLimit: string;
     /**
      * 
      * @type {string}
      * @memberof RawTransactionDTO
      */
-    gasPrice?: string;
+    gasPrice: string;
     /**
      * 
      * @type {string}
      * @memberof RawTransactionDTO
      */
-    nonce?: string;
+    nonce: string;
     /**
      * 
      * @type {string}
      * @memberof RawTransactionDTO
      */
-    to?: string;
+    to: string;
     /**
      * 
      * @type {string}
      * @memberof RawTransactionDTO
      */
-    value?: string;
+    value: string;
 }
 
 /**
@@ -1237,13 +1231,13 @@ export interface SignedMultiSigPayloadDTO {
      * @type {MultiSigPayloadDTO}
      * @memberof SignedMultiSigPayloadDTO
      */
-    multiSigPayload?: MultiSigPayloadDTO;
+    multiSigPayload: MultiSigPayloadDTO;
     /**
      * 
      * @type {string}
      * @memberof SignedMultiSigPayloadDTO
      */
-    signature?: string;
+    signature: string;
 }
 
 /**
@@ -1257,13 +1251,13 @@ export interface TransactionDTO {
      * @type {string}
      * @memberof TransactionDTO
      */
-    blockchain?: TransactionDTO.BlockchainEnum;
+    blockchain: TransactionDTO.BlockchainEnum;
     /**
      * 
      * @type {string}
      * @memberof TransactionDTO
      */
-    createdAt?: string;
+    createdAt: string;
     /**
      * 
      * @type {string}
@@ -1281,37 +1275,37 @@ export interface TransactionDTO {
      * @type {string}
      * @memberof TransactionDTO
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof TransactionDTO
      */
-    keyId?: string;
+    keyId: string;
     /**
      * 
      * @type {RawTransactionDTO}
      * @memberof TransactionDTO
      */
-    rawTransaction?: RawTransactionDTO;
+    rawTransaction: RawTransactionDTO;
     /**
      * 
      * @type {string}
      * @memberof TransactionDTO
      */
-    sender?: string;
+    sender: string;
     /**
      * 
      * @type {SignedMultiSigPayloadDTO}
      * @memberof TransactionDTO
      */
-    signedMultiSigPayload?: SignedMultiSigPayloadDTO;
+    signedMultiSigPayload: SignedMultiSigPayloadDTO;
     /**
      * 
      * @type {string}
      * @memberof TransactionDTO
      */
-    status?: TransactionDTO.StatusEnum;
+    status: TransactionDTO.StatusEnum;
 }
 
 /**
@@ -1353,7 +1347,7 @@ export interface UpdateAccountKeyRequest {
      * @type {string}
      * @memberof UpdateAccountKeyRequest
      */
-    keyFile?: string;
+    keyFile: string;
     /**
      * 
      * @type {string}
@@ -1373,31 +1367,31 @@ export interface UpdateCoinRequest {
      * @type {string}
      * @memberof UpdateCoinRequest
      */
-    address?: string;
+    address: string;
     /**
      * 
      * @type {string}
      * @memberof UpdateCoinRequest
      */
-    desc?: string;
+    desc: string;
     /**
      * 
      * @type {boolean}
      * @memberof UpdateCoinRequest
      */
-    flag?: boolean;
+    flag: boolean;
     /**
      * 
      * @type {string}
      * @memberof UpdateCoinRequest
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof UpdateCoinRequest
      */
-    symbol?: string;
+    symbol: string;
 }
 
 /**
@@ -1411,19 +1405,19 @@ export interface UserWalletDTO {
      * @type {string}
      * @memberof UserWalletDTO
      */
-    address?: string;
+    address: string;
     /**
      * 
      * @type {string}
      * @memberof UserWalletDTO
      */
-    blockchain?: UserWalletDTO.BlockchainEnum;
+    blockchain: UserWalletDTO.BlockchainEnum;
     /**
      * 
      * @type {string}
      * @memberof UserWalletDTO
      */
-    createdAt?: string;
+    createdAt: string;
     /**
      * 
      * @type {string}
@@ -1435,19 +1429,19 @@ export interface UserWalletDTO {
      * @type {string}
      * @memberof UserWalletDTO
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof UserWalletDTO
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof UserWalletDTO
      */
-    status?: UserWalletDTO.StatusEnum;
+    status: UserWalletDTO.StatusEnum;
     /**
      * 
      * @type {string}
@@ -1459,7 +1453,7 @@ export interface UserWalletDTO {
      * @type {string}
      * @memberof UserWalletDTO
      */
-    updatedAt?: string;
+    updatedAt: string;
 }
 
 /**
@@ -1496,37 +1490,37 @@ export interface ValueTransferEventDTO {
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    amount?: string;
+    amount: string;
     /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    blockchain?: string;
+    blockchain: string;
     /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    coinSymbol?: string;
+    coinSymbol: string;
     /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    createdAt?: string;
+    createdAt: string;
     /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    from?: string;
+    from: string;
     /**
      * 
      * @type {number}
      * @memberof ValueTransferEventDTO
      */
-    id?: number;
+    id: number;
     /**
      * 
      * @type {string}
@@ -1544,13 +1538,13 @@ export interface ValueTransferEventDTO {
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    status?: ValueTransferEventDTO.StatusEnum;
+    status: ValueTransferEventDTO.StatusEnum;
     /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    to?: string;
+    to: string;
     /**
      * 
      * @type {string}
@@ -1568,19 +1562,19 @@ export interface ValueTransferEventDTO {
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    transferType?: ValueTransferEventDTO.TransferTypeEnum;
+    transferType: ValueTransferEventDTO.TransferTypeEnum;
     /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    updatedAt?: string;
+    updatedAt: string;
     /**
      * 
      * @type {string}
      * @memberof ValueTransferEventDTO
      */
-    walletId?: string;
+    walletId: string;
 }
 
 /**
@@ -1640,6 +1634,12 @@ export interface WalletWithdrawalPolicyDTO {
      * @type {string}
      * @memberof WalletWithdrawalPolicyDTO
      */
+    coinName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletWithdrawalPolicyDTO
+     */
     coinSymbol: string;
     /**
      * 
@@ -1658,7 +1658,7 @@ export interface WalletWithdrawalPolicyDTO {
      * @type {string}
      * @memberof WalletWithdrawalPolicyDTO
      */
-    policyType: string;
+    policyType: WalletWithdrawalPolicyDTO.PolicyTypeEnum;
     /**
      * 
      * @type {string}
@@ -1670,7 +1670,30 @@ export interface WalletWithdrawalPolicyDTO {
      * @type {string}
      * @memberof WalletWithdrawalPolicyDTO
      */
-    walletType: string;
+    walletType: WalletWithdrawalPolicyDTO.WalletTypeEnum;
+}
+
+/**
+ * @export
+ * @namespace WalletWithdrawalPolicyDTO
+ */
+export namespace WalletWithdrawalPolicyDTO {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum PolicyTypeEnum {
+        DAILY = <any> 'DAILY',
+        TRANSACTION = <any> 'TRANSACTION'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum WalletTypeEnum {
+        MASTERWALLET = <any> 'MASTER_WALLET',
+        USERWALLET = <any> 'USER_WALLET'
+    }
 }
 
 
@@ -1682,11 +1705,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
     return {
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingDELETE(options: any = {}): FetchArgs {
+        errorUsingDELETE(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
@@ -1705,11 +1728,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingGET(options: any = {}): FetchArgs {
+        errorUsingGET(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -1728,11 +1751,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingHEAD(options: any = {}): FetchArgs {
+        errorUsingHEAD(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'HEAD' }, options);
@@ -1751,11 +1774,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingOPTIONS(options: any = {}): FetchArgs {
+        errorUsingOPTIONS(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'OPTIONS' }, options);
@@ -1774,11 +1797,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPATCH(options: any = {}): FetchArgs {
+        errorUsingPATCH(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
@@ -1797,11 +1820,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPOST(options: any = {}): FetchArgs {
+        errorUsingPOST(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -1820,11 +1843,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPUT(options: any = {}): FetchArgs {
+        errorUsingPUT(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
@@ -1852,12 +1875,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
     return {
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingDELETE(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingDELETE(options);
+        errorUsingDELETE(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingDELETE(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1870,12 +1893,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingGET(options);
+        errorUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingGET(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1888,12 +1911,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingHEAD(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingHEAD(options);
+        errorUsingHEAD(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingHEAD(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1906,12 +1929,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingOPTIONS(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingOPTIONS(options);
+        errorUsingOPTIONS(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingOPTIONS(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1924,12 +1947,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPATCH(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPATCH(options);
+        errorUsingPATCH(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPATCH(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1942,12 +1965,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPOST(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPOST(options);
+        errorUsingPOST(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPOST(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1960,12 +1983,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPUT(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPUT(options);
+        errorUsingPUT(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPUT(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1987,66 +2010,66 @@ export const BasicErrorControllerApiFactory = function (configuration?: Configur
     return {
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingDELETE(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingDELETE(options)(fetch, basePath);
+        errorUsingDELETE(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingDELETE(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingGET(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingGET(options)(fetch, basePath);
+        errorUsingGET(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingGET(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingHEAD(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingHEAD(options)(fetch, basePath);
+        errorUsingHEAD(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingHEAD(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingOPTIONS(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingOPTIONS(options)(fetch, basePath);
+        errorUsingOPTIONS(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingOPTIONS(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPATCH(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPATCH(options)(fetch, basePath);
+        errorUsingPATCH(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingPATCH(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPOST(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPOST(options)(fetch, basePath);
+        errorUsingPOST(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingPOST(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPUT(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPUT(options)(fetch, basePath);
+        errorUsingPUT(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingPUT(options)(fetch, basePath);
         },
     };
 };
@@ -2060,79 +2083,79 @@ export const BasicErrorControllerApiFactory = function (configuration?: Configur
 export class BasicErrorControllerApi extends BaseAPI {
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingDELETE(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingDELETE(options)(this.fetch, this.basePath);
+    public errorUsingDELETE(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingDELETE(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingGET(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingGET(options)(this.fetch, this.basePath);
+    public errorUsingGET(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingGET(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingHEAD(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingHEAD(options)(this.fetch, this.basePath);
+    public errorUsingHEAD(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingHEAD(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingOPTIONS(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingOPTIONS(options)(this.fetch, this.basePath);
+    public errorUsingOPTIONS(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingOPTIONS(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingPATCH(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPATCH(options)(this.fetch, this.basePath);
+    public errorUsingPATCH(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingPATCH(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingPOST(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPOST(options)(this.fetch, this.basePath);
+    public errorUsingPOST(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingPOST(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingPUT(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPUT(options)(this.fetch, this.basePath);
+    public errorUsingPUT(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingPUT(options)(this.fetch, this.basePath);
     }
 
 }
@@ -2207,15 +2230,24 @@ export const EthCoinControllerApiFetchParamCreator = function (configuration?: C
         /**
          * 
          * @summary getAllCoins
+         * @param {'true'} flag flag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET(options: any = {}): FetchArgs {
+        getAllCoinsUsingGET1(flag: 'true', options: any = {}): FetchArgs {
+            // verify required parameter 'flag' is not null or undefined
+            if (flag === null || flag === undefined) {
+                throw new RequiredError('flag','Required parameter flag was null or undefined when calling getAllCoinsUsingGET1.');
+            }
             const localVarPath = `/api/v2/eth/coins`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (flag !== undefined) {
+                localVarQueryParameter['flag'] = flag;
+            }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -2338,11 +2370,12 @@ export const EthCoinControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary getAllCoins
+         * @param {'true'} flag flag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<CoinDTO>> {
-            const localVarFetchArgs = EthCoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET(options);
+        getAllCoinsUsingGET1(flag: 'true', options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<CoinDTO>> {
+            const localVarFetchArgs = EthCoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET1(flag, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2423,11 +2456,12 @@ export const EthCoinControllerApiFactory = function (configuration?: Configurati
         /**
          * 
          * @summary getAllCoins
+         * @param {'true'} flag flag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET(options?: any) {
-            return EthCoinControllerApiFp(configuration).getAllCoinsUsingGET(options)(fetch, basePath);
+        getAllCoinsUsingGET1(flag: 'true', options?: any) {
+            return EthCoinControllerApiFp(configuration).getAllCoinsUsingGET1(flag, options)(fetch, basePath);
         },
         /**
          * 
@@ -2486,12 +2520,13 @@ export class EthCoinControllerApi extends BaseAPI {
     /**
      * 
      * @summary getAllCoins
+     * @param {'true'} flag flag
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EthCoinControllerApi
      */
-    public getAllCoinsUsingGET(options?: any) {
-        return EthCoinControllerApiFp(this.configuration).getAllCoinsUsingGET(options)(this.fetch, this.basePath);
+    public getAllCoinsUsingGET1(flag: 'true', options?: any) {
+        return EthCoinControllerApiFp(this.configuration).getAllCoinsUsingGET1(flag, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -3988,7 +4023,6 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
         /**
          * 
          * @summary getUserWalletBalance
-         * @param {'true'} flag flag
          * @param {string} userWalletId userWalletId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -3997,18 +4031,14 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWalletBalanceUsingGET1(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'flag' is not null or undefined
-            if (flag === null || flag === undefined) {
-                throw new RequiredError('flag','Required parameter flag was null or undefined when calling getUserWalletBalanceUsingGET1.');
-            }
+        getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
             // verify required parameter 'userWalletId' is not null or undefined
             if (userWalletId === null || userWalletId === undefined) {
-                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletBalanceUsingGET1.');
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletBalanceUsingGET.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletBalanceUsingGET1.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletBalanceUsingGET.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets/{userWalletId}/balance`
                 .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
@@ -4020,10 +4050,6 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
-            }
-
-            if (flag !== undefined) {
-                localVarQueryParameter['flag'] = flag;
             }
 
             if (organizationId !== undefined) {
@@ -4415,6 +4441,7 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
          * 
          * @summary patchWalletWithdrawalPolicy
          * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+         * @param {string} policyId policyId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -4422,16 +4449,21 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+        patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, policyId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
             // verify required parameter 'patchWithdrawalPolicyRequest' is not null or undefined
             if (patchWithdrawalPolicyRequest === null || patchWithdrawalPolicyRequest === undefined) {
                 throw new RequiredError('patchWithdrawalPolicyRequest','Required parameter patchWithdrawalPolicyRequest was null or undefined when calling patchWalletWithdrawalPolicyUsingPATCH.');
+            }
+            // verify required parameter 'policyId' is not null or undefined
+            if (policyId === null || policyId === undefined) {
+                throw new RequiredError('policyId','Required parameter policyId was null or undefined when calling patchWalletWithdrawalPolicyUsingPATCH.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
                 throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchWalletWithdrawalPolicyUsingPATCH.');
             }
-            const localVarPath = `/api/v2/eth/wallets/{walletId}/withdrawal-policies`
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/withdrawal-policies/{policyId}`
+                .replace(`{${"policyId"}}`, encodeURIComponent(String(policyId)))
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
@@ -4770,7 +4802,6 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
         /**
          * 
          * @summary getUserWalletBalance
-         * @param {'true'} flag flag
          * @param {string} userWalletId userWalletId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -4779,8 +4810,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWalletBalanceUsingGET1(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
-            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getUserWalletBalanceUsingGET1(flag, userWalletId, walletId, accountId, organizationId, otpKey, options);
+        getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getUserWalletBalanceUsingGET(userWalletId, walletId, accountId, organizationId, otpKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4959,6 +4990,7 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * 
          * @summary patchWalletWithdrawalPolicy
          * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+         * @param {string} policyId policyId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -4966,8 +4998,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WalletWithdrawalPolicyDTO> {
-            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options);
+        patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, policyId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WalletWithdrawalPolicyDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest, policyId, walletId, accountId, organizationId, otpKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -5153,7 +5185,6 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
         /**
          * 
          * @summary getUserWalletBalance
-         * @param {'true'} flag flag
          * @param {string} userWalletId userWalletId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -5162,8 +5193,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWalletBalanceUsingGET1(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-            return EthWalletControllerApiFp(configuration).getUserWalletBalanceUsingGET1(flag, userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).getUserWalletBalanceUsingGET(userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
         },
         /**
          * 
@@ -5270,6 +5301,7 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * 
          * @summary patchWalletWithdrawalPolicy
          * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+         * @param {string} policyId policyId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -5277,8 +5309,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-            return EthWalletControllerApiFp(configuration).patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, policyId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return EthWalletControllerApiFp(configuration).patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest, policyId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
         },
         /**
          * 
@@ -5456,7 +5488,6 @@ export class EthWalletControllerApi extends BaseAPI {
     /**
      * 
      * @summary getUserWalletBalance
-     * @param {'true'} flag flag
      * @param {string} userWalletId userWalletId
      * @param {string} walletId walletId
      * @param {string} [accountId] 
@@ -5466,8 +5497,8 @@ export class EthWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthWalletControllerApi
      */
-    public getUserWalletBalanceUsingGET1(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).getUserWalletBalanceUsingGET1(flag, userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    public getUserWalletBalanceUsingGET(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getUserWalletBalanceUsingGET(userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5589,6 +5620,7 @@ export class EthWalletControllerApi extends BaseAPI {
      * 
      * @summary patchWalletWithdrawalPolicy
      * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+     * @param {string} policyId policyId
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -5597,8 +5629,8 @@ export class EthWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthWalletControllerApi
      */
-    public patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    public patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, policyId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicyUsingPATCH(patchWithdrawalPolicyRequest, policyId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -7734,7 +7766,6 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
         /**
          * 
          * @summary getUserWalletBalance
-         * @param {'true'} flag flag
          * @param {string} userWalletId userWalletId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -7743,18 +7774,14 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWalletBalanceUsingGET3(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'flag' is not null or undefined
-            if (flag === null || flag === undefined) {
-                throw new RequiredError('flag','Required parameter flag was null or undefined when calling getUserWalletBalanceUsingGET3.');
-            }
+        getUserWalletBalanceUsingGET2(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
             // verify required parameter 'userWalletId' is not null or undefined
             if (userWalletId === null || userWalletId === undefined) {
-                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletBalanceUsingGET3.');
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletBalanceUsingGET2.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletBalanceUsingGET3.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletBalanceUsingGET2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}/balance`
                 .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)))
@@ -7766,10 +7793,6 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
-            }
-
-            if (flag !== undefined) {
-                localVarQueryParameter['flag'] = flag;
             }
 
             if (organizationId !== undefined) {
@@ -8161,6 +8184,7 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
          * 
          * @summary patchWalletWithdrawalPolicy
          * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+         * @param {string} policyId policyId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -8168,16 +8192,21 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
+        patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, policyId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options: any = {}): FetchArgs {
             // verify required parameter 'patchWithdrawalPolicyRequest' is not null or undefined
             if (patchWithdrawalPolicyRequest === null || patchWithdrawalPolicyRequest === undefined) {
                 throw new RequiredError('patchWithdrawalPolicyRequest','Required parameter patchWithdrawalPolicyRequest was null or undefined when calling patchWalletWithdrawalPolicyUsingPATCH1.');
+            }
+            // verify required parameter 'policyId' is not null or undefined
+            if (policyId === null || policyId === undefined) {
+                throw new RequiredError('policyId','Required parameter policyId was null or undefined when calling patchWalletWithdrawalPolicyUsingPATCH1.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
                 throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchWalletWithdrawalPolicyUsingPATCH1.');
             }
-            const localVarPath = `/api/v2/klay/wallets/{walletId}/withdrawal-policies`
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/withdrawal-policies/{policyId}`
+                .replace(`{${"policyId"}}`, encodeURIComponent(String(policyId)))
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
@@ -8516,7 +8545,6 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
         /**
          * 
          * @summary getUserWalletBalance
-         * @param {'true'} flag flag
          * @param {string} userWalletId userWalletId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -8525,8 +8553,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWalletBalanceUsingGET3(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
-            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getUserWalletBalanceUsingGET3(flag, userWalletId, walletId, accountId, organizationId, otpKey, options);
+        getUserWalletBalanceUsingGET2(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getUserWalletBalanceUsingGET2(userWalletId, walletId, accountId, organizationId, otpKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -8705,6 +8733,7 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * 
          * @summary patchWalletWithdrawalPolicy
          * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+         * @param {string} policyId policyId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -8712,8 +8741,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WalletWithdrawalPolicyDTO> {
-            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options);
+        patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, policyId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WalletWithdrawalPolicyDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest, policyId, walletId, accountId, organizationId, otpKey, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -8899,7 +8928,6 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
         /**
          * 
          * @summary getUserWalletBalance
-         * @param {'true'} flag flag
          * @param {string} userWalletId userWalletId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -8908,8 +8936,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWalletBalanceUsingGET3(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-            return KlayWalletControllerApiFp(configuration).getUserWalletBalanceUsingGET3(flag, userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        getUserWalletBalanceUsingGET2(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getUserWalletBalanceUsingGET2(userWalletId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
         },
         /**
          * 
@@ -9016,6 +9044,7 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * 
          * @summary patchWalletWithdrawalPolicy
          * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+         * @param {string} policyId policyId
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -9023,8 +9052,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-            return KlayWalletControllerApiFp(configuration).patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
+        patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, policyId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+            return KlayWalletControllerApiFp(configuration).patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest, policyId, walletId, accountId, organizationId, otpKey, options)(fetch, basePath);
         },
         /**
          * 
@@ -9202,7 +9231,6 @@ export class KlayWalletControllerApi extends BaseAPI {
     /**
      * 
      * @summary getUserWalletBalance
-     * @param {'true'} flag flag
      * @param {string} userWalletId userWalletId
      * @param {string} walletId walletId
      * @param {string} [accountId] 
@@ -9212,8 +9240,8 @@ export class KlayWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayWalletControllerApi
      */
-    public getUserWalletBalanceUsingGET3(flag: 'true', userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-        return KlayWalletControllerApiFp(this.configuration).getUserWalletBalanceUsingGET3(flag, userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    public getUserWalletBalanceUsingGET2(userWalletId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getUserWalletBalanceUsingGET2(userWalletId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -9335,6 +9363,7 @@ export class KlayWalletControllerApi extends BaseAPI {
      * 
      * @summary patchWalletWithdrawalPolicy
      * @param {PatchWithdrawalPolicyRequest} patchWithdrawalPolicyRequest patchWithdrawalPolicyRequest
+     * @param {string} policyId policyId
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -9343,8 +9372,8 @@ export class KlayWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayWalletControllerApi
      */
-    public patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
-        return KlayWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
+    public patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, policyId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicyUsingPATCH1(patchWithdrawalPolicyRequest, policyId, walletId, accountId, organizationId, otpKey, options)(this.fetch, this.basePath);
     }
 
     /**
