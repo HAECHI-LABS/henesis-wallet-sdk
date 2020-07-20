@@ -29,11 +29,13 @@ import {
   BalanceDTO,
   MasterWalletDTO,
   TransferDTO,
+  ApproveWithdrawalApprovalRequest,
 } from "../__generate__/btc";
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
 import _ from "lodash";
 import { Transfer } from "./transfers";
+import { ApproveWithdrawal } from "../withdrawalApprovals";
 
 export interface BtcTransaction {
   id: string;
@@ -117,6 +119,8 @@ export interface DepositAddressPaginationOptions extends PaginationOptions {
   id?: string;
   address?: string;
 }
+
+export interface BtcWithdrawalApproveParams extends ApproveWithdrawal {}
 
 export class BtcMasterWallet extends Wallet<BtcTransaction> {
   private readonly data: BtcMasterWalletData;
@@ -306,6 +310,29 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     const queryString: string = makeQueryString(options);
     return await this.client.get<Pagination<DepositAddressDTO>>(
       `${this.baseUrl}/deposit-addresses${queryString ? `?${queryString}` : ""}`
+    );
+  }
+
+  async approve(params: BtcWithdrawalApproveParams): Promise<Transfer> {
+    const request: ApproveWithdrawalApprovalRequest = await this.build(
+      params.to,
+      params.amount,
+      params.passphrase,
+      params.otpCode
+    );
+
+    const transfer = await this.client.post<TransferDTO>(
+      `${this.withdrawalApprovalUrl}/${params.id}/approve`,
+      {
+        request,
+      }
+    );
+    return parseResponseToTransfer(transfer);
+  }
+
+  async reject(id: string): Promise<void> {
+    return await this.client.post<void>(
+      `${this.withdrawalApprovalUrl}/${id}/reject`
     );
   }
 
