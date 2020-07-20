@@ -61,6 +61,8 @@ export type WalletStatus =
 export abstract class Wallet<T> {
   protected readonly client: Client;
 
+  protected readonly withdrawalApprovalUrl: string = "/withdrawal-approvals";
+
   protected readonly baseUrl;
 
   protected readonly keychains: Keychains;
