@@ -28,9 +28,11 @@ import {
   BalanceDTO,
   PaginationUserWalletDTO,
   MasterWalletDTO,
+  ApproveWithdrawalApprovalRequest,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
+import { ApproveWithdrawal } from "../withdrawalApprovals";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -55,6 +57,11 @@ export interface UserWalletPaginationOptions extends PaginationOptions {
   id?: string;
   ids?: string[];
   address?: string;
+}
+
+export interface EthWithdrawalApproveParams extends ApproveWithdrawal {
+  gasPrice?: BN;
+  gasLimit?: BN;
 }
 
 function convertSignedMultiSigPayloadToDTO(
@@ -535,6 +542,50 @@ export class EthMasterWallet extends EthLikeWallet {
       otpCode,
       gasPrice,
       gasLimit || this.DEFAULT_CONTRACT_CALL_GAS_LIMIT
+    );
+  }
+
+  async approve(params: EthWithdrawalApproveParams): Promise<EthTransaction> {
+    const signedMultiSigPayload = await this.buildTransferPayload(
+      params.coinSymbol,
+      params.to,
+      params.amount,
+      params.passphrase
+    );
+
+    const request: ApproveWithdrawalApprovalRequest = {
+      signedMultiSigPayload: {
+        ...signedMultiSigPayload,
+        multiSigPayload: {
+          ...signedMultiSigPayload.multiSigPayload,
+          value: BNConverter.bnToHexString(
+            signedMultiSigPayload.multiSigPayload.value
+          ),
+          walletNonce: BNConverter.bnToHexString(
+            signedMultiSigPayload.multiSigPayload.walletNonce
+          ),
+        },
+      },
+      transactionId: params.transactionId,
+      walletId: params.masterWalletId,
+      otpCode: params.otpCode,
+      gasLimit: BNConverter.bnToHexString(params.gasLimit),
+      gasPrice: BNConverter.bnToHexString(params.gasPrice),
+    };
+
+    const response = await this.client.post<TransactionDTO>(
+      `${this.withdrawalApprovalUrl}/${params.id}/approve`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
+  }
+
+  async reject(id: string): Promise<void> {
+    return await this.client.post<void>(
+      `${this.withdrawalApprovalUrl}/${id}/reject`
     );
   }
 }

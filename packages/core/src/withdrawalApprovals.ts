@@ -33,16 +33,6 @@ export type WithdrawalApprovalStatus = WithdrawalApprovalDTO.StatusEnum;
 export interface ApproveWithdrawal extends WithdrawalApproval {
   passphrase: string;
   otpCode: string;
-  // only used in ethereum
-  gasLimit?: BN;
-  gasPrice?: BN;
-}
-
-export interface WithdrawalApprover {
-  approve(
-    approveWithdrawal: ApproveWithdrawal
-  ): Promise<Transfer | EthTransaction>;
-  reject(id: string): Promise<void>;
 }
 
 export class WithdrawalApprovals {
@@ -50,11 +40,8 @@ export class WithdrawalApprovals {
 
   private readonly baseUrl = "/withdrawal-approvals";
 
-  private readonly resolver: Record<BlockchainType, WithdrawalApprover>;
-
-  constructor(client: Client, resolver: Record<string, WithdrawalApprover>) {
+  constructor(client: Client) {
     this.client = client;
-    this.resolver = resolver;
   }
 
   async getWithdrawalApprovals(
@@ -73,33 +60,5 @@ export class WithdrawalApprovals {
         };
       }),
     };
-  }
-
-  async approveWithdrawalApproval(
-    id: string,
-    passphrase: string,
-    otpCode: string,
-    gasPrice?: BN,
-    gasLimit?: BN
-  ): Promise<Transfer | EthTransaction> {
-    const data = await this.client.get<WithdrawalApprovalDTO>(
-      `${this.baseUrl}/${id}`
-    );
-    const approveWithdrawal: ApproveWithdrawal = {
-      ..._.omit(data, "approvedBy"),
-      amount: BNConverter.hexStringToBN(data.amount),
-      passphrase: passphrase,
-      otpCode: otpCode,
-      gasLimit: gasLimit,
-      gasPrice: gasPrice,
-    };
-    return await this.resolver[data.blockchain].approve(approveWithdrawal);
-  }
-
-  async rejectWithdrawalApproval(id: string): Promise<void> {
-    const data = await this.client.get<WithdrawalApprovalDTO>(
-      `${this.baseUrl}/${id}`
-    );
-    return await this.resolver[data.blockchain].reject(id);
   }
 }
