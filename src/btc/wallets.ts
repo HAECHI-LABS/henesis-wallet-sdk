@@ -1,8 +1,6 @@
 import { Client } from "../httpClient";
 import {
   BtcMasterWallet,
-  BtcMasterWalletData,
-  CreateMasterWalletResponse,
 } from "./wallet";
 import { Wallets } from "../wallets";
 import aesjs from "aes-js";
