@@ -331,9 +331,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   async reject(id: string): Promise<void> {
-    return await this.client.post<void>(
-      `${this.withdrawalApprovalUrl}/${id}/reject`
-    );
+    await this.client.post<void>(`${this.withdrawalApprovalUrl}/${id}/reject`);
   }
 
   getAddress(): string {
