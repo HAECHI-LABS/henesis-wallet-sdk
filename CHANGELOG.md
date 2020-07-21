@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.6...v2.0.7) (2020-07-21)
+
+
+### Features
+
+* add bitcoin status requested, format invalid error ([1fce261](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1fce261081757cc33dc65076ea76f3d12c4ad787))
+* add contract call parameter data empty check ([19a1768](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/19a1768c2c51800d8523802f62e45d741db82451))
+
+
+
+
+
 ## [2.0.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.5...v2.0.6) (2020-07-10)
 
 
