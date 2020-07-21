@@ -8,11 +8,10 @@
     "allowJs": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true
   },
-  "include": [
-    "./src"
-  ]
+  "include": ["./src"]
 }
