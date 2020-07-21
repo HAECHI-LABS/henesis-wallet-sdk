@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.8...v2.0.9) (2020-07-21)
+
+
+### Features
+
+* add withdrawal policy and approval api ([d40cfa1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d40cfa1fcc3f42043618658f2ff141d52d1a740f))
+* implement approve, reject withdrawal approvals ([60ef5db](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/60ef5dbb25b8cb26fc5fd7fb5e16f151c1462203))
+
+
+
+
+
 ## [2.0.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.7...v2.0.8) (2020-07-21)
 
 
