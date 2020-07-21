@@ -12,6 +12,8 @@ import { Transfer } from "./btc/transfers";
 import { EthTransaction } from "./eth/wallet";
 import { BlockchainType } from "./blockchain";
 
+export import WithdrawalApprovalStatus = WithdrawalApprovalDTO.StatusEnum;
+
 export interface WithdrawalApproval {
   id: string;
   masterWalletId: string;
@@ -27,8 +29,6 @@ export interface WithdrawalApproval {
   to: string;
   transactionId: string;
 }
-
-export type WithdrawalApprovalStatus = WithdrawalApprovalDTO.StatusEnum;
 
 export interface ApproveWithdrawal extends WithdrawalApproval {
   passphrase: string;
