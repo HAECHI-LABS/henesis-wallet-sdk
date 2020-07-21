@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.9...v2.0.10) (2020-07-21)
+
+
+### Bug Fixes
+
+* fixed policy, wallet type ([f7706cc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f7706cc4dfba9f08e03de4199a3c00d62583889a))
+* fixed WithdrawalApprovalStatus ([17c8e6d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/17c8e6df002603148f4cc778dfe467be6e7be63d))
+
+
+
+
+
 ## [2.0.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.8...v2.0.9) (2020-07-21)
 
 
