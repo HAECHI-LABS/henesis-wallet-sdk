@@ -38,8 +38,8 @@ export interface WalletData {
   status: WalletStatus;
 }
 
-export type PolicyType = WalletWithdrawalPolicyDTO.PolicyTypeEnum;
-export type WalletType = WalletWithdrawalPolicyDTO.WalletTypeEnum;
+export import PolicyType = WalletWithdrawalPolicyDTO.PolicyTypeEnum;
+export import WalletType = WalletWithdrawalPolicyDTO.WalletTypeEnum;
 
 export interface WithdrawalPolicy {
   id: string;
