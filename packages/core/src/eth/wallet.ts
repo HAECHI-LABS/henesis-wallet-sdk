@@ -274,7 +274,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     gasLimit?: BN
   ): Promise<EthTransaction> {
     const response = await this.client.post<TransactionDTO>(
-      `${this.baseUrl}/transactions`,
+      `/wallets/transactions`,
       {
         walletId,
         blockchain,
@@ -306,7 +306,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
     const response = await this.client.post<
       NoUndefinedField<BatchTransactionDTO>[]
-    >(`${this.baseUrl}/batch-transactions`, {
+    >(`"/wallets/batch-transactions`, {
       walletId,
       blockchain,
       signedMultiSigPayloads: signedMultiSigPayloadDTOs,

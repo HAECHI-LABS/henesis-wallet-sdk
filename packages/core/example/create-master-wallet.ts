@@ -1,8 +1,5 @@
-/// <reference path="../src/typings/index.d.ts" />
-import { SDK } from "../src";
+import {SDK} from "../src";
 import "dotenv/config";
-import { BlockchainType } from "../src/blockchain";
-import { EthMasterWallet } from "../src/eth/wallet";
 
 async function main() {
   const sdk = new SDK({
@@ -11,12 +8,11 @@ async function main() {
     url: process.env.URL,
   });
 
-  const wallet: EthMasterWallet = await sdk.eth.wallets.createMasterWallet(
-    "wallet1",
-    "passphrase"
+  const wallet = await sdk.btc.wallets.createMasterWallet(
+    'btc_master_wallet',
+    'passphrase'
   );
-
-  console.log(wallet.getData());
+  console.log(wallet);
 }
 
 main().catch((e) => console.error(e));

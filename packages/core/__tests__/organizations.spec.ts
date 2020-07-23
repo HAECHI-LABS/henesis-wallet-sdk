@@ -105,7 +105,7 @@ describe('Organizations', () => {
     });
   });
   describe('#changeAccountRole()', () => {
-    it('success change account role', async () => {
+    it('success change data role', async () => {
       const accountId = '49803fbf0a2a2c3ab3a0aba8b98dbb2a';
       const response = {
         id: '49803fbf0a2a2c3ab3a0aba8b98dbb2a',
