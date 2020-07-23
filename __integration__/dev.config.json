@@ -1,0 +1,21 @@
+{
+  "admin": {
+    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJlbWFpbCI6InByb2R1Y3RAaGFlY2hpLmlvIiwiaWQiOiI0OTgwM2ZiZjBhMmEyYzNhYjNhMGFiYThiOThkYmIyYSIsInR5cGUiOiJMT05HIiwiaXNzIjoiaGVuZXNpcy13YWxsZXQtZGV2IiwiaWF0IjoxNTk0OTc4MDIyLCJleHAiOjE2MjY1MTQwMjJ9.zC8gwcKlpNHt-K2XNZ4czrriZ2aseihwHbepF5ivrMoCa7K3MTvGOTDjUffQUhZiJ1pUjRUoeKKCrmj-uEcyKg",
+    "secret": "119Es7Czo6yM4cYfS8IxTRhLfuDwDmN4rl0RK3ivuGI="
+  },
+  "viewer": {
+    "accessToken": "",
+    "secret": ""
+  },
+  "btc": {
+    "walletId": "0b6eb9a463b499643a6782fec27c3453",
+    "password": "passphrase",
+    "externalAddress": "mqwps6wRa6iUUZ7uqQt8maZ6xsUkdLTEaA"
+  },
+  "eth": {
+    "masterWalletId": "d01ce25a303491d3204b0af5c6c399df",
+    "userWalletId": "d4e8f5ee896e0b76669d13f05ec4656c",
+    "password": "passphrase",
+    "externalAddress": "0xfd82e97cc768f5f385ffbf2f4a9f5195efad864d"
+  }
+}

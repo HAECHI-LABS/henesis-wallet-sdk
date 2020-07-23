@@ -1,0 +1,17 @@
+{
+  "transform": {
+    "^.+\\.ts$": "ts-jest"
+  },
+  "testRegex": "\\.integration\\.ts$",
+  "moduleFileExtensions": [
+    "ts",
+    "js",
+    "json"
+  ],
+  "globals": {
+    "ts-jest": {
+      "diagnostics": true
+    }
+  },
+  "testEnvironment": "node"
+}
