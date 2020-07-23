@@ -17,5 +17,12 @@
     "userWalletId": "d4e8f5ee896e0b76669d13f05ec4656c",
     "password": "passphrase",
     "externalAddress": "0xfd82e97cc768f5f385ffbf2f4a9f5195efad864d"
+  },
+  "klay": {
+    "masterWalletId": "a53aff4bdb117f59560f68478eb5a97d",
+    "userWalletId": "b691b8566c353c8d8031a1d967b624c5",
+    "password": "passphrase",
+    "externalAddress": "0xfd82e97cc768f5f385ffbf2f4a9f5195efad864d",
+    "externalAccountPrivateKey": "0x93fb80e3816d03fae1226645685a550e2a8ac21c26b948d0b2f7ae862bb043b4"
   }
 }
