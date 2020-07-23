@@ -1,0 +1,41 @@
+name: Integration Test Action
+
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      trigger_service:
+        description: 'Service which trigger this action'
+        default: 'anonymous'
+        required: false
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "greet"
+  integration_test:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-18.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '10'
+          check-latest: true
+      - name: Run integration tests
+        run: |
+          npm run bootstrap
+          npm run test:integration
+      - name: Notification Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: Integration Test Acton (Dev)
+          fields: repo,commit,message,author,took
+          mention: here
+          if_mention: failure,cancelled
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
