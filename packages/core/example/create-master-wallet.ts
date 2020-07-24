@@ -1,4 +1,4 @@
-import {SDK} from "../src";
+import { SDK } from "../src";
 import "dotenv/config";
 
 async function main() {
@@ -9,8 +9,8 @@ async function main() {
   });
 
   const wallet = await sdk.btc.wallets.createMasterWallet(
-    'btc_master_wallet',
-    'passphrase'
+    "btc_master_wallet",
+    "passphrase"
   );
   console.log(wallet);
 }

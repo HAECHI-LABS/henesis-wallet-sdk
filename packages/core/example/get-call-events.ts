@@ -11,7 +11,7 @@ async function main() {
 
   console.log(
     await sdk.eth.events.getCallEvents({
-      walletId: '3be5351bd52626108326f9ec44b7b633'
+      walletId: "3be5351bd52626108326f9ec44b7b633",
     })
   );
 }
