@@ -5,7 +5,7 @@ import BN from "bn.js";
 import { retryAsync } from "ts-retry";
 import { TransferStatus } from "../../src/btc/transfers";
 
-describe("BTC integration tests", () => {
+describe.skip("BTC integration tests", () => {
   const maxTimeout = 20 * 60 * 1000;
   jest.setTimeout(maxTimeout);
   const config = require("../dev.config.json");
