@@ -49,7 +49,7 @@ describe("ETH integration tests", () => {
   });
 
   describe("#transfer()", () => {
-    it("should transfer from master wallet", async (done) => {
+    it("should eth transfer from master wallet", async (done) => {
       const wallet = await sdkAdmin.eth.wallets.getMasterWallet(config.eth.masterWalletId);
       const transfer = await wallet.transfer(
         "ETH",
@@ -77,7 +77,44 @@ describe("ETH integration tests", () => {
             }
             return confirmedTransferEvents;
           },
-          { delay: 10000, maxTry: 120 } // 20min
+          { delay: 10000, maxTry: 30 } // 5 min
+        );
+        expect(result.results[0].status).toEqual(TransferStatus.CONFIRMED);
+      } catch (e) {
+        done.fail("status of value transfer event should be confirmed");
+      }
+      done();
+    });
+
+    it("should erc20 transfer from master wallet", async (done) => {
+      const wallet = await sdkAdmin.eth.wallets.getMasterWallet(config.eth.masterWalletId);
+      const transfer = await wallet.transfer(
+        "EVT",
+        config.eth.externalAddress,
+        new BN(1),
+        config.eth.password
+      );
+
+      try {
+        const result = await retryAsync(
+          async () => {
+            const confirmedTransferEvents = await sdkAdmin.eth.events.getValueTransferEvents({
+              transactionId: transfer.id
+            });
+
+            if (confirmedTransferEvents.results.length > 0) {
+              if (confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.PENDING
+                || confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.REQUESTED
+                || confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.MINED
+              ) {
+                throw new Error("retry");
+              }
+            } else {
+              throw new Error("retry");
+            }
+            return confirmedTransferEvents;
+          },
+          { delay: 10000, maxTry: 30 } // 5 min
         );
         expect(result.results[0].status).toEqual(TransferStatus.CONFIRMED);
       } catch (e) {
@@ -104,7 +141,7 @@ describe("ETH integration tests", () => {
             }
             return activeUserWallet;
           },
-          { delay: 5000, maxTry: 10 } // 5 min
+          { delay: 10000, maxTry: 30 } // 5 min
         );
         expect(result.getData().status).toEqual(WalletStatus.ACTIVE);
       } catch (e) {
@@ -115,7 +152,7 @@ describe("ETH integration tests", () => {
   });
 
   describe("#transfer()", () => {
-    it("should transfer from user wallet", async (done) => {
+    it("should eth transfer from user wallet", async (done) => {
       const wallet = await sdkAdmin.eth.wallets.getMasterWallet(config.eth.masterWalletId);
       const userWallet = await wallet.getUserWallet(config.eth.userWalletId);
       const transfer = await userWallet.transfer(
@@ -144,7 +181,45 @@ describe("ETH integration tests", () => {
             }
             return confirmedTransferEvents;
           },
-          { delay: 5000, maxTry: 10 } // 5 min
+          { delay: 10000, maxTry: 30 } // 5 min
+        );
+        expect(result.results[0].status).toEqual(TransferStatus.CONFIRMED);
+      } catch (e) {
+        console.log(transfer.id);
+        done.fail("status of value transfer event should be confirmed");
+      }
+    });
+
+    it("should erc20 transfer from user wallet", async (done) => {
+      const wallet = await sdkAdmin.eth.wallets.getMasterWallet(config.eth.masterWalletId);
+      const userWallet = await wallet.getUserWallet(config.eth.userWalletId);
+      const transfer = await userWallet.transfer(
+        "EVT",
+        config.eth.externalAddress,
+        new BN(1),
+        config.eth.password
+      );
+
+      try {
+        const result = await retryAsync(
+          async () => {
+            const confirmedTransferEvents = await sdkAdmin.eth.events.getValueTransferEvents({
+              transactionId: transfer.id
+            });
+
+            if (confirmedTransferEvents.results.length > 0) {
+              if (confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.PENDING
+                || confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.REQUESTED
+                || confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.MINED
+              ) {
+                throw new Error("retry");
+              }
+            } else {
+              throw new Error("retry");
+            }
+            return confirmedTransferEvents;
+          },
+          { delay: 10000, maxTry: 30 } // 5 min
         );
         expect(result.results[0].status).toEqual(TransferStatus.CONFIRMED);
       } catch (e) {
