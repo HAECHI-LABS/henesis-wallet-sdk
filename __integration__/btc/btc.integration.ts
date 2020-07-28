@@ -6,7 +6,7 @@ import { retryAsync } from "ts-retry";
 import { TransferStatus } from "../../src/btc/transfers";
 
 describe("BTC integration tests", () => {
-  const maxTimeout = 30 * 60 * 1000;
+  const maxTimeout = 40 * 60 * 1000;
   jest.setTimeout(maxTimeout);
   const config = require("../dev.config.json");
   const sdkAdmin = new SDK({
@@ -51,9 +51,10 @@ describe("BTC integration tests", () => {
             }
             return confirmedTransfer;
           },
-          { delay: 10000, maxTry: 180 } // 30min
+          { delay: 10000, maxTry: 240 } // 40min
         );
         expect(result.status).toEqual(TransferStatus.CONFIRMED);
+        done();
       } catch (e) {
         done.fail("transfer status should be confirmed but pending");
       }
