@@ -7,7 +7,7 @@ import { TransferStatus } from "../../src/btc/transfers";
 import { ValueTransferEventDTO as EthValueTransferEventDTO } from "../../src/__generate__/eth";
 
 describe("ETH integration tests", () => {
-  const maxTimeout = 5 * 60 * 1000; // min 5
+  const maxTimeout = 10 * 60 * 1000; // min 10
   jest.setTimeout(maxTimeout);
   const config = require("../dev.config.json");
   const sdkAdmin = new SDK({
@@ -38,7 +38,7 @@ describe("ETH integration tests", () => {
             }
             return activeMasterWallet;
           },
-          { delay: 10000, maxTry: 30 } // 5 min
+          { delay: 10000, maxTry: 60 } // 10 min
         );
         expect(result.getData().status).toEqual(WalletStatus.ACTIVE);
       } catch (e) {
@@ -77,7 +77,7 @@ describe("ETH integration tests", () => {
             }
             return confirmedTransferEvents;
           },
-          { delay: 10000, maxTry: 30 } // 5 min
+          { delay: 10000, maxTry: 60 } // 10 min
         );
         expect(result.results[0].status).toEqual(TransferStatus.CONFIRMED);
       } catch (e) {
@@ -114,7 +114,7 @@ describe("ETH integration tests", () => {
             }
             return confirmedTransferEvents;
           },
-          { delay: 10000, maxTry: 30 } // 5 min
+          { delay: 10000, maxTry: 60 } // 10 min
         );
         expect(result.results[0].status).toEqual(TransferStatus.CONFIRMED);
       } catch (e) {
@@ -141,7 +141,7 @@ describe("ETH integration tests", () => {
             }
             return activeUserWallet;
           },
-          { delay: 10000, maxTry: 30 } // 5 min
+          { delay: 10000, maxTry: 60 } // 10 min
         );
         expect(result.getData().status).toEqual(WalletStatus.ACTIVE);
       } catch (e) {
@@ -181,13 +181,14 @@ describe("ETH integration tests", () => {
             }
             return confirmedTransferEvents;
           },
-          { delay: 10000, maxTry: 30 } // 5 min
+          { delay: 10000, maxTry: 60 } // 10 min
         );
         expect(result.results[0].status).toEqual(TransferStatus.CONFIRMED);
       } catch (e) {
         console.log(transfer.id);
         done.fail("status of value transfer event should be confirmed");
       }
+      done();
     });
 
     it("should erc20 transfer from user wallet", async (done) => {
@@ -219,13 +220,14 @@ describe("ETH integration tests", () => {
             }
             return confirmedTransferEvents;
           },
-          { delay: 10000, maxTry: 30 } // 5 min
+          { delay: 10000, maxTry: 60 } // 10 min
         );
         expect(result.results[0].status).toEqual(TransferStatus.CONFIRMED);
       } catch (e) {
         console.log(transfer.id);
         done.fail("status of value transfer event should be confirmed");
       }
+      done();
     });
   });
 });
