@@ -40,12 +40,10 @@ describe("BTC integration tests", () => {
         new BN(1),
         config.btc.password
       );
-      console.log(transfer);
       try {
         const result = await retryAsync(
           async () => {
             const confirmedTransfer = await sdkAdmin.btc.transfers.getTransfer(transfer.id);
-            console.log(confirmedTransfer.status);
             if (confirmedTransfer.status == TransferStatus.PENDING || confirmedTransfer.status == TransferStatus.MINED) {
               throw new Error("error");
             }
@@ -54,10 +52,11 @@ describe("BTC integration tests", () => {
           { delay: 10000, maxTry: 240 } // 40min
         );
         expect(result.status).toEqual(TransferStatus.CONFIRMED);
-        done();
       } catch (e) {
+        console.log(transfer.id);
         done.fail("transfer status should be confirmed but pending");
       }
+      done();
     });
   });
 });
