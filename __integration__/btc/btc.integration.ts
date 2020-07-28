@@ -5,8 +5,8 @@ import BN from "bn.js";
 import { retryAsync } from "ts-retry";
 import { TransferStatus } from "../../src/btc/transfers";
 
-describe.skip("BTC integration tests", () => {
-  const maxTimeout = 20 * 60 * 1000;
+describe("BTC integration tests", () => {
+  const maxTimeout = 30 * 60 * 1000;
   jest.setTimeout(maxTimeout);
   const config = require("../dev.config.json");
   const sdkAdmin = new SDK({
@@ -40,17 +40,18 @@ describe.skip("BTC integration tests", () => {
         new BN(1),
         config.btc.password
       );
-
+      console.log(transfer);
       try {
         const result = await retryAsync(
           async () => {
             const confirmedTransfer = await sdkAdmin.btc.transfers.getTransfer(transfer.id);
+            console.log(confirmedTransfer.status);
             if (confirmedTransfer.status == TransferStatus.PENDING || confirmedTransfer.status == TransferStatus.MINED) {
               throw new Error("error");
             }
             return confirmedTransfer;
           },
-          { delay: 10000, maxTry: 120 } // 20min
+          { delay: 10000, maxTry: 180 } // 30min
         );
         expect(result.status).toEqual(TransferStatus.CONFIRMED);
       } catch (e) {
