@@ -19,7 +19,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v2-beta
         with:
           node-version: '10'
           check-latest: true
