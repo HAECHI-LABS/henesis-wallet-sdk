@@ -227,6 +227,7 @@ describe("Klay integration tests", () => {
         console.log(transfer.id);
         done.fail("status of value transfer event should be confirmed");
       }
+      done();
     });
   });
 });
