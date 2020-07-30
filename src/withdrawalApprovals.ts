@@ -14,21 +14,13 @@ import { BlockchainType } from "./blockchain";
 
 export import WithdrawalApprovalStatus = WithdrawalApprovalDTO.StatusEnum;
 
-export interface WithdrawalApproval {
-  id: string;
-  masterWalletId: string;
-  userWalletId?: string;
-  requester: {
-    name: string;
-    email: string;
-  };
-  blockchain: string;
-  coinSymbol: string;
+export type WithdrawalApproval = Omit<
+  WithdrawalApprovalDTO,
+  "approvedBy" | "amount" | "status"
+> & {
   amount: BN;
   status: WithdrawalApprovalStatus;
-  to: string;
-  transactionId: string;
-}
+};
 
 export interface ApproveWithdrawal extends WithdrawalApproval {
   passphrase: string;
@@ -42,6 +34,18 @@ export class WithdrawalApprovals {
 
   constructor(client: Client) {
     this.client = client;
+  }
+
+  async getWithdrawalApprovalById(
+    withdrawalApprovalId: string
+  ): Promise<WithdrawalApproval> {
+    const data = await this.client.get<WithdrawalApprovalDTO>(
+      `${this.baseUrl}/${withdrawalApprovalId}`
+    );
+    return {
+      ..._.omit(data, "approvedBy"),
+      amount: BNConverter.hexStringToBN(data.amount),
+    };
   }
 
   async getWithdrawalApprovals(

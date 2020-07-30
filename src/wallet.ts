@@ -38,14 +38,14 @@ export interface WalletData {
   status: WalletStatus;
 }
 
-export import PolicyType = WalletWithdrawalPolicyDTO.PolicyTypeEnum;
+export import PolicyType = WalletWithdrawalPolicyDTO.TypeEnum;
 export import WalletType = WalletWithdrawalPolicyDTO.WalletTypeEnum;
 
 export interface WithdrawalPolicy {
   id: string;
   limitAmount: BN;
   walletType: WalletType;
-  policyType: PolicyType;
+  type: PolicyType;
   coinSymbol: string;
 }
 
@@ -205,8 +205,8 @@ export abstract class Wallet<T> {
       | BtcCreateWithdrawalPolicyRequest
       | EthCreateWithdrawalPolicyRequest = {
       limitAmount: BNConverter.bnToHexString(limitAmount),
-      walletType: walletType.toString(),
-      policyType: policyType.toString(),
+      walletType: walletType,
+      type: policyType,
       coinSymbol,
     };
     const data = await this.client.post<
