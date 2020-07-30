@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.11](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.10...v2.0.11) (2020-07-30)
+
+
+### Bug Fixes
+
+* add getWithdrawalApprovalById, update codegen ([1207d10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1207d10a98e04a281a9da8ca8d9ccfdf482ae4d0))
+* call done() when assert success ([4eea747](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4eea7470fd562f76501184a6dd59f3b3ad152fd6))
+* fix async test by calling done() func ([dc02344](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/dc02344c0d157d3238ef01acfa884aa109b50e69))
+* fix eth/klay transaction path bug, test: add integration test for btc/eth ([4bcb812](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4bcb812d33f4c86892945376b846a8fbce105a54))
+* fix integration_test github action with README.md badge ([2c488b7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2c488b736aa4c355423cf1170276905c4b12a745))
+* update codgen ([40ee2c2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/40ee2c248ee144c872be3fff55d27757f72aabfb))
+* 코드 수정 ([c9b219b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c9b219be07cddda72cf230a491d459af989c808c))
+
+
+### Features
+
+* add integration test github action ([0bcc3f5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0bcc3f5a995a94bf0a45b5f4365d5ae1c6e0a4c2))
+* add role spender ([9cb8850](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9cb8850a044381f214b2bb69ba27a7ea10ce91f6))
+
+
+
+
+
 ## [2.0.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.9...v2.0.10) (2020-07-21)
 
 
