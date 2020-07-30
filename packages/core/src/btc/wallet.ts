@@ -315,7 +315,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
 
   async approve(params: BtcWithdrawalApproveParams): Promise<Transfer> {
     const request: ApproveWithdrawalApprovalRequest = await this.build(
-      params.to,
+      params.toAddress,
       params.amount,
       params.passphrase,
       params.otpCode

@@ -548,7 +548,7 @@ export class EthMasterWallet extends EthLikeWallet {
   async approve(params: EthWithdrawalApproveParams): Promise<EthTransaction> {
     const signedMultiSigPayload = await this.buildTransferPayload(
       params.coinSymbol,
-      params.to,
+      params.toAddress,
       params.amount,
       params.passphrase
     );
@@ -566,7 +566,6 @@ export class EthMasterWallet extends EthLikeWallet {
           ),
         },
       },
-      transactionId: params.transactionId,
       walletId: params.masterWalletId,
       otpCode: params.otpCode,
       gasLimit: BNConverter.bnToHexString(params.gasLimit),
