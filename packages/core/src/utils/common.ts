@@ -68,6 +68,7 @@ export class BNConverter {
     if (_.isEmpty(hexString)) {
       throw new ValidationParameterError("hexString is empty");
     }
+
     if (!hexString.startsWith("0x")) {
       throw new FormatInvalidError(
         `invalid hex string format${
@@ -75,6 +76,7 @@ export class BNConverter {
         }`
       );
     }
+
     return new BN(this.remove0x(hexString), 16);
   }
 }
