@@ -214,7 +214,7 @@ export abstract class Wallet<T> {
     >(`${this.baseUrl}/withdrawal-policies`, request);
     return {
       ...data,
-      limitAmount: new BN(data.limitAmount),
+      limitAmount: BNConverter.hexStringToBN(data.limitAmount),
     };
   }
 
@@ -230,7 +230,7 @@ export abstract class Wallet<T> {
     );
     return {
       ...data,
-      limitAmount: new BN(data.limitAmount),
+      limitAmount: BNConverter.hexStringToBN(data.limitAmount),
     };
   }
 
@@ -250,7 +250,7 @@ export abstract class Wallet<T> {
       results: data.results.map((data) => {
         return {
           ...data,
-          limitAmount: new BN(data.limitAmount),
+          limitAmount: BNConverter.hexStringToBN(data.limitAmount),
         };
       }),
     };
