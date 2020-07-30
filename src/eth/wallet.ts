@@ -566,6 +566,7 @@ export class EthMasterWallet extends EthLikeWallet {
           ),
         },
       },
+      transactionId: "",
       walletId: params.masterWalletId,
       otpCode: params.otpCode,
       gasLimit: BNConverter.bnToHexString(params.gasLimit),
