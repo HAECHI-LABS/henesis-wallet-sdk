@@ -195,12 +195,14 @@ export abstract class Wallet<T> {
     }
   }
 
-  async createWithdrawalPolicy(
-    limitAmount: BN,
-    walletType: WalletType,
-    policyType: PolicyType,
-    coinSymbol: string
-  ): Promise<WithdrawalPolicy> {
+  async createWithdrawalPolicy(params: {
+    limitAmount: BN;
+    walletType: WalletType;
+    policyType: PolicyType;
+    coinSymbol: string;
+    otpCode?: string;
+  }): Promise<WithdrawalPolicy> {
+    const { limitAmount, walletType, policyType, coinSymbol, otpCode } = params;
     const request:
       | BtcCreateWithdrawalPolicyRequest
       | EthCreateWithdrawalPolicyRequest = {
@@ -208,6 +210,7 @@ export abstract class Wallet<T> {
       walletType: walletType,
       type: policyType,
       coinSymbol,
+      otpCode,
     };
     const data = await this.client.post<
       NoUndefinedField<WalletWithdrawalPolicyDTO>
@@ -218,11 +221,17 @@ export abstract class Wallet<T> {
     };
   }
 
-  async patchWithdrawalPolicy(id: string, limitAmount: BN) {
+  async patchWithdrawalPolicy(params: {
+    id: string;
+    limitAmount: BN;
+    otpCode?: string;
+  }) {
+    const { id, limitAmount, otpCode } = params;
     const request:
       | EthPatchWithdrawalPolicyRequest
       | BtcPatchWithdrawalPolicyRequest = {
       limitAmount: BNConverter.bnToHexString(limitAmount),
+      otpCode,
     };
     const data = await this.client.patch<WalletWithdrawalPolicyDTO>(
       `${this.baseUrl}/withdrawal-policies/${id}`,
