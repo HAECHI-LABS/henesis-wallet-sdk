@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.14](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.13...v2.0.14) (2020-07-31)
+
+
+### Features
+
+* add withdraw policy otpcode ([5cca72e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5cca72e35835e4bbbaaf0e708777a795ea460ff6))
+
+
+
+
+
 ## [2.0.13](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.12...v2.0.13) (2020-07-30)
 
 
