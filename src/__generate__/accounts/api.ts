@@ -251,7 +251,19 @@ export interface CreateWithdrawalApprovalRequest {
      * @type {string}
      * @memberof CreateWithdrawalApprovalRequest
      */
+    coinName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateWithdrawalApprovalRequest
+     */
     coinSymbol: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateWithdrawalApprovalRequest
+     */
+    feeAmount?: string;
     /**
      * 
      * @type {string}
@@ -263,19 +275,25 @@ export interface CreateWithdrawalApprovalRequest {
      * @type {string}
      * @memberof CreateWithdrawalApprovalRequest
      */
-    to: string;
+    toAddress: string;
     /**
      * 
      * @type {string}
      * @memberof CreateWithdrawalApprovalRequest
      */
-    transactionId: string;
+    transferAt: string;
     /**
      * 
      * @type {string}
      * @memberof CreateWithdrawalApprovalRequest
      */
     userWalletId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateWithdrawalApprovalRequest
+     */
+    walletName: string;
 }
 
 /**
