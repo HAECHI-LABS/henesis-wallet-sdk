@@ -156,6 +156,26 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     );
   }
 
+  public async retryCreateMasterWallet(walletId: string, gasPrice?: BN) {
+    checkNullAndUndefinedParameter({ walletId });
+    const response = await this.client.post<MasterWalletDTO>(
+      `${this.baseUrl}/${walletId}/recreate`,
+      {
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      }
+    );
+
+    return new EthMasterWallet(
+      this.client,
+      {
+        ...response,
+        blockchain: transformBlockchainType(response.blockchain),
+      },
+      this.keychains,
+      this.blockchain
+    );
+  }
+
   public verifyAddress(address: string): boolean {
     if (!/^(0x|0X)?[0-9a-fA-F]{40}$/i.test(address)) {
       return false;

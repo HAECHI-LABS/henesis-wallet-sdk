@@ -476,6 +476,32 @@ export class EthMasterWallet extends EthLikeWallet {
     };
   }
 
+  public async retryCreateUserWallet(
+    walletId: string,
+    gasPrice?: BN,
+    gasLimit?: BN
+  ) {
+    checkNullAndUndefinedParameter({ walletId });
+    const response = await this.client.post<UserWalletDTO>(
+      `${this.baseUrl}/user-wallets/${walletId}/recreate`,
+      {
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+        gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
+      }
+    );
+
+    return new EthUserWallet(
+      this.client,
+      this.data,
+      this.keychains,
+      {
+        ...response,
+        blockchain: transformBlockchainType(response.blockchain),
+      },
+      this.blockchain
+    );
+  }
+
   getId(): string {
     return this.data.id;
   }
