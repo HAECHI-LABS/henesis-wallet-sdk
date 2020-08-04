@@ -10,16 +10,17 @@ import _ from "lodash";
 import { BNConverter } from "./utils/common";
 import { Transfer } from "./btc/transfers";
 import { EthTransaction } from "./eth/wallet";
-import { BlockchainType } from "./blockchain";
+import { BlockchainType, transformBlockchainType } from "./blockchain";
 
 export import WithdrawalApprovalStatus = WithdrawalApprovalDTO.StatusEnum;
 
 export type WithdrawalApproval = Omit<
   WithdrawalApprovalDTO,
-  "approvedBy" | "amount" | "status"
+  "approvedBy" | "amount" | "status" | "blockchain"
 > & {
   amount: BN;
   status: WithdrawalApprovalStatus;
+  blockchain: BlockchainType;
 };
 
 export interface ApproveWithdrawal extends WithdrawalApproval {
@@ -45,6 +46,7 @@ export class WithdrawalApprovals {
     return {
       ..._.omit(data, "approvedBy"),
       amount: BNConverter.hexStringToBN(data.amount),
+      blockchain: transformBlockchainType(data.blockchain),
     };
   }
 
@@ -61,6 +63,7 @@ export class WithdrawalApprovals {
         return {
           ..._.omit(data, "approvedBy"),
           amount: BNConverter.hexStringToBN(data.amount),
+          blockchain: transformBlockchainType(data.blockchain),
         };
       }),
     };
