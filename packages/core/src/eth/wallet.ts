@@ -566,7 +566,6 @@ export class EthMasterWallet extends EthLikeWallet {
           ),
         },
       },
-      walletId: params.masterWalletId,
       otpCode: params.otpCode,
     };
 
