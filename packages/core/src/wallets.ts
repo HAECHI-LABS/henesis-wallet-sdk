@@ -145,4 +145,22 @@ export class Wallets {
   private removeKeyFile(key: KeyWithPriv | Key): KeyWithPriv | Key {
     return _.omit(key, 'keyFile');
   }
+
+  async retryCreateMasterWallet(
+    walletId: string,
+    gasPrice?: BN
+  ): Promise<MasterWallet> {
+    const response = await this.client.post<MasterWalletData>(
+      `${this.baseUrl}/${walletId}/recreate`,
+      {
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined
+      }
+    );
+
+    return new MasterWallet(
+      this.client,
+      response,
+      this.keychains
+    );
+  }
 }

@@ -165,6 +165,42 @@ export default class WalletController extends AbstractController
       `${this.path}/:masterWalletId/batch-transactions`,
       this.promiseWrapper(this.sendMasterWalletBatchTransactions, 201),
     );
+
+    this.router.post(
+      `${this.path}/:masterWalletId/recreate`,
+      this.promiseWrapper(this.retryCreateMasterWallet),
+    );
+
+    this.router.post(
+      `${this.path}/:masterWalletId/user-wallets/:userWalletId/recreate`,
+      this.promiseWrapper(this.retryCreateUserWallet),
+    )
+  }
+
+  private async retryCreateMasterWallet(
+    req: express.Request,
+  ): Promise<UserWalletData> {
+    return (await req.sdk.wallets.retryCreateMasterWallet(
+      req.params.masterWalletId,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+    )).getData();
+  }
+
+  private async retryCreateUserWallet(
+    req: express.Request,
+  ): Promise<UserWalletData> {
+    const masterWallet = await req.sdk.wallets.getMasterWallet(req.params.masterWalletId);
+    return (await masterWallet.retryCreateUserWallet(
+      req.params.userWalletId,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+      req.body.gasLimit
+        ? BNConverter.hexStringToBN(req.body.gasLimit)
+        : undefined,
+    )).getData();
   }
 
   private async getMasterWallets(
