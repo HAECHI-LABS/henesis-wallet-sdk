@@ -529,6 +529,27 @@ export class MasterWallet extends EthLikeWallet {
     );
   }
 
+  async retryCreateUserWallet(
+    walletId: string,
+    gasPrice?: BN,
+    gasLimit?: BN
+  ): Promise<UserWallet> {
+    const response = await this.client.post<UserWalletData>(
+      `${this.baseUrl}/user-wallets/${walletId}/recreate`,
+      {
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+        gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
+      }
+    );
+
+    return new UserWallet(
+      this.client,
+      this.masterWalletData,
+      this.keychains,
+      response,
+    );
+  }
+
   async getUserWallet(walletId: string): Promise<UserWallet> {
     const userWalletData = await this.client.get<UserWalletData>(
       `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${walletId}`,
