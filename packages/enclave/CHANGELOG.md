@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.15...v2.1.0) (2020-08-05)
+
+
+### Features
+
+* add retry create wallet ([105e0d4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/105e0d4aa200dbca226cc5bd9617ae2222f4c9fa))
+
+
+
+
+
 ## [2.0.15](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.14...v2.0.15) (2020-08-05)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
