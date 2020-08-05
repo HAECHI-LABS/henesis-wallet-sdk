@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.15](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.14...v2.0.15) (2020-08-05)
+
+
+### Features
+
+* update withdrawal approvals blockchain type ([30435b5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/30435b5943624fcc0bdccd4ad4a71515f9bef8b5))
+
+
+
+
+
 ## [2.0.14](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.0.13...v2.0.14) (2020-07-31)
 
 
