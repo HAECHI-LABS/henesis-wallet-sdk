@@ -7,6 +7,7 @@
     "bootstrap": "npm run install:reset && npm run lerna:bootstrap && npm run build",
     "bootstrap:windows": "npm run install:reset-windows && lerna run preBootstrap:windows && lerna bootstrap --hoist --no-ci && lerna run build:windows",
     "travis:bootstrap": "npm run lerna:bootstrap && npm run build",
+    "publish:minor": "lerna version minor && lerna publish from-git",
     "publish:patch": "lerna version patch && lerna publish from-git",
     "publish:prerelease": "lerna version prerelease && lerna publish from-git",
     "codegen": "lerna run --scope=\"@haechi-labs/henesis-wallet-core\" codegen",
