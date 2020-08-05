@@ -107,7 +107,7 @@ export default abstract class AbstractController {
           n[k] = convertObj[k];
           return;
         }
-        if (convertObj[k].constructor["name"] === "BN") {
+        if (BN.isBN(k)) {
           n[k] = BNConverter.bnToHexString(convertObj[k]);
           return;
         }

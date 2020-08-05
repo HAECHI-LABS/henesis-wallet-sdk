@@ -7,9 +7,7 @@ import {
 } from "./__generate__/accounts";
 import BN from "bn.js";
 import _ from "lodash";
-import { BNConverter } from "./utils/common";
-import { Transfer } from "./btc/transfers";
-import { EthTransaction } from "./eth/wallet";
+import { BNConverter, checkNullAndUndefinedParameter } from "./utils/common";
 import { BlockchainType, transformBlockchainType } from "./blockchain";
 
 export import WithdrawalApprovalStatus = WithdrawalApprovalDTO.StatusEnum;
@@ -40,6 +38,7 @@ export class WithdrawalApprovals {
   async getWithdrawalApprovalById(
     withdrawalApprovalId: string
   ): Promise<WithdrawalApproval> {
+    checkNullAndUndefinedParameter({ withdrawalApprovalId });
     const data = await this.client.get<WithdrawalApprovalDTO>(
       `${this.baseUrl}/${withdrawalApprovalId}`
     );

@@ -4,6 +4,7 @@ import GasUsagesController from "./gasusages.controller";
 import HenesisKeysController from "./henesisKeys.controller";
 import TransactionsController from "./transactions.controller";
 import WalletsController from "./wallets.controller";
+import WithdrawalApprovalsController from "./withdrawalApprovals.controllers";
 
 export const klayController = [
   new CoinsController(),
@@ -12,4 +13,5 @@ export const klayController = [
   new HenesisKeysController(),
   new TransactionsController(),
   new WalletsController(),
+  new WithdrawalApprovalsController(),
 ];

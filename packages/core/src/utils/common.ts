@@ -137,8 +137,11 @@ export function checkNullAndUndefinedParameter(requiredParams: object): void {
     if (_.isNaN(o[1])) {
       throw new ValidationParameterError(`${o[0]} is NaN`);
     }
+    if (BN.isBN(o[1])) {
+      return;
+    }
     if (_.isPlainObject(o[1])) {
-      checkNullAndUndefinedParameter(_.fromPairs(o));
+      checkNullAndUndefinedParameter(o[1]);
     }
   });
 }

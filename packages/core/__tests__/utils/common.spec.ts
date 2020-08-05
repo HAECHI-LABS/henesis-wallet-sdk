@@ -48,6 +48,19 @@ describe("BNConverter", () => {
         passphrase: "passphrase"
       });
     });
+    it("checkNullAndUndefinedParameter - object in BN", () => {
+      checkNullAndUndefinedParameter({
+        to: "to",
+        amount: new BN(0),
+        passphrase: "passphrase",
+        tObject: {
+          bn: new BN(0),
+          tString: "string",
+          bnNumber: new BN(0)
+        },
+        name: "name"
+      });
+    });
     it("checkNullAndUndefinedParameter - in undefined", () => {
       try {
         checkNullAndUndefinedParameter({
