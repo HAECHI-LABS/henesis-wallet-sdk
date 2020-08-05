@@ -82,36 +82,40 @@ export class BNConverter {
 }
 
 export const parseResponseToTransfer = (t: TransferDTO): Transfer => {
+  let transaction: BtcTransaction = t.transaction
+    ? ({
+        id: t.transaction.id,
+        transactionHash: t.transaction.transactionHash,
+        amount: BNConverter.hexStringToBN(String(t.transaction.amount)),
+        blockNumber: t.transaction.blockNumber
+          ? BNConverter.hexStringToBN(String(t.transaction.blockNumber))
+          : null,
+        feeAmount: t.transaction.feeAmount
+          ? BNConverter.hexStringToBN(String(t.transaction.feeAmount))
+          : null,
+        createdAt: t.transaction.createdAt,
+        hex: t.transaction.hex,
+        outputs: t.transaction.outputs.map((o) => {
+          return {
+            transactionId: o.transactionId,
+            outputIndex: o.outputIndex,
+            address: o.address,
+            scriptPubKey: o.scriptPubKey,
+            amount: BNConverter.hexStringToBN(String(o.amount)),
+            isChange: o.isChange,
+          } as BtcTransactionOutput;
+        }),
+      } as BtcTransaction)
+    : null;
   return {
     id: t.id,
     walletId: t.walletId,
     outputIndex: t.outputIndex,
     updatedAt: t.updatedAt,
-    transaction: {
-      id: t.transaction.id,
-      transactionHash: t.transaction.transactionHash,
-      amount: BNConverter.hexStringToBN(String(t.transaction.amount)),
-      blockNumber: t.transaction.blockNumber
-        ? BNConverter.hexStringToBN(String(t.transaction.blockNumber))
-        : null,
-      feeAmount: t.transaction.feeAmount
-        ? BNConverter.hexStringToBN(String(t.transaction.feeAmount))
-        : null,
-      createdAt: t.transaction.createdAt,
-      hex: t.transaction.hex,
-      outputs: t.transaction.outputs.map((o) => {
-        return {
-          transactionId: o.transactionId,
-          outputIndex: o.outputIndex,
-          address: o.address,
-          scriptPubKey: o.scriptPubKey,
-          amount: BNConverter.hexStringToBN(String(o.amount)),
-          isChange: o.isChange,
-        } as BtcTransactionOutput;
-      }),
-    } as BtcTransaction,
+    transaction,
     receivedAt: t.receivedAt,
     sendTo: t.sendTo,
+    withdrawalApprovalId: t.withdrawalApprovalId,
     type: t.type,
     status: t.status,
     createdAt: t.createdAt,
