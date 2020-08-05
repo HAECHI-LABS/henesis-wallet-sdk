@@ -30,6 +30,7 @@ import {
   MasterWalletDTO,
   TransferDTO,
   ApproveWithdrawalApprovalRequest,
+  RejectWithdrawalApprovalRequest,
 } from "../__generate__/btc";
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
@@ -330,8 +331,14 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     return parseResponseToTransfer(transfer);
   }
 
-  async reject(id: string): Promise<void> {
-    await this.client.post<void>(`${this.withdrawalApprovalUrl}/${id}/reject`);
+  async reject(params: { id: string; otpCode: string }): Promise<void> {
+    const request: RejectWithdrawalApprovalRequest = {
+      otpCode: params.otpCode,
+    };
+    await this.client.post<void>(
+      `${this.withdrawalApprovalUrl}/${params.id}/reject`,
+      request
+    );
   }
 
   getAddress(): string {

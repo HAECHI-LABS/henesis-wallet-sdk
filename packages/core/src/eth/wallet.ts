@@ -29,6 +29,7 @@ import {
   PaginationUserWalletDTO,
   MasterWalletDTO,
   ApproveWithdrawalApprovalRequest,
+  RejectWithdrawalApprovalRequest,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
@@ -605,8 +606,14 @@ export class EthMasterWallet extends EthLikeWallet {
     };
   }
 
-  async reject(id: string): Promise<void> {
-    await this.client.post<void>(`${this.withdrawalApprovalUrl}/${id}/reject`);
+  async reject(params: { id: string; otpCode: string }): Promise<void> {
+    const request: RejectWithdrawalApprovalRequest = {
+      otpCode: params.otpCode,
+    };
+    await this.client.post<void>(
+      `${this.withdrawalApprovalUrl}/${params.id}/reject`,
+      request
+    );
   }
 }
 
