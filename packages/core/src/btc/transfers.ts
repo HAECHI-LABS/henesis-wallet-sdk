@@ -22,10 +22,10 @@ export interface Transfer {
   id: string;
   walletId: string;
   outputIndex: number;
-  transaction?: BtcTransaction;
+  transaction: BtcTransaction | null;
   receivedAt: string;
   sendTo: string;
-  withdrawalApprovalId?: string;
+  withdrawalApprovalId: string | null;
   type: TransferType;
   status: TransferStatus;
   createdAt: string;
