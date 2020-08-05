@@ -324,9 +324,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
 
     const transfer = await this.client.post<TransferDTO>(
       `${this.withdrawalApprovalUrl}/${params.id}/approve`,
-      {
-        request,
-      }
+      request
     );
     return parseResponseToTransfer(transfer);
   }
