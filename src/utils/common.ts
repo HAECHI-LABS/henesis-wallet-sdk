@@ -113,6 +113,8 @@ export const parseResponseToTransfer = (t: TransferDTO): Transfer => {
     outputIndex: t.outputIndex,
     updatedAt: t.updatedAt,
     transaction,
+    feeAmount: t.feeAmount ? BNConverter.hexStringToBN(t.feeAmount) : null,
+    amount: BNConverter.hexStringToBN(t.amount),
     receivedAt: t.receivedAt,
     sendTo: t.sendTo,
     withdrawalApprovalId: t.withdrawalApprovalId,

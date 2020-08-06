@@ -53,11 +53,6 @@ export interface BtcEstimatedFee {
   estimatedFee: string;
 }
 
-export interface BtcBalance {
-  balance: string;
-  spendableBalance: string;
-}
-
 export interface BtcRawTransaction {
   inputs: BtcRawTransactionInput[];
   outputs: BtcRawTransactionOutput[];

@@ -1056,7 +1056,19 @@ export interface TransferDTO {
      * @type {string}
      * @memberof TransferDTO
      */
+    amount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferDTO
+     */
     createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferDTO
+     */
+    feeAmount?: string;
     /**
      * 
      * @type {string}
@@ -4544,14 +4556,13 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
          * @param {ApproveWithdrawalApprovalRequest} approveWithdrawalApprovalRequest approveWithdrawalApprovalRequest
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
-         * @param {boolean} [needOTP] needOTP
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'approveWithdrawalApprovalRequest' is not null or undefined
             if (approveWithdrawalApprovalRequest === null || approveWithdrawalApprovalRequest === undefined) {
                 throw new RequiredError('approveWithdrawalApprovalRequest','Required parameter approveWithdrawalApprovalRequest was null or undefined when calling approveWithdrawalApprovalUsingPOST.');
@@ -4589,8 +4600,8 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"boolean" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(needOTP || {}) : (needOTP || "");
+            const needsSerialization = (<any>"ApproveWithdrawalApprovalRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(approveWithdrawalApprovalRequest || {}) : (approveWithdrawalApprovalRequest || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -4603,14 +4614,13 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
          * @param {RejectWithdrawalApprovalRequest} rejectWithdrawalApprovalRequest rejectWithdrawalApprovalRequest
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
-         * @param {boolean} [needOTP] needOTP
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'rejectWithdrawalApprovalRequest' is not null or undefined
             if (rejectWithdrawalApprovalRequest === null || rejectWithdrawalApprovalRequest === undefined) {
                 throw new RequiredError('rejectWithdrawalApprovalRequest','Required parameter rejectWithdrawalApprovalRequest was null or undefined when calling rejectWithdrawalApprovalUsingPOST.');
@@ -4671,15 +4681,14 @@ export const WithdrawalApprovalControllerApiFp = function(configuration?: Config
          * @param {ApproveWithdrawalApprovalRequest} approveWithdrawalApprovalRequest approveWithdrawalApprovalRequest
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
-         * @param {boolean} [needOTP] needOTP
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransferDTO> {
-            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest, withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, roles, options);
+        approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TransferDTO> {
+            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest, withdrawalApprovalId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4696,15 +4705,14 @@ export const WithdrawalApprovalControllerApiFp = function(configuration?: Config
          * @param {RejectWithdrawalApprovalRequest} rejectWithdrawalApprovalRequest rejectWithdrawalApprovalRequest
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
-         * @param {boolean} [needOTP] needOTP
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest, withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, roles, options);
+        rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest, withdrawalApprovalId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4730,15 +4738,14 @@ export const WithdrawalApprovalControllerApiFactory = function (configuration?: 
          * @param {ApproveWithdrawalApprovalRequest} approveWithdrawalApprovalRequest approveWithdrawalApprovalRequest
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
-         * @param {boolean} [needOTP] needOTP
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WithdrawalApprovalControllerApiFp(configuration).approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest, withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, roles, options)(fetch, basePath);
+        approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return WithdrawalApprovalControllerApiFp(configuration).approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest, withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -4746,15 +4753,14 @@ export const WithdrawalApprovalControllerApiFactory = function (configuration?: 
          * @param {RejectWithdrawalApprovalRequest} rejectWithdrawalApprovalRequest rejectWithdrawalApprovalRequest
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
-         * @param {boolean} [needOTP] needOTP
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WithdrawalApprovalControllerApiFp(configuration).rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest, withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, roles, options)(fetch, basePath);
+        rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return WithdrawalApprovalControllerApiFp(configuration).rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest, withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
     };
 };
@@ -4772,7 +4778,6 @@ export class WithdrawalApprovalControllerApi extends BaseAPI {
      * @param {ApproveWithdrawalApprovalRequest} approveWithdrawalApprovalRequest approveWithdrawalApprovalRequest
      * @param {string} withdrawalApprovalId withdrawalApprovalId
      * @param {string} [accountId] 
-     * @param {boolean} [needOTP] needOTP
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
@@ -4780,8 +4785,8 @@ export class WithdrawalApprovalControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WithdrawalApprovalControllerApi
      */
-    public approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WithdrawalApprovalControllerApiFp(this.configuration).approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest, withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return WithdrawalApprovalControllerApiFp(this.configuration).approveWithdrawalApprovalUsingPOST(approveWithdrawalApprovalRequest, withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4790,7 +4795,6 @@ export class WithdrawalApprovalControllerApi extends BaseAPI {
      * @param {RejectWithdrawalApprovalRequest} rejectWithdrawalApprovalRequest rejectWithdrawalApprovalRequest
      * @param {string} withdrawalApprovalId withdrawalApprovalId
      * @param {string} [accountId] 
-     * @param {boolean} [needOTP] needOTP
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
@@ -4798,8 +4802,8 @@ export class WithdrawalApprovalControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WithdrawalApprovalControllerApi
      */
-    public rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WithdrawalApprovalControllerApiFp(this.configuration).rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest, withdrawalApprovalId, accountId, needOTP, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return WithdrawalApprovalControllerApiFp(this.configuration).rejectWithdrawalApprovalUsingPOST(rejectWithdrawalApprovalRequest, withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
 }
