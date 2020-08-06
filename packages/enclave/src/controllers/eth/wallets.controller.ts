@@ -15,6 +15,7 @@ import { Controller } from "../../types";
 interface Balance {
   coinType: string;
   amount: string;
+  spendableAmount?: string;
   name: string;
   symbol: string;
 }
@@ -255,7 +256,6 @@ export default class WalletsController extends AbstractController
       req.params.masterWalletId
     );
     const balances = await masterWallet.getBalance(req.query.flag === "true");
-
     return balances.map((c) => this.bnToHexString(c));
   }
 
@@ -453,12 +453,7 @@ export default class WalletsController extends AbstractController
     );
 
     const balances = await userWallet.getBalance(req.query.flag === "true");
-    return balances.map((x) => ({
-      coinType: x.coinType,
-      amount: BNConverter.bnToHexString(x.amount),
-      name: x.name,
-      symbol: x.symbol,
-    }));
+    return balances.map((c) => this.bnToHexString(c));
   }
 
   private async getUserWalletNonce(req: express.Request): Promise<Nonce> {

@@ -4,6 +4,7 @@ import { BNConverter, parseResponseToTransfer } from "../utils/common";
 import { makeQueryString } from "../utils/url";
 import { BtcTransaction, BtcTransactionOutput } from "./wallet";
 import { PaginationTransferDTO, TransferDTO } from "../__generate__/btc";
+import BN from "bn.js";
 
 export import TransferStatus = TransferDTO.StatusEnum;
 export import TransferType = TransferDTO.TypeEnum;
@@ -23,6 +24,8 @@ export interface Transfer {
   walletId: string;
   outputIndex: number;
   transaction: BtcTransaction | null;
+  feeAmount: BN | null;
+  amount: BN;
   receivedAt: string;
   sendTo: string;
   withdrawalApprovalId: string | null;
