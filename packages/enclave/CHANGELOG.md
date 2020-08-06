@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.1.4...v2.1.5) (2020-08-06)
+
+
+### Features
+
+* add spendable balance to eth/klay balance and add feeamount, amount to transfer ([923577d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/923577d0f46e9f7c1959b0f61068f2b9ea4a6cd7))
+
+
+
+
+
 ## [2.1.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.1.3...v2.1.4) (2020-08-06)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
