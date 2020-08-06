@@ -439,6 +439,9 @@ export class EthMasterWallet extends EthLikeWallet {
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(String(balance.amount)),
       coinType: balance.coinType as any,
+      spendableAmount: BNConverter.hexStringToBN(
+        String(balance.spendableAmount)
+      ),
       name: balance.name,
     }));
   }
@@ -652,6 +655,9 @@ export class EthUserWallet extends EthLikeWallet {
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(String(balance.amount)),
       coinType: balance.coinType as any,
+      spendableAmount: BNConverter.hexStringToBN(
+        String(balance.spendableAmount)
+      ),
       name: balance.name,
     }));
   }

@@ -15,6 +15,7 @@ import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 interface Balance {
   coinType: string;
   amount: string;
+  spendableAmount?: string;
   name: string;
   symbol: string;
 }
@@ -255,13 +256,7 @@ export default class WalletsController extends AbstractController
       req.params.masterWalletId
     );
     const balances = await masterWallet.getBalance();
-
-    return balances.map((c) => ({
-      symbol: c.symbol,
-      amount: BNConverter.bnToHexString(c.amount),
-      coinType: c.coinType,
-      name: c.name,
-    }));
+    return balances.map((c) => this.bnToHexString(c));
   }
 
   private async getMasterWalletNonce(req: express.Request): Promise<Nonce> {
@@ -458,12 +453,7 @@ export default class WalletsController extends AbstractController
     );
 
     const balances = await userWallet.getBalance();
-    return balances.map((x) => ({
-      coinType: x.coinType,
-      amount: BNConverter.bnToHexString(x.amount),
-      name: x.name,
-      symbol: x.symbol,
-    }));
+    return balances.map((c) => this.bnToHexString(c));
   }
 
   private async getUserWalletNonce(req: express.Request): Promise<Nonce> {
