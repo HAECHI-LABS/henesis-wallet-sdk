@@ -233,7 +233,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     };
 
     const signature = this.signPayload(multiSigPayload, passphrase);
-
     return {
       signature,
       multiSigPayload,
@@ -576,7 +575,11 @@ export class EthMasterWallet extends EthLikeWallet {
   }
 
   async approve(params: EthWithdrawalApproveParams): Promise<EthTransaction> {
-    const signedMultiSigPayload = await this.buildTransferPayload(
+    const wallet = params.userWalletId
+      ? await this.getUserWallet(params.userWalletId)
+      : this;
+
+    const signedMultiSigPayload = await wallet.buildTransferPayload(
       params.coinSymbol,
       params.toAddress,
       params.amount,
