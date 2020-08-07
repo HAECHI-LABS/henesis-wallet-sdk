@@ -75,7 +75,7 @@ export abstract class Wallet<T> {
 
   abstract getChain(): BlockchainType;
 
-  abstract getBalance(): Promise<Balance[]>;
+  abstract getBalance(flag?: boolean): Promise<Balance[]>;
 
   abstract getAddress(): string;
 
