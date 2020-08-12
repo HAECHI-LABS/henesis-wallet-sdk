@@ -13,7 +13,7 @@ module.exports = {
   },
   "rules": {
     'require-jsdoc': 'off',
-    'no-unused-vars': 'warn',
+    'no-unused-vars': 'off',
     'new-cap': 'warn',
     'prefer-rest-params': 'warn',
   }
