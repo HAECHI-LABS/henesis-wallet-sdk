@@ -17,7 +17,7 @@ export interface ClientOptions {
 export interface Client {
   get<T = any>(url: string): Promise<T>;
 
-  delete<T = any>(url: string): Promise<T>;
+  delete<T = any>(url: string, data?: any): Promise<T>;
 
   options<T = any>(url: string): Promise<T>;
 
