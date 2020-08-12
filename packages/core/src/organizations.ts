@@ -41,19 +41,19 @@ export class Organizations {
     this.client = client;
   }
 
-  public async getOrganization(): Promise<Organization> {
+  async getOrganization(): Promise<Organization> {
     return this.client.get<OrganizationDTO>(`${this.baseUrl}/me`);
   }
 
-  public async getAccounts(): Promise<Account[]> {
+  async getAccounts(): Promise<Account[]> {
     return this.client.get<OrgAccountDTO[]>(`${this.baseUrl}/accounts`);
   }
 
-  public async createSecret(): Promise<Secret> {
+  async createSecret(): Promise<Secret> {
     return this.client.post<CreateSecretResponse>(`${this.baseUrl}/secret`);
   }
 
-  public async changeAccountRole(
+  async changeAccountRole(
     accountId: string,
     role: Role,
     otpCode?: string
@@ -67,7 +67,7 @@ export class Organizations {
     );
   }
 
-  public async addAllowedIP(params: {
+  async addAllowedIP(params: {
     ipAddress: string;
     label: string;
     otpCode: string;
@@ -82,8 +82,8 @@ export class Organizations {
     return this.convertAllowedIpDTO(result);
   }
 
-  public async getAllowedIPs(
-    options: AllowedIpsPaginationOptions
+  async getAllowedIPs(
+    options?: AllowedIpsPaginationOptions
   ): Promise<Pagination<AllowedIp>> {
     const queryString: string = makeQueryString(options);
     const result: PaginationAllowedIpDTO = await this.client.get<
@@ -95,14 +95,14 @@ export class Organizations {
     };
   }
 
-  public async getAllowedIP(id: string): Promise<AllowedIp> {
+  async getAllowedIP(id: string): Promise<AllowedIp> {
     const result: AllowedIpDTO = await this.client.get<AllowedIpDTO>(
       `${this.baseUrl}/allowed-ips/${id}`
     );
     return this.convertAllowedIpDTO(result);
   }
 
-  public async patchAllowedIpLabel(params: {
+  async patchAllowedIpLabel(params: {
     id: string;
     label: string;
     otpCode: string;
@@ -118,20 +118,17 @@ export class Organizations {
     return this.convertAllowedIpDTO(result);
   }
 
-  public async deleteAllowedIp(params: {
-    id: string;
-    otpCode: string;
-  }): Promise<void> {
+  async deleteAllowedIp(id: string, otpCode: string): Promise<void> {
     const request: DeleteAllowedIpRequest = {
-      otpCode: params.otpCode,
+      otpCode,
     };
     await this.client.delete<void>(
-      `${this.baseUrl}/allowed-ips/${params.id}`,
+      `${this.baseUrl}/allowed-ips/${id}`,
       request
     );
   }
 
-  public async activateAllowedIp(otpCode: string): Promise<void> {
+  async activateAllowedIp(otpCode: string): Promise<void> {
     const request: ActivateAllowedIpRequest = {
       otpCode,
     };
@@ -141,7 +138,7 @@ export class Organizations {
     );
   }
 
-  public async inactivateAllowedIp(otpCode: string): Promise<void> {
+  async inactivateAllowedIp(otpCode: string): Promise<void> {
     const request: InactivateAllowedIpRequest = {
       otpCode,
     };
