@@ -122,10 +122,9 @@ export class Organizations {
     const request: DeleteAllowedIpRequest = {
       otpCode,
     };
-    await this.client.delete<void>(
-      `${this.baseUrl}/allowed-ips/${id}`,
-      request
-    );
+    await this.client.delete<void>(`${this.baseUrl}/allowed-ips/${id}`, {
+      data: request,
+    });
   }
 
   async activateAllowedIp(otpCode: string): Promise<void> {
@@ -133,7 +132,7 @@ export class Organizations {
       otpCode,
     };
     await this.client.post<void>(
-      `${this.baseUrl}/allowed-ips/activate`,
+      `${this.baseUrl}/activate-allowed-ips`,
       request
     );
   }
@@ -143,7 +142,7 @@ export class Organizations {
       otpCode,
     };
     await this.client.post<void>(
-      `${this.baseUrl}/allowed-ips/inactivate`,
+      `${this.baseUrl}/inactivate-allowed-ips`,
       request
     );
   }

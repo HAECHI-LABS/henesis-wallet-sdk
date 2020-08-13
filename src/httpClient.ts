@@ -17,7 +17,7 @@ export interface ClientOptions {
 export interface Client {
   get<T = any>(url: string): Promise<T>;
 
-  delete<T = any>(url: string, data?: any): Promise<T>;
+  delete<T = any>(url: string, config?: any): Promise<T>;
 
   options<T = any>(url: string): Promise<T>;
 
@@ -114,11 +114,11 @@ export const enhancedBlockchainClient = (
     get<T = any>(url: string): Promise<T> {
       return client.get(`${prefixPath}${url}`);
     },
-    delete<T = any>(url: string): Promise<T> {
-      return client.delete(`${prefixPath}${url}`);
+    delete<T = any>(url: string, config?: any): Promise<T> {
+      return client.delete(`${prefixPath}${url}`, config);
     },
     options<T = any>(url: string): Promise<T> {
-      return client.delete(`${prefixPath}${url}`);
+      return client.options(`${prefixPath}${url}`);
     },
     post<T = any>(url: string, data?: any): Promise<T> {
       return client.post(`${prefixPath}${url}`, data);
