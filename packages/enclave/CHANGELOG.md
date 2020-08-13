@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.2.1...v2.3.0) (2020-08-13)
+
+
+### Bug Fixes
+
+* fix options bug and endpoints, make pass body with delete method ([d663112](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d66311252d9a2c9808c6add7718be35d91401f9e))
+
+
+### Features
+
+* add ip allowlist apis at core ([9e0ce58](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9e0ce584eea83bf70bc1edeb295d54feb99c0090))
+
+
+
+
+
 ## [2.2.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.2.0...v2.2.1) (2020-08-13)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
