@@ -14,7 +14,7 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     'require-jsdoc': 'off',
-    'no-unused-vars': 'off',
+    'no-unused-vars': 'off', // warn으로 설정할 경우, 사용하지 않은 import들을 정상적으로 잡지 못함
     'new-cap': 'warn',
     'prefer-rest-params': 'warn',
   }
