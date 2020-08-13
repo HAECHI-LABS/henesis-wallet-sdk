@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.2.0...v2.2.1) (2020-08-13)
+
+
+### Features
+
+* implement allowed address api ([08f156f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/08f156f1aeb8ede6fd90e69592fb1bf0b684cad2))
+
+
+
+
+
 # [2.2.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.1.8...v2.2.0) (2020-08-12)
 
 **Note:** Version bump only for package henesis-wallet-sdk
