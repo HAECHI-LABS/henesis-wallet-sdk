@@ -169,13 +169,13 @@ export namespace AccountDTO {
 /**
  * 
  * @export
- * @interface ActivateAllowedIpRequest
+ * @interface ActivateAllowedIpsRequest
  */
-export interface ActivateAllowedIpRequest {
+export interface ActivateAllowedIpsRequest {
     /**
      * 
      * @type {string}
-     * @memberof ActivateAllowedIpRequest
+     * @memberof ActivateAllowedIpsRequest
      */
     otpCode: string;
 }
@@ -465,13 +465,13 @@ export namespace IdentityDTO {
 /**
  * 
  * @export
- * @interface InactivateAllowedIpRequest
+ * @interface InactivateAllowedIpsRequest
  */
-export interface InactivateAllowedIpRequest {
+export interface InactivateAllowedIpsRequest {
     /**
      * 
      * @type {string}
-     * @memberof InactivateAllowedIpRequest
+     * @memberof InactivateAllowedIpsRequest
      */
     otpCode: string;
 }
@@ -821,12 +821,6 @@ export namespace OrgAccountDTO {
 export interface OrganizationDTO {
     /**
      * 
-     * @type {boolean}
-     * @memberof OrganizationDTO
-     */
-    allowlistActivated: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof OrganizationDTO
      */
@@ -843,6 +837,12 @@ export interface OrganizationDTO {
      * @memberof OrganizationDTO
      */
     secret: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrganizationDTO
+     */
+    whitelistActivated: boolean;
 }
 
 /**
@@ -3187,8 +3187,8 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
     return {
         /**
          * 
-         * @summary activateAllowedIp
-         * @param {ActivateAllowedIpRequest} request request
+         * @summary activateAllowedIps
+         * @param {ActivateAllowedIpsRequest} request request
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -3196,12 +3196,12 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedIpUsingPOST(request: ActivateAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        activateAllowedIpsUsingPOST(request: ActivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling activateAllowedIpUsingPOST.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling activateAllowedIpsUsingPOST.');
             }
-            const localVarPath = `/api/v2/organizations/allowed-ips/activate`;
+            const localVarPath = `/api/v2/organizations/activate-allowed-ips`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -3229,7 +3229,7 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"ActivateAllowedIpRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"ActivateAllowedIpsRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
@@ -3469,14 +3469,10 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * 
          * @summary getAllowedIp
          * @param {string} allowedIpId allowedIpId
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedIpUsingGET(allowedIpId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        getAllowedIpUsingGET(allowedIpId: string, options: any = {}): FetchArgs {
             // verify required parameter 'allowedIpId' is not null or undefined
             if (allowedIpId === null || allowedIpId === undefined) {
                 throw new RequiredError('allowedIpId','Required parameter allowedIpId was null or undefined when calling getAllowedIpUsingGET.');
@@ -3487,22 +3483,6 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (accountId !== undefined) {
-                localVarQueryParameter['accountId'] = accountId;
-            }
-
-            if (organizationId !== undefined) {
-                localVarQueryParameter['organizationId'] = organizationId;
-            }
-
-            if (otpKey !== undefined) {
-                localVarQueryParameter['otpKey'] = otpKey;
-            }
-
-            if (roles) {
-                localVarQueryParameter['roles'] = roles;
-            }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -3637,8 +3617,8 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
         },
         /**
          * 
-         * @summary inactivateAllowedIp
-         * @param {InactivateAllowedIpRequest} request request
+         * @summary inactivateAllowedIps
+         * @param {InactivateAllowedIpsRequest} request request
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -3646,12 +3626,12 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedIpUsingPOST(request: InactivateAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        inactivateAllowedIpsUsingPOST(request: InactivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling inactivateAllowedIpUsingPOST.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling inactivateAllowedIpsUsingPOST.');
             }
-            const localVarPath = `/api/v2/organizations/allowed-ips/inactivate`;
+            const localVarPath = `/api/v2/organizations/inactivate-allowed-ips`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -3679,7 +3659,7 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"InactivateAllowedIpRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"InactivateAllowedIpsRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
@@ -3815,8 +3795,8 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
     return {
         /**
          * 
-         * @summary activateAllowedIp
-         * @param {ActivateAllowedIpRequest} request request
+         * @summary activateAllowedIps
+         * @param {ActivateAllowedIpsRequest} request request
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -3824,12 +3804,12 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedIpUsingPOST(request: ActivateAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrganizationDTO> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).activateAllowedIpUsingPOST(request, accountId, organizationId, otpKey, roles, options);
+        activateAllowedIpsUsingPOST(request: ActivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).activateAllowedIpsUsingPOST(request, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -3950,15 +3930,11 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * 
          * @summary getAllowedIp
          * @param {string} allowedIpId allowedIpId
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedIpUsingGET(allowedIpId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AllowedIpDTO> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).getAllowedIpUsingGET(allowedIpId, accountId, organizationId, otpKey, roles, options);
+        getAllowedIpUsingGET(allowedIpId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AllowedIpDTO> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).getAllowedIpUsingGET(allowedIpId, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4022,8 +3998,8 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
         },
         /**
          * 
-         * @summary inactivateAllowedIp
-         * @param {InactivateAllowedIpRequest} request request
+         * @summary inactivateAllowedIps
+         * @param {InactivateAllowedIpsRequest} request request
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -4031,12 +4007,12 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedIpUsingPOST(request: InactivateAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrganizationDTO> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).inactivateAllowedIpUsingPOST(request, accountId, organizationId, otpKey, roles, options);
+        inactivateAllowedIpsUsingPOST(request: InactivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).inactivateAllowedIpsUsingPOST(request, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return response;
                     } else {
                         throw response;
                     }
@@ -4103,8 +4079,8 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
     return {
         /**
          * 
-         * @summary activateAllowedIp
-         * @param {ActivateAllowedIpRequest} request request
+         * @summary activateAllowedIps
+         * @param {ActivateAllowedIpsRequest} request request
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -4112,8 +4088,8 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedIpUsingPOST(request: ActivateAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return OrganizationControllerApiFp(configuration).activateAllowedIpUsingPOST(request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        activateAllowedIpsUsingPOST(request: ActivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return OrganizationControllerApiFp(configuration).activateAllowedIpsUsingPOST(request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -4184,15 +4160,11 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          * 
          * @summary getAllowedIp
          * @param {string} allowedIpId allowedIpId
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedIpUsingGET(allowedIpId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return OrganizationControllerApiFp(configuration).getAllowedIpUsingGET(allowedIpId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        getAllowedIpUsingGET(allowedIpId: string, options?: any) {
+            return OrganizationControllerApiFp(configuration).getAllowedIpUsingGET(allowedIpId, options)(fetch, basePath);
         },
         /**
          * 
@@ -4229,8 +4201,8 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
         },
         /**
          * 
-         * @summary inactivateAllowedIp
-         * @param {InactivateAllowedIpRequest} request request
+         * @summary inactivateAllowedIps
+         * @param {InactivateAllowedIpsRequest} request request
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -4238,8 +4210,8 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedIpUsingPOST(request: InactivateAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return OrganizationControllerApiFp(configuration).inactivateAllowedIpUsingPOST(request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        inactivateAllowedIpsUsingPOST(request: InactivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return OrganizationControllerApiFp(configuration).inactivateAllowedIpsUsingPOST(request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -4284,8 +4256,8 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
 export class OrganizationControllerApi extends BaseAPI {
     /**
      * 
-     * @summary activateAllowedIp
-     * @param {ActivateAllowedIpRequest} request request
+     * @summary activateAllowedIps
+     * @param {ActivateAllowedIpsRequest} request request
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
@@ -4294,8 +4266,8 @@ export class OrganizationControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public activateAllowedIpUsingPOST(request: ActivateAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).activateAllowedIpUsingPOST(request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public activateAllowedIpsUsingPOST(request: ActivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).activateAllowedIpsUsingPOST(request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4377,16 +4349,12 @@ export class OrganizationControllerApi extends BaseAPI {
      * 
      * @summary getAllowedIp
      * @param {string} allowedIpId allowedIpId
-     * @param {string} [accountId] 
-     * @param {string} [organizationId] 
-     * @param {string} [otpKey] 
-     * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public getAllowedIpUsingGET(allowedIpId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).getAllowedIpUsingGET(allowedIpId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public getAllowedIpUsingGET(allowedIpId: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).getAllowedIpUsingGET(allowedIpId, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4428,8 +4396,8 @@ export class OrganizationControllerApi extends BaseAPI {
 
     /**
      * 
-     * @summary inactivateAllowedIp
-     * @param {InactivateAllowedIpRequest} request request
+     * @summary inactivateAllowedIps
+     * @param {InactivateAllowedIpsRequest} request request
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
@@ -4438,8 +4406,8 @@ export class OrganizationControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public inactivateAllowedIpUsingPOST(request: InactivateAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).inactivateAllowedIpUsingPOST(request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public inactivateAllowedIpsUsingPOST(request: InactivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).inactivateAllowedIpsUsingPOST(request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
