@@ -8,8 +8,8 @@ async function main() {
     secret: process.env.SECRET,
     url: process.env.URL,
   });
-  console.log(await sdk.organizations.activateAllowedIp("otp"));
-  console.log(await sdk.organizations.inactivateAllowedIp("otp"));
+  console.log(await sdk.organizations.activateAllowedIps("otp"));
+  console.log(await sdk.organizations.inactivateAllowedIps("otp"));
   console.log(await sdk.organizations.getAllowedIP("id"));
   console.log(await sdk.organizations.getAllowedIPs());
   console.log(await sdk.organizations.addAllowedIP({

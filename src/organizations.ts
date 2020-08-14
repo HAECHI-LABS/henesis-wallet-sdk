@@ -10,8 +10,8 @@ import {
   CreateAllowedIpRequest,
   PatchAllowedIpLabelRequest,
   DeleteAllowedIpRequest,
-  ActivateAllowedIpRequest,
-  InactivateAllowedIpRequest,
+  ActivateAllowedIpsRequest,
+  InactivateAllowedIpsRequest,
   PaginationAllowedIpDTO,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
@@ -20,7 +20,7 @@ export interface Organization {
   id: string;
   name: string;
   secret: string;
-  allowlistActivated: boolean;
+  whitelistActivated: boolean;
 }
 
 export interface AllowedIp {
@@ -127,8 +127,8 @@ export class Organizations {
     });
   }
 
-  async activateAllowedIp(otpCode: string): Promise<void> {
-    const request: ActivateAllowedIpRequest = {
+  async activateAllowedIps(otpCode: string): Promise<void> {
+    const request: ActivateAllowedIpsRequest = {
       otpCode,
     };
     await this.client.post<void>(
@@ -137,8 +137,8 @@ export class Organizations {
     );
   }
 
-  async inactivateAllowedIp(otpCode: string): Promise<void> {
-    const request: InactivateAllowedIpRequest = {
+  async inactivateAllowedIps(otpCode: string): Promise<void> {
+    const request: InactivateAllowedIpsRequest = {
       otpCode,
     };
     await this.client.post<void>(
