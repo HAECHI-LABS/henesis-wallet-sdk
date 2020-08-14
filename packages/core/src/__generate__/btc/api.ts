@@ -2454,7 +2454,6 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
         /**
          * 
          * @summary activateAllowedAddress
-         * @param {string} allowedAddressId allowedAddressId
          * @param {ActivateAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -2464,11 +2463,7 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedAddressUsingPOST(allowedAddressId: string, request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
-            // verify required parameter 'allowedAddressId' is not null or undefined
-            if (allowedAddressId === null || allowedAddressId === undefined) {
-                throw new RequiredError('allowedAddressId','Required parameter allowedAddressId was null or undefined when calling activateAllowedAddressUsingPOST.');
-            }
+        activateAllowedAddressUsingPOST(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
                 throw new RequiredError('request','Required parameter request was null or undefined when calling activateAllowedAddressUsingPOST.');
@@ -2478,7 +2473,6 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
                 throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling activateAllowedAddressUsingPOST.');
             }
             const localVarPath = `/api/v2/btc/wallets/{walletId}/allowed-addresses/activate`
-                .replace(`{${"allowedAddressId"}}`, encodeURIComponent(String(allowedAddressId)))
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -3586,7 +3580,6 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
         /**
          * 
          * @summary inactivateAllowedAddress
-         * @param {string} allowedAddressId allowedAddressId
          * @param {InactivateAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -3596,11 +3589,7 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedAddressUsingPOST(allowedAddressId: string, request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
-            // verify required parameter 'allowedAddressId' is not null or undefined
-            if (allowedAddressId === null || allowedAddressId === undefined) {
-                throw new RequiredError('allowedAddressId','Required parameter allowedAddressId was null or undefined when calling inactivateAllowedAddressUsingPOST.');
-            }
+        inactivateAllowedAddressUsingPOST(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
                 throw new RequiredError('request','Required parameter request was null or undefined when calling inactivateAllowedAddressUsingPOST.');
@@ -3610,7 +3599,6 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
                 throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling inactivateAllowedAddressUsingPOST.');
             }
             const localVarPath = `/api/v2/btc/wallets/{walletId}/allowed-addresses/inactivate`
-                .replace(`{${"allowedAddressId"}}`, encodeURIComponent(String(allowedAddressId)))
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -3964,7 +3952,6 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary activateAllowedAddress
-         * @param {string} allowedAddressId allowedAddressId
          * @param {ActivateAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -3974,8 +3961,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedAddressUsingPOST(allowedAddressId: string, request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).activateAllowedAddressUsingPOST(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options);
+        activateAllowedAddressUsingPOST(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).activateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4435,7 +4422,6 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary inactivateAllowedAddress
-         * @param {string} allowedAddressId allowedAddressId
          * @param {InactivateAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -4445,8 +4431,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedAddressUsingPOST(allowedAddressId: string, request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).inactivateAllowedAddressUsingPOST(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options);
+        inactivateAllowedAddressUsingPOST(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).inactivateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4594,7 +4580,6 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
         /**
          * 
          * @summary activateAllowedAddress
-         * @param {string} allowedAddressId allowedAddressId
          * @param {ActivateAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -4604,8 +4589,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedAddressUsingPOST(allowedAddressId: string, request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WalletControllerApiFp(configuration).activateAllowedAddressUsingPOST(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        activateAllowedAddressUsingPOST(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return WalletControllerApiFp(configuration).activateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -4894,7 +4879,6 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
         /**
          * 
          * @summary inactivateAllowedAddress
-         * @param {string} allowedAddressId allowedAddressId
          * @param {InactivateAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
@@ -4904,8 +4888,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedAddressUsingPOST(allowedAddressId: string, request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WalletControllerApiFp(configuration).inactivateAllowedAddressUsingPOST(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        inactivateAllowedAddressUsingPOST(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return WalletControllerApiFp(configuration).inactivateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -5000,7 +4984,6 @@ export class WalletControllerApi extends BaseAPI {
     /**
      * 
      * @summary activateAllowedAddress
-     * @param {string} allowedAddressId allowedAddressId
      * @param {ActivateAllowedAddressRequest} request request
      * @param {string} walletId walletId
      * @param {string} [accountId] 
@@ -5011,8 +4994,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public activateAllowedAddressUsingPOST(allowedAddressId: string, request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WalletControllerApiFp(this.configuration).activateAllowedAddressUsingPOST(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public activateAllowedAddressUsingPOST(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return WalletControllerApiFp(this.configuration).activateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5338,7 +5321,6 @@ export class WalletControllerApi extends BaseAPI {
     /**
      * 
      * @summary inactivateAllowedAddress
-     * @param {string} allowedAddressId allowedAddressId
      * @param {InactivateAllowedAddressRequest} request request
      * @param {string} walletId walletId
      * @param {string} [accountId] 
@@ -5349,8 +5331,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public inactivateAllowedAddressUsingPOST(allowedAddressId: string, request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WalletControllerApiFp(this.configuration).inactivateAllowedAddressUsingPOST(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public inactivateAllowedAddressUsingPOST(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return WalletControllerApiFp(this.configuration).inactivateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
