@@ -91,15 +91,19 @@ export class Transactions {
       rawTransaction: rawTransaction
         ? {
             ...rawTransaction,
-            nonce: BNConverter.hexStringToBN(String(rawTransaction.nonce)),
-            gasPrice: BNConverter.hexStringToBN(
-              String(rawTransaction.gasPrice)
-            ),
-            gasLimit: BNConverter.hexStringToBN(
-              String(rawTransaction.gasLimit)
-            ),
+            nonce: rawTransaction.nonce
+              ? BNConverter.hexStringToBN(String(rawTransaction.nonce))
+              : null,
+            gasPrice: rawTransaction.gasPrice
+              ? BNConverter.hexStringToBN(String(rawTransaction.gasPrice))
+              : null,
+            gasLimit: rawTransaction.gasLimit
+              ? BNConverter.hexStringToBN(String(rawTransaction.gasLimit))
+              : null,
             to: rawTransaction.to,
-            value: BNConverter.hexStringToBN(String(rawTransaction.value)),
+            value: rawTransaction.value
+              ? BNConverter.hexStringToBN(String(rawTransaction.value))
+              : null,
             data: rawTransaction.data,
           }
         : null,
