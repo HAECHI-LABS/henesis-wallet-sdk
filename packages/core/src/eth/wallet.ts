@@ -119,7 +119,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     const walletId = this.getId();
     const blockchain = this.getChain();
     const data = await this.client.post<TransactionDTO>(
-      `${this.baseUrl}/transactions`,
+      `/wallets/transactions`,
       {
         walletId,
         transactionId,
