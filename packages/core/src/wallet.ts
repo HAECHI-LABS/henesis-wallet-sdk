@@ -12,44 +12,41 @@ import {
 import aesjs from "aes-js";
 import { Base64 } from "js-base64";
 import {
-  ActivateAllowedAddressRequest as BtcActivateAllowedAddressRequest,
+  ActivateAllowedAddressesRequest as BtcActivateAllowedAddressesRequest,
   AllowedAddressDTO as BtcAllowedAddressDTO,
   CreateWithdrawalPolicyRequest as BtcCreateWithdrawalPolicyRequest,
   KeyDTO as BtcKeyDTO,
   MasterWalletDTO as BtcMasterWalletDTO,
   PaginationAllowedAddressDTO as BtcPaginationAllowedAddressDTO,
-  PatchAllowedAddressLabelRequest as BtcPatchAllowedAddressLabelRequest,
   PatchWithdrawalPolicyRequest as BtcPatchWithdrawalPolicyRequest,
   CreateAllowedAddressRequest as BtcCreateAllowedAddressRequest,
-  InactivateAllowedAddressRequest as BtcInactivateAllowedAddressRequest,
+  DeleteAllowedAddressRequest as BtcDeleteAllowedAddressRequest,
+  InactivateAllowedAddressesRequest as BtcInactivateAllowedAddressesRequest,
 } from "./__generate__/btc/api";
 import { BNConverter, checkNullAndUndefinedParameter } from "./utils/common";
 import { makeQueryString } from "./utils/url";
 import {
-  ActivateAllowedAddressRequest as EthActivateAllowedAddressRequest,
+  ActivateAllowedAddressesRequest as EthActivateAllowedAddressesRequest,
   KeyDTO as EthKeyDTO,
   MasterWalletDTO as EthMasterWalletDTO,
   PaginationWalletWithdrawalPolicyDTO,
-  PatchAllowedAddressLabelRequest as EthPatchAllowedAddressLabelRequest,
   PatchWithdrawalPolicyRequest as EthPatchWithdrawalPolicyRequest,
   WalletWithdrawalPolicyDTO,
   AllowedAddressDTO as EthAllowedAddressDTO,
   PaginationAllowedAddressDTO as EthPaginationAllowedAddressDTO,
   CreateAllowedAddressRequest as EthCreateAllowedAddressRequest,
+  DeleteAllowedAddressRequest as EthDeleteAllowedAddressRequest,
   CreateWithdrawalPolicyRequest as EthCreateWithdrawalPolicyRequest,
-  InactivateAllowedAddressRequest as EthInactivateAllowedAddressRequest,
+  InactivateAllowedAddressesRequest as EthInactivateAllowedAddressesRequest,
 } from "./__generate__/eth/api";
 
-export type InactivateAllowedAddressRequest =
-  | EthInactivateAllowedAddressRequest
-  | BtcInactivateAllowedAddressRequest;
+export type InactivateAllowedAddressesRequest =
+  | EthInactivateAllowedAddressesRequest
+  | BtcInactivateAllowedAddressesRequest;
 
-export type ActivateAllowedAddressRequest =
-  | EthActivateAllowedAddressRequest
-  | BtcActivateAllowedAddressRequest;
-export type PatchAllowedAddressLabelRequest =
-  | EthPatchAllowedAddressLabelRequest
-  | BtcPatchAllowedAddressLabelRequest;
+export type ActivateAllowedAddressesRequest =
+  | EthActivateAllowedAddressesRequest
+  | BtcActivateAllowedAddressesRequest;
 export type AllowedAddressDTO = EthAllowedAddressDTO | BtcAllowedAddressDTO;
 export type AllowedAddress = AllowedAddressDTO;
 export type PaginationAllowedAddressDTO =
@@ -58,6 +55,11 @@ export type PaginationAllowedAddressDTO =
 export type CreateAllowedAddressRequest =
   | BtcCreateAllowedAddressRequest
   | EthCreateAllowedAddressRequest;
+export import WhitelistType = EthCreateAllowedAddressRequest.WhitelistTypeEnum;
+export import AllowedCoinType = EthCreateAllowedAddressRequest.AllowedCoinTypeEnum;
+export type DeleteAllowedAddressRequest =
+  | BtcDeleteAllowedAddressRequest
+  | EthDeleteAllowedAddressRequest;
 
 export interface WalletData {
   id: string;
@@ -89,7 +91,7 @@ export type WalletStatus =
   | BtcMasterWalletDTO.StatusEnum;
 
 export interface AllowedAddressesPaginationOptions extends PaginationOptions {
-  coinId?: string;
+  coinId?: number;
 }
 
 export abstract class Wallet<T> {
@@ -302,14 +304,18 @@ export abstract class Wallet<T> {
   async createAllowedAddress(params: {
     address: string;
     label: string;
+    whitelistType: WhitelistType;
+    allowedCoinType: AllowedCoinType;
     otpCode: string;
-    coinId: string;
+    coinId: number | null;
   }): Promise<AllowedAddress> {
     const request: CreateAllowedAddressRequest = {
       address: params.address,
       label: params.label,
-      otpCode: params.otpCode,
       coinId: params.coinId,
+      whitelistType: params.whitelistType,
+      allowedCoinType: params.allowedCoinType,
+      otpCode: params.otpCode,
     };
     return await this.client.post<AllowedAddressDTO>(
       `${this.baseUrl}/allowed-addresses`,
@@ -332,42 +338,33 @@ export abstract class Wallet<T> {
     );
   }
 
-  async patchAllowedAddressLabel(
-    id: string,
-    label: string
-  ): Promise<AllowedAddress> {
-    const request: PatchAllowedAddressLabelRequest = {
-      label: label,
+  async deleteAllowedAddress(id: string, otpCode: string): Promise<void> {
+    const request: DeleteAllowedAddressRequest = {
+      otpCode,
     };
-
-    return await this.client.patch<AllowedAddressDTO>(
-      `${this.baseUrl}/allowed-addresses/${id}/label`,
-      request
-    );
+    await this.client.delete<void>(`${this.baseUrl}/allowed-addresses/${id}`, {
+      data: request,
+    });
   }
 
-  async deleteAllowedAddress(id: string): Promise<void> {
-    await this.client.delete<void>(`${this.baseUrl}/allowed-addresses/${id}`);
-  }
-
-  async activateAllowedAddress(otpCode: string): Promise<void> {
-    const request: ActivateAllowedAddressRequest = {
+  async activateAllowedAddresses(otpCode: string): Promise<void> {
+    const request: ActivateAllowedAddressesRequest = {
       otpCode,
     };
 
     await this.client.post<void>(
-      `${this.baseUrl}/allowed-addresses/activate`,
+      `${this.baseUrl}/activate-allowed-addresses`,
       request
     );
   }
 
-  async inactivateAllowedAddress(otpCode: string): Promise<void> {
-    const request: InactivateAllowedAddressRequest = {
+  async inactivateAllowedAddresses(otpCode: string): Promise<void> {
+    const request: InactivateAllowedAddressesRequest = {
       otpCode,
     };
 
     await this.client.post<void>(
-      `${this.baseUrl}/allowed-addresses/inactivate`,
+      `${this.baseUrl}/inactivate-allowed-addresses`,
       request
     );
   }
