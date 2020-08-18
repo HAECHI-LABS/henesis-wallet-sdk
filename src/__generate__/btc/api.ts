@@ -81,13 +81,13 @@ export class RequiredError extends Error {
 /**
  * 
  * @export
- * @interface ActivateAllowedAddressRequest
+ * @interface ActivateAllowedAddressesRequest
  */
-export interface ActivateAllowedAddressRequest {
+export interface ActivateAllowedAddressesRequest {
     /**
      * 
      * @type {string}
-     * @memberof ActivateAllowedAddressRequest
+     * @memberof ActivateAllowedAddressesRequest
      */
     otpCode: string;
 }
@@ -129,6 +129,18 @@ export interface AllowedAddressDTO {
      * @type {string}
      * @memberof AllowedAddressDTO
      */
+    allowedCoinType: AllowedAddressDTO.AllowedCoinTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof AllowedAddressDTO
+     */
+    coinId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AllowedAddressDTO
+     */
     createdAt: string;
     /**
      * 
@@ -148,6 +160,35 @@ export interface AllowedAddressDTO {
      * @memberof AllowedAddressDTO
      */
     updatedAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AllowedAddressDTO
+     */
+    whitelistType: AllowedAddressDTO.WhitelistTypeEnum;
+}
+
+/**
+ * @export
+ * @namespace AllowedAddressDTO
+ */
+export namespace AllowedAddressDTO {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum AllowedCoinTypeEnum {
+        ALL = <any> 'ALL',
+        SINGLE = <any> 'SINGLE'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum WhitelistTypeEnum {
+        ALL = <any> 'ALL',
+        SINGLE = <any> 'SINGLE'
+    }
 }
 
 /**
@@ -208,12 +249,6 @@ export interface CreateAllowedAddressRequest {
      * @memberof CreateAllowedAddressRequest
      */
     address: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateAllowedAddressRequest
-     */
-    coinId: string;
     /**
      * 
      * @type {string}
@@ -496,6 +531,20 @@ export namespace CreateWithdrawalPolicyRequest {
 /**
  * 
  * @export
+ * @interface DeleteAllowedAddressRequest
+ */
+export interface DeleteAllowedAddressRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeleteAllowedAddressRequest
+     */
+    otpCode: string;
+}
+
+/**
+ * 
+ * @export
  * @interface DepositAddressDTO
  */
 export interface DepositAddressDTO {
@@ -548,13 +597,13 @@ export interface EstimatedFeeDTO {
 /**
  * 
  * @export
- * @interface InactivateAllowedAddressRequest
+ * @interface InactivateAllowedAddressesRequest
  */
-export interface InactivateAllowedAddressRequest {
+export interface InactivateAllowedAddressesRequest {
     /**
      * 
      * @type {string}
-     * @memberof InactivateAllowedAddressRequest
+     * @memberof InactivateAllowedAddressesRequest
      */
     otpCode: string;
 }
@@ -663,6 +712,12 @@ export interface MasterWalletDTO {
      * @memberof MasterWalletDTO
      */
     status: MasterWalletDTO.StatusEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MasterWalletDTO
+     */
+    whitelistActivated: boolean;
 }
 
 /**
@@ -941,20 +996,6 @@ export interface PatchAccountKeyRequestDTO {
      * @memberof PatchAccountKeyRequestDTO
      */
     pub: string;
-}
-
-/**
- * 
- * @export
- * @interface PatchAllowedAddressLabelRequest
- */
-export interface PatchAllowedAddressLabelRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof PatchAllowedAddressLabelRequest
-     */
-    label: string;
 }
 
 /**
@@ -1391,11 +1432,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
     return {
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingDELETE(options: any = {}): FetchArgs {
+        errorUsingDELETE(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
@@ -1414,11 +1455,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingGET(options: any = {}): FetchArgs {
+        errorUsingGET(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -1437,11 +1478,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingHEAD(options: any = {}): FetchArgs {
+        errorUsingHEAD(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'HEAD' }, options);
@@ -1460,11 +1501,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingOPTIONS(options: any = {}): FetchArgs {
+        errorUsingOPTIONS(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'OPTIONS' }, options);
@@ -1483,11 +1524,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPATCH(options: any = {}): FetchArgs {
+        errorUsingPATCH(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
@@ -1506,11 +1547,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPOST(options: any = {}): FetchArgs {
+        errorUsingPOST(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -1529,11 +1570,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPUT(options: any = {}): FetchArgs {
+        errorUsingPUT(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
@@ -1561,12 +1602,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
     return {
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingDELETE(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingDELETE(options);
+        errorUsingDELETE(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingDELETE(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1579,12 +1620,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingGET(options);
+        errorUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingGET(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1597,12 +1638,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingHEAD(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingHEAD(options);
+        errorUsingHEAD(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingHEAD(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1615,12 +1656,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingOPTIONS(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingOPTIONS(options);
+        errorUsingOPTIONS(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingOPTIONS(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1633,12 +1674,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPATCH(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPATCH(options);
+        errorUsingPATCH(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPATCH(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1651,12 +1692,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPOST(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPOST(options);
+        errorUsingPOST(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPOST(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1669,12 +1710,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPUT(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPUT(options);
+        errorUsingPUT(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPUT(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1696,66 +1737,66 @@ export const BasicErrorControllerApiFactory = function (configuration?: Configur
     return {
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingDELETE(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingDELETE(options)(fetch, basePath);
+        errorUsingDELETE(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingDELETE(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingGET(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingGET(options)(fetch, basePath);
+        errorUsingGET(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingGET(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingHEAD(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingHEAD(options)(fetch, basePath);
+        errorUsingHEAD(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingHEAD(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingOPTIONS(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingOPTIONS(options)(fetch, basePath);
+        errorUsingOPTIONS(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingOPTIONS(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPATCH(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPATCH(options)(fetch, basePath);
+        errorUsingPATCH(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingPATCH(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPOST(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPOST(options)(fetch, basePath);
+        errorUsingPOST(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingPOST(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary errorHtml
+         * @summary error
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorHtmlUsingPUT(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPUT(options)(fetch, basePath);
+        errorUsingPUT(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorUsingPUT(options)(fetch, basePath);
         },
     };
 };
@@ -1769,79 +1810,79 @@ export const BasicErrorControllerApiFactory = function (configuration?: Configur
 export class BasicErrorControllerApi extends BaseAPI {
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingDELETE(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingDELETE(options)(this.fetch, this.basePath);
+    public errorUsingDELETE(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingDELETE(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingGET(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingGET(options)(this.fetch, this.basePath);
+    public errorUsingGET(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingGET(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingHEAD(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingHEAD(options)(this.fetch, this.basePath);
+    public errorUsingHEAD(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingHEAD(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingOPTIONS(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingOPTIONS(options)(this.fetch, this.basePath);
+    public errorUsingOPTIONS(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingOPTIONS(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingPATCH(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPATCH(options)(this.fetch, this.basePath);
+    public errorUsingPATCH(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingPATCH(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingPOST(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPOST(options)(this.fetch, this.basePath);
+    public errorUsingPOST(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingPOST(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary errorHtml
+     * @summary error
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorHtmlUsingPUT(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPUT(options)(this.fetch, this.basePath);
+    public errorUsingPUT(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorUsingPUT(options)(this.fetch, this.basePath);
     }
 
 }
@@ -2453,8 +2494,8 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
     return {
         /**
          * 
-         * @summary activateAllowedAddress
-         * @param {ActivateAllowedAddressRequest} request request
+         * @summary activateAllowedAddresses
+         * @param {ActivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -2463,16 +2504,16 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedAddressUsingPOST(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        activateAllowedAddressesUsingPOST(request: ActivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling activateAllowedAddressUsingPOST.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling activateAllowedAddressesUsingPOST.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling activateAllowedAddressUsingPOST.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling activateAllowedAddressesUsingPOST.');
             }
-            const localVarPath = `/api/v2/btc/wallets/{walletId}/allowed-addresses/activate`
+            const localVarPath = `/api/v2/btc/wallets/{walletId}/activate-allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -2501,7 +2542,7 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"ActivateAllowedAddressRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"ActivateAllowedAddressesRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
@@ -2914,6 +2955,7 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
          * 
          * @summary deleteAllowedAddress
          * @param {string} allowedAddressId allowedAddressId
+         * @param {DeleteAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -2922,10 +2964,14 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAllowedAddressUsingDELETE(allowedAddressId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        deleteAllowedAddressUsingDELETE(allowedAddressId: string, request: DeleteAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'allowedAddressId' is not null or undefined
             if (allowedAddressId === null || allowedAddressId === undefined) {
                 throw new RequiredError('allowedAddressId','Required parameter allowedAddressId was null or undefined when calling deleteAllowedAddressUsingDELETE.');
+            }
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling deleteAllowedAddressUsingDELETE.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
@@ -2955,10 +3001,14 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
                 localVarQueryParameter['roles'] = roles;
             }
 
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"DeleteAllowedAddressRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -3025,7 +3075,6 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
          * @summary getAllowedAddresses
          * @param {string} walletId walletId
          * @param {string} [accountId] 
-         * @param {number} [coinId] coin_id
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -3039,7 +3088,7 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedAddressesUsingGET(walletId: string, accountId?: string, coinId?: number, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+        getAllowedAddressesUsingGET(walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
                 throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getAllowedAddressesUsingGET.');
@@ -3053,10 +3102,6 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
-            }
-
-            if (coinId !== undefined) {
-                localVarQueryParameter['coin_id'] = coinId;
             }
 
             if (offset !== undefined) {
@@ -3579,8 +3624,8 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary inactivateAllowedAddress
-         * @param {InactivateAllowedAddressRequest} request request
+         * @summary inactivateAllowedAddresses
+         * @param {InactivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -3589,16 +3634,16 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedAddressUsingPOST(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        inactivateAllowedAddressesUsingPOST(request: InactivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling inactivateAllowedAddressUsingPOST.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling inactivateAllowedAddressesUsingPOST.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling inactivateAllowedAddressUsingPOST.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling inactivateAllowedAddressesUsingPOST.');
             }
-            const localVarPath = `/api/v2/btc/wallets/{walletId}/allowed-addresses/inactivate`
+            const localVarPath = `/api/v2/btc/wallets/{walletId}/inactivate-allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -3627,71 +3672,7 @@ export const WalletControllerApiFetchParamCreator = function (configuration?: Co
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"InactivateAllowedAddressRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary patchAllowedAddressLabel
-         * @param {string} allowedAddressId allowedAddressId
-         * @param {PatchAllowedAddressLabelRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAllowedAddressLabelUsingPATCH(allowedAddressId: string, request: PatchAllowedAddressLabelRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
-            // verify required parameter 'allowedAddressId' is not null or undefined
-            if (allowedAddressId === null || allowedAddressId === undefined) {
-                throw new RequiredError('allowedAddressId','Required parameter allowedAddressId was null or undefined when calling patchAllowedAddressLabelUsingPATCH.');
-            }
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling patchAllowedAddressLabelUsingPATCH.');
-            }
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchAllowedAddressLabelUsingPATCH.');
-            }
-            const localVarPath = `/api/v2/btc/wallets/{walletId}/allowed-addresses/{allowedAddressId}/label`
-                .replace(`{${"allowedAddressId"}}`, encodeURIComponent(String(allowedAddressId)))
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (accountId !== undefined) {
-                localVarQueryParameter['accountId'] = accountId;
-            }
-
-            if (organizationId !== undefined) {
-                localVarQueryParameter['organizationId'] = organizationId;
-            }
-
-            if (otpKey !== undefined) {
-                localVarQueryParameter['otpKey'] = otpKey;
-            }
-
-            if (roles) {
-                localVarQueryParameter['roles'] = roles;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"PatchAllowedAddressLabelRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"InactivateAllowedAddressesRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
@@ -3951,8 +3932,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary activateAllowedAddress
-         * @param {ActivateAllowedAddressRequest} request request
+         * @summary activateAllowedAddresses
+         * @param {ActivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -3961,8 +3942,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedAddressUsingPOST(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).activateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options);
+        activateAllowedAddressesUsingPOST(request: ActivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).activateAllowedAddressesUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4145,6 +4126,7 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * 
          * @summary deleteAllowedAddress
          * @param {string} allowedAddressId allowedAddressId
+         * @param {DeleteAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -4153,8 +4135,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAllowedAddressUsingDELETE(allowedAddressId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).deleteAllowedAddressUsingDELETE(allowedAddressId, walletId, accountId, organizationId, otpKey, roles, options);
+        deleteAllowedAddressUsingDELETE(allowedAddressId: string, request: DeleteAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).deleteAllowedAddressUsingDELETE(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4194,7 +4176,6 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @summary getAllowedAddresses
          * @param {string} walletId walletId
          * @param {string} [accountId] 
-         * @param {number} [coinId] coin_id
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -4208,8 +4189,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedAddressesUsingGET(walletId: string, accountId?: string, coinId?: number, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationAllowedAddressDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getAllowedAddressesUsingGET(walletId, accountId, coinId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options);
+        getAllowedAddressesUsingGET(walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationAllowedAddressDTO> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).getAllowedAddressesUsingGET(walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4421,8 +4402,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary inactivateAllowedAddress
-         * @param {InactivateAllowedAddressRequest} request request
+         * @summary inactivateAllowedAddresses
+         * @param {InactivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -4431,37 +4412,12 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedAddressUsingPOST(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).inactivateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options);
+        inactivateAllowedAddressesUsingPOST(request: InactivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).inactivateAllowedAddressesUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary patchAllowedAddressLabel
-         * @param {string} allowedAddressId allowedAddressId
-         * @param {PatchAllowedAddressLabelRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAllowedAddressLabelUsingPATCH(allowedAddressId: string, request: PatchAllowedAddressLabelRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AllowedAddressDTO> {
-            const localVarFetchArgs = WalletControllerApiFetchParamCreator(configuration).patchAllowedAddressLabelUsingPATCH(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
                     } else {
                         throw response;
                     }
@@ -4579,8 +4535,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
     return {
         /**
          * 
-         * @summary activateAllowedAddress
-         * @param {ActivateAllowedAddressRequest} request request
+         * @summary activateAllowedAddresses
+         * @param {ActivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -4589,8 +4545,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedAddressUsingPOST(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WalletControllerApiFp(configuration).activateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        activateAllowedAddressesUsingPOST(request: ActivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return WalletControllerApiFp(configuration).activateAllowedAddressesUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -4701,6 +4657,7 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * 
          * @summary deleteAllowedAddress
          * @param {string} allowedAddressId allowedAddressId
+         * @param {DeleteAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -4709,8 +4666,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAllowedAddressUsingDELETE(allowedAddressId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WalletControllerApiFp(configuration).deleteAllowedAddressUsingDELETE(allowedAddressId, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        deleteAllowedAddressUsingDELETE(allowedAddressId: string, request: DeleteAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return WalletControllerApiFp(configuration).deleteAllowedAddressUsingDELETE(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -4732,7 +4689,6 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @summary getAllowedAddresses
          * @param {string} walletId walletId
          * @param {string} [accountId] 
-         * @param {number} [coinId] coin_id
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -4746,8 +4702,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedAddressesUsingGET(walletId: string, accountId?: string, coinId?: number, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-            return WalletControllerApiFp(configuration).getAllowedAddressesUsingGET(walletId, accountId, coinId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        getAllowedAddressesUsingGET(walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+            return WalletControllerApiFp(configuration).getAllowedAddressesUsingGET(walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
         },
         /**
          * 
@@ -4878,8 +4834,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary inactivateAllowedAddress
-         * @param {InactivateAllowedAddressRequest} request request
+         * @summary inactivateAllowedAddresses
+         * @param {InactivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -4888,24 +4844,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedAddressUsingPOST(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WalletControllerApiFp(configuration).inactivateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary patchAllowedAddressLabel
-         * @param {string} allowedAddressId allowedAddressId
-         * @param {PatchAllowedAddressLabelRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAllowedAddressLabelUsingPATCH(allowedAddressId: string, request: PatchAllowedAddressLabelRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WalletControllerApiFp(configuration).patchAllowedAddressLabelUsingPATCH(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        inactivateAllowedAddressesUsingPOST(request: InactivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return WalletControllerApiFp(configuration).inactivateAllowedAddressesUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -4983,8 +4923,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
 export class WalletControllerApi extends BaseAPI {
     /**
      * 
-     * @summary activateAllowedAddress
-     * @param {ActivateAllowedAddressRequest} request request
+     * @summary activateAllowedAddresses
+     * @param {ActivateAllowedAddressesRequest} request request
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -4994,8 +4934,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public activateAllowedAddressUsingPOST(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WalletControllerApiFp(this.configuration).activateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public activateAllowedAddressesUsingPOST(request: ActivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return WalletControllerApiFp(this.configuration).activateAllowedAddressesUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5121,6 +5061,7 @@ export class WalletControllerApi extends BaseAPI {
      * 
      * @summary deleteAllowedAddress
      * @param {string} allowedAddressId allowedAddressId
+     * @param {DeleteAllowedAddressRequest} request request
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -5130,8 +5071,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public deleteAllowedAddressUsingDELETE(allowedAddressId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WalletControllerApiFp(this.configuration).deleteAllowedAddressUsingDELETE(allowedAddressId, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public deleteAllowedAddressUsingDELETE(allowedAddressId: string, request: DeleteAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return WalletControllerApiFp(this.configuration).deleteAllowedAddressUsingDELETE(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5156,7 +5097,6 @@ export class WalletControllerApi extends BaseAPI {
      * @summary getAllowedAddresses
      * @param {string} walletId walletId
      * @param {string} [accountId] 
-     * @param {number} [coinId] coin_id
      * @param {number} [offset] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
@@ -5171,8 +5111,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getAllowedAddressesUsingGET(walletId: string, accountId?: string, coinId?: number, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-        return WalletControllerApiFp(this.configuration).getAllowedAddressesUsingGET(walletId, accountId, coinId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    public getAllowedAddressesUsingGET(walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+        return WalletControllerApiFp(this.configuration).getAllowedAddressesUsingGET(walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5320,8 +5260,8 @@ export class WalletControllerApi extends BaseAPI {
 
     /**
      * 
-     * @summary inactivateAllowedAddress
-     * @param {InactivateAllowedAddressRequest} request request
+     * @summary inactivateAllowedAddresses
+     * @param {InactivateAllowedAddressesRequest} request request
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -5331,26 +5271,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public inactivateAllowedAddressUsingPOST(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WalletControllerApiFp(this.configuration).inactivateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary patchAllowedAddressLabel
-     * @param {string} allowedAddressId allowedAddressId
-     * @param {PatchAllowedAddressLabelRequest} request request
-     * @param {string} walletId walletId
-     * @param {string} [accountId] 
-     * @param {string} [organizationId] 
-     * @param {string} [otpKey] 
-     * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WalletControllerApi
-     */
-    public patchAllowedAddressLabelUsingPATCH(allowedAddressId: string, request: PatchAllowedAddressLabelRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WalletControllerApiFp(this.configuration).patchAllowedAddressLabelUsingPATCH(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public inactivateAllowedAddressesUsingPOST(request: InactivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return WalletControllerApiFp(this.configuration).inactivateAllowedAddressesUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**

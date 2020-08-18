@@ -81,13 +81,13 @@ export class RequiredError extends Error {
 /**
  * 
  * @export
- * @interface ActivateAllowedAddressRequest
+ * @interface ActivateAllowedAddressesRequest
  */
-export interface ActivateAllowedAddressRequest {
+export interface ActivateAllowedAddressesRequest {
     /**
      * 
      * @type {string}
-     * @memberof ActivateAllowedAddressRequest
+     * @memberof ActivateAllowedAddressesRequest
      */
     otpCode: string;
 }
@@ -104,6 +104,18 @@ export interface AllowedAddressDTO {
      * @memberof AllowedAddressDTO
      */
     address: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AllowedAddressDTO
+     */
+    allowedCoinType: AllowedAddressDTO.AllowedCoinTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof AllowedAddressDTO
+     */
+    coinId?: number;
     /**
      * 
      * @type {string}
@@ -128,6 +140,35 @@ export interface AllowedAddressDTO {
      * @memberof AllowedAddressDTO
      */
     updatedAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AllowedAddressDTO
+     */
+    whitelistType: AllowedAddressDTO.WhitelistTypeEnum;
+}
+
+/**
+ * @export
+ * @namespace AllowedAddressDTO
+ */
+export namespace AllowedAddressDTO {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum AllowedCoinTypeEnum {
+        ALL = <any> 'ALL',
+        SINGLE = <any> 'SINGLE'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum WhitelistTypeEnum {
+        ALL = <any> 'ALL',
+        SINGLE = <any> 'SINGLE'
+    }
 }
 
 /**
@@ -422,7 +463,13 @@ export interface CreateAllowedAddressRequest {
      * @type {string}
      * @memberof CreateAllowedAddressRequest
      */
-    coinId: string;
+    allowedCoinType: CreateAllowedAddressRequest.AllowedCoinTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateAllowedAddressRequest
+     */
+    coinId?: number;
     /**
      * 
      * @type {string}
@@ -435,6 +482,35 @@ export interface CreateAllowedAddressRequest {
      * @memberof CreateAllowedAddressRequest
      */
     otpCode: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateAllowedAddressRequest
+     */
+    whitelistType: CreateAllowedAddressRequest.WhitelistTypeEnum;
+}
+
+/**
+ * @export
+ * @namespace CreateAllowedAddressRequest
+ */
+export namespace CreateAllowedAddressRequest {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum AllowedCoinTypeEnum {
+        ALL = <any> 'ALL',
+        SINGLE = <any> 'SINGLE'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum WhitelistTypeEnum {
+        ALL = <any> 'ALL',
+        SINGLE = <any> 'SINGLE'
+    }
 }
 
 /**
@@ -749,6 +825,20 @@ export namespace CreateWithdrawalPolicyRequest {
 /**
  * 
  * @export
+ * @interface DeleteAllowedAddressRequest
+ */
+export interface DeleteAllowedAddressRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DeleteAllowedAddressRequest
+     */
+    otpCode: string;
+}
+
+/**
+ * 
+ * @export
  * @interface HenesisKeyBalanceDTO
  */
 export interface HenesisKeyBalanceDTO {
@@ -797,13 +887,13 @@ export namespace HenesisKeyBalanceDTO {
 /**
  * 
  * @export
- * @interface InactivateAllowedAddressRequest
+ * @interface InactivateAllowedAddressesRequest
  */
-export interface InactivateAllowedAddressRequest {
+export interface InactivateAllowedAddressesRequest {
     /**
      * 
      * @type {string}
-     * @memberof InactivateAllowedAddressRequest
+     * @memberof InactivateAllowedAddressesRequest
      */
     otpCode: string;
 }
@@ -942,6 +1032,12 @@ export interface MasterWalletDTO {
      * @memberof MasterWalletDTO
      */
     updatedAt: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MasterWalletDTO
+     */
+    whitelistActivated: boolean;
 }
 
 /**
@@ -1343,20 +1439,6 @@ export interface PaginationWalletWithdrawalPolicyDTO {
      * @memberof PaginationWalletWithdrawalPolicyDTO
      */
     results: Array<WalletWithdrawalPolicyDTO>;
-}
-
-/**
- * 
- * @export
- * @interface PatchAllowedAddressLabelRequest
- */
-export interface PatchAllowedAddressLabelRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof PatchAllowedAddressLabelRequest
-     */
-    label: string;
 }
 
 /**
@@ -2489,15 +2571,24 @@ export const EthCoinControllerApiFetchParamCreator = function (configuration?: C
         /**
          * 
          * @summary getAllCoins
+         * @param {'true'} flag flag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET(options: any = {}): FetchArgs {
+        getAllCoinsUsingGET1(flag: 'true', options: any = {}): FetchArgs {
+            // verify required parameter 'flag' is not null or undefined
+            if (flag === null || flag === undefined) {
+                throw new RequiredError('flag','Required parameter flag was null or undefined when calling getAllCoinsUsingGET1.');
+            }
             const localVarPath = `/api/v2/eth/coins`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (flag !== undefined) {
+                localVarQueryParameter['flag'] = flag;
+            }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -2620,11 +2711,12 @@ export const EthCoinControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary getAllCoins
+         * @param {'true'} flag flag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<CoinDTO>> {
-            const localVarFetchArgs = EthCoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET(options);
+        getAllCoinsUsingGET1(flag: 'true', options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<CoinDTO>> {
+            const localVarFetchArgs = EthCoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET1(flag, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2705,11 +2797,12 @@ export const EthCoinControllerApiFactory = function (configuration?: Configurati
         /**
          * 
          * @summary getAllCoins
+         * @param {'true'} flag flag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET(options?: any) {
-            return EthCoinControllerApiFp(configuration).getAllCoinsUsingGET(options)(fetch, basePath);
+        getAllCoinsUsingGET1(flag: 'true', options?: any) {
+            return EthCoinControllerApiFp(configuration).getAllCoinsUsingGET1(flag, options)(fetch, basePath);
         },
         /**
          * 
@@ -2768,12 +2861,13 @@ export class EthCoinControllerApi extends BaseAPI {
     /**
      * 
      * @summary getAllCoins
+     * @param {'true'} flag flag
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EthCoinControllerApi
      */
-    public getAllCoinsUsingGET(options?: any) {
-        return EthCoinControllerApiFp(this.configuration).getAllCoinsUsingGET(options)(this.fetch, this.basePath);
+    public getAllCoinsUsingGET1(flag: 'true', options?: any) {
+        return EthCoinControllerApiFp(this.configuration).getAllCoinsUsingGET1(flag, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -3904,8 +3998,8 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
     return {
         /**
          * 
-         * @summary activateAllowedAddress
-         * @param {ActivateAllowedAddressRequest} request request
+         * @summary activateAllowedAddresses
+         * @param {ActivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -3914,16 +4008,16 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedAddressUsingPOST(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        activateAllowedAddressesUsingPOST(request: ActivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling activateAllowedAddressUsingPOST.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling activateAllowedAddressesUsingPOST.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling activateAllowedAddressUsingPOST.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling activateAllowedAddressesUsingPOST.');
             }
-            const localVarPath = `/api/v2/eth/wallets/{walletId}/allowed-addresses/activate`
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/activate-allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -3952,7 +4046,7 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"ActivateAllowedAddressRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"ActivateAllowedAddressesRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
@@ -4191,6 +4285,7 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
          * 
          * @summary deleteAllowedAddress
          * @param {string} allowedAddressId allowedAddressId
+         * @param {DeleteAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -4199,10 +4294,14 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAllowedAddressUsingDELETE(allowedAddressId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        deleteAllowedAddressUsingDELETE(allowedAddressId: string, request: DeleteAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'allowedAddressId' is not null or undefined
             if (allowedAddressId === null || allowedAddressId === undefined) {
                 throw new RequiredError('allowedAddressId','Required parameter allowedAddressId was null or undefined when calling deleteAllowedAddressUsingDELETE.');
+            }
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling deleteAllowedAddressUsingDELETE.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
@@ -4232,10 +4331,14 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
                 localVarQueryParameter['roles'] = roles;
             }
 
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"DeleteAllowedAddressRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -4383,10 +4486,10 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary getAllowedAddresses
+         * @summary getAllowedAddressesByCoinId
+         * @param {string} coinId coin_id
          * @param {string} walletId walletId
          * @param {string} [accountId] 
-         * @param {number} [coinId] coin_id
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -4400,10 +4503,14 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedAddressesUsingGET(walletId: string, accountId?: string, coinId?: number, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+        getAllowedAddressesByCoinIdUsingGET(coinId: string, walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+            // verify required parameter 'coinId' is not null or undefined
+            if (coinId === null || coinId === undefined) {
+                throw new RequiredError('coinId','Required parameter coinId was null or undefined when calling getAllowedAddressesByCoinIdUsingGET.');
+            }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getAllowedAddressesUsingGET.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getAllowedAddressesByCoinIdUsingGET.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4989,8 +5096,8 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
         },
         /**
          * 
-         * @summary inactivateAllowedAddress
-         * @param {InactivateAllowedAddressRequest} request request
+         * @summary inactivateAllowedAddresses
+         * @param {InactivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -4999,16 +5106,16 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedAddressUsingPOST(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        inactivateAllowedAddressesUsingPOST(request: InactivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling inactivateAllowedAddressUsingPOST.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling inactivateAllowedAddressesUsingPOST.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling inactivateAllowedAddressUsingPOST.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling inactivateAllowedAddressesUsingPOST.');
             }
-            const localVarPath = `/api/v2/eth/wallets/{walletId}/allowed-addresses/inactivate`
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/inactivate-allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -5037,7 +5144,7 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"InactivateAllowedAddressRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"InactivateAllowedAddressesRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
@@ -5098,70 +5205,6 @@ export const EthWalletControllerApiFetchParamCreator = function (configuration?:
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"UpdateAccountKeyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(updateAccountKeyRequest || {}) : (updateAccountKeyRequest || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary patchAllowedAddressLabel
-         * @param {string} allowedAddressId allowedAddressId
-         * @param {PatchAllowedAddressLabelRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAllowedAddressLabelUsingPATCH(allowedAddressId: string, request: PatchAllowedAddressLabelRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
-            // verify required parameter 'allowedAddressId' is not null or undefined
-            if (allowedAddressId === null || allowedAddressId === undefined) {
-                throw new RequiredError('allowedAddressId','Required parameter allowedAddressId was null or undefined when calling patchAllowedAddressLabelUsingPATCH.');
-            }
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling patchAllowedAddressLabelUsingPATCH.');
-            }
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchAllowedAddressLabelUsingPATCH.');
-            }
-            const localVarPath = `/api/v2/eth/wallets/{walletId}/allowed-addresses/{allowedAddressId}/label`
-                .replace(`{${"allowedAddressId"}}`, encodeURIComponent(String(allowedAddressId)))
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (accountId !== undefined) {
-                localVarQueryParameter['accountId'] = accountId;
-            }
-
-            if (organizationId !== undefined) {
-                localVarQueryParameter['organizationId'] = organizationId;
-            }
-
-            if (otpKey !== undefined) {
-                localVarQueryParameter['otpKey'] = otpKey;
-            }
-
-            if (roles) {
-                localVarQueryParameter['roles'] = roles;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"PatchAllowedAddressLabelRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -5594,8 +5637,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
     return {
         /**
          * 
-         * @summary activateAllowedAddress
-         * @param {ActivateAllowedAddressRequest} request request
+         * @summary activateAllowedAddresses
+         * @param {ActivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -5604,8 +5647,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedAddressUsingPOST(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).activateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options);
+        activateAllowedAddressesUsingPOST(request: ActivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).activateAllowedAddressesUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -5716,6 +5759,7 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * 
          * @summary deleteAllowedAddress
          * @param {string} allowedAddressId allowedAddressId
+         * @param {DeleteAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -5724,8 +5768,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAllowedAddressUsingDELETE(allowedAddressId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).deleteAllowedAddressUsingDELETE(allowedAddressId, walletId, accountId, organizationId, otpKey, roles, options);
+        deleteAllowedAddressUsingDELETE(allowedAddressId: string, request: DeleteAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).deleteAllowedAddressUsingDELETE(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -5792,10 +5836,10 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
-         * @summary getAllowedAddresses
+         * @summary getAllowedAddressesByCoinId
+         * @param {string} coinId coin_id
          * @param {string} walletId walletId
          * @param {string} [accountId] 
-         * @param {number} [coinId] coin_id
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -5809,8 +5853,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedAddressesUsingGET(walletId: string, accountId?: string, coinId?: number, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationAllowedAddressDTO> {
-            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getAllowedAddressesUsingGET(walletId, accountId, coinId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options);
+        getAllowedAddressesByCoinIdUsingGET(coinId: string, walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationAllowedAddressDTO> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).getAllowedAddressesByCoinIdUsingGET(coinId, walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -6057,8 +6101,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
-         * @summary inactivateAllowedAddress
-         * @param {InactivateAllowedAddressRequest} request request
+         * @summary inactivateAllowedAddresses
+         * @param {InactivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -6067,8 +6111,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedAddressUsingPOST(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).inactivateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options);
+        inactivateAllowedAddressesUsingPOST(request: InactivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).inactivateAllowedAddressesUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -6094,31 +6138,6 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          */
         patchAccountKeyUsingPATCH(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
             const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).patchAccountKeyUsingPATCH(updateAccountKeyRequest, walletId, accountId, needOTP, organizationId, otpKey, roles, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary patchAllowedAddressLabel
-         * @param {string} allowedAddressId allowedAddressId
-         * @param {PatchAllowedAddressLabelRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAllowedAddressLabelUsingPATCH(allowedAddressId: string, request: PatchAllowedAddressLabelRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AllowedAddressDTO> {
-            const localVarFetchArgs = EthWalletControllerApiFetchParamCreator(configuration).patchAllowedAddressLabelUsingPATCH(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -6312,8 +6331,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
     return {
         /**
          * 
-         * @summary activateAllowedAddress
-         * @param {ActivateAllowedAddressRequest} request request
+         * @summary activateAllowedAddresses
+         * @param {ActivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -6322,8 +6341,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedAddressUsingPOST(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return EthWalletControllerApiFp(configuration).activateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        activateAllowedAddressesUsingPOST(request: ActivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return EthWalletControllerApiFp(configuration).activateAllowedAddressesUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -6389,6 +6408,7 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * 
          * @summary deleteAllowedAddress
          * @param {string} allowedAddressId allowedAddressId
+         * @param {DeleteAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -6397,8 +6417,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAllowedAddressUsingDELETE(allowedAddressId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return EthWalletControllerApiFp(configuration).deleteAllowedAddressUsingDELETE(allowedAddressId, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        deleteAllowedAddressUsingDELETE(allowedAddressId: string, request: DeleteAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return EthWalletControllerApiFp(configuration).deleteAllowedAddressUsingDELETE(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -6438,10 +6458,10 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
         },
         /**
          * 
-         * @summary getAllowedAddresses
+         * @summary getAllowedAddressesByCoinId
+         * @param {string} coinId coin_id
          * @param {string} walletId walletId
          * @param {string} [accountId] 
-         * @param {number} [coinId] coin_id
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -6455,8 +6475,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedAddressesUsingGET(walletId: string, accountId?: string, coinId?: number, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-            return EthWalletControllerApiFp(configuration).getAllowedAddressesUsingGET(walletId, accountId, coinId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        getAllowedAddressesByCoinIdUsingGET(coinId: string, walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+            return EthWalletControllerApiFp(configuration).getAllowedAddressesByCoinIdUsingGET(coinId, walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
         },
         /**
          * 
@@ -6604,8 +6624,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
         },
         /**
          * 
-         * @summary inactivateAllowedAddress
-         * @param {InactivateAllowedAddressRequest} request request
+         * @summary inactivateAllowedAddresses
+         * @param {InactivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -6614,8 +6634,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedAddressUsingPOST(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return EthWalletControllerApiFp(configuration).inactivateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        inactivateAllowedAddressesUsingPOST(request: InactivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return EthWalletControllerApiFp(configuration).inactivateAllowedAddressesUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -6632,22 +6652,6 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          */
         patchAccountKeyUsingPATCH(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
             return EthWalletControllerApiFp(configuration).patchAccountKeyUsingPATCH(updateAccountKeyRequest, walletId, accountId, needOTP, organizationId, otpKey, roles, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary patchAllowedAddressLabel
-         * @param {string} allowedAddressId allowedAddressId
-         * @param {PatchAllowedAddressLabelRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAllowedAddressLabelUsingPATCH(allowedAddressId: string, request: PatchAllowedAddressLabelRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return EthWalletControllerApiFp(configuration).patchAllowedAddressLabelUsingPATCH(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -6770,8 +6774,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
 export class EthWalletControllerApi extends BaseAPI {
     /**
      * 
-     * @summary activateAllowedAddress
-     * @param {ActivateAllowedAddressRequest} request request
+     * @summary activateAllowedAddresses
+     * @param {ActivateAllowedAddressesRequest} request request
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -6781,8 +6785,8 @@ export class EthWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthWalletControllerApi
      */
-    public activateAllowedAddressUsingPOST(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).activateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public activateAllowedAddressesUsingPOST(request: ActivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).activateAllowedAddressesUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -6857,6 +6861,7 @@ export class EthWalletControllerApi extends BaseAPI {
      * 
      * @summary deleteAllowedAddress
      * @param {string} allowedAddressId allowedAddressId
+     * @param {DeleteAllowedAddressRequest} request request
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -6866,8 +6871,8 @@ export class EthWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthWalletControllerApi
      */
-    public deleteAllowedAddressUsingDELETE(allowedAddressId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).deleteAllowedAddressUsingDELETE(allowedAddressId, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public deleteAllowedAddressUsingDELETE(allowedAddressId: string, request: DeleteAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).deleteAllowedAddressUsingDELETE(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -6912,10 +6917,10 @@ export class EthWalletControllerApi extends BaseAPI {
 
     /**
      * 
-     * @summary getAllowedAddresses
+     * @summary getAllowedAddressesByCoinId
+     * @param {string} coinId coin_id
      * @param {string} walletId walletId
      * @param {string} [accountId] 
-     * @param {number} [coinId] coin_id
      * @param {number} [offset] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
@@ -6930,8 +6935,8 @@ export class EthWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthWalletControllerApi
      */
-    public getAllowedAddressesUsingGET(walletId: string, accountId?: string, coinId?: number, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).getAllowedAddressesUsingGET(walletId, accountId, coinId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    public getAllowedAddressesByCoinIdUsingGET(coinId: string, walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getAllowedAddressesByCoinIdUsingGET(coinId, walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -7100,8 +7105,8 @@ export class EthWalletControllerApi extends BaseAPI {
 
     /**
      * 
-     * @summary inactivateAllowedAddress
-     * @param {InactivateAllowedAddressRequest} request request
+     * @summary inactivateAllowedAddresses
+     * @param {InactivateAllowedAddressesRequest} request request
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -7111,8 +7116,8 @@ export class EthWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthWalletControllerApi
      */
-    public inactivateAllowedAddressUsingPOST(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).inactivateAllowedAddressUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public inactivateAllowedAddressesUsingPOST(request: InactivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).inactivateAllowedAddressesUsingPOST(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -7131,24 +7136,6 @@ export class EthWalletControllerApi extends BaseAPI {
      */
     public patchAccountKeyUsingPATCH(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
         return EthWalletControllerApiFp(this.configuration).patchAccountKeyUsingPATCH(updateAccountKeyRequest, walletId, accountId, needOTP, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary patchAllowedAddressLabel
-     * @param {string} allowedAddressId allowedAddressId
-     * @param {PatchAllowedAddressLabelRequest} request request
-     * @param {string} walletId walletId
-     * @param {string} [accountId] 
-     * @param {string} [organizationId] 
-     * @param {string} [otpKey] 
-     * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof EthWalletControllerApi
-     */
-    public patchAllowedAddressLabelUsingPATCH(allowedAddressId: string, request: PatchAllowedAddressLabelRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).patchAllowedAddressLabelUsingPATCH(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -7610,15 +7597,24 @@ export const KlayCoinControllerApiFetchParamCreator = function (configuration?: 
         /**
          * 
          * @summary getAllCoins
+         * @param {'true'} flag flag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET2(options: any = {}): FetchArgs {
+        getAllCoinsUsingGET3(flag: 'true', options: any = {}): FetchArgs {
+            // verify required parameter 'flag' is not null or undefined
+            if (flag === null || flag === undefined) {
+                throw new RequiredError('flag','Required parameter flag was null or undefined when calling getAllCoinsUsingGET3.');
+            }
             const localVarPath = `/api/v2/klay/coins`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (flag !== undefined) {
+                localVarQueryParameter['flag'] = flag;
+            }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -7741,11 +7737,12 @@ export const KlayCoinControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary getAllCoins
+         * @param {'true'} flag flag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET2(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<CoinDTO>> {
-            const localVarFetchArgs = KlayCoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET2(options);
+        getAllCoinsUsingGET3(flag: 'true', options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<CoinDTO>> {
+            const localVarFetchArgs = KlayCoinControllerApiFetchParamCreator(configuration).getAllCoinsUsingGET3(flag, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -7826,11 +7823,12 @@ export const KlayCoinControllerApiFactory = function (configuration?: Configurat
         /**
          * 
          * @summary getAllCoins
+         * @param {'true'} flag flag
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllCoinsUsingGET2(options?: any) {
-            return KlayCoinControllerApiFp(configuration).getAllCoinsUsingGET2(options)(fetch, basePath);
+        getAllCoinsUsingGET3(flag: 'true', options?: any) {
+            return KlayCoinControllerApiFp(configuration).getAllCoinsUsingGET3(flag, options)(fetch, basePath);
         },
         /**
          * 
@@ -7889,12 +7887,13 @@ export class KlayCoinControllerApi extends BaseAPI {
     /**
      * 
      * @summary getAllCoins
+     * @param {'true'} flag flag
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KlayCoinControllerApi
      */
-    public getAllCoinsUsingGET2(options?: any) {
-        return KlayCoinControllerApiFp(this.configuration).getAllCoinsUsingGET2(options)(this.fetch, this.basePath);
+    public getAllCoinsUsingGET3(flag: 'true', options?: any) {
+        return KlayCoinControllerApiFp(this.configuration).getAllCoinsUsingGET3(flag, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -9025,8 +9024,8 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
     return {
         /**
          * 
-         * @summary activateAllowedAddress
-         * @param {ActivateAllowedAddressRequest} request request
+         * @summary activateAllowedAddresses
+         * @param {ActivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -9035,16 +9034,16 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedAddressUsingPOST1(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        activateAllowedAddressesUsingPOST1(request: ActivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling activateAllowedAddressUsingPOST1.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling activateAllowedAddressesUsingPOST1.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling activateAllowedAddressUsingPOST1.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling activateAllowedAddressesUsingPOST1.');
             }
-            const localVarPath = `/api/v2/klay/wallets/{walletId}/allowed-addresses/activate`
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/activate-allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -9073,7 +9072,7 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"ActivateAllowedAddressRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"ActivateAllowedAddressesRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
@@ -9312,6 +9311,7 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
          * 
          * @summary deleteAllowedAddress
          * @param {string} allowedAddressId allowedAddressId
+         * @param {DeleteAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -9320,10 +9320,14 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAllowedAddressUsingDELETE1(allowedAddressId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        deleteAllowedAddressUsingDELETE1(allowedAddressId: string, request: DeleteAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'allowedAddressId' is not null or undefined
             if (allowedAddressId === null || allowedAddressId === undefined) {
                 throw new RequiredError('allowedAddressId','Required parameter allowedAddressId was null or undefined when calling deleteAllowedAddressUsingDELETE1.');
+            }
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling deleteAllowedAddressUsingDELETE1.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
@@ -9353,10 +9357,14 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
                 localVarQueryParameter['roles'] = roles;
             }
 
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"DeleteAllowedAddressRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -9504,10 +9512,10 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary getAllowedAddresses
+         * @summary getAllowedAddressesByCoinId
+         * @param {string} coinId coin_id
          * @param {string} walletId walletId
          * @param {string} [accountId] 
-         * @param {number} [coinId] coin_id
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -9521,10 +9529,14 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedAddressesUsingGET1(walletId: string, accountId?: string, coinId?: number, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+        getAllowedAddressesByCoinIdUsingGET1(coinId: string, walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+            // verify required parameter 'coinId' is not null or undefined
+            if (coinId === null || coinId === undefined) {
+                throw new RequiredError('coinId','Required parameter coinId was null or undefined when calling getAllowedAddressesByCoinIdUsingGET1.');
+            }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getAllowedAddressesUsingGET1.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getAllowedAddressesByCoinIdUsingGET1.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -9643,6 +9655,7 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
         /**
          * 
          * @summary getMasterWalletBalance
+         * @param {'true'} flag flag
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -9651,10 +9664,14 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletBalanceUsingGET2(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        getMasterWalletBalanceUsingGET3(flag: 'true', walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+            // verify required parameter 'flag' is not null or undefined
+            if (flag === null || flag === undefined) {
+                throw new RequiredError('flag','Required parameter flag was null or undefined when calling getMasterWalletBalanceUsingGET3.');
+            }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletBalanceUsingGET2.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletBalanceUsingGET3.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/balance`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -9665,6 +9682,10 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (flag !== undefined) {
+                localVarQueryParameter['flag'] = flag;
             }
 
             if (organizationId !== undefined) {
@@ -10101,8 +10122,8 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary inactivateAllowedAddress
-         * @param {InactivateAllowedAddressRequest} request request
+         * @summary inactivateAllowedAddresses
+         * @param {InactivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -10111,16 +10132,16 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedAddressUsingPOST1(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        inactivateAllowedAddressesUsingPOST1(request: InactivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling inactivateAllowedAddressUsingPOST1.');
+                throw new RequiredError('request','Required parameter request was null or undefined when calling inactivateAllowedAddressesUsingPOST1.');
             }
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling inactivateAllowedAddressUsingPOST1.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling inactivateAllowedAddressesUsingPOST1.');
             }
-            const localVarPath = `/api/v2/klay/wallets/{walletId}/allowed-addresses/inactivate`
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/inactivate-allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -10149,7 +10170,7 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"InactivateAllowedAddressRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"InactivateAllowedAddressesRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
@@ -10210,70 +10231,6 @@ export const KlayWalletControllerApiFetchParamCreator = function (configuration?
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"UpdateAccountKeyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(updateAccountKeyRequest || {}) : (updateAccountKeyRequest || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary patchAllowedAddressLabel
-         * @param {string} allowedAddressId allowedAddressId
-         * @param {PatchAllowedAddressLabelRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAllowedAddressLabelUsingPATCH1(allowedAddressId: string, request: PatchAllowedAddressLabelRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
-            // verify required parameter 'allowedAddressId' is not null or undefined
-            if (allowedAddressId === null || allowedAddressId === undefined) {
-                throw new RequiredError('allowedAddressId','Required parameter allowedAddressId was null or undefined when calling patchAllowedAddressLabelUsingPATCH1.');
-            }
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling patchAllowedAddressLabelUsingPATCH1.');
-            }
-            // verify required parameter 'walletId' is not null or undefined
-            if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchAllowedAddressLabelUsingPATCH1.');
-            }
-            const localVarPath = `/api/v2/klay/wallets/{walletId}/allowed-addresses/{allowedAddressId}/label`
-                .replace(`{${"allowedAddressId"}}`, encodeURIComponent(String(allowedAddressId)))
-                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (accountId !== undefined) {
-                localVarQueryParameter['accountId'] = accountId;
-            }
-
-            if (organizationId !== undefined) {
-                localVarQueryParameter['organizationId'] = organizationId;
-            }
-
-            if (otpKey !== undefined) {
-                localVarQueryParameter['otpKey'] = otpKey;
-            }
-
-            if (roles) {
-                localVarQueryParameter['roles'] = roles;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"PatchAllowedAddressLabelRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -10706,8 +10663,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
     return {
         /**
          * 
-         * @summary activateAllowedAddress
-         * @param {ActivateAllowedAddressRequest} request request
+         * @summary activateAllowedAddresses
+         * @param {ActivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -10716,8 +10673,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedAddressUsingPOST1(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).activateAllowedAddressUsingPOST1(request, walletId, accountId, organizationId, otpKey, roles, options);
+        activateAllowedAddressesUsingPOST1(request: ActivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).activateAllowedAddressesUsingPOST1(request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -10828,6 +10785,7 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * 
          * @summary deleteAllowedAddress
          * @param {string} allowedAddressId allowedAddressId
+         * @param {DeleteAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -10836,8 +10794,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAllowedAddressUsingDELETE1(allowedAddressId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).deleteAllowedAddressUsingDELETE1(allowedAddressId, walletId, accountId, organizationId, otpKey, roles, options);
+        deleteAllowedAddressUsingDELETE1(allowedAddressId: string, request: DeleteAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).deleteAllowedAddressUsingDELETE1(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -10904,10 +10862,10 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary getAllowedAddresses
+         * @summary getAllowedAddressesByCoinId
+         * @param {string} coinId coin_id
          * @param {string} walletId walletId
          * @param {string} [accountId] 
-         * @param {number} [coinId] coin_id
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -10921,8 +10879,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedAddressesUsingGET1(walletId: string, accountId?: string, coinId?: number, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationAllowedAddressDTO> {
-            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getAllowedAddressesUsingGET1(walletId, accountId, coinId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options);
+        getAllowedAddressesByCoinIdUsingGET1(coinId: string, walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationAllowedAddressDTO> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getAllowedAddressesByCoinIdUsingGET1(coinId, walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -10959,6 +10917,7 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
         /**
          * 
          * @summary getMasterWalletBalance
+         * @param {'true'} flag flag
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -10967,8 +10926,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletBalanceUsingGET2(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
-            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getMasterWalletBalanceUsingGET2(walletId, accountId, organizationId, otpKey, roles, options);
+        getMasterWalletBalanceUsingGET3(flag: 'true', walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<BalanceDTO>> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).getMasterWalletBalanceUsingGET3(flag, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -11168,8 +11127,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary inactivateAllowedAddress
-         * @param {InactivateAllowedAddressRequest} request request
+         * @summary inactivateAllowedAddresses
+         * @param {InactivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -11178,8 +11137,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedAddressUsingPOST1(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).inactivateAllowedAddressUsingPOST1(request, walletId, accountId, organizationId, otpKey, roles, options);
+        inactivateAllowedAddressesUsingPOST1(request: InactivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).inactivateAllowedAddressesUsingPOST1(request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -11205,31 +11164,6 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          */
         patchAccountKeyUsingPATCH1(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<KeyDTO> {
             const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).patchAccountKeyUsingPATCH1(updateAccountKeyRequest, walletId, accountId, needOTP, organizationId, otpKey, roles, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary patchAllowedAddressLabel
-         * @param {string} allowedAddressId allowedAddressId
-         * @param {PatchAllowedAddressLabelRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAllowedAddressLabelUsingPATCH1(allowedAddressId: string, request: PatchAllowedAddressLabelRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AllowedAddressDTO> {
-            const localVarFetchArgs = KlayWalletControllerApiFetchParamCreator(configuration).patchAllowedAddressLabelUsingPATCH1(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -11423,8 +11357,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
     return {
         /**
          * 
-         * @summary activateAllowedAddress
-         * @param {ActivateAllowedAddressRequest} request request
+         * @summary activateAllowedAddresses
+         * @param {ActivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -11433,8 +11367,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedAddressUsingPOST1(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return KlayWalletControllerApiFp(configuration).activateAllowedAddressUsingPOST1(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        activateAllowedAddressesUsingPOST1(request: ActivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return KlayWalletControllerApiFp(configuration).activateAllowedAddressesUsingPOST1(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -11500,6 +11434,7 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * 
          * @summary deleteAllowedAddress
          * @param {string} allowedAddressId allowedAddressId
+         * @param {DeleteAllowedAddressRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -11508,8 +11443,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAllowedAddressUsingDELETE1(allowedAddressId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return KlayWalletControllerApiFp(configuration).deleteAllowedAddressUsingDELETE1(allowedAddressId, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        deleteAllowedAddressUsingDELETE1(allowedAddressId: string, request: DeleteAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return KlayWalletControllerApiFp(configuration).deleteAllowedAddressUsingDELETE1(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -11549,10 +11484,10 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
         },
         /**
          * 
-         * @summary getAllowedAddresses
+         * @summary getAllowedAddressesByCoinId
+         * @param {string} coinId coin_id
          * @param {string} walletId walletId
          * @param {string} [accountId] 
-         * @param {number} [coinId] coin_id
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -11566,8 +11501,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedAddressesUsingGET1(walletId: string, accountId?: string, coinId?: number, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-            return KlayWalletControllerApiFp(configuration).getAllowedAddressesUsingGET1(walletId, accountId, coinId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        getAllowedAddressesByCoinIdUsingGET1(coinId: string, walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getAllowedAddressesByCoinIdUsingGET1(coinId, walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
         },
         /**
          * 
@@ -11586,6 +11521,7 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
         /**
          * 
          * @summary getMasterWalletBalance
+         * @param {'true'} flag flag
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -11594,8 +11530,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletBalanceUsingGET2(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return KlayWalletControllerApiFp(configuration).getMasterWalletBalanceUsingGET2(walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        getMasterWalletBalanceUsingGET3(flag: 'true', walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return KlayWalletControllerApiFp(configuration).getMasterWalletBalanceUsingGET3(flag, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -11714,8 +11650,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
         },
         /**
          * 
-         * @summary inactivateAllowedAddress
-         * @param {InactivateAllowedAddressRequest} request request
+         * @summary inactivateAllowedAddresses
+         * @param {InactivateAllowedAddressesRequest} request request
          * @param {string} walletId walletId
          * @param {string} [accountId] 
          * @param {string} [organizationId] 
@@ -11724,8 +11660,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedAddressUsingPOST1(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return KlayWalletControllerApiFp(configuration).inactivateAllowedAddressUsingPOST1(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        inactivateAllowedAddressesUsingPOST1(request: InactivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+            return KlayWalletControllerApiFp(configuration).inactivateAllowedAddressesUsingPOST1(request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -11742,22 +11678,6 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          */
         patchAccountKeyUsingPATCH1(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
             return KlayWalletControllerApiFp(configuration).patchAccountKeyUsingPATCH1(updateAccountKeyRequest, walletId, accountId, needOTP, organizationId, otpKey, roles, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary patchAllowedAddressLabel
-         * @param {string} allowedAddressId allowedAddressId
-         * @param {PatchAllowedAddressLabelRequest} request request
-         * @param {string} walletId walletId
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchAllowedAddressLabelUsingPATCH1(allowedAddressId: string, request: PatchAllowedAddressLabelRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return KlayWalletControllerApiFp(configuration).patchAllowedAddressLabelUsingPATCH1(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
         },
         /**
          * 
@@ -11880,8 +11800,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
 export class KlayWalletControllerApi extends BaseAPI {
     /**
      * 
-     * @summary activateAllowedAddress
-     * @param {ActivateAllowedAddressRequest} request request
+     * @summary activateAllowedAddresses
+     * @param {ActivateAllowedAddressesRequest} request request
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -11891,8 +11811,8 @@ export class KlayWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayWalletControllerApi
      */
-    public activateAllowedAddressUsingPOST1(request: ActivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return KlayWalletControllerApiFp(this.configuration).activateAllowedAddressUsingPOST1(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public activateAllowedAddressesUsingPOST1(request: ActivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).activateAllowedAddressesUsingPOST1(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -11967,6 +11887,7 @@ export class KlayWalletControllerApi extends BaseAPI {
      * 
      * @summary deleteAllowedAddress
      * @param {string} allowedAddressId allowedAddressId
+     * @param {DeleteAllowedAddressRequest} request request
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -11976,8 +11897,8 @@ export class KlayWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayWalletControllerApi
      */
-    public deleteAllowedAddressUsingDELETE1(allowedAddressId: string, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return KlayWalletControllerApiFp(this.configuration).deleteAllowedAddressUsingDELETE1(allowedAddressId, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public deleteAllowedAddressUsingDELETE1(allowedAddressId: string, request: DeleteAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).deleteAllowedAddressUsingDELETE1(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -12022,10 +11943,10 @@ export class KlayWalletControllerApi extends BaseAPI {
 
     /**
      * 
-     * @summary getAllowedAddresses
+     * @summary getAllowedAddressesByCoinId
+     * @param {string} coinId coin_id
      * @param {string} walletId walletId
      * @param {string} [accountId] 
-     * @param {number} [coinId] coin_id
      * @param {number} [offset] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
@@ -12040,8 +11961,8 @@ export class KlayWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayWalletControllerApi
      */
-    public getAllowedAddressesUsingGET1(walletId: string, accountId?: string, coinId?: number, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-        return KlayWalletControllerApiFp(this.configuration).getAllowedAddressesUsingGET1(walletId, accountId, coinId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    public getAllowedAddressesByCoinIdUsingGET1(coinId: string, walletId: string, accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getAllowedAddressesByCoinIdUsingGET1(coinId, walletId, accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -12063,6 +11984,7 @@ export class KlayWalletControllerApi extends BaseAPI {
     /**
      * 
      * @summary getMasterWalletBalance
+     * @param {'true'} flag flag
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -12072,8 +11994,8 @@ export class KlayWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayWalletControllerApi
      */
-    public getMasterWalletBalanceUsingGET2(walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return KlayWalletControllerApiFp(this.configuration).getMasterWalletBalanceUsingGET2(walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public getMasterWalletBalanceUsingGET3(flag: 'true', walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getMasterWalletBalanceUsingGET3(flag, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -12209,8 +12131,8 @@ export class KlayWalletControllerApi extends BaseAPI {
 
     /**
      * 
-     * @summary inactivateAllowedAddress
-     * @param {InactivateAllowedAddressRequest} request request
+     * @summary inactivateAllowedAddresses
+     * @param {InactivateAllowedAddressesRequest} request request
      * @param {string} walletId walletId
      * @param {string} [accountId] 
      * @param {string} [organizationId] 
@@ -12220,8 +12142,8 @@ export class KlayWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayWalletControllerApi
      */
-    public inactivateAllowedAddressUsingPOST1(request: InactivateAllowedAddressRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return KlayWalletControllerApiFp(this.configuration).inactivateAllowedAddressUsingPOST1(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public inactivateAllowedAddressesUsingPOST1(request: InactivateAllowedAddressesRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).inactivateAllowedAddressesUsingPOST1(request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -12240,24 +12162,6 @@ export class KlayWalletControllerApi extends BaseAPI {
      */
     public patchAccountKeyUsingPATCH1(updateAccountKeyRequest: UpdateAccountKeyRequest, walletId: string, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
         return KlayWalletControllerApiFp(this.configuration).patchAccountKeyUsingPATCH1(updateAccountKeyRequest, walletId, accountId, needOTP, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary patchAllowedAddressLabel
-     * @param {string} allowedAddressId allowedAddressId
-     * @param {PatchAllowedAddressLabelRequest} request request
-     * @param {string} walletId walletId
-     * @param {string} [accountId] 
-     * @param {string} [organizationId] 
-     * @param {string} [otpKey] 
-     * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof KlayWalletControllerApi
-     */
-    public patchAllowedAddressLabelUsingPATCH1(allowedAddressId: string, request: PatchAllowedAddressLabelRequest, walletId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return KlayWalletControllerApiFp(this.configuration).patchAllowedAddressLabelUsingPATCH1(allowedAddressId, request, walletId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
     }
 
     /**
