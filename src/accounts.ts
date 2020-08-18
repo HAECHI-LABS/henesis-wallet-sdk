@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { Client } from "./httpClient";
 import { Key, Token } from "./types";
 import {
@@ -45,28 +44,23 @@ export class Accounts {
     this.client = client;
   }
 
-  public async me(): Promise<Account> {
-    const response = await this.client.get<AccountDTO>(`${this.baseUrl}/me`);
-    return response;
+  me(): Promise<Account> {
+    return this.client.get<AccountDTO>(`${this.baseUrl}/me`);
   }
 
-  public async login(
+  login(
     email: string,
     password: string,
     otpCode?: string
   ): Promise<AccountWithOTP> {
-    const response = await this.client.post<LoginResponse>(
-      `${this.baseUrl}/login`,
-      {
-        email,
-        password,
-        otpCode,
-      }
-    );
-    return response;
+    return this.client.post<LoginResponse>(`${this.baseUrl}/login`, {
+      email,
+      password,
+      otpCode,
+    });
   }
 
-  public async verify(params: {
+  async verify(params: {
     identifier: string;
     accountId: string;
   }): Promise<void> {
@@ -79,7 +73,7 @@ export class Accounts {
     );
   }
 
-  public async changeName(firstName: string, lastName: string): Promise<void> {
+  async changeName(firstName: string, lastName: string): Promise<void> {
     const params: ChangeAccountNameRequest = {
       firstName,
       lastName,
@@ -87,7 +81,7 @@ export class Accounts {
     await this.client.patch<AccountDTO>(`${this.baseUrl}/name`, params);
   }
 
-  public async changePassword(
+  async changePassword(
     password: string,
     newPassword: string,
     otpCode?: string
@@ -100,31 +94,23 @@ export class Accounts {
     await this.client.patch(`${this.baseUrl}/password`, params);
   }
 
-  public async createAccessToken(expiresIn?: number): Promise<Token> {
+  createAccessToken(expiresIn?: number): Promise<Token> {
     const requestExpiresIn = expiresIn || this.DEFAULT_TOKEN_EXPIRED_TIME;
-    const response = await this.client.post<AccessTokenDTO>(
-      `${this.baseUrl}/token`,
-      {
-        expiresIn: requestExpiresIn,
-      }
-    );
-    return response;
+    return this.client.post<AccessTokenDTO>(`${this.baseUrl}/token`, {
+      expiresIn: requestExpiresIn,
+    });
   }
 
-  public async refreshShortAccessToken(otpCode?: string): Promise<Token> {
-    const response = await this.client.post<AccessTokenDTO>(
+  refreshShortAccessToken(otpCode?: string): Promise<Token> {
+    return this.client.post<AccessTokenDTO>(
       `${this.baseUrl}/token?type=short`,
       {
         otpCode,
       }
     );
-    return response;
   }
 
-  public async getAccessToken(): Promise<Token> {
-    const response = await this.client.get<AccessTokenDTO>(
-      `${this.baseUrl}/token`
-    );
-    return response;
+  getAccessToken(): Promise<Token> {
+    return this.client.get<AccessTokenDTO>(`${this.baseUrl}/token`);
   }
 }
