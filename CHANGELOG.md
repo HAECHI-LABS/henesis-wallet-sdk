@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.3.1...v2.3.2) (2020-08-18)
+
+
+### Bug Fixes
+
+* fix raw transaction null error ([503b673](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/503b6739c9c7f036804b23549587d21a14c2c5df))
+* fix replace url ([6fde791](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6fde791496ccbfa225ec97e6703cd7f496131f30))
+* update allowed addresses sdk ([99372ab](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/99372abe88b7fd1f8e79e33b0061b8aa01efdcaa))
+
+
+
+
+
 ## [2.3.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.3.0...v2.3.1) (2020-08-14)
 
 
