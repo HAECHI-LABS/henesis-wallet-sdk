@@ -1,7 +1,10 @@
 /// <reference path="../src/typings/index.d.ts" />
-import { SDK } from "../src";
-import { EthMasterWallet } from "../src/eth/wallet";
+import {SDK} from "../src";
+import {EthMasterWallet} from "../src/eth/wallet";
 import "dotenv/config";
+import {CreateAllowedAddressRequest} from "../src/__generate__/eth";
+import WhitelistTypeEnum = CreateAllowedAddressRequest.WhitelistTypeEnum;
+import AllowedCoinTypeEnum = CreateAllowedAddressRequest.AllowedCoinTypeEnum;
 
 async function main() {
   const sdk = new SDK({
@@ -14,15 +17,16 @@ async function main() {
   console.log(await wallet.getAllowedAddress("123"));
   console.log(await wallet.getAllowedAddresses());
   console.log(await wallet.createAllowedAddress({
-    otpCode: "123",
     label: "hello",
     address: "address",
-    coinId: "coinId"
+    coinId: 123,
+    whitelistType: WhitelistTypeEnum.ALL,
+    allowedCoinType: AllowedCoinTypeEnum.SINGLE,
+    otpCode: "123",
   }));
-  console.log(await wallet.activateAllowedAddress("otp"));
-  console.log(await wallet.inactivateAllowedAddress("otp"));
-  console.log(await wallet.patchAllowedAddressLabel("id", "label"));
-  console.log(await wallet.deleteAllowedAddress("id"));
+  console.log(await wallet.activateAllowedAddresses("otp"));
+  console.log(await wallet.inactivateAllowedAddresses("otp"));
+  console.log(await wallet.deleteAllowedAddress("id", "otp"));
 }
 
 main().catch((e) => console.error(e));
