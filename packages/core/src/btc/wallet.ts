@@ -95,6 +95,7 @@ export interface BtcCreateRawTransaction {
 export interface BtcMasterWalletData extends WalletData {
   orgId: string;
   accountKey: Key;
+  whitelistActivated: boolean;
 }
 
 export interface CreateMasterWalletResponse {

@@ -48,6 +48,7 @@ export interface EthWalletData extends WalletData {
 export interface EthMasterWalletData extends EthWalletData {
   accountKey: Key;
   encryptionKey: string;
+  whitelistActivated: boolean;
 }
 
 export interface EthUserWalletData
