@@ -273,6 +273,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     );
     return [
       {
+        coinId: null,
         symbol: "BTC",
         amount: BNConverter.hexStringToBN(String(response.balance)),
         spendableAmount: BNConverter.hexStringToBN(

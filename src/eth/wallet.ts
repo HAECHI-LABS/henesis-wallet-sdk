@@ -436,6 +436,7 @@ export class EthMasterWallet extends EthLikeWallet {
     );
 
     return balances.map((balance) => ({
+      coinId: balance.coinId,
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(String(balance.amount)),
       coinType: balance.coinType as any,
@@ -656,6 +657,7 @@ export class EthUserWallet extends EthLikeWallet {
     );
 
     return balances.map((balance) => ({
+      coinId: balance.coinId,
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(String(balance.amount)),
       coinType: balance.coinType as any,
