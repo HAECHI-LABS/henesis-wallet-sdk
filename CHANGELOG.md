@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.3.3...v2.3.4) (2020-08-19)
+
+
+### Bug Fixes
+
+* add coinId to Balance ([e7e1688](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e7e1688282d00f1e5c80f9a938a5e46bf7f1c319))
+* add whitelistActivated field to master wallet data ([3eb5e3d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3eb5e3d1bbd1889ba978c23180359414b545ee39))
+
+
+
+
+
 ## [2.3.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.3.2...v2.3.3) (2020-08-18)
 
 **Note:** Version bump only for package henesis-wallet-sdk
