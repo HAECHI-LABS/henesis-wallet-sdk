@@ -11,6 +11,7 @@ export interface Keychains {
 }
 
 export interface Balance {
+  coinId: number | null;
   coinType: string;
   amount: BN;
   spendableAmount?: BN;
