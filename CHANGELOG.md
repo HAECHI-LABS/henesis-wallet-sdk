@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.3.4...v2.3.5) (2020-08-21)
+
+
+### Bug Fixes
+
+* update whitelist address interface ([053e0ce](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/053e0ce9417bb2746f6e3a50b76992798a39e7ea))
+
+
+
+
+
 ## [2.3.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.3.3...v2.3.4) (2020-08-19)
 
 
