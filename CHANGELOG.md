@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.3.5...v2.3.6) (2020-08-21)
+
+
+### Bug Fixes
+
+* add createdAt at allowed ip dto ([680bfc3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/680bfc366c6425517158cefd959a956fcdbe887d))
+
+
+
+
+
 ## [2.3.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.3.4...v2.3.5) (2020-08-21)
 
 
