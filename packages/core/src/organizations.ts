@@ -28,6 +28,7 @@ export interface AllowedIp {
   ipAddress: string;
   location: string | null;
   label: string;
+  createdAt: string;
 }
 
 export interface AllowedIpsPaginationOptions extends PaginationOptions {}
