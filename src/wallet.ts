@@ -303,10 +303,10 @@ export abstract class Wallet<T> {
 
   async createAllowedAddress(params: {
     address: string;
-    label: string;
     whitelistType: WhitelistType;
     allowedCoinType: AllowedCoinType;
     otpCode: string;
+    label: string | null;
     coinId: number | null;
   }): Promise<AllowedAddress> {
     const request: CreateAllowedAddressRequest = {

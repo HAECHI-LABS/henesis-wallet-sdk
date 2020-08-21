@@ -740,6 +740,50 @@ export namespace ModelAndView {
 /**
  * 
  * @export
+ * @interface NotifyRequest
+ */
+export interface NotifyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotifyRequest
+     */
+    content?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof NotifyRequest
+     */
+    targets?: Array<NotifyRequest.TargetsEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotifyRequest
+     */
+    title?: string;
+}
+
+/**
+ * @export
+ * @namespace NotifyRequest
+ */
+export namespace NotifyRequest {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum TargetsEnum {
+        COIN = <any> 'COIN',
+        VIEWER = <any> 'VIEWER',
+        ADMIN = <any> 'ADMIN',
+        HAECHI = <any> 'HAECHI',
+        SPENDER = <any> 'SPENDER'
+    }
+}
+
+/**
+ * 
+ * @export
  * @interface OTPDTO
  */
 export interface OTPDTO {
@@ -1264,13 +1308,16 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
          * @summary changeAccountName
          * @param {ChangeAccountNameRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        changeAccountNameUsingPATCH(request: ChangeAccountNameRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        changeAccountNameUsingPATCH(request: ChangeAccountNameRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
                 throw new RequiredError('request','Required parameter request was null or undefined when calling changeAccountNameUsingPATCH.');
@@ -1285,6 +1332,14 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -1295,6 +1350,10 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1313,67 +1372,18 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary createAccessToken
-         * @param {CreateAccessTokenRequest} request request
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAccessTokenUsingPOST(request: CreateAccessTokenRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
-            // verify required parameter 'request' is not null or undefined
-            if (request === null || request === undefined) {
-                throw new RequiredError('request','Required parameter request was null or undefined when calling createAccessTokenUsingPOST.');
-            }
-            const localVarPath = `/api/v2/accounts/token`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (accountId !== undefined) {
-                localVarQueryParameter['accountId'] = accountId;
-            }
-
-            if (organizationId !== undefined) {
-                localVarQueryParameter['organizationId'] = organizationId;
-            }
-
-            if (otpKey !== undefined) {
-                localVarQueryParameter['otpKey'] = otpKey;
-            }
-
-            if (roles) {
-                localVarQueryParameter['roles'] = roles;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreateAccessTokenRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary deleteAccessToken
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAccessTokenUsingDELETE(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        deleteAccessTokenUsingDELETE(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             const localVarPath = `/api/v2/accounts/token`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
@@ -1384,6 +1394,14 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -1394,6 +1412,10 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -1410,13 +1432,16 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
          * 
          * @summary getAccessToken
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccessTokenUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        getAccessTokenUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             const localVarPath = `/api/v2/accounts/token`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -1425,6 +1450,14 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
             }
 
             if (organizationId !== undefined) {
@@ -1437,6 +1470,10 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -1453,13 +1490,16 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
          * 
          * @summary getAccount
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccountUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        getAccountUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             const localVarPath = `/api/v2/accounts/me`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -1468,6 +1508,14 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
             }
 
             if (organizationId !== undefined) {
@@ -1480,6 +1528,10 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -1536,6 +1588,83 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
         },
         /**
          * 
+         * @summary refreshShortAccessToken
+         * @param {RefreshAccessTokenRequest} request request
+         * @param {'short'} type 
+         * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        refreshShortAccessTokenUsingPOST(request: RefreshAccessTokenRequest, type: 'short', accountId?: string, firstName?: string, lastName?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling refreshShortAccessTokenUsingPOST.');
+            }
+            // verify required parameter 'type' is not null or undefined
+            if (type === null || type === undefined) {
+                throw new RequiredError('type','Required parameter type was null or undefined when calling refreshShortAccessTokenUsingPOST.');
+            }
+            const localVarPath = `/api/v2/accounts/token`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            if (roles) {
+                localVarQueryParameter['roles'] = roles;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"RefreshAccessTokenRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary signup
          * @param {SignUpRequest} request request
          * @param {*} [options] Override http request option.
@@ -1571,13 +1700,16 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
          * @summary updateOTPInitialize
          * @param {UpdateOTPInitializeRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateOTPInitializeUsingPATCH(request: UpdateOTPInitializeRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        updateOTPInitializeUsingPATCH(request: UpdateOTPInitializeRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
                 throw new RequiredError('request','Required parameter request was null or undefined when calling updateOTPInitializeUsingPATCH.');
@@ -1592,6 +1724,14 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -1602,6 +1742,10 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1623,13 +1767,16 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
          * @summary updateOrganization
          * @param {UpdateOrganizationRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateOrganizationUsingPATCH(request: UpdateOrganizationRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        updateOrganizationUsingPATCH(request: UpdateOrganizationRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
                 throw new RequiredError('request','Required parameter request was null or undefined when calling updateOrganizationUsingPATCH.');
@@ -1644,6 +1791,14 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -1654,6 +1809,10 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1675,14 +1834,17 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
          * @summary updatePassword
          * @param {UpdatePasswordRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {boolean} [needOTP] needOTP
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, firstName?: string, lastName?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
                 throw new RequiredError('request','Required parameter request was null or undefined when calling updatePasswordUsingPATCH.');
@@ -1697,6 +1859,14 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -1707,6 +1877,10 @@ export const AccountControllerApiFetchParamCreator = function (configuration?: C
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -1779,37 +1953,17 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          * @summary changeAccountName
          * @param {ChangeAccountNameRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        changeAccountNameUsingPATCH(request: ChangeAccountNameRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccountDTO> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).changeAccountNameUsingPATCH(request, accountId, organizationId, otpKey, roles, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary createAccessToken
-         * @param {CreateAccessTokenRequest} request request
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAccessTokenUsingPOST(request: CreateAccessTokenRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccessTokenDTO> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).createAccessTokenUsingPOST(request, accountId, organizationId, otpKey, roles, options);
+        changeAccountNameUsingPATCH(request: ChangeAccountNameRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccountDTO> {
+            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).changeAccountNameUsingPATCH(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1824,14 +1978,17 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          * 
          * @summary deleteAccessToken
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAccessTokenUsingDELETE(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).deleteAccessTokenUsingDELETE(accountId, organizationId, otpKey, roles, options);
+        deleteAccessTokenUsingDELETE(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).deleteAccessTokenUsingDELETE(accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1846,14 +2003,17 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          * 
          * @summary getAccessToken
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccessTokenUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccessTokenDTO> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).getAccessTokenUsingGET(accountId, organizationId, otpKey, roles, options);
+        getAccessTokenUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccessTokenDTO> {
+            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).getAccessTokenUsingGET(accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1868,14 +2028,17 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          * 
          * @summary getAccount
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccountUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccountDTO> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).getAccountUsingGET(accountId, organizationId, otpKey, roles, options);
+        getAccountUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccountDTO> {
+            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).getAccountUsingGET(accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1897,6 +2060,34 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          */
         loginUsingPOST(request: LoginRequest, browser?: string, ip?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LoginResponse> {
             const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).loginUsingPOST(request, browser, ip, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary refreshShortAccessToken
+         * @param {RefreshAccessTokenRequest} request request
+         * @param {'short'} type 
+         * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        refreshShortAccessTokenUsingPOST(request: RefreshAccessTokenRequest, type: 'short', accountId?: string, firstName?: string, lastName?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccessTokenDTO> {
+            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).refreshShortAccessTokenUsingPOST(request, type, accountId, firstName, lastName, needOTP, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1931,14 +2122,17 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          * @summary updateOTPInitialize
          * @param {UpdateOTPInitializeRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateOTPInitializeUsingPATCH(request: UpdateOTPInitializeRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).updateOTPInitializeUsingPATCH(request, accountId, organizationId, otpKey, roles, options);
+        updateOTPInitializeUsingPATCH(request: UpdateOTPInitializeRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).updateOTPInitializeUsingPATCH(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1954,14 +2148,17 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          * @summary updateOrganization
          * @param {UpdateOrganizationRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateOrganizationUsingPATCH(request: UpdateOrganizationRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).updateOrganizationUsingPATCH(request, accountId, organizationId, otpKey, roles, options);
+        updateOrganizationUsingPATCH(request: UpdateOrganizationRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).updateOrganizationUsingPATCH(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1977,15 +2174,18 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          * @summary updatePassword
          * @param {UpdatePasswordRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {boolean} [needOTP] needOTP
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).updatePasswordUsingPATCH(request, accountId, needOTP, organizationId, otpKey, roles, options);
+        updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, firstName?: string, lastName?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = AccountControllerApiFetchParamCreator(configuration).updatePasswordUsingPATCH(request, accountId, firstName, lastName, needOTP, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2031,67 +2231,65 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
          * @summary changeAccountName
          * @param {ChangeAccountNameRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        changeAccountNameUsingPATCH(request: ChangeAccountNameRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return AccountControllerApiFp(configuration).changeAccountNameUsingPATCH(request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary createAccessToken
-         * @param {CreateAccessTokenRequest} request request
-         * @param {string} [accountId] 
-         * @param {string} [organizationId] 
-         * @param {string} [otpKey] 
-         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAccessTokenUsingPOST(request: CreateAccessTokenRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return AccountControllerApiFp(configuration).createAccessTokenUsingPOST(request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        changeAccountNameUsingPATCH(request: ChangeAccountNameRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return AccountControllerApiFp(configuration).changeAccountNameUsingPATCH(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary deleteAccessToken
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAccessTokenUsingDELETE(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return AccountControllerApiFp(configuration).deleteAccessTokenUsingDELETE(accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        deleteAccessTokenUsingDELETE(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return AccountControllerApiFp(configuration).deleteAccessTokenUsingDELETE(accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary getAccessToken
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccessTokenUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return AccountControllerApiFp(configuration).getAccessTokenUsingGET(accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        getAccessTokenUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return AccountControllerApiFp(configuration).getAccessTokenUsingGET(accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary getAccount
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccountUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return AccountControllerApiFp(configuration).getAccountUsingGET(accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        getAccountUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return AccountControllerApiFp(configuration).getAccountUsingGET(accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
@@ -2104,6 +2302,25 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
          */
         loginUsingPOST(request: LoginRequest, browser?: string, ip?: string, options?: any) {
             return AccountControllerApiFp(configuration).loginUsingPOST(request, browser, ip, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary refreshShortAccessToken
+         * @param {RefreshAccessTokenRequest} request request
+         * @param {'short'} type 
+         * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
+         * @param {boolean} [needOTP] needOTP
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        refreshShortAccessTokenUsingPOST(request: RefreshAccessTokenRequest, type: 'short', accountId?: string, firstName?: string, lastName?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return AccountControllerApiFp(configuration).refreshShortAccessTokenUsingPOST(request, type, accountId, firstName, lastName, needOTP, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
@@ -2120,43 +2337,52 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
          * @summary updateOTPInitialize
          * @param {UpdateOTPInitializeRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateOTPInitializeUsingPATCH(request: UpdateOTPInitializeRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return AccountControllerApiFp(configuration).updateOTPInitializeUsingPATCH(request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        updateOTPInitializeUsingPATCH(request: UpdateOTPInitializeRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return AccountControllerApiFp(configuration).updateOTPInitializeUsingPATCH(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary updateOrganization
          * @param {UpdateOrganizationRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateOrganizationUsingPATCH(request: UpdateOrganizationRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return AccountControllerApiFp(configuration).updateOrganizationUsingPATCH(request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        updateOrganizationUsingPATCH(request: UpdateOrganizationRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return AccountControllerApiFp(configuration).updateOrganizationUsingPATCH(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary updatePassword
          * @param {UpdatePasswordRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {boolean} [needOTP] needOTP
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return AccountControllerApiFp(configuration).updatePasswordUsingPATCH(request, accountId, needOTP, organizationId, otpKey, roles, options)(fetch, basePath);
+        updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, firstName?: string, lastName?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return AccountControllerApiFp(configuration).updatePasswordUsingPATCH(request, accountId, firstName, lastName, needOTP, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
@@ -2185,76 +2411,72 @@ export class AccountControllerApi extends BaseAPI {
      * @summary changeAccountName
      * @param {ChangeAccountNameRequest} request request
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountControllerApi
      */
-    public changeAccountNameUsingPATCH(request: ChangeAccountNameRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return AccountControllerApiFp(this.configuration).changeAccountNameUsingPATCH(request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary createAccessToken
-     * @param {CreateAccessTokenRequest} request request
-     * @param {string} [accountId] 
-     * @param {string} [organizationId] 
-     * @param {string} [otpKey] 
-     * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountControllerApi
-     */
-    public createAccessTokenUsingPOST(request: CreateAccessTokenRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return AccountControllerApiFp(this.configuration).createAccessTokenUsingPOST(request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public changeAccountNameUsingPATCH(request: ChangeAccountNameRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return AccountControllerApiFp(this.configuration).changeAccountNameUsingPATCH(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary deleteAccessToken
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountControllerApi
      */
-    public deleteAccessTokenUsingDELETE(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return AccountControllerApiFp(this.configuration).deleteAccessTokenUsingDELETE(accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public deleteAccessTokenUsingDELETE(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return AccountControllerApiFp(this.configuration).deleteAccessTokenUsingDELETE(accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary getAccessToken
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountControllerApi
      */
-    public getAccessTokenUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return AccountControllerApiFp(this.configuration).getAccessTokenUsingGET(accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public getAccessTokenUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return AccountControllerApiFp(this.configuration).getAccessTokenUsingGET(accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary getAccount
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountControllerApi
      */
-    public getAccountUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return AccountControllerApiFp(this.configuration).getAccountUsingGET(accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public getAccountUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return AccountControllerApiFp(this.configuration).getAccountUsingGET(accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2269,6 +2491,27 @@ export class AccountControllerApi extends BaseAPI {
      */
     public loginUsingPOST(request: LoginRequest, browser?: string, ip?: string, options?: any) {
         return AccountControllerApiFp(this.configuration).loginUsingPOST(request, browser, ip, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary refreshShortAccessToken
+     * @param {RefreshAccessTokenRequest} request request
+     * @param {'short'} type 
+     * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
+     * @param {boolean} [needOTP] needOTP
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountControllerApi
+     */
+    public refreshShortAccessTokenUsingPOST(request: RefreshAccessTokenRequest, type: 'short', accountId?: string, firstName?: string, lastName?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return AccountControllerApiFp(this.configuration).refreshShortAccessTokenUsingPOST(request, type, accountId, firstName, lastName, needOTP, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2288,15 +2531,18 @@ export class AccountControllerApi extends BaseAPI {
      * @summary updateOTPInitialize
      * @param {UpdateOTPInitializeRequest} request request
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountControllerApi
      */
-    public updateOTPInitializeUsingPATCH(request: UpdateOTPInitializeRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return AccountControllerApiFp(this.configuration).updateOTPInitializeUsingPATCH(request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public updateOTPInitializeUsingPATCH(request: UpdateOTPInitializeRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return AccountControllerApiFp(this.configuration).updateOTPInitializeUsingPATCH(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2304,15 +2550,18 @@ export class AccountControllerApi extends BaseAPI {
      * @summary updateOrganization
      * @param {UpdateOrganizationRequest} request request
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountControllerApi
      */
-    public updateOrganizationUsingPATCH(request: UpdateOrganizationRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return AccountControllerApiFp(this.configuration).updateOrganizationUsingPATCH(request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public updateOrganizationUsingPATCH(request: UpdateOrganizationRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return AccountControllerApiFp(this.configuration).updateOrganizationUsingPATCH(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2320,16 +2569,19 @@ export class AccountControllerApi extends BaseAPI {
      * @summary updatePassword
      * @param {UpdatePasswordRequest} request request
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {boolean} [needOTP] needOTP
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AccountControllerApi
      */
-    public updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return AccountControllerApiFp(this.configuration).updatePasswordUsingPATCH(request, accountId, needOTP, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public updatePasswordUsingPATCH(request: UpdatePasswordRequest, accountId?: string, firstName?: string, lastName?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return AccountControllerApiFp(this.configuration).updatePasswordUsingPATCH(request, accountId, firstName, lastName, needOTP, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2356,11 +2608,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
     return {
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingDELETE(options: any = {}): FetchArgs {
+        errorHtmlUsingDELETE(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
@@ -2379,11 +2631,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingGET(options: any = {}): FetchArgs {
+        errorHtmlUsingGET(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -2402,11 +2654,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingHEAD(options: any = {}): FetchArgs {
+        errorHtmlUsingHEAD(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'HEAD' }, options);
@@ -2425,11 +2677,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingOPTIONS(options: any = {}): FetchArgs {
+        errorHtmlUsingOPTIONS(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'OPTIONS' }, options);
@@ -2448,11 +2700,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPATCH(options: any = {}): FetchArgs {
+        errorHtmlUsingPATCH(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
@@ -2471,11 +2723,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPOST(options: any = {}): FetchArgs {
+        errorHtmlUsingPOST(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -2494,11 +2746,11 @@ export const BasicErrorControllerApiFetchParamCreator = function (configuration?
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPUT(options: any = {}): FetchArgs {
+        errorHtmlUsingPUT(options: any = {}): FetchArgs {
             const localVarPath = `/error`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
@@ -2526,12 +2778,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
     return {
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingDELETE(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingDELETE(options);
+        errorHtmlUsingDELETE(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingDELETE(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2544,12 +2796,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingGET(options);
+        errorHtmlUsingGET(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingGET(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2562,12 +2814,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingHEAD(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingHEAD(options);
+        errorHtmlUsingHEAD(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingHEAD(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2580,12 +2832,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingOPTIONS(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingOPTIONS(options);
+        errorHtmlUsingOPTIONS(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingOPTIONS(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2598,12 +2850,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPATCH(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPATCH(options);
+        errorHtmlUsingPATCH(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPATCH(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2616,12 +2868,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPOST(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPOST(options);
+        errorHtmlUsingPOST(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPOST(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2634,12 +2886,12 @@ export const BasicErrorControllerApiFp = function(configuration?: Configuration)
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPUT(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<{ [key: string]: any; }> {
-            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorUsingPUT(options);
+        errorHtmlUsingPUT(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ModelAndView> {
+            const localVarFetchArgs = BasicErrorControllerApiFetchParamCreator(configuration).errorHtmlUsingPUT(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2661,66 +2913,66 @@ export const BasicErrorControllerApiFactory = function (configuration?: Configur
     return {
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingDELETE(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingDELETE(options)(fetch, basePath);
+        errorHtmlUsingDELETE(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingDELETE(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingGET(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingGET(options)(fetch, basePath);
+        errorHtmlUsingGET(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingGET(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingHEAD(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingHEAD(options)(fetch, basePath);
+        errorHtmlUsingHEAD(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingHEAD(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingOPTIONS(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingOPTIONS(options)(fetch, basePath);
+        errorHtmlUsingOPTIONS(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingOPTIONS(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPATCH(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingPATCH(options)(fetch, basePath);
+        errorHtmlUsingPATCH(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPATCH(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPOST(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingPOST(options)(fetch, basePath);
+        errorHtmlUsingPOST(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPOST(options)(fetch, basePath);
         },
         /**
          * 
-         * @summary error
+         * @summary errorHtml
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        errorUsingPUT(options?: any) {
-            return BasicErrorControllerApiFp(configuration).errorUsingPUT(options)(fetch, basePath);
+        errorHtmlUsingPUT(options?: any) {
+            return BasicErrorControllerApiFp(configuration).errorHtmlUsingPUT(options)(fetch, basePath);
         },
     };
 };
@@ -2734,79 +2986,79 @@ export const BasicErrorControllerApiFactory = function (configuration?: Configur
 export class BasicErrorControllerApi extends BaseAPI {
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingDELETE(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingDELETE(options)(this.fetch, this.basePath);
+    public errorHtmlUsingDELETE(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingDELETE(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingGET(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingGET(options)(this.fetch, this.basePath);
+    public errorHtmlUsingGET(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingGET(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingHEAD(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingHEAD(options)(this.fetch, this.basePath);
+    public errorHtmlUsingHEAD(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingHEAD(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingOPTIONS(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingOPTIONS(options)(this.fetch, this.basePath);
+    public errorHtmlUsingOPTIONS(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingOPTIONS(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingPATCH(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingPATCH(options)(this.fetch, this.basePath);
+    public errorHtmlUsingPATCH(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPATCH(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingPOST(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingPOST(options)(this.fetch, this.basePath);
+    public errorHtmlUsingPOST(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPOST(options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary error
+     * @summary errorHtml
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BasicErrorControllerApi
      */
-    public errorUsingPUT(options?: any) {
-        return BasicErrorControllerApiFp(this.configuration).errorUsingPUT(options)(this.fetch, this.basePath);
+    public errorHtmlUsingPUT(options?: any) {
+        return BasicErrorControllerApiFp(this.configuration).errorHtmlUsingPUT(options)(this.fetch, this.basePath);
     }
 
 }
@@ -2819,15 +3071,21 @@ export const IdentityControllerApiFetchParamCreator = function (configuration?: 
     return {
         /**
          * 
-         * @summary getIdentity
+         * @summary getVerifiedIdentity
          * @param {string} accountId accountId
+         * @param {string} [browser] 
+         * @param {string} [email] 
+         * @param {string} [id] 
+         * @param {string} [ip] 
+         * @param {boolean} [longType] 
+         * @param {'LONG' | 'SHORT'} [type] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIdentityUsingGET(accountId: string, options: any = {}): FetchArgs {
+        getVerifiedIdentityUsingGET(accountId: string, browser?: string, email?: string, id?: string, ip?: string, longType?: boolean, type?: 'LONG' | 'SHORT', options: any = {}): FetchArgs {
             // verify required parameter 'accountId' is not null or undefined
             if (accountId === null || accountId === undefined) {
-                throw new RequiredError('accountId','Required parameter accountId was null or undefined when calling getIdentityUsingGET.');
+                throw new RequiredError('accountId','Required parameter accountId was null or undefined when calling getVerifiedIdentityUsingGET.');
             }
             const localVarPath = `/api/v2/identities`;
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -2837,6 +3095,30 @@ export const IdentityControllerApiFetchParamCreator = function (configuration?: 
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (browser !== undefined) {
+                localVarQueryParameter['browser'] = browser;
+            }
+
+            if (email !== undefined) {
+                localVarQueryParameter['email'] = email;
+            }
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (ip !== undefined) {
+                localVarQueryParameter['ip'] = ip;
+            }
+
+            if (longType !== undefined) {
+                localVarQueryParameter['longType'] = longType;
+            }
+
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -2860,13 +3142,19 @@ export const IdentityControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary getIdentity
+         * @summary getVerifiedIdentity
          * @param {string} accountId accountId
+         * @param {string} [browser] 
+         * @param {string} [email] 
+         * @param {string} [id] 
+         * @param {string} [ip] 
+         * @param {boolean} [longType] 
+         * @param {'LONG' | 'SHORT'} [type] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIdentityUsingGET(accountId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<IdentityDTO> {
-            const localVarFetchArgs = IdentityControllerApiFetchParamCreator(configuration).getIdentityUsingGET(accountId, options);
+        getVerifiedIdentityUsingGET(accountId: string, browser?: string, email?: string, id?: string, ip?: string, longType?: boolean, type?: 'LONG' | 'SHORT', options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<IdentityDTO> {
+            const localVarFetchArgs = IdentityControllerApiFetchParamCreator(configuration).getVerifiedIdentityUsingGET(accountId, browser, email, id, ip, longType, type, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2888,13 +3176,19 @@ export const IdentityControllerApiFactory = function (configuration?: Configurat
     return {
         /**
          * 
-         * @summary getIdentity
+         * @summary getVerifiedIdentity
          * @param {string} accountId accountId
+         * @param {string} [browser] 
+         * @param {string} [email] 
+         * @param {string} [id] 
+         * @param {string} [ip] 
+         * @param {boolean} [longType] 
+         * @param {'LONG' | 'SHORT'} [type] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getIdentityUsingGET(accountId: string, options?: any) {
-            return IdentityControllerApiFp(configuration).getIdentityUsingGET(accountId, options)(fetch, basePath);
+        getVerifiedIdentityUsingGET(accountId: string, browser?: string, email?: string, id?: string, ip?: string, longType?: boolean, type?: 'LONG' | 'SHORT', options?: any) {
+            return IdentityControllerApiFp(configuration).getVerifiedIdentityUsingGET(accountId, browser, email, id, ip, longType, type, options)(fetch, basePath);
         },
     };
 };
@@ -2908,14 +3202,20 @@ export const IdentityControllerApiFactory = function (configuration?: Configurat
 export class IdentityControllerApi extends BaseAPI {
     /**
      * 
-     * @summary getIdentity
+     * @summary getVerifiedIdentity
      * @param {string} accountId accountId
+     * @param {string} [browser] 
+     * @param {string} [email] 
+     * @param {string} [id] 
+     * @param {string} [ip] 
+     * @param {boolean} [longType] 
+     * @param {'LONG' | 'SHORT'} [type] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof IdentityControllerApi
      */
-    public getIdentityUsingGET(accountId: string, options?: any) {
-        return IdentityControllerApiFp(this.configuration).getIdentityUsingGET(accountId, options)(this.fetch, this.basePath);
+    public getVerifiedIdentityUsingGET(accountId: string, browser?: string, email?: string, id?: string, ip?: string, longType?: boolean, type?: 'LONG' | 'SHORT', options?: any) {
+        return IdentityControllerApiFp(this.configuration).getVerifiedIdentityUsingGET(accountId, browser, email, id, ip, longType, type, options)(this.fetch, this.basePath);
     }
 
 }
@@ -3174,13 +3474,16 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * @summary activateAllowedIps
          * @param {ActivateAllowedIpsRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedIpsUsingPOST(request: ActivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        activateAllowedIpsUsingPOST(request: ActivateAllowedIpsRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
                 throw new RequiredError('request','Required parameter request was null or undefined when calling activateAllowedIpsUsingPOST.');
@@ -3195,6 +3498,14 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -3205,6 +3516,10 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -3226,13 +3541,16 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * @summary createAllowedIp
          * @param {CreateAllowedIpRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createAllowedIpUsingPOST(request: CreateAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        createAllowedIpUsingPOST(request: CreateAllowedIpRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
                 throw new RequiredError('request','Required parameter request was null or undefined when calling createAllowedIpUsingPOST.');
@@ -3247,6 +3565,14 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -3257,6 +3583,10 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -3309,13 +3639,16 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * 
          * @summary createSecret
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createSecretUsingPOST(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        createSecretUsingPOST(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             const localVarPath = `/api/v2/organizations/secret`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
@@ -3324,6 +3657,14 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
             }
 
             if (organizationId !== undefined) {
@@ -3336,6 +3677,10 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -3354,13 +3699,16 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * @param {string} allowedIpId allowedIpId
          * @param {DeleteAllowedIpRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAllowedIpUsingDELETE(allowedIpId: string, request: DeleteAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        deleteAllowedIpUsingDELETE(allowedIpId: string, request: DeleteAllowedIpRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'allowedIpId' is not null or undefined
             if (allowedIpId === null || allowedIpId === undefined) {
                 throw new RequiredError('allowedIpId','Required parameter allowedIpId was null or undefined when calling deleteAllowedIpUsingDELETE.');
@@ -3380,6 +3728,14 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -3390,6 +3746,10 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -3410,13 +3770,16 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * 
          * @summary getAccountByOrganizationId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccountByOrganizationIdUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        getAccountByOrganizationIdUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             const localVarPath = `/api/v2/organizations/accounts`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -3425,6 +3788,14 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
             }
 
             if (organizationId !== undefined) {
@@ -3437,6 +3808,10 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -3482,6 +3857,8 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * 
          * @summary getAllowedIps
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -3492,10 +3869,11 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * @param {boolean} [sortSorted] 
          * @param {boolean} [sortUnsorted] 
          * @param {boolean} [unpaged] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedIpsUsingGET(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+        getAllowedIpsUsingGET(accountId?: string, firstName?: string, lastName?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, username?: string, options: any = {}): FetchArgs {
             const localVarPath = `/api/v2/organizations/allowed-ips`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -3504,6 +3882,14 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
             }
 
             if (offset !== undefined) {
@@ -3546,6 +3932,10 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
                 localVarQueryParameter['unpaged'] = unpaged;
             }
 
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
+            }
+
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
@@ -3560,13 +3950,16 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * 
          * @summary getOrganization
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        getOrganizationUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             const localVarPath = `/api/v2/organizations/me`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -3575,6 +3968,14 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
             }
 
             if (organizationId !== undefined) {
@@ -3587,6 +3988,10 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -3604,13 +4009,16 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * @summary inactivateAllowedIps
          * @param {InactivateAllowedIpsRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedIpsUsingPOST(request: InactivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        inactivateAllowedIpsUsingPOST(request: InactivateAllowedIpsRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'request' is not null or undefined
             if (request === null || request === undefined) {
                 throw new RequiredError('request','Required parameter request was null or undefined when calling inactivateAllowedIpsUsingPOST.');
@@ -3625,6 +4033,14 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -3635,6 +4051,10 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -3653,18 +4073,88 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
         },
         /**
          * 
+         * @summary notify
+         * @param {NotifyRequest} request request
+         * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyUsingPOST(request: NotifyRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
+            // verify required parameter 'request' is not null or undefined
+            if (request === null || request === undefined) {
+                throw new RequiredError('request','Required parameter request was null or undefined when calling notifyUsingPOST.');
+            }
+            const localVarPath = `/api/v2/organizations/notify`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (accountId !== undefined) {
+                localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
+            if (organizationId !== undefined) {
+                localVarQueryParameter['organizationId'] = organizationId;
+            }
+
+            if (otpKey !== undefined) {
+                localVarQueryParameter['otpKey'] = otpKey;
+            }
+
+            if (roles) {
+                localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"NotifyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(request || {}) : (request || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary patchAccountRole
          * @param {string} accountId2 accountId
          * @param {PatchAccountRoleRequest} patchAccountRoleRequest patchAccountRoleRequest
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {boolean} [needOTP] needOTP
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAccountRoleUsingPATCH(accountId2: string, patchAccountRoleRequest: PatchAccountRoleRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        patchAccountRoleUsingPATCH(accountId2: string, patchAccountRoleRequest: PatchAccountRoleRequest, accountId?: string, firstName?: string, lastName?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'accountId2' is not null or undefined
             if (accountId2 === null || accountId2 === undefined) {
                 throw new RequiredError('accountId2','Required parameter accountId2 was null or undefined when calling patchAccountRoleUsingPATCH.');
@@ -3684,6 +4174,14 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -3694,6 +4192,10 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -3716,13 +4218,16 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
          * @param {string} allowedIpId allowedIpId
          * @param {PatchAllowedIpLabelRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAllowedIpLabelUsingPATCH(allowedIpId: string, request: PatchAllowedIpLabelRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        patchAllowedIpLabelUsingPATCH(allowedIpId: string, request: PatchAllowedIpLabelRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'allowedIpId' is not null or undefined
             if (allowedIpId === null || allowedIpId === undefined) {
                 throw new RequiredError('allowedIpId','Required parameter allowedIpId was null or undefined when calling patchAllowedIpLabelUsingPATCH.');
@@ -3742,6 +4247,14 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -3752,6 +4265,10 @@ export const OrganizationControllerApiFetchParamCreator = function (configuratio
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -3782,14 +4299,17 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * @summary activateAllowedIps
          * @param {ActivateAllowedIpsRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedIpsUsingPOST(request: ActivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).activateAllowedIpsUsingPOST(request, accountId, organizationId, otpKey, roles, options);
+        activateAllowedIpsUsingPOST(request: ActivateAllowedIpsRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).activateAllowedIpsUsingPOST(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3805,14 +4325,17 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * @summary createAllowedIp
          * @param {CreateAllowedIpRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createAllowedIpUsingPOST(request: CreateAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AllowedIpDTO> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).createAllowedIpUsingPOST(request, accountId, organizationId, otpKey, roles, options);
+        createAllowedIpUsingPOST(request: CreateAllowedIpRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AllowedIpDTO> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).createAllowedIpUsingPOST(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3846,14 +4369,17 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * 
          * @summary createSecret
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createSecretUsingPOST(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CreateSecretResponse> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).createSecretUsingPOST(accountId, organizationId, otpKey, roles, options);
+        createSecretUsingPOST(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CreateSecretResponse> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).createSecretUsingPOST(accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3870,14 +4396,17 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * @param {string} allowedIpId allowedIpId
          * @param {DeleteAllowedIpRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAllowedIpUsingDELETE(allowedIpId: string, request: DeleteAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).deleteAllowedIpUsingDELETE(allowedIpId, request, accountId, organizationId, otpKey, roles, options);
+        deleteAllowedIpUsingDELETE(allowedIpId: string, request: DeleteAllowedIpRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).deleteAllowedIpUsingDELETE(allowedIpId, request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3892,14 +4421,17 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * 
          * @summary getAccountByOrganizationId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccountByOrganizationIdUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<OrgAccountDTO>> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).getAccountByOrganizationIdUsingGET(accountId, organizationId, otpKey, roles, options);
+        getAccountByOrganizationIdUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<OrgAccountDTO>> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).getAccountByOrganizationIdUsingGET(accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3933,6 +4465,8 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * 
          * @summary getAllowedIps
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -3943,11 +4477,12 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * @param {boolean} [sortSorted] 
          * @param {boolean} [sortUnsorted] 
          * @param {boolean} [unpaged] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedIpsUsingGET(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationAllowedIpDTO> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).getAllowedIpsUsingGET(accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options);
+        getAllowedIpsUsingGET(accountId?: string, firstName?: string, lastName?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationAllowedIpDTO> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).getAllowedIpsUsingGET(accountId, firstName, lastName, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3962,14 +4497,17 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * 
          * @summary getOrganization
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrganizationDTO> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).getOrganizationUsingGET(accountId, organizationId, otpKey, roles, options);
+        getOrganizationUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrganizationDTO> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).getOrganizationUsingGET(accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3985,14 +4523,43 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * @summary inactivateAllowedIps
          * @param {InactivateAllowedIpsRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedIpsUsingPOST(request: InactivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).inactivateAllowedIpsUsingPOST(request, accountId, organizationId, otpKey, roles, options);
+        inactivateAllowedIpsUsingPOST(request: InactivateAllowedIpsRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).inactivateAllowedIpsUsingPOST(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary notify
+         * @param {NotifyRequest} request request
+         * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyUsingPOST(request: NotifyRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).notifyUsingPOST(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4009,15 +4576,18 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * @param {string} accountId2 accountId
          * @param {PatchAccountRoleRequest} patchAccountRoleRequest patchAccountRoleRequest
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {boolean} [needOTP] needOTP
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAccountRoleUsingPATCH(accountId2: string, patchAccountRoleRequest: PatchAccountRoleRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccountDTO> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).patchAccountRoleUsingPATCH(accountId2, patchAccountRoleRequest, accountId, needOTP, organizationId, otpKey, roles, options);
+        patchAccountRoleUsingPATCH(accountId2: string, patchAccountRoleRequest: PatchAccountRoleRequest, accountId?: string, firstName?: string, lastName?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AccountDTO> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).patchAccountRoleUsingPATCH(accountId2, patchAccountRoleRequest, accountId, firstName, lastName, needOTP, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4034,14 +4604,17 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          * @param {string} allowedIpId allowedIpId
          * @param {PatchAllowedIpLabelRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAllowedIpLabelUsingPATCH(allowedIpId: string, request: PatchAllowedIpLabelRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AllowedIpDTO> {
-            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).patchAllowedIpLabelUsingPATCH(allowedIpId, request, accountId, organizationId, otpKey, roles, options);
+        patchAllowedIpLabelUsingPATCH(allowedIpId: string, request: PatchAllowedIpLabelRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<AllowedIpDTO> {
+            const localVarFetchArgs = OrganizationControllerApiFetchParamCreator(configuration).patchAllowedIpLabelUsingPATCH(allowedIpId, request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4066,28 +4639,34 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          * @summary activateAllowedIps
          * @param {ActivateAllowedIpsRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        activateAllowedIpsUsingPOST(request: ActivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return OrganizationControllerApiFp(configuration).activateAllowedIpsUsingPOST(request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        activateAllowedIpsUsingPOST(request: ActivateAllowedIpsRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return OrganizationControllerApiFp(configuration).activateAllowedIpsUsingPOST(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary createAllowedIp
          * @param {CreateAllowedIpRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createAllowedIpUsingPOST(request: CreateAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return OrganizationControllerApiFp(configuration).createAllowedIpUsingPOST(request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        createAllowedIpUsingPOST(request: CreateAllowedIpRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return OrganizationControllerApiFp(configuration).createAllowedIpUsingPOST(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
@@ -4103,14 +4682,17 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          * 
          * @summary createSecret
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createSecretUsingPOST(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return OrganizationControllerApiFp(configuration).createSecretUsingPOST(accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        createSecretUsingPOST(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return OrganizationControllerApiFp(configuration).createSecretUsingPOST(accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
@@ -4118,27 +4700,33 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          * @param {string} allowedIpId allowedIpId
          * @param {DeleteAllowedIpRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAllowedIpUsingDELETE(allowedIpId: string, request: DeleteAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return OrganizationControllerApiFp(configuration).deleteAllowedIpUsingDELETE(allowedIpId, request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        deleteAllowedIpUsingDELETE(allowedIpId: string, request: DeleteAllowedIpRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return OrganizationControllerApiFp(configuration).deleteAllowedIpUsingDELETE(allowedIpId, request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary getAccountByOrganizationId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccountByOrganizationIdUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return OrganizationControllerApiFp(configuration).getAccountByOrganizationIdUsingGET(accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        getAccountByOrganizationIdUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return OrganizationControllerApiFp(configuration).getAccountByOrganizationIdUsingGET(accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
@@ -4154,6 +4742,8 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          * 
          * @summary getAllowedIps
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -4164,38 +4754,62 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          * @param {boolean} [sortSorted] 
          * @param {boolean} [sortUnsorted] 
          * @param {boolean} [unpaged] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllowedIpsUsingGET(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-            return OrganizationControllerApiFp(configuration).getAllowedIpsUsingGET(accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        getAllowedIpsUsingGET(accountId?: string, firstName?: string, lastName?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, username?: string, options?: any) {
+            return OrganizationControllerApiFp(configuration).getAllowedIpsUsingGET(accountId, firstName, lastName, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary getOrganization
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrganizationUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return OrganizationControllerApiFp(configuration).getOrganizationUsingGET(accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        getOrganizationUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return OrganizationControllerApiFp(configuration).getOrganizationUsingGET(accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary inactivateAllowedIps
          * @param {InactivateAllowedIpsRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        inactivateAllowedIpsUsingPOST(request: InactivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return OrganizationControllerApiFp(configuration).inactivateAllowedIpsUsingPOST(request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        inactivateAllowedIpsUsingPOST(request: InactivateAllowedIpsRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return OrganizationControllerApiFp(configuration).inactivateAllowedIpsUsingPOST(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary notify
+         * @param {NotifyRequest} request request
+         * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
+         * @param {string} [organizationId] 
+         * @param {string} [otpKey] 
+         * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyUsingPOST(request: NotifyRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return OrganizationControllerApiFp(configuration).notifyUsingPOST(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
@@ -4203,15 +4817,18 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          * @param {string} accountId2 accountId
          * @param {PatchAccountRoleRequest} patchAccountRoleRequest patchAccountRoleRequest
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {boolean} [needOTP] needOTP
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAccountRoleUsingPATCH(accountId2: string, patchAccountRoleRequest: PatchAccountRoleRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return OrganizationControllerApiFp(configuration).patchAccountRoleUsingPATCH(accountId2, patchAccountRoleRequest, accountId, needOTP, organizationId, otpKey, roles, options)(fetch, basePath);
+        patchAccountRoleUsingPATCH(accountId2: string, patchAccountRoleRequest: PatchAccountRoleRequest, accountId?: string, firstName?: string, lastName?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return OrganizationControllerApiFp(configuration).patchAccountRoleUsingPATCH(accountId2, patchAccountRoleRequest, accountId, firstName, lastName, needOTP, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
@@ -4219,14 +4836,17 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          * @param {string} allowedIpId allowedIpId
          * @param {PatchAllowedIpLabelRequest} request request
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAllowedIpLabelUsingPATCH(allowedIpId: string, request: PatchAllowedIpLabelRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return OrganizationControllerApiFp(configuration).patchAllowedIpLabelUsingPATCH(allowedIpId, request, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        patchAllowedIpLabelUsingPATCH(allowedIpId: string, request: PatchAllowedIpLabelRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return OrganizationControllerApiFp(configuration).patchAllowedIpLabelUsingPATCH(allowedIpId, request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
     };
 };
@@ -4243,15 +4863,18 @@ export class OrganizationControllerApi extends BaseAPI {
      * @summary activateAllowedIps
      * @param {ActivateAllowedIpsRequest} request request
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public activateAllowedIpsUsingPOST(request: ActivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).activateAllowedIpsUsingPOST(request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public activateAllowedIpsUsingPOST(request: ActivateAllowedIpsRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).activateAllowedIpsUsingPOST(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4259,15 +4882,18 @@ export class OrganizationControllerApi extends BaseAPI {
      * @summary createAllowedIp
      * @param {CreateAllowedIpRequest} request request
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public createAllowedIpUsingPOST(request: CreateAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).createAllowedIpUsingPOST(request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public createAllowedIpUsingPOST(request: CreateAllowedIpRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).createAllowedIpUsingPOST(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4286,15 +4912,18 @@ export class OrganizationControllerApi extends BaseAPI {
      * 
      * @summary createSecret
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public createSecretUsingPOST(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).createSecretUsingPOST(accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public createSecretUsingPOST(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).createSecretUsingPOST(accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4303,30 +4932,36 @@ export class OrganizationControllerApi extends BaseAPI {
      * @param {string} allowedIpId allowedIpId
      * @param {DeleteAllowedIpRequest} request request
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public deleteAllowedIpUsingDELETE(allowedIpId: string, request: DeleteAllowedIpRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).deleteAllowedIpUsingDELETE(allowedIpId, request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public deleteAllowedIpUsingDELETE(allowedIpId: string, request: DeleteAllowedIpRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).deleteAllowedIpUsingDELETE(allowedIpId, request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary getAccountByOrganizationId
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public getAccountByOrganizationIdUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).getAccountByOrganizationIdUsingGET(accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public getAccountByOrganizationIdUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).getAccountByOrganizationIdUsingGET(accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4345,6 +4980,8 @@ export class OrganizationControllerApi extends BaseAPI {
      * 
      * @summary getAllowedIps
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {number} [offset] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
@@ -4355,27 +4992,31 @@ export class OrganizationControllerApi extends BaseAPI {
      * @param {boolean} [sortSorted] 
      * @param {boolean} [sortUnsorted] 
      * @param {boolean} [unpaged] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public getAllowedIpsUsingGET(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).getAllowedIpsUsingGET(accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    public getAllowedIpsUsingGET(accountId?: string, firstName?: string, lastName?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, username?: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).getAllowedIpsUsingGET(accountId, firstName, lastName, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, username, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary getOrganization
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public getOrganizationUsingGET(accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).getOrganizationUsingGET(accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public getOrganizationUsingGET(accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).getOrganizationUsingGET(accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4383,15 +5024,37 @@ export class OrganizationControllerApi extends BaseAPI {
      * @summary inactivateAllowedIps
      * @param {InactivateAllowedIpsRequest} request request
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public inactivateAllowedIpsUsingPOST(request: InactivateAllowedIpsRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).inactivateAllowedIpsUsingPOST(request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public inactivateAllowedIpsUsingPOST(request: InactivateAllowedIpsRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).inactivateAllowedIpsUsingPOST(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary notify
+     * @param {NotifyRequest} request request
+     * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
+     * @param {string} [organizationId] 
+     * @param {string} [otpKey] 
+     * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public notifyUsingPOST(request: NotifyRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).notifyUsingPOST(request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4400,16 +5063,19 @@ export class OrganizationControllerApi extends BaseAPI {
      * @param {string} accountId2 accountId
      * @param {PatchAccountRoleRequest} patchAccountRoleRequest patchAccountRoleRequest
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {boolean} [needOTP] needOTP
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public patchAccountRoleUsingPATCH(accountId2: string, patchAccountRoleRequest: PatchAccountRoleRequest, accountId?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).patchAccountRoleUsingPATCH(accountId2, patchAccountRoleRequest, accountId, needOTP, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public patchAccountRoleUsingPATCH(accountId2: string, patchAccountRoleRequest: PatchAccountRoleRequest, accountId?: string, firstName?: string, lastName?: string, needOTP?: boolean, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).patchAccountRoleUsingPATCH(accountId2, patchAccountRoleRequest, accountId, firstName, lastName, needOTP, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4418,15 +5084,18 @@ export class OrganizationControllerApi extends BaseAPI {
      * @param {string} allowedIpId allowedIpId
      * @param {PatchAllowedIpLabelRequest} request request
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public patchAllowedIpLabelUsingPATCH(allowedIpId: string, request: PatchAllowedIpLabelRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).patchAllowedIpLabelUsingPATCH(allowedIpId, request, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public patchAllowedIpLabelUsingPATCH(allowedIpId: string, request: PatchAllowedIpLabelRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).patchAllowedIpLabelUsingPATCH(allowedIpId, request, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
 }
@@ -4539,13 +5208,16 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
          * @summary approve
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        approveUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        approveUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'withdrawalApprovalId' is not null or undefined
             if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
                 throw new RequiredError('withdrawalApprovalId','Required parameter withdrawalApprovalId was null or undefined when calling approveUsingPOST.');
@@ -4561,6 +5233,14 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -4571,6 +5251,10 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -4588,13 +5272,16 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
          * @summary cancelApproval
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelApprovalUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        cancelApprovalUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'withdrawalApprovalId' is not null or undefined
             if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
                 throw new RequiredError('withdrawalApprovalId','Required parameter withdrawalApprovalId was null or undefined when calling cancelApprovalUsingPOST.');
@@ -4610,6 +5297,14 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -4620,6 +5315,10 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -4637,13 +5336,16 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
          * @summary cancelRejection
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelRejectionUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        cancelRejectionUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'withdrawalApprovalId' is not null or undefined
             if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
                 throw new RequiredError('withdrawalApprovalId','Required parameter withdrawalApprovalId was null or undefined when calling cancelRejectionUsingPOST.');
@@ -4659,6 +5361,14 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -4669,6 +5379,10 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -4686,13 +5400,16 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
          * @summary createWithdrawalApproval
          * @param {CreateWithdrawalApprovalRequest} createWithdrawalApprovalRequest createWithdrawalApprovalRequest
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest: CreateWithdrawalApprovalRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest: CreateWithdrawalApprovalRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'createWithdrawalApprovalRequest' is not null or undefined
             if (createWithdrawalApprovalRequest === null || createWithdrawalApprovalRequest === undefined) {
                 throw new RequiredError('createWithdrawalApprovalRequest','Required parameter createWithdrawalApprovalRequest was null or undefined when calling createWithdrawalApprovalUsingPOST.');
@@ -4707,6 +5424,14 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -4717,6 +5442,10 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -4738,13 +5467,16 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
          * @summary getWithdrawalApproval
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWithdrawalApprovalUsingGET(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        getWithdrawalApprovalUsingGET(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'withdrawalApprovalId' is not null or undefined
             if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
                 throw new RequiredError('withdrawalApprovalId','Required parameter withdrawalApprovalId was null or undefined when calling getWithdrawalApprovalUsingGET.');
@@ -4760,6 +5492,14 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -4770,6 +5510,10 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -4786,6 +5530,8 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
          * 
          * @summary getWithdrawalApprovals
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -4796,10 +5542,11 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
          * @param {boolean} [sortSorted] 
          * @param {boolean} [sortUnsorted] 
          * @param {boolean} [unpaged] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWithdrawalApprovalsUsingGET(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options: any = {}): FetchArgs {
+        getWithdrawalApprovalsUsingGET(accountId?: string, firstName?: string, lastName?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, username?: string, options: any = {}): FetchArgs {
             const localVarPath = `/api/v2/withdrawal-approvals`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -4808,6 +5555,14 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
 
             if (accountId !== undefined) {
                 localVarQueryParameter['accountId'] = accountId;
+            }
+
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
             }
 
             if (offset !== undefined) {
@@ -4850,6 +5605,10 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
                 localVarQueryParameter['unpaged'] = unpaged;
             }
 
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
+            }
+
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
@@ -4865,13 +5624,16 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
          * @summary reject
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rejectUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options: any = {}): FetchArgs {
+        rejectUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options: any = {}): FetchArgs {
             // verify required parameter 'withdrawalApprovalId' is not null or undefined
             if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
                 throw new RequiredError('withdrawalApprovalId','Required parameter withdrawalApprovalId was null or undefined when calling rejectUsingPOST.');
@@ -4887,6 +5649,14 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
                 localVarQueryParameter['accountId'] = accountId;
             }
 
+            if (firstName !== undefined) {
+                localVarQueryParameter['firstName'] = firstName;
+            }
+
+            if (lastName !== undefined) {
+                localVarQueryParameter['lastName'] = lastName;
+            }
+
             if (organizationId !== undefined) {
                 localVarQueryParameter['organizationId'] = organizationId;
             }
@@ -4897,6 +5667,10 @@ export const WithdrawalApprovalControllerApiFetchParamCreator = function (config
 
             if (roles) {
                 localVarQueryParameter['roles'] = roles;
+            }
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -4923,14 +5697,17 @@ export const WithdrawalApprovalControllerApiFp = function(configuration?: Config
          * @summary approve
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        approveUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WithdrawalApprovalDTO> {
-            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).approveUsingPOST(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options);
+        approveUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WithdrawalApprovalDTO> {
+            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).approveUsingPOST(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4946,14 +5723,17 @@ export const WithdrawalApprovalControllerApiFp = function(configuration?: Config
          * @summary cancelApproval
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelApprovalUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WithdrawalApprovalDTO> {
-            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).cancelApprovalUsingPOST(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options);
+        cancelApprovalUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WithdrawalApprovalDTO> {
+            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).cancelApprovalUsingPOST(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4969,14 +5749,17 @@ export const WithdrawalApprovalControllerApiFp = function(configuration?: Config
          * @summary cancelRejection
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelRejectionUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WithdrawalApprovalDTO> {
-            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).cancelRejectionUsingPOST(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options);
+        cancelRejectionUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WithdrawalApprovalDTO> {
+            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).cancelRejectionUsingPOST(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4992,14 +5775,17 @@ export const WithdrawalApprovalControllerApiFp = function(configuration?: Config
          * @summary createWithdrawalApproval
          * @param {CreateWithdrawalApprovalRequest} createWithdrawalApprovalRequest createWithdrawalApprovalRequest
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest: CreateWithdrawalApprovalRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WithdrawalApprovalDTO> {
-            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest, accountId, organizationId, otpKey, roles, options);
+        createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest: CreateWithdrawalApprovalRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WithdrawalApprovalDTO> {
+            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -5015,14 +5801,17 @@ export const WithdrawalApprovalControllerApiFp = function(configuration?: Config
          * @summary getWithdrawalApproval
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWithdrawalApprovalUsingGET(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WithdrawalApprovalDTO> {
-            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).getWithdrawalApprovalUsingGET(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options);
+        getWithdrawalApprovalUsingGET(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WithdrawalApprovalDTO> {
+            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).getWithdrawalApprovalUsingGET(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -5037,6 +5826,8 @@ export const WithdrawalApprovalControllerApiFp = function(configuration?: Config
          * 
          * @summary getWithdrawalApprovals
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -5047,11 +5838,12 @@ export const WithdrawalApprovalControllerApiFp = function(configuration?: Config
          * @param {boolean} [sortSorted] 
          * @param {boolean} [sortUnsorted] 
          * @param {boolean} [unpaged] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWithdrawalApprovalsUsingGET(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationWithdrawalApprovalDTO> {
-            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).getWithdrawalApprovalsUsingGET(accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options);
+        getWithdrawalApprovalsUsingGET(accountId?: string, firstName?: string, lastName?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PaginationWithdrawalApprovalDTO> {
+            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).getWithdrawalApprovalsUsingGET(accountId, firstName, lastName, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -5067,14 +5859,17 @@ export const WithdrawalApprovalControllerApiFp = function(configuration?: Config
          * @summary reject
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rejectUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WithdrawalApprovalDTO> {
-            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).rejectUsingPOST(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options);
+        rejectUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<WithdrawalApprovalDTO> {
+            const localVarFetchArgs = WithdrawalApprovalControllerApiFetchParamCreator(configuration).rejectUsingPOST(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -5099,75 +5894,92 @@ export const WithdrawalApprovalControllerApiFactory = function (configuration?: 
          * @summary approve
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        approveUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WithdrawalApprovalControllerApiFp(configuration).approveUsingPOST(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        approveUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return WithdrawalApprovalControllerApiFp(configuration).approveUsingPOST(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary cancelApproval
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelApprovalUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WithdrawalApprovalControllerApiFp(configuration).cancelApprovalUsingPOST(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        cancelApprovalUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return WithdrawalApprovalControllerApiFp(configuration).cancelApprovalUsingPOST(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary cancelRejection
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelRejectionUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WithdrawalApprovalControllerApiFp(configuration).cancelRejectionUsingPOST(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        cancelRejectionUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return WithdrawalApprovalControllerApiFp(configuration).cancelRejectionUsingPOST(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary createWithdrawalApproval
          * @param {CreateWithdrawalApprovalRequest} createWithdrawalApprovalRequest createWithdrawalApprovalRequest
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest: CreateWithdrawalApprovalRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WithdrawalApprovalControllerApiFp(configuration).createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest: CreateWithdrawalApprovalRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return WithdrawalApprovalControllerApiFp(configuration).createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary getWithdrawalApproval
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWithdrawalApprovalUsingGET(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WithdrawalApprovalControllerApiFp(configuration).getWithdrawalApprovalUsingGET(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        getWithdrawalApprovalUsingGET(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return WithdrawalApprovalControllerApiFp(configuration).getWithdrawalApprovalUsingGET(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary getWithdrawalApprovals
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {number} [offset] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
@@ -5178,25 +5990,29 @@ export const WithdrawalApprovalControllerApiFactory = function (configuration?: 
          * @param {boolean} [sortSorted] 
          * @param {boolean} [sortUnsorted] 
          * @param {boolean} [unpaged] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getWithdrawalApprovalsUsingGET(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-            return WithdrawalApprovalControllerApiFp(configuration).getWithdrawalApprovalsUsingGET(accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(fetch, basePath);
+        getWithdrawalApprovalsUsingGET(accountId?: string, firstName?: string, lastName?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, username?: string, options?: any) {
+            return WithdrawalApprovalControllerApiFp(configuration).getWithdrawalApprovalsUsingGET(accountId, firstName, lastName, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, username, options)(fetch, basePath);
         },
         /**
          * 
          * @summary reject
          * @param {string} withdrawalApprovalId withdrawalApprovalId
          * @param {string} [accountId] 
+         * @param {string} [firstName] 
+         * @param {string} [lastName] 
          * @param {string} [organizationId] 
          * @param {string} [otpKey] 
          * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rejectUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-            return WithdrawalApprovalControllerApiFp(configuration).rejectUsingPOST(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(fetch, basePath);
+        rejectUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+            return WithdrawalApprovalControllerApiFp(configuration).rejectUsingPOST(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(fetch, basePath);
         },
     };
 };
@@ -5213,15 +6029,18 @@ export class WithdrawalApprovalControllerApi extends BaseAPI {
      * @summary approve
      * @param {string} withdrawalApprovalId withdrawalApprovalId
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WithdrawalApprovalControllerApi
      */
-    public approveUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WithdrawalApprovalControllerApiFp(this.configuration).approveUsingPOST(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public approveUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return WithdrawalApprovalControllerApiFp(this.configuration).approveUsingPOST(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5229,15 +6048,18 @@ export class WithdrawalApprovalControllerApi extends BaseAPI {
      * @summary cancelApproval
      * @param {string} withdrawalApprovalId withdrawalApprovalId
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WithdrawalApprovalControllerApi
      */
-    public cancelApprovalUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WithdrawalApprovalControllerApiFp(this.configuration).cancelApprovalUsingPOST(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public cancelApprovalUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return WithdrawalApprovalControllerApiFp(this.configuration).cancelApprovalUsingPOST(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5245,15 +6067,18 @@ export class WithdrawalApprovalControllerApi extends BaseAPI {
      * @summary cancelRejection
      * @param {string} withdrawalApprovalId withdrawalApprovalId
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WithdrawalApprovalControllerApi
      */
-    public cancelRejectionUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WithdrawalApprovalControllerApiFp(this.configuration).cancelRejectionUsingPOST(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public cancelRejectionUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return WithdrawalApprovalControllerApiFp(this.configuration).cancelRejectionUsingPOST(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5261,15 +6086,18 @@ export class WithdrawalApprovalControllerApi extends BaseAPI {
      * @summary createWithdrawalApproval
      * @param {CreateWithdrawalApprovalRequest} createWithdrawalApprovalRequest createWithdrawalApprovalRequest
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WithdrawalApprovalControllerApi
      */
-    public createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest: CreateWithdrawalApprovalRequest, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WithdrawalApprovalControllerApiFp(this.configuration).createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest: CreateWithdrawalApprovalRequest, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return WithdrawalApprovalControllerApiFp(this.configuration).createWithdrawalApprovalUsingPOST(createWithdrawalApprovalRequest, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5277,21 +6105,26 @@ export class WithdrawalApprovalControllerApi extends BaseAPI {
      * @summary getWithdrawalApproval
      * @param {string} withdrawalApprovalId withdrawalApprovalId
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WithdrawalApprovalControllerApi
      */
-    public getWithdrawalApprovalUsingGET(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WithdrawalApprovalControllerApiFp(this.configuration).getWithdrawalApprovalUsingGET(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public getWithdrawalApprovalUsingGET(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return WithdrawalApprovalControllerApiFp(this.configuration).getWithdrawalApprovalUsingGET(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary getWithdrawalApprovals
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {number} [offset] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
@@ -5302,12 +6135,13 @@ export class WithdrawalApprovalControllerApi extends BaseAPI {
      * @param {boolean} [sortSorted] 
      * @param {boolean} [sortUnsorted] 
      * @param {boolean} [unpaged] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WithdrawalApprovalControllerApi
      */
-    public getWithdrawalApprovalsUsingGET(accountId?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, options?: any) {
-        return WithdrawalApprovalControllerApiFp(this.configuration).getWithdrawalApprovalsUsingGET(accountId, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, options)(this.fetch, this.basePath);
+    public getWithdrawalApprovalsUsingGET(accountId?: string, firstName?: string, lastName?: string, offset?: number, organizationId?: string, otpKey?: string, pageNumber?: number, pageSize?: number, paged?: boolean, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, sortSorted?: boolean, sortUnsorted?: boolean, unpaged?: boolean, username?: string, options?: any) {
+        return WithdrawalApprovalControllerApiFp(this.configuration).getWithdrawalApprovalsUsingGET(accountId, firstName, lastName, offset, organizationId, otpKey, pageNumber, pageSize, paged, roles, sortSorted, sortUnsorted, unpaged, username, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5315,15 +6149,18 @@ export class WithdrawalApprovalControllerApi extends BaseAPI {
      * @summary reject
      * @param {string} withdrawalApprovalId withdrawalApprovalId
      * @param {string} [accountId] 
+     * @param {string} [firstName] 
+     * @param {string} [lastName] 
      * @param {string} [organizationId] 
      * @param {string} [otpKey] 
      * @param {Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>} [roles] 
+     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WithdrawalApprovalControllerApi
      */
-    public rejectUsingPOST(withdrawalApprovalId: string, accountId?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, options?: any) {
-        return WithdrawalApprovalControllerApiFp(this.configuration).rejectUsingPOST(withdrawalApprovalId, accountId, organizationId, otpKey, roles, options)(this.fetch, this.basePath);
+    public rejectUsingPOST(withdrawalApprovalId: string, accountId?: string, firstName?: string, lastName?: string, organizationId?: string, otpKey?: string, roles?: Array<'COIN' | 'VIEWER' | 'ADMIN' | 'HAECHI' | 'SPENDER'>, username?: string, options?: any) {
+        return WithdrawalApprovalControllerApiFp(this.configuration).rejectUsingPOST(withdrawalApprovalId, accountId, firstName, lastName, organizationId, otpKey, roles, username, options)(this.fetch, this.basePath);
     }
 
 }
