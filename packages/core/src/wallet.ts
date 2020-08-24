@@ -532,14 +532,12 @@ export class MasterWallet extends EthLikeWallet {
 
   async retryCreateUserWallet(
     walletId: string,
-    gasPrice?: BN,
-    gasLimit?: BN
+    gasPrice?: BN
   ): Promise<UserWallet> {
     const response = await this.client.post<UserWalletData>(
       `${this.baseUrl}/user-wallets/${walletId}/recreate`,
       {
-        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
-        gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined
       }
     );
 
