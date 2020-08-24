@@ -481,18 +481,11 @@ export class EthMasterWallet extends EthLikeWallet {
     };
   }
 
-  public async retryCreateUserWallet(
-    walletId: string,
-    gasPrice?: BN,
-    gasLimit?: BN
-  ) {
+  public async retryCreateUserWallet(walletId: string, gasPrice?: BN) {
     checkNullAndUndefinedParameter({ walletId });
     const response = await this.client.post<UserWalletDTO>(
       `${this.baseUrl}/user-wallets/${walletId}/recreate`,
-      {
-        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
-        gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
-      }
+      { gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined }
     );
 
     return new EthUserWallet(
