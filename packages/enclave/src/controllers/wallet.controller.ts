@@ -196,10 +196,7 @@ export default class WalletController extends AbstractController
       req.params.userWalletId,
       req.body.gasPrice
         ? BNConverter.hexStringToBN(req.body.gasPrice)
-        : undefined,
-      req.body.gasLimit
-        ? BNConverter.hexStringToBN(req.body.gasLimit)
-        : undefined,
+        : undefined
     )).getData();
   }
 
