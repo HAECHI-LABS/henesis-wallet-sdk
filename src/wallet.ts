@@ -22,6 +22,8 @@ import {
   CreateAllowedAddressRequest as BtcCreateAllowedAddressRequest,
   DeleteAllowedAddressRequest as BtcDeleteAllowedAddressRequest,
   InactivateAllowedAddressesRequest as BtcInactivateAllowedAddressesRequest,
+  ValidateIsAllowedAddressRequest as BtcValidateIsAllowedAddressRequest,
+  ValidateIsAllowedAddressResponse as BtcValidateIsAllowedAddressResponse,
 } from "./__generate__/btc/api";
 import { BNConverter, checkNullAndUndefinedParameter } from "./utils/common";
 import { makeQueryString } from "./utils/url";
@@ -38,12 +40,12 @@ import {
   DeleteAllowedAddressRequest as EthDeleteAllowedAddressRequest,
   CreateWithdrawalPolicyRequest as EthCreateWithdrawalPolicyRequest,
   InactivateAllowedAddressesRequest as EthInactivateAllowedAddressesRequest,
+  ValidateIsAllowedAddressRequest as EthValidateIsAllowedAddressRequest,
+  ValidateIsAllowedAddressResponse as EthValidateIsAllowedAddressResponse,
 } from "./__generate__/eth/api";
-
 export type InactivateAllowedAddressesRequest =
   | EthInactivateAllowedAddressesRequest
   | BtcInactivateAllowedAddressesRequest;
-
 export type ActivateAllowedAddressesRequest =
   | EthActivateAllowedAddressesRequest
   | BtcActivateAllowedAddressesRequest;
@@ -60,7 +62,12 @@ export import AllowedCoinType = EthCreateAllowedAddressRequest.AllowedCoinTypeEn
 export type DeleteAllowedAddressRequest =
   | BtcDeleteAllowedAddressRequest
   | EthDeleteAllowedAddressRequest;
-
+export type ValidateAllowedAddressRequest =
+  | BtcValidateIsAllowedAddressRequest
+  | EthValidateIsAllowedAddressRequest;
+export type ValidateAllowedAddressResponse =
+  | BtcValidateIsAllowedAddressResponse
+  | EthValidateIsAllowedAddressResponse;
 export interface WalletData {
   id: string;
   name: string;
@@ -69,10 +76,8 @@ export interface WalletData {
   createdAt: string;
   status: WalletStatus;
 }
-
 export import PolicyType = WalletWithdrawalPolicyDTO.TypeEnum;
 export import WalletType = WalletWithdrawalPolicyDTO.WalletTypeEnum;
-
 export interface WithdrawalPolicy {
   id: string;
   limitAmount: BN;
@@ -80,7 +85,6 @@ export interface WithdrawalPolicy {
   type: PolicyType;
   coinSymbol: string;
 }
-
 export const WalletStatus: Record<
   | keyof typeof EthMasterWalletDTO.StatusEnum
   | keyof typeof BtcMasterWalletDTO.StatusEnum,
@@ -89,42 +93,27 @@ export const WalletStatus: Record<
 export type WalletStatus =
   | EthMasterWalletDTO.StatusEnum
   | BtcMasterWalletDTO.StatusEnum;
-
 export interface AllowedAddressesPaginationOptions extends PaginationOptions {
   coinId?: number;
 }
-
 export abstract class Wallet<T> {
   protected readonly client: Client;
-
   protected readonly withdrawalApprovalUrl: string = "/withdrawal-approvals";
-
   protected readonly baseUrl;
-
   protected readonly keychains: Keychains;
-
   protected constructor(client: Client, keychains: Keychains, baseUrl: string) {
     this.client = client;
     this.keychains = keychains;
     this.baseUrl = baseUrl;
   }
-
   abstract getChain(): BlockchainType;
-
   abstract getBalance(flag?: boolean): Promise<Balance[]>;
-
   abstract getAddress(): string;
-
   abstract getId(): string;
-
   abstract changeName(name: string);
-
   abstract getEncryptionKey(): string;
-
   abstract getAccountKey(): Key;
-
   abstract updateAccountKey(key: Key);
-
   protected recoverPassphrase(encryptedPassphrase: string): string {
     try {
       const aesCtr = new aesjs.ModeOfOperation.ctr(
@@ -138,7 +127,6 @@ export abstract class Wallet<T> {
       throw new Error("failed to recover passphrase");
     }
   }
-
   async changePassphrase(
     passphrase: string,
     newPassphrase: string,
@@ -155,7 +143,6 @@ export abstract class Wallet<T> {
       otpCode
     );
   }
-
   private async changePassphraseWithKeyFile(
     passphrase: string,
     newPassphrase: string,
@@ -167,7 +154,6 @@ export abstract class Wallet<T> {
       passphrase,
       newPassphrase
     );
-
     const key: Key = await this.client.patch<
       BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">
     >(`${this.baseUrl}/account-key`, {
@@ -175,10 +161,8 @@ export abstract class Wallet<T> {
       pub: newKey.pub,
       otpCode,
     });
-
     this.updateAccountKey(key);
   }
-
   async restorePassphrase(
     encryptedPassphrase: string,
     newPassphrase: string,
@@ -195,7 +179,6 @@ export abstract class Wallet<T> {
       otpCode
     );
   }
-
   async verifyEncryptedPassphrase(
     encryptedPassphrase: string
   ): Promise<boolean> {
@@ -205,17 +188,14 @@ export abstract class Wallet<T> {
     } catch (e) {
       return false;
     }
-
     const initialKey: Key = await this.client.get<
       BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">
     >(`${this.baseUrl}/initial-key`);
     return await this.verifyPassphraseWithKeyFile(passphrase, initialKey);
   }
-
   async verifyPassphrase(passphrase: string): Promise<boolean> {
     return this.verifyPassphraseWithKeyFile(passphrase);
   }
-
   protected async verifyPassphraseWithKeyFile(
     passphrase: string,
     initialKey?: Key
@@ -230,7 +210,6 @@ export abstract class Wallet<T> {
       return false;
     }
   }
-
   async createWithdrawalPolicy(params: {
     limitAmount: BN;
     walletType: WalletType;
@@ -256,7 +235,6 @@ export abstract class Wallet<T> {
       limitAmount: BNConverter.hexStringToBN(data.limitAmount),
     };
   }
-
   async patchWithdrawalPolicy(params: {
     id: string;
     limitAmount: BN;
@@ -278,7 +256,6 @@ export abstract class Wallet<T> {
       limitAmount: BNConverter.hexStringToBN(data.limitAmount),
     };
   }
-
   async getWithdrawalPolices(
     options: PaginationOptions
   ): Promise<Pagination<WithdrawalPolicy>> {
@@ -300,7 +277,6 @@ export abstract class Wallet<T> {
       }),
     };
   }
-
   async createAllowedAddress(params: {
     address: string;
     whitelistType: WhitelistType;
@@ -322,7 +298,6 @@ export abstract class Wallet<T> {
       request
     );
   }
-
   async getAllowedAddresses(
     options?: AllowedAddressesPaginationOptions
   ): Promise<Pagination<AllowedAddress>> {
@@ -331,13 +306,11 @@ export abstract class Wallet<T> {
       `${this.baseUrl}/allowed-addresses${queryString ? `?${queryString}` : ""}`
     );
   }
-
   async getAllowedAddress(id: string): Promise<AllowedAddress> {
     return await this.client.get<AllowedAddressDTO>(
       `${this.baseUrl}/allowed-addresses/${id}`
     );
   }
-
   async deleteAllowedAddress(id: string, otpCode: string): Promise<void> {
     const request: DeleteAllowedAddressRequest = {
       otpCode,
@@ -346,26 +319,33 @@ export abstract class Wallet<T> {
       data: request,
     });
   }
-
   async activateAllowedAddresses(otpCode: string): Promise<void> {
     const request: ActivateAllowedAddressesRequest = {
       otpCode,
     };
-
     await this.client.post<void>(
       `${this.baseUrl}/activate-allowed-addresses`,
       request
     );
   }
-
   async inactivateAllowedAddresses(otpCode: string): Promise<void> {
     const request: InactivateAllowedAddressesRequest = {
       otpCode,
     };
-
     await this.client.post<void>(
       `${this.baseUrl}/inactivate-allowed-addresses`,
       request
     );
+  }
+
+  async validateAllowedAddress(address: string): Promise<boolean> {
+    const request: ValidateAllowedAddressRequest = {
+      address,
+    };
+    const response: ValidateAllowedAddressResponse = await this.client.post<
+      ValidateAllowedAddressResponse
+    >(`${this.baseUrl}/allowed-addresses/validate`, request);
+
+    return response.isValid;
   }
 }
