@@ -27,6 +27,7 @@ async function main() {
   console.log(await wallet.activateAllowedAddresses("otp"));
   console.log(await wallet.inactivateAllowedAddresses("otp"));
   console.log(await wallet.deleteAllowedAddress("id", "otp"));
+  console.log(await wallet.validateAllowedAddress("address"));
 }
 
 main().catch((e) => console.error(e));
