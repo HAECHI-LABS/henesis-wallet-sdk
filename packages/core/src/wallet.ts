@@ -31,6 +31,7 @@ export interface Nonce {
 export enum WalletStatus {
   Creating = 'CREATING',
   Active = 'ACTIVE',
+  Failed = 'FAILED'
 }
 
 export interface Transaction {
