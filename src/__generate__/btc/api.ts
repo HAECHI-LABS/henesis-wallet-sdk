@@ -1274,7 +1274,7 @@ export interface TransferDTO {
      * @type {number}
      * @memberof TransferDTO
      */
-    outputIndex: number;
+    outputIndex?: number;
     /**
      * 
      * @type {string}
@@ -1337,7 +1337,6 @@ export namespace TransferDTO {
     export enum StatusEnum {
         PENDINGAPPROVAL = <any> 'PENDING_APPROVAL',
         REJECTED = <any> 'REJECTED',
-        APPROVED = <any> 'APPROVED',
         PENDING = <any> 'PENDING',
         MINED = <any> 'MINED',
         CONFIRMED = <any> 'CONFIRMED',

@@ -41,6 +41,7 @@ export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
 
 export interface EthWalletData extends WalletData {
   blockchain: BlockchainType;
+  version: string;
   transactionId?: string | null;
   error?: string | null;
 }
@@ -110,6 +111,10 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
 
   getChain(): BlockchainType {
     return this.blockchain;
+  }
+
+  getVersion(): string {
+    return this.data.version;
   }
 
   async replaceTransaction(
@@ -206,6 +211,20 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       to,
       passphrase,
     });
+
+    const coin: Coin = await this.coins.getCoin(ticker);
+    if (this.getVersion() == "v1" || this.getVersion() == "v2") {
+      return this.contractCall(
+        coin.getCoinData().address,
+        BNConverter.hexStringToBN("0x0"),
+        coin.buildTransferData(to, amount),
+        passphrase,
+        otpCode,
+        gasPrice,
+        gasLimit
+      );
+    }
+
     return this.sendTransaction(
       this.getChain(),
       await this.buildTransferPayload(ticker, to, amount, passphrase),
