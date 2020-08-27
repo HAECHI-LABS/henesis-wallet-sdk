@@ -4,7 +4,8 @@ import { CoinDTO } from "@haechi-labs/henesis-wallet-core";
 import AbstractController from "../controller";
 import { Controller } from "../../types";
 
-export default class CoinsController extends AbstractController
+export default class CoinsController
+  extends AbstractController
   implements Controller {
   private path = "/api/v2/klay/coins";
 

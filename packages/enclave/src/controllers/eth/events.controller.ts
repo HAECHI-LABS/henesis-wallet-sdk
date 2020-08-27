@@ -8,7 +8,8 @@ import {
 import AbstractController from "../controller";
 import { Controller } from "../../types";
 
-export default class EventsController extends AbstractController
+export default class EventsController
+  extends AbstractController
   implements Controller {
   private path = "/api/v2/eth";
 

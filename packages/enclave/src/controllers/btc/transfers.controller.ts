@@ -29,7 +29,8 @@ export interface TransferResponse extends Omit<Transfer, "transaction"> {
   transaction: BtcTransactionResponse;
 }
 
-export default class TransfersController extends AbstractController
+export default class TransfersController
+  extends AbstractController
   implements Controller {
   private path = "/api/v2/btc/transfers";
 
