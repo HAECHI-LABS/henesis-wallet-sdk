@@ -7,7 +7,8 @@ import {
   EthValueTransferEvent,
 } from "@haechi-labs/henesis-wallet-core/lib/events";
 
-export default class EventsController extends AbstractController
+export default class EventsController
+  extends AbstractController
   implements Controller {
   private path = "/api/v2/klay";
 

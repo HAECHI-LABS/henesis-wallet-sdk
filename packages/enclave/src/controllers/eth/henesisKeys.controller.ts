@@ -4,7 +4,8 @@ import { Balance, Key } from "@haechi-labs/henesis-wallet-core/lib/types";
 import AbstractController from "../controller";
 import { Controller } from "../../types";
 
-export default class HenesisKeysController extends AbstractController
+export default class HenesisKeysController
+  extends AbstractController
   implements Controller {
   private path = "/api/v2/eth/henesis-keys";
 

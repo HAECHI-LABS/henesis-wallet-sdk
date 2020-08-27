@@ -5,7 +5,8 @@ import { Transaction } from "@haechi-labs/henesis-wallet-core";
 import AbstractController from "../controller";
 import { Controller } from "../../types";
 
-export default class TransactionsController extends AbstractController
+export default class TransactionsController
+  extends AbstractController
   implements Controller {
   private path = "/api/v2/eth/transactions";
 

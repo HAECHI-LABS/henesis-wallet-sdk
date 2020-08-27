@@ -1,6 +1,9 @@
 import BN from 'bn.js';
-import { CoinDTO, Eth } from "../../src/eth";
+import { Eth } from "../../src/eth";
 import { BlockchainType } from "../../src/blockchain";
+import {CoinDTO} from "../../src/__generate__/eth";
+import {WalletWithdrawalPolicyDTO} from "../../src/__generate__/btc";
+import BlockchainEnum = WalletWithdrawalPolicyDTO.BlockchainEnum;
 
 describe('Eth', () => {
   let eth: Eth;
@@ -10,7 +13,8 @@ describe('Eth', () => {
     symbol: 'ETH',
     address: null,
     desc: '',
-    blockchain: BlockchainType.Ethereum
+    blockchain: BlockchainEnum.ETHEREUM,
+    attributes: [],
   };
   beforeEach(() => {
     eth = new Eth(coinData);
