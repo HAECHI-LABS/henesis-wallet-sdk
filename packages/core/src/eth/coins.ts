@@ -1,5 +1,14 @@
 import { Client } from "../httpClient";
-import { Coin, CoinDTO, Erc20, Eth, Klay } from "./coin";
+import {
+  Coin,
+  StandardErc20,
+  Eth,
+  Klay,
+  NonStandardReturnTypeErc20,
+} from "./coin";
+import { CoinDTO } from "../__generate__/eth";
+import AttributesEnum = CoinDTO.AttributesEnum;
+import { InternalServerError } from "../error";
 
 export class Coins {
   private readonly client: Client;
@@ -9,9 +18,7 @@ export class Coins {
   }
 
   public async getCoin(ticker: string): Promise<Coin> {
-    const coinData = await this.client.get<CoinDTO>(
-      `/coins/${ticker.toUpperCase()}`
-    );
+    const coinData = await this.client.get<CoinDTO>(`/coins/${ticker}`);
     return this.resolveCoin(coinData);
   }
 
@@ -22,13 +29,22 @@ export class Coins {
   }
 
   private resolveCoin(coinData: CoinDTO): Coin {
-    switch (coinData.symbol.toUpperCase()) {
-      case "ETH":
-        return new Eth(coinData);
-      case "KLAY":
-        return new Klay(coinData);
-      default:
-        return new Erc20(coinData);
+    if (coinData.symbol.toString() == "ETH") {
+      return new Eth(coinData);
     }
+
+    if (coinData.symbol.toString() == "KLAY") {
+      return new Klay(coinData);
+    }
+
+    if (coinData.attributes.includes(AttributesEnum.STANDARD)) {
+      return new StandardErc20(coinData);
+    }
+
+    if (coinData.attributes.includes(AttributesEnum.NONSTANDARDRETURNTYPE)) {
+      return new NonStandardReturnTypeErc20(coinData);
+    }
+
+    throw new InternalServerError("no matched coin attributes");
   }
 }

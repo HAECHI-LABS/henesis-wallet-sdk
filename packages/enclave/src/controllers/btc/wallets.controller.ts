@@ -23,7 +23,8 @@ export interface Boolean {
   value: boolean;
 }
 
-export default class WalletsController extends AbstractController
+export default class WalletsController
+  extends AbstractController
   implements Controller {
   private path = "/api/v2/btc/wallets";
 

@@ -1,10 +1,11 @@
 import express from "express";
-import { CoinDTO } from "@haechi-labs/henesis-wallet-core";
 
 import AbstractController from "../controller";
 import { Controller } from "../../types";
+import { CoinDTO } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
-export default class CoinsController extends AbstractController
+export default class CoinsController
+  extends AbstractController
   implements Controller {
   private path = "/api/v2/eth/coins";
 
