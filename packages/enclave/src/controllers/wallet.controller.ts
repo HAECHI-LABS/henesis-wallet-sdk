@@ -34,7 +34,8 @@ interface ContractCallRequest {
   data: string;
 }
 
-export default class WalletController extends AbstractController
+export default class WalletController
+  extends AbstractController
   implements Controller {
   private path = '/api/v1/wallets';
 
@@ -174,30 +175,36 @@ export default class WalletController extends AbstractController
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/recreate`,
       this.promiseWrapper(this.retryCreateUserWallet),
-    )
+    );
   }
 
   private async retryCreateMasterWallet(
     req: express.Request,
   ): Promise<UserWalletData> {
-    return (await req.sdk.wallets.retryCreateMasterWallet(
-      req.params.masterWalletId,
-      req.body.gasPrice
-        ? BNConverter.hexStringToBN(req.body.gasPrice)
-        : undefined,
-    )).getData();
+    return (
+      await req.sdk.wallets.retryCreateMasterWallet(
+        req.params.masterWalletId,
+        req.body.gasPrice
+          ? BNConverter.hexStringToBN(req.body.gasPrice)
+          : undefined,
+      )
+    ).getData();
   }
 
   private async retryCreateUserWallet(
     req: express.Request,
   ): Promise<UserWalletData> {
-    const masterWallet = await req.sdk.wallets.getMasterWallet(req.params.masterWalletId);
-    return (await masterWallet.retryCreateUserWallet(
-      req.params.userWalletId,
-      req.body.gasPrice
-        ? BNConverter.hexStringToBN(req.body.gasPrice)
-        : undefined
-    )).getData();
+    const masterWallet = await req.sdk.wallets.getMasterWallet(
+      req.params.masterWalletId,
+    );
+    return (
+      await masterWallet.retryCreateUserWallet(
+        req.params.userWalletId,
+        req.body.gasPrice
+          ? BNConverter.hexStringToBN(req.body.gasPrice)
+          : undefined,
+      )
+    ).getData();
   }
 
   private async getMasterWallets(

@@ -1,6 +1,13 @@
 import { Client } from './sdk';
-import { BlockchainType } from './blockchain';
-import { Coin, CoinData, Erc20, Eth, Klay } from './coin';
+import {
+  Coin,
+  CoinData,
+  StandardErc20,
+  Eth,
+  Klay,
+  NonStandardReturnTypeErc20,
+} from './coin';
+import { BlockchainType, CoinAttribute } from './types';
 
 export class Coins {
   private readonly client: Client;
@@ -14,7 +21,7 @@ export class Coins {
     blockchain: BlockchainType,
   ): Promise<Coin> {
     const coinData = await this.client.get(
-      `/coins/${ticker.toUpperCase()}?blockchain=${blockchain}`,
+      `/coins/${ticker}?blockchain=${blockchain}`,
     );
     return this.resolveCoin(coinData);
   }
@@ -25,15 +32,24 @@ export class Coins {
   }
 
   private resolveCoin(coinData: CoinData): Coin {
-    switch (coinData.symbol.toUpperCase()) {
-      case 'ETH':
-        return new Eth(coinData);
-        break;
-      case 'KLAY':
-        return new Klay(coinData);
-        break;
-      default:
-        return new Erc20(coinData);
+    if (coinData.symbol.toString() == 'ETH') {
+      return new Eth(coinData);
     }
+
+    if (coinData.symbol.toString() == 'KLAY') {
+      return new Klay(coinData);
+    }
+
+    if (coinData.attributes.includes(CoinAttribute.ERC20_STANDARD)) {
+      return new StandardErc20(coinData);
+    }
+
+    if (
+      coinData.attributes.includes(CoinAttribute.ERC20_NON_STANDARD_RETURN_TYPE)
+    ) {
+      return new NonStandardReturnTypeErc20(coinData);
+    }
+
+    throw new Error('no matched coin attributes');
   }
 }

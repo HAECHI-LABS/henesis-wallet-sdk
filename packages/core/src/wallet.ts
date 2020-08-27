@@ -11,9 +11,10 @@ import {
   Key,
   KeyWithPriv,
   Balance,
+  BlockchainType,
+  CoinAttribute,
 } from './types';
 import { Keychains } from './keychains';
-import { BlockchainType } from './blockchain';
 import wallet from './contracts/MasterWallet.json';
 import { BNConverter, ObjectConverter, toChecksum } from './utils';
 import { MultiSigPayload, SignedMultiSigPayload } from './transactions';
@@ -31,7 +32,7 @@ export interface Nonce {
 export enum WalletStatus {
   Creating = 'CREATING',
   Active = 'ACTIVE',
-  Failed = 'FAILED'
+  Failed = 'FAILED',
 }
 
 export interface Transaction {
@@ -51,6 +52,7 @@ export interface WalletData {
   status: WalletStatus;
   transactionId: string | null;
   error: string | null;
+  version: string;
 }
 
 export interface MasterWalletData extends WalletData {
@@ -177,6 +179,10 @@ export abstract class EthLikeWallet extends Wallet {
     return this.masterWalletData.blockchain;
   }
 
+  getVersion(): string {
+    return this.masterWalletData.version;
+  }
+
   async replaceTransaction(
     transactionId: string,
     otpCode?: string,
@@ -247,6 +253,19 @@ export abstract class EthLikeWallet extends Wallet {
     gasPrice?: BN,
     gasLimit?: BN,
   ): Promise<Transaction> {
+    const coin: Coin = await this.coins.getCoin(ticker, this.getChain());
+    if (this.isNonStandardCoin(coin)) {
+      return this.contractCall(
+        coin.getCoinData().address,
+        BNConverter.hexStringToBN('0x0'),
+        coin.buildTransferData(to, amount),
+        passphrase,
+        otpCode,
+        gasPrice,
+        gasLimit,
+      );
+    }
+
     return this.sendTransaction(
       this.getChain(),
       await this.buildTransferPayload(ticker, to, amount, passphrase),
@@ -254,6 +273,15 @@ export abstract class EthLikeWallet extends Wallet {
       otpCode,
       gasPrice,
       gasLimit || this.getGasLimitByTicker(ticker),
+    );
+  }
+
+  private isNonStandardCoin(coin: Coin): boolean {
+    return (
+      (this.getVersion() == 'v1' || this.getVersion() == 'v2') &&
+      coin
+        .getAttributes()
+        .includes(CoinAttribute.ERC20_NON_STANDARD_RETURN_TYPE)
     );
   }
 
@@ -532,13 +560,13 @@ export class MasterWallet extends EthLikeWallet {
 
   async retryCreateUserWallet(
     walletId: string,
-    gasPrice?: BN
+    gasPrice?: BN,
   ): Promise<UserWallet> {
     const response = await this.client.post<UserWalletData>(
       `${this.baseUrl}/user-wallets/${walletId}/recreate`,
       {
-        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined
-      }
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      },
     );
 
     return new UserWallet(

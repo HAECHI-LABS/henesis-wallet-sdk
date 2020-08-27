@@ -2,10 +2,11 @@ import BN from 'bn.js';
 import { Contract } from 'web3-eth-contract';
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
-import erc20 from './contracts/ERC20.json';
+import standardErc20 from './contracts/ERC20.json';
+import nonStandardErc20 from './contracts/ERC20_NON_STANDARD_RETURN_TYPE.json';
 import eth from './contracts/Eth.json';
 import klay from './contracts/Klay.json';
-import { BlockchainType } from './blockchain';
+import { BlockchainType, CoinAttribute } from './types';
 
 export interface CoinData {
   address: string;
@@ -14,6 +15,7 @@ export interface CoinData {
   id: number;
   name: string;
   symbol: string;
+  attributes: CoinAttribute[];
 }
 
 export abstract class Coin {
@@ -36,15 +38,17 @@ export abstract class Coin {
     tokenAddress?: string,
   ): string;
 
-  abstract isErc20(): boolean;
+  abstract getAttributes(): CoinAttribute[];
 }
 
-export class Erc20 extends Coin {
-  private readonly erc20: Contract;
+export class StandardErc20 extends Coin {
+  private readonly standardErc20: Contract;
 
   constructor(coinData: CoinData) {
     super(coinData);
-    this.erc20 = new new Web3().eth.Contract(erc20 as AbiItem[]);
+    this.standardErc20 = new new Web3().eth.Contract(
+      standardErc20 as AbiItem[],
+    );
   }
 
   getAddress(): string {
@@ -56,19 +60,52 @@ export class Erc20 extends Coin {
   }
 
   buildTransferData(to: string, amount: BN): string {
-    return this.erc20.methods
+    return this.standardErc20.methods
       .transferToken(this.getAddress(), to, amount)
       .encodeABI();
   }
 
   buildFlushData(targetAddresses: string[], tokenAddress: string) {
-    return this.erc20.methods
+    return this.standardErc20.methods
       .flushToken(tokenAddress, targetAddresses)
       .encodeABI();
   }
 
-  isErc20(): boolean {
-    return true;
+  getAttributes(): CoinAttribute[] {
+    return this.coinData.attributes;
+  }
+}
+
+export class NonStandardReturnTypeErc20 extends Coin {
+  private readonly nonStandardErc20: Contract;
+
+  constructor(coinData: CoinData) {
+    super(coinData);
+    this.nonStandardErc20 = new new Web3().eth.Contract(
+      nonStandardErc20 as AbiItem[],
+    );
+  }
+
+  getAddress(): string {
+    return this.coinData.address;
+  }
+
+  getName(): string {
+    return this.coinData.name;
+  }
+
+  buildTransferData(to: string, amount: BN): string {
+    return this.nonStandardErc20.methods.transfer(to, amount).encodeABI();
+  }
+
+  buildFlushData(targetAddresses: string[], tokenAddress: string) {
+    return this.nonStandardErc20.methods
+      .flushToken(tokenAddress, targetAddresses)
+      .encodeABI();
+  }
+
+  getAttributes(): CoinAttribute[] {
+    return this.coinData.attributes;
   }
 }
 
@@ -92,8 +129,8 @@ export class Eth extends Coin {
     return this.eth.methods.flushEth(targetAddresses).encodeABI();
   }
 
-  isErc20(): boolean {
-    return false;
+  getAttributes(): CoinAttribute[] {
+    return this.coinData.attributes;
   }
 }
 
@@ -117,7 +154,7 @@ export class Klay extends Coin {
     return this.klay.methods.flushKlay(targetAddresses).encodeABI();
   }
 
-  isErc20(): boolean {
-    return false;
+  getAttributes(): CoinAttribute[] {
+    return this.coinData.attributes;
   }
 }

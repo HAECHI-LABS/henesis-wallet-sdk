@@ -1,6 +1,6 @@
 import BN from 'bn.js';
 import { Eth } from '../../src/coin';
-import { BlockchainType } from '../../src/blockchain';
+import { BlockchainType } from '../../src/types';
 
 describe('Eth', () => {
   let eth: Eth;
@@ -11,6 +11,7 @@ describe('Eth', () => {
     address: null,
     desc: '',
     blockchain: BlockchainType.Ethereum,
+    attributes: [],
   };
 
   beforeEach(() => {

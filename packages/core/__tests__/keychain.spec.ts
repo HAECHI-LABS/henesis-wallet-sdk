@@ -1,6 +1,5 @@
 import { EthereumKeychains, Keychains } from '../src/keychains';
-import { KeyWithPriv } from '../src/types';
-import { BlockchainType } from '../src/blockchain';
+import { BlockchainType, KeyWithPriv } from '../src/types';
 
 describe('keychian', () => {
   let keychain: Keychains;

@@ -1,7 +1,6 @@
 import nock from 'nock';
 import { SDK } from '../src';
-import { BlockchainType } from '../src/blockchain';
-import { PaginationOptions } from '../src/types';
+import { BlockchainType, PaginationOptions } from '../src/types';
 
 const baseUrl = 'http://localhost:8080';
 describe('Transactions', () => {

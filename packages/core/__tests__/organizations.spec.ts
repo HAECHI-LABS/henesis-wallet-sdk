@@ -1,7 +1,5 @@
 import nock from 'nock';
-import BN from 'bn.js';
 import { SDK } from '../src';
-import { BlockchainType } from '../src/blockchain';
 import { Organization } from '../src/organizations';
 import { Account, Role } from '../src/accounts';
 import { Balance, Secret, Token } from '../src/types';

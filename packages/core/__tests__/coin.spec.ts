@@ -1,10 +1,10 @@
 import BN from 'bn.js';
 
-import { Erc20 } from '../src/coin';
-import { BlockchainType } from '../src/blockchain';
+import { StandardErc20 } from '../src/coin';
+import { BlockchainType } from '../src/types';
 
 describe('Erc20', () => {
-  let erc20: Erc20;
+  let erc20: StandardErc20;
   const evtToken = {
     id: 3,
     name: '엔바토',
@@ -12,10 +12,11 @@ describe('Erc20', () => {
     address: '0x5457d04fc5ad31921c2254df528932a22d757d22',
     desc: '',
     blockchain: BlockchainType.Klaytn,
+    attributes: [],
   };
 
   beforeEach(() => {
-    erc20 = new Erc20(evtToken);
+    erc20 = new StandardErc20(evtToken);
   });
 
   describe('#getAddress()', () => {
