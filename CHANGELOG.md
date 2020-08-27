@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.0...v2.4.1) (2020-08-27)
+
+
+### Bug Fixes
+
+* check version and coin attributes when transfer coin ([cbeb895](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/cbeb8955b633b2d4911f115e96c8e8957762896c))
+
+
+
+
+
 # [2.4.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.3.7...v2.4.0) (2020-08-27)
 
 
