@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.3.7...v2.4.0) (2020-08-27)
+
+
+### Bug Fixes
+
+* delete user wallet recreate gaslimit ([5c3b9f3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5c3b9f3042c43bbf6df4da48d1c6ba07dcf5f886))
+
+
+### Features
+
+* check version and coin attributes when transfer coin ([52520f8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/52520f83a5846dc4e1a4af2bfa77766e68303945))
+
+
+
+
+
 ## [2.3.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.3.6...v2.3.7) (2020-08-24)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
