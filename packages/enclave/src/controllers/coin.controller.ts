@@ -1,10 +1,11 @@
 import express from 'express';
-import { BlockchainType } from '@haechi-labs/henesis-wallet-core/lib/blockchain';
 import { CoinData } from '@haechi-labs/henesis-wallet-core/lib/coin';
 import AbstractController from './controller';
 import { Controller } from '../types';
+import { BlockchainType } from '@haechi-labs/henesis-wallet-core/lib/types';
 
-export default class CoinController extends AbstractController
+export default class CoinController
+  extends AbstractController
   implements Controller {
   private path = '/api/v1/coins';
 

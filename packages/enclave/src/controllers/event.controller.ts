@@ -8,7 +8,8 @@ import express from 'express';
 import { Controller } from '../types';
 import AbstractController from './controller';
 
-export default class EventController extends AbstractController
+export default class EventController
+  extends AbstractController
   implements Controller {
   private path = '/api/v1';
 

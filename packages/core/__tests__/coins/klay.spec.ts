@@ -1,6 +1,6 @@
 import BN from 'bn.js';
 import { Klay } from '../../src/coin';
-import { BlockchainType } from '../../src/blockchain';
+import { BlockchainType } from '../../src/types';
 
 describe('Klay', () => {
   let klay: Klay;
@@ -11,6 +11,7 @@ describe('Klay', () => {
     address: null,
     desc: '',
     blockchain: BlockchainType.Klaytn,
+    attributes: [],
   };
 
   beforeEach(() => {

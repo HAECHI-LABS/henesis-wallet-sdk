@@ -19,6 +19,16 @@ export interface KeyWithPriv extends Key {
 
 export type Timestamp = number;
 
+export enum BlockchainType {
+  Ethereum = 'ETHEREUM',
+  Klaytn = 'KLAYTN',
+}
+
+export enum CoinAttribute {
+  ERC20_STANDARD = 'ERC20_STANDARD',
+  ERC20_NON_STANDARD_RETURN_TYPE = 'ERC20_NON_STANDARD_RETURN_TYPE',
+}
+
 export interface SearchOptions {
   toAddress?: string;
   fromAddress?: string;

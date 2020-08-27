@@ -1,7 +1,7 @@
 import nock from 'nock';
 import { SDK } from '../src';
-import { BlockchainType } from '../src/blockchain';
 import { CoinData } from '../src/coin';
+import { BlockchainType, CoinAttribute } from '../src/types';
 
 const baseUrl = 'http://localhost:8080';
 describe('Coins', () => {
@@ -21,6 +21,7 @@ describe('Coins', () => {
         address: '0x8a904f0fb443d62b6a2835483b087abecf93a137',
         desc: '',
         blockchain: BlockchainType.Ethereum,
+        attributes: [CoinAttribute.ERC20_STANDARD],
       };
 
       nock(baseUrl)
@@ -43,6 +44,7 @@ describe('Coins', () => {
           address: null,
           desc: '',
           blockchain: BlockchainType.Klaytn,
+          attributes: [],
         },
         {
           id: 2,
@@ -51,6 +53,7 @@ describe('Coins', () => {
           address: null,
           desc: '',
           blockchain: BlockchainType.Ethereum,
+          attributes: [],
         },
         {
           id: 3,
@@ -59,6 +62,7 @@ describe('Coins', () => {
           address: '0x5457d04fc5ad31921c2254df528932a22d757d22',
           desc: '',
           blockchain: BlockchainType.Klaytn,
+          attributes: [CoinAttribute.ERC20_STANDARD],
         },
       ];
 

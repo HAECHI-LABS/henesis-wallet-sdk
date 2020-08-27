@@ -3,11 +3,12 @@ import {
   MethodName,
 } from '@haechi-labs/henesis-wallet-core/lib/gasusages';
 import express from 'express';
-import { BlockchainType } from '@haechi-labs/henesis-wallet-core/lib/blockchain';
 import { Controller } from '../types';
 import AbstractController from './controller';
+import { BlockchainType } from '@haechi-labs/henesis-wallet-core/lib/types';
 
-export default class GasUsagesController extends AbstractController
+export default class GasUsagesController
+  extends AbstractController
   implements Controller {
   private path = '/api/v1';
 

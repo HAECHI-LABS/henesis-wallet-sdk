@@ -1,7 +1,6 @@
 import * as BN from 'bn.js';
 import { Client } from './sdk';
-import { BlockchainType } from './blockchain';
-import { Pagination, PaginationOptions } from './types';
+import { BlockchainType, Pagination, PaginationOptions } from './types';
 import { toSnakeCase } from './utils';
 
 export interface Transaction {

@@ -1,7 +1,7 @@
 import nock from 'nock';
 import { SDK } from '../src';
 import { MasterWallet } from '../src/wallet';
-import { BlockchainType } from '../src/blockchain';
+import { BlockchainType } from '../src/types';
 
 const baseUrl = 'http://localhost:8080';
 describe('Wallets', () => {

@@ -1,11 +1,14 @@
 import { Transaction } from '@haechi-labs/henesis-wallet-core/lib/transactions';
-import { Pagination } from '@haechi-labs/henesis-wallet-core/lib/types';
+import {
+  BlockchainType,
+  Pagination,
+} from '@haechi-labs/henesis-wallet-core/lib/types';
 import express from 'express';
-import { BlockchainType } from '@haechi-labs/henesis-wallet-core/lib/blockchain';
 import { Controller } from '../types';
 import AbstractController from './controller';
 
-export default class TransactionController extends AbstractController
+export default class TransactionController
+  extends AbstractController
   implements Controller {
   private path = '/api/v1/transactions';
 

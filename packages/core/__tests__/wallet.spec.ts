@@ -12,8 +12,8 @@ import {
 } from '../src/wallet';
 import { MultiSigPayload, SignedMultiSigPayload } from '../src/transactions';
 import { HttpClient } from '../src/httpClient';
-import { BlockchainType } from '../src/blockchain';
 import { Env } from '../src/sdk';
+import { BlockchainType } from '../src/types';
 
 const baseUrl = 'http://localhost:8080';
 describe('Wallet', () => {

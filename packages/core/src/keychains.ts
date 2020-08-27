@@ -8,8 +8,7 @@ import {
   encodeSignature,
   toChecksum,
 } from './utils';
-import { BlockchainType } from './blockchain';
-import { Key, KeyWithPriv } from './types';
+import { BlockchainType, Key, KeyWithPriv } from './types';
 import { logo } from './resources/logo';
 import { Env } from './sdk';
 

@@ -6,8 +6,7 @@ import Web3 from 'web3';
 import { Client, Env } from './sdk';
 import { MasterWallet, MasterWalletData } from './wallet';
 import { Keychains, RecoveryKit } from './keychains';
-import { BlockchainType } from './blockchain';
-import { Key, KeyWithPriv } from './types';
+import { BlockchainType, Key, KeyWithPriv } from './types';
 import { BNConverter, toSnakeCase } from './utils';
 import _ from 'lodash';
 
@@ -148,19 +147,15 @@ export class Wallets {
 
   async retryCreateMasterWallet(
     walletId: string,
-    gasPrice?: BN
+    gasPrice?: BN,
   ): Promise<MasterWallet> {
     const response = await this.client.post<MasterWalletData>(
       `${this.baseUrl}/${walletId}/recreate`,
       {
-        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined
-      }
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      },
     );
 
-    return new MasterWallet(
-      this.client,
-      response,
-      this.keychains
-    );
+    return new MasterWallet(this.client, response, this.keychains);
   }
 }
