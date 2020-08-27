@@ -30,10 +30,12 @@ import {
   MasterWalletDTO,
   ApproveWithdrawalApprovalRequest,
   RejectWithdrawalApprovalRequest,
+  UpdateCoinRequest,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
+import AttributesEnum = UpdateCoinRequest.AttributesEnum;
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -213,7 +215,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     });
 
     const coin: Coin = await this.coins.getCoin(ticker);
-    if (this.getVersion() == "v1" || this.getVersion() == "v2") {
+    if (this.isNonStandardCoin(coin)) {
       return this.contractCall(
         coin.getCoinData().address,
         BNConverter.hexStringToBN("0x0"),
@@ -232,6 +234,13 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       otpCode,
       gasPrice,
       gasLimit || this.getGasLimitByTicker(ticker)
+    );
+  }
+
+  private isNonStandardCoin(coin: Coin): boolean {
+    return (
+      (this.getVersion() == "v1" || this.getVersion() == "v2") &&
+      coin.getAttributes().includes(AttributesEnum.NONSTANDARDRETURNTYPE)
     );
   }
 
