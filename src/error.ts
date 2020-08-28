@@ -65,13 +65,3 @@ export class FormatInvalidError extends HenesisError {
     );
   }
 }
-
-export class InternalServerError extends HenesisError {
-  constructor(message: string) {
-    super(
-      message || "internal server error",
-      HttpStatus.INTERNAL_SERVER_ERROR,
-      ErrorCode.INTERNAL_SERVER
-    );
-  }
-}
