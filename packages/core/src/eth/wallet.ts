@@ -608,7 +608,7 @@ export class EthMasterWallet extends EthLikeWallet {
       this.getVersion()
     );
     if (this.isNonStandardCoin(coin)) {
-      signedMultiSigPayload = await this.buildContractCallPayload(
+      signedMultiSigPayload = await wallet.buildContractCallPayload(
         coin.getCoinData().address,
         BNConverter.hexStringToBN("0x0"),
         coin.buildTransferData(params.toAddress, params.amount),
