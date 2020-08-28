@@ -25,6 +25,8 @@ export default class CoinsController
   }
 
   private async getAllCoins(req: express.Request): Promise<CoinDTO[]> {
-    return (await req.sdk.klay.coins.getCoins()).map((c) => c.getCoinData());
+    return (
+      await req.sdk.klay.coins.getCoins(req.query.flag === "true")
+    ).map((c) => c.getCoinData());
   }
 }
