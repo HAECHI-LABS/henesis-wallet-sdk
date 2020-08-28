@@ -214,7 +214,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       passphrase,
     });
 
-    const coin: Coin = await this.coins.getCoin(ticker);
+    const coin: Coin = await this.coins.getCoin(ticker, this.getVersion());
     if (this.isNonStandardCoin(coin)) {
       return this.contractCall(
         coin.getCoinData().address,
@@ -237,7 +237,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
   }
 
-  private isNonStandardCoin(coin: Coin): boolean {
+  protected isNonStandardCoin(coin: Coin): boolean {
     return (
       (this.getVersion() == "v1" || this.getVersion() == "v2") &&
       coin.getAttributes().includes(AttributesEnum.NONSTANDARDRETURNTYPE)
@@ -250,7 +250,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     amount: BN,
     passphrase: string
   ): Promise<SignedMultiSigPayload> {
-    const coin: Coin = await this.coins.getCoin(ticker);
+    const coin: Coin = await this.coins.getCoin(ticker, this.getVersion());
     const hexData = coin.buildTransferData(to, amount);
     const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
@@ -554,7 +554,7 @@ export class EthMasterWallet extends EthLikeWallet {
     if (userWalletIds.length > 50) {
       throw new Error(`only 50 accounts can be flushed at a time`);
     }
-    const coin: Coin = await this.coins.getCoin(ticker);
+    const coin: Coin = await this.coins.getCoin(ticker, this.getVersion());
     const userWallets: Pagination<EthUserWallet> = await this.getUserWallets({
       ids: userWalletIds,
       size: userWalletIds.length,
@@ -602,12 +602,26 @@ export class EthMasterWallet extends EthLikeWallet {
       ? await this.getUserWallet(params.userWalletId)
       : this;
 
-    const signedMultiSigPayload = await wallet.buildTransferPayload(
+    let signedMultiSigPayload;
+    const coin: Coin = await this.coins.getCoin(
       params.coinSymbol,
-      params.toAddress,
-      params.amount,
-      params.passphrase
+      this.getVersion()
     );
+    if (this.isNonStandardCoin(coin)) {
+      signedMultiSigPayload = await this.buildContractCallPayload(
+        coin.getCoinData().address,
+        BNConverter.hexStringToBN("0x0"),
+        coin.buildTransferData(params.toAddress, params.amount),
+        params.passphrase
+      );
+    } else {
+      signedMultiSigPayload = await wallet.buildTransferPayload(
+        params.coinSymbol,
+        params.toAddress,
+        params.amount,
+        params.passphrase
+      );
+    }
 
     const request: ApproveWithdrawalApprovalRequest = {
       signedMultiSigPayload: {

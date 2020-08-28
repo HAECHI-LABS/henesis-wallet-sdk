@@ -8,7 +8,6 @@ import {
 } from "./coin";
 import { CoinDTO } from "../__generate__/eth";
 import AttributesEnum = CoinDTO.AttributesEnum;
-import { InternalServerError } from "../error";
 
 export class Coins {
   private readonly client: Client;
@@ -17,18 +16,22 @@ export class Coins {
     this.client = client;
   }
 
-  public async getCoin(ticker: string): Promise<Coin> {
+  public async getCoin(ticker: string, walletVersion?: string): Promise<Coin> {
     const coinData = await this.client.get<CoinDTO>(`/coins/${ticker}`);
-    return this.resolveCoin(coinData);
+    return this.resolveCoin(coinData, walletVersion);
   }
 
-  public async getCoins(flag?: boolean): Promise<Coin[]> {
-    const params = flag ? `?flag=${flag}` : "";
-    const coinData = await this.client.get<CoinDTO[]>(`/coins${params}`);
-    return coinData.map((coinDatum) => this.resolveCoin(coinDatum));
+  public async getCoins(
+    flag: boolean,
+    walletVersion?: string
+  ): Promise<Coin[]> {
+    const coinData = await this.client.get<CoinDTO[]>(`/coins?flag=${flag}`);
+    return coinData.map((coinDatum) =>
+      this.resolveCoin(coinDatum, walletVersion)
+    );
   }
 
-  private resolveCoin(coinData: CoinDTO): Coin {
+  private resolveCoin(coinData: CoinDTO, walletVersion?: string): Coin {
     if (coinData.symbol.toString() == "ETH") {
       return new Eth(coinData);
     }
@@ -37,14 +40,13 @@ export class Coins {
       return new Klay(coinData);
     }
 
-    if (coinData.attributes.includes(AttributesEnum.STANDARD)) {
-      return new StandardErc20(coinData);
-    }
-
-    if (coinData.attributes.includes(AttributesEnum.NONSTANDARDRETURNTYPE)) {
+    if (
+      (walletVersion == "v1" || walletVersion == "v2") &&
+      coinData.attributes.includes(AttributesEnum.NONSTANDARDRETURNTYPE)
+    ) {
       return new NonStandardReturnTypeErc20(coinData);
     }
 
-    throw new InternalServerError("no matched coin attributes");
+    return new StandardErc20(coinData);
   }
 }
