@@ -253,7 +253,11 @@ export abstract class EthLikeWallet extends Wallet {
     gasPrice?: BN,
     gasLimit?: BN,
   ): Promise<Transaction> {
-    const coin: Coin = await this.coins.getCoin(ticker, this.getChain());
+    const coin: Coin = await this.coins.getCoin(
+      ticker,
+      this.getChain(),
+      this.getVersion(),
+    );
     if (this.isNonStandardCoin(coin)) {
       return this.contractCall(
         coin.getCoinData().address,
@@ -291,7 +295,11 @@ export abstract class EthLikeWallet extends Wallet {
     amount: BN,
     passphrase: string,
   ): Promise<SignedMultiSigPayload> {
-    const coin: Coin = await this.coins.getCoin(ticker, this.getChain());
+    const coin: Coin = await this.coins.getCoin(
+      ticker,
+      this.getChain(),
+      this.getVersion(),
+    );
     const hexData = coin.buildTransferData(to, amount);
     const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
@@ -671,7 +679,11 @@ export class MasterWallet extends EthLikeWallet {
     if (userWalletIds.length > 50) {
       throw new Error(`only 50 accounts can be flushed at a time`);
     }
-    const coin: Coin = await this.coins.getCoin(ticker, this.getChain());
+    const coin: Coin = await this.coins.getCoin(
+      ticker,
+      this.getChain(),
+      this.getVersion(),
+    );
     const userWallets: Pagination<UserWallet> = await this.getUserWallets({
       ids: userWalletIds,
       size: userWalletIds.length,

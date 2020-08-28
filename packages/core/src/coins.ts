@@ -19,6 +19,7 @@ export class Coins {
   public async getCoin(
     ticker: string,
     blockchain: BlockchainType,
+    walletVersion?: string,
   ): Promise<Coin> {
     const coinData = await this.client.get(
       `/coins/${ticker}?blockchain=${blockchain}`,
@@ -26,12 +27,14 @@ export class Coins {
     return this.resolveCoin(coinData);
   }
 
-  public async getCoins(): Promise<Coin[]> {
+  public async getCoins(walletVersion?: string): Promise<Coin[]> {
     const coinData: CoinData[] = await this.client.get<CoinData[]>('/coins');
-    return coinData.map((coinDatum) => this.resolveCoin(coinDatum));
+    return coinData.map((coinDatum) =>
+      this.resolveCoin(coinDatum, walletVersion),
+    );
   }
 
-  private resolveCoin(coinData: CoinData): Coin {
+  private resolveCoin(coinData: CoinData, walletVersion?: string): Coin {
     if (coinData.symbol.toString() == 'ETH') {
       return new Eth(coinData);
     }
@@ -40,16 +43,13 @@ export class Coins {
       return new Klay(coinData);
     }
 
-    if (coinData.attributes.includes(CoinAttribute.ERC20_STANDARD)) {
-      return new StandardErc20(coinData);
-    }
-
     if (
+      (walletVersion == 'v1' || walletVersion == 'v2') &&
       coinData.attributes.includes(CoinAttribute.ERC20_NON_STANDARD_RETURN_TYPE)
     ) {
       return new NonStandardReturnTypeErc20(coinData);
     }
 
-    throw new Error('no matched coin attributes');
+    return new StandardErc20(coinData);
   }
 }
