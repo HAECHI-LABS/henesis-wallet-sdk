@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.1...v2.4.2) (2020-08-28)
+
+
+### Bug Fixes
+
+* add coinId parameter to validateAllowedAddress function ([13ebc44](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/13ebc4463588ce37cd42c062d550e2ffa6a0d03d))
+* handle when wallet version is v3 ([07ae789](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/07ae7891ca71276335a0cc81d1f5e1e7fe00a72a))
+
+
+
+
+
 ## [2.4.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.0...v2.4.1) (2020-08-27)
 
 
