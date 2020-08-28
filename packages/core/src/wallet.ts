@@ -338,9 +338,13 @@ export abstract class Wallet<T> {
     );
   }
 
-  async validateAllowedAddress(address: string): Promise<boolean> {
+  async validateAllowedAddress(
+    address: string,
+    coinId?: number
+  ): Promise<boolean> {
     const request: ValidateAllowedAddressRequest = {
       address,
+      coinId,
     };
     const response: ValidateAllowedAddressResponse = await this.client.post<
       ValidateAllowedAddressResponse
