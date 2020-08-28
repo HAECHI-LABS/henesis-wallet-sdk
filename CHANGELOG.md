@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.5...v1.1.7) (2020-08-28)
+
+
+### Bug Fixes
+
+* add walletData transactionId null ([792f171](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/792f171fe451ecb4eb9b154e1fd872b7a1c31822))
+* added txId in event, createdAt at transactions ([fc045a3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/fc045a369e88a8fc80f94f9c926585c290fdc8f8))
+* delete events wallet id query param ([798677d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/798677d79c0382af478170c237b4064b52c8a18d))
+* delete user wallet recreate galimit ([88436dc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/88436dcf4b9a68714296130600a1df1a1396d547))
+* fix flush parameter coinType to ticker ([9b1f20f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9b1f20f2b135a01b00a0cd00a4f48a069740aad0))
+* fix query string ([a14dabf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a14dabf33d9efdd13cbe4e8687080268948eb00e))
+* pagination null exception ([a7085ae](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a7085ae8f9b60442f56fed902435b6b8cb8cf0c9))
+* search events by updatedAt ([8bfaab1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8bfaab1159f8de6f035d89928381ee0018f8619d))
+
+
+### Features
+
+* add account short accessToken refresh logic ([2577795](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2577795e752116f1d9bec7276db32a4e8651a963))
+* add call event response properties ([c08457f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c08457f580c01af0b5eb6ddbe93d08b5af977866))
+* add enclave pagination url fixer ([d057135](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d05713558bd0f6d487208494c8a441b3adb2921f))
+* add flush endpoint ([634db50](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/634db50879c9fe92cf60c80a42ada53cd80ec4ea))
+* add getMasterWallets sort query ([cc06925](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/cc0692596e328425932e2aa83b00198f7481660f))
+* add v1 retry master wallet, user wallet ([9b379de](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9b379de44750634d3b62355a242411becee5c340))
+* add walletData interface transactionId, error field ([1b988d6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1b988d6c4ffb9c9f167ef21df393311886bded00))
+* change wallet status ([f9cc46a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f9cc46a0531e471c3e2763acf7601708fe5ddbfa))
+* check version and coin attributes when transfer coin ([10982db](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/10982dbdaf1dfbf349681c4031a0a50e62b97b69))
+* implements flush ([4da02b0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4da02b07a6f69bbe4a19a002b768accbf55cc5a4))
+
+
+
+
+
 ## [1.1.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.5...v1.1.6) (2020-06-12)
 
 
