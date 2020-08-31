@@ -14,9 +14,9 @@
   "scripts": {
     "node:example": "ts-node --files ./example/change-account-role.ts",
     "codegen": "concurrently \"npm run codegen:btc\" \"npm run codegen:eth\" \"npm run codegen:accounts\"",
-    "codegen:btc": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i https://dev.wallet.henesis.io/docs/v2/btc/v2/api-docs -l typescript-fetch -o ./src/__generate__/btc --type-mappings Date=string",
-    "codegen:eth": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i https://dev.wallet.henesis.io/docs/v2/eth/v2/api-docs -l typescript-fetch -o ./src/__generate__/eth --type-mappings Date=string",
-    "codegen:accounts": "java -jar ./scripts/swagger-codegen-cli-2.4.10.jar generate -i https://dev.wallet.henesis.io/docs/v2/accounts/v2/api-docs -l typescript-fetch -o ./src/__generate__/accounts --type-mappings Date=string",
+    "codegen:btc": "java -jar ./scripts/openapi-generator-cli-4.3.1.jar generate -i https://dev.wallet.henesis.io/docs/v2/btc/v3/api-docs -g typescript-axios -o ./src/__generate__/btc --type-mappings Date=string --skip-validate-spec --config ./codegenConfig.json",
+    "codegen:eth": "java -jar ./scripts/openapi-generator-cli-4.3.1.jar generate -i https://dev.wallet.henesis.io/docs/v2/eth/v3/api-docs -g typescript-axios -o ./src/__generate__/eth --type-mappings Date=string --skip-validate-spec --config ./codegenConfig.json",
+    "codegen:accounts": "java -jar ./scripts/openapi-generator-cli-4.3.1.jar generate -i https://dev.wallet.henesis.io/docs/v2/accounts/v3/api-docs -g typescript-axios -o ./src/__generate__/accounts --type-mappings Date=string --skip-validate-spec --config ./codegenConfig.json",
     "test": "jest",
     "test:integration": "jest --config ./jest-integration.json",
     "type-check": "tsc --noEmit",
