@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.4...v2.4.5) (2020-09-01)
+
+
+### Bug Fixes
+
+* fixed patch withdrawal policy response ([96c8ec2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/96c8ec213d8612672ee314d9d99146a80146095a))
+
+
+
+
+
 ## [2.4.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.3...v2.4.4) (2020-09-01)
 
 
