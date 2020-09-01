@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.3...v2.4.4) (2020-09-01)
+
+
+### Features
+
+* add transform enum type ([4a9a405](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4a9a4052e7aea5d2144d3f0711bd66dc729d8231))
+* update swagger v3 ([63fc0f5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/63fc0f529b603b8623038b2878ed48dc5bf21be5))
+
+
+
+
+
 ## [2.4.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.2...v2.4.3) (2020-08-28)
 
 
