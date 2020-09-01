@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.7...v2.4.8) (2020-09-01)
+
+
+### Bug Fixes
+
+* fixed tests ([e9ebb7f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e9ebb7f6c22e6db2f1d61cba7cf10e8ab625d95c))
+
+
+### Features
+
+* update reusable enums ([1fed67f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1fed67fdc72c196b5a721f32c1d4d2b0503fef09))
+
+
+
+
+
 ## [2.4.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.6...v2.4.7) (2020-09-01)
 
 
