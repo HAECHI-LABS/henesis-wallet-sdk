@@ -1,6 +1,6 @@
 import { Client } from "./httpClient";
 import { Pagination, PaginationOptions, Secret } from "./types";
-import { Account, Role, transformRole } from "./accounts";
+import { Account, Role } from "./accounts";
 import {
   OrganizationDTO,
   OrgAccountDTO,
@@ -46,39 +46,26 @@ export class Organizations {
     return this.client.get<OrganizationDTO>(`${this.baseUrl}/me`);
   }
 
-  async getAccounts(): Promise<Account[]> {
-    const response = await this.client.get<OrgAccountDTO[]>(
-      `${this.baseUrl}/accounts`
-    );
-
-    return response.map((item) => {
-      return {
-        ...item,
-        roles: item.roles.map((role) => transformRole(role)),
-      };
-    });
+  getAccounts(): Promise<Account[]> {
+    return this.client.get<OrgAccountDTO[]>(`${this.baseUrl}/accounts`);
   }
 
-  async createSecret(): Promise<Secret> {
+  createSecret(): Promise<Secret> {
     return this.client.post<CreateSecretResponse>(`${this.baseUrl}/secret`);
   }
 
-  async changeAccountRole(
+  changeAccountRole(
     accountId: string,
     role: Role,
     otpCode?: string
   ): Promise<Account> {
-    const response = await this.client.patch<AccountDTO>(
+    return this.client.patch<AccountDTO>(
       `${this.baseUrl}/accounts/${accountId}`,
       {
         role,
         otpCode,
       }
     );
-    return {
-      ...response,
-      roles: response.roles.map((role) => transformRole(role)),
-    };
   }
 
   async addAllowedIP(params: {

@@ -17,16 +17,16 @@ import {
   CreateWithdrawalPolicyRequest as BtcCreateWithdrawalPolicyRequest,
   KeyDTO as BtcKeyDTO,
   MasterWalletDTO as BtcMasterWalletDTO,
-  MasterWalletDTOStatusEnum as BtcMasterWalletDTOStatusEnum,
   PaginationAllowedAddressDTO as BtcPaginationAllowedAddressDTO,
   PatchWithdrawalPolicyRequest as BtcPatchWithdrawalPolicyRequest,
-  WalletWithdrawalPolicyDTOTypeEnum as BtcWalletWithdrawalPolicyDTOTypeEnum,
   CreateAllowedAddressRequest as BtcCreateAllowedAddressRequest,
   DeleteAllowedAddressRequest as BtcDeleteAllowedAddressRequest,
   InactivateAllowedAddressesRequest as BtcInactivateAllowedAddressesRequest,
   ValidateIsAllowedAddressRequest as BtcValidateIsAllowedAddressRequest,
   ValidateIsAllowedAddressResponse as BtcValidateIsAllowedAddressResponse,
-  CreateWithdrawalPolicyRequestTypeEnum as BtcCreateWithdrawalPolicyRequestTypeEnum,
+  WalletStatus as BtcWalletStatus,
+  WhitelistType as BtcWhitelistType,
+  WithdrawalPolicyType as BtcWithdrawalPolicyType,
 } from "./__generate__/btc/api";
 import { BNConverter, checkNullAndUndefinedParameter } from "./utils/common";
 import { makeQueryString } from "./utils/url";
@@ -34,27 +34,23 @@ import {
   ActivateAllowedAddressesRequest as EthActivateAllowedAddressesRequest,
   KeyDTO as EthKeyDTO,
   MasterWalletDTO as EthMasterWalletDTO,
-  MasterWalletDTOStatusEnum as EthMasterWalletDTOStatusEnum,
   PaginationWalletWithdrawalPolicyDTO,
   PatchWithdrawalPolicyRequest as EthPatchWithdrawalPolicyRequest,
   WalletWithdrawalPolicyDTO,
-  WalletWithdrawalPolicyDTOTypeEnum as EthWalletWithdrawalPolicyDTOTypeEnum,
-  WalletWithdrawalPolicyDTOWalletTypeEnum as EthWalletWithdrawalPolicyDTOWalletTypeEnum,
   AllowedAddressDTO as EthAllowedAddressDTO,
   PaginationAllowedAddressDTO as EthPaginationAllowedAddressDTO,
   CreateAllowedAddressRequest as EthCreateAllowedAddressRequest,
-  CreateAllowedAddressRequestWhitelistTypeEnum as EthCreateAllowedAddressRequestWhitelistTypeEnum,
-  CreateAllowedAddressRequestAllowedCoinTypeEnum as EthCreateAllowedAddressRequestAllowedCoinTypeEnum,
   DeleteAllowedAddressRequest as EthDeleteAllowedAddressRequest,
   CreateWithdrawalPolicyRequest as EthCreateWithdrawalPolicyRequest,
   InactivateAllowedAddressesRequest as EthInactivateAllowedAddressesRequest,
   ValidateIsAllowedAddressRequest as EthValidateIsAllowedAddressRequest,
   ValidateIsAllowedAddressResponse as EthValidateIsAllowedAddressResponse,
-  CreateWithdrawalPolicyRequestTypeEnum as EthCreateWithdrawalPolicyRequestTypeEnum,
-  CreateWithdrawalPolicyRequestWalletTypeEnum as EthCreateWithdrawalPolicyRequestWalletTypeEnum,
-  TransactionDTOStatusEnum,
-  UserWalletDTOStatusEnum,
   MasterWalletDTO,
+  AllowedCoinType as EthAllowedCoinType,
+  WalletWithdrawalPolicyWalletType as EthWalletWithdrawalPolicyWalletType,
+  WalletStatus as EthWalletStatus,
+  WhitelistType as EthWhitelistType,
+  WithdrawalPolicyType as EthWithdrawalPolicyType,
 } from "./__generate__/eth/api";
 export type InactivateAllowedAddressesRequest =
   | EthInactivateAllowedAddressesRequest
@@ -70,8 +66,8 @@ export type PaginationAllowedAddressDTO =
 export type CreateAllowedAddressRequest =
   | BtcCreateAllowedAddressRequest
   | EthCreateAllowedAddressRequest;
-export import WhitelistType = EthCreateAllowedAddressRequestWhitelistTypeEnum;
-export import AllowedCoinType = EthCreateAllowedAddressRequestAllowedCoinTypeEnum;
+export import WhitelistType = EthWhitelistType;
+export import AllowedCoinType = EthAllowedCoinType;
 import { BtcMasterWalletData } from "./btc/wallet";
 import { EthMasterWalletData } from "./eth/wallet";
 export type DeleteAllowedAddressRequest =
@@ -98,39 +94,19 @@ export enum PolicyType {
 }
 
 export const transformPolicyType = (
-  type:
-    | BtcWalletWithdrawalPolicyDTOTypeEnum
-    | EthWalletWithdrawalPolicyDTOTypeEnum
-    | BtcCreateWithdrawalPolicyRequestTypeEnum
-    | EthCreateWithdrawalPolicyRequestTypeEnum
+  type: BtcWithdrawalPolicyType | EthWithdrawalPolicyType
 ) => {
-  const byPolicyType: Record<any, PolicyType> = {
+  const byPolicyType: Record<
+    BtcWithdrawalPolicyType | EthWithdrawalPolicyType,
+    PolicyType
+  > = {
     DAILY: PolicyType.DAILY,
     TRANSACTION: PolicyType.TRANSACTION,
   };
   return byPolicyType[type];
 };
 
-export enum WalletType {
-  MASTERWALLET = "MASTER_WALLET",
-  USERWALLET = "USER_WALLET",
-}
-
-export const transformWalletType = (
-  type:
-    | EthWalletWithdrawalPolicyDTOWalletTypeEnum
-    | EthCreateWithdrawalPolicyRequestWalletTypeEnum
-) => {
-  const byWalletType: Record<
-    | EthWalletWithdrawalPolicyDTOWalletTypeEnum
-    | EthCreateWithdrawalPolicyRequestWalletTypeEnum,
-    WalletType
-  > = {
-    MASTER_WALLET: WalletType.MASTERWALLET,
-    USER_WALLET: WalletType.USERWALLET,
-  };
-  return byWalletType[type];
-};
+export import WalletType = EthWalletWithdrawalPolicyWalletType;
 
 export interface WithdrawalPolicy {
   id: string;
@@ -148,15 +124,10 @@ export enum WalletStatus {
 }
 
 export const transformWalletStatus = (
-  status:
-    | EthMasterWalletDTOStatusEnum
-    | BtcMasterWalletDTOStatusEnum
-    | UserWalletDTOStatusEnum
+  status: BtcWalletStatus | EthWalletStatus
 ) => {
   const byWalletStatus: Record<
-    | EthMasterWalletDTOStatusEnum
-    | BtcMasterWalletDTOStatusEnum
-    | UserWalletDTOStatusEnum,
+    BtcWalletStatus | EthWalletStatus,
     WalletStatus
   > = {
     ACTIVE: WalletStatus.ACTIVE,
@@ -297,7 +268,7 @@ export abstract class Wallet<T> {
       | BtcCreateWithdrawalPolicyRequest
       | EthCreateWithdrawalPolicyRequest = {
       limitAmount: BNConverter.bnToHexString(limitAmount),
-      walletType: walletType as any,
+      walletType: walletType,
       type: policyType as any,
       coinSymbol,
       otpCode,
@@ -307,7 +278,6 @@ export abstract class Wallet<T> {
     >(`${this.baseUrl}/withdrawal-policies`, request);
     return {
       ...data,
-      walletType: transformWalletType(data.walletType),
       type: transformPolicyType(data.type),
       limitAmount: BNConverter.hexStringToBN(data.limitAmount),
     };
@@ -330,7 +300,6 @@ export abstract class Wallet<T> {
     );
     return {
       ...data,
-      walletType: transformWalletType(data.walletType),
       type: transformPolicyType(data.type),
       limitAmount: BNConverter.hexStringToBN(data.limitAmount),
     };
@@ -351,7 +320,6 @@ export abstract class Wallet<T> {
       results: data.results.map((data) => {
         return {
           ...data,
-          walletType: transformWalletType(data.walletType),
           type: transformPolicyType(data.type),
           limitAmount: BNConverter.hexStringToBN(data.limitAmount),
         };
