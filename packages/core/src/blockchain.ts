@@ -1,20 +1,34 @@
-import { MasterWalletDTO as EthMasterWalletDTO } from "./__generate__/eth";
-import { WithdrawalApprovalDTO } from "./__generate__/accounts";
+import {
+  MasterWalletDTO as EthMasterWalletDTO,
+  MasterWalletDTOBlockchainEnum as EthMasterWalletDTOBlockchainEnum,
+  TransactionDTOBlockchainEnum,
+  UserWalletDTOBlockchainEnum,
+  MethodGasUsageDTOBlockchainEnum,
+} from "./__generate__/eth";
+import {
+  WithdrawalApprovalDTO,
+  WithdrawalApprovalDTOBlockchainEnum,
+} from "./__generate__/accounts";
 
 export const transformBlockchainType = (
   blockchain:
-    | EthMasterWalletDTO.BlockchainEnum
-    | WithdrawalApprovalDTO.BlockchainEnum
+    | EthMasterWalletDTOBlockchainEnum
+    | WithdrawalApprovalDTOBlockchainEnum
+    | TransactionDTOBlockchainEnum
+    | UserWalletDTOBlockchainEnum
+    | MethodGasUsageDTOBlockchainEnum
 ) => {
   const byBlockchain: Record<
-    EthMasterWalletDTO.BlockchainEnum | WithdrawalApprovalDTO.BlockchainEnum,
+    | EthMasterWalletDTOBlockchainEnum
+    | WithdrawalApprovalDTOBlockchainEnum
+    | TransactionDTOBlockchainEnum
+    | UserWalletDTOBlockchainEnum
+    | MethodGasUsageDTOBlockchainEnum,
     BlockchainType
   > = {
-    [EthMasterWalletDTO.BlockchainEnum.ETHEREUM]: BlockchainType.Ethereum,
-    [EthMasterWalletDTO.BlockchainEnum.KLAYTN]: BlockchainType.Klaytn,
-    [WithdrawalApprovalDTO.BlockchainEnum.ETHEREUM]: BlockchainType.Ethereum,
-    [WithdrawalApprovalDTO.BlockchainEnum.KLAYTN]: BlockchainType.Klaytn,
-    [WithdrawalApprovalDTO.BlockchainEnum.BITCOIN]: BlockchainType.BitCoin,
+    ETHEREUM: BlockchainType.Ethereum,
+    KLAYTN: BlockchainType.Klaytn,
+    BITCOIN: BlockchainType.BitCoin,
   };
   return byBlockchain[blockchain];
 };

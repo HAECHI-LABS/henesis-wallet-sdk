@@ -1,6 +1,11 @@
 import * as BN from "bn.js";
 import { PaginationOptions, Timestamp } from "./types";
-import { ValueTransferEventDTO as EthValueTransferEventDTO } from "./__generate__/eth";
+import {
+  ValueTransferEventDTO as EthValueTransferEventDTO,
+  ValueTransferEventDTOStatusEnum as EthValueTransferEventDTOStatusEnum,
+  ValueTransferEventDTOTransferTypeEnum as EthValueTransferEventDTOTransferTypeEnum,
+  CallEventDTOStatusEnum,
+} from "./__generate__/eth";
 
 export interface Event<S> {
   id: number;
@@ -16,7 +21,7 @@ export interface Event<S> {
 
 export type BtcEvent = Event<null>;
 
-export type EthCallEvent = CallEvent<EthValueTransferEventDTO.StatusEnum>;
+export type EthCallEvent = CallEvent<CallEventDTOStatusEnum>;
 
 export interface CallEvent<T> extends Event<T> {
   fromAddress: string;
@@ -33,8 +38,8 @@ export interface ValueTransferEvent<S, T> extends Event<S> {
 }
 
 export type EthValueTransferEvent = ValueTransferEvent<
-  EthValueTransferEventDTO.StatusEnum,
-  EthValueTransferEventDTO.TransferTypeEnum
+  EthValueTransferEventDTOStatusEnum,
+  EthValueTransferEventDTOTransferTypeEnum
 >;
 
 export interface EventPaginationOptions<S> extends PaginationOptions {
@@ -54,5 +59,5 @@ export interface EventPaginationOptions<S> extends PaginationOptions {
 export type BtcEventPaginationOptions = EventPaginationOptions<null>;
 
 export type EthEventPaginationOptions = EventPaginationOptions<
-  EthValueTransferEventDTO.StatusEnum
+  EthValueTransferEventDTOStatusEnum
 >;

@@ -3,10 +3,14 @@ import { BlockchainType, transformBlockchainType } from "../blockchain";
 import { Pagination, PaginationOptions, Timestamp } from "../types";
 import { Client } from "../httpClient";
 import { makeQueryString } from "../utils/url";
-import { PaginationTransactionDTO, TransactionDTO } from "../__generate__/eth";
+import {
+  PaginationTransactionDTO,
+  TransactionDTO,
+  TransactionDTOStatusEnum,
+} from "../__generate__/eth";
 import _ from "lodash";
 
-export import TransactionStatus = TransactionDTO.StatusEnum;
+export import TransactionStatus = TransactionDTOStatusEnum;
 import { BNConverter } from "../utils/common";
 
 export interface Transaction {

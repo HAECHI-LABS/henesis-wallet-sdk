@@ -6,8 +6,8 @@ import {
   Klay,
   NonStandardReturnTypeErc20,
 } from "./coin";
-import { CoinDTO } from "../__generate__/eth";
-import AttributesEnum = CoinDTO.AttributesEnum;
+import { CoinDTO, CoinDTOAttributesEnum } from "../__generate__/eth";
+import AttributesEnum = CoinDTOAttributesEnum;
 
 export class Coins {
   private readonly client: Client;

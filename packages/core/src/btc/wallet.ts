@@ -19,10 +19,10 @@ import {
   parseResponseToTransfer,
   checkNullAndUndefinedParameter,
 } from "../utils/common";
-import { Wallet, WalletData } from "../wallet";
+import { Wallet, WalletData, transformWalletStatus } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import {
-  CreateDepositAddressDTO,
+  CreateDepositAddressRequest,
   DepositAddressDTO,
   RawTransactionDTO,
   EstimatedFeeDTO,
@@ -118,6 +118,15 @@ export interface DepositAddressPaginationOptions extends PaginationOptions {
 }
 
 export interface BtcWithdrawalApproveParams extends ApproveWithdrawal {}
+
+export const transformWalletData = (
+  data: MasterWalletDTO
+): BtcMasterWalletData => {
+  return {
+    ...data,
+    status: transformWalletStatus(data.status),
+  };
+};
 
 export class BtcMasterWallet extends Wallet<BtcTransaction> {
   private readonly data: BtcMasterWalletData;
@@ -287,7 +296,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
 
   async createDepositAddress(name: string): Promise<DepositAddress> {
     checkNullAndUndefinedParameter({ name });
-    const params: CreateDepositAddressDTO = { name };
+    const params: CreateDepositAddressRequest = { name };
     const response = await this.client.post<DepositAddressDTO>(
       `${this.baseUrl}/deposit-addresses`,
       params

@@ -6,7 +6,11 @@ import { Client } from "../httpClient";
 import { Key, Keychains, KeyWithPriv } from "../types";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
 import { RecoveryKit } from "../recoverykit";
-import { EthMasterWallet, EthMasterWalletData } from "./wallet";
+import {
+  EthMasterWallet,
+  EthMasterWalletData,
+  transformMasterWalletData,
+} from "./wallet";
 import { Wallets } from "../wallets";
 import { toChecksum } from "./keychains";
 import { keccak256s } from "./eth-core-lib/hash";
@@ -44,10 +48,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
 
     return new EthMasterWallet(
       this.client,
-      {
-        ...walletData,
-        blockchain: transformBlockchainType(walletData.blockchain),
-      },
+      transformMasterWalletData(walletData),
       this.keychains,
       this.blockchain
     );
@@ -65,10 +66,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       (wallet) =>
         new EthMasterWallet(
           this.client,
-          {
-            ...wallet,
-            blockchain: transformBlockchainType(wallet.blockchain),
-          },
+          transformMasterWalletData(wallet),
           this.keychains,
           this.blockchain
         )
@@ -116,10 +114,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
 
     return new EthMasterWallet(
       this.client,
-      {
-        ...walletData,
-        blockchain: transformBlockchainType(walletData.blockchain),
-      },
+      transformMasterWalletData(walletData),
       this.keychains,
       this.blockchain
     );
@@ -147,10 +142,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
 
     return new EthMasterWallet(
       this.client,
-      {
-        ...walletData,
-        blockchain: transformBlockchainType(walletData.blockchain),
-      },
+      transformMasterWalletData(walletData),
       this.keychains,
       this.blockchain
     );
@@ -167,10 +159,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
 
     return new EthMasterWallet(
       this.client,
-      {
-        ...response,
-        blockchain: transformBlockchainType(response.blockchain),
-      },
+      transformMasterWalletData(response),
       this.keychains,
       this.blockchain
     );
