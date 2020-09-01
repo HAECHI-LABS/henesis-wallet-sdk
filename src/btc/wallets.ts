@@ -1,5 +1,5 @@
 import { Client } from "../httpClient";
-import { BtcMasterWallet } from "./wallet";
+import { BtcMasterWallet, transformWalletData } from "./wallet";
 import { Wallets } from "../wallets";
 import aesjs from "aes-js";
 import { Keychains } from "../types";
@@ -12,9 +12,9 @@ import { BtcRecoveryKit } from "./recoveryKit";
 import { address as BitcoinAddress, networks } from "bitcoinjs-lib";
 import {
   MasterWalletDTO,
-  CreateInactiveMasterWalletRequestDTO,
-  CreateMasterWalletResponseDTO,
-  ActivateMasterWalletRequestDTO,
+  CreateInactiveMasterWalletRequest,
+  CreateInactiveMasterWalletResponse,
+  ActivateMasterWalletRequest,
 } from "../__generate__/btc";
 import { checkNullAndUndefinedParameter } from "..";
 
@@ -43,7 +43,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     });
 
     return new BtcMasterWallet(
-      { ...data },
+      transformWalletData(data),
       this.client,
       this.keychains,
       this.env
@@ -55,7 +55,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       `${this.baseUrl}/${id}`
     );
     return new BtcMasterWallet(
-      { ...data },
+      transformWalletData(data),
       this.client,
       this.keychains,
       this.env
@@ -84,7 +84,12 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     );
     return walletDatas.map(
       (wallet) =>
-        new BtcMasterWallet(wallet, this.client, this.keychains, this.env)
+        new BtcMasterWallet(
+          transformWalletData(wallet),
+          this.client,
+          this.keychains,
+          this.env
+        )
     );
   }
 
@@ -95,12 +100,12 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
     const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const params: CreateInactiveMasterWalletRequestDTO = {
+    const params: CreateInactiveMasterWalletRequest = {
       name,
       encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
     };
     const masterWalletResponse = await this.client.post<
-      CreateMasterWalletResponseDTO
+      CreateInactiveMasterWalletResponse
     >(`${this.baseUrl}?type=inactive`, params);
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
@@ -125,7 +130,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
   ): Promise<BtcMasterWallet> {
     const accountKey = recoveryKit.getAccountKey();
     const backupKey = this.removeKeyFile(recoveryKit.getBackupKey());
-    const params: ActivateMasterWalletRequestDTO = {
+    const params: ActivateMasterWalletRequest = {
       accountKey: {
         pub: accountKey.pub,
         keyFile: accountKey.keyFile,
@@ -139,6 +144,11 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       `${this.baseUrl}/${recoveryKit.getWalletId}/activate`,
       params
     );
-    return new BtcMasterWallet(wallet, this.client, this.keychains, this.env);
+    return new BtcMasterWallet(
+      transformWalletData(wallet),
+      this.client,
+      this.keychains,
+      this.env
+    );
   }
 }

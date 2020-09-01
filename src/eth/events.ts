@@ -23,9 +23,9 @@ export class EthEvents {
     options?: EthEventPaginationOptions
   ): Promise<Pagination<EthCallEvent>> {
     const queryString: string = makeQueryString(options);
-    const data = await this.client.get<
-      NoUndefinedField<PaginationCallEventDTO>
-    >(`/call-events${queryString ? `?${queryString}` : ""}`);
+    const data = await this.client.get<PaginationCallEventDTO>(
+      `/call-events${queryString ? `?${queryString}` : ""}`
+    );
     return {
       pagination: data.pagination,
       results: data.results,
