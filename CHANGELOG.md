@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.5...v2.4.6) (2020-09-01)
+
+
+### Bug Fixes
+
+* fixed create user wallet params ([b32161b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b32161b8a340055327345497855a030c4f72bd39))
+
+
+
+
+
 ## [2.4.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.4...v2.4.5) (2020-09-01)
 
 
