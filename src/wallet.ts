@@ -316,7 +316,7 @@ export abstract class Wallet<T> {
     id: string;
     limitAmount: BN;
     otpCode?: string;
-  }) {
+  }): Promise<WithdrawalPolicy> {
     const { id, limitAmount, otpCode } = params;
     const request:
       | EthPatchWithdrawalPolicyRequest
@@ -330,6 +330,8 @@ export abstract class Wallet<T> {
     );
     return {
       ...data,
+      walletType: transformWalletType(data.walletType),
+      type: transformPolicyType(data.type),
       limitAmount: BNConverter.hexStringToBN(data.limitAmount),
     };
   }
