@@ -15,7 +15,6 @@ import { BNConverter } from "../utils/common";
 
 export interface Transaction {
   id: string;
-  blockchain: BlockchainType;
   sender: string;
   keyId: string;
   hash: string;
@@ -75,7 +74,6 @@ export class Transactions {
     const multiSigPayload = signedMultiSigPayload?.multiSigPayload;
     return {
       ...transcationDTO,
-      blockchain: transformBlockchainType(transcationDTO.blockchain),
       signedMultiSigPayload: signedMultiSigPayload
         ? {
             ...signedMultiSigPayload,
