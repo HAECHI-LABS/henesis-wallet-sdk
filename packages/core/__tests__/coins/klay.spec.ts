@@ -1,9 +1,9 @@
 import BN from 'bn.js';
 import { Klay } from "../../src/eth/coin";
 import { BlockchainType } from "../../src/blockchain";
-import {CoinDTO} from "../../src/__generate__/eth";
+import {CoinDTO, CoinDTOBlockchainEnum} from "../../src/__generate__/eth";
 import {WalletWithdrawalPolicyDTO} from "../../src/__generate__/btc";
-import BlockchainEnum = WalletWithdrawalPolicyDTO.BlockchainEnum;
+import BlockchainEnum = CoinDTOBlockchainEnum;
 
 describe('Klay', () => {
   let klay: Klay;

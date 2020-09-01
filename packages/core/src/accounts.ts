@@ -2,10 +2,13 @@ import { Client } from "./httpClient";
 import { Key, Token } from "./types";
 import {
   AccountDTO,
+  AccountDTORolesEnum,
   LoginResponse,
   ChangeAccountNameRequest,
   UpdatePasswordRequest,
   AccessTokenDTO,
+  LoginResponseRolesEnum,
+  OrgAccountDTORolesEnum,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
 
@@ -27,11 +30,26 @@ export interface OTP {
   url: string;
 }
 
-export const Role: Record<
-  keyof typeof AccountDTO.RolesEnum,
-  AccountDTO.RolesEnum
-> = { ...AccountDTO.RolesEnum };
-export type Role = AccountDTO.RolesEnum;
+export enum Role {
+  COIN = "COIN",
+  VIEWER = "VIEWER",
+  ADMIN = "ADMIN",
+  HAECHI = "HAECHI",
+  SPENDER = "SPENDER",
+}
+
+export const transformRole = (
+  role: AccountDTORolesEnum | LoginResponseRolesEnum | OrgAccountDTORolesEnum
+) => {
+  const byRole: Record<AccountDTORolesEnum | LoginResponseRolesEnum, Role> = {
+    COIN: Role.COIN,
+    VIEWER: Role.VIEWER,
+    ADMIN: Role.ADMIN,
+    HAECHI: Role.HAECHI,
+    SPENDER: Role.SPENDER,
+  };
+  return byRole[role];
+};
 
 export class Accounts {
   private readonly client: Client;
@@ -44,20 +62,31 @@ export class Accounts {
     this.client = client;
   }
 
-  me(): Promise<Account> {
-    return this.client.get<AccountDTO>(`${this.baseUrl}/me`);
+  async me(): Promise<Account> {
+    const response = await this.client.get<AccountDTO>(`${this.baseUrl}/me`);
+    return {
+      ...response,
+      roles: response.roles.map((role) => transformRole(role)),
+    };
   }
 
-  login(
+  async login(
     email: string,
     password: string,
     otpCode?: string
   ): Promise<AccountWithOTP> {
-    return this.client.post<LoginResponse>(`${this.baseUrl}/login`, {
-      email,
-      password,
-      otpCode,
-    });
+    const response = await this.client.post<LoginResponse>(
+      `${this.baseUrl}/login`,
+      {
+        email,
+        password,
+        otpCode,
+      }
+    );
+    return {
+      ...response,
+      roles: response.roles.map((role) => transformRole(role)),
+    };
   }
 
   async verify(params: {

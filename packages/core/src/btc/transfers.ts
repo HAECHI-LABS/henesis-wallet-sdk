@@ -3,11 +3,16 @@ import { Client } from "../httpClient";
 import { BNConverter, parseResponseToTransfer } from "../utils/common";
 import { makeQueryString } from "../utils/url";
 import { BtcTransaction, BtcTransactionOutput } from "./wallet";
-import { PaginationTransferDTO, TransferDTO } from "../__generate__/btc";
+import {
+  PaginationTransferDTO,
+  TransferDTO,
+  TransferDTOStatusEnum,
+  TransferDTOTypeEnum,
+} from "../__generate__/btc";
 import BN from "bn.js";
 
-export import TransferStatus = TransferDTO.StatusEnum;
-export import TransferType = TransferDTO.TypeEnum;
+export import TransferStatus = TransferDTOStatusEnum;
+export import TransferType = TransferDTOTypeEnum;
 
 export interface TransferPaginationOptions extends PaginationOptions {
   walletId?: string;

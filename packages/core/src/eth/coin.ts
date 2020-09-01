@@ -6,8 +6,8 @@ import standardErc20 from "../contracts/ERC20.json";
 import nonStandardErc20 from "../contracts/ERC20_NON_STANDARD_RETURN_TYPE.json";
 import eth from "../contracts/Eth.json";
 import klay from "../contracts/Klay.json";
-import { CoinDTO } from "../__generate__/eth";
-import AttributesEnum = CoinDTO.AttributesEnum;
+import { CoinDTO, CoinDTOAttributesEnum } from "../__generate__/eth";
+import AttributesEnum = CoinDTOAttributesEnum;
 
 export abstract class Coin {
   protected coinData: CoinDTO;
@@ -62,7 +62,7 @@ export class StandardErc20 extends Coin {
       .encodeABI();
   }
 
-  getAttributes(): CoinDTO.AttributesEnum[] {
+  getAttributes(): CoinDTOAttributesEnum[] {
     return this.coinData.attributes;
   }
 }
@@ -95,7 +95,7 @@ export class NonStandardReturnTypeErc20 extends Coin {
       .encodeABI();
   }
 
-  getAttributes(): CoinDTO.AttributesEnum[] {
+  getAttributes(): CoinDTOAttributesEnum[] {
     return this.coinData.attributes;
   }
 }
@@ -120,7 +120,7 @@ export class Eth extends Coin {
     return this.eth.methods.flushEth(targetAddresses).encodeABI();
   }
 
-  getAttributes(): CoinDTO.AttributesEnum[] {
+  getAttributes(): CoinDTOAttributesEnum[] {
     return this.coinData.attributes;
   }
 }
@@ -145,7 +145,7 @@ export class Klay extends Coin {
     return this.klay.methods.flushKlay(targetAddresses).encodeABI();
   }
 
-  getAttributes(): CoinDTO.AttributesEnum[] {
+  getAttributes(): CoinDTOAttributesEnum[] {
     return this.coinData.attributes;
   }
 }

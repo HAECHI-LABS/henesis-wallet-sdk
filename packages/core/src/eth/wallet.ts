@@ -3,6 +3,7 @@ import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import BN from "bn.js";
 import { Coin } from "./coin";
+import { transformWalletStatus } from "../wallet";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
 import {
   Balance,
@@ -30,12 +31,12 @@ import {
   MasterWalletDTO,
   ApproveWithdrawalApprovalRequest,
   RejectWithdrawalApprovalRequest,
-  UpdateCoinRequest,
+  CoinDTOAttributesEnum,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
-import AttributesEnum = UpdateCoinRequest.AttributesEnum;
+import AttributesEnum = CoinDTOAttributesEnum;
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -87,6 +88,26 @@ function convertSignedMultiSigPayloadToDTO(
     },
   };
 }
+
+export const transformMasterWalletData = (
+  data: MasterWalletDTO
+): EthMasterWalletData => {
+  return {
+    ...data,
+    blockchain: transformBlockchainType(data.blockchain),
+    status: transformWalletStatus(data.status),
+  };
+};
+
+export const transformUserWalletData = (
+  data: UserWalletDTO
+): EthUserWalletData => {
+  return {
+    ...data,
+    blockchain: transformBlockchainType(data.blockchain),
+    status: transformWalletStatus(data.status),
+  };
+};
 
 export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   protected data: EthMasterWalletData;
@@ -433,10 +454,7 @@ export class EthMasterWallet extends EthLikeWallet {
       this.client,
       this.data,
       this.keychains,
-      {
-        ...userWalletData,
-        blockchain: transformBlockchainType(userWalletData.blockchain),
-      },
+      transformUserWalletData(userWalletData),
       this.blockchain
     );
   }
@@ -449,10 +467,7 @@ export class EthMasterWallet extends EthLikeWallet {
       this.client,
       this.data,
       this.keychains,
-      {
-        ...userWalletData,
-        blockchain: transformBlockchainType(userWalletData.blockchain),
-      },
+      transformUserWalletData(userWalletData),
       this.blockchain
     );
   }
@@ -499,10 +514,7 @@ export class EthMasterWallet extends EthLikeWallet {
             this.client,
             this.data,
             this.keychains,
-            {
-              ...data,
-              blockchain: transformBlockchainType(data.blockchain),
-            },
+            transformUserWalletData(data),
             this.blockchain
           )
       ),
@@ -520,10 +532,7 @@ export class EthMasterWallet extends EthLikeWallet {
       this.client,
       this.data,
       this.keychains,
-      {
-        ...response,
-        blockchain: transformBlockchainType(response.blockchain),
-      },
+      transformUserWalletData(response),
       this.blockchain
     );
   }
