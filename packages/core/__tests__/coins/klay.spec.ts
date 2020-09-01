@@ -1,9 +1,8 @@
 import BN from 'bn.js';
 import { Klay } from "../../src/eth/coin";
 import { BlockchainType } from "../../src/blockchain";
-import {CoinDTO, CoinDTOBlockchainEnum} from "../../src/__generate__/eth";
+import {CoinDTO, Blockchain} from "../../src/__generate__/eth";
 import {WalletWithdrawalPolicyDTO} from "../../src/__generate__/btc";
-import BlockchainEnum = CoinDTOBlockchainEnum;
 
 describe('Klay', () => {
   let klay: Klay;
@@ -13,7 +12,7 @@ describe('Klay', () => {
     symbol: 'KLAY',
     address: null,
     desc: '',
-    blockchain: BlockchainEnum.KLAYTN,
+    blockchain: Blockchain.KLAYTN,
     attributes: [],
   };
   beforeEach(() => {
