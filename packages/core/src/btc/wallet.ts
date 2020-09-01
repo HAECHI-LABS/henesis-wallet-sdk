@@ -98,15 +98,6 @@ export interface BtcMasterWalletData extends WalletData {
   whitelistActivated: boolean;
 }
 
-export interface CreateMasterWalletResponse {
-  id: string;
-  name: string;
-  orgId: string;
-  henesisKey: Key;
-  encryptionKey: string;
-  createdAt: Timestamp;
-}
-
 export type DepositAddress = DepositAddressDTO;
 
 export interface DepositAddressPaginationOptions extends PaginationOptions {
@@ -294,28 +285,29 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     ];
   }
 
-  async createDepositAddress(name: string): Promise<DepositAddress> {
+  createDepositAddress(
+    name: string,
+    otpCode?: string
+  ): Promise<DepositAddress> {
     checkNullAndUndefinedParameter({ name });
-    const params: CreateDepositAddressRequest = { name };
-    const response = await this.client.post<DepositAddressDTO>(
+    const params: CreateDepositAddressRequest = { name, otpCode };
+    return this.client.post<DepositAddressDTO>(
       `${this.baseUrl}/deposit-addresses`,
       params
     );
-    return response;
   }
 
-  async getDepositAddress(depositAddressId: string): Promise<DepositAddress> {
-    const response = await this.client.get<DepositAddressDTO>(
+  getDepositAddress(depositAddressId: string): Promise<DepositAddress> {
+    return this.client.get<DepositAddressDTO>(
       `${this.baseUrl}/deposit-addresses/${depositAddressId}`
     );
-    return response;
   }
 
-  async getDepositAddresses(
+  getDepositAddresses(
     options?: DepositAddressPaginationOptions
   ): Promise<Pagination<DepositAddress>> {
     const queryString: string = makeQueryString(options);
-    return await this.client.get<Pagination<DepositAddressDTO>>(
+    return this.client.get<Pagination<DepositAddressDTO>>(
       `${this.baseUrl}/deposit-addresses${queryString ? `?${queryString}` : ""}`
     );
   }
