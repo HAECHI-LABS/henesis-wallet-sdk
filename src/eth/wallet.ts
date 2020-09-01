@@ -32,6 +32,7 @@ import {
   ApproveWithdrawalApprovalRequest,
   RejectWithdrawalApprovalRequest,
   CoinDTOAttributesEnum,
+  CreateUserWalletRequest,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
@@ -438,17 +439,18 @@ export class EthMasterWallet extends EthLikeWallet {
       multiSigPayload,
     };
 
-    const userWalletData = await this.client.post<
-      NoUndefinedField<UserWalletDTO>
-    >(`${this.baseUrl}/user-wallets`, {
+    const userWalletParams: CreateUserWalletRequest = {
       name,
       salt: BNConverter.bnToHexString(salt),
-      blockchain: this.getChain(),
       signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
         signedMultiSigPayload
       ),
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
-    });
+    };
+    const userWalletData = await this.client.post<UserWalletDTO>(
+      `${this.baseUrl}/user-wallets`,
+      userWalletParams
+    );
 
     return new EthUserWallet(
       this.client,
