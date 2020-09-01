@@ -89,16 +89,16 @@ export interface AllowedAddressDTO {
     coinId?: number;
     /**
      * 
-     * @type {string}
+     * @type {WhitelistType}
      * @memberof AllowedAddressDTO
      */
-    whitelistType: AllowedAddressDTOWhitelistTypeEnum;
+    whitelistType: WhitelistType;
     /**
      * 
-     * @type {string}
+     * @type {AllowedCoinType}
      * @memberof AllowedAddressDTO
      */
-    allowedCoinType: AllowedAddressDTOAllowedCoinTypeEnum;
+    allowedCoinType: AllowedCoinType;
     /**
      * 
      * @type {string}
@@ -112,20 +112,12 @@ export interface AllowedAddressDTO {
      */
     updatedAt: string;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum AllowedAddressDTOWhitelistTypeEnum {
-    ALL = 'ALL',
-    SINGLE = 'SINGLE'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum AllowedAddressDTOAllowedCoinTypeEnum {
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum AllowedCoinType {
     ALL = 'ALL',
     SINGLE = 'SINGLE'
 }
@@ -177,6 +169,28 @@ export interface BalanceDTO {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+export enum Blockchain {
+    ETHEREUM = 'ETHEREUM',
+    KLAYTN = 'KLAYTN',
+    BITCOIN = 'BITCOIN'
+}
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum CoinSymbol {
+    ETH = 'ETH',
+    KLAY = 'KLAY',
+    BTC = 'BTC'
+}
+
+/**
+ * 
+ * @export
  * @interface CreateAllowedAddressRequest
  */
 export interface CreateAllowedAddressRequest {
@@ -194,10 +208,10 @@ export interface CreateAllowedAddressRequest {
     label?: string;
     /**
      * 
-     * @type {string}
+     * @type {WhitelistType}
      * @memberof CreateAllowedAddressRequest
      */
-    whitelistType: CreateAllowedAddressRequestWhitelistTypeEnum;
+    whitelistType: WhitelistType;
     /**
      * 
      * @type {string}
@@ -205,16 +219,6 @@ export interface CreateAllowedAddressRequest {
      */
     otpCode: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum CreateAllowedAddressRequestWhitelistTypeEnum {
-    ALL = 'ALL',
-    SINGLE = 'SINGLE'
-}
-
 /**
  * 
  * @export
@@ -291,10 +295,10 @@ export interface CreateInactiveMasterWalletResponse {
     encryptionKey: string;
     /**
      * 
-     * @type {string}
+     * @type {WalletStatus}
      * @memberof CreateInactiveMasterWalletResponse
      */
-    status: CreateInactiveMasterWalletResponseStatusEnum;
+    status: WalletStatus;
     /**
      * 
      * @type {string}
@@ -302,17 +306,6 @@ export interface CreateInactiveMasterWalletResponse {
      */
     createdAt: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum CreateInactiveMasterWalletResponseStatusEnum {
-    ACTIVE = 'ACTIVE',
-    INACTIVE = 'INACTIVE',
-    CREATING = 'CREATING'
-}
-
 /**
  * 
  * @export
@@ -415,10 +408,10 @@ export interface CreateWithdrawalPolicyRequest {
     limitAmount: string;
     /**
      * 
-     * @type {string}
+     * @type {WithdrawalPolicyType}
      * @memberof CreateWithdrawalPolicyRequest
      */
-    type: CreateWithdrawalPolicyRequestTypeEnum;
+    type: WithdrawalPolicyType;
     /**
      * 
      * @type {string}
@@ -426,16 +419,6 @@ export interface CreateWithdrawalPolicyRequest {
      */
     otpCode: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum CreateWithdrawalPolicyRequestTypeEnum {
-    DAILY = 'DAILY',
-    TRANSACTION = 'TRANSACTION'
-}
-
 /**
  * 
  * @export
@@ -991,10 +974,10 @@ export interface MasterWalletDTO {
     encryptionKey: string;
     /**
      * 
-     * @type {string}
+     * @type {WalletStatus}
      * @memberof MasterWalletDTO
      */
-    status: MasterWalletDTOStatusEnum;
+    status: WalletStatus;
     /**
      * 
      * @type {boolean}
@@ -1008,17 +991,6 @@ export interface MasterWalletDTO {
      */
     createdAt: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum MasterWalletDTOStatusEnum {
-    ACTIVE = 'ACTIVE',
-    INACTIVE = 'INACTIVE',
-    CREATING = 'CREATING'
-}
-
 /**
  * 
  * @export
@@ -1396,10 +1368,10 @@ export interface TransferDTO {
     amount: string;
     /**
      * 
-     * @type {string}
+     * @type {TransferStatus}
      * @memberof TransferDTO
      */
-    status: TransferDTOStatusEnum;
+    status: TransferStatus;
     /**
      * 
      * @type {string}
@@ -1444,10 +1416,10 @@ export interface TransferDTO {
     withdrawalApprovalId?: string;
     /**
      * 
-     * @type {string}
+     * @type {TransferType}
      * @memberof TransferDTO
      */
-    type: TransferDTOTypeEnum;
+    type: TransferType;
     /**
      * 
      * @type {string}
@@ -1461,12 +1433,12 @@ export interface TransferDTO {
      */
     updatedAt: string;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum TransferDTOStatusEnum {
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum TransferStatus {
     PENDINGAPPROVAL = 'PENDING_APPROVAL',
     REJECTED = 'REJECTED',
     PENDING = 'PENDING',
@@ -1474,11 +1446,13 @@ export enum TransferDTOStatusEnum {
     CONFIRMED = 'CONFIRMED',
     REQUESTED = 'REQUESTED'
 }
+
 /**
-    * @export
-    * @enum {string}
-    */
-export enum TransferDTOTypeEnum {
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum TransferType {
     WITHDRAWAL = 'WITHDRAWAL',
     DEPOSIT = 'DEPOSIT'
 }
@@ -1512,6 +1486,17 @@ export interface ValidateIsAllowedAddressResponse {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+export enum WalletStatus {
+    ACTIVE = 'ACTIVE',
+    INACTIVE = 'INACTIVE',
+    CREATING = 'CREATING'
+}
+
+/**
+ * 
+ * @export
  * @interface WalletWithdrawalPolicyDTO
  */
 export interface WalletWithdrawalPolicyDTO {
@@ -1523,10 +1508,10 @@ export interface WalletWithdrawalPolicyDTO {
     id: string;
     /**
      * 
-     * @type {string}
+     * @type {Blockchain}
      * @memberof WalletWithdrawalPolicyDTO
      */
-    blockchain: WalletWithdrawalPolicyDTOBlockchainEnum;
+    blockchain: Blockchain;
     /**
      * 
      * @type {string}
@@ -1535,10 +1520,10 @@ export interface WalletWithdrawalPolicyDTO {
     limitAmount: string;
     /**
      * 
-     * @type {string}
+     * @type {WithdrawalPolicyType}
      * @memberof WalletWithdrawalPolicyDTO
      */
-    type: WalletWithdrawalPolicyDTOTypeEnum;
+    type: WithdrawalPolicyType;
     /**
      * 
      * @type {string}
@@ -1547,10 +1532,10 @@ export interface WalletWithdrawalPolicyDTO {
     walletId: string;
     /**
      * 
-     * @type {string}
+     * @type {CoinSymbol}
      * @memberof WalletWithdrawalPolicyDTO
      */
-    coinSymbol: WalletWithdrawalPolicyDTOCoinSymbolEnum;
+    coinSymbol: CoinSymbol;
     /**
      * 
      * @type {string}
@@ -1558,32 +1543,24 @@ export interface WalletWithdrawalPolicyDTO {
      */
     coinName: string;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum WhitelistType {
+    ALL = 'ALL',
+    SINGLE = 'SINGLE'
+}
 
 /**
-    * @export
-    * @enum {string}
-    */
-export enum WalletWithdrawalPolicyDTOBlockchainEnum {
-    ETHEREUM = 'ETHEREUM',
-    KLAYTN = 'KLAYTN',
-    BITCOIN = 'BITCOIN'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum WalletWithdrawalPolicyDTOTypeEnum {
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum WithdrawalPolicyType {
     DAILY = 'DAILY',
     TRANSACTION = 'TRANSACTION'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum WalletWithdrawalPolicyDTOCoinSymbolEnum {
-    ETH = 'ETH',
-    KLAY = 'KLAY',
-    BTC = 'BTC'
 }
 
 

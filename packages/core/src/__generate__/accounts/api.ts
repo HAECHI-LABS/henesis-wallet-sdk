@@ -52,10 +52,10 @@ export interface AccountDTO {
     email: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<Role>}
      * @memberof AccountDTO
      */
-    roles: Array<AccountDTORolesEnum>;
+    roles: Array<Role>;
     /**
      * 
      * @type {string}
@@ -87,19 +87,6 @@ export interface AccountDTO {
      */
     createdAt: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum AccountDTORolesEnum {
-    COIN = 'COIN',
-    VIEWER = 'VIEWER',
-    ADMIN = 'ADMIN',
-    HAECHI = 'HAECHI',
-    SPENDER = 'SPENDER'
-}
-
 /**
  * 
  * @export
@@ -150,6 +137,17 @@ export interface AllowedIpDTO {
      */
     createdAt: string;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum Blockchain {
+    ETHEREUM = 'ETHEREUM',
+    KLAYTN = 'KLAYTN',
+    BITCOIN = 'BITCOIN'
+}
+
 /**
  * 
  * @export
@@ -468,10 +466,10 @@ export interface IdentityDTO {
     email: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<Role>}
      * @memberof IdentityDTO
      */
-    roles: Array<IdentityDTORolesEnum>;
+    roles: Array<Role>;
     /**
      * 
      * @type {string}
@@ -515,19 +513,6 @@ export interface IdentityDTO {
      */
     accessToken: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum IdentityDTORolesEnum {
-    COIN = 'COIN',
-    VIEWER = 'VIEWER',
-    ADMIN = 'ADMIN',
-    HAECHI = 'HAECHI',
-    SPENDER = 'SPENDER'
-}
-
 /**
  * 
  * @export
@@ -870,10 +855,10 @@ export interface LoginResponse {
     email: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<Role>}
      * @memberof LoginResponse
      */
-    roles: Array<LoginResponseRolesEnum>;
+    roles: Array<Role>;
     /**
      * 
      * @type {string}
@@ -905,19 +890,6 @@ export interface LoginResponse {
      */
     otp: OTPDTO;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum LoginResponseRolesEnum {
-    COIN = 'COIN',
-    VIEWER = 'VIEWER',
-    ADMIN = 'ADMIN',
-    HAECHI = 'HAECHI',
-    SPENDER = 'SPENDER'
-}
-
 /**
  * 
  * @export
@@ -926,10 +898,10 @@ export enum LoginResponseRolesEnum {
 export interface NotifyRequest {
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<Role>}
      * @memberof NotifyRequest
      */
-    targets?: Array<NotifyRequestTargetsEnum>;
+    targets?: Array<Role>;
     /**
      * 
      * @type {string}
@@ -943,19 +915,6 @@ export interface NotifyRequest {
      */
     content?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum NotifyRequestTargetsEnum {
-    COIN = 'COIN',
-    VIEWER = 'VIEWER',
-    ADMIN = 'ADMIN',
-    HAECHI = 'HAECHI',
-    SPENDER = 'SPENDER'
-}
-
 /**
  * 
  * @export
@@ -995,10 +954,10 @@ export interface OrgAccountDTO {
     email: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<Role>}
      * @memberof OrgAccountDTO
      */
-    roles: Array<OrgAccountDTORolesEnum>;
+    roles: Array<Role>;
     /**
      * 
      * @type {string}
@@ -1012,19 +971,6 @@ export interface OrgAccountDTO {
      */
     lastName: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum OrgAccountDTORolesEnum {
-    COIN = 'COIN',
-    VIEWER = 'VIEWER',
-    ADMIN = 'ADMIN',
-    HAECHI = 'HAECHI',
-    SPENDER = 'SPENDER'
-}
-
 /**
  * 
  * @export
@@ -1195,6 +1141,19 @@ export interface RefreshAccessTokenRequest {
      */
     otpCode?: string;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum Role {
+    COIN = 'COIN',
+    VIEWER = 'VIEWER',
+    ADMIN = 'ADMIN',
+    HAECHI = 'HAECHI',
+    SPENDER = 'SPENDER'
+}
+
 /**
  * 
  * @export
@@ -1371,10 +1330,10 @@ export interface WithdrawalApprovalDTO {
     requester: SimpleAccountDTO;
     /**
      * 
-     * @type {string}
+     * @type {Blockchain}
      * @memberof WithdrawalApprovalDTO
      */
-    blockchain: WithdrawalApprovalDTOBlockchainEnum;
+    blockchain: Blockchain;
     /**
      * 
      * @type {string}
@@ -1383,10 +1342,10 @@ export interface WithdrawalApprovalDTO {
     amount: string;
     /**
      * 
-     * @type {string}
+     * @type {WithdrawalApprovalStatus}
      * @memberof WithdrawalApprovalDTO
      */
-    status: WithdrawalApprovalDTOStatusEnum;
+    status: WithdrawalApprovalStatus;
     /**
      * 
      * @type {string}
@@ -1436,21 +1395,12 @@ export interface WithdrawalApprovalDTO {
      */
     updatedAt: string;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum WithdrawalApprovalDTOBlockchainEnum {
-    ETHEREUM = 'ETHEREUM',
-    KLAYTN = 'KLAYTN',
-    BITCOIN = 'BITCOIN'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum WithdrawalApprovalDTOStatusEnum {
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum WithdrawalApprovalStatus {
     PENDING = 'PENDING',
     REJECTED = 'REJECTED',
     APPROVED = 'APPROVED'
