@@ -4,7 +4,7 @@ import { makeQueryString } from "./utils/url";
 import {
   PaginationWithdrawalApprovalDTO,
   WithdrawalApprovalDTO,
-  WithdrawalApprovalDTOStatusEnum,
+  WithdrawalApprovalStatus,
 } from "./__generate__/accounts";
 import BN from "bn.js";
 import _ from "lodash";
@@ -13,7 +13,7 @@ import { Transfer } from "./btc/transfers";
 import { EthTransaction } from "./eth/wallet";
 import { BlockchainType, transformBlockchainType } from "./blockchain";
 
-export import WithdrawalApprovalStatus = WithdrawalApprovalDTOStatusEnum;
+export import WithdrawalApprovalStatus = WithdrawalApprovalStatus;
 
 export type WithdrawalApproval = Omit<
   WithdrawalApprovalDTO,

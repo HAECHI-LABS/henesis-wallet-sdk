@@ -1,29 +1,15 @@
 import {
   MasterWalletDTO as EthMasterWalletDTO,
-  MasterWalletDTOBlockchainEnum as EthMasterWalletDTOBlockchainEnum,
-  TransactionDTOBlockchainEnum,
   UserWalletDTOBlockchainEnum,
-  MethodGasUsageDTOBlockchainEnum,
+  Blockchain as EthBlockchain,
 } from "./__generate__/eth";
-import {
-  WithdrawalApprovalDTO,
-  WithdrawalApprovalDTOBlockchainEnum,
-} from "./__generate__/accounts";
+import { Blockchain as AccountsBlockchain } from "./__generate__/accounts";
 
 export const transformBlockchainType = (
-  blockchain:
-    | EthMasterWalletDTOBlockchainEnum
-    | WithdrawalApprovalDTOBlockchainEnum
-    | TransactionDTOBlockchainEnum
-    | UserWalletDTOBlockchainEnum
-    | MethodGasUsageDTOBlockchainEnum
+  blockchain: EthBlockchain | AccountsBlockchain | UserWalletDTOBlockchainEnum
 ) => {
   const byBlockchain: Record<
-    | EthMasterWalletDTOBlockchainEnum
-    | WithdrawalApprovalDTOBlockchainEnum
-    | TransactionDTOBlockchainEnum
-    | UserWalletDTOBlockchainEnum
-    | MethodGasUsageDTOBlockchainEnum,
+    EthBlockchain | AccountsBlockchain | UserWalletDTOBlockchainEnum,
     BlockchainType
   > = {
     ETHEREUM: BlockchainType.Ethereum,

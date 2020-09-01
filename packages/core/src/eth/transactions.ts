@@ -6,11 +6,11 @@ import { makeQueryString } from "../utils/url";
 import {
   PaginationTransactionDTO,
   TransactionDTO,
-  TransactionDTOStatusEnum,
+  TransactionStatus,
 } from "../__generate__/eth";
 import _ from "lodash";
 
-export import TransactionStatus = TransactionDTOStatusEnum;
+export import TransactionStatus = TransactionStatus;
 import { BNConverter } from "../utils/common";
 
 export interface Transaction {
