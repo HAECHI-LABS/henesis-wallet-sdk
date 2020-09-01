@@ -416,7 +416,8 @@ export class EthMasterWallet extends EthLikeWallet {
     name: string,
     passphrase: string,
     gasPrice?: BN,
-    salt?: BN
+    salt?: BN,
+    otpCode?: string
   ): Promise<EthUserWallet> {
     const nonce = await this.getNonce();
     // generates 32byte(256 bit) randoma hex string and converts to BN when salt is not defined
@@ -446,6 +447,7 @@ export class EthMasterWallet extends EthLikeWallet {
         signedMultiSigPayload
       ),
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      otpCode,
     };
     const userWalletData = await this.client.post<UserWalletDTO>(
       `${this.baseUrl}/user-wallets`,
