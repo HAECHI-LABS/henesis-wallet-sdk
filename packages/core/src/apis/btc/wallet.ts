@@ -7,7 +7,6 @@ import {
 import { Client } from "../../httpClient";
 
 const walletControllerApi = (client: Client) => {
-  console.log(client);
   const apiClient: AxiosInstance = _.get(client, ["apiClient"]);
   return WalletControllerApiFactory(undefined, "", apiClient);
 };
