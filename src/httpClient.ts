@@ -4,7 +4,7 @@ import Base64 from "crypto-js/enc-base64";
 
 import { ObjectConverter } from "./utils/common";
 import { BlockchainType } from "./blockchain";
-import { makePrefixPathByBlockchainType } from "./utils/url";
+import { makePrefixPathByBlockchainType, removePrefixApi } from "./utils/url";
 
 const packageJson = require("../package.json");
 
@@ -33,6 +33,8 @@ export class HttpClient {
 
   private readonly client: AxiosInstance;
 
+  private readonly apiClient: AxiosInstance;
+
   private readonly accessToken: string;
 
   private readonly secret: string;
@@ -41,7 +43,66 @@ export class HttpClient {
     this.baseUrl = options.url;
     this.secret = options.secret;
     this.accessToken = options.accessToken;
-    this.client = axios.create({
+    this.client = this.makeSDKClient();
+    this.apiClient = this.makeApiClient();
+    return new AxiosMethodProxy(this, this.client) as any;
+  }
+
+  private makeSDKClient() {
+    const client = this.makeClient();
+    client.interceptors.request.use((config) => {
+      config.data = ObjectConverter.toSnakeCase(config.data);
+      return config;
+    });
+
+    client.interceptors.response.use(
+      (response) => {
+        if (response.data) {
+          return ObjectConverter.toCamelCase(response.data);
+        }
+        return response;
+      },
+      (error) => {
+        if (error.response) {
+          error.response.data = ObjectConverter.toCamelCase(
+            error.response.data
+          );
+        }
+        return Promise.reject(error);
+      }
+    );
+    return client;
+  }
+
+  private makeApiClient() {
+    const client = this.makeClient();
+    client.defaults.baseURL = removePrefixApi(client.defaults.baseURL);
+    client.interceptors.request.use((config) => {
+      config.data = ObjectConverter.toSnakeCase(config.data);
+      return config;
+    });
+
+    client.interceptors.response.use(
+      (response) => {
+        if (response.data) {
+          response.data = ObjectConverter.toCamelCase(response.data);
+        }
+        return response;
+      },
+      (error) => {
+        if (error.response) {
+          error.response.data = ObjectConverter.toCamelCase(
+            error.response.data
+          );
+        }
+        return error;
+      }
+    );
+    return client;
+  }
+
+  private makeClient() {
+    const client = axios.create({
       baseURL: this.baseUrl,
       timeout: 30000,
       validateStatus(status) {
@@ -49,7 +110,7 @@ export class HttpClient {
       },
     });
 
-    this.client.interceptors.request.use((config) => {
+    client.interceptors.request.use((config) => {
       config.headers["If-Modified-Since"] = "Mon, 26 Jul 1997 05:00:00 GMT";
       if (this.accessToken) {
         config.headers.Authorization = `Bearer ${this.accessToken}`;
@@ -74,30 +135,7 @@ export class HttpClient {
 
       return config;
     });
-
-    this.client.interceptors.request.use((config) => {
-      config.data = ObjectConverter.toSnakeCase(config.data);
-      return config;
-    });
-
-    this.client.interceptors.response.use(
-      (response) => {
-        if (response.data) {
-          return ObjectConverter.toCamelCase(response.data);
-        }
-        return response;
-      },
-      (error) => {
-        if (error.response) {
-          error.response.data = ObjectConverter.toCamelCase(
-            error.response.data
-          );
-        }
-        return Promise.reject(error);
-      }
-    );
-
-    return new AxiosMethodProxy(this, this.client) as any;
+    return client;
   }
 
   createSig(message: string): string {
@@ -111,6 +149,7 @@ export const enhancedBlockchainClient = (
 ): Client => {
   const prefixPath = makePrefixPathByBlockchainType(blockchain);
   return {
+    ...client,
     get<T = any>(url: string): Promise<T> {
       return client.get(`${prefixPath}${url}`);
     },

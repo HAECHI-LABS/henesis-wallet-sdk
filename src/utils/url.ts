@@ -8,6 +8,10 @@ baseUrls.set(Env.Test, "https://test.wallet.henesis.io/api/v2");
 baseUrls.set(Env.Dev, "https://dev.wallet.henesis.io/api/v2");
 baseUrls.set(Env.Prod, "https://wallet.henesis.io/api/v2");
 
+export const removePrefixApi = (url: string) => {
+  return url.replace("/api/v2", "");
+};
+
 export const makePrefixPathByBlockchainType = (blockchain?: BlockchainType) => {
   if (!blockchain) {
     return "";
