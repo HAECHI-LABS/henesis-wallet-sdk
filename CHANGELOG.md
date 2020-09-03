@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.8...v2.4.9) (2020-09-03)
+
+
+### Bug Fixes
+
+* fix deposit address api call bug ([4eff45a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4eff45a189aee1275cafba8285d2586649d9ac76))
+* remove console log ([86a0081](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/86a0081cf2c988e3226e91c6f8c643f25ebc3910))
+
+
+### Features
+
+* apply swagger api axios depositaddress ([5716a79](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5716a79c6fccc07d318f1560f4adbc062921c2fa))
+
+
+
+
+
 ## [2.4.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.7...v2.4.8) (2020-09-01)
 
 
