@@ -253,7 +253,10 @@ export default class WalletsController
     const masterWallet = await req.sdk.klay.wallets.getMasterWallet(
       req.params.masterWalletId
     );
-    const balances = await masterWallet.getBalance();
+    const balances = await masterWallet.getBalance(
+      req.query.flag === "true",
+      String(req.query.symbol)
+    );
     return balances.map((c) => this.bnToHexString(c));
   }
 
@@ -450,7 +453,10 @@ export default class WalletsController
       req.params.userWalletId
     );
 
-    const balances = await userWallet.getBalance();
+    const balances = await userWallet.getBalance(
+      req.query.flag === "true",
+      String(req.query.symbol)
+    );
     return balances.map((c) => this.bnToHexString(c));
   }
 
