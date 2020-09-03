@@ -37,10 +37,6 @@ import { Env } from "../sdk";
 import _ from "lodash";
 import { Transfer } from "./transfers";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
-import {
-  createDepositAddressApi,
-  getDepositAddressApi,
-} from "../apis/btc/wallet";
 
 export interface BtcTransaction {
   id: string;
@@ -294,22 +290,20 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     otpCode?: string
   ): Promise<DepositAddress> {
     checkNullAndUndefinedParameter({ name });
-    return createDepositAddressApi({
-      client: this.client,
-      walletId: this.data.id,
-      request: {
-        name,
-        otpCode,
-      },
-    });
+    const request: CreateDepositAddressRequest = {
+      name,
+      otpCode,
+    };
+    return this.client.post<DepositAddressDTO>(
+      `${this.baseUrl}/deposit-addresses`,
+      request
+    );
   }
 
   getDepositAddress(depositAddressId: string): Promise<DepositAddress> {
-    return getDepositAddressApi({
-      client: this.client,
-      walletId: this.data.id,
-      depositAddressId,
-    });
+    return this.client.get<DepositAddressDTO>(
+      `${this.baseUrl}/deposit-addresses/${depositAddressId}`
+    );
   }
 
   getDepositAddresses(
