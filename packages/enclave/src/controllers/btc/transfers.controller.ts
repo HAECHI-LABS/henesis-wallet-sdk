@@ -42,7 +42,7 @@ export default class TransfersController
   protected initRoutes() {
     this.router.get(`${this.path}`, this.promiseWrapper(this.getTransfers));
     this.router.get(
-      `${this.path}/:walletId`,
+      `${this.path}/:transferId`,
       this.promiseWrapper(this.getTransfer)
     );
   }
@@ -59,7 +59,7 @@ export default class TransfersController
 
   private async getTransfer(req: express.Request): Promise<TransferResponse> {
     return this.bnToHexString(
-      await req.sdk.btc.transfers.getTransfer(req.params.walletId)
+      await req.sdk.btc.transfers.getTransfer(req.params.transferId)
     );
   }
 }
