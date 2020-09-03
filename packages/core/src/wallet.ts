@@ -153,7 +153,7 @@ export abstract class Wallet<T> {
     this.baseUrl = baseUrl;
   }
   abstract getChain(): BlockchainType;
-  abstract getBalance(flag?: boolean): Promise<Balance[]>;
+  abstract getBalance(flag?: boolean, symbol?: string): Promise<Balance[]>;
   abstract getAddress(): string;
   abstract getId(): string;
   abstract changeName(name: string);

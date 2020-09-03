@@ -476,8 +476,8 @@ export class EthMasterWallet extends EthLikeWallet {
     );
   }
 
-  async getBalance(flag?: boolean): Promise<Balance[]> {
-    const queryString: string = makeQueryString({ flag });
+  async getBalance(flag?: boolean, symbol?: string): Promise<Balance[]> {
+    const queryString: string = makeQueryString({ flag, symbol });
     const balances = await this.client.get<NoUndefinedField<BalanceDTO>[]>(
       `${this.baseUrl}/balance${queryString ? `?${queryString}` : ""}`
     );
@@ -698,10 +698,10 @@ export class EthUserWallet extends EthLikeWallet {
     return BNConverter.hexStringToBN(String(nonce.nonce));
   }
 
-  async getBalance(flag?: boolean): Promise<Balance[]> {
-    const params = flag ? `?flag=${flag}` : "";
+  async getBalance(flag?: boolean, symbol?: string): Promise<Balance[]> {
+    const queryString: string = makeQueryString({ flag, symbol });
     const balances = await this.client.get<BalanceDTO[]>(
-      `${this.baseUrl}/balance${params}`
+      `${this.baseUrl}/balance${queryString ? `?${queryString}` : ""}`
     );
 
     return balances.map((balance) => ({
