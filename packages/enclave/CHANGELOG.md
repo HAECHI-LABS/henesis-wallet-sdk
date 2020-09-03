@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.8...v2.4.9) (2020-09-03)
+
+
+### Bug Fixes
+
+* fix deposit address api call bug ([4eff45a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4eff45a189aee1275cafba8285d2586649d9ac76))
+
+
+
+
+
 ## [2.4.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.7...v2.4.8) (2020-09-01)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
