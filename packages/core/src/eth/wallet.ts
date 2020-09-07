@@ -48,7 +48,6 @@ export interface EthWalletData extends WalletData {
   version: string;
   transactionId?: string | null;
   error?: string | null;
-  updatedAt: string;
 }
 
 export interface EthMasterWalletData extends EthWalletData {
