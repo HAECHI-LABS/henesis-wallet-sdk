@@ -85,6 +85,7 @@ export interface WalletData {
   address: string;
   encryptionKey: string;
   createdAt: string;
+  updatedAt: string;
   status: WalletStatus;
 }
 
