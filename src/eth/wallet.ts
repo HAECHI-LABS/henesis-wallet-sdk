@@ -357,7 +357,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
     const response = await this.client.post<
       NoUndefinedField<BatchTransactionDTO>[]
-    >(`"/wallets/batch-transactions`, {
+    >(`/wallets/batch-transactions`, {
       walletId,
       blockchain,
       signedMultiSigPayloads: signedMultiSigPayloadDTOs,
