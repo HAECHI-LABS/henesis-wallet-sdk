@@ -10,14 +10,14 @@ import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
 
 import AbstractController from "../controller";
 import { Controller } from "../../types";
-import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
+import {
+  Balance,
+  Pagination,
+} from "@haechi-labs/henesis-wallet-core/lib/types";
 
-interface Balance {
-  coinType: string;
+interface BalanceResponse extends Omit<Balance, "amount" | "spendableAmount"> {
   amount: string;
   spendableAmount?: string;
-  name: string;
-  symbol: string;
 }
 
 interface Nonce {
@@ -249,7 +249,7 @@ export default class WalletsController
 
   private async getMasterWalletBalance(
     req: express.Request
-  ): Promise<Balance[]> {
+  ): Promise<BalanceResponse[]> {
     const masterWallet = await req.sdk.klay.wallets.getMasterWallet(
       req.params.masterWalletId
     );
@@ -446,7 +446,9 @@ export default class WalletsController
     return await userWallet.changeName(req.body.name);
   }
 
-  private async getUserWalletBalance(req: express.Request): Promise<Balance[]> {
+  private async getUserWalletBalance(
+    req: express.Request
+  ): Promise<BalanceResponse[]> {
     const userWallet = await this.getUserWalletByContext(
       req.sdk,
       req.params.masterWalletId,
