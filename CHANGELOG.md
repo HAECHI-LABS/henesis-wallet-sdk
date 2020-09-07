@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.9...v2.4.10) (2020-09-07)
+
+
+### Bug Fixes
+
+* fix batch-tx url ([2220b23](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2220b23e1caa1e7e57acdfdc5b7309fa1f65f205))
+
+
+### Features
+
+* add symbol when get balance ([3862117](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3862117d35f15b79e8ca1e95e20cc77f9564faba))
+
+
+
+
+
 ## [2.4.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.8...v2.4.9) (2020-09-03)
 
 
