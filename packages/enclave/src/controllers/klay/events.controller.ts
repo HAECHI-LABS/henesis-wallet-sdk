@@ -7,6 +7,11 @@ import {
   EthValueTransferEvent,
 } from "@haechi-labs/henesis-wallet-core/lib/events";
 
+export interface EthValueTransferEventResponse
+  extends Omit<EthValueTransferEvent, "amount"> {
+  amount: string;
+}
+
 export default class EventsController
   extends AbstractController
   implements Controller {
@@ -40,7 +45,7 @@ export default class EventsController
 
   private async getValueTransferEvents(
     req: express.Request
-  ): Promise<Pagination<EthValueTransferEvent>> {
+  ): Promise<Pagination<EthValueTransferEventResponse>> {
     const events = await req.sdk.klay.events.getValueTransferEvents(req.query);
     return this.pagination<EthValueTransferEvent>(req, {
       pagination: events.pagination,

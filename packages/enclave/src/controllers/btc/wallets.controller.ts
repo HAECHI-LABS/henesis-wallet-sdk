@@ -4,19 +4,20 @@ import express from "express";
 import {
   BtcEstimatedFee,
   BtcMasterWalletData,
-  BtcTransaction,
   DepositAddress,
 } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
-import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
+import {
+  Balance,
+  Pagination,
+} from "@haechi-labs/henesis-wallet-core/lib/types";
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
 import { TransferResponse } from "./transfers.controller";
 
-export interface BalanceResponse {
-  coinType: string;
+export interface BalanceResponse
+  extends Omit<Balance, "amount" | "spendableAmount"> {
   amount: string;
-  name: string;
-  symbol: string;
+  spendableAmount?: string;
 }
 
 export interface Boolean {

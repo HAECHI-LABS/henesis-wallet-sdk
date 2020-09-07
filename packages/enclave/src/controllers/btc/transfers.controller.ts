@@ -2,7 +2,6 @@ import AbstractController from "../controller";
 import { Controller } from "../../types";
 import express from "express";
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
-import BN from "bn.js";
 import {
   BtcTransaction,
   BtcTransactionOutput,
@@ -25,8 +24,11 @@ export interface BtcTransactionResponse
   outputs: BtcTransactionOutputResponse[];
 }
 
-export interface TransferResponse extends Omit<Transfer, "transaction"> {
+export interface TransferResponse
+  extends Omit<Transfer, "transaction" | "amount" | "feeAmount"> {
   transaction: BtcTransactionResponse;
+  amount: string;
+  feeAmount: string | null;
 }
 
 export default class TransfersController
