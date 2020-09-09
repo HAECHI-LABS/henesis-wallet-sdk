@@ -276,7 +276,9 @@ export default class WalletController
       req.params.masterWalletId,
     );
 
-    const balances = await masterWallet.getBalance();
+    const balances = await masterWallet.getBalance(
+      req.query.symbol ? String(req.query.symbol) : null
+    );
     return balances.map((x) => ({
       coinType: x.coinType,
       amount: BNConverter.bnToHexString(x.amount),
@@ -293,7 +295,9 @@ export default class WalletController
       req.params.masterWalletId,
       req.params.userWalletId,
     );
-    const balances = await userWallet.getBalance();
+    const balances = await userWallet.getBalance(
+      req.query.symbol ? String(req.query.symbol) : null
+    );
     return balances.map((x) => ({
       coinType: x.coinType,
       amount: BNConverter.bnToHexString(x.amount),
