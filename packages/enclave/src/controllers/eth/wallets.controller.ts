@@ -255,7 +255,7 @@ export default class WalletsController
     );
     const balances = await masterWallet.getBalance(
       req.query.flag === "true",
-      String(req.query.symbol)
+      req.query.symbol ? String(req.query.symbol) : null
     );
     return balances.map((c) => this.bnToHexString(c));
   }
