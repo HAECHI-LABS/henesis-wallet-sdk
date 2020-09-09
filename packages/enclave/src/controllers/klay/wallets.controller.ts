@@ -85,11 +85,6 @@ export default class WalletsController
     );
 
     this.router.post(
-      `${this.path}/:masterWalletId/transactions`,
-      this.promiseWrapper(this.replaceMasterWalletTransaction, 201)
-    );
-
-    this.router.post(
       `${this.path}/:masterWalletId/batch-transactions`,
       this.promiseWrapper(this.sendMasterWalletBatchTransactions, 201)
     );
@@ -137,11 +132,6 @@ export default class WalletsController
     this.router.post(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId/transfer`,
       this.promiseWrapper(this.sendUserWalletCoin, 201)
-    );
-
-    this.router.post(
-      `${this.path}/:masterWalletId/user-wallets/:userWalletId/transactions`,
-      this.promiseWrapper(this.replaceUserWalletTransaction, 201)
     );
 
     this.router.patch(
@@ -290,16 +280,6 @@ export default class WalletsController
         ? BNConverter.hexStringToBN(req.body.gasLimit)
         : undefined
     );
-  }
-
-  private async replaceMasterWalletTransaction(
-    req: express.Request
-  ): Promise<EthTransaction> {
-    const masterWallet = await req.sdk.klay.wallets.getMasterWallet(
-      req.params.masterWalletId
-    );
-
-    return await masterWallet.replaceTransaction(req.body.transactionId);
   }
 
   private async sendMasterWalletBatchTransactions(
@@ -496,18 +476,6 @@ export default class WalletsController
         ? BNConverter.hexStringToBN(req.body.gasLimit)
         : undefined
     );
-  }
-
-  private async replaceUserWalletTransaction(
-    req: express.Request
-  ): Promise<EthTransaction> {
-    const userWallet = await this.getUserWalletByContext(
-      req.sdk,
-      req.params.masterWalletId,
-      req.params.userWalletId
-    );
-
-    return await userWallet.replaceTransaction(req.body.transactionId);
   }
 
   private async changePassphrase(req: express.Request): Promise<void> {
