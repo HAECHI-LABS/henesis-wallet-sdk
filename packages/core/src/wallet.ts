@@ -600,19 +600,23 @@ export class MasterWallet extends EthLikeWallet {
   async getBalance(symbol?: string): Promise<Balance[]> {
     const queryString: string = symbol ? `symbol=${symbol}` : "";
     const balances: {
+      coinId: number;
       coinType: string;
       amount: string;
       name: string;
       symbol: string;
+      spendableAmount: string;
     }[] = await this.client.get(
       `${this.baseUrl}/${this.masterWalletData.id}/balance${queryString ? `?${queryString}` : ""}`,
     );
 
     return balances.map((balance) => ({
+      coinId: balance.coinId,
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(balance.amount),
       coinType: balance.coinType,
       name: balance.name,
+      spendableAmount:  BNConverter.hexStringToBN(balance.spendableAmount),
     }));
   }
 
@@ -754,17 +758,21 @@ export class UserWallet extends EthLikeWallet {
   async getBalance(symbol?: string): Promise<Balance[]> {
     const queryString: string = symbol ? `symbol=${symbol}` : "";
     const balances: {
+      coinId: number;
       coinType: string;
       amount: string;
       name: string;
       symbol: string;
+      spendableAmount: string;
     }[] = await this.client.get(
       `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/balance${queryString ? `?${queryString}` : ""}`,
     );
 
     return balances.map((balance) => ({
+      coinId: balance.coinId,
       symbol: balance.symbol,
       amount: BNConverter.hexStringToBN(balance.amount),
+      spendableAmount: BNConverter.hexStringToBN(balance.spendableAmount),
       coinType: balance.coinType,
       name: balance.name,
     }));
