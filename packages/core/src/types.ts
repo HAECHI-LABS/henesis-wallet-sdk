@@ -1,10 +1,12 @@
 import BN from 'bn.js';
 
 export interface Balance {
+  coinId: number;
   coinType: string;
   amount: BN;
   name: string;
   symbol: string;
+  spendableAmount: BN;
 }
 
 export interface Key {
