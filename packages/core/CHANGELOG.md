@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.9...v1.1.10) (2020-09-09)
+
+
+### Bug Fixes
+
+* fix balance missing property bug ([847efa0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/847efa086bb81480a977725bc5a9aae59a6efab6))
+
+
+
+
+
 ## [1.1.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.8...v1.1.9) (2020-09-09)
 
 
