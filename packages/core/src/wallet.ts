@@ -129,7 +129,7 @@ export abstract class Wallet {
     otpCode?: string,
   ): Promise<Transaction>;
 
-  abstract getBalance(): Promise<Balance[]>;
+  abstract getBalance(symbol?: string): Promise<Balance[]>;
 
   abstract getAddress(): string;
 
@@ -597,14 +597,15 @@ export class MasterWallet extends EthLikeWallet {
     );
   }
 
-  async getBalance(): Promise<Balance[]> {
+  async getBalance(symbol?: string): Promise<Balance[]> {
+    const queryString: string = symbol ? `symbol=${symbol}` : "";
     const balances: {
       coinType: string;
       amount: string;
       name: string;
       symbol: string;
     }[] = await this.client.get(
-      `${this.baseUrl}/${this.masterWalletData.id}/balance`,
+      `${this.baseUrl}/${this.masterWalletData.id}/balance${queryString ? `?${queryString}` : ""}`,
     );
 
     return balances.map((balance) => ({
@@ -750,14 +751,15 @@ export class UserWallet extends EthLikeWallet {
     return BNConverter.hexStringToBN(nonce.nonce);
   }
 
-  async getBalance(): Promise<Balance[]> {
+  async getBalance(symbol?: string): Promise<Balance[]> {
+    const queryString: string = symbol ? `symbol=${symbol}` : "";
     const balances: {
       coinType: string;
       amount: string;
       name: string;
       symbol: string;
     }[] = await this.client.get(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/balance`,
+      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/balance${queryString ? `?${queryString}` : ""}`,
     );
 
     return balances.map((balance) => ({
