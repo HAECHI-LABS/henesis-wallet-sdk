@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.8...v1.1.9) (2020-09-09)
+
+
+### Features
+
+* add symbol when get balance ([a3872ef](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a3872efdbe021bb7b4c233f174042a058266c2cb))
+
+
+
+
+
 ## [1.1.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.7...v1.1.8) (2020-08-28)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
