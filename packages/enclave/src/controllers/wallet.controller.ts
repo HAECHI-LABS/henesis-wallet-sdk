@@ -16,10 +16,12 @@ export interface NonceResponse {
 }
 
 export interface BalanceResponse {
+  coinId: number;
   coinType: string;
   amount: string;
   name: string;
   symbol: string;
+  spendableAmount: string;
 }
 
 interface TransferRequest {
@@ -280,10 +282,12 @@ export default class WalletController
       req.query.symbol ? String(req.query.symbol) : null
     );
     return balances.map((x) => ({
+      coinId: x.coinId,
       coinType: x.coinType,
       amount: BNConverter.bnToHexString(x.amount),
       name: x.name,
       symbol: x.symbol,
+      spendableAmount: BNConverter.bnToHexString(x.spendableAmount)
     }));
   }
 
@@ -299,10 +303,12 @@ export default class WalletController
       req.query.symbol ? String(req.query.symbol) : null
     );
     return balances.map((x) => ({
+      coinId: x.coinId,
       coinType: x.coinType,
       amount: BNConverter.bnToHexString(x.amount),
       name: x.name,
       symbol: x.symbol,
+      spendableAmount: BNConverter.bnToHexString(x.spendableAmount)
     }));
   }
 
