@@ -22,9 +22,7 @@ export const createDepositAddressApi = async ({
 }) => {
   const response = await walletControllerApi(client).createDepositAddress(
     walletId,
-    {
-      createDepositAddressRequest: request,
-    }
+    request
   );
   return response.data;
 };
@@ -39,7 +37,6 @@ export const getDepositAddressApi = async ({
   depositAddressId: string;
 }) => {
   const response = await walletControllerApi(client).getDepositAddress(
-    {},
     walletId,
     depositAddressId
   );
