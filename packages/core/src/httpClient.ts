@@ -119,7 +119,7 @@ export class HttpClient {
       const timestamp = Date.now();
       if (this.secret) {
         let body = "";
-        if (config.data) {
+        if (config.data && typeof config.data !== "string") {
           body = JSON.stringify(config.data);
         }
         const path =
