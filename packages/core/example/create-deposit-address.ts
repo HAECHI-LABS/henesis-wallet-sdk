@@ -5,10 +5,9 @@ import "dotenv/config";
 
 async function main() {
   const sdk = new SDK({
-    accessToken:
-      "eyJhbGciOiJIUzUxMiJ9.eyJlbWFpbCI6ImJvYkBoYWVjaGkuaW8iLCJpZCI6IjYxNDRlNjZlNjkxYjc5ZTRjZTkxYTM4MzZlZGI3ZWEyIiwidHlwZSI6IkxPTkciLCJpc3MiOiJ3YWxsZXQtZGV2IiwiaWF0IjoxNTk0NzI2MDEyLCJleHAiOjEwMDAwMDE1OTQ3MjYwMTJ9.gHB_dowy6OCakwCGtR7JxKcT2ne4bu-mLA7yM4bo_XVhhw-Czxmeggr-Q01tCNxIkv9QKVNjaC2JERi0pA0vvw",
-    secret: "3EDaWA6dy0SfkFqYBYAQgquzyF4cV2d5lTkjzFvFq28=",
-    url: "https://dev.wallet.henesis.io/api/v2",
+    accessToken: process.env.ACCESS_TOKEN,
+    secret: process.env.SECRET,
+    url: process.env.URL,
   });
 
   const wallet: BtcMasterWallet = await sdk.btc.wallets.getWallet(
