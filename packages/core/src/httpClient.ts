@@ -119,8 +119,11 @@ export class HttpClient {
       const timestamp = Date.now();
       if (this.secret) {
         let body = "";
-        if (config.data && typeof config.data !== "string") {
-          body = JSON.stringify(config.data);
+        if (config.data) {
+          body =
+            typeof config.data !== "string"
+              ? JSON.stringify(config.data)
+              : config.data;
         }
         const path =
           config.baseURL + config.url + (config.params ? config.params : "");
