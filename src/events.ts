@@ -4,6 +4,7 @@ import {
   ValueTransferEventDTO as EthValueTransferEventDTO,
   ValueTransferType,
   EventStatus,
+  WalletType,
 } from "./__generate__/eth";
 
 export interface Event<S> {
@@ -28,18 +29,17 @@ export interface CallEvent<T> extends Event<T> {
   data: string;
 }
 
-export interface ValueTransferEvent<S, T> extends Event<S> {
+export interface ValueTransferEvent<S> extends Event<S> {
   amount: BN;
   coinSymbol: string;
   from: string;
   to: string;
-  transferType: T;
+  transferType: ValueTransferType;
+  walletName: string;
+  walletType: WalletType;
 }
 
-export type EthValueTransferEvent = ValueTransferEvent<
-  EventStatus,
-  ValueTransferType
->;
+export type EthValueTransferEvent = ValueTransferEvent<EventStatus>;
 
 export interface EventPaginationOptions<S> extends PaginationOptions {
   address?: string;
@@ -53,6 +53,7 @@ export interface EventPaginationOptions<S> extends PaginationOptions {
   orgId?: string;
   masterWalletId?: string;
   transactionId?: string;
+  symbol?: string;
 }
 
 export type BtcEventPaginationOptions = EventPaginationOptions<null>;
