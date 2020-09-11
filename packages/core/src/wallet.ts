@@ -47,7 +47,7 @@ import {
   ValidateIsAllowedAddressResponse as EthValidateIsAllowedAddressResponse,
   MasterWalletDTO,
   AllowedCoinType as EthAllowedCoinType,
-  WalletWithdrawalPolicyWalletType as EthWalletWithdrawalPolicyWalletType,
+  WalletType as EthWalletType,
   WalletStatus as EthWalletStatus,
   WhitelistType as EthWhitelistType,
   WithdrawalPolicyType as EthWithdrawalPolicyType,
@@ -106,7 +106,7 @@ export const transformPolicyType = (
   return byPolicyType[type];
 };
 
-export import WalletType = EthWalletWithdrawalPolicyWalletType;
+export import WalletType = EthWalletType;
 
 export interface WithdrawalPolicy {
   id: string;
