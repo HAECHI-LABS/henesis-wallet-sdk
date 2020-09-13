@@ -56,6 +56,15 @@ export interface EventPaginationOptions<S> extends PaginationOptions {
   symbol?: string;
 }
 
+export interface ValueTransferEventPaginationOptions<S>
+  extends EventPaginationOptions<S> {
+  symbol?: string;
+}
+
 export type BtcEventPaginationOptions = EventPaginationOptions<null>;
 
 export type EthEventPaginationOptions = EventPaginationOptions<EventStatus>;
+
+export type EthValueTransferEventPaginationOptions = ValueTransferEventPaginationOptions<
+  EventStatus
+>;
