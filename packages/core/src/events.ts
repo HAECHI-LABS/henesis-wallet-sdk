@@ -29,6 +29,11 @@ export enum TransferType {
   DEPOSIT = 'DEPOSIT',
 }
 
+export enum WalletType {
+  MASTER_WALLET = 'MASTER_WALLET',
+  USER_WALLET = 'USER_WALLET',
+}
+
 export interface CallEvent extends Event {
   from: string;
   to: string;
@@ -41,6 +46,8 @@ export interface ValueTransferEvent extends Event {
   from: string;
   to: string;
   transferType: TransferType;
+  walletName: string;
+  walletType: WalletType;
 }
 
 export interface EventPaginationOptions extends PaginationOptions {
@@ -51,6 +58,11 @@ export interface EventPaginationOptions extends PaginationOptions {
   transactionHash?: string;
   status?: EventStatusType;
   blockchain?: BlockchainType;
+}
+
+export interface ValueTransferEventPaginationOptions
+  extends EventPaginationOptions {
+  symbol?: string;
 }
 
 export class Events {
@@ -80,7 +92,7 @@ export class Events {
   }
 
   public async getValueTransferEvents(
-    options?: EventPaginationOptions,
+    options?: ValueTransferEventPaginationOptions,
   ): Promise<Pagination<ValueTransferEvent>> {
     const queryString: string = options
       ? Object.keys(options)
