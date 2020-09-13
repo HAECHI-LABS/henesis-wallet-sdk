@@ -5,6 +5,7 @@ import {
   EthCallEvent,
   EthEventPaginationOptions,
   EthValueTransferEvent,
+  EthValueTransferEventPaginationOptions,
 } from "../events";
 import {
   PaginationValueTransferEventDTO,
@@ -33,7 +34,7 @@ export class EthEvents {
   }
 
   public async getValueTransferEvents(
-    options?: EthEventPaginationOptions
+    options?: EthValueTransferEventPaginationOptions
   ): Promise<Pagination<EthValueTransferEvent>> {
     const queryString: string = makeQueryString(options);
     const data = await this.client.get<
