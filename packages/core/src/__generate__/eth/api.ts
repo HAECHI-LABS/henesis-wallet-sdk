@@ -825,6 +825,79 @@ export interface DeleteAllowedAddressRequest {
 /**
  * 
  * @export
+ * @interface DetailedTransactionDTO
+ */
+export interface DetailedTransactionDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof DetailedTransactionDTO
+     */
+    id: string;
+    /**
+     * 
+     * @type {Blockchain}
+     * @memberof DetailedTransactionDTO
+     */
+    blockchain: Blockchain;
+    /**
+     * 
+     * @type {string}
+     * @memberof DetailedTransactionDTO
+     */
+    sender: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DetailedTransactionDTO
+     */
+    hash?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DetailedTransactionDTO
+     */
+    error?: string;
+    /**
+     * 
+     * @type {TransactionStatus}
+     * @memberof DetailedTransactionDTO
+     */
+    status: TransactionStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof DetailedTransactionDTO
+     */
+    fee: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DetailedTransactionDTO
+     */
+    keyId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DetailedTransactionDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {SignedMultiSigPayloadDTO}
+     * @memberof DetailedTransactionDTO
+     */
+    signedMultiSigPayload: SignedMultiSigPayloadDTO;
+    /**
+     * 
+     * @type {RawTransactionDTO}
+     * @memberof DetailedTransactionDTO
+     */
+    rawTransaction: RawTransactionDTO;
+}
+/**
+ * 
+ * @export
  * @interface ErrorBody
  */
 export interface ErrorBody {
@@ -3316,7 +3389,7 @@ export const EthTransactionControllerApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransactionById(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
+        async getTransactionById(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetailedTransactionDTO>> {
             const localVarAxiosArgs = await EthTransactionControllerApiAxiosParamCreator(configuration).getTransactionById(transactionId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -3348,7 +3421,7 @@ export const EthTransactionControllerApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionById(transactionId: string, options?: any): AxiosPromise<TransactionDTO> {
+        getTransactionById(transactionId: string, options?: any): AxiosPromise<DetailedTransactionDTO> {
             return EthTransactionControllerApiFp(configuration).getTransactionById(transactionId, options).then((request) => request(axios, basePath));
         },
     };
@@ -7307,7 +7380,7 @@ export const KlayTransactionControllerApiFp = function(configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransactionById1(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
+        async getTransactionById1(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetailedTransactionDTO>> {
             const localVarAxiosArgs = await KlayTransactionControllerApiAxiosParamCreator(configuration).getTransactionById1(transactionId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -7339,7 +7412,7 @@ export const KlayTransactionControllerApiFactory = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionById1(transactionId: string, options?: any): AxiosPromise<TransactionDTO> {
+        getTransactionById1(transactionId: string, options?: any): AxiosPromise<DetailedTransactionDTO> {
             return KlayTransactionControllerApiFp(configuration).getTransactionById1(transactionId, options).then((request) => request(axios, basePath));
         },
     };
@@ -10127,7 +10200,7 @@ export const TransactionControllerApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransactionById2(blockchain: string, transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
+        async getTransactionById2(blockchain: string, transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetailedTransactionDTO>> {
             const localVarAxiosArgs = await TransactionControllerApiAxiosParamCreator(configuration).getTransactionById2(blockchain, transactionId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -10160,7 +10233,7 @@ export const TransactionControllerApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionById2(blockchain: string, transactionId: string, options?: any): AxiosPromise<TransactionDTO> {
+        getTransactionById2(blockchain: string, transactionId: string, options?: any): AxiosPromise<DetailedTransactionDTO> {
             return TransactionControllerApiFp(configuration).getTransactionById2(blockchain, transactionId, options).then((request) => request(axios, basePath));
         },
     };
