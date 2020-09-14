@@ -1,6 +1,9 @@
 import express from "express";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
-import { Transaction } from "@haechi-labs/henesis-wallet-core";
+import {
+  DetailedTransaction,
+  Transaction,
+} from "@haechi-labs/henesis-wallet-core";
 
 import AbstractController from "../controller";
 import { Controller } from "../../types";
@@ -39,7 +42,9 @@ export default class TransactionsController
     });
   }
 
-  private async getTransaction(req: express.Request): Promise<Transaction> {
+  private async getTransaction(
+    req: express.Request
+  ): Promise<DetailedTransaction> {
     return this.bnToHexString(
       await req.sdk.eth.transactions.getTransaction(req.params.transactionId)
     );

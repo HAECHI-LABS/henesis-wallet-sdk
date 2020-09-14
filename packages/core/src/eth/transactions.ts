@@ -4,6 +4,7 @@ import { Pagination, PaginationOptions, Timestamp } from "../types";
 import { Client } from "../httpClient";
 import { makeQueryString } from "../utils/url";
 import {
+  DetailedTransactionDTO,
   PaginationTransactionDTO,
   TransactionDTO,
   TransactionStatus,
@@ -12,6 +13,10 @@ import _ from "lodash";
 
 export import TransactionStatus = TransactionStatus;
 import { BNConverter } from "../utils/common";
+
+export interface DetailedTransaction extends Transaction {
+  fee: BN;
+}
 
 export interface Transaction {
   id: string;
@@ -114,11 +119,24 @@ export class Transactions {
     };
   }
 
-  public async getTransaction(transactionId: string): Promise<Transaction> {
-    const response = await this.client.get<NoUndefinedField<TransactionDTO>>(
-      `${this.baseUrl}/${transactionId}`
-    );
-    return this.mappingTransactionDTOToTransaction(response);
+  private mappingDetailedTransactionDTOToTransaction(
+    detailedTransactionDTO: NoUndefinedField<DetailedTransactionDTO>
+  ): DetailedTransaction {
+    return {
+      ...this.mappingTransactionDTOToTransaction(detailedTransactionDTO),
+      fee: detailedTransactionDTO.fee
+        ? BNConverter.hexStringToBN(String(detailedTransactionDTO.fee))
+        : null,
+    };
+  }
+
+  public async getTransaction(
+    transactionId: string
+  ): Promise<DetailedTransaction> {
+    const response = await this.client.get<
+      NoUndefinedField<DetailedTransactionDTO>
+    >(`${this.baseUrl}/${transactionId}`);
+    return this.mappingDetailedTransactionDTOToTransaction(response);
   }
 
   public async getTransactions(
