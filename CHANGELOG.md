@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.13...v2.5.0) (2020-09-14)
+
+
+### Bug Fixes
+
+* add create deposit address example ([0f53de7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0f53de7104f218b6a0d651af05f6d47ddd45d3fd))
+* fix EventPaginationOptions having symbol ([9827e9d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9827e9d4ac704c3eb395d1ff4af81e954e7ab726))
+* fixed config data json stringify ([58b8abc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/58b8abcfeaf39e7668b6cae16dac0955267a268f))
+* update env code ([738b0ae](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/738b0aeedad0de48988b72a597a6ac3b88f859d4))
+* update serialization json httpclient ([f1a7a10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f1a7a10193d61bacf7e9afff49b2ec0287ad5e6c))
+
+
+### Features
+
+* add symbol and wallet name to value transfer ([2c70ceb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2c70ceb28f0a3a9bddfbbfff0711dd0f8780b5d8))
+* change deposit apis codegen ([3159d79](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3159d793cd17989c520aac9078eb1588ac373360))
+
+
+
+
+
 ## [2.4.13](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.12...v2.4.13) (2020-09-09)
 
 
