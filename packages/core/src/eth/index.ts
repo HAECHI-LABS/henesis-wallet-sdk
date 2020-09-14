@@ -1,5 +1,5 @@
 export * from "./keychains";
-export * from "./gasusages";
+export * from "./gasUsages";
 export * from "./batch";
 export * from "./coin";
 export * from "./coins";
