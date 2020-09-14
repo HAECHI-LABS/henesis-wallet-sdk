@@ -23,7 +23,7 @@ export default class GasUsagesController
 
   private async getMethodGasUsages(req: express.Request): Promise<Method> {
     return this.bnToHexString(
-      await req.sdk.klay.gasusages.getMethodGasUsages(
+      await req.sdk.klay.gasUsages.getMethodGasUsages(
         req.query.name as MethodName
       )
     );
