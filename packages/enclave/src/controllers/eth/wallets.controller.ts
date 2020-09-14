@@ -299,7 +299,13 @@ export default class WalletsController
       req.params.masterWalletId
     );
 
-    return await masterWallet.replaceTransaction(req.body.transactionId);
+    return await masterWallet.replaceTransaction(
+      req.body.transactionId,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+      req.body.otpCode
+    );
   }
 
   private async sendMasterWalletBatchTransactions(
@@ -507,7 +513,13 @@ export default class WalletsController
       req.params.userWalletId
     );
 
-    return await userWallet.replaceTransaction(req.body.transactionId);
+    return await userWallet.replaceTransaction(
+      req.body.transactionId,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+      req.body.otpCode
+    );
   }
 
   private async changePassphrase(req: express.Request): Promise<void> {
