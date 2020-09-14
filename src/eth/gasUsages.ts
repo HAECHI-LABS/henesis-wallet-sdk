@@ -17,7 +17,7 @@ export interface Method {
   estimatedGasConsumption: BN;
 }
 
-export class Gasusages {
+export class GasUsages {
   private readonly client: Client;
 
   private readonly baseUrl;

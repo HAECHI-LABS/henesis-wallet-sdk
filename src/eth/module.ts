@@ -1,7 +1,7 @@
 import { EthWallets } from "./wallets";
 import { Keychains } from "../types";
 import { EthEvents } from "./events";
-import { Gasusages } from "./gasusages";
+import { GasUsages } from "./gasUsages";
 import { Transactions } from "./transactions";
 import { Env } from "../sdk";
 import { Client } from "../httpClient";
@@ -28,7 +28,7 @@ export class EthModule {
 
   public readonly gasPrice: GasPrice;
 
-  public readonly gasusages: Gasusages;
+  public readonly gasUsages: GasUsages;
 
   public readonly transactions: Transactions;
 
@@ -49,7 +49,7 @@ export class EthModule {
     );
     this.events = new EthEvents(this.client);
     this.gasPrice = new GasPrice(this.client);
-    this.gasusages = new Gasusages(this.client);
+    this.gasUsages = new GasUsages(this.client);
     this.transactions = new Transactions(this.client);
     this.coins = new Coins(this.client);
   }

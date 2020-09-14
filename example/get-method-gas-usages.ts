@@ -1,7 +1,7 @@
 /// <reference path="../src/typings/index.d.ts" />
 import { SDK } from "../src";
 import "dotenv/config";
-import { MethodName } from "../src/eth/gasusages";
+import { MethodName } from "../src/eth/gasUsages";
 
 async function main() {
   const sdk = new SDK({
@@ -11,13 +11,13 @@ async function main() {
   });
 
   console.log(
-    await sdk.eth.gasusages.getMethodGasUsages(MethodName.CREATE_MASTER_WALLET)
+    await sdk.eth.gasUsages.getMethodGasUsages(MethodName.CREATE_MASTER_WALLET)
   );
 
-  console.log(await sdk.eth.gasusages.getMethodGasUsages(MethodName.TRANSFER));
+  console.log(await sdk.eth.gasUsages.getMethodGasUsages(MethodName.TRANSFER));
 
   console.log(
-    await sdk.eth.gasusages.getMethodGasUsages(MethodName.TRANSFER_ERC20)
+    await sdk.eth.gasUsages.getMethodGasUsages(MethodName.TRANSFER_ERC20)
   );
 }
 
