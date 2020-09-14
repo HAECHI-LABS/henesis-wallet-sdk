@@ -145,7 +145,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   async replaceTransaction(
     transactionId: string,
     gasPrice: BN,
-    otpCode?: string,
+    otpCode?: string
   ): Promise<EthTransaction> {
     checkNullAndUndefinedParameter({ transactionId });
     const walletId = this.getId();

@@ -9,6 +9,7 @@ import { EthKeychains } from "./keychains";
 import { BlockchainType } from "../blockchain";
 import { HenesisKeys } from "./henesisKeys";
 import { Coins } from "./coins";
+import { GasPrice } from "./gasPrice";
 
 export interface ModuleOptions {
   client: Client;
@@ -24,6 +25,8 @@ export class EthModule {
   public readonly henesisKeys: HenesisKeys;
 
   public readonly events: EthEvents;
+
+  public readonly gasPrice: GasPrice;
 
   public readonly gasusages: Gasusages;
 
@@ -45,6 +48,7 @@ export class EthModule {
       options.blockchain
     );
     this.events = new EthEvents(this.client);
+    this.gasPrice = new GasPrice(this.client);
     this.gasusages = new Gasusages(this.client);
     this.transactions = new Transactions(this.client);
     this.coins = new Coins(this.client);

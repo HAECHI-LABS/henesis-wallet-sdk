@@ -873,6 +873,19 @@ export enum EventStatus {
 /**
  * 
  * @export
+ * @interface GetGasPriceResponse
+ */
+export interface GetGasPriceResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetGasPriceResponse
+     */
+    gasPrice: string;
+}
+/**
+ * 
+ * @export
  * @interface HenesisKeyBalanceDTO
  */
 export interface HenesisKeyBalanceDTO {
@@ -2680,6 +2693,102 @@ export class EthEventControllerApi extends BaseAPI {
      */
     public getValueTransferEvents(pageable: Pageable, specs: object, options?: any) {
         return EthEventControllerApiFp(this.configuration).getValueTransferEvents(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    }
+
+}
+
+
+/**
+ * EthGasPriceControllerApi - axios parameter creator
+ * @export
+ */
+export const EthGasPriceControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGasPrice: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v2/eth/gas-price`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * EthGasPriceControllerApi - functional programming interface
+ * @export
+ */
+export const EthGasPriceControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGasPrice(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetGasPriceResponse>> {
+            const localVarAxiosArgs = await EthGasPriceControllerApiAxiosParamCreator(configuration).getGasPrice(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * EthGasPriceControllerApi - factory interface
+ * @export
+ */
+export const EthGasPriceControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGasPrice(options?: any): AxiosPromise<GetGasPriceResponse> {
+            return EthGasPriceControllerApiFp(configuration).getGasPrice(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * EthGasPriceControllerApi - object-oriented interface
+ * @export
+ * @class EthGasPriceControllerApi
+ * @extends {BaseAPI}
+ */
+export class EthGasPriceControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthGasPriceControllerApi
+     */
+    public getGasPrice(options?: any) {
+        return EthGasPriceControllerApiFp(this.configuration).getGasPrice(options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -6575,6 +6684,102 @@ export class KlayEventControllerApi extends BaseAPI {
      */
     public getValueTransferEvents1(pageable: Pageable, specs: object, options?: any) {
         return KlayEventControllerApiFp(this.configuration).getValueTransferEvents1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    }
+
+}
+
+
+/**
+ * KlayGasPriceControllerApi - axios parameter creator
+ * @export
+ */
+export const KlayGasPriceControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGasPrice1: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v2/klay/gas-price`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KlayGasPriceControllerApi - functional programming interface
+ * @export
+ */
+export const KlayGasPriceControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGasPrice1(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetGasPriceResponse>> {
+            const localVarAxiosArgs = await KlayGasPriceControllerApiAxiosParamCreator(configuration).getGasPrice1(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * KlayGasPriceControllerApi - factory interface
+ * @export
+ */
+export const KlayGasPriceControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGasPrice1(options?: any): AxiosPromise<GetGasPriceResponse> {
+            return KlayGasPriceControllerApiFp(configuration).getGasPrice1(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * KlayGasPriceControllerApi - object-oriented interface
+ * @export
+ * @class KlayGasPriceControllerApi
+ * @extends {BaseAPI}
+ */
+export class KlayGasPriceControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayGasPriceControllerApi
+     */
+    public getGasPrice1(options?: any) {
+        return KlayGasPriceControllerApiFp(this.configuration).getGasPrice1(options).then((request) => request(this.axios, this.basePath));
     }
 
 }
