@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.5.0...v2.6.0) (2020-09-14)
+
+
+### Features
+
+* add gas price endpoint ([69d134e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/69d134e18c50ff5e7d077b4e449b8951d8af00a8))
+* add gas price parameter when replace transaction ([208a58a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/208a58ae8f0dcef308d58309fc36424ec20e9e31))
+* delete klaytn's replace transaction endpoint ([6582fb3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6582fb305395846d24b31528692e79e75300c6c6))
+
+
+
+
+
 # [2.5.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.4.13...v2.5.0) (2020-09-14)
 
 
