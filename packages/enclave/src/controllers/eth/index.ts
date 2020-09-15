@@ -1,6 +1,6 @@
 import CoinsController from "./coins.controller";
 import EventsController from "./events.controller";
-import GasUsagesController from "./gasusages.controller";
+import GasUsagesController from "./gasUsages.controller";
 import HenesisKeysController from "./henesisKeys.controller";
 import TransactionsController from "./transactions.controller";
 import WalletsController from "./wallets.controller";
