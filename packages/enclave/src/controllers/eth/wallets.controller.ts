@@ -303,8 +303,7 @@ export default class WalletsController
       req.body.transactionId,
       req.body.gasPrice
         ? BNConverter.hexStringToBN(req.body.gasPrice)
-        : undefined,
-      req.body.otpCode
+        : undefined
     );
   }
 
@@ -517,8 +516,7 @@ export default class WalletsController
       req.body.transactionId,
       req.body.gasPrice
         ? BNConverter.hexStringToBN(req.body.gasPrice)
-        : undefined,
-      req.body.otpCode
+        : undefined
     );
   }
 
