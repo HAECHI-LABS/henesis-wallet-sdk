@@ -15,7 +15,7 @@ export import TransactionStatus = TransactionStatus;
 import { BNConverter } from "../utils/common";
 
 export interface DetailedTransaction extends Transaction {
-  fee: BN;
+  fee: BN | null;
 }
 
 export interface Transaction {
