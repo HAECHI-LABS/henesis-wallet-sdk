@@ -4,17 +4,18 @@ import { Pagination, PaginationOptions, Timestamp } from "../types";
 import { Client } from "../httpClient";
 import { makeQueryString } from "../utils/url";
 import {
-  DetailedTransactionDTO,
+  RawTransactionDTO,
   PaginationTransactionDTO,
   TransactionDTO,
   TransactionStatus,
+  DetailedRawTransactionDTO,
 } from "../__generate__/eth";
 import _ from "lodash";
 
 export import TransactionStatus = TransactionStatus;
 import { BNConverter } from "../utils/common";
 
-export interface DetailedTransaction extends Transaction {
+export interface DetailedRawTransaction extends RawTransaction {
   fee: BN | null;
 }
 
@@ -66,8 +67,6 @@ export interface RawTransaction {
 export class Transactions {
   private readonly client: Client;
 
-  private readonly baseUrl = "/transactions";
-
   constructor(client: Client) {
     this.client = client;
   }
@@ -97,46 +96,65 @@ export class Transactions {
               : null,
           }
         : null,
-      rawTransaction: rawTransaction
-        ? {
-            ...rawTransaction,
-            nonce: rawTransaction.nonce
-              ? BNConverter.hexStringToBN(String(rawTransaction.nonce))
-              : null,
-            gasPrice: rawTransaction.gasPrice
-              ? BNConverter.hexStringToBN(String(rawTransaction.gasPrice))
-              : null,
-            gasLimit: rawTransaction.gasLimit
-              ? BNConverter.hexStringToBN(String(rawTransaction.gasLimit))
-              : null,
-            to: rawTransaction.to,
-            value: rawTransaction.value
-              ? BNConverter.hexStringToBN(String(rawTransaction.value))
-              : null,
-            data: rawTransaction.data,
-          }
-        : null,
+      rawTransaction: this.mappingRawTransactionDTOToRawTransaction(
+        rawTransaction
+      ),
     };
   }
 
-  private mappingDetailedTransactionDTOToTransaction(
-    detailedTransactionDTO: NoUndefinedField<DetailedTransactionDTO>
-  ): DetailedTransaction {
+  private mappingRawTransactionDTOToRawTransaction(
+    rawTransaction: RawTransactionDTO
+  ): RawTransaction {
+    return rawTransaction
+      ? {
+          ...rawTransaction,
+          nonce: rawTransaction.nonce
+            ? BNConverter.hexStringToBN(String(rawTransaction.nonce))
+            : null,
+          gasPrice: rawTransaction.gasPrice
+            ? BNConverter.hexStringToBN(String(rawTransaction.gasPrice))
+            : null,
+          gasLimit: rawTransaction.gasLimit
+            ? BNConverter.hexStringToBN(String(rawTransaction.gasLimit))
+            : null,
+          to: rawTransaction.to,
+          value: rawTransaction.value
+            ? BNConverter.hexStringToBN(String(rawTransaction.value))
+            : null,
+          data: rawTransaction.data,
+        }
+      : null;
+  }
+
+  private mappingDetailedRawTransactionDTOToDetailedRawTransaction(
+    detailedRawTransactionDTO: DetailedRawTransactionDTO
+  ): DetailedRawTransaction {
     return {
-      ...this.mappingTransactionDTOToTransaction(detailedTransactionDTO),
-      fee: detailedTransactionDTO.fee
-        ? BNConverter.hexStringToBN(String(detailedTransactionDTO.fee))
+      ...this.mappingRawTransactionDTOToRawTransaction(
+        detailedRawTransactionDTO
+      ),
+      fee: detailedRawTransactionDTO.fee
+        ? BNConverter.hexStringToBN(String(detailedRawTransactionDTO.fee))
         : null,
     };
   }
 
-  public async getTransaction(
-    transactionId: string
-  ): Promise<DetailedTransaction> {
-    const response = await this.client.get<
-      NoUndefinedField<DetailedTransactionDTO>
-    >(`${this.baseUrl}/${transactionId}`);
-    return this.mappingDetailedTransactionDTOToTransaction(response);
+  public async getRawTransaction(
+    transactionHash: string
+  ): Promise<DetailedRawTransaction> {
+    const response = await this.client.get<DetailedRawTransactionDTO>(
+      `/raw-transactions/${transactionHash}`
+    );
+    return this.mappingDetailedRawTransactionDTOToDetailedRawTransaction(
+      response
+    );
+  }
+
+  public async getTransaction(transactionId: string): Promise<Transaction> {
+    const response = await this.client.get<NoUndefinedField<TransactionDTO>>(
+      `/transactions/${transactionId}`
+    );
+    return this.mappingTransactionDTOToTransaction(response);
   }
 
   public async getTransactions(
@@ -145,7 +163,7 @@ export class Transactions {
     const queryString: string = makeQueryString(options);
     const data = await this.client.get<
       NoUndefinedField<PaginationTransactionDTO>
-    >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
+    >(`/transactions${queryString ? `?${queryString}` : ""}`);
     return {
       pagination: data.pagination,
       results: _.map(data.results, (result) =>
