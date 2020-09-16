@@ -825,75 +825,51 @@ export interface DeleteAllowedAddressRequest {
 /**
  * 
  * @export
- * @interface DetailedTransactionDTO
+ * @interface DetailedRawTransactionDTO
  */
-export interface DetailedTransactionDTO {
+export interface DetailedRawTransactionDTO {
     /**
      * 
      * @type {string}
-     * @memberof DetailedTransactionDTO
+     * @memberof DetailedRawTransactionDTO
      */
-    id: string;
-    /**
-     * 
-     * @type {Blockchain}
-     * @memberof DetailedTransactionDTO
-     */
-    blockchain: Blockchain;
+    nonce: string;
     /**
      * 
      * @type {string}
-     * @memberof DetailedTransactionDTO
+     * @memberof DetailedRawTransactionDTO
      */
-    sender: string;
+    to: string;
     /**
      * 
      * @type {string}
-     * @memberof DetailedTransactionDTO
+     * @memberof DetailedRawTransactionDTO
      */
-    hash?: string;
+    value: string;
     /**
      * 
      * @type {string}
-     * @memberof DetailedTransactionDTO
+     * @memberof DetailedRawTransactionDTO
      */
-    error?: string;
-    /**
-     * 
-     * @type {TransactionStatus}
-     * @memberof DetailedTransactionDTO
-     */
-    status: TransactionStatus;
+    data: string;
     /**
      * 
      * @type {string}
-     * @memberof DetailedTransactionDTO
+     * @memberof DetailedRawTransactionDTO
      */
     fee: string;
     /**
      * 
      * @type {string}
-     * @memberof DetailedTransactionDTO
+     * @memberof DetailedRawTransactionDTO
      */
-    keyId: string;
+    gasPrice: string;
     /**
      * 
      * @type {string}
-     * @memberof DetailedTransactionDTO
+     * @memberof DetailedRawTransactionDTO
      */
-    createdAt: string;
-    /**
-     * 
-     * @type {SignedMultiSigPayloadDTO}
-     * @memberof DetailedTransactionDTO
-     */
-    signedMultiSigPayload: SignedMultiSigPayloadDTO;
-    /**
-     * 
-     * @type {RawTransactionDTO}
-     * @memberof DetailedTransactionDTO
-     */
-    rawTransaction: RawTransactionDTO;
+    gasLimit: string;
 }
 /**
  * 
@@ -3327,6 +3303,41 @@ export const EthTransactionControllerApiAxiosParamCreator = function (configurat
         },
         /**
          * 
+         * @param {string} transactionHash 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRawTransactionByHash: async (transactionHash: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'transactionHash' is not null or undefined
+            if (transactionHash === null || transactionHash === undefined) {
+                throw new RequiredError('transactionHash','Required parameter transactionHash was null or undefined when calling getRawTransactionByHash.');
+            }
+            const localVarPath = `/api/v2/eth/raw-transactions/{transactionHash}`
+                .replace(`{${"transactionHash"}}`, encodeURIComponent(String(transactionHash)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} transactionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3385,11 +3396,24 @@ export const EthTransactionControllerApiFp = function(configuration?: Configurat
         },
         /**
          * 
+         * @param {string} transactionHash 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRawTransactionByHash(transactionHash: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetailedRawTransactionDTO>> {
+            const localVarAxiosArgs = await EthTransactionControllerApiAxiosParamCreator(configuration).getRawTransactionByHash(transactionHash, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} transactionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransactionById(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetailedTransactionDTO>> {
+        async getTransactionById(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
             const localVarAxiosArgs = await EthTransactionControllerApiAxiosParamCreator(configuration).getTransactionById(transactionId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -3417,11 +3441,20 @@ export const EthTransactionControllerApiFactory = function (configuration?: Conf
         },
         /**
          * 
+         * @param {string} transactionHash 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRawTransactionByHash(transactionHash: string, options?: any): AxiosPromise<DetailedRawTransactionDTO> {
+            return EthTransactionControllerApiFp(configuration).getRawTransactionByHash(transactionHash, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} transactionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionById(transactionId: string, options?: any): AxiosPromise<DetailedTransactionDTO> {
+        getTransactionById(transactionId: string, options?: any): AxiosPromise<TransactionDTO> {
             return EthTransactionControllerApiFp(configuration).getTransactionById(transactionId, options).then((request) => request(axios, basePath));
         },
     };
@@ -3444,6 +3477,17 @@ export class EthTransactionControllerApi extends BaseAPI {
      */
     public getAllTransactions(pageable: Pageable, specs: object, options?: any) {
         return EthTransactionControllerApiFp(this.configuration).getAllTransactions(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} transactionHash 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthTransactionControllerApi
+     */
+    public getRawTransactionByHash(transactionHash: string, options?: any) {
+        return EthTransactionControllerApiFp(this.configuration).getRawTransactionByHash(transactionHash, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -7318,6 +7362,41 @@ export const KlayTransactionControllerApiAxiosParamCreator = function (configura
         },
         /**
          * 
+         * @param {string} transactionHash 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRawTransactionByHash1: async (transactionHash: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'transactionHash' is not null or undefined
+            if (transactionHash === null || transactionHash === undefined) {
+                throw new RequiredError('transactionHash','Required parameter transactionHash was null or undefined when calling getRawTransactionByHash1.');
+            }
+            const localVarPath = `/api/v2/klay/raw-transactions/{transactionHash}`
+                .replace(`{${"transactionHash"}}`, encodeURIComponent(String(transactionHash)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} transactionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7376,11 +7455,24 @@ export const KlayTransactionControllerApiFp = function(configuration?: Configura
         },
         /**
          * 
+         * @param {string} transactionHash 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRawTransactionByHash1(transactionHash: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetailedRawTransactionDTO>> {
+            const localVarAxiosArgs = await KlayTransactionControllerApiAxiosParamCreator(configuration).getRawTransactionByHash1(transactionHash, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} transactionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransactionById1(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetailedTransactionDTO>> {
+        async getTransactionById1(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
             const localVarAxiosArgs = await KlayTransactionControllerApiAxiosParamCreator(configuration).getTransactionById1(transactionId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -7408,11 +7500,20 @@ export const KlayTransactionControllerApiFactory = function (configuration?: Con
         },
         /**
          * 
+         * @param {string} transactionHash 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRawTransactionByHash1(transactionHash: string, options?: any): AxiosPromise<DetailedRawTransactionDTO> {
+            return KlayTransactionControllerApiFp(configuration).getRawTransactionByHash1(transactionHash, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} transactionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionById1(transactionId: string, options?: any): AxiosPromise<DetailedTransactionDTO> {
+        getTransactionById1(transactionId: string, options?: any): AxiosPromise<TransactionDTO> {
             return KlayTransactionControllerApiFp(configuration).getTransactionById1(transactionId, options).then((request) => request(axios, basePath));
         },
     };
@@ -7435,6 +7536,17 @@ export class KlayTransactionControllerApi extends BaseAPI {
      */
     public getAllTransactions1(pageable: Pageable, specs: object, options?: any) {
         return KlayTransactionControllerApiFp(this.configuration).getAllTransactions1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} transactionHash 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayTransactionControllerApi
+     */
+    public getRawTransactionByHash1(transactionHash: string, options?: any) {
+        return KlayTransactionControllerApiFp(this.configuration).getRawTransactionByHash1(transactionHash, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10200,7 +10312,7 @@ export const TransactionControllerApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransactionById2(blockchain: string, transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetailedTransactionDTO>> {
+        async getTransactionById2(blockchain: string, transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
             const localVarAxiosArgs = await TransactionControllerApiAxiosParamCreator(configuration).getTransactionById2(blockchain, transactionId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -10233,7 +10345,7 @@ export const TransactionControllerApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionById2(blockchain: string, transactionId: string, options?: any): AxiosPromise<DetailedTransactionDTO> {
+        getTransactionById2(blockchain: string, transactionId: string, options?: any): AxiosPromise<TransactionDTO> {
             return TransactionControllerApiFp(configuration).getTransactionById2(blockchain, transactionId, options).then((request) => request(axios, basePath));
         },
     };
