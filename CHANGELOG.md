@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.6.4...v2.7.0) (2020-09-16)
+
+
+### Bug Fixes
+
+* fix eth and klay integration tests ([86a7596](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/86a75968acfe2edeef606053f06475bdc3baaf94))
+
+
+### Features
+
+* add get raw-transactions ([d0fbae4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d0fbae494270cc8291d3c0d9589a8955d6dfe013))
+
+
+
+
+
 ## [2.6.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.6.3...v2.6.4) (2020-09-16)
 
 
