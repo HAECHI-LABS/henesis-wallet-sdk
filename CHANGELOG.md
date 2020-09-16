@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.6.3...v2.6.4) (2020-09-16)
+
+
+### Bug Fixes
+
+* fixed api client request data ([d181a4d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d181a4d18f925c04402e9e2974e12a718c0b9052))
+* if exists config data, json parse ([288371f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/288371f257baf1a1d53e2eccfb41f91907b81c4e))
+* sync with dtos ([9de6ec1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9de6ec16dc39d5427a0854af88d4ff9d58142e97))
+
+
+
+
+
 ## [2.6.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.6.2...v2.6.3) (2020-09-15)
 
 **Note:** Version bump only for package henesis-wallet-sdk
