@@ -118,7 +118,7 @@ export abstract class Wallet {
 
   abstract replaceTransaction(
     transactionId: string,
-    otpCode?: string,
+    gasPrice?: BN,
   ): Promise<Transaction>;
 
   abstract contractCall(
@@ -185,15 +185,15 @@ export abstract class EthLikeWallet extends Wallet {
 
   async replaceTransaction(
     transactionId: string,
-    otpCode?: string,
+    gasPrice?: BN,
   ): Promise<Transaction> {
     const walletId = this.getId();
     const blockchain = this.getChain();
     return this.client.post<Transaction>(`${this.baseUrl}/transactions`, {
       walletId,
       transactionId,
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
       blockchain,
-      otpCode,
     });
   }
 
@@ -598,7 +598,7 @@ export class MasterWallet extends EthLikeWallet {
   }
 
   async getBalance(symbol?: string): Promise<Balance[]> {
-    const queryString: string = symbol ? `symbol=${symbol}` : "";
+    const queryString: string = symbol ? `symbol=${symbol}` : '';
     const balances: {
       coinId: number;
       coinType: string;
@@ -607,7 +607,9 @@ export class MasterWallet extends EthLikeWallet {
       symbol: string;
       spendableAmount: string;
     }[] = await this.client.get(
-      `${this.baseUrl}/${this.masterWalletData.id}/balance${queryString ? `?${queryString}` : ""}`,
+      `${this.baseUrl}/${this.masterWalletData.id}/balance${
+        queryString ? `?${queryString}` : ''
+      }`,
     );
 
     return balances.map((balance) => ({
@@ -616,7 +618,7 @@ export class MasterWallet extends EthLikeWallet {
       amount: BNConverter.hexStringToBN(balance.amount),
       coinType: balance.coinType,
       name: balance.name,
-      spendableAmount:  BNConverter.hexStringToBN(balance.spendableAmount),
+      spendableAmount: BNConverter.hexStringToBN(balance.spendableAmount),
     }));
   }
 
@@ -756,7 +758,7 @@ export class UserWallet extends EthLikeWallet {
   }
 
   async getBalance(symbol?: string): Promise<Balance[]> {
-    const queryString: string = symbol ? `symbol=${symbol}` : "";
+    const queryString: string = symbol ? `symbol=${symbol}` : '';
     const balances: {
       coinId: number;
       coinType: string;
@@ -765,7 +767,9 @@ export class UserWallet extends EthLikeWallet {
       symbol: string;
       spendableAmount: string;
     }[] = await this.client.get(
-      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${this.userWalletData.id}/balance${queryString ? `?${queryString}` : ""}`,
+      `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${
+        this.userWalletData.id
+      }/balance${queryString ? `?${queryString}` : ''}`,
     );
 
     return balances.map((balance) => ({

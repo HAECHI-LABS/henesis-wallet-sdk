@@ -279,7 +279,7 @@ export default class WalletController
     );
 
     const balances = await masterWallet.getBalance(
-      req.query.symbol ? String(req.query.symbol) : null
+      req.query.symbol ? String(req.query.symbol) : null,
     );
     return balances.map((x) => ({
       coinId: x.coinId,
@@ -287,7 +287,7 @@ export default class WalletController
       amount: BNConverter.bnToHexString(x.amount),
       name: x.name,
       symbol: x.symbol,
-      spendableAmount: BNConverter.bnToHexString(x.spendableAmount)
+      spendableAmount: BNConverter.bnToHexString(x.spendableAmount),
     }));
   }
 
@@ -300,7 +300,7 @@ export default class WalletController
       req.params.userWalletId,
     );
     const balances = await userWallet.getBalance(
-      req.query.symbol ? String(req.query.symbol) : null
+      req.query.symbol ? String(req.query.symbol) : null,
     );
     return balances.map((x) => ({
       coinId: x.coinId,
@@ -308,7 +308,7 @@ export default class WalletController
       amount: BNConverter.bnToHexString(x.amount),
       name: x.name,
       symbol: x.symbol,
-      spendableAmount: BNConverter.bnToHexString(x.spendableAmount)
+      spendableAmount: BNConverter.bnToHexString(x.spendableAmount),
     }));
   }
 
@@ -360,7 +360,12 @@ export default class WalletController
       req.params.masterWalletId,
     );
 
-    return await masterWallet.replaceTransaction(req.body.transactionId);
+    return await masterWallet.replaceTransaction(
+      req.body.transactionId,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+    );
   }
 
   private async replaceUserWalletTransaction(
@@ -372,7 +377,12 @@ export default class WalletController
       req.params.userWalletId,
     );
 
-    return await userWallet.replaceTransaction(req.body.transactionId);
+    return await userWallet.replaceTransaction(
+      req.body.transactionId,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+    );
   }
 
   private async flush(req: express.Request): Promise<Transaction> {

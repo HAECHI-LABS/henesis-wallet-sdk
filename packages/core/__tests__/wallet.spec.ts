@@ -212,7 +212,7 @@ describe('Wallet', () => {
         it('should be called normally', async () => {
           const transactionIdPayload: string =
             'e4a1e5f66a32dc50b66fb3229aed0202';
-          const otpCodePayload: string = '000000';
+          const gasPricePayload: BN = new BN(0);
 
           const replaceTransactionResponse: Transaction = {
             id: '2c08cf4beb195c582535d197aa40c498',
@@ -229,7 +229,7 @@ describe('Wallet', () => {
 
           const replaceTx = await wallet.replaceTransaction(
             transactionIdPayload,
-            otpCodePayload,
+            gasPricePayload,
           );
           expect(replaceTx).toEqual(replaceTransactionResponse);
         });
