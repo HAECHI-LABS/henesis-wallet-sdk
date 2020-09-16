@@ -78,7 +78,8 @@ export class HttpClient {
     const client = this.makeClient();
     client.defaults.baseURL = removePrefixApi(client.defaults.baseURL);
     client.interceptors.request.use((config) => {
-      config.data = ObjectConverter.toSnakeCase(config.data);
+      const dataObj = JSON.parse(config.data);
+      config.data = ObjectConverter.toSnakeCase(dataObj);
       return config;
     });
 
