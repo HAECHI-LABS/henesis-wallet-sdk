@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.10...v1.2.0) (2020-09-16)
+
+
+### Features
+
+* get gas price optional when replcae transaction ([0eb3387](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0eb3387e6496b4c5ce35874a9e62692254ba30d3))
+
+
+
+
+
 ## [1.1.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.1.9...v1.1.10) (2020-09-09)
 
 
