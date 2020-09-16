@@ -4,7 +4,7 @@ import { WalletStatus } from "../../src/wallet";
 import faker from "faker";
 import BN from "bn.js";
 import { TransferStatus } from "../../src/btc/transfers";
-import { ValueTransferEventDTO as EthValueTransferEventDTO } from "../../src/__generate__/eth";
+import { EventStatus } from "../../src/__generate__/eth";
 
 describe("ETH integration tests", () => {
   const maxTimeout = 10 * 60 * 1000; // min 10
@@ -66,9 +66,9 @@ describe("ETH integration tests", () => {
             });
 
             if (confirmedTransferEvents.results.length > 0) {
-              if (confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.PENDING
-                || confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.REQUESTED
-                || confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.MINED
+              if (confirmedTransferEvents.results[0].status == EventStatus.PENDING
+                || confirmedTransferEvents.results[0].status == EventStatus.REQUESTED
+                || confirmedTransferEvents.results[0].status == EventStatus.MINED
               ) {
                 throw new Error("retry");
               }
@@ -103,9 +103,9 @@ describe("ETH integration tests", () => {
             });
 
             if (confirmedTransferEvents.results.length > 0) {
-              if (confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.PENDING
-                || confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.REQUESTED
-                || confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.MINED
+              if (confirmedTransferEvents.results[0].status == EventStatus.PENDING
+                || confirmedTransferEvents.results[0].status == EventStatus.REQUESTED
+                || confirmedTransferEvents.results[0].status == EventStatus.MINED
               ) {
                 throw new Error("retry");
               }
@@ -170,9 +170,9 @@ describe("ETH integration tests", () => {
             });
 
             if (confirmedTransferEvents.results.length > 0) {
-              if (confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.PENDING
-                || confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.REQUESTED
-                || confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.MINED
+              if (confirmedTransferEvents.results[0].status == EventStatus.PENDING
+                || confirmedTransferEvents.results[0].status == EventStatus.REQUESTED
+                || confirmedTransferEvents.results[0].status == EventStatus.MINED
               ) {
                 throw new Error("retry");
               }
@@ -209,9 +209,9 @@ describe("ETH integration tests", () => {
             });
 
             if (confirmedTransferEvents.results.length > 0) {
-              if (confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.PENDING
-                || confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.REQUESTED
-                || confirmedTransferEvents.results[0].status == EthValueTransferEventDTO.StatusEnum.MINED
+              if (confirmedTransferEvents.results[0].status == EventStatus.PENDING
+                || confirmedTransferEvents.results[0].status == EventStatus.REQUESTED
+                || confirmedTransferEvents.results[0].status == EventStatus.MINED
               ) {
                 throw new Error("retry");
               }

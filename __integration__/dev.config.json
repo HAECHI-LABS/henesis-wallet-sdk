@@ -1,6 +1,6 @@
 {
   "admin": {
-    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJlbWFpbCI6ImhlbmVzaXMubGFic0Bwcm90b25tYWlsLmNvbSIsImlkIjoiYTAxZjM1ZjRiNjI1ZWMwMzUwNmI2N2NlMWYzZTMxNTgiLCJ0eXBlIjoiTE9ORyIsImlzcyI6ImhlbmVzaXMtd2FsbGV0LWRldiIsImlhdCI6MTU5NTQxMDQyOSwiZXhwIjoxNjI2OTQ2NDI5fQ._53rWyrBt_bkjBJbVRutT_JkGoBvMLP7J3w_3lQw8q2uGej7zxngKIvqg8CuGh1Wt4bXYYaW92i4HljDtjK5Gg",
+    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJlbWFpbCI6InByb2R1Y3RAaGFlY2hpLmlvIiwiaWQiOiI0OTgwM2ZiZjBhMmEyYzNhYjNhMGFiYThiOThkYmIyYSIsInR5cGUiOiJMT05HIiwibG9uZ1R5cGUiOnRydWUsImlzcyI6ImhlbmVzaXMtd2FsbGV0LWRldiIsImlhdCI6MTU5OTA2MDk2NSwiZXhwIjoxNjMwNTk2OTY1fQ.fkMrP4VukrAVBHn7qQFkbYIq9wXmf9pAhPR37alNulFTZfJZ0isTL6UPVMJ7H8ong65n1Lkw2rikdE2SdBnSbQ",
     "secret": "3EDaWA6dy0SfkFqYBYAQgquzyF4cV2d5lTkjzFvFq28="
   },
   "viewer": {
