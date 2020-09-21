@@ -13,7 +13,7 @@
     "start": "nodemon",
     "start:local": "cross-env NODE_ENV=local nodemon",
     "start:dev": "cross-env NODE_ENV=development nodemon",
-    "start:test": "cross-env NODE_ENV=testnet nodemon",
+    "start:test": "cross-env NODE_ENV=test nodemon",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
     "test": "jest --passWithNoTests",
     "type-check": "tsc --noEmit",
