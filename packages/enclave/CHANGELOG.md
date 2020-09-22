@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.7.0...v2.7.1) (2020-09-22)
+
+
+### Bug Fixes
+
+* update enclave start:test cmd to NODE_ENV=test ([70e6288](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/70e62883a6f86ddd84ab44a1b302695d1e4605da))
+
+
+### Features
+
+* add confirmation to transfer dto and event dto ([#291](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/291)) ([6b35952](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6b35952f310926f78db962bf92c82346efdaee1b))
+
+
+
+
+
 # [2.7.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.6.4...v2.7.0) (2020-09-16)
 
 
