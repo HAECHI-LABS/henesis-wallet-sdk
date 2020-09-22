@@ -14,6 +14,7 @@ export interface Event {
   toAddress: string;
   transactionHash: string;
   walletId: string;
+  confirmation: BN;
 }
 
 export enum EventStatusType {
@@ -82,12 +83,15 @@ export class Events {
           .join('&')
       : '';
 
-    const data: Pagination<CallEvent> = await this.client.get<
-      Pagination<CallEvent>
-    >(`/call-events${queryString ? `?${queryString}` : ''}`);
+    const data = await this.client.get(
+      `/call-events${queryString ? `?${queryString}` : ''}`,
+    );
     return {
       pagination: data.pagination,
-      results: data.results,
+      results: data.results.map((e) => {
+        e.confirmation = BNConverter.hexStringToBN(e.confirmation);
+        return e;
+      }),
     };
   }
 
@@ -108,6 +112,7 @@ export class Events {
       pagination: data.pagination,
       results: data.results.map((e) => {
         e.amount = BNConverter.hexStringToBN(e.amount);
+        e.confirmation = BNConverter.hexStringToBN(e.confirmation);
         return e;
       }),
     };
