@@ -20,12 +20,14 @@ describe('Events', () => {
             status: '1',
             toAddress: '1',
             transactionHash: '1',
+            confirmation: '0x0',
           },
           {
             createdAt: '2',
             status: '2',
             toAddress: '2',
             transactionHash: '2',
+            confirmation: '0x1',
           },
         ],
       };
@@ -46,6 +48,9 @@ describe('Events', () => {
       });
       expect(eventsWithPagination.results.length).toEqual(2);
       eventsWithPagination.results.forEach((item, index) => {
+        response.results[index].confirmation = BNConverter.hexStringToBN(
+          response.results[index].confirmation,
+        ) as any;
         expect(item).toEqual(response.results[index]);
       });
     });
@@ -72,6 +77,7 @@ describe('Events', () => {
             to: '0x2333',
             transferType: 'WITHDRAWAL',
             walletId: 'id1',
+            confirmation: '0x3',
           },
           {
             createdAt: '2',
@@ -84,6 +90,7 @@ describe('Events', () => {
             to: '0x2333',
             transferType: 'WITHDRAWAL',
             walletId: 'id1',
+            confirmation: '0x3',
           },
         ],
       };
@@ -105,6 +112,9 @@ describe('Events', () => {
       eventsWithPagination.results.forEach((item, index) => {
         response.results[index].amount = BNConverter.hexStringToBN(
           response.results[index].amount,
+        ) as any;
+        response.results[index].confirmation = BNConverter.hexStringToBN(
+          response.results[index].confirmation,
         ) as any;
         expect(item).toEqual(response.results[index]);
       });
