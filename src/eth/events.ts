@@ -29,7 +29,12 @@ export class EthEvents {
     );
     return {
       pagination: data.pagination,
-      results: data.results,
+      results: data.results.map((e) => {
+        return {
+          ...e,
+          confirmation: BNConverter.hexStringToBN(e.confirmation),
+        };
+      }),
     };
   }
 
@@ -47,6 +52,7 @@ export class EthEvents {
         return {
           ...e,
           amount: BNConverter.hexStringToBN(String(e.amount)),
+          confirmation: BNConverter.hexStringToBN(String(e.confirmation)),
         };
       }),
     };

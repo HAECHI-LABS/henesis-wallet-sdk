@@ -36,6 +36,7 @@ export interface Transfer {
   withdrawalApprovalId: string | null;
   type: TransferType;
   status: TransferStatus;
+  confirmation: BN;
   createdAt: string;
   updatedAt: string;
 }
