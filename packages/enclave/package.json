@@ -1,6 +1,6 @@
 {
   "name": "@haechi-labs/henesis-wallet-enclave",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "henesis wallet enclave module",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
@@ -17,7 +17,7 @@
     "preBootstrap": "rm -rf ./node_modules"
   },
   "dependencies": {
-    "@haechi-labs/henesis-wallet-core": "^1.2.0",
+    "@haechi-labs/henesis-wallet-core": "^1.2.1",
     "express": "^4.17.1",
     "ts-node": "^8.6.2"
   },
