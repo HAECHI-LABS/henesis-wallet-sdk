@@ -32,7 +32,7 @@ export class EthEvents {
       results: data.results.map((e) => {
         return {
           ...e,
-          confirmation: BNConverter.hexStringToBN(String(e.confirmation)),
+          confirmation: BNConverter.hexStringToBN(e.confirmation),
         };
       }),
     };
