@@ -999,6 +999,12 @@ export interface TransferDTO {
      * @type {string}
      * @memberof TransferDTO
      */
+    confirmation: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferDTO
+     */
     id: string;
     /**
      * 

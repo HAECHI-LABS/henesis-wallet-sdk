@@ -1,11 +1,6 @@
 import * as BN from "bn.js";
 import { PaginationOptions, Timestamp } from "./types";
-import {
-  ValueTransferEventDTO as EthValueTransferEventDTO,
-  ValueTransferType,
-  EventStatus,
-  WalletType,
-} from "./__generate__/eth";
+import { ValueTransferType, EventStatus, WalletType } from "./__generate__/eth";
 
 export interface Event<S> {
   id: number;
@@ -17,6 +12,7 @@ export interface Event<S> {
   transactionId?: string;
   orgId?: string;
   masterWalletId?: string;
+  confirmation: BN;
 }
 
 export type BtcEvent = Event<null>;
