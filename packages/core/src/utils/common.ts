@@ -120,6 +120,7 @@ export const parseResponseToTransfer = (t: TransferDTO): Transfer => {
     withdrawalApprovalId: t.withdrawalApprovalId,
     type: t.type,
     status: t.status,
+    confirmation: BNConverter.hexStringToBN(t.confirmation),
     createdAt: t.createdAt,
   };
 };

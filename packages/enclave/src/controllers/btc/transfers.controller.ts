@@ -25,10 +25,14 @@ export interface BtcTransactionResponse
 }
 
 export interface TransferResponse
-  extends Omit<Transfer, "transaction" | "amount" | "feeAmount"> {
+  extends Omit<
+    Transfer,
+    "transaction" | "amount" | "feeAmount" | "confirmation"
+  > {
   transaction: BtcTransactionResponse;
   amount: string;
   feeAmount: string | null;
+  confirmation: string;
 }
 
 export default class TransfersController

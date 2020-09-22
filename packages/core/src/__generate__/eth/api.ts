@@ -230,6 +230,12 @@ export interface CallEventDTO {
      * @type {string}
      * @memberof CallEventDTO
      */
+    confirmation: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventDTO
+     */
     walletId: string;
     /**
      * 
@@ -1802,6 +1808,12 @@ export interface ValueTransferEventDTO {
      * @memberof ValueTransferEventDTO
      */
     status: EventStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValueTransferEventDTO
+     */
+    confirmation: string;
     /**
      * 
      * @type {string}
