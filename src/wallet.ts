@@ -1,6 +1,6 @@
 import BN from "bn.js";
 import { Client } from "./httpClient";
-import { BlockchainType, transformBlockchainType } from "./blockchain";
+import { BlockchainType } from "./blockchain";
 import {
   Balance,
   Key,
@@ -16,7 +16,6 @@ import {
   AllowedAddressDTO as BtcAllowedAddressDTO,
   CreateWithdrawalPolicyRequest as BtcCreateWithdrawalPolicyRequest,
   KeyDTO as BtcKeyDTO,
-  MasterWalletDTO as BtcMasterWalletDTO,
   PaginationAllowedAddressDTO as BtcPaginationAllowedAddressDTO,
   PatchWithdrawalPolicyRequest as BtcPatchWithdrawalPolicyRequest,
   CreateAllowedAddressRequest as BtcCreateAllowedAddressRequest,
@@ -25,7 +24,6 @@ import {
   ValidateIsAllowedAddressRequest as BtcValidateIsAllowedAddressRequest,
   ValidateIsAllowedAddressResponse as BtcValidateIsAllowedAddressResponse,
   WalletStatus as BtcWalletStatus,
-  WhitelistType as BtcWhitelistType,
   WithdrawalPolicyType as BtcWithdrawalPolicyType,
 } from "./__generate__/btc/api";
 import { BNConverter, checkNullAndUndefinedParameter } from "./utils/common";
@@ -33,7 +31,6 @@ import { makeQueryString } from "./utils/url";
 import {
   ActivateAllowedAddressesRequest as EthActivateAllowedAddressesRequest,
   KeyDTO as EthKeyDTO,
-  MasterWalletDTO as EthMasterWalletDTO,
   PaginationWalletWithdrawalPolicyDTO,
   PatchWithdrawalPolicyRequest as EthPatchWithdrawalPolicyRequest,
   WalletWithdrawalPolicyDTO,
@@ -45,7 +42,6 @@ import {
   InactivateAllowedAddressesRequest as EthInactivateAllowedAddressesRequest,
   ValidateIsAllowedAddressRequest as EthValidateIsAllowedAddressRequest,
   ValidateIsAllowedAddressResponse as EthValidateIsAllowedAddressResponse,
-  MasterWalletDTO,
   AllowedCoinType as EthAllowedCoinType,
   WalletType as EthWalletType,
   WalletStatus as EthWalletStatus,
@@ -68,8 +64,6 @@ export type CreateAllowedAddressRequest =
   | EthCreateAllowedAddressRequest;
 export import WhitelistType = EthWhitelistType;
 export import AllowedCoinType = EthAllowedCoinType;
-import { BtcMasterWalletData } from "./btc/wallet";
-import { EthMasterWalletData } from "./eth/wallet";
 export type DeleteAllowedAddressRequest =
   | BtcDeleteAllowedAddressRequest
   | EthDeleteAllowedAddressRequest;
