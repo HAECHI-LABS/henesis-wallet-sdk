@@ -1016,6 +1016,55 @@ export interface KeyDTO {
 /**
  * 
  * @export
+ * @interface MasterWalletBalanceDTO
+ */
+export interface MasterWalletBalanceDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof MasterWalletBalanceDTO
+     */
+    symbol: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MasterWalletBalanceDTO
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MasterWalletBalanceDTO
+     */
+    amount: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MasterWalletBalanceDTO
+     */
+    coinId: number;
+    /**
+     * 
+     * @type {CoinType}
+     * @memberof MasterWalletBalanceDTO
+     */
+    coinType: CoinType;
+    /**
+     * 
+     * @type {string}
+     * @memberof MasterWalletBalanceDTO
+     */
+    spendableAmount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MasterWalletBalanceDTO
+     */
+    aggregatedAmount: string;
+}
+/**
+ * 
+ * @export
  * @interface MasterWalletDTO
  */
 export interface MasterWalletDTO {
@@ -1587,6 +1636,16 @@ export enum TransactionStatus {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+export enum TransferType {
+    WITHDRAWAL = 'WITHDRAWAL',
+    DEPOSIT = 'DEPOSIT'
+}
+
+/**
+ * 
+ * @export
  * @interface UpdateAccountKeyRequest
  */
 export interface UpdateAccountKeyRequest {
@@ -1846,10 +1905,10 @@ export interface ValueTransferEventDTO {
     coinSymbol: string;
     /**
      * 
-     * @type {ValueTransferType}
+     * @type {TransferType}
      * @memberof ValueTransferEventDTO
      */
-    transferType: ValueTransferType;
+    transferType: TransferType;
     /**
      * 
      * @type {string}
@@ -1887,16 +1946,6 @@ export interface ValueTransferEventDTO {
      */
     walletType?: WalletType;
 }
-/**
- * 
- * @export
- * @enum {string}
- */
-export enum ValueTransferType {
-    WITHDRAWAL = 'WITHDRAWAL',
-    DEPOSIT = 'DEPOSIT'
-}
-
 /**
  * 
  * @export
@@ -4929,7 +4978,7 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMasterWalletBalance(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BalanceDTO>>> {
+        async getMasterWalletBalance(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletBalanceDTO>>> {
             const localVarAxiosArgs = await EthWalletControllerApiAxiosParamCreator(configuration).getMasterWalletBalance(walletId, symbol, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -5298,7 +5347,7 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletBalance(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<BalanceDTO>> {
+        getMasterWalletBalance(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<MasterWalletBalanceDTO>> {
             return EthWalletControllerApiFp(configuration).getMasterWalletBalance(walletId, symbol, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8988,7 +9037,7 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMasterWalletBalance1(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BalanceDTO>>> {
+        async getMasterWalletBalance1(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletBalanceDTO>>> {
             const localVarAxiosArgs = await KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWalletBalance1(walletId, symbol, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -9357,7 +9406,7 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletBalance1(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<BalanceDTO>> {
+        getMasterWalletBalance1(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<MasterWalletBalanceDTO>> {
             return KlayWalletControllerApiFp(configuration).getMasterWalletBalance1(walletId, symbol, options).then((request) => request(axios, basePath));
         },
         /**
@@ -11252,7 +11301,7 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMasterWalletBalance2(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BalanceDTO>>> {
+        async getMasterWalletBalance2(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletBalanceDTO>>> {
             const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getMasterWalletBalance2(walletId, symbol, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -11506,7 +11555,7 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletBalance2(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<BalanceDTO>> {
+        getMasterWalletBalance2(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<MasterWalletBalanceDTO>> {
             return WalletControllerApiFp(configuration).getMasterWalletBalance2(walletId, symbol, options).then((request) => request(axios, basePath));
         },
         /**
