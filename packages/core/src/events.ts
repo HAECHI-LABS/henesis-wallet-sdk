@@ -1,6 +1,6 @@
 import * as BN from "bn.js";
 import { PaginationOptions, Timestamp } from "./types";
-import { ValueTransferType, EventStatus, WalletType } from "./__generate__/eth";
+import { TransferType, EventStatus, WalletType } from "./__generate__/eth";
 
 export interface Event<S> {
   id: number;
@@ -30,7 +30,7 @@ export interface ValueTransferEvent<S> extends Event<S> {
   coinSymbol: string;
   from: string;
   to: string;
-  transferType: ValueTransferType;
+  transferType: TransferType;
   walletName: string;
   walletType: WalletType;
 }

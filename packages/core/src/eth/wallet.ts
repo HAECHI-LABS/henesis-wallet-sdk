@@ -3,7 +3,7 @@ import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import BN from "bn.js";
 import { Coin } from "./coin";
-import { transformWalletStatus } from "../wallet";
+import { transformWalletStatus, WalletStatus } from "../wallet";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
 import {
   Balance,
@@ -64,6 +64,7 @@ export interface UserWalletPaginationOptions extends PaginationOptions {
   id?: string;
   ids?: string[];
   address?: string;
+  status?: WalletStatus;
 }
 
 export interface EthWithdrawalApproveParams extends ApproveWithdrawal {
