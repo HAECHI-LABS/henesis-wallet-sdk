@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.7.1...v2.7.2) (2020-09-25)
+
+
+### Features
+
+* add status query params to get user wallets ([#293](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/293)) ([2858310](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2858310f37ed17bbf6b3b62598d35205cc38da41))
+
+
+
+
+
 ## [2.7.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.7.0...v2.7.1) (2020-09-22)
 
 
