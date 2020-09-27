@@ -17,6 +17,7 @@ export interface Balance {
   spendableAmount?: BN;
   name: string;
   symbol: string;
+  aggregatedAmount?: BN;
 }
 
 export interface Key {
