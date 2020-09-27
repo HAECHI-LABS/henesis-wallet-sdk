@@ -15,9 +15,14 @@ import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
 import AbstractController from "../controller";
 import { Controller } from "../../types";
 
-interface BalanceResponse extends Omit<Balance, "amount" | "spendableAmount"> {
+interface BalanceResponse
+  extends Omit<Balance, "amount" | "spendableAmount" | "aggregatedAmount"> {
   amount: string;
   spendableAmount?: string;
+}
+
+interface MasterWalletBalanceResponse extends BalanceResponse {
+  aggregatedAmount: string;
 }
 
 interface Nonce {
@@ -249,7 +254,7 @@ export default class WalletsController
 
   private async getMasterWalletBalance(
     req: express.Request
-  ): Promise<BalanceResponse[]> {
+  ): Promise<MasterWalletBalanceResponse[]> {
     const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
       req.params.masterWalletId
     );

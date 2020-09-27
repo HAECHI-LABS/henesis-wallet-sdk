@@ -27,6 +27,7 @@ import {
   NonceDTO,
   UserWalletDTO,
   BalanceDTO,
+  MasterWalletBalanceDTO,
   PaginationUserWalletDTO,
   MasterWalletDTO,
   ApproveWithdrawalApprovalRequest,
@@ -479,9 +480,9 @@ export class EthMasterWallet extends EthLikeWallet {
 
   async getBalance(flag?: boolean, symbol?: string): Promise<Balance[]> {
     const queryString: string = makeQueryString({ flag, symbol });
-    const balances = await this.client.get<NoUndefinedField<BalanceDTO>[]>(
-      `${this.baseUrl}/balance${queryString ? `?${queryString}` : ""}`
-    );
+    const balances = await this.client.get<
+      NoUndefinedField<MasterWalletBalanceDTO>[]
+    >(`${this.baseUrl}/balance${queryString ? `?${queryString}` : ""}`);
 
     return balances.map((balance) => ({
       coinId: balance.coinId,
@@ -492,6 +493,9 @@ export class EthMasterWallet extends EthLikeWallet {
         String(balance.spendableAmount)
       ),
       name: balance.name,
+      aggregatedAmount: BNConverter.hexStringToBN(
+        String(balance.aggregatedAmount)
+      ),
     }));
   }
 
