@@ -22,7 +22,6 @@ import {
 import { Wallet, WalletData, transformWalletStatus } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import {
-  CreateDepositAddressRequest,
   DepositAddressDTO,
   RawTransactionDTO,
   EstimatedFeeDTO,
@@ -31,6 +30,8 @@ import {
   TransferDTO,
   ApproveWithdrawalApprovalRequest,
   RejectWithdrawalApprovalRequest,
+  TransactionOutputDTO,
+  TransactionDTO,
 } from "../__generate__/btc";
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
@@ -42,15 +43,15 @@ import {
   createDepositAddressApi,
 } from "../apis/btc/wallet";
 
-export interface BtcTransaction {
-  id: string;
-  hex: string;
-  transactionHash: string;
-  blockNumber: BN;
+export interface BtcTransaction
+  extends Omit<
+    TransactionDTO,
+    "outputs" | "blockNumber" | "feeAmount" | "amount"
+  > {
+  blockNumber?: BN;
   feeAmount?: BN;
   amount: BN;
   outputs: BtcTransactionOutput[];
-  createdAt: string;
 }
 
 export interface BtcEstimatedFee {
@@ -62,13 +63,9 @@ export interface BtcRawTransaction {
   outputs: BtcRawTransactionOutput[];
 }
 
-export interface BtcTransactionOutput {
-  transactionId: string;
-  outputIndex: number;
-  address: string;
-  scriptPubKey: string;
+export interface BtcTransactionOutput
+  extends Omit<TransactionOutputDTO, "amount"> {
   amount: BN;
-  isChange: boolean;
 }
 
 export interface BtcRawTransactionInput {
