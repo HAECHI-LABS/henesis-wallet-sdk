@@ -2,11 +2,11 @@ import * as BN from "bn.js";
 import { PaginationOptions, Timestamp } from "./types";
 import { TransferType, EventStatus, WalletType } from "./__generate__/eth";
 
-export interface Event<S> {
+export interface Event {
   id: number;
   createdAt: string;
   updatedAt: string;
-  status: S;
+  status: EventStatus;
   transactionHash?: string;
   walletId: string;
   transactionId?: string;
@@ -15,17 +15,15 @@ export interface Event<S> {
   confirmation: BN;
 }
 
-export type BtcEvent = Event<null>;
+export type EthCallEvent = CallEvent;
 
-export type EthCallEvent = CallEvent<EventStatus>;
-
-export interface CallEvent<T> extends Event<T> {
+export interface CallEvent extends Event {
   fromAddress: string;
   toAddress: string;
   data: string;
 }
 
-export interface ValueTransferEvent<S> extends Event<S> {
+export interface ValueTransferEvent extends Event {
   amount: BN;
   coinSymbol: string;
   from: string;
@@ -35,16 +33,16 @@ export interface ValueTransferEvent<S> extends Event<S> {
   walletType: WalletType;
 }
 
-export type EthValueTransferEvent = ValueTransferEvent<EventStatus>;
+export type EthValueTransferEvent = ValueTransferEvent;
 
-export interface EventPaginationOptions<S> extends PaginationOptions {
+export interface EventPaginationOptions extends PaginationOptions {
   address?: string;
   toAddress?: string;
   fromAddress?: string;
   transactionHash?: string;
   updatedAtGte?: Timestamp;
   updatedAtLt?: Timestamp;
-  status?: S;
+  status?: EventStatus;
   walletId?: string;
   orgId?: string;
   masterWalletId?: string;
@@ -52,15 +50,11 @@ export interface EventPaginationOptions<S> extends PaginationOptions {
   symbol?: string;
 }
 
-export interface ValueTransferEventPaginationOptions<S>
-  extends EventPaginationOptions<S> {
+export interface ValueTransferEventPaginationOptions
+  extends EventPaginationOptions {
   symbol?: string;
 }
 
-export type BtcEventPaginationOptions = EventPaginationOptions<null>;
+export type EthEventPaginationOptions = EventPaginationOptions;
 
-export type EthEventPaginationOptions = EventPaginationOptions<EventStatus>;
-
-export type EthValueTransferEventPaginationOptions = ValueTransferEventPaginationOptions<
-  EventStatus
->;
+export type EthValueTransferEventPaginationOptions = ValueTransferEventPaginationOptions;

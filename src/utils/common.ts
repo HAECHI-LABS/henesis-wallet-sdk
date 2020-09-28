@@ -6,7 +6,10 @@ import {
 } from "./string";
 import { BtcTransaction, BtcTransactionOutput } from "../btc/wallet";
 import { Transfer } from "../btc/transfers";
-import { TransferDTO } from "../__generate__/btc";
+import {
+  TransactionDTO as BtcTransactionDTO,
+  TransferDTO,
+} from "../__generate__/btc";
 import _ from "lodash";
 import {
   FormatInvalidError,
@@ -81,47 +84,38 @@ export class BNConverter {
   }
 }
 
-export const parseResponseToTransfer = (t: TransferDTO): Transfer => {
-  let transaction: BtcTransaction = t.transaction
-    ? ({
-        id: t.transaction.id,
-        transactionHash: t.transaction.transactionHash,
-        amount: BNConverter.hexStringToBN(String(t.transaction.amount)),
-        blockNumber: t.transaction.blockNumber
-          ? BNConverter.hexStringToBN(String(t.transaction.blockNumber))
-          : null,
-        feeAmount: t.transaction.feeAmount
-          ? BNConverter.hexStringToBN(String(t.transaction.feeAmount))
-          : null,
-        createdAt: t.transaction.createdAt,
-        hex: t.transaction.hex,
-        outputs: t.transaction.outputs.map((o) => {
-          return {
-            transactionId: o.transactionId,
-            outputIndex: o.outputIndex,
-            address: o.address,
-            scriptPubKey: o.scriptPubKey,
-            amount: BNConverter.hexStringToBN(String(o.amount)),
-            isChange: o.isChange,
-          } as BtcTransactionOutput;
-        }),
-      } as BtcTransaction)
-    : null;
+export const convertBtcTransactionDTO = (
+  transaction: BtcTransactionDTO
+): BtcTransaction => {
   return {
-    id: t.id,
-    walletId: t.walletId,
-    outputIndex: t.outputIndex,
-    updatedAt: t.updatedAt,
-    transaction,
+    ...transaction,
+    amount: BNConverter.hexStringToBN(String(transaction.amount)),
+    blockNumber: transaction.blockNumber
+      ? BNConverter.hexStringToBN(String(transaction.blockNumber))
+      : null,
+    feeAmount: transaction.feeAmount
+      ? BNConverter.hexStringToBN(String(transaction.feeAmount))
+      : null,
+    outputs: transaction.outputs.map((o) => {
+      return {
+        transactionId: o.transactionId,
+        outputIndex: o.outputIndex,
+        address: o.address,
+        scriptPubKey: o.scriptPubKey,
+        amount: BNConverter.hexStringToBN(String(o.amount)),
+        isChange: o.isChange,
+      } as BtcTransactionOutput;
+    }),
+  };
+};
+
+export const parseResponseToTransfer = (t: TransferDTO): Transfer => {
+  return {
+    ...t,
+    transaction: t.transaction ? convertBtcTransactionDTO(t.transaction) : null,
     feeAmount: t.feeAmount ? BNConverter.hexStringToBN(t.feeAmount) : null,
     amount: BNConverter.hexStringToBN(t.amount),
-    receivedAt: t.receivedAt,
-    sendTo: t.sendTo,
-    withdrawalApprovalId: t.withdrawalApprovalId,
-    type: t.type,
-    status: t.status,
     confirmation: BNConverter.hexStringToBN(t.confirmation),
-    createdAt: t.createdAt,
   };
 };
 
