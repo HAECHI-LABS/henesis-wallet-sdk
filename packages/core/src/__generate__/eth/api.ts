@@ -289,6 +289,85 @@ export interface CallEventDTO {
 /**
  * 
  * @export
+ * @interface CallEventInternalDTO
+ */
+export interface CallEventInternalDTO {
+    /**
+     * 
+     * @type {number}
+     * @memberof CallEventInternalDTO
+     */
+    id: number;
+    /**
+     * 
+     * @type {SimplifiedTransactionInternalDTO}
+     * @memberof CallEventInternalDTO
+     */
+    transaction: SimplifiedTransactionInternalDTO;
+    /**
+     * 
+     * @type {SimplifiedWalletInternalDTO}
+     * @memberof CallEventInternalDTO
+     */
+    from: SimplifiedWalletInternalDTO;
+    /**
+     * 
+     * @type {SimplifiedWalletInternalDTO}
+     * @memberof CallEventInternalDTO
+     */
+    to: SimplifiedWalletInternalDTO;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventInternalDTO
+     */
+    data: string;
+    /**
+     * 
+     * @type {Blockchain}
+     * @memberof CallEventInternalDTO
+     */
+    blockchain: Blockchain;
+    /**
+     * 
+     * @type {EventStatus}
+     * @memberof CallEventInternalDTO
+     */
+    status: EventStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventInternalDTO
+     */
+    confirmation: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventInternalDTO
+     */
+    walletId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventInternalDTO
+     */
+    orgId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventInternalDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventInternalDTO
+     */
+    updatedAt: string;
+}
+/**
+ * 
+ * @export
  * @interface ChangeWalletNameRequest
  */
 export interface ChangeWalletNameRequest {
@@ -1300,6 +1379,25 @@ export interface PaginationCallEventDTO {
 /**
  * 
  * @export
+ * @interface PaginationCallEventInternalDTO
+ */
+export interface PaginationCallEventInternalDTO {
+    /**
+     * 
+     * @type {PaginationMeta}
+     * @memberof PaginationCallEventInternalDTO
+     */
+    pagination: PaginationMeta;
+    /**
+     * 
+     * @type {Array<CallEventInternalDTO>}
+     * @memberof PaginationCallEventInternalDTO
+     */
+    results: Array<CallEventInternalDTO>;
+}
+/**
+ * 
+ * @export
  * @interface PaginationMeta
  */
 export interface PaginationMeta {
@@ -1378,6 +1476,25 @@ export interface PaginationValueTransferEventDTO {
      * @memberof PaginationValueTransferEventDTO
      */
     results: Array<ValueTransferEventDTO>;
+}
+/**
+ * 
+ * @export
+ * @interface PaginationValueTransferEventInternalDTO
+ */
+export interface PaginationValueTransferEventInternalDTO {
+    /**
+     * 
+     * @type {PaginationMeta}
+     * @memberof PaginationValueTransferEventInternalDTO
+     */
+    pagination: PaginationMeta;
+    /**
+     * 
+     * @type {Array<ValueTransferEventInternalDTO>}
+     * @memberof PaginationValueTransferEventInternalDTO
+     */
+    results: Array<ValueTransferEventInternalDTO>;
 }
 /**
  * 
@@ -1523,6 +1640,87 @@ export interface SignedMultiSigPayloadDTO {
      * @memberof SignedMultiSigPayloadDTO
      */
     multiSigPayload: MultiSigPayloadDTO;
+}
+/**
+ * 
+ * @export
+ * @interface SimplifiedCoinInternalDTO
+ */
+export interface SimplifiedCoinInternalDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedCoinInternalDTO
+     */
+    symbol: string;
+}
+/**
+ * 
+ * @export
+ * @interface SimplifiedTransactionInternalDTO
+ */
+export interface SimplifiedTransactionInternalDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedTransactionInternalDTO
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedTransactionInternalDTO
+     */
+    hash?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedTransactionInternalDTO
+     */
+    blockHash?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedTransactionInternalDTO
+     */
+    blockNumber?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SimplifiedWalletInternalDTO
+ */
+export interface SimplifiedWalletInternalDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    address: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    name?: string;
+    /**
+     * 
+     * @type {WalletType}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    type?: WalletType;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    masterWalletId?: string;
 }
 /**
  * 
@@ -1945,6 +2143,97 @@ export interface ValueTransferEventDTO {
      * @memberof ValueTransferEventDTO
      */
     walletType?: WalletType;
+}
+/**
+ * 
+ * @export
+ * @interface ValueTransferEventInternalDTO
+ */
+export interface ValueTransferEventInternalDTO {
+    /**
+     * 
+     * @type {number}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    id: number;
+    /**
+     * 
+     * @type {SimplifiedTransactionInternalDTO}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    transaction: SimplifiedTransactionInternalDTO;
+    /**
+     * 
+     * @type {SimplifiedCoinInternalDTO}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    coin: SimplifiedCoinInternalDTO;
+    /**
+     * 
+     * @type {SimplifiedWalletInternalDTO}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    from: SimplifiedWalletInternalDTO;
+    /**
+     * 
+     * @type {SimplifiedWalletInternalDTO}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    to: SimplifiedWalletInternalDTO;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    amount: string;
+    /**
+     * 
+     * @type {Blockchain}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    blockchain: Blockchain;
+    /**
+     * 
+     * @type {EventStatus}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    status: EventStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    confirmation: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    walletId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    orgId?: string;
+    /**
+     * 
+     * @type {TransferType}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    transferType: TransferType;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValueTransferEventInternalDTO
+     */
+    updatedAt: string;
 }
 /**
  * 
@@ -2618,14 +2907,14 @@ export const EthEventControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCallEvents: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+        getCallEvents1: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getCallEvents.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getCallEvents1.');
             }
             // verify required parameter 'specs' is not null or undefined
             if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getCallEvents.');
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getCallEvents1.');
             }
             const localVarPath = `/api/v2/eth/call-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2665,14 +2954,14 @@ export const EthEventControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+        getValueTransferEvents1: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents1.');
             }
             // verify required parameter 'specs' is not null or undefined
             if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getValueTransferEvents.');
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getValueTransferEvents1.');
             }
             const localVarPath = `/api/v2/eth/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2721,8 +3010,8 @@ export const EthEventControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCallEvents(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>> {
-            const localVarAxiosArgs = await EthEventControllerApiAxiosParamCreator(configuration).getCallEvents(pageable, specs, options);
+        async getCallEvents1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>> {
+            const localVarAxiosArgs = await EthEventControllerApiAxiosParamCreator(configuration).getCallEvents1(pageable, specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2735,8 +3024,8 @@ export const EthEventControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getValueTransferEvents(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>> {
-            const localVarAxiosArgs = await EthEventControllerApiAxiosParamCreator(configuration).getValueTransferEvents(pageable, specs, options);
+        async getValueTransferEvents1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>> {
+            const localVarAxiosArgs = await EthEventControllerApiAxiosParamCreator(configuration).getValueTransferEvents1(pageable, specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2758,8 +3047,8 @@ export const EthEventControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCallEvents(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO> {
-            return EthEventControllerApiFp(configuration).getCallEvents(pageable, specs, options).then((request) => request(axios, basePath));
+        getCallEvents1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO> {
+            return EthEventControllerApiFp(configuration).getCallEvents1(pageable, specs, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2768,8 +3057,8 @@ export const EthEventControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationValueTransferEventDTO> {
-            return EthEventControllerApiFp(configuration).getValueTransferEvents(pageable, specs, options).then((request) => request(axios, basePath));
+        getValueTransferEvents1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationValueTransferEventDTO> {
+            return EthEventControllerApiFp(configuration).getValueTransferEvents1(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2789,8 +3078,8 @@ export class EthEventControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthEventControllerApi
      */
-    public getCallEvents(pageable: Pageable, specs: object, options?: any) {
-        return EthEventControllerApiFp(this.configuration).getCallEvents(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    public getCallEvents1(pageable: Pageable, specs: object, options?: any) {
+        return EthEventControllerApiFp(this.configuration).getCallEvents1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2801,8 +3090,8 @@ export class EthEventControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthEventControllerApi
      */
-    public getValueTransferEvents(pageable: Pageable, specs: object, options?: any) {
-        return EthEventControllerApiFp(this.configuration).getValueTransferEvents(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    public getValueTransferEvents1(pageable: Pageable, specs: object, options?: any) {
+        return EthEventControllerApiFp(this.configuration).getValueTransferEvents1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -3196,6 +3485,209 @@ export class EthHenesisKeyControllerApi extends BaseAPI {
      */
     public getHenesisKeyBalance(options?: any) {
         return EthHenesisKeyControllerApiFp(this.configuration).getHenesisKeyBalance(options).then((request) => request(this.axios, this.basePath));
+    }
+
+}
+
+
+/**
+ * EthInternalControllerApi - axios parameter creator
+ * @export
+ */
+export const EthInternalControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCallEvents: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getCallEvents.');
+            }
+            // verify required parameter 'specs' is not null or undefined
+            if (specs === null || specs === undefined) {
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getCallEvents.');
+            }
+            const localVarPath = `/api/v2/eth/internal/call-events`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (specs !== undefined) {
+                localVarQueryParameter['specs'] = specs;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getValueTransferEvents: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents.');
+            }
+            // verify required parameter 'specs' is not null or undefined
+            if (specs === null || specs === undefined) {
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getValueTransferEvents.');
+            }
+            const localVarPath = `/api/v2/eth/internal/value-transfer-events`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (specs !== undefined) {
+                localVarQueryParameter['specs'] = specs;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * EthInternalControllerApi - functional programming interface
+ * @export
+ */
+export const EthInternalControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCallEvents(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventInternalDTO>> {
+            const localVarAxiosArgs = await EthInternalControllerApiAxiosParamCreator(configuration).getCallEvents(pageable, specs, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getValueTransferEvents(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventInternalDTO>> {
+            const localVarAxiosArgs = await EthInternalControllerApiAxiosParamCreator(configuration).getValueTransferEvents(pageable, specs, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * EthInternalControllerApi - factory interface
+ * @export
+ */
+export const EthInternalControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCallEvents(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventInternalDTO> {
+            return EthInternalControllerApiFp(configuration).getCallEvents(pageable, specs, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getValueTransferEvents(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationValueTransferEventInternalDTO> {
+            return EthInternalControllerApiFp(configuration).getValueTransferEvents(pageable, specs, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * EthInternalControllerApi - object-oriented interface
+ * @export
+ * @class EthInternalControllerApi
+ * @extends {BaseAPI}
+ */
+export class EthInternalControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {Pageable} pageable 
+     * @param {object} specs 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthInternalControllerApi
+     */
+    public getCallEvents(pageable: Pageable, specs: object, options?: any) {
+        return EthInternalControllerApiFp(this.configuration).getCallEvents(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Pageable} pageable 
+     * @param {object} specs 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthInternalControllerApi
+     */
+    public getValueTransferEvents(pageable: Pageable, specs: object, options?: any) {
+        return EthInternalControllerApiFp(this.configuration).getValueTransferEvents(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -6088,14 +6580,14 @@ export const EventControllerApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCallEvents2: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+        getCallEvents4: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getCallEvents2.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getCallEvents4.');
             }
             // verify required parameter 'specs' is not null or undefined
             if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getCallEvents2.');
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getCallEvents4.');
             }
             const localVarPath = `/api/v1/call-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6135,14 +6627,14 @@ export const EventControllerApiAxiosParamCreator = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents2: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+        getValueTransferEvents4: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents2.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents4.');
             }
             // verify required parameter 'specs' is not null or undefined
             if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getValueTransferEvents2.');
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getValueTransferEvents4.');
             }
             const localVarPath = `/api/v1/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6191,8 +6683,8 @@ export const EventControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCallEvents2(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>> {
-            const localVarAxiosArgs = await EventControllerApiAxiosParamCreator(configuration).getCallEvents2(pageable, specs, options);
+        async getCallEvents4(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>> {
+            const localVarAxiosArgs = await EventControllerApiAxiosParamCreator(configuration).getCallEvents4(pageable, specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -6205,8 +6697,8 @@ export const EventControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getValueTransferEvents2(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>> {
-            const localVarAxiosArgs = await EventControllerApiAxiosParamCreator(configuration).getValueTransferEvents2(pageable, specs, options);
+        async getValueTransferEvents4(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>> {
+            const localVarAxiosArgs = await EventControllerApiAxiosParamCreator(configuration).getValueTransferEvents4(pageable, specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -6228,8 +6720,8 @@ export const EventControllerApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCallEvents2(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO> {
-            return EventControllerApiFp(configuration).getCallEvents2(pageable, specs, options).then((request) => request(axios, basePath));
+        getCallEvents4(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO> {
+            return EventControllerApiFp(configuration).getCallEvents4(pageable, specs, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6238,8 +6730,8 @@ export const EventControllerApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents2(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationValueTransferEventDTO> {
-            return EventControllerApiFp(configuration).getValueTransferEvents2(pageable, specs, options).then((request) => request(axios, basePath));
+        getValueTransferEvents4(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationValueTransferEventDTO> {
+            return EventControllerApiFp(configuration).getValueTransferEvents4(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6259,8 +6751,8 @@ export class EventControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EventControllerApi
      */
-    public getCallEvents2(pageable: Pageable, specs: object, options?: any) {
-        return EventControllerApiFp(this.configuration).getCallEvents2(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    public getCallEvents4(pageable: Pageable, specs: object, options?: any) {
+        return EventControllerApiFp(this.configuration).getCallEvents4(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6271,8 +6763,8 @@ export class EventControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EventControllerApi
      */
-    public getValueTransferEvents2(pageable: Pageable, specs: object, options?: any) {
-        return EventControllerApiFp(this.configuration).getValueTransferEvents2(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    public getValueTransferEvents4(pageable: Pageable, specs: object, options?: any) {
+        return EventControllerApiFp(this.configuration).getValueTransferEvents4(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -6677,14 +7169,14 @@ export const KlayEventControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCallEvents1: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+        getCallEvents3: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getCallEvents1.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getCallEvents3.');
             }
             // verify required parameter 'specs' is not null or undefined
             if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getCallEvents1.');
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getCallEvents3.');
             }
             const localVarPath = `/api/v2/klay/call-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6724,14 +7216,14 @@ export const KlayEventControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents1: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+        getValueTransferEvents3: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents1.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents3.');
             }
             // verify required parameter 'specs' is not null or undefined
             if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getValueTransferEvents1.');
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getValueTransferEvents3.');
             }
             const localVarPath = `/api/v2/klay/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6780,8 +7272,8 @@ export const KlayEventControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCallEvents1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>> {
-            const localVarAxiosArgs = await KlayEventControllerApiAxiosParamCreator(configuration).getCallEvents1(pageable, specs, options);
+        async getCallEvents3(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>> {
+            const localVarAxiosArgs = await KlayEventControllerApiAxiosParamCreator(configuration).getCallEvents3(pageable, specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -6794,8 +7286,8 @@ export const KlayEventControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getValueTransferEvents1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>> {
-            const localVarAxiosArgs = await KlayEventControllerApiAxiosParamCreator(configuration).getValueTransferEvents1(pageable, specs, options);
+        async getValueTransferEvents3(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>> {
+            const localVarAxiosArgs = await KlayEventControllerApiAxiosParamCreator(configuration).getValueTransferEvents3(pageable, specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -6817,8 +7309,8 @@ export const KlayEventControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCallEvents1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO> {
-            return KlayEventControllerApiFp(configuration).getCallEvents1(pageable, specs, options).then((request) => request(axios, basePath));
+        getCallEvents3(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO> {
+            return KlayEventControllerApiFp(configuration).getCallEvents3(pageable, specs, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6827,8 +7319,8 @@ export const KlayEventControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationValueTransferEventDTO> {
-            return KlayEventControllerApiFp(configuration).getValueTransferEvents1(pageable, specs, options).then((request) => request(axios, basePath));
+        getValueTransferEvents3(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationValueTransferEventDTO> {
+            return KlayEventControllerApiFp(configuration).getValueTransferEvents3(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6848,8 +7340,8 @@ export class KlayEventControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayEventControllerApi
      */
-    public getCallEvents1(pageable: Pageable, specs: object, options?: any) {
-        return KlayEventControllerApiFp(this.configuration).getCallEvents1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    public getCallEvents3(pageable: Pageable, specs: object, options?: any) {
+        return KlayEventControllerApiFp(this.configuration).getCallEvents3(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6860,8 +7352,8 @@ export class KlayEventControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayEventControllerApi
      */
-    public getValueTransferEvents1(pageable: Pageable, specs: object, options?: any) {
-        return KlayEventControllerApiFp(this.configuration).getValueTransferEvents1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    public getValueTransferEvents3(pageable: Pageable, specs: object, options?: any) {
+        return KlayEventControllerApiFp(this.configuration).getValueTransferEvents3(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -7255,6 +7747,209 @@ export class KlayHenesisKeyControllerApi extends BaseAPI {
      */
     public getHenesisKeyBalance1(options?: any) {
         return KlayHenesisKeyControllerApiFp(this.configuration).getHenesisKeyBalance1(options).then((request) => request(this.axios, this.basePath));
+    }
+
+}
+
+
+/**
+ * KlayInternalControllerApi - axios parameter creator
+ * @export
+ */
+export const KlayInternalControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCallEvents2: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getCallEvents2.');
+            }
+            // verify required parameter 'specs' is not null or undefined
+            if (specs === null || specs === undefined) {
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getCallEvents2.');
+            }
+            const localVarPath = `/api/v2/klay/internal/call-events`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (specs !== undefined) {
+                localVarQueryParameter['specs'] = specs;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getValueTransferEvents2: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents2.');
+            }
+            // verify required parameter 'specs' is not null or undefined
+            if (specs === null || specs === undefined) {
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getValueTransferEvents2.');
+            }
+            const localVarPath = `/api/v2/klay/internal/value-transfer-events`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (specs !== undefined) {
+                localVarQueryParameter['specs'] = specs;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KlayInternalControllerApi - functional programming interface
+ * @export
+ */
+export const KlayInternalControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCallEvents2(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventInternalDTO>> {
+            const localVarAxiosArgs = await KlayInternalControllerApiAxiosParamCreator(configuration).getCallEvents2(pageable, specs, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getValueTransferEvents2(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventInternalDTO>> {
+            const localVarAxiosArgs = await KlayInternalControllerApiAxiosParamCreator(configuration).getValueTransferEvents2(pageable, specs, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * KlayInternalControllerApi - factory interface
+ * @export
+ */
+export const KlayInternalControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCallEvents2(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventInternalDTO> {
+            return KlayInternalControllerApiFp(configuration).getCallEvents2(pageable, specs, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getValueTransferEvents2(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationValueTransferEventInternalDTO> {
+            return KlayInternalControllerApiFp(configuration).getValueTransferEvents2(pageable, specs, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * KlayInternalControllerApi - object-oriented interface
+ * @export
+ * @class KlayInternalControllerApi
+ * @extends {BaseAPI}
+ */
+export class KlayInternalControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {Pageable} pageable 
+     * @param {object} specs 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayInternalControllerApi
+     */
+    public getCallEvents2(pageable: Pageable, specs: object, options?: any) {
+        return KlayInternalControllerApiFp(this.configuration).getCallEvents2(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Pageable} pageable 
+     * @param {object} specs 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayInternalControllerApi
+     */
+    public getValueTransferEvents2(pageable: Pageable, specs: object, options?: any) {
+        return KlayInternalControllerApiFp(this.configuration).getValueTransferEvents2(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

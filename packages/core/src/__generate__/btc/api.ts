@@ -723,6 +723,25 @@ export interface PaginationTransferDTO {
 /**
  * 
  * @export
+ * @interface PaginationTransferInternalDTO
+ */
+export interface PaginationTransferInternalDTO {
+    /**
+     * 
+     * @type {PaginationMeta}
+     * @memberof PaginationTransferInternalDTO
+     */
+    pagination: PaginationMeta;
+    /**
+     * 
+     * @type {Array<TransferInternalDTO>}
+     * @memberof PaginationTransferInternalDTO
+     */
+    results: Array<TransferInternalDTO>;
+}
+/**
+ * 
+ * @export
  * @interface PaginationWalletWithdrawalPolicyDTO
  */
 export interface PaginationWalletWithdrawalPolicyDTO {
@@ -871,6 +890,37 @@ export interface RejectWithdrawalApprovalRequest {
      * @memberof RejectWithdrawalApprovalRequest
      */
     otpCode?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SimplifiedWalletInternalDTO
+ */
+export interface SimplifiedWalletInternalDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    address: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    walletId?: string;
 }
 /**
  * 
@@ -1070,6 +1120,97 @@ export interface TransferDTO {
 /**
  * 
  * @export
+ * @interface TransferInternalDTO
+ */
+export interface TransferInternalDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    amount: string;
+    /**
+     * 
+     * @type {TransferStatus}
+     * @memberof TransferInternalDTO
+     */
+    status: TransferStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    confirmation: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    walletId: string;
+    /**
+     * 
+     * @type {TransactionDTO}
+     * @memberof TransferInternalDTO
+     */
+    transaction?: TransactionDTO;
+    /**
+     * 
+     * @type {number}
+     * @memberof TransferInternalDTO
+     */
+    outputIndex?: number;
+    /**
+     * 
+     * @type {SimplifiedWalletInternalDTO}
+     * @memberof TransferInternalDTO
+     */
+    receivedAt?: SimplifiedWalletInternalDTO;
+    /**
+     * 
+     * @type {SimplifiedWalletInternalDTO}
+     * @memberof TransferInternalDTO
+     */
+    sendTo?: SimplifiedWalletInternalDTO;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    feeAmount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    withdrawalApprovalId?: string;
+    /**
+     * 
+     * @type {TransferType}
+     * @memberof TransferInternalDTO
+     */
+    type: TransferType;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    updatedAt: string;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 export enum TransferStatus {
@@ -1199,10 +1340,10 @@ export enum WithdrawalPolicyType {
 
 
 /**
- * TransferControllerApi - axios parameter creator
+ * InternalControllerApi - axios parameter creator
  * @export
  */
-export const TransferControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const InternalControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -1215,7 +1356,7 @@ export const TransferControllerApiAxiosParamCreator = function (configuration?: 
             if (transferId === null || transferId === undefined) {
                 throw new RequiredError('transferId','Required parameter transferId was null or undefined when calling getTransfer.');
             }
-            const localVarPath = `/api/v2/btc/transfers/{transferId}`
+            const localVarPath = `/api/v2/btc/internal/transfers/{transferId}`
                 .replace(`{${"transferId"}}`, encodeURIComponent(String(transferId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -1254,6 +1395,194 @@ export const TransferControllerApiAxiosParamCreator = function (configuration?: 
             // verify required parameter 'specs' is not null or undefined
             if (specs === null || specs === undefined) {
                 throw new RequiredError('specs','Required parameter specs was null or undefined when calling getTransfers.');
+            }
+            const localVarPath = `/api/v2/btc/internal/transfers`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (specs !== undefined) {
+                localVarQueryParameter['specs'] = specs;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * InternalControllerApi - functional programming interface
+ * @export
+ */
+export const InternalControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} transferId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTransfer(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getTransfer(transferId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTransfers(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getTransfers(pageable, specs, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * InternalControllerApi - factory interface
+ * @export
+ */
+export const InternalControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {string} transferId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransfer(transferId: string, options?: any): AxiosPromise<TransferInternalDTO> {
+            return InternalControllerApiFp(configuration).getTransfer(transferId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransfers(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransferInternalDTO> {
+            return InternalControllerApiFp(configuration).getTransfers(pageable, specs, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * InternalControllerApi - object-oriented interface
+ * @export
+ * @class InternalControllerApi
+ * @extends {BaseAPI}
+ */
+export class InternalControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} transferId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InternalControllerApi
+     */
+    public getTransfer(transferId: string, options?: any) {
+        return InternalControllerApiFp(this.configuration).getTransfer(transferId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Pageable} pageable 
+     * @param {object} specs 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InternalControllerApi
+     */
+    public getTransfers(pageable: Pageable, specs: object, options?: any) {
+        return InternalControllerApiFp(this.configuration).getTransfers(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    }
+
+}
+
+
+/**
+ * TransferControllerApi - axios parameter creator
+ * @export
+ */
+export const TransferControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} transferId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransfer1: async (transferId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'transferId' is not null or undefined
+            if (transferId === null || transferId === undefined) {
+                throw new RequiredError('transferId','Required parameter transferId was null or undefined when calling getTransfer1.');
+            }
+            const localVarPath = `/api/v2/btc/transfers/{transferId}`
+                .replace(`{${"transferId"}}`, encodeURIComponent(String(transferId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransfers1: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransfers1.');
+            }
+            // verify required parameter 'specs' is not null or undefined
+            if (specs === null || specs === undefined) {
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getTransfers1.');
             }
             const localVarPath = `/api/v2/btc/transfers`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1301,8 +1630,8 @@ export const TransferControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransfer(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>> {
-            const localVarAxiosArgs = await TransferControllerApiAxiosParamCreator(configuration).getTransfer(transferId, options);
+        async getTransfer1(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>> {
+            const localVarAxiosArgs = await TransferControllerApiAxiosParamCreator(configuration).getTransfer1(transferId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1315,8 +1644,8 @@ export const TransferControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransfers(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferDTO>> {
-            const localVarAxiosArgs = await TransferControllerApiAxiosParamCreator(configuration).getTransfers(pageable, specs, options);
+        async getTransfers1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferDTO>> {
+            const localVarAxiosArgs = await TransferControllerApiAxiosParamCreator(configuration).getTransfers1(pageable, specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1337,8 +1666,8 @@ export const TransferControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfer(transferId: string, options?: any): AxiosPromise<TransferDTO> {
-            return TransferControllerApiFp(configuration).getTransfer(transferId, options).then((request) => request(axios, basePath));
+        getTransfer1(transferId: string, options?: any): AxiosPromise<TransferDTO> {
+            return TransferControllerApiFp(configuration).getTransfer1(transferId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1347,8 +1676,8 @@ export const TransferControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfers(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransferDTO> {
-            return TransferControllerApiFp(configuration).getTransfers(pageable, specs, options).then((request) => request(axios, basePath));
+        getTransfers1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransferDTO> {
+            return TransferControllerApiFp(configuration).getTransfers1(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1367,8 +1696,8 @@ export class TransferControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TransferControllerApi
      */
-    public getTransfer(transferId: string, options?: any) {
-        return TransferControllerApiFp(this.configuration).getTransfer(transferId, options).then((request) => request(this.axios, this.basePath));
+    public getTransfer1(transferId: string, options?: any) {
+        return TransferControllerApiFp(this.configuration).getTransfer1(transferId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1379,8 +1708,8 @@ export class TransferControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TransferControllerApi
      */
-    public getTransfers(pageable: Pageable, specs: object, options?: any) {
-        return TransferControllerApiFp(this.configuration).getTransfers(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    public getTransfers1(pageable: Pageable, specs: object, options?: any) {
+        return TransferControllerApiFp(this.configuration).getTransfers1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

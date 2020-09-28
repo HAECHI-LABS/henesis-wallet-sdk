@@ -10,8 +10,35 @@ import {
 import {
   PaginationValueTransferEventDTO,
   PaginationCallEventDTO,
+  PaginationValueTransferEventInternalDTO,
+  ValueTransferEventInternalDTO,
+  SimplifiedTransactionInternalDTO,
+  CallEventInternalDTO,
+  PaginationCallEventInternalDTO,
 } from "../__generate__/eth";
 import { makeQueryString } from "../utils/url";
+import BN from "bn.js";
+
+export interface SimplifiedTransactionInternal
+  extends Omit<SimplifiedTransactionInternalDTO, "blockNumber"> {
+  blockNumber: BN;
+}
+
+export interface ValueTransferEventInternal
+  extends Omit<
+    ValueTransferEventInternalDTO,
+    "amount" | "confirmation" | "transaction"
+  > {
+  amount: BN;
+  confirmation: BN;
+  transaction: SimplifiedTransactionInternal;
+}
+
+export interface CallEventInternal
+  extends Omit<CallEventInternalDTO, "confirmation" | "transaction"> {
+  confirmation: BN;
+  transaction: SimplifiedTransactionInternal;
+}
 
 export class EthEvents {
   private readonly client: Client;
@@ -55,6 +82,57 @@ export class EthEvents {
           confirmation: BNConverter.hexStringToBN(String(e.confirmation)),
         };
       }),
+    };
+  }
+
+  public async getInternalCallEvents(
+    options?: EthEventPaginationOptions
+  ): Promise<Pagination<CallEventInternal>> {
+    const queryString: string = makeQueryString(options);
+    const data = await this.client.get<PaginationCallEventInternalDTO>(
+      `/internal/call-events${queryString ? `?${queryString}` : ""}`
+    );
+    return {
+      pagination: data.pagination,
+      results: data.results.map((e) => {
+        return {
+          ...e,
+          transaction: this.convertSimplifiedTransaction(e.transaction),
+          confirmation: BNConverter.hexStringToBN(e.confirmation),
+        };
+      }),
+    };
+  }
+
+  public async getInternalValueTransferEvents(
+    options?: EthValueTransferEventPaginationOptions
+  ): Promise<Pagination<ValueTransferEventInternal>> {
+    const queryString: string = makeQueryString(options);
+    const data = await this.client.get<PaginationValueTransferEventInternalDTO>(
+      `/internal/value-transfer-events${queryString ? `?${queryString}` : ""}`
+    );
+
+    return {
+      pagination: data.pagination,
+      results: data.results.map((e) => {
+        return {
+          ...e,
+          transaction: this.convertSimplifiedTransaction(e.transaction),
+          amount: BNConverter.hexStringToBN(String(e.amount)),
+          confirmation: BNConverter.hexStringToBN(String(e.confirmation)),
+        };
+      }),
+    };
+  }
+
+  private convertSimplifiedTransaction(
+    transaction: SimplifiedTransactionInternalDTO
+  ): SimplifiedTransactionInternal {
+    return {
+      ...transaction,
+      blockNumber: transaction.blockNumber
+        ? BNConverter.hexStringToBN(String(transaction.blockNumber))
+        : null,
     };
   }
 }

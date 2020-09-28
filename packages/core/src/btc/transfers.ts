@@ -1,13 +1,19 @@
 import { Pagination, PaginationOptions, Timestamp } from "../types";
 import { Client } from "../httpClient";
-import { BNConverter, parseResponseToTransfer } from "../utils/common";
+import {
+  BNConverter,
+  convertBtcTransactionDTO,
+  parseResponseToTransfer,
+} from "../utils/common";
 import { makeQueryString } from "../utils/url";
-import { BtcTransaction, BtcTransactionOutput } from "./wallet";
+import { BtcTransaction } from "./wallet";
 import {
   PaginationTransferDTO,
   TransferDTO,
   TransferType,
   TransferStatus,
+  TransferInternalDTO,
+  PaginationTransferInternalDTO,
 } from "../__generate__/btc";
 import BN from "bn.js";
 
@@ -24,21 +30,26 @@ export interface TransferPaginationOptions extends PaginationOptions {
   updatedAtLt?: Timestamp;
 }
 
-export interface Transfer {
-  id: string;
-  walletId: string;
-  outputIndex: number;
-  transaction: BtcTransaction | null;
-  feeAmount: BN | null;
+export interface Transfer
+  extends Omit<
+    TransferDTO,
+    "amount" | "feeAmount" | "confirmation" | "transaction"
+  > {
   amount: BN;
-  receivedAt: string;
-  sendTo: string;
-  withdrawalApprovalId: string | null;
-  type: TransferType;
-  status: TransferStatus;
+  feeAmount: BN | null;
   confirmation: BN;
-  createdAt: string;
-  updatedAt: string;
+  transaction: BtcTransaction | null;
+}
+
+export interface TransferInternal
+  extends Omit<
+    TransferInternalDTO,
+    "amount" | "feeAmount" | "confirmation" | "transaction"
+  > {
+  amount: BN;
+  feeAmount: BN | null;
+  confirmation: BN;
+  transaction: BtcTransaction | null;
 }
 
 export class BtcTransfers {
@@ -66,6 +77,45 @@ export class BtcTransfers {
       results: data.results.map((t) => {
         return parseResponseToTransfer(t);
       }),
+    };
+  }
+
+  public async getInternalTransfer(id: string): Promise<TransferInternal> {
+    const response = await this.client.get<TransferInternalDTO>(
+      `/internal/transfers/${id}`
+    );
+    return this.convertTransferInternal(response);
+  }
+
+  public async getInternalTransfers(
+    options?: TransferPaginationOptions
+  ): Promise<Pagination<TransferInternal>> {
+    const queryString: string = makeQueryString(options);
+    const data = await this.client.get<PaginationTransferInternalDTO>(
+      `/internal/transfers${queryString ? `?${queryString}` : ""}`
+    );
+
+    return {
+      pagination: data.pagination,
+      results: data.results.map((t) => {
+        return this.convertTransferInternal(t);
+      }),
+    };
+  }
+
+  private convertTransferInternal(
+    transfer: TransferInternalDTO
+  ): TransferInternal {
+    return {
+      ...transfer,
+      transaction: transfer.transaction
+        ? convertBtcTransactionDTO(transfer.transaction)
+        : null,
+      feeAmount: transfer.feeAmount
+        ? BNConverter.hexStringToBN(transfer.feeAmount)
+        : null,
+      amount: BNConverter.hexStringToBN(transfer.amount),
+      confirmation: BNConverter.hexStringToBN(transfer.confirmation),
     };
   }
 }
