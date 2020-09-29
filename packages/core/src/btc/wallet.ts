@@ -14,11 +14,7 @@ import {
   script,
   Transaction as BitcoinTransaction,
 } from "bitcoinjs-lib";
-import {
-  BNConverter,
-  parseResponseToTransfer,
-  checkNullAndUndefinedParameter,
-} from "../utils/common";
+import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import { Wallet, WalletData, transformWalletStatus } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import {
@@ -42,6 +38,7 @@ import {
   getDepositAddressApi,
   createDepositAddressApi,
 } from "../apis/btc/wallet";
+import { convertTransferDTO } from "./utils";
 
 export interface BtcTransaction
   extends Omit<
@@ -219,7 +216,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       await this.build(to, amount, passphrase, otpCode)
     );
 
-    return parseResponseToTransfer(transfer);
+    return convertTransferDTO(transfer);
   }
 
   private async createRawTransaction(
@@ -330,7 +327,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       `${this.withdrawalApprovalUrl}/${params.id}/approve`,
       request
     );
-    return parseResponseToTransfer(transfer);
+    return convertTransferDTO(transfer);
   }
 
   async reject(params: { id: string; otpCode: string }): Promise<void> {

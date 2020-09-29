@@ -1,10 +1,5 @@
 import { Pagination, PaginationOptions, Timestamp } from "../types";
 import { Client } from "../httpClient";
-import {
-  BNConverter,
-  convertBtcTransactionDTO,
-  parseResponseToTransfer,
-} from "../utils/common";
 import { makeQueryString } from "../utils/url";
 import { BtcTransaction } from "./wallet";
 import {
@@ -19,6 +14,7 @@ import BN from "bn.js";
 
 export import TransferStatus = TransferStatus;
 export import TransferType = TransferType;
+import { convertTransferInternalDTO, convertTransferDTO } from "./utils";
 
 export interface TransferPaginationOptions extends PaginationOptions {
   walletId?: string;
@@ -61,7 +57,7 @@ export class BtcTransfers {
 
   public async getTransfer(id: string): Promise<Transfer> {
     const response = await this.client.get<TransferDTO>(`/transfers/${id}`);
-    return parseResponseToTransfer(response);
+    return convertTransferDTO(response);
   }
 
   public async getTransfers(
@@ -75,7 +71,7 @@ export class BtcTransfers {
     return {
       pagination: data.pagination,
       results: data.results.map((t) => {
-        return parseResponseToTransfer(t);
+        return convertTransferDTO(t);
       }),
     };
   }
@@ -84,7 +80,7 @@ export class BtcTransfers {
     const response = await this.client.get<TransferInternalDTO>(
       `/internal/transfers/${id}`
     );
-    return this.convertTransferInternal(response);
+    return convertTransferInternalDTO(response);
   }
 
   public async getInternalTransfers(
@@ -98,24 +94,8 @@ export class BtcTransfers {
     return {
       pagination: data.pagination,
       results: data.results.map((t) => {
-        return this.convertTransferInternal(t);
+        return convertTransferInternalDTO(t);
       }),
-    };
-  }
-
-  private convertTransferInternal(
-    transfer: TransferInternalDTO
-  ): TransferInternal {
-    return {
-      ...transfer,
-      transaction: transfer.transaction
-        ? convertBtcTransactionDTO(transfer.transaction)
-        : null,
-      feeAmount: transfer.feeAmount
-        ? BNConverter.hexStringToBN(transfer.feeAmount)
-        : null,
-      amount: BNConverter.hexStringToBN(transfer.amount),
-      confirmation: BNConverter.hexStringToBN(transfer.confirmation),
     };
   }
 }
