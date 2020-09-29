@@ -4,18 +4,8 @@ import {
   toCamelCase as toStringCamelCase,
   toSnakeCase as toStringSnakeCase,
 } from "./string";
-import { BtcTransaction, BtcTransactionOutput } from "../btc/wallet";
-import { Transfer } from "../btc/transfers";
-import {
-  TransactionDTO as BtcTransactionDTO,
-  TransferDTO,
-} from "../__generate__/btc";
 import _ from "lodash";
-import {
-  FormatInvalidError,
-  HenesisError,
-  ValidationParameterError,
-} from "../error";
+import { FormatInvalidError, ValidationParameterError } from "../error";
 
 const packageJson = require("../../package.json");
 
@@ -83,41 +73,6 @@ export class BNConverter {
     return new BN(this.remove0x(hexString), 16);
   }
 }
-
-export const convertBtcTransactionDTO = (
-  transaction: BtcTransactionDTO
-): BtcTransaction => {
-  return {
-    ...transaction,
-    amount: BNConverter.hexStringToBN(String(transaction.amount)),
-    blockNumber: transaction.blockNumber
-      ? BNConverter.hexStringToBN(String(transaction.blockNumber))
-      : null,
-    feeAmount: transaction.feeAmount
-      ? BNConverter.hexStringToBN(String(transaction.feeAmount))
-      : null,
-    outputs: transaction.outputs.map((o) => {
-      return {
-        transactionId: o.transactionId,
-        outputIndex: o.outputIndex,
-        address: o.address,
-        scriptPubKey: o.scriptPubKey,
-        amount: BNConverter.hexStringToBN(String(o.amount)),
-        isChange: o.isChange,
-      } as BtcTransactionOutput;
-    }),
-  };
-};
-
-export const parseResponseToTransfer = (t: TransferDTO): Transfer => {
-  return {
-    ...t,
-    transaction: t.transaction ? convertBtcTransactionDTO(t.transaction) : null,
-    feeAmount: t.feeAmount ? BNConverter.hexStringToBN(t.feeAmount) : null,
-    amount: BNConverter.hexStringToBN(t.amount),
-    confirmation: BNConverter.hexStringToBN(t.confirmation),
-  };
-};
 
 export function checkNullAndUndefinedParameter(requiredParams: object): void {
   Object.entries(requiredParams).forEach((o) => {
