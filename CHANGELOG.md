@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.7.2...v2.8.0) (2020-10-01)
+
+
+### Bug Fixes
+
+* delete generic event status, clean codes ([1f2aade](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1f2aadec78e68c9be666d9d3e25298e781585aa5))
+
+
+### Features
+
+* add aggregated amount to get master wallet balance ([b6655d3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b6655d3640ad81986bdf280e217cc2a90286d4c4))
+* add internal apis ([2346492](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/234649236a09fdeb334cbab0af9924ed411226fa))
+
+
+
+
+
 ## [2.7.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.7.1...v2.7.2) (2020-09-25)
 
 

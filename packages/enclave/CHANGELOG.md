@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.7.2...v2.8.0) (2020-10-01)
+
+
+### Features
+
+* add aggregated amount to get master wallet balance ([b6655d3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b6655d3640ad81986bdf280e217cc2a90286d4c4))
+
+
+
+
+
 ## [2.7.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.7.1...v2.7.2) (2020-09-25)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
