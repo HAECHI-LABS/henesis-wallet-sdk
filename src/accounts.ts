@@ -7,6 +7,7 @@ import {
   UpdatePasswordRequest,
   AccessTokenDTO,
   Role,
+  LoginIpDTO,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
 
@@ -21,6 +22,10 @@ export interface Account {
   lastName: string;
   accessToken?: string;
   roles: Role[];
+}
+
+export interface AccountWithIps extends Account {
+  loginIps: LoginIpDTO[];
 }
 
 export interface OTP {

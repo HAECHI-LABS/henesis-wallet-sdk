@@ -486,6 +486,65 @@ export interface InlineObject {
 /**
  * 
  * @export
+ * @interface LoginIpDTO
+ */
+export interface LoginIpDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof LoginIpDTO
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LoginIpDTO
+     */
+    browser?: string;
+    /**
+     * 
+     * @type {LoginIpStatus}
+     * @memberof LoginIpDTO
+     */
+    status: LoginIpStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof LoginIpDTO
+     */
+    location?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LoginIpDTO
+     */
+    ipAddress: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LoginIpDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LoginIpDTO
+     */
+    updatedAt: string;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum LoginIpStatus {
+    REQUESTED = 'REQUESTED',
+    VERIFIED = 'VERIFIED'
+}
+
+/**
+ * 
+ * @export
  * @interface LoginRequest
  */
 export interface LoginRequest {
@@ -643,6 +702,12 @@ export interface OrgAccountDTO {
      * @memberof OrgAccountDTO
      */
     lastName: string;
+    /**
+     * 
+     * @type {Array<LoginIpDTO>}
+     * @memberof OrgAccountDTO
+     */
+    loginIps: Array<LoginIpDTO>;
 }
 /**
  * 

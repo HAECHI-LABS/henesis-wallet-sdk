@@ -1,6 +1,6 @@
 import { Client } from "./httpClient";
 import { Pagination, PaginationOptions, Secret } from "./types";
-import { Account, Role } from "./accounts";
+import { Account, AccountWithIps, Role } from "./accounts";
 import {
   OrganizationDTO,
   OrgAccountDTO,
@@ -46,7 +46,7 @@ export class Organizations {
     return this.client.get<OrganizationDTO>(`${this.baseUrl}/me`);
   }
 
-  getAccounts(): Promise<Account[]> {
+  getAccounts(): Promise<AccountWithIps[]> {
     return this.client.get<OrgAccountDTO[]>(`${this.baseUrl}/accounts`);
   }
 

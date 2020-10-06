@@ -434,7 +434,8 @@ export interface CoinDTO {
     */
 export enum CoinDTOAttributesEnum {
     STANDARD = 'ERC20_STANDARD',
-    NONSTANDARDRETURNTYPE = 'ERC20_NON_STANDARD_RETURN_TYPE'
+    NONSTANDARDRETURNTYPE = 'ERC20_NON_STANDARD_RETURN_TYPE',
+    REBASE = 'ERC20_REBASE'
 }
 
 /**
@@ -579,7 +580,8 @@ export interface CreateCoinRequest {
     */
 export enum CreateCoinRequestAttributesEnum {
     STANDARD = 'ERC20_STANDARD',
-    NONSTANDARDRETURNTYPE = 'ERC20_NON_STANDARD_RETURN_TYPE'
+    NONSTANDARDRETURNTYPE = 'ERC20_NON_STANDARD_RETURN_TYPE',
+    REBASE = 'ERC20_REBASE'
 }
 
 /**
@@ -1910,7 +1912,8 @@ export interface UpdateCoinRequest {
     */
 export enum UpdateCoinRequestAttributesEnum {
     STANDARD = 'ERC20_STANDARD',
-    NONSTANDARDRETURNTYPE = 'ERC20_NON_STANDARD_RETURN_TYPE'
+    NONSTANDARDRETURNTYPE = 'ERC20_NON_STANDARD_RETURN_TYPE',
+    REBASE = 'ERC20_REBASE'
 }
 
 /**

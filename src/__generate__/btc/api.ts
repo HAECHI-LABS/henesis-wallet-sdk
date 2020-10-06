@@ -1091,7 +1091,7 @@ export interface TransferDTO {
      * @type {string}
      * @memberof TransferDTO
      */
-    feeAmount: string;
+    feeAmount?: string;
     /**
      * 
      * @type {string}
@@ -1182,7 +1182,7 @@ export interface TransferInternalDTO {
      * @type {string}
      * @memberof TransferInternalDTO
      */
-    feeAmount: string;
+    feeAmount?: string;
     /**
      * 
      * @type {string}
