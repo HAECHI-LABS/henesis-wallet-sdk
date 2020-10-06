@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.0...v2.8.1) (2020-10-06)
+
+
+### Features
+
+* add login Ip to get accounts ([1b7bdb0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1b7bdb07d271b1dac6b26c74f09b908dee4a3af2))
+
+
+
+
+
 # [2.8.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.7.2...v2.8.0) (2020-10-01)
 
 
