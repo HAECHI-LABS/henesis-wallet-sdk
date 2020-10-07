@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.1...v2.8.2) (2020-10-07)
+
+
+### Bug Fixes
+
+* fixed empty code ([b40d36c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b40d36c525d002a7d72e2eb96fb91118144e0968))
+* fixed hexStringToBN if nil ([b31cfe1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b31cfe1e6cc8feddbc2c9301183c8c4daa570123))
+* return bn 0 if isEmpty ([470201d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/470201de010216ac6299aff53f462ea1965c1d87))
+
+
+
+
+
 ## [2.8.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.0...v2.8.1) (2020-10-06)
 
 
