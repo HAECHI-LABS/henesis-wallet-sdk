@@ -59,7 +59,7 @@ export class BNConverter {
 
   static hexStringToBN(hexString: string) {
     if (
-      _.isEmpty(hexString) &&
+      _.isEmpty(hexString) ||
       ["undefined", "null"].some((nil) => nil === hexString)
     ) {
       return new BN(0);
