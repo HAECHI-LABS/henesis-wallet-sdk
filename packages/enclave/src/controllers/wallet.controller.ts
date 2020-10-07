@@ -24,6 +24,10 @@ export interface BalanceResponse {
   spendableAmount: string;
 }
 
+export interface MasterWalletBalanceResponse extends BalanceResponse {
+  aggregatedAmount: string;
+}
+
 interface TransferRequest {
   ticker: string;
   to: string;
@@ -273,7 +277,7 @@ export default class WalletController
 
   private async getMasterWalletBalance(
     req: express.Request,
-  ): Promise<BalanceResponse[]> {
+  ): Promise<MasterWalletBalanceResponse[]> {
     const masterWallet = await req.sdk.wallets.getMasterWallet(
       req.params.masterWalletId,
     );
@@ -288,6 +292,7 @@ export default class WalletController
       name: x.name,
       symbol: x.symbol,
       spendableAmount: BNConverter.bnToHexString(x.spendableAmount),
+      aggregatedAmount: BNConverter.bnToHexString(x.aggregatedAmount),
     }));
   }
 
