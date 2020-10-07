@@ -11,6 +11,7 @@ import {
   Key,
   KeyWithPriv,
   Balance,
+  MasterWalletBalance,
   BlockchainType,
   CoinAttribute,
 } from './types';
@@ -128,8 +129,6 @@ export abstract class Wallet {
     passphrase: string,
     otpCode?: string,
   ): Promise<Transaction>;
-
-  abstract getBalance(symbol?: string): Promise<Balance[]>;
 
   abstract getAddress(): string;
 
@@ -597,7 +596,7 @@ export class MasterWallet extends EthLikeWallet {
     );
   }
 
-  async getBalance(symbol?: string): Promise<Balance[]> {
+  async getBalance(symbol?: string): Promise<MasterWalletBalance[]> {
     const queryString: string = symbol ? `symbol=${symbol}` : '';
     const balances: {
       coinId: number;
@@ -606,6 +605,7 @@ export class MasterWallet extends EthLikeWallet {
       name: string;
       symbol: string;
       spendableAmount: string;
+      aggregatedAmount: string;
     }[] = await this.client.get(
       `${this.baseUrl}/${this.masterWalletData.id}/balance${
         queryString ? `?${queryString}` : ''
@@ -615,10 +615,15 @@ export class MasterWallet extends EthLikeWallet {
     return balances.map((balance) => ({
       coinId: balance.coinId,
       symbol: balance.symbol,
-      amount: BNConverter.hexStringToBN(balance.amount),
+      amount: BNConverter.hexStringToBN(balance.amount ?? '0x0'),
       coinType: balance.coinType,
       name: balance.name,
-      spendableAmount: BNConverter.hexStringToBN(balance.spendableAmount),
+      spendableAmount: BNConverter.hexStringToBN(
+        balance.spendableAmount ?? '0x0',
+      ),
+      aggregatedAmount: BNConverter.hexStringToBN(
+        balance.aggregatedAmount ?? '0x0',
+      ),
     }));
   }
 
@@ -775,8 +780,10 @@ export class UserWallet extends EthLikeWallet {
     return balances.map((balance) => ({
       coinId: balance.coinId,
       symbol: balance.symbol,
-      amount: BNConverter.hexStringToBN(balance.amount),
-      spendableAmount: BNConverter.hexStringToBN(balance.spendableAmount),
+      amount: BNConverter.hexStringToBN(balance.amount ?? '0x0'),
+      spendableAmount: BNConverter.hexStringToBN(
+        balance.spendableAmount ?? '0x0',
+      ),
       coinType: balance.coinType,
       name: balance.name,
     }));

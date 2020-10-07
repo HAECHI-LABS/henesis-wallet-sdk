@@ -9,6 +9,10 @@ export interface Balance {
   spendableAmount: BN;
 }
 
+export interface MasterWalletBalance extends Balance {
+  aggregatedAmount: BN;
+}
+
 export interface Key {
   address: string;
   pub: string;
