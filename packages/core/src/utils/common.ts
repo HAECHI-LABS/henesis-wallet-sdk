@@ -58,10 +58,10 @@ export class BNConverter {
   }
 
   static hexStringToBN(hexString: string) {
-    if (_.isEmpty(hexString)) {
-      throw new ValidationParameterError("hexString is empty");
-    }
-    if (["undefined", "null"].some((nil) => nil === hexString)) {
+    if (
+      _.isEmpty(hexString) &&
+      ["undefined", "null"].some((nil) => nil === hexString)
+    ) {
       return new BN(0);
     }
     if (!hexString.startsWith("0x")) {
