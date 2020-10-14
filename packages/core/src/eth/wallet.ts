@@ -487,14 +487,14 @@ export class EthMasterWallet extends EthLikeWallet {
     return balances.map((balance) => ({
       coinId: balance.coinId,
       symbol: balance.symbol,
-      amount: BNConverter.hexStringToBN(String(balance.amount)),
+      amount: BNConverter.hexStringToBN(String(balance.amount ?? "0x0")),
       coinType: balance.coinType as any,
       spendableAmount: BNConverter.hexStringToBN(
-        String(balance.spendableAmount)
+        String(balance.spendableAmount ?? "0x0")
       ),
       name: balance.name,
       aggregatedAmount: BNConverter.hexStringToBN(
-        String(balance.aggregatedAmount)
+        String(balance.aggregatedAmount ?? "0x0")
       ),
     }));
   }
@@ -712,10 +712,10 @@ export class EthUserWallet extends EthLikeWallet {
     return balances.map((balance) => ({
       coinId: balance.coinId,
       symbol: balance.symbol,
-      amount: BNConverter.hexStringToBN(String(balance.amount)),
+      amount: BNConverter.hexStringToBN(String(balance.amount ?? "0x0")),
       coinType: balance.coinType as any,
       spendableAmount: BNConverter.hexStringToBN(
-        String(balance.spendableAmount)
+        String(balance.spendableAmount ?? "0x0")
       ),
       name: balance.name,
     }));

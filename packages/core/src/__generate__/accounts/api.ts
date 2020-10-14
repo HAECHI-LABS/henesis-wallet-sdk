@@ -226,7 +226,47 @@ export interface ClientIdentity {
      * @memberof ClientIdentity
      */
     browser?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClientIdentity
+     */
+    host?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClientIdentity
+     */
+    method?: ClientIdentityMethodEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof ClientIdentity
+     */
+    uri?: string;
+    /**
+     * 
+     * @type {{ [key: string]: Array<string>; }}
+     * @memberof ClientIdentity
+     */
+    queryParams?: { [key: string]: Array<string>; };
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ClientIdentityMethodEnum {
+    GET = 'GET',
+    HEAD = 'HEAD',
+    POST = 'POST',
+    PUT = 'PUT',
+    PATCH = 'PATCH',
+    DELETE = 'DELETE',
+    OPTIONS = 'OPTIONS',
+    TRACE = 'TRACE'
+}
+
 /**
  * 
  * @export
