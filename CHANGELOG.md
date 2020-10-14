@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.2...v2.8.3) (2020-10-14)
+
+
+### Bug Fixes
+
+* add gaurd null and execute codegen ([9d31180](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9d311808cb75f95f538d338e50b252e1fe8d32b5))
+
+
+
+
+
 ## [2.8.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.1...v2.8.2) (2020-10-07)
 
 
