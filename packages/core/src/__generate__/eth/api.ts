@@ -142,6 +142,12 @@ export interface BalanceDTO {
     name: string;
     /**
      * 
+     * @type {number}
+     * @memberof BalanceDTO
+     */
+    decimals: number;
+    /**
+     * 
      * @type {string}
      * @memberof BalanceDTO
      */
@@ -422,6 +428,12 @@ export interface CoinDTO {
     blockchain: Blockchain;
     /**
      * 
+     * @type {number}
+     * @memberof CoinDTO
+     */
+    decimals: number;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof CoinDTO
      */
@@ -566,6 +578,12 @@ export interface CreateCoinRequest {
      * @memberof CreateCoinRequest
      */
     flag: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateCoinRequest
+     */
+    decimals: number;
     /**
      * 
      * @type {Array<string>}
@@ -1048,6 +1066,12 @@ export interface HenesisKeyBalanceDTO {
      * @type {number}
      * @memberof HenesisKeyBalanceDTO
      */
+    decimals: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof HenesisKeyBalanceDTO
+     */
     coinId: number;
     /**
      * 
@@ -1112,6 +1136,12 @@ export interface MasterWalletBalanceDTO {
      * @memberof MasterWalletBalanceDTO
      */
     name: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MasterWalletBalanceDTO
+     */
+    decimals: number;
     /**
      * 
      * @type {string}
@@ -1655,6 +1685,12 @@ export interface SimplifiedCoinInternalDTO {
      * @memberof SimplifiedCoinInternalDTO
      */
     symbol: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SimplifiedCoinInternalDTO
+     */
+    decimals: number;
 }
 /**
  * 
@@ -1686,6 +1722,43 @@ export interface SimplifiedTransactionInternalDTO {
      * @memberof SimplifiedTransactionInternalDTO
      */
     blockNumber?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SimplifiedWalletDTO
+ */
+export interface SimplifiedWalletDTO {
+    /**
+     * 
+     * @type {WalletType}
+     * @memberof SimplifiedWalletDTO
+     */
+    type: WalletType;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletDTO
+     */
+    masterWalletId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletDTO
+     */
+    masterWalletName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletDTO
+     */
+    userWalletId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletDTO
+     */
+    userWalletName?: string;
 }
 /**
  * 
@@ -1793,6 +1866,18 @@ export interface TransactionDTO {
     status: TransactionStatus;
     /**
      * 
+     * @type {TransactionType}
+     * @memberof TransactionDTO
+     */
+    type: TransactionType;
+    /**
+     * 
+     * @type {SimplifiedWalletDTO}
+     * @memberof TransactionDTO
+     */
+    wallet: SimplifiedWalletDTO;
+    /**
+     * 
      * @type {string}
      * @memberof TransactionDTO
      */
@@ -1815,6 +1900,24 @@ export interface TransactionDTO {
      * @memberof TransactionDTO
      */
     rawTransaction: RawTransactionDTO;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TransactionDTO
+     */
+    isFeeDelegated: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransactionDTO
+     */
+    gasUsed?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransactionDTO
+     */
+    estimatedGasUsed?: string;
 }
 /**
  * 
@@ -1831,6 +1934,21 @@ export enum TransactionStatus {
     REVERTED = 'REVERTED',
     CONFIRMED = 'CONFIRMED',
     REPLACED = 'REPLACED'
+}
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum TransactionType {
+    WITHDRAWAL = 'WITHDRAWAL',
+    DEPOSIT = 'DEPOSIT',
+    UNKNOWNEXTERNALCALL = 'UNKNOWN_EXTERNAL_CALL',
+    SMARTCONTRACTCALL = 'SMART_CONTRACT_CALL',
+    MASTERWALLETDEPLOYMENT = 'MASTER_WALLET_DEPLOYMENT',
+    USERWALLETDEPLOYMENT = 'USER_WALLET_DEPLOYMENT',
+    FLUSH = 'FLUSH'
 }
 
 /**
@@ -1898,6 +2016,12 @@ export interface UpdateCoinRequest {
      * @memberof UpdateCoinRequest
      */
     flag: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateCoinRequest
+     */
+    decimals: number;
     /**
      * 
      * @type {Array<string>}
@@ -2056,6 +2180,12 @@ export interface ValueTransferEventDTO {
      * @memberof ValueTransferEventDTO
      */
     amount: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ValueTransferEventDTO
+     */
+    decimals: number;
     /**
      * 
      * @type {string}
@@ -2271,6 +2401,12 @@ export interface WalletWithdrawalPolicyDTO {
      * @memberof WalletWithdrawalPolicyDTO
      */
     id: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof WalletWithdrawalPolicyDTO
+     */
+    decimals: number;
     /**
      * 
      * @type {string}

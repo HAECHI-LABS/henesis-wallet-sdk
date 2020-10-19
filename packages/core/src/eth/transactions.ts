@@ -9,6 +9,7 @@ import {
   TransactionDTO,
   TransactionStatus,
   DetailedRawTransactionDTO,
+  TransactionType,
 } from "../__generate__/eth";
 import _ from "lodash";
 
@@ -39,6 +40,8 @@ export interface TransactionPaginationOptions extends PaginationOptions {
   start?: Timestamp;
   end?: Timestamp;
   status?: TransactionStatus;
+  statuses?: TransactionStatus[];
+  types?: TransactionType[];
   keyId?: string;
 }
 
