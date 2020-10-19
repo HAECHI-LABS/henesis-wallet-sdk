@@ -13,6 +13,7 @@ describe('Klay', () => {
     address: null,
     desc: '',
     blockchain: Blockchain.KLAYTN,
+    decimals: 18,
     attributes: [],
   };
   beforeEach(() => {

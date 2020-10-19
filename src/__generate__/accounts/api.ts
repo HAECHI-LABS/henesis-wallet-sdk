@@ -783,6 +783,37 @@ export interface OrganizationDTO {
 /**
  * 
  * @export
+ * @interface OrganizationInfoDTO
+ */
+export interface OrganizationInfoDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationInfoDTO
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationInfoDTO
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationInfoDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrganizationInfoDTO
+     */
+    userCount: number;
+}
+/**
+ * 
+ * @export
  * @interface Pageable
  */
 export interface Pageable {
@@ -2106,6 +2137,170 @@ export class IdentityControllerApi extends BaseAPI {
      */
     public getVerifiedIdentity(claim: Claim, clientIdentity: ClientIdentity, accountId: string, options?: any) {
         return IdentityControllerApiFp(this.configuration).getVerifiedIdentity(claim, clientIdentity, accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+}
+
+
+/**
+ * OperationControllerApi - axios parameter creator
+ * @export
+ */
+export const OperationControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllAccountsByOrganizationId: async (organizationId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            if (organizationId === null || organizationId === undefined) {
+                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling getAllAccountsByOrganizationId.');
+            }
+            const localVarPath = `/api/v2/operation/organizations/{organizationId}/accounts`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationsInfo: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v2/operation/organizations`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OperationControllerApi - functional programming interface
+ * @export
+ */
+export const OperationControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllAccountsByOrganizationId(organizationId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AccountDTO>>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getAllAccountsByOrganizationId(organizationId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationsInfo(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationInfoDTO>>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getOrganizationsInfo(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * OperationControllerApi - factory interface
+ * @export
+ */
+export const OperationControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllAccountsByOrganizationId(organizationId: string, options?: any): AxiosPromise<Array<AccountDTO>> {
+            return OperationControllerApiFp(configuration).getAllAccountsByOrganizationId(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationsInfo(options?: any): AxiosPromise<Array<OrganizationInfoDTO>> {
+            return OperationControllerApiFp(configuration).getOrganizationsInfo(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * OperationControllerApi - object-oriented interface
+ * @export
+ * @class OperationControllerApi
+ * @extends {BaseAPI}
+ */
+export class OperationControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} organizationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public getAllAccountsByOrganizationId(organizationId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).getAllAccountsByOrganizationId(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public getOrganizationsInfo(options?: any) {
+        return OperationControllerApiFp(this.configuration).getOrganizationsInfo(options).then((request) => request(this.axios, this.basePath));
     }
 
 }
