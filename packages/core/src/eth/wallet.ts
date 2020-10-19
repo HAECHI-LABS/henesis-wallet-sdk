@@ -496,6 +496,7 @@ export class EthMasterWallet extends EthLikeWallet {
       aggregatedAmount: BNConverter.hexStringToBN(
         String(balance.aggregatedAmount ?? "0x0")
       ),
+      decimals: balance.decimals,
     }));
   }
 
@@ -718,6 +719,7 @@ export class EthUserWallet extends EthLikeWallet {
         String(balance.spendableAmount ?? "0x0")
       ),
       name: balance.name,
+      decimals: balance.decimals,
     }));
   }
 
