@@ -44,6 +44,7 @@ export interface CallEvent extends Event {
 export interface ValueTransferEvent extends Event {
   amount: BN;
   coinSymbol: string;
+  decimals: number;
   from: string;
   to: string;
   transferType: TransferType;

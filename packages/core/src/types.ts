@@ -6,6 +6,7 @@ export interface Balance {
   amount: BN;
   name: string;
   symbol: string;
+  decimals: number;
   spendableAmount: BN;
 }
 

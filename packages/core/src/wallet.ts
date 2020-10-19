@@ -604,6 +604,7 @@ export class MasterWallet extends EthLikeWallet {
       amount: string;
       name: string;
       symbol: string;
+      decimals: number;
       spendableAmount: string;
       aggregatedAmount: string;
     }[] = await this.client.get(
@@ -615,6 +616,7 @@ export class MasterWallet extends EthLikeWallet {
     return balances.map((balance) => ({
       coinId: balance.coinId,
       symbol: balance.symbol,
+      decimals: balance.decimals,
       amount: BNConverter.hexStringToBN(balance.amount ?? '0x0'),
       coinType: balance.coinType,
       name: balance.name,
@@ -770,6 +772,7 @@ export class UserWallet extends EthLikeWallet {
       amount: string;
       name: string;
       symbol: string;
+      decimals: number;
       spendableAmount: string;
     }[] = await this.client.get(
       `${this.baseUrl}/${this.masterWalletData.id}/user-wallets/${
@@ -780,6 +783,7 @@ export class UserWallet extends EthLikeWallet {
     return balances.map((balance) => ({
       coinId: balance.coinId,
       symbol: balance.symbol,
+      decimals: balance.decimals,
       amount: BNConverter.hexStringToBN(balance.amount ?? '0x0'),
       spendableAmount: BNConverter.hexStringToBN(
         balance.spendableAmount ?? '0x0',

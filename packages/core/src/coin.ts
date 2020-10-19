@@ -16,6 +16,7 @@ export interface CoinData {
   name: string;
   symbol: string;
   attributes: CoinAttribute[];
+  decimals: number;
 }
 
 export abstract class Coin {
