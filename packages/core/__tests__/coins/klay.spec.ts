@@ -8,6 +8,7 @@ describe('Klay', () => {
     id: 1,
     name: '클레이튼',
     symbol: 'KLAY',
+    decimals: 18,
     address: null,
     desc: '',
     blockchain: BlockchainType.Klaytn,

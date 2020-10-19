@@ -9,6 +9,7 @@ describe('Erc20', () => {
     id: 3,
     name: '엔바토',
     symbol: 'EVT',
+    decimals: 18,
     address: '0x5457d04fc5ad31921c2254df528932a22d757d22',
     desc: '',
     blockchain: BlockchainType.Klaytn,
