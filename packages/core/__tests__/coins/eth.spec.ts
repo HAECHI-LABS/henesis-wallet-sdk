@@ -8,6 +8,7 @@ describe('Eth', () => {
     id: 2,
     name: '이더리움',
     symbol: 'ETH',
+    decimals: 18,
     address: null,
     desc: '',
     blockchain: BlockchainType.Ethereum,
