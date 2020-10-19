@@ -21,6 +21,7 @@ export interface BalanceResponse {
   amount: string;
   name: string;
   symbol: string;
+  decimals: number;
   spendableAmount: string;
 }
 
@@ -291,6 +292,7 @@ export default class WalletController
       amount: BNConverter.bnToHexString(x.amount),
       name: x.name,
       symbol: x.symbol,
+      decimals: x.decimals,
       spendableAmount: BNConverter.bnToHexString(x.spendableAmount),
       aggregatedAmount: BNConverter.bnToHexString(x.aggregatedAmount),
     }));
@@ -313,6 +315,7 @@ export default class WalletController
       amount: BNConverter.bnToHexString(x.amount),
       name: x.name,
       symbol: x.symbol,
+      decimals: x.decimals,
       spendableAmount: BNConverter.bnToHexString(x.spendableAmount),
     }));
   }
