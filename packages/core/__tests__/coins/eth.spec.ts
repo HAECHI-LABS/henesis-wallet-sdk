@@ -14,6 +14,7 @@ describe("Eth", () => {
     address: null,
     desc: "",
     blockchain: Blockchain.ETHEREUM,
+    decimals: 18,
     attributes: [],
   };
   beforeEach(() => {
