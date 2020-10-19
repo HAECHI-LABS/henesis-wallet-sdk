@@ -18,6 +18,7 @@ export interface Balance {
   name: string;
   symbol: string;
   aggregatedAmount?: BN;
+  decimals: number;
 }
 
 export interface Key {

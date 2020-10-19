@@ -22,13 +22,14 @@ export class HenesisKeys {
     const response = await this.client.get<BalanceDTO>(
       `${this.baseUrl}/balance`
     );
-    const { coinId, coinType, amount, name, symbol } = response;
+    const { coinId, coinType, amount, name, symbol, decimals } = response;
     return {
       coinId: coinId,
       coinType: coinType as any,
       amount: BNConverter.hexStringToBN(String(amount)),
       name,
       symbol,
+      decimals,
     };
   }
 }
