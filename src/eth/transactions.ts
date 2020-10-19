@@ -9,7 +9,8 @@ import {
   TransactionDTO,
   TransactionStatus,
   DetailedRawTransactionDTO,
-  TransactionType, WalletType, SimplifiedWalletDTO,
+  TransactionType,
+  SimplifiedWalletDTO,
 } from "../__generate__/eth";
 import _ from "lodash";
 
@@ -19,8 +20,6 @@ import { BNConverter } from "../utils/common";
 export interface DetailedRawTransaction extends RawTransaction {
   fee: BN | null;
 }
-
-export interface SimplifiedWallet extends SimplifiedWalletDTO {}
 
 export interface Transaction {
   id: string;
@@ -33,7 +32,7 @@ export interface Transaction {
   rawTransaction: RawTransaction;
   status: TransactionStatus;
   type: TransactionType;
-  wallet: SimplifiedWallet;
+  wallet: SimplifiedWalletDTO;
   isFeeDelegated: boolean;
   gasUsed?: string;
   estimatedGasUsed?: string;
