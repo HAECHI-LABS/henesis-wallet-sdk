@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.3...v2.8.4) (2020-10-19)
+
+
+### Features
+
+* adds transaction pagination options ([575bb14](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/575bb148ea2b8aa0130785086b52620e6a2ab86f))
+
+
+
+
+
 ## [2.8.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.2...v2.8.3) (2020-10-14)
 
 
