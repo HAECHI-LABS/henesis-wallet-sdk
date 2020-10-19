@@ -279,6 +279,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
         ),
         coinType: "BTC",
         name: "비트코인",
+        decimals: 8,
       },
     ];
   }
