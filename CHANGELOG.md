@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.4...v2.8.5) (2020-10-20)
+
+
+### Bug Fixes
+
+* add transaction properties ([a1cbc02](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a1cbc02b4f9280499c3267962cd37c4d3ba6f31d))
+* remove SimplifiedWalletDTO in Transaction ([bf57823](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/bf578233ac7d2c77165d05b914b84a1b8562237a))
+
+
+### Features
+
+* add decimals to response relevant to coin ([e3a52bf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e3a52bfcef1cbee85c96185628a14d7f4163a1c1))
+
+
+
+
+
 ## [2.8.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.3...v2.8.4) (2020-10-19)
 
 
