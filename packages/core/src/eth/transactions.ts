@@ -32,10 +32,10 @@ export interface Transaction {
   rawTransaction: RawTransaction;
   status: TransactionStatus;
   type: TransactionType;
-  wallet: SimplifiedWalletDTO;
   isFeeDelegated: boolean;
-  gasUsed?: string;
-  estimatedGasUsed?: string;
+  wallet?: SimplifiedWalletDTO;
+  fee?: string;
+  estimatedFee?: string;
 }
 
 export interface TransactionPaginationOptions extends PaginationOptions {
