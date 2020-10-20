@@ -1,7 +1,11 @@
 import { Client } from "../httpClient";
 import { Balance, Key } from "../types";
-import { KeyDTO, BalanceDTO } from "../__generate__/eth";
+import { BalanceDTO, HenesisKeyDTO } from "../__generate__/eth";
 import { BNConverter } from "../";
+
+export interface HenesisKey extends Key {
+  feeDelegationEnabled: boolean;
+}
 
 export class HenesisKeys {
   private readonly client: Client;
@@ -12,8 +16,8 @@ export class HenesisKeys {
     this.client = client;
   }
 
-  getHenesisKey(): Promise<Key> {
-    return this.client.get<RequireProperty<KeyDTO, "pub">>(
+  getHenesisKey(): Promise<HenesisKey> {
+    return this.client.get<RequireProperty<HenesisKeyDTO, "pub">>(
       `${this.baseUrl}/me`
     );
   }

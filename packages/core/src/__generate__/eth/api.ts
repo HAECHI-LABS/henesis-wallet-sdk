@@ -1027,6 +1027,73 @@ export enum EventStatus {
 /**
  * 
  * @export
+ * @interface ExampleHenesisKeyDTO
+ */
+export interface ExampleHenesisKeyDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExampleHenesisKeyDTO
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExampleHenesisKeyDTO
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExampleHenesisKeyDTO
+     */
+    address: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExampleHenesisKeyDTO
+     */
+    pub: string;
+    /**
+     * 
+     * @type {Blockchain}
+     * @memberof ExampleHenesisKeyDTO
+     */
+    blockchain: Blockchain;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExampleHenesisKeyDTO
+     */
+    path: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExampleHenesisKeyDTO
+     */
+    nonce: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExampleHenesisKeyDTO
+     */
+    orgId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExampleHenesisKeyDTO
+     */
+    encryptedPassphrase: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ExampleHenesisKeyDTO
+     */
+    feeDelegationEnabled: boolean;
+}
+/**
+ * 
+ * @export
  * @interface GetGasPriceResponse
  */
 export interface GetGasPriceResponse {
@@ -1079,6 +1146,37 @@ export interface HenesisKeyBalanceDTO {
      * @memberof HenesisKeyBalanceDTO
      */
     coinType: CoinType;
+}
+/**
+ * 
+ * @export
+ * @interface HenesisKeyDTO
+ */
+export interface HenesisKeyDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof HenesisKeyDTO
+     */
+    address: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HenesisKeyDTO
+     */
+    pub: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HenesisKeyDTO
+     */
+    keyFile: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof HenesisKeyDTO
+     */
+    feeDelegationEnabled: boolean;
 }
 /**
  * 
@@ -3340,6 +3438,35 @@ export const EthHenesisKeyControllerApiAxiosParamCreator = function (configurati
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createExampleHenesisKey: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v2/eth/henesis-keys/example`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {CreateHenesisKeyRequest} createHenesisKeyRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3483,11 +3610,23 @@ export const EthHenesisKeyControllerApiFp = function(configuration?: Configurati
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createExampleHenesisKey(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExampleHenesisKeyDTO>> {
+            const localVarAxiosArgs = await EthHenesisKeyControllerApiAxiosParamCreator(configuration).createExampleHenesisKey(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {CreateHenesisKeyRequest} createHenesisKeyRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>> {
+        async createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HenesisKeyDTO>> {
             const localVarAxiosArgs = await EthHenesisKeyControllerApiAxiosParamCreator(configuration).createHenesisKey(createHenesisKeyRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -3512,7 +3651,7 @@ export const EthHenesisKeyControllerApiFp = function(configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getHenesisKey(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>> {
+        async getHenesisKey(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HenesisKeyDTO>> {
             const localVarAxiosArgs = await EthHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKey(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -3542,11 +3681,19 @@ export const EthHenesisKeyControllerApiFactory = function (configuration?: Confi
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createExampleHenesisKey(options?: any): AxiosPromise<ExampleHenesisKeyDTO> {
+            return EthHenesisKeyControllerApiFp(configuration).createExampleHenesisKey(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {CreateHenesisKeyRequest} createHenesisKeyRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): AxiosPromise<KeyDTO> {
+        createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): AxiosPromise<HenesisKeyDTO> {
             return EthHenesisKeyControllerApiFp(configuration).createHenesisKey(createHenesisKeyRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -3563,7 +3710,7 @@ export const EthHenesisKeyControllerApiFactory = function (configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHenesisKey(options?: any): AxiosPromise<KeyDTO> {
+        getHenesisKey(options?: any): AxiosPromise<HenesisKeyDTO> {
             return EthHenesisKeyControllerApiFp(configuration).getHenesisKey(options).then((request) => request(axios, basePath));
         },
         /**
@@ -3584,6 +3731,16 @@ export const EthHenesisKeyControllerApiFactory = function (configuration?: Confi
  * @extends {BaseAPI}
  */
 export class EthHenesisKeyControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthHenesisKeyControllerApi
+     */
+    public createExampleHenesisKey(options?: any) {
+        return EthHenesisKeyControllerApiFp(this.configuration).createExampleHenesisKey(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {CreateHenesisKeyRequest} createHenesisKeyRequest 
@@ -7602,6 +7759,35 @@ export const KlayHenesisKeyControllerApiAxiosParamCreator = function (configurat
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createExampleHenesisKey1: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v2/klay/henesis-keys/example`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {CreateHenesisKeyRequest} createHenesisKeyRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7745,11 +7931,23 @@ export const KlayHenesisKeyControllerApiFp = function(configuration?: Configurat
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createExampleHenesisKey1(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExampleHenesisKeyDTO>> {
+            const localVarAxiosArgs = await KlayHenesisKeyControllerApiAxiosParamCreator(configuration).createExampleHenesisKey1(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {CreateHenesisKeyRequest} createHenesisKeyRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createHenesisKey1(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>> {
+        async createHenesisKey1(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HenesisKeyDTO>> {
             const localVarAxiosArgs = await KlayHenesisKeyControllerApiAxiosParamCreator(configuration).createHenesisKey1(createHenesisKeyRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -7774,7 +7972,7 @@ export const KlayHenesisKeyControllerApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getHenesisKey1(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>> {
+        async getHenesisKey1(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HenesisKeyDTO>> {
             const localVarAxiosArgs = await KlayHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKey1(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -7804,11 +8002,19 @@ export const KlayHenesisKeyControllerApiFactory = function (configuration?: Conf
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createExampleHenesisKey1(options?: any): AxiosPromise<ExampleHenesisKeyDTO> {
+            return KlayHenesisKeyControllerApiFp(configuration).createExampleHenesisKey1(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {CreateHenesisKeyRequest} createHenesisKeyRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createHenesisKey1(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): AxiosPromise<KeyDTO> {
+        createHenesisKey1(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): AxiosPromise<HenesisKeyDTO> {
             return KlayHenesisKeyControllerApiFp(configuration).createHenesisKey1(createHenesisKeyRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -7825,7 +8031,7 @@ export const KlayHenesisKeyControllerApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHenesisKey1(options?: any): AxiosPromise<KeyDTO> {
+        getHenesisKey1(options?: any): AxiosPromise<HenesisKeyDTO> {
             return KlayHenesisKeyControllerApiFp(configuration).getHenesisKey1(options).then((request) => request(axios, basePath));
         },
         /**
@@ -7846,6 +8052,16 @@ export const KlayHenesisKeyControllerApiFactory = function (configuration?: Conf
  * @extends {BaseAPI}
  */
 export class KlayHenesisKeyControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayHenesisKeyControllerApi
+     */
+    public createExampleHenesisKey1(options?: any) {
+        return KlayHenesisKeyControllerApiFp(this.configuration).createExampleHenesisKey1(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {CreateHenesisKeyRequest} createHenesisKeyRequest 
