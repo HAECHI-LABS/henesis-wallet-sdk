@@ -338,6 +338,12 @@ export interface CreateWithdrawalApprovalRequest {
     amount: string;
     /**
      * 
+     * @type {number}
+     * @memberof CreateWithdrawalApprovalRequest
+     */
+    decimals: number;
+    /**
+     * 
      * @type {string}
      * @memberof CreateWithdrawalApprovalRequest
      */
@@ -1149,6 +1155,12 @@ export interface WithdrawalApprovalDTO {
      * @memberof WithdrawalApprovalDTO
      */
     amount: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof WithdrawalApprovalDTO
+     */
+    decimals: number;
     /**
      * 
      * @type {WithdrawalApprovalStatus}

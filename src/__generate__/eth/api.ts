@@ -1973,7 +1973,7 @@ export interface TransactionDTO {
      * @type {SimplifiedWalletDTO}
      * @memberof TransactionDTO
      */
-    wallet: SimplifiedWalletDTO;
+    wallet?: SimplifiedWalletDTO;
     /**
      * 
      * @type {string}
@@ -2009,13 +2009,13 @@ export interface TransactionDTO {
      * @type {string}
      * @memberof TransactionDTO
      */
-    gasUsed?: string;
+    fee?: string;
     /**
      * 
      * @type {string}
      * @memberof TransactionDTO
      */
-    estimatedGasUsed?: string;
+    estimatedFee?: string;
 }
 /**
  * 
