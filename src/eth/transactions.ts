@@ -10,9 +10,9 @@ import {
   TransactionStatus,
   DetailedRawTransactionDTO,
   TransactionType,
-  SimplifiedWalletDTO,
 } from "../__generate__/eth";
 import _ from "lodash";
+import { convertTransactionDTO, convertRawTransactionDTO } from "./utils";
 
 export import TransactionStatus = TransactionStatus;
 import { BNConverter } from "../utils/common";
@@ -31,9 +31,7 @@ export interface Transaction {
   signedMultiSigPayload: SignedMultiSigPayload;
   rawTransaction: RawTransaction;
   status: TransactionStatus;
-  type: TransactionType;
   isFeeDelegated: boolean;
-  wallet?: SimplifiedWalletDTO;
   fee?: string;
   estimatedFee?: string;
 }
@@ -80,68 +78,11 @@ export class Transactions {
     this.client = client;
   }
 
-  private mappingTransactionDTOToTransaction(
-    transcationDTO: NoUndefinedField<TransactionDTO>
-  ): Transaction {
-    const rawTransaction = transcationDTO.rawTransaction;
-    const signedMultiSigPayload = transcationDTO.signedMultiSigPayload;
-    const multiSigPayload = signedMultiSigPayload?.multiSigPayload;
-    return {
-      ...transcationDTO,
-      blockchain: transformBlockchainType(transcationDTO.blockchain),
-      signedMultiSigPayload: signedMultiSigPayload
-        ? {
-            ...signedMultiSigPayload,
-            multiSigPayload: multiSigPayload
-              ? {
-                  ...multiSigPayload,
-                  value: BNConverter.hexStringToBN(
-                    String(multiSigPayload.value)
-                  ),
-                  walletNonce: BNConverter.hexStringToBN(
-                    String(multiSigPayload.walletNonce)
-                  ),
-                }
-              : null,
-          }
-        : null,
-      rawTransaction: this.mappingRawTransactionDTOToRawTransaction(
-        rawTransaction
-      ),
-    };
-  }
-
-  private mappingRawTransactionDTOToRawTransaction(
-    rawTransaction: RawTransactionDTO
-  ): RawTransaction {
-    return rawTransaction
-      ? {
-          ...rawTransaction,
-          nonce: rawTransaction.nonce
-            ? BNConverter.hexStringToBN(String(rawTransaction.nonce))
-            : null,
-          gasPrice: rawTransaction.gasPrice
-            ? BNConverter.hexStringToBN(String(rawTransaction.gasPrice))
-            : null,
-          gasLimit: rawTransaction.gasLimit
-            ? BNConverter.hexStringToBN(String(rawTransaction.gasLimit))
-            : null,
-          to: rawTransaction.to,
-          value: rawTransaction.value
-            ? BNConverter.hexStringToBN(String(rawTransaction.value))
-            : null,
-          data: rawTransaction.data,
-        }
-      : null;
-  }
-
   private mappingDetailedRawTransactionDTOToDetailedRawTransaction(
     detailedRawTransactionDTO: DetailedRawTransactionDTO
   ): DetailedRawTransaction {
     return {
-      ...this.mappingRawTransactionDTOToRawTransaction(
-        detailedRawTransactionDTO
-      ),
+      ...convertRawTransactionDTO(detailedRawTransactionDTO),
       fee: detailedRawTransactionDTO.fee
         ? BNConverter.hexStringToBN(String(detailedRawTransactionDTO.fee))
         : null,
@@ -163,7 +104,7 @@ export class Transactions {
     const response = await this.client.get<NoUndefinedField<TransactionDTO>>(
       `/transactions/${transactionId}`
     );
-    return this.mappingTransactionDTOToTransaction(response);
+    return convertTransactionDTO(response);
   }
 
   public async getTransactions(
@@ -175,9 +116,7 @@ export class Transactions {
     >(`/transactions${queryString ? `?${queryString}` : ""}`);
     return {
       pagination: data.pagination,
-      results: _.map(data.results, (result) =>
-        this.mappingTransactionDTOToTransaction(result)
-      ),
+      results: _.map(data.results, (result) => convertTransactionDTO(result)),
     };
   }
 }
