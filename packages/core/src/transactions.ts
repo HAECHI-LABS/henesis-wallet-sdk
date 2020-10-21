@@ -14,6 +14,9 @@ export interface Transaction {
   rawTransaction: RawTransaction;
   status: TransactionStatus;
   createdAt: string;
+  fee: BN;
+  estimatedFee: BN;
+  isFeeDelegated: boolean;
 }
 
 export interface TransactionPaginationOptions extends PaginationOptions {
