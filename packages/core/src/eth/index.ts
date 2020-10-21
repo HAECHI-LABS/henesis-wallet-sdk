@@ -8,3 +8,4 @@ export * from "./transactions";
 export * from "./wallets";
 export * from "./wallets";
 export * from "./module";
+export * from "./utils";
