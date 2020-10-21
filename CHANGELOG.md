@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.8...v2.9.0) (2020-10-21)
+
+
+### Bug Fixes
+
+* add createdAt to TransactionHistoryDTO ([3a9f638](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3a9f638e19536f3a64c6f4011c753a93f7808570))
+
+
+### Features
+
+* add spendable amount to henesis key balance ([0e37ede](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0e37ede84dcdbcc3c44d41778254e8aa0149161a))
+
+
+
+
+
 ## [2.8.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.7...v2.8.8) (2020-10-21)
 
 
