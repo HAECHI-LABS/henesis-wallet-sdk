@@ -4,20 +4,23 @@ import {
   BalanceDTO,
   HenesisKeyDTO,
   PaginationTransactionHistoryDTO,
-  RawTransactionDTO,
   SimplifiedWalletDTO,
-  TransactionDTO,
-  TransactionHistoryDTO,
   TransactionType,
 } from "../__generate__/eth";
-import { BNConverter, RawTransaction, Transaction } from "../";
+import { BNConverter, Transaction } from "../";
 import { makeQueryString } from "../utils/url";
 import { convertTransactionHistoryDTO } from "./utils";
 
 export interface TransactionHistory extends Transaction {
   wallet: SimplifiedWalletDTO;
   type: TransactionType;
+  createdAt: string;
 }
+
+export interface TransactionHistoryPaginationOptions extends PaginationOptions {
+  transactionHash?: string;
+}
+
 export interface HenesisKey extends Key {
   feeDelegationEnabled: boolean;
 }
@@ -62,7 +65,7 @@ export class HenesisKeys {
   }
 
   async getTransactionHistories(
-    options?: PaginationOptions
+    options?: TransactionHistoryPaginationOptions
   ): Promise<Pagination<TransactionHistory>> {
     const queryString: string = makeQueryString(options);
     const data = await this.client.get<

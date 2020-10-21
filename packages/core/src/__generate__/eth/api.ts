@@ -3712,13 +3712,18 @@ export const EthHenesisKeyControllerApiAxiosParamCreator = function (configurati
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {object} specs 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionHistories: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getTransactionHistories: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
                 throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransactionHistories.');
+            }
+            // verify required parameter 'specs' is not null or undefined
+            if (specs === null || specs === undefined) {
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getTransactionHistories.');
             }
             const localVarPath = `/api/v2/eth/henesis-keys/histories`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3732,6 +3737,10 @@ export const EthHenesisKeyControllerApiAxiosParamCreator = function (configurati
 
             if (pageable !== undefined) {
                 localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (specs !== undefined) {
+                localVarQueryParameter['specs'] = specs;
             }
 
 
@@ -3821,11 +3830,12 @@ export const EthHenesisKeyControllerApiFp = function(configuration?: Configurati
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {object} specs 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransactionHistories(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionHistoryDTO>> {
-            const localVarAxiosArgs = await EthHenesisKeyControllerApiAxiosParamCreator(configuration).getTransactionHistories(pageable, options);
+        async getTransactionHistories(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionHistoryDTO>> {
+            const localVarAxiosArgs = await EthHenesisKeyControllerApiAxiosParamCreator(configuration).getTransactionHistories(pageable, specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3885,11 +3895,12 @@ export const EthHenesisKeyControllerApiFactory = function (configuration?: Confi
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {object} specs 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionHistories(pageable: Pageable, options?: any): AxiosPromise<PaginationTransactionHistoryDTO> {
-            return EthHenesisKeyControllerApiFp(configuration).getTransactionHistories(pageable, options).then((request) => request(axios, basePath));
+        getTransactionHistories(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionHistoryDTO> {
+            return EthHenesisKeyControllerApiFp(configuration).getTransactionHistories(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3956,12 +3967,13 @@ export class EthHenesisKeyControllerApi extends BaseAPI {
     /**
      * 
      * @param {Pageable} pageable 
+     * @param {object} specs 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EthHenesisKeyControllerApi
      */
-    public getTransactionHistories(pageable: Pageable, options?: any) {
-        return EthHenesisKeyControllerApiFp(this.configuration).getTransactionHistories(pageable, options).then((request) => request(this.axios, this.basePath));
+    public getTransactionHistories(pageable: Pageable, specs: object, options?: any) {
+        return EthHenesisKeyControllerApiFp(this.configuration).getTransactionHistories(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -8104,13 +8116,18 @@ export const KlayHenesisKeyControllerApiAxiosParamCreator = function (configurat
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {object} specs 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionHistories1: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getTransactionHistories1: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
                 throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransactionHistories1.');
+            }
+            // verify required parameter 'specs' is not null or undefined
+            if (specs === null || specs === undefined) {
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getTransactionHistories1.');
             }
             const localVarPath = `/api/v2/klay/henesis-keys/histories`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -8124,6 +8141,10 @@ export const KlayHenesisKeyControllerApiAxiosParamCreator = function (configurat
 
             if (pageable !== undefined) {
                 localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (specs !== undefined) {
+                localVarQueryParameter['specs'] = specs;
             }
 
 
@@ -8213,11 +8234,12 @@ export const KlayHenesisKeyControllerApiFp = function(configuration?: Configurat
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {object} specs 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransactionHistories1(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionHistoryDTO>> {
-            const localVarAxiosArgs = await KlayHenesisKeyControllerApiAxiosParamCreator(configuration).getTransactionHistories1(pageable, options);
+        async getTransactionHistories1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionHistoryDTO>> {
+            const localVarAxiosArgs = await KlayHenesisKeyControllerApiAxiosParamCreator(configuration).getTransactionHistories1(pageable, specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -8277,11 +8299,12 @@ export const KlayHenesisKeyControllerApiFactory = function (configuration?: Conf
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {object} specs 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransactionHistories1(pageable: Pageable, options?: any): AxiosPromise<PaginationTransactionHistoryDTO> {
-            return KlayHenesisKeyControllerApiFp(configuration).getTransactionHistories1(pageable, options).then((request) => request(axios, basePath));
+        getTransactionHistories1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionHistoryDTO> {
+            return KlayHenesisKeyControllerApiFp(configuration).getTransactionHistories1(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -8348,12 +8371,13 @@ export class KlayHenesisKeyControllerApi extends BaseAPI {
     /**
      * 
      * @param {Pageable} pageable 
+     * @param {object} specs 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KlayHenesisKeyControllerApi
      */
-    public getTransactionHistories1(pageable: Pageable, options?: any) {
-        return KlayHenesisKeyControllerApiFp(this.configuration).getTransactionHistories1(pageable, options).then((request) => request(this.axios, this.basePath));
+    public getTransactionHistories1(pageable: Pageable, specs: object, options?: any) {
+        return KlayHenesisKeyControllerApiFp(this.configuration).getTransactionHistories1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

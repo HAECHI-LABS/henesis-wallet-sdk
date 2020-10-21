@@ -69,5 +69,6 @@ export const convertTransactionHistoryDTO = (
     ...convertTransactionDTO(transcationHistoryDTO),
     wallet: transcationHistoryDTO.wallet,
     type: transcationHistoryDTO.type,
+    createdAt: transcationHistoryDTO.createdAt,
   };
 };
