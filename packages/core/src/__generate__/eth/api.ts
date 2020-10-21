@@ -1130,6 +1130,12 @@ export interface HenesisKeyBalanceDTO {
     amount: string;
     /**
      * 
+     * @type {string}
+     * @memberof HenesisKeyBalanceDTO
+     */
+    spendableAmount: string;
+    /**
+     * 
      * @type {number}
      * @memberof HenesisKeyBalanceDTO
      */
