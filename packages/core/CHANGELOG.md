@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.7...v2.8.8) (2020-10-21)
+
+
+### Features
+
+* add henesis key's transaction history ([a27ab51](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a27ab5195a0c807070016b9ea60a78d6f3e311b0))
+
+
+
+
+
 ## [2.8.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.8.6...v2.8.7) (2020-10-20)
 
 
