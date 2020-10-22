@@ -1869,6 +1869,12 @@ export interface SimplifiedWalletDTO {
      * @type {string}
      * @memberof SimplifiedWalletDTO
      */
+    masterWalletAddress: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletDTO
+     */
     masterWalletName: string;
     /**
      * 
@@ -1876,6 +1882,12 @@ export interface SimplifiedWalletDTO {
      * @memberof SimplifiedWalletDTO
      */
     userWalletId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletDTO
+     */
+    userWalletAddress?: string;
     /**
      * 
      * @type {string}
