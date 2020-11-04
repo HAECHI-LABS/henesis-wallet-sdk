@@ -169,7 +169,9 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     contractAddress: string,
     value: BN,
     data: string,
-    passphrase: string,
+    passphrase?: string,
+    keyFile?: string,
+    privateKey?: string,
     otpCode?: string,
     gasPrice?: BN,
     gasLimit?: BN
@@ -179,7 +181,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     }
     checkNullAndUndefinedParameter({
       contractAddress,
-      passphrase,
     });
     return this.sendTransaction(
       this.getChain(),
@@ -187,7 +188,9 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
         contractAddress,
         value,
         data,
-        passphrase
+        passphrase,
+        keyFile,
+        privateKey
       ),
       this.getId(),
       otpCode,
@@ -200,13 +203,20 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     contractAddress: string,
     value: BN,
     data: string,
-    passphrase: string
+    passphrase?: string,
+    keyFile?: string,
+    privateKey?: string
   ): Promise<SignedMultiSigPayload> {
     checkNullAndUndefinedParameter({
       contractAddress,
       data,
-      passphrase,
     });
+    const priv = this.derivePrivateKey(
+      this.data.accountKey,
+      passphrase,
+      keyFile,
+      privateKey
+    );
     const nonce = await this.getNonce();
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
@@ -216,7 +226,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       walletAddress: this.getAddress(),
     };
 
-    const signature = this.signPayload(multiSigPayload, passphrase);
+    const signature = this.signPayload(multiSigPayload, priv);
     return {
       signature,
       multiSigPayload,
@@ -227,7 +237,9 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     ticker: string,
     to: string,
     amount: BN,
-    passphrase: string,
+    passphrase?: string,
+    keyFile?: string,
+    privateKey?: string,
     otpCode?: string,
     gasPrice?: BN,
     gasLimit?: BN
@@ -235,7 +247,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     checkNullAndUndefinedParameter({
       ticker,
       to,
-      passphrase,
     });
 
     const coin: Coin = await this.coins.getCoin(ticker, this.getVersion());
@@ -245,6 +256,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
         BNConverter.hexStringToBN("0x0"),
         coin.buildTransferData(to, amount),
         passphrase,
+        keyFile,
+        privateKey,
         otpCode,
         gasPrice,
         gasLimit
@@ -253,7 +266,14 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
 
     return this.sendTransaction(
       this.getChain(),
-      await this.buildTransferPayload(ticker, to, amount, passphrase),
+      await this.buildTransferPayload(
+        ticker,
+        to,
+        amount,
+        passphrase,
+        keyFile,
+        privateKey
+      ),
       this.getId(),
       otpCode,
       gasPrice,
@@ -272,8 +292,16 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     ticker: string,
     to: string,
     amount: BN,
-    passphrase: string
+    passphrase?: string,
+    keyFile?: string,
+    privateKey?: string
   ): Promise<SignedMultiSigPayload> {
+    const priv = this.derivePrivateKey(
+      this.data.accountKey,
+      passphrase,
+      keyFile,
+      privateKey
+    );
     const coin: Coin = await this.coins.getCoin(ticker, this.getVersion());
     const hexData = coin.buildTransferData(to, amount);
     const nonce = await this.getNonce();
@@ -285,7 +313,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       walletAddress: this.getAddress(),
     };
 
-    const signature = this.signPayload(multiSigPayload, passphrase);
+    const signature = this.signPayload(multiSigPayload, priv);
     return {
       signature,
       multiSigPayload,
@@ -304,7 +332,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
   }
 
-  protected signPayload(multiSigPayload: MultiSigPayload, passphrase: string) {
+  protected signPayload(multiSigPayload: MultiSigPayload, privateKey: string) {
     const payload = `0x${multiSigPayload.walletAddress
       .toLowerCase()
       .slice(2)}${multiSigPayload.toAddress.toLowerCase().slice(2)}${Bytes.pad(
@@ -315,7 +343,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       Bytes.fromNat(`0x${multiSigPayload.walletNonce.toString(16)}`)
     ).slice(2)}${multiSigPayload.hexData.slice(2)}`;
 
-    return this.keychains.sign(this.data.accountKey, passphrase, payload);
+    return this.keychains.sign(privateKey, payload);
   }
 
   protected async sendTransaction(
@@ -416,11 +444,19 @@ export class EthMasterWallet extends EthLikeWallet {
 
   async createUserWallet(
     name: string,
-    passphrase: string,
+    passphrase?: string,
+    keyFile?: string,
+    privateKey?: string,
     gasPrice?: BN,
     salt?: BN,
     otpCode?: string
   ): Promise<EthUserWallet> {
+    const priv = this.derivePrivateKey(
+      this.data.accountKey,
+      passphrase,
+      keyFile,
+      privateKey
+    );
     const nonce = await this.getNonce();
     // generates 32byte(256 bit) randoma hex string and converts to BN when salt is not defined
     if (salt === undefined) {
@@ -435,7 +471,7 @@ export class EthMasterWallet extends EthLikeWallet {
       walletAddress: this.getAddress(),
     };
 
-    const signature = this.signPayload(multiSigPayload, passphrase);
+    const signature = this.signPayload(multiSigPayload, priv);
 
     const signedMultiSigPayload = {
       signature,
@@ -565,7 +601,9 @@ export class EthMasterWallet extends EthLikeWallet {
   async flush(
     ticker: string,
     userWalletIds: string[],
-    passphrase: string,
+    passphrase?: string,
+    keyFile?: string,
+    privateKey?: string,
     otpCode?: string,
     gasPrice?: BN,
     gasLimit?: BN
@@ -573,6 +611,12 @@ export class EthMasterWallet extends EthLikeWallet {
     if (userWalletIds.length > 50) {
       throw new Error(`only 50 accounts can be flushed at a time`);
     }
+    const priv = this.derivePrivateKey(
+      this.data.accountKey,
+      passphrase,
+      keyFile,
+      privateKey
+    );
     const coin: Coin = await this.coins.getCoin(ticker, this.getVersion());
     const userWallets: Pagination<EthUserWallet> = await this.getUserWallets({
       ids: userWalletIds,
@@ -600,7 +644,7 @@ export class EthMasterWallet extends EthLikeWallet {
       walletAddress: this.getAddress(),
     };
 
-    const signature = this.signPayload(multiSigPayload, passphrase);
+    const signature = this.signPayload(multiSigPayload, priv);
     const signedMultiSigPayload = {
       signature,
       multiSigPayload,

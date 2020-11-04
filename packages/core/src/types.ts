@@ -3,11 +3,11 @@ import BN from "bn.js";
 export interface Keychains {
   create(password: string): KeyWithPriv;
 
-  changePassword(key: Key, password: string, newPassword: string): KeyWithPriv;
+  changePassword(privateKey: string, newPassword: string): KeyWithPriv;
 
-  decrypt(key: Key, password: string): string;
+  decrypt(keyFile: string, passphrase: string): string;
 
-  sign(key: Key, password: string, hexPayload: string): string;
+  sign(privateKey: string, hexPayload: string): string;
 }
 
 export interface Balance {

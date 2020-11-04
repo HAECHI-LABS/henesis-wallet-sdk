@@ -234,6 +234,8 @@ export default class WalletsController
       BNConverter.hexStringToBN(req.body.value),
       req.body.data,
       req.body.passphrase,
+      req.body.keyFile,
+      req.body.privateKey,
       req.body.otpCode,
       req.body.gasPrice
         ? BNConverter.hexStringToBN(req.body.gasPrice)
@@ -287,6 +289,8 @@ export default class WalletsController
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
+      req.body.keyFile,
+      req.body.privateKey,
       req.body.otpCode,
       req.body.gasPrice
         ? BNConverter.hexStringToBN(req.body.gasPrice)
@@ -328,7 +332,9 @@ export default class WalletsController
           request.contractAddress,
           BNConverter.hexStringToBN(request.value),
           request.data,
-          req.body.passphrase
+          req.body.passphrase,
+          req.body.keyFile,
+          req.body.privateKey
         );
       }
 
@@ -338,7 +344,9 @@ export default class WalletsController
           request.ticker,
           request.to,
           BNConverter.hexStringToBN(request.amount),
-          req.body.passphrase
+          req.body.passphrase,
+          req.body.keyFile,
+          req.body.privateKey
         );
       }
 
@@ -360,6 +368,8 @@ export default class WalletsController
       req.body.ticker,
       req.body.userWalletIds,
       req.body.passphrase,
+      req.body.keyFile,
+      req.body.privateKey,
       req.body.otpCode,
       req.body.gasPrice
         ? BNConverter.hexStringToBN(req.body.gasPrice)
@@ -414,6 +424,8 @@ export default class WalletsController
       await masterWallet.createUserWallet(
         req.body.name,
         req.body.passphrase,
+        req.body.keyFile,
+        req.body.privateKey,
         req.body.gasPrice
           ? BNConverter.hexStringToBN(req.body.gasPrice)
           : undefined,
@@ -436,6 +448,8 @@ export default class WalletsController
       BNConverter.hexStringToBN(req.body.value),
       req.body.data,
       req.body.passphrase,
+      req.body.keyFile,
+      req.body.privateKey,
       req.body.otpCode,
       req.body.gasPrice
         ? BNConverter.hexStringToBN(req.body.gasPrice)
@@ -498,6 +512,8 @@ export default class WalletsController
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
+      req.body.keyFile,
+      req.body.privateKey,
       req.body.otpCode,
       req.body.gasPrice
         ? BNConverter.hexStringToBN(req.body.gasPrice)
@@ -531,8 +547,10 @@ export default class WalletsController
     );
 
     return await masterWallet.changePassphrase(
-      req.body.passphrase,
       req.body.newPassphrase,
+      req.body.passphrase,
+      req.body.keyFile,
+      req.body.privateKey,
       req.body.otpCode
     );
   }

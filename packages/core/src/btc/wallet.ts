@@ -135,7 +135,9 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   public async build(
     to: string,
     amount: BN,
-    passphrase: string,
+    passphrase?: string,
+    keyFile?: string,
+    privateKey?: string,
     otpCode?: string
   ): Promise<BtcCreateRawTransaction> {
     checkNullAndUndefinedParameter({ to, passphrase });
@@ -170,9 +172,14 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
         new Buffer(rawTransaction.inputs[i].redeemScript.slice(2), "hex"),
         BitcoinTransaction.SIGHASH_ALL
       );
-      const hexHash: string = this.keychains.sign(
+      const priv = this.derivePrivateKey(
         this.data.accountKey,
         passphrase,
+        keyFile,
+        privateKey
+      );
+      const hexHash: string = this.keychains.sign(
+        priv,
         sigHash.toString("hex")
       );
       const accountSig = script.signature
@@ -208,12 +215,14 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   public async transfer(
     to: string,
     amount: BN,
-    passphrase: string,
+    passphrase?: string,
+    keyFile?: string,
+    privateKey?: string,
     otpCode?: string
   ): Promise<Transfer> {
     const transfer = await this.client.post<TransferDTO>(
       `${this.baseUrl}/transactions`,
-      await this.build(to, amount, passphrase, otpCode)
+      await this.build(to, amount, passphrase, keyFile, privateKey, otpCode)
     );
 
     return convertTransferDTO(transfer);

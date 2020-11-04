@@ -67,28 +67,25 @@ export class EthKeychains implements Keychains {
     };
   }
 
-  public changePassword(
-    key: Key,
-    password: string,
-    newPassword: string
-  ): KeyWithPriv {
-    const priv = this.decrypt(key, password);
-    const ecKey = secp256k1.keyFromPrivate(Buffer.from(priv.slice(2), "hex"));
+  public changePassword(privateKey: string, newPassword: string): KeyWithPriv {
+    const ecKey = secp256k1.keyFromPrivate(
+      Buffer.from(privateKey.slice(2), "hex")
+    );
     const publicKey = `0x${ecKey.getPublic(false, "hex").slice(2)}`;
     const publicHash = keccak256(publicKey);
     const address = toChecksum(`0x${publicHash.slice(-40)}`);
-    const newKeyFile = this.encryptPrivToKeyFile(priv, newPassword);
+    const newKeyFile = this.encryptPrivToKeyFile(privateKey, newPassword);
     return {
       address,
       pub: publicKey,
-      priv,
+      priv: privateKey,
       keyFile: newKeyFile,
     };
   }
 
-  public decrypt(key: Key, password: string): string {
+  public decrypt(keyFile: string, passphrase: string): string {
     try {
-      return sjcl.decrypt(password, key.keyFile);
+      return sjcl.decrypt(passphrase, keyFile);
     } catch (error) {
       if (error.message.includes("ccm: tag doesn't match")) {
         error.message = `password error - ${error.message}`;
@@ -101,12 +98,11 @@ export class EthKeychains implements Keychains {
     }
   }
 
-  public sign(key: Key, password: string, hexPayload: string): string {
+  public sign(privateKey: string, hexPayload: string): string {
     const hashedMessage = keccak256(this.payloadToPrefixedMessage(hexPayload));
 
-    const priv = this.decrypt(key, password);
     const signature = secp256k1
-      .keyFromPrivate(Buffer.from(priv.slice(2), "hex"))
+      .keyFromPrivate(Buffer.from(privateKey.slice(2), "hex"))
       .sign(Buffer.from(hashedMessage.slice(2), "hex"), { canonical: true });
 
     return encodeSignature([

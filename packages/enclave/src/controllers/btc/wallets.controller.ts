@@ -104,6 +104,8 @@ export default class WalletsController
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
+      req.body.keyFile,
+      req.body.privateKey,
       req.body.otpCode
     );
 
@@ -157,8 +159,10 @@ export default class WalletsController
     const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
 
     return wallet.changePassphrase(
-      req.body.passphrase,
       req.body.newPassphrase,
+      req.body.passphrase,
+      req.body.keyFile,
+      req.body.privateKey,
       req.body.otpCode
     );
   }

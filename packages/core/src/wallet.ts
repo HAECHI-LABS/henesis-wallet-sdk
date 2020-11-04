@@ -102,6 +102,7 @@ export const transformPolicyType = (
 };
 
 export import WalletType = EthWalletType;
+import { ValidationParameterError } from "./error";
 
 export interface WithdrawalPolicy {
   id: string;
@@ -169,30 +170,39 @@ export abstract class Wallet<T> {
     }
   }
   async changePassphrase(
-    passphrase: string,
     newPassphrase: string,
+    passphrase?: string,
+    keyFile?: string,
+    privateKey?: string,
     otpCode?: string
   ): Promise<void> {
     checkNullAndUndefinedParameter({
-      passphrase,
       newPassphrase,
     });
     return await this.changePassphraseWithKeyFile(
-      passphrase,
       newPassphrase,
+      passphrase,
+      keyFile,
+      privateKey,
       undefined,
       otpCode
     );
   }
   private async changePassphraseWithKeyFile(
-    passphrase: string,
     newPassphrase: string,
+    passphrase?: string,
+    keyFile?: string,
+    privateKey?: string,
     initialKey?: Key,
     otpCode?: string
   ): Promise<void> {
     const newKey: KeyWithPriv = this.keychains.changePassword(
-      initialKey ? initialKey : this.getAccountKey(),
-      passphrase,
+      this.derivePrivateKey(
+        initialKey ? initialKey : this.getAccountKey(),
+        passphrase,
+        keyFile,
+        privateKey
+      ),
       newPassphrase
     );
     const key: Key = await this.client.patch<
@@ -204,6 +214,24 @@ export abstract class Wallet<T> {
     });
     this.updateAccountKey(key);
   }
+  protected derivePrivateKey(
+    key: Key,
+    passphrase?: string,
+    keyFile?: string,
+    privateKey?: string
+  ): string {
+    if (privateKey != undefined) {
+      return privateKey;
+    }
+
+    if (passphrase == undefined) {
+      throw new ValidationParameterError(
+        "passphrase or private key should be not undefined"
+      );
+    }
+
+    return this.keychains.decrypt(keyFile ?? key.keyFile, passphrase);
+  }
   async restorePassphrase(
     encryptedPassphrase: string,
     newPassphrase: string,
@@ -214,8 +242,10 @@ export abstract class Wallet<T> {
       BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">
     >(`${this.baseUrl}/initial-key`);
     await this.changePassphraseWithKeyFile(
-      passphrase,
       newPassphrase,
+      passphrase,
+      undefined,
+      undefined,
       initialKey,
       otpCode
     );
@@ -243,7 +273,7 @@ export abstract class Wallet<T> {
   ): Promise<boolean> {
     try {
       this.keychains.decrypt(
-        initialKey ? initialKey : this.getAccountKey(),
+        initialKey ? initialKey.keyFile : this.getAccountKey().keyFile,
         passphrase
       );
       return true;

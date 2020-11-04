@@ -27,13 +27,13 @@ export class BtcKeyChains implements Keychains {
     };
   }
 
-  sign(key: Key, password: string, hexPayload: string): string {
-    const ecPair = this.decryptECPair(key, password);
+  sign(privateKey: string, hexPayload: string): string {
+    const ecPair = this.decryptECPair(privateKey);
     return ecPair.sign(Buffer.from(hexPayload, "hex")).toString("hex");
   }
 
-  changePassword(key: Key, password: string, newPassword: string): KeyWithPriv {
-    const ecPair = this.decryptECPair(key, password);
+  changePassword(privateKey: string, newPassword: string): KeyWithPriv {
+    const ecPair = this.decryptECPair(privateKey);
     return {
       keyFile: this.encryptECPair(ecPair, newPassword),
       priv: `0x${ecPair.privateKey.toString("hex")}`,
@@ -41,9 +41,9 @@ export class BtcKeyChains implements Keychains {
     };
   }
 
-  decrypt(key: Key, password: string): string {
+  decrypt(keyFile: string, passphrase: string): string {
     try {
-      return `0x${sjcl.decrypt(password, key.keyFile)}`;
+      return `0x${sjcl.decrypt(passphrase, keyFile)}`;
     } catch (error) {
       if (
         error.message.includes("ccm: tag doesn't match") ||
@@ -86,10 +86,9 @@ export class BtcKeyChains implements Keychains {
     return sjcl.encrypt(password, privateKey, encryptOptions);
   }
 
-  private decryptECPair(key: Key, password: string) {
-    const decryptedKey = this.decrypt(key, password);
+  private decryptECPair(privateKey: string) {
     return ECPair.fromPrivateKey(
-      Buffer.from(BNConverter.remove0x(decryptedKey), "hex"),
+      Buffer.from(BNConverter.remove0x(privateKey), "hex"),
       {
         compressed: true,
         network: Env.Prod ? networks.bitcoin : networks.testnet,
