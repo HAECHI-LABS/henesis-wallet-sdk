@@ -77,4 +77,15 @@ export class HenesisKeys {
       results: data.results.map((data) => convertTransactionHistoryDTO(data)),
     };
   }
+
+  async getTransactionHistoriesCsv(
+    createdAtGte: string,
+    createdAtLt: string
+  ): Promise<void> {
+    const queryString: string = makeQueryString({
+      createdAtGte: createdAtGte,
+      createdAtLt: createdAtLt,
+    });
+    await this.client.get<void>(`${this.baseUrl}/histories/csv?${queryString}`);
+  }
 }
