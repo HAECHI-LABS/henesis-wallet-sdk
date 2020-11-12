@@ -81,11 +81,13 @@ export class HenesisKeys {
   async getTransactionHistoriesCsv(
     createdAtGte: string,
     createdAtLt: string
-  ): Promise<void> {
+  ): Promise<any> {
     const queryString: string = makeQueryString({
       createdAtGte: createdAtGte,
       createdAtLt: createdAtLt,
     });
-    await this.client.get<void>(`${this.baseUrl}/histories/csv?${queryString}`);
+    return await this.client.get<any>(
+      `${this.baseUrl}/histories/csv?${queryString}`
+    );
   }
 }
