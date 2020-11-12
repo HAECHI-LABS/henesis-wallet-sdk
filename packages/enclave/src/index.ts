@@ -11,7 +11,12 @@ function main() {
   try {
     const app = new App({
       middleWares: [logger, sdkInjector, converter],
-      controllers: [].concat(btcController, ethController, klayController, versionController),
+      controllers: [].concat(
+        btcController,
+        ethController,
+        klayController,
+        versionController
+      ),
       port: 3000,
       hostname: "0.0.0.0",
     });
