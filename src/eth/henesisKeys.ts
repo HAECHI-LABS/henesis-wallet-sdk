@@ -19,6 +19,8 @@ export interface TransactionHistory extends Transaction {
 
 export interface TransactionHistoryPaginationOptions extends PaginationOptions {
   transactionHash?: string;
+  createdAtGte?: string;
+  createdAtLt?: string;
 }
 
 export interface HenesisKey extends Key {
