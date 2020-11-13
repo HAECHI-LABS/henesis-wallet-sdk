@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.2.3...v1.2.4) (2020-11-13)
+
+
+### Bug Fixes
+
+* validate size of user waller ids ([f3228b4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f3228b4eed4f6d9facaf5787f268087567911256))
+
+
+
+
+
 ## [1.2.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v1.3.0...v1.2.3) (2020-11-13)
 
 
