@@ -570,8 +570,8 @@ export class EthMasterWallet extends EthLikeWallet {
     gasPrice?: BN,
     gasLimit?: BN
   ) {
-    if (userWalletIds.length > 50) {
-      throw new Error(`only 50 accounts can be flushed at a time`);
+    if (userWalletIds.length > 50 || userWalletIds.length == 0) {
+      throw new Error(`only 1 ~ 50 accounts can be flushed at a time`);
     }
     const coin: Coin = await this.coins.getCoin(ticker, this.getVersion());
     const userWallets: Pagination<EthUserWallet> = await this.getUserWallets({
