@@ -590,6 +590,12 @@ export interface CreateCoinRequest {
      * @memberof CreateCoinRequest
      */
     attributes: Array<CreateCoinRequestAttributesEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCoinRequest
+     */
+    orgId?: string;
 }
 
 /**
@@ -944,7 +950,7 @@ export interface DetailedRawTransactionDTO {
      * @type {string}
      * @memberof DetailedRawTransactionDTO
      */
-    to: string;
+    to?: string;
     /**
      * 
      * @type {string}
@@ -956,7 +962,7 @@ export interface DetailedRawTransactionDTO {
      * @type {string}
      * @memberof DetailedRawTransactionDTO
      */
-    data: string;
+    data?: string;
     /**
      * 
      * @type {string}
@@ -1019,6 +1025,7 @@ export enum EventStatus {
     REQUESTED = 'REQUESTED',
     PENDING = 'PENDING',
     FAILED = 'FAILED',
+    REVERTED = 'REVERTED',
     REPLACED = 'REPLACED',
     MINED = 'MINED',
     CONFIRMED = 'CONFIRMED'
@@ -1434,7 +1441,7 @@ export interface MultiSigPayloadDTO {
      * @type {string}
      * @memberof MultiSigPayloadDTO
      */
-    hexData: string;
+    hexData?: string;
 }
 /**
  * 
@@ -1706,7 +1713,7 @@ export interface RawTransactionDTO {
      * @type {string}
      * @memberof RawTransactionDTO
      */
-    to: string;
+    to?: string;
     /**
      * 
      * @type {string}
@@ -1718,7 +1725,7 @@ export interface RawTransactionDTO {
      * @type {string}
      * @memberof RawTransactionDTO
      */
-    data: string;
+    data?: string;
     /**
      * 
      * @type {string}
@@ -2004,25 +2011,25 @@ export interface TransactionDTO {
      * @type {string}
      * @memberof TransactionDTO
      */
-    keyId: string;
+    fee?: string;
     /**
      * 
      * @type {string}
      * @memberof TransactionDTO
      */
-    createdAt: string;
+    keyId: string;
     /**
      * 
      * @type {SignedMultiSigPayloadDTO}
      * @memberof TransactionDTO
      */
-    signedMultiSigPayload: SignedMultiSigPayloadDTO;
+    signedMultiSigPayload?: SignedMultiSigPayloadDTO;
     /**
      * 
      * @type {RawTransactionDTO}
      * @memberof TransactionDTO
      */
-    rawTransaction: RawTransactionDTO;
+    rawTransaction?: RawTransactionDTO;
     /**
      * 
      * @type {boolean}
@@ -2034,13 +2041,13 @@ export interface TransactionDTO {
      * @type {string}
      * @memberof TransactionDTO
      */
-    fee?: string;
+    estimatedFee?: string;
     /**
      * 
      * @type {string}
      * @memberof TransactionDTO
      */
-    estimatedFee?: string;
+    createdAt: string;
 }
 /**
  * 
@@ -2086,6 +2093,12 @@ export interface TransactionHistoryDTO {
     status: TransactionStatus;
     /**
      * 
+     * @type {string}
+     * @memberof TransactionHistoryDTO
+     */
+    fee?: string;
+    /**
+     * 
      * @type {TransactionType}
      * @memberof TransactionHistoryDTO
      */
@@ -2104,22 +2117,16 @@ export interface TransactionHistoryDTO {
     keyId: string;
     /**
      * 
-     * @type {string}
-     * @memberof TransactionHistoryDTO
-     */
-    createdAt: string;
-    /**
-     * 
      * @type {SignedMultiSigPayloadDTO}
      * @memberof TransactionHistoryDTO
      */
-    signedMultiSigPayload: SignedMultiSigPayloadDTO;
+    signedMultiSigPayload?: SignedMultiSigPayloadDTO;
     /**
      * 
      * @type {RawTransactionDTO}
      * @memberof TransactionHistoryDTO
      */
-    rawTransaction: RawTransactionDTO;
+    rawTransaction?: RawTransactionDTO;
     /**
      * 
      * @type {boolean}
@@ -2131,13 +2138,13 @@ export interface TransactionHistoryDTO {
      * @type {string}
      * @memberof TransactionHistoryDTO
      */
-    fee?: string;
+    estimatedFee?: string;
     /**
      * 
      * @type {string}
      * @memberof TransactionHistoryDTO
      */
-    estimatedFee?: string;
+    createdAt: string;
 }
 /**
  * 
@@ -2248,6 +2255,12 @@ export interface UpdateCoinRequest {
      * @memberof UpdateCoinRequest
      */
     attributes: Array<UpdateCoinRequestAttributesEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCoinRequest
+     */
+    orgId?: string;
 }
 
 /**
@@ -3723,6 +3736,53 @@ export const EthHenesisKeyControllerApiAxiosParamCreator = function (configurati
         },
         /**
          * 
+         * @param {string} createdAtGte 
+         * @param {string} createdAtLt 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHistoriesCsv: async (createdAtGte: string, createdAtLt: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createdAtGte' is not null or undefined
+            if (createdAtGte === null || createdAtGte === undefined) {
+                throw new RequiredError('createdAtGte','Required parameter createdAtGte was null or undefined when calling getHistoriesCsv.');
+            }
+            // verify required parameter 'createdAtLt' is not null or undefined
+            if (createdAtLt === null || createdAtLt === undefined) {
+                throw new RequiredError('createdAtLt','Required parameter createdAtLt was null or undefined when calling getHistoriesCsv.');
+            }
+            const localVarPath = `/api/v2/eth/henesis-keys/histories/csv`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (createdAtGte !== undefined) {
+                localVarQueryParameter['created_at_gte'] = createdAtGte;
+            }
+
+            if (createdAtLt !== undefined) {
+                localVarQueryParameter['created_at_lt'] = createdAtLt;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {Pageable} pageable 
          * @param {object} specs 
          * @param {*} [options] Override http request option.
@@ -3841,6 +3901,20 @@ export const EthHenesisKeyControllerApiFp = function(configuration?: Configurati
         },
         /**
          * 
+         * @param {string} createdAtGte 
+         * @param {string} createdAtLt 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHistoriesCsv(createdAtGte: string, createdAtLt: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await EthHenesisKeyControllerApiAxiosParamCreator(configuration).getHistoriesCsv(createdAtGte, createdAtLt, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {Pageable} pageable 
          * @param {object} specs 
          * @param {*} [options] Override http request option.
@@ -3903,6 +3977,16 @@ export const EthHenesisKeyControllerApiFactory = function (configuration?: Confi
          */
         getHenesisKeyBalance(options?: any): AxiosPromise<HenesisKeyBalanceDTO> {
             return EthHenesisKeyControllerApiFp(configuration).getHenesisKeyBalance(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} createdAtGte 
+         * @param {string} createdAtLt 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHistoriesCsv(createdAtGte: string, createdAtLt: string, options?: any): AxiosPromise<void> {
+            return EthHenesisKeyControllerApiFp(configuration).getHistoriesCsv(createdAtGte, createdAtLt, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3974,6 +4058,18 @@ export class EthHenesisKeyControllerApi extends BaseAPI {
      */
     public getHenesisKeyBalance(options?: any) {
         return EthHenesisKeyControllerApiFp(this.configuration).getHenesisKeyBalance(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} createdAtGte 
+     * @param {string} createdAtLt 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthHenesisKeyControllerApi
+     */
+    public getHistoriesCsv(createdAtGte: string, createdAtLt: string, options?: any) {
+        return EthHenesisKeyControllerApiFp(this.configuration).getHistoriesCsv(createdAtGte, createdAtLt, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8127,6 +8223,53 @@ export const KlayHenesisKeyControllerApiAxiosParamCreator = function (configurat
         },
         /**
          * 
+         * @param {string} createdAtGte 
+         * @param {string} createdAtLt 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHistoriesCsv1: async (createdAtGte: string, createdAtLt: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createdAtGte' is not null or undefined
+            if (createdAtGte === null || createdAtGte === undefined) {
+                throw new RequiredError('createdAtGte','Required parameter createdAtGte was null or undefined when calling getHistoriesCsv1.');
+            }
+            // verify required parameter 'createdAtLt' is not null or undefined
+            if (createdAtLt === null || createdAtLt === undefined) {
+                throw new RequiredError('createdAtLt','Required parameter createdAtLt was null or undefined when calling getHistoriesCsv1.');
+            }
+            const localVarPath = `/api/v2/klay/henesis-keys/histories/csv`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (createdAtGte !== undefined) {
+                localVarQueryParameter['created_at_gte'] = createdAtGte;
+            }
+
+            if (createdAtLt !== undefined) {
+                localVarQueryParameter['created_at_lt'] = createdAtLt;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {Pageable} pageable 
          * @param {object} specs 
          * @param {*} [options] Override http request option.
@@ -8245,6 +8388,20 @@ export const KlayHenesisKeyControllerApiFp = function(configuration?: Configurat
         },
         /**
          * 
+         * @param {string} createdAtGte 
+         * @param {string} createdAtLt 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHistoriesCsv1(createdAtGte: string, createdAtLt: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await KlayHenesisKeyControllerApiAxiosParamCreator(configuration).getHistoriesCsv1(createdAtGte, createdAtLt, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {Pageable} pageable 
          * @param {object} specs 
          * @param {*} [options] Override http request option.
@@ -8307,6 +8464,16 @@ export const KlayHenesisKeyControllerApiFactory = function (configuration?: Conf
          */
         getHenesisKeyBalance1(options?: any): AxiosPromise<HenesisKeyBalanceDTO> {
             return KlayHenesisKeyControllerApiFp(configuration).getHenesisKeyBalance1(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} createdAtGte 
+         * @param {string} createdAtLt 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHistoriesCsv1(createdAtGte: string, createdAtLt: string, options?: any): AxiosPromise<void> {
+            return KlayHenesisKeyControllerApiFp(configuration).getHistoriesCsv1(createdAtGte, createdAtLt, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8378,6 +8545,18 @@ export class KlayHenesisKeyControllerApi extends BaseAPI {
      */
     public getHenesisKeyBalance1(options?: any) {
         return KlayHenesisKeyControllerApiFp(this.configuration).getHenesisKeyBalance1(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} createdAtGte 
+     * @param {string} createdAtLt 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayHenesisKeyControllerApi
+     */
+    public getHistoriesCsv1(createdAtGte: string, createdAtLt: string, options?: any) {
+        return KlayHenesisKeyControllerApiFp(this.configuration).getHistoriesCsv1(createdAtGte, createdAtLt, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
