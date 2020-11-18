@@ -1317,6 +1317,12 @@ export interface WalletWithdrawalPolicyDTO {
      * @memberof WalletWithdrawalPolicyDTO
      */
     coinName: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof WalletWithdrawalPolicyDTO
+     */
+    decimals: number;
 }
 /**
  * 
