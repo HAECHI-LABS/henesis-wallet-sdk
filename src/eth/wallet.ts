@@ -32,13 +32,11 @@ import {
   MasterWalletDTO,
   ApproveWithdrawalApprovalRequest,
   RejectWithdrawalApprovalRequest,
-  CoinDTOAttributesEnum,
   CreateUserWalletRequest,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
-import AttributesEnum = CoinDTOAttributesEnum;
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -216,11 +214,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       walletAddress: this.getAddress(),
     };
 
-    const signature = this.signPayload(multiSigPayload, passphrase);
-    return {
-      signature,
-      multiSigPayload,
-    };
+    return this.signPayload(multiSigPayload, passphrase);
   }
 
   async transfer(
@@ -232,39 +226,20 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     gasPrice?: BN,
     gasLimit?: BN
   ): Promise<EthTransaction> {
-    checkNullAndUndefinedParameter({
+    const signedMultiSigPayload = await this.buildTransferPayload(
       ticker,
       to,
-      passphrase,
-    });
-
-    const coin: Coin = await this.coins.getCoin(ticker, this.getVersion());
-    if (this.isNonStandardCoin(coin)) {
-      return this.contractCall(
-        coin.getCoinData().address,
-        BNConverter.hexStringToBN("0x0"),
-        coin.buildTransferData(to, amount),
-        passphrase,
-        otpCode,
-        gasPrice,
-        gasLimit
-      );
-    }
+      amount,
+      passphrase
+    );
 
     return this.sendTransaction(
       this.getChain(),
-      await this.buildTransferPayload(ticker, to, amount, passphrase),
+      signedMultiSigPayload,
       this.getId(),
       otpCode,
       gasPrice,
       gasLimit || this.getGasLimitByTicker(ticker)
-    );
-  }
-
-  protected isNonStandardCoin(coin: Coin): boolean {
-    return (
-      (this.getVersion() == "v1" || this.getVersion() == "v2") &&
-      coin.getAttributes().includes(AttributesEnum.NONSTANDARDRETURNTYPE)
     );
   }
 
@@ -274,22 +249,18 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     amount: BN,
     passphrase: string
   ): Promise<SignedMultiSigPayload> {
-    const coin: Coin = await this.coins.getCoin(ticker, this.getVersion());
-    const hexData = coin.buildTransferData(to, amount);
-    const nonce = await this.getNonce();
-    const multiSigPayload: MultiSigPayload = {
-      hexData,
-      walletNonce: nonce,
-      value: BNConverter.hexStringToBN("0x0"),
-      toAddress: this.getAddress(),
-      walletAddress: this.getAddress(),
-    };
+    checkNullAndUndefinedParameter({
+      ticker,
+      to,
+      passphrase,
+    });
 
-    const signature = this.signPayload(multiSigPayload, passphrase);
-    return {
-      signature,
-      multiSigPayload,
-    };
+    const coin = await this.coins.getCoin(ticker, this.getVersion());
+
+    return this.signPayload(
+      await coin.buildTransferMultiSigPayload(this, to, amount),
+      passphrase
+    );
   }
 
   public createBatchRequest(otpCode?: string) {
@@ -304,7 +275,10 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
   }
 
-  protected signPayload(multiSigPayload: MultiSigPayload, passphrase: string) {
+  protected signPayload(
+    multiSigPayload: MultiSigPayload,
+    passphrase: string
+  ): SignedMultiSigPayload {
     const payload = `0x${multiSigPayload.walletAddress
       .toLowerCase()
       .slice(2)}${multiSigPayload.toAddress.toLowerCase().slice(2)}${Bytes.pad(
@@ -315,7 +289,10 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       Bytes.fromNat(`0x${multiSigPayload.walletNonce.toString(16)}`)
     ).slice(2)}${multiSigPayload.hexData.slice(2)}`;
 
-    return this.keychains.sign(this.data.accountKey, passphrase, payload);
+    return {
+      signature: this.keychains.sign(this.data.accountKey, passphrase, payload),
+      multiSigPayload,
+    };
   }
 
   protected async sendTransaction(
@@ -435,12 +412,7 @@ export class EthMasterWallet extends EthLikeWallet {
       walletAddress: this.getAddress(),
     };
 
-    const signature = this.signPayload(multiSigPayload, passphrase);
-
-    const signedMultiSigPayload = {
-      signature,
-      multiSigPayload,
-    };
+    const signedMultiSigPayload = this.signPayload(multiSigPayload, passphrase);
 
     const userWalletParams: CreateUserWalletRequest = {
       name,
@@ -600,11 +572,7 @@ export class EthMasterWallet extends EthLikeWallet {
       walletAddress: this.getAddress(),
     };
 
-    const signature = this.signPayload(multiSigPayload, passphrase);
-    const signedMultiSigPayload = {
-      signature,
-      multiSigPayload,
-    };
+    const signedMultiSigPayload = this.signPayload(multiSigPayload, passphrase);
 
     return this.sendTransaction(
       this.getChain(),
@@ -621,26 +589,18 @@ export class EthMasterWallet extends EthLikeWallet {
       ? await this.getUserWallet(params.userWalletId)
       : this;
 
-    let signedMultiSigPayload;
     const coin: Coin = await this.coins.getCoin(
       params.coinSymbol,
       this.getVersion()
     );
-    if (this.isNonStandardCoin(coin)) {
-      signedMultiSigPayload = await wallet.buildContractCallPayload(
-        coin.getCoinData().address,
-        BNConverter.hexStringToBN("0x0"),
-        coin.buildTransferData(params.toAddress, params.amount),
-        params.passphrase
-      );
-    } else {
-      signedMultiSigPayload = await wallet.buildTransferPayload(
-        params.coinSymbol,
+    const signedMultiSigPayload = this.signPayload(
+      await coin.buildTransferMultiSigPayload(
+        wallet,
         params.toAddress,
-        params.amount,
-        params.passphrase
-      );
-    }
+        params.amount
+      ),
+      params.passphrase
+    );
 
     const request: ApproveWithdrawalApprovalRequest = {
       signedMultiSigPayload: {

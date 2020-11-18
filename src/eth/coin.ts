@@ -8,6 +8,9 @@ import eth from "../contracts/Eth.json";
 import klay from "../contracts/Klay.json";
 import { CoinDTO, CoinDTOAttributesEnum } from "../__generate__/eth";
 import AttributesEnum = CoinDTOAttributesEnum;
+import { BNConverter } from "../utils/common";
+import { MultiSigPayload } from "./transactions";
+import { EthLikeWallet } from "./wallet";
 
 export abstract class Coin {
   protected coinData: CoinDTO;
@@ -18,6 +21,29 @@ export abstract class Coin {
 
   public getCoinData(): CoinDTO {
     return this.coinData;
+  }
+
+  async buildTransferMultiSigPayload(
+    wallet: EthLikeWallet,
+    toAddress: string,
+    amount: BN
+  ): Promise<MultiSigPayload> {
+    return {
+      hexData: this.buildTransferData(toAddress, amount),
+      walletNonce: await wallet.getNonce(),
+      value: BNConverter.hexStringToBN("0x0"),
+      toAddress: this.isNonStandardCoin(wallet.getVersion())
+        ? this.coinData.address
+        : wallet.getAddress(),
+      walletAddress: wallet.getAddress(),
+    };
+  }
+
+  private isNonStandardCoin(walletVersion: string): boolean {
+    return (
+      (walletVersion == "v1" || walletVersion == "v2") &&
+      this.getAttributes().includes(AttributesEnum.NONSTANDARDRETURNTYPE)
+    );
   }
 
   abstract getName(): string;
