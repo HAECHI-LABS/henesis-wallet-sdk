@@ -1,8 +1,7 @@
 import BN from 'bn.js';
 import { Klay } from "../../src/eth/coin";
-import { BlockchainType } from "../../src/blockchain";
-import {CoinDTO, Blockchain} from "../../src/__generate__/eth";
-import {WalletWithdrawalPolicyDTO} from "../../src/__generate__/btc";
+import { CoinDTO, Blockchain } from "../../src/__generate__/eth";
+import { EthLikeWallet } from "../../src/eth/wallet";
 
 describe('Klay', () => {
   let klay: Klay;
@@ -27,13 +26,18 @@ describe('Klay', () => {
   });
 
   describe('#buildData()', () => {
-    it('should return encoded hex data', () => {
-      const data = klay.buildTransferData(
-        '0x280460de5d4488DDA8e29dFb947a8D4574203E3F',
-        new BN(5),
+    it("should has encoded hex data", async () => {
+      const mockWallet = {} as EthLikeWallet;
+      mockWallet.getAddress = jest.fn();
+      mockWallet.getNonce = jest.fn();
+
+      const data = await klay.buildTransferMultiSigPayload(
+        mockWallet,
+        "0x280460de5d4488DDA8e29dFb947a8D4574203E3F",
+        new BN(5)
       );
-      expect(data).toEqual(
-        '0x9cbaca3b000000000000000000000000280460de5d4488dda8e29dfb947a8d4574203e3f0000000000000000000000000000000000000000000000000000000000000005',
+      expect(data.hexData).toEqual(
+        "0x9cbaca3b000000000000000000000000280460de5d4488dda8e29dfb947a8d4574203e3f0000000000000000000000000000000000000000000000000000000000000005"
       );
     });
   });
