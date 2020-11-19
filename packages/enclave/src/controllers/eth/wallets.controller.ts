@@ -10,7 +10,11 @@ import {
   Balance,
   Pagination,
 } from "@haechi-labs/henesis-wallet-core/lib/types";
-import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
+import {
+  BNConverter,
+  SDK,
+  SignedMultiSigPayload,
+} from "@haechi-labs/henesis-wallet-core";
 
 import AbstractController from "../controller";
 import { Controller } from "../../types";
@@ -320,33 +324,33 @@ export default class WalletsController
     );
 
     const batch = masterWallet.createBatchRequest(req.body.otpCode);
-    for (let request of req.body.requests) {
-      let payload;
-      if (this.isContractCallRequest(request)) {
-        request = request as ContractCallRequest;
-        payload = await masterWallet.buildContractCallPayload(
-          request.contractAddress,
-          BNConverter.hexStringToBN(request.value),
-          request.data,
-          req.body.passphrase
-        );
-      }
+    const payloads: SignedMultiSigPayload[] = await Promise.all(
+      req.body.requests.map((request) => {
+        // TODO: should refactoring
+        if (this.isContractCallRequest(request)) {
+          request = request as ContractCallRequest;
+          return masterWallet.buildContractCallPayload(
+            request.contractAddress,
+            BNConverter.hexStringToBN(request.value),
+            request.data,
+            req.body.passphrase
+          );
+        }
 
-      if (this.isTransferRequest(request)) {
-        request = request as TransferRequest;
-        payload = await masterWallet.buildTransferPayload(
-          request.ticker,
-          request.to,
-          BNConverter.hexStringToBN(request.amount),
-          req.body.passphrase
-        );
-      }
+        if (this.isTransferRequest(request)) {
+          request = request as TransferRequest;
+          return masterWallet.buildTransferPayload(
+            request.ticker,
+            request.to,
+            BNConverter.hexStringToBN(request.amount),
+            req.body.passphrase
+          );
+        }
 
-      if (!payload) {
         throw new Error("invalid batch transactions request format");
-      }
-      batch.add(payload);
-    }
+      })
+    );
+    batch.addAll(payloads);
 
     return batch.execute();
   }

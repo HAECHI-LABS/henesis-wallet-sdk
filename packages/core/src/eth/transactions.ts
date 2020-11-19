@@ -16,6 +16,7 @@ import { convertTransactionDTO, convertRawTransactionDTO } from "./utils";
 
 export import TransactionStatus = TransactionStatus;
 import { BNConverter } from "../utils/common";
+import Bytes from "./eth-core-lib/bytes";
 
 export interface DetailedRawTransaction extends RawTransaction {
   fee: BN | null;
@@ -56,6 +57,20 @@ export interface MultiSigPayload {
   walletNonce: BN;
   hexData: string;
 }
+
+export const formatMultiSigPayload = (
+  multiSigPayload: MultiSigPayload
+): string => {
+  return `0x${multiSigPayload.walletAddress
+    .toLowerCase()
+    .slice(2)}${multiSigPayload.toAddress.toLowerCase().slice(2)}${Bytes.pad(
+    32,
+    Bytes.fromNat(`0x${multiSigPayload.value.toString(16)}`)
+  ).slice(2)}${Bytes.pad(
+    32,
+    Bytes.fromNat(`0x${multiSigPayload.walletNonce.toString(16)}`)
+  ).slice(2)}${multiSigPayload.hexData.slice(2)}`;
+};
 
 export interface SignedMultiSigPayload {
   signature: string;
