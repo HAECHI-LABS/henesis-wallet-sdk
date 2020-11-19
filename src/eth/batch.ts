@@ -10,8 +10,12 @@ export default class BatchRequest {
     this.payloads = [];
   }
 
-  public add(payload: SignedMultiSigPayload) {
+  public add(payload: SignedMultiSigPayload): void {
     this.payloads.push(payload);
+  }
+
+  public addAll(payloads: SignedMultiSigPayload[]): void {
+    this.payloads.push(...payloads);
   }
 
   public async execute() {
