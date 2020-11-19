@@ -5,21 +5,23 @@ import { AbiItem } from "web3-utils";
 import walletAbi from "../contracts/Wallet.json";
 import erc20Abi from "../contracts/ERC20.json";
 import { CoinDTO, CoinDTOAttributesEnum } from "../__generate__/eth";
-import AttributesEnum = CoinDTOAttributesEnum;
 import { BNConverter } from "../utils/common";
 import { MultiSigPayload } from "./transactions";
 import { EthLikeWallet } from "./wallet";
 
+export import AttributesEnum = CoinDTOAttributesEnum;
+export type CoinData = CoinDTO;
+
 export abstract class Coin {
-  protected coinData: CoinDTO;
+  protected coinData: CoinData;
   protected readonly walletContract: Contract;
 
-  protected constructor(coinData: CoinDTO) {
+  protected constructor(coinData: CoinData) {
     this.coinData = coinData;
     this.walletContract = new new Web3().eth.Contract(walletAbi as AbiItem[]);
   }
 
-  public getCoinData(): CoinDTO {
+  public getCoinData(): CoinData {
     return this.coinData;
   }
 
@@ -44,11 +46,13 @@ export abstract class Coin {
     tokenAddress?: string
   ): string;
 
-  abstract getAttributes(): AttributesEnum[];
+  getAttributes(): AttributesEnum[] {
+    return this.coinData.attributes;
+  }
 }
 
 export class StandardErc20 extends Coin {
-  constructor(coinData: CoinDTO) {
+  constructor(coinData: CoinData) {
     super(coinData);
   }
 
@@ -79,16 +83,12 @@ export class StandardErc20 extends Coin {
       .flushToken(tokenAddress, targetAddresses)
       .encodeABI();
   }
-
-  getAttributes(): CoinDTOAttributesEnum[] {
-    return this.coinData.attributes;
-  }
 }
 
 export class NonStandardReturnTypeErc20 extends Coin {
   private readonly erc20Contract: Contract;
 
-  constructor(coinData: CoinDTO) {
+  constructor(coinData: CoinData) {
     super(coinData);
     this.erc20Contract = new new Web3().eth.Contract(erc20Abi as AbiItem[]);
   }
@@ -106,7 +106,7 @@ export class NonStandardReturnTypeErc20 extends Coin {
     to: string,
     amount: BN
   ): Promise<MultiSigPayload> {
-    if (wallet.getVersion() == "v1" || wallet.getVersion() == "v2") {
+    if (wallet.getVersion() === "v1" || wallet.getVersion() === "v2") {
       return {
         ...(await this.buildTransferMultiSigPayloadTemplate(wallet)),
         hexData: this.erc20Contract.methods.transfer(to, amount).encodeABI(),
@@ -128,14 +128,10 @@ export class NonStandardReturnTypeErc20 extends Coin {
       .flushToken(tokenAddress, targetAddresses)
       .encodeABI();
   }
-
-  getAttributes(): CoinDTOAttributesEnum[] {
-    return this.coinData.attributes;
-  }
 }
 
 export class Eth extends Coin {
-  constructor(coinData: CoinDTO) {
+  constructor(coinData: CoinData) {
     super(coinData);
   }
 
@@ -158,14 +154,10 @@ export class Eth extends Coin {
   buildFlushData(targetAddresses: string[]) {
     return this.walletContract.methods.flushEth(targetAddresses).encodeABI();
   }
-
-  getAttributes(): CoinDTOAttributesEnum[] {
-    return this.coinData.attributes;
-  }
 }
 
 export class Klay extends Coin {
-  constructor(coinData: CoinDTO) {
+  constructor(coinData: CoinData) {
     super(coinData);
   }
 
@@ -187,9 +179,5 @@ export class Klay extends Coin {
 
   buildFlushData(targetAddresses: string[]) {
     return this.walletContract.methods.flushKlay(targetAddresses).encodeABI();
-  }
-
-  getAttributes(): CoinDTOAttributesEnum[] {
-    return this.coinData.attributes;
   }
 }
