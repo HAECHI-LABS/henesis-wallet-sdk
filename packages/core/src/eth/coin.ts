@@ -2,10 +2,8 @@ import BN from "bn.js";
 import { Contract } from "web3-eth-contract";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
-import standardErc20 from "../contracts/ERC20.json";
-import nonStandardErc20 from "../contracts/ERC20_NON_STANDARD_RETURN_TYPE.json";
-import eth from "../contracts/Eth.json";
-import klay from "../contracts/Klay.json";
+import walletAbi from "../contracts/Wallet.json";
+import erc20Abi from "../contracts/ERC20.json";
 import { CoinDTO, CoinDTOAttributesEnum } from "../__generate__/eth";
 import AttributesEnum = CoinDTOAttributesEnum;
 import { BNConverter } from "../utils/common";
@@ -14,41 +12,32 @@ import { EthLikeWallet } from "./wallet";
 
 export abstract class Coin {
   protected coinData: CoinDTO;
+  protected readonly walletContract: Contract;
 
   protected constructor(coinData: CoinDTO) {
     this.coinData = coinData;
+    this.walletContract = new new Web3().eth.Contract(walletAbi as AbiItem[]);
   }
 
   public getCoinData(): CoinDTO {
     return this.coinData;
   }
 
-  async buildTransferMultiSigPayload(
+  abstract async buildTransferMultiSigPayload(
     wallet: EthLikeWallet,
-    toAddress: string,
+    to: string,
     amount: BN
-  ): Promise<MultiSigPayload> {
+  ): Promise<MultiSigPayload>;
+
+  protected async buildTransferMultiSigPayloadTemplate(wallet: EthLikeWallet) {
     return {
-      hexData: this.buildTransferData(toAddress, amount),
       walletNonce: await wallet.getNonce(),
       value: BNConverter.hexStringToBN("0x0"),
-      toAddress: this.isNonStandardCoin(wallet.getVersion())
-        ? this.coinData.address
-        : wallet.getAddress(),
       walletAddress: wallet.getAddress(),
     };
   }
 
-  private isNonStandardCoin(walletVersion: string): boolean {
-    return (
-      (walletVersion == "v1" || walletVersion == "v2") &&
-      this.getAttributes().includes(AttributesEnum.NONSTANDARDRETURNTYPE)
-    );
-  }
-
   abstract getName(): string;
-
-  abstract buildTransferData(to: string, amount: BN): string;
 
   abstract buildFlushData(
     targetAddresses: string[],
@@ -59,13 +48,8 @@ export abstract class Coin {
 }
 
 export class StandardErc20 extends Coin {
-  private readonly standardErc20: Contract;
-
   constructor(coinData: CoinDTO) {
     super(coinData);
-    this.standardErc20 = new new Web3().eth.Contract(
-      standardErc20 as AbiItem[]
-    );
   }
 
   getAddress(): string {
@@ -76,14 +60,22 @@ export class StandardErc20 extends Coin {
     return this.coinData.name;
   }
 
-  buildTransferData(to: string, amount: BN): string {
-    return this.standardErc20.methods
-      .transferToken(this.getAddress(), to, amount)
-      .encodeABI();
+  async buildTransferMultiSigPayload(
+    wallet: EthLikeWallet,
+    to: string,
+    amount: BN
+  ): Promise<MultiSigPayload> {
+    return {
+      ...(await this.buildTransferMultiSigPayloadTemplate(wallet)),
+      hexData: this.walletContract.methods
+        .transferToken(this.getAddress(), to, amount)
+        .encodeABI(),
+      toAddress: wallet.getAddress(),
+    };
   }
 
   buildFlushData(targetAddresses: string[], tokenAddress: string) {
-    return this.standardErc20.methods
+    return this.walletContract.methods
       .flushToken(tokenAddress, targetAddresses)
       .encodeABI();
   }
@@ -94,13 +86,11 @@ export class StandardErc20 extends Coin {
 }
 
 export class NonStandardReturnTypeErc20 extends Coin {
-  private readonly nonStandardErc20: Contract;
+  private readonly erc20Contract: Contract;
 
   constructor(coinData: CoinDTO) {
     super(coinData);
-    this.nonStandardErc20 = new new Web3().eth.Contract(
-      nonStandardErc20 as AbiItem[]
-    );
+    this.erc20Contract = new new Web3().eth.Contract(erc20Abi as AbiItem[]);
   }
 
   getAddress(): string {
@@ -111,12 +101,30 @@ export class NonStandardReturnTypeErc20 extends Coin {
     return this.coinData.name;
   }
 
-  buildTransferData(to: string, amount: BN): string {
-    return this.nonStandardErc20.methods.transfer(to, amount).encodeABI();
+  async buildTransferMultiSigPayload(
+    wallet: EthLikeWallet,
+    to: string,
+    amount: BN
+  ): Promise<MultiSigPayload> {
+    if (wallet.getVersion() == "v1" || wallet.getVersion() == "v2") {
+      return {
+        ...(await this.buildTransferMultiSigPayloadTemplate(wallet)),
+        hexData: this.erc20Contract.methods.transfer(to, amount).encodeABI(),
+        toAddress: this.coinData.address,
+      };
+    }
+
+    return {
+      ...(await this.buildTransferMultiSigPayloadTemplate(wallet)),
+      hexData: this.walletContract.methods
+        .transferToken(this.getAddress(), to, amount)
+        .encodeABI(),
+      toAddress: wallet.getAddress(),
+    };
   }
 
   buildFlushData(targetAddresses: string[], tokenAddress: string) {
-    return this.nonStandardErc20.methods
+    return this.erc20Contract.methods
       .flushToken(tokenAddress, targetAddresses)
       .encodeABI();
   }
@@ -127,23 +135,28 @@ export class NonStandardReturnTypeErc20 extends Coin {
 }
 
 export class Eth extends Coin {
-  private eth: Contract;
-
   constructor(coinData: CoinDTO) {
     super(coinData);
-    this.eth = new new Web3().eth.Contract(eth as AbiItem[]);
   }
 
   getName(): string {
     return "eth";
   }
 
-  buildTransferData(to: string, amount: BN): string {
-    return this.eth.methods.transferEth(to, amount).encodeABI();
+  async buildTransferMultiSigPayload(
+    wallet: EthLikeWallet,
+    to: string,
+    amount: BN
+  ): Promise<MultiSigPayload> {
+    return {
+      ...(await this.buildTransferMultiSigPayloadTemplate(wallet)),
+      hexData: this.walletContract.methods.transferEth(to, amount).encodeABI(),
+      toAddress: wallet.getAddress(),
+    };
   }
 
   buildFlushData(targetAddresses: string[]) {
-    return this.eth.methods.flushEth(targetAddresses).encodeABI();
+    return this.walletContract.methods.flushEth(targetAddresses).encodeABI();
   }
 
   getAttributes(): CoinDTOAttributesEnum[] {
@@ -152,23 +165,28 @@ export class Eth extends Coin {
 }
 
 export class Klay extends Coin {
-  private readonly klay: Contract;
-
   constructor(coinData: CoinDTO) {
     super(coinData);
-    this.klay = new new Web3().eth.Contract(klay as AbiItem[]);
   }
 
   getName(): string {
     return "klay";
   }
 
-  buildTransferData(to: string, amount: BN): string {
-    return this.klay.methods.transferKlay(to, amount).encodeABI();
+  async buildTransferMultiSigPayload(
+    wallet: EthLikeWallet,
+    to: string,
+    amount: BN
+  ): Promise<MultiSigPayload> {
+    return {
+      ...(await this.buildTransferMultiSigPayloadTemplate(wallet)),
+      hexData: this.walletContract.methods.transferKlay(to, amount).encodeABI(),
+      toAddress: wallet.getAddress(),
+    };
   }
 
   buildFlushData(targetAddresses: string[]) {
-    return this.klay.methods.flushKlay(targetAddresses).encodeABI();
+    return this.walletContract.methods.flushKlay(targetAddresses).encodeABI();
   }
 
   getAttributes(): CoinDTOAttributesEnum[] {

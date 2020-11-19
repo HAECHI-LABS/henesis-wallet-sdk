@@ -2,7 +2,6 @@ import { Contract } from "web3-eth-contract/";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import BN from "bn.js";
-import { Coin } from "./coin";
 import { transformWalletStatus, WalletStatus } from "../wallet";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
 import {
@@ -172,13 +171,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     gasPrice?: BN,
     gasLimit?: BN
   ): Promise<EthTransaction> {
-    if (_.isEmpty(data)) {
-      throw new ValidationParameterError("data is empty");
-    }
-    checkNullAndUndefinedParameter({
-      contractAddress,
-      passphrase,
-    });
     return this.sendTransaction(
       this.getChain(),
       await this.buildContractCallPayload(
@@ -200,6 +192,9 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     data: string,
     passphrase: string
   ): Promise<SignedMultiSigPayload> {
+    if (_.isEmpty(data)) {
+      throw new ValidationParameterError("data is empty");
+    }
     checkNullAndUndefinedParameter({
       contractAddress,
       data,
@@ -255,7 +250,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       passphrase,
     });
 
-    const coin = await this.coins.getCoin(ticker, this.getVersion());
+    const coin = await this.coins.getCoin(ticker);
 
     return this.signPayload(
       await coin.buildTransferMultiSigPayload(this, to, amount),
@@ -545,7 +540,7 @@ export class EthMasterWallet extends EthLikeWallet {
     if (userWalletIds.length > 50 || userWalletIds.length == 0) {
       throw new Error(`only 1 ~ 50 accounts can be flushed at a time`);
     }
-    const coin: Coin = await this.coins.getCoin(ticker, this.getVersion());
+    const coin = await this.coins.getCoin(ticker);
     const userWallets: Pagination<EthUserWallet> = await this.getUserWallets({
       ids: userWalletIds,
       size: userWalletIds.length,
@@ -589,10 +584,7 @@ export class EthMasterWallet extends EthLikeWallet {
       ? await this.getUserWallet(params.userWalletId)
       : this;
 
-    const coin: Coin = await this.coins.getCoin(
-      params.coinSymbol,
-      this.getVersion()
-    );
+    const coin = await this.coins.getCoin(params.coinSymbol);
     const signedMultiSigPayload = this.signPayload(
       await coin.buildTransferMultiSigPayload(
         wallet,

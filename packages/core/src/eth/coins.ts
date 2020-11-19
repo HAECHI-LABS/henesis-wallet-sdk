@@ -16,22 +16,17 @@ export class Coins {
     this.client = client;
   }
 
-  public async getCoin(ticker: string, walletVersion?: string): Promise<Coin> {
+  public async getCoin(ticker: string): Promise<Coin> {
     const coinData = await this.client.get<CoinDTO>(`/coins/${ticker}`);
-    return this.resolveCoin(coinData, walletVersion);
+    return this.resolveCoin(coinData);
   }
 
-  public async getCoins(
-    flag: boolean,
-    walletVersion?: string
-  ): Promise<Coin[]> {
+  public async getCoins(flag: boolean): Promise<Coin[]> {
     const coinData = await this.client.get<CoinDTO[]>(`/coins?flag=${flag}`);
-    return coinData.map((coinDatum) =>
-      this.resolveCoin(coinDatum, walletVersion)
-    );
+    return coinData.map((coinDatum) => this.resolveCoin(coinDatum));
   }
 
-  private resolveCoin(coinData: CoinDTO, walletVersion?: string): Coin {
+  private resolveCoin(coinData: CoinDTO): Coin {
     if (coinData.symbol.toString() == "ETH") {
       return new Eth(coinData);
     }
@@ -40,10 +35,7 @@ export class Coins {
       return new Klay(coinData);
     }
 
-    if (
-      (walletVersion == "v1" || walletVersion == "v2") &&
-      coinData.attributes.includes(AttributesEnum.NONSTANDARDRETURNTYPE)
-    ) {
+    if (coinData.attributes.includes(AttributesEnum.NONSTANDARDRETURNTYPE)) {
       return new NonStandardReturnTypeErc20(coinData);
     }
 
