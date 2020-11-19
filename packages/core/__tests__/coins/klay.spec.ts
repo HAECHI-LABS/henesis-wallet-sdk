@@ -1,11 +1,11 @@
 import BN from 'bn.js';
-import { Klay } from "../../src/eth/coin";
-import { CoinDTO, Blockchain } from "../../src/__generate__/eth";
+import { CoinData, Klay } from "../../src/eth/coin";
+import { Blockchain } from "../../src/__generate__/eth";
 import { EthLikeWallet } from "../../src/eth/wallet";
 
 describe('Klay', () => {
   let klay: Klay;
-  const coinData: CoinDTO = {
+  const coinData: CoinData = {
     id: 1,
     name: '클레이튼',
     symbol: 'KLAY',

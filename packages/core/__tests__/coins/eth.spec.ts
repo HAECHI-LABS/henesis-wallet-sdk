@@ -1,11 +1,11 @@
 import BN from "bn.js";
-import { Eth } from "../../src/eth";
-import { CoinDTO, Blockchain } from "../../src/__generate__/eth";
+import { CoinData, Eth } from "../../src/eth";
+import { Blockchain } from "../../src/__generate__/eth";
 import { EthLikeWallet } from "../../src/eth/wallet";
 
 describe("Eth", () => {
   let eth: Eth;
-  const coinData: CoinDTO = {
+  const coinData: CoinData = {
     id: 1,
     name: "이더리움",
     symbol: "ETH",

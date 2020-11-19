@@ -2,7 +2,7 @@ import express from "express";
 
 import AbstractController from "../controller";
 import { Controller } from "../../types";
-import { CoinDTO } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import { CoinData } from "@haechi-labs/henesis-wallet-core";
 
 export default class CoinsController
   extends AbstractController
@@ -20,11 +20,11 @@ export default class CoinsController
     this.router.get(`${this.path}`, this.promiseWrapper(this.getAllCoins));
   }
 
-  private async getCoin(req: express.Request): Promise<CoinDTO> {
+  private async getCoin(req: express.Request): Promise<CoinData> {
     return (await req.sdk.eth.coins.getCoin(req.params.ticker)).getCoinData();
   }
 
-  private async getAllCoins(req: express.Request): Promise<CoinDTO[]> {
+  private async getAllCoins(req: express.Request): Promise<CoinData[]> {
     return (
       await req.sdk.eth.coins.getCoins(req.query.flag === "true")
     ).map((c) => c.getCoinData());
