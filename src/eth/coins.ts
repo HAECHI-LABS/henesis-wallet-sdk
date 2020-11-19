@@ -5,9 +5,9 @@ import {
   Eth,
   Klay,
   NonStandardReturnTypeErc20,
+  CoinData,
+  AttributesEnum,
 } from "./coin";
-import { CoinDTO, CoinDTOAttributesEnum } from "../__generate__/eth";
-import AttributesEnum = CoinDTOAttributesEnum;
 
 export class Coins {
   private readonly client: Client;
@@ -17,16 +17,16 @@ export class Coins {
   }
 
   public async getCoin(ticker: string): Promise<Coin> {
-    const coinData = await this.client.get<CoinDTO>(`/coins/${ticker}`);
+    const coinData = await this.client.get<CoinData>(`/coins/${ticker}`);
     return this.resolveCoin(coinData);
   }
 
   public async getCoins(flag: boolean): Promise<Coin[]> {
-    const coinData = await this.client.get<CoinDTO[]>(`/coins?flag=${flag}`);
+    const coinData = await this.client.get<CoinData[]>(`/coins?flag=${flag}`);
     return coinData.map((coinDatum) => this.resolveCoin(coinDatum));
   }
 
-  private resolveCoin(coinData: CoinDTO): Coin {
+  private resolveCoin(coinData: CoinData): Coin {
     if (coinData.symbol.toString() == "ETH") {
       return new Eth(coinData);
     }
