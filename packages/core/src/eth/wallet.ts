@@ -18,7 +18,7 @@ import {
 } from "./transactions";
 import { Client } from "../httpClient";
 import BatchRequest from "./batch";
-import wallet from "../contracts/MasterWallet.json";
+import walletAbi from "../contracts/Wallet.json";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import { WalletData, Wallet } from "../wallet";
 import { makeQueryString } from "../utils/url";
@@ -351,7 +351,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
 }
 
 export class EthMasterWallet extends EthLikeWallet {
-  private wallet: Contract;
+  private walletContract: Contract;
 
   public constructor(
     client: Client,
@@ -360,7 +360,7 @@ export class EthMasterWallet extends EthLikeWallet {
     blockchain: BlockchainType
   ) {
     super(client, data, keychains, blockchain, `/wallets/${data.id}`);
-    this.wallet = new new Web3().eth.Contract(wallet as AbiItem[]);
+    this.walletContract = new new Web3().eth.Contract(walletAbi as AbiItem[]);
   }
 
   getEncryptionKey(): string {
@@ -387,7 +387,7 @@ export class EthMasterWallet extends EthLikeWallet {
     if (salt === undefined) {
       salt = Web3.utils.toBN(Web3.utils.randomHex(32));
     }
-    const data = this.wallet.methods.createUserWallet(salt).encodeABI();
+    const data = this.walletContract.methods.createUserWallet(salt).encodeABI();
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
       walletNonce: nonce,
