@@ -3,8 +3,8 @@ import { Base64 } from "js-base64";
 import * as BN from "bn.js";
 import { Env } from "../sdk";
 import { Client } from "../httpClient";
-import { Key, Keychains, KeyWithPriv } from "../types";
-import { BlockchainType, transformBlockchainType } from "../blockchain";
+import { Keychains } from "../types";
+import { BlockchainType } from "../blockchain";
 import { RecoveryKit } from "../recoverykit";
 import {
   EthMasterWallet,
@@ -26,7 +26,6 @@ export interface MasterWalletSearchOptions {
 
 export class EthWallets extends Wallets<EthMasterWallet> {
   private readonly henesisKey: HenesisKeys;
-
   private readonly blockchain: BlockchainType;
 
   constructor(
@@ -57,7 +56,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
   public async getMasterWallets(
     options?: MasterWalletSearchOptions
   ): Promise<EthMasterWallet[]> {
-    const queryString: string = makeQueryString(options);
+    const queryString = makeQueryString(options);
     const walletDatas = await this.client.get<
       NoUndefinedField<MasterWalletDTO>[]
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
@@ -80,8 +79,8 @@ export class EthWallets extends Wallets<EthMasterWallet> {
   ): Promise<RecoveryKit> {
     const accountKey = this.keychains.create(passphrase);
     const backupKey = this.keychains.create(passphrase);
-    const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
-    const henesisKey: Key = await this.henesisKey.getHenesisKey();
+    const encryptionKeyBuffer = this.createEncryptionKey(passphrase);
+    const henesisKey = await this.henesisKey.getHenesisKey();
 
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
