@@ -14,7 +14,7 @@ export default class HenesisKeysController
     this.initRoutes();
   }
 
-  public initRoutes() {
+  initRoutes(): void {
     this.router.get(`${this.path}/me`, this.promiseWrapper(this.getHenesisKey));
 
     this.router.get(
@@ -23,8 +23,8 @@ export default class HenesisKeysController
     );
   }
 
-  private async getHenesisKey(req: express.Request): Promise<Key> {
-    return await req.sdk.eth.henesisKeys.getHenesisKey();
+  private getHenesisKey(req: express.Request): Promise<Key> {
+    return req.sdk.eth.henesisKeys.getHenesisKey();
   }
 
   private async getHenesisKeyBalance(req: express.Request): Promise<Balance> {

@@ -55,15 +55,15 @@ export class BtcTransfers {
     this.client = client;
   }
 
-  public async getTransfer(id: string): Promise<Transfer> {
+  async getTransfer(id: string): Promise<Transfer> {
     const response = await this.client.get<TransferDTO>(`/transfers/${id}`);
     return convertTransferDTO(response);
   }
 
-  public async getTransfers(
+  async getTransfers(
     options?: TransferPaginationOptions
   ): Promise<Pagination<Transfer>> {
-    const queryString: string = makeQueryString(options);
+    const queryString = makeQueryString(options);
     const data = await this.client.get<PaginationTransferDTO>(
       `/transfers${queryString ? `?${queryString}` : ""}`
     );
@@ -76,17 +76,17 @@ export class BtcTransfers {
     };
   }
 
-  public async getInternalTransfer(id: string): Promise<TransferInternal> {
+  async getInternalTransfer(id: string): Promise<TransferInternal> {
     const response = await this.client.get<TransferInternalDTO>(
       `/internal/transfers/${id}`
     );
     return convertTransferInternalDTO(response);
   }
 
-  public async getInternalTransfers(
+  async getInternalTransfers(
     options?: TransferPaginationOptions
   ): Promise<Pagination<TransferInternal>> {
-    const queryString: string = makeQueryString(options);
+    const queryString = makeQueryString(options);
     const data = await this.client.get<PaginationTransferInternalDTO>(
       `/internal/transfers${queryString ? `?${queryString}` : ""}`
     );

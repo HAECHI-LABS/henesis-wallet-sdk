@@ -14,9 +14,8 @@ export default class HenesisKeysController
     this.initRoutes();
   }
 
-  public initRoutes() {
+  initRoutes(): void {
     this.router.get(`${this.path}/me`, this.promiseWrapper(this.getHenesisKey));
-
     this.router.get(
       `${this.path}/balance`,
       this.promiseWrapper(this.getHenesisKeyBalance)

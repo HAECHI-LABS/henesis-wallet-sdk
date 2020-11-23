@@ -14,7 +14,7 @@ export default class CoinsController
     this.initRoutes();
   }
 
-  public initRoutes() {
+  initRoutes(): void {
     this.router.get(`${this.path}/:ticker`, this.promiseWrapper(this.getCoin));
 
     this.router.get(`${this.path}`, this.promiseWrapper(this.getAllCoins));

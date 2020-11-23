@@ -22,7 +22,7 @@ export default class EventsController
     this.initRoutes();
   }
 
-  public initRoutes() {
+  initRoutes(): void {
     this.router.get(
       `${this.path}/call-events`,
       this.promiseWrapper(this.getCallEvents)

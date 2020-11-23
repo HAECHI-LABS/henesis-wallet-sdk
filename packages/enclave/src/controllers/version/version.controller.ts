@@ -13,7 +13,7 @@ export default class VersionController
     this.initRoutes();
   }
 
-  public initRoutes() {
+  initRoutes(): void {
     this.router.get(`/version`, this.promiseWrapper(this.getEnclaveVersion));
   }
 

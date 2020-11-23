@@ -19,11 +19,11 @@ import {
 import { checkNullAndUndefinedParameter } from "..";
 
 export class BtcWallets extends Wallets<BtcMasterWallet> {
-  public constructor(env: Env, client: Client, keychains: Keychains) {
+  constructor(env: Env, client: Client, keychains: Keychains) {
     super(env, client, keychains);
   }
 
-  public async createMasterWallet(
+  async createMasterWallet(
     name: string,
     passphrase: string
   ): Promise<BtcMasterWallet> {
@@ -50,7 +50,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     );
   }
 
-  public async getWallet(id: string) {
+  async getWallet(id: string): Promise<BtcMasterWallet> {
     const data = await this.client.get<MasterWalletDTO>(
       `${this.baseUrl}/${id}`
     );
@@ -62,7 +62,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     );
   }
 
-  public verifyAddress(address: string): boolean {
+  verifyAddress(address: string): boolean {
     checkNullAndUndefinedParameter({ address });
     try {
       BitcoinAddress.toOutputScript(
@@ -104,9 +104,10 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       name,
       encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
     };
-    const masterWalletResponse = await this.client.post<
-      CreateInactiveMasterWalletResponse
-    >(`${this.baseUrl}?type=inactive`, params);
+    const masterWalletResponse = await this.client.post<CreateInactiveMasterWalletResponse>(
+      `${this.baseUrl}?type=inactive`,
+      params
+    );
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
       aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))

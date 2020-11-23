@@ -14,7 +14,7 @@ export default class GasUsagesController
     this.initRoutes();
   }
 
-  public initRoutes() {
+  initRoutes(): void {
     this.router.get(
       `${this.path}/method-gas-usages`,
       this.promiseWrapper(this.getMethodGasUsages)

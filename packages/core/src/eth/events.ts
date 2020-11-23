@@ -47,10 +47,10 @@ export class EthEvents {
     this.client = client;
   }
 
-  public async getCallEvents(
+  async getCallEvents(
     options?: EthEventPaginationOptions
   ): Promise<Pagination<EthCallEvent>> {
-    const queryString: string = makeQueryString(options);
+    const queryString = makeQueryString(options);
     const data = await this.client.get<PaginationCallEventDTO>(
       `/call-events${queryString ? `?${queryString}` : ""}`
     );
@@ -65,10 +65,10 @@ export class EthEvents {
     };
   }
 
-  public async getValueTransferEvents(
+  async getValueTransferEvents(
     options?: EthValueTransferEventPaginationOptions
   ): Promise<Pagination<EthValueTransferEvent>> {
-    const queryString: string = makeQueryString(options);
+    const queryString = makeQueryString(options);
     const data = await this.client.get<
       NoUndefinedField<PaginationValueTransferEventDTO>
     >(`/value-transfer-events${queryString ? `?${queryString}` : ""}`);
@@ -85,10 +85,10 @@ export class EthEvents {
     };
   }
 
-  public async getInternalCallEvents(
+  async getInternalCallEvents(
     options?: EthEventPaginationOptions
   ): Promise<Pagination<CallEventInternal>> {
-    const queryString: string = makeQueryString(options);
+    const queryString = makeQueryString(options);
     const data = await this.client.get<PaginationCallEventInternalDTO>(
       `/internal/call-events${queryString ? `?${queryString}` : ""}`
     );
@@ -104,7 +104,7 @@ export class EthEvents {
     };
   }
 
-  public async getInternalValueTransferEvents(
+  async getInternalValueTransferEvents(
     options?: EthValueTransferEventPaginationOptions
   ): Promise<Pagination<ValueTransferEventInternal>> {
     const queryString: string = makeQueryString(options);
