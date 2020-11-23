@@ -42,6 +42,7 @@ import {
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
+import { Coin } from "./coin";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -216,7 +217,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   }
 
   async transfer(
-    ticker: string,
+    coin: string | Coin,
     to: string,
     amount: BN,
     passphrase: string,
@@ -224,30 +225,33 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     gasPrice?: BN,
     gasLimit?: BN
   ): Promise<EthTransaction> {
+    const localCoin =
+      typeof coin === "string" ? await this.coins.getCoin(coin) : coin;
     return this.sendTransaction(
-      await this.buildTransferPayload(ticker, to, amount, passphrase),
+      await this.buildTransferPayload(localCoin, to, amount, passphrase),
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit || this.getGasLimitByTicker(ticker)
+      gasLimit || this.getGasLimitByTicker(localCoin)
     );
   }
 
   public async buildTransferPayload(
-    ticker: string,
+    coin: string | Coin,
     to: string,
     amount: BN,
     passphrase: string
   ): Promise<SignedMultiSigPayload> {
     checkNullAndUndefinedParameter({
-      ticker,
+      coin,
       to,
       passphrase,
     });
 
-    const coin = await this.coins.getCoin(ticker);
+    const localCoin =
+      typeof coin === "string" ? await this.coins.getCoin(coin) : coin;
     return this.signPayload(
-      await coin.buildTransferMultiSigPayload(this, to, amount),
+      await localCoin.buildTransferMultiSigPayload(this, to, amount),
       passphrase
     );
   }
@@ -342,7 +346,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     return BNConverter.hexStringToBN(String(nonce.nonce));
   }
 
-  protected getGasLimitByTicker(ticker: string): BN {
+  protected getGasLimitByTicker(coin: Coin): BN {
+    const ticker = coin.getCoinData().symbol;
     if (ticker.toUpperCase() === "ETH" || ticker.toUpperCase() === "KLAY") {
       return this.DEFAULT_COIN_TRANSFER_GAS_LIMIT;
     }
@@ -518,7 +523,7 @@ export class EthMasterWallet extends EthLikeWallet {
   }
 
   async flush(
-    ticker: string,
+    coin: string | Coin,
     userWalletIds: string[],
     passphrase: string,
     otpCode?: string,
@@ -528,7 +533,9 @@ export class EthMasterWallet extends EthLikeWallet {
     if (userWalletIds.length > 50 || userWalletIds.length == 0) {
       throw new Error(`only 1 ~ 50 accounts can be flushed at a time`);
     }
-    const coin = await this.coins.getCoin(ticker);
+    const localCoin =
+      typeof coin === "string" ? await this.coins.getCoin(coin) : coin;
+
     const userWallets: Pagination<EthUserWallet> = await this.getUserWallets({
       ids: userWalletIds,
       size: userWalletIds.length,
@@ -544,9 +551,9 @@ export class EthMasterWallet extends EthLikeWallet {
     }
 
     const multiSigPayload: MultiSigPayload = {
-      hexData: coin.buildFlushData(
+      hexData: localCoin.buildFlushData(
         userWalletAddresses,
-        coin.getCoinData().address
+        localCoin.getCoinData().address
       ),
       walletNonce: await this.getNonce(),
       value: BNConverter.hexStringToBN("0x0"),
