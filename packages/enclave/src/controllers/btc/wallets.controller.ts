@@ -3,16 +3,20 @@ import { Controller } from "../../types";
 import express from "express";
 import {
   BtcEstimatedFee,
+  BtcMasterWallet,
   BtcMasterWalletData,
   DepositAddress,
 } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
-import { BNConverter } from "@haechi-labs/henesis-wallet-core";
+import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
 import {
   Balance,
   Pagination,
 } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
 import { TransferResponse } from "./transfers.controller";
+import { Cacheable } from "@type-cacheable/core";
+import { WalletStatus } from "@haechi-labs/henesis-wallet-core/lib/wallet";
+import { DefaultFilterCacheStrategy } from "../../utils/cache";
 
 export interface BalanceResponse
   extends Omit<Balance, "amount" | "spendableAmount"> {
@@ -87,8 +91,22 @@ export default class WalletsController
   }
 
   private async getWallet(req: express.Request): Promise<BtcMasterWalletData> {
-    const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
+    const wallet = await this.getWalletById(req.sdk, req.params.walletId);
     return wallet.getData();
+  }
+
+  @Cacheable({
+    cacheKey: (args) => args[1],
+    hashKey: "btc_wallet",
+    ttlSeconds: 10, // should refresh master wallet due to whitelistActivated field
+    strategy: new DefaultFilterCacheStrategy(
+      (wallet: BtcMasterWallet) =>
+        // should cache only if it is active
+        wallet.getData().status === WalletStatus.ACTIVE
+    ),
+  })
+  private getWalletById(sdk: SDK, id: string): Promise<BtcMasterWallet> {
+    return sdk.btc.wallets.getWallet(id);
   }
 
   private async verifyAddress(req: express.Request): Promise<Boolean> {
@@ -98,7 +116,7 @@ export default class WalletsController
   }
 
   private async transfer(req: express.Request): Promise<TransferResponse> {
-    const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
+    const wallet = await this.getWalletById(req.sdk, req.params.walletId);
 
     const transfer: Transfer = await wallet.transfer(
       req.body.to,
@@ -113,14 +131,14 @@ export default class WalletsController
   private async getEstimatedFee(
     req: express.Request
   ): Promise<BtcEstimatedFee> {
-    const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
+    const wallet = await this.getWalletById(req.sdk, req.params.walletId);
     return wallet.getEstimatedFee();
   }
 
   private async getWalletBalance(
     req: express.Request
   ): Promise<BalanceResponse[]> {
-    const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
+    const wallet = await this.getWalletById(req.sdk, req.params.walletId);
 
     const balances = await wallet.getBalance();
     return this.bnToHexString(balances);
@@ -129,7 +147,7 @@ export default class WalletsController
   private async getDepositAddresses(
     req: express.Request
   ): Promise<Pagination<DepositAddress>> {
-    const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
+    const wallet = await this.getWalletById(req.sdk, req.params.walletId);
 
     return this.pagination<DepositAddress>(
       req,
@@ -137,24 +155,38 @@ export default class WalletsController
     );
   }
 
-  private async getDepositAddress(
-    req: express.Request
-  ): Promise<DepositAddress> {
-    const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
+  private getDepositAddress(req: express.Request): Promise<DepositAddress> {
+    return this.getDepositAddressByContext(
+      req.sdk,
+      req.params.walletId,
+      req.params.depositAddressId
+    );
+  }
 
-    return await wallet.getDepositAddress(req.params.depositAddressId);
+  @Cacheable({
+    cacheKey: (args) => args[1] + args[2],
+    hashKey: "btc_deposit_address",
+  })
+  private async getDepositAddressByContext(
+    sdk: SDK,
+    walletId: string,
+    depositAddressId: string
+  ): Promise<DepositAddress> {
+    const wallet = await this.getWalletById(sdk, walletId);
+
+    return wallet.getDepositAddress(depositAddressId);
   }
 
   private async createDepositAddress(
     req: express.Request
   ): Promise<DepositAddress> {
-    const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
+    const wallet = await this.getWalletById(req.sdk, req.params.walletId);
 
     return await wallet.createDepositAddress(req.body.name);
   }
 
   private async changePassphrase(req: express.Request): Promise<void> {
-    const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
+    const wallet = await this.getWalletById(req.sdk, req.params.walletId);
 
     return wallet.changePassphrase(
       req.body.passphrase,
@@ -164,7 +196,7 @@ export default class WalletsController
   }
 
   private async changeWalletName(req: express.Request): Promise<void> {
-    const wallet = await req.sdk.btc.wallets.getWallet(req.params.walletId);
+    const wallet = await this.getWalletById(req.sdk, req.params.walletId);
 
     return wallet.changeName(req.body.name);
   }

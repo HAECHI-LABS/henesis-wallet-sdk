@@ -1,4 +1,5 @@
 import { App } from "./app";
+import minimist from "minimist";
 import logger from "./middlewares/logger";
 import sdkInjector from "./middlewares/sdkInjector";
 import converter from "./middlewares/converter";
@@ -9,6 +10,7 @@ import { versionController } from "./controllers/version";
 
 function main() {
   try {
+    const argv = minimist(process.argv.slice(2));
     const app = new App({
       middleWares: [logger, sdkInjector, converter],
       controllers: [].concat(
@@ -19,6 +21,9 @@ function main() {
       ),
       port: 3000,
       hostname: "0.0.0.0",
+      cache: {
+        max: argv["cacheMax"],
+      },
     });
 
     app.listen();

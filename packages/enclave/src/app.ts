@@ -1,11 +1,16 @@
 import express from "express";
 import { Controller, MiddleWare } from "./types";
+import LRUCache from "lru-cache";
+import { useAdapter } from "@type-cacheable/lru-cache-adapter";
 
 export interface AppOption {
   port?: number;
   hostname?: string;
   controllers?: Controller[];
   middleWares?: MiddleWare[];
+  cache?: {
+    max?: number;
+  };
 }
 
 export class App {
@@ -27,6 +32,13 @@ export class App {
     }
     if (params.controllers) {
       this.routeController(params.controllers);
+    }
+    if (params.cache) {
+      useAdapter(
+        new LRUCache({
+          max: params.cache.max ? params.cache.max : 500,
+        }) as any
+      );
     }
   }
 
