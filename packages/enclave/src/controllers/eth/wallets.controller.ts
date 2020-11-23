@@ -1,6 +1,7 @@
 import express from "express";
 import BN from "bn.js";
 import {
+  EthMasterWallet,
   EthMasterWalletData,
   EthTransaction,
   EthUserWallet,
@@ -12,12 +13,16 @@ import {
 } from "@haechi-labs/henesis-wallet-core/lib/types";
 import {
   BNConverter,
+  Coin,
   SDK,
   SignedMultiSigPayload,
 } from "@haechi-labs/henesis-wallet-core";
 
 import AbstractController from "../controller";
 import { Controller } from "../../types";
+import { Cacheable, CacheClear } from "@type-cacheable/core";
+import { DefaultFilterCacheStrategy } from "../../utils/cache";
+import { WalletStatus } from "@haechi-labs/henesis-wallet-core/lib/wallet";
 
 interface BalanceResponse
   extends Omit<Balance, "amount" | "spendableAmount" | "aggregatedAmount"> {
@@ -169,38 +174,36 @@ export default class WalletsController
     );
   }
 
-  private async retryCreateMasterWallet(
+  private retryCreateMasterWallet(
     req: express.Request
   ): Promise<EthMasterWalletData> {
-    const response = await req.sdk.eth.wallets.retryCreateMasterWallet(
+    return this.retryCreateMasterWalletById(
+      req.sdk,
       req.params.masterWalletId,
       req.body.gasPrice
         ? BNConverter.hexStringToBN(req.body.gasPrice)
         : undefined
     );
-    return response.getData();
   }
 
-  private async retryCreateUserWallet(
+  private retryCreateUserWallet(
     req: express.Request
   ): Promise<EthUserWalletData> {
-    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
-      req.params.masterWalletId
-    );
-    const response = await masterWallet.retryCreateUserWallet(
+    return this.retryCreateUserWalletByContext(
+      req.sdk,
+      req.params.masterWalletId,
       req.params.userWalletId,
       req.body.gasPrice
         ? BNConverter.hexStringToBN(req.body.gasPrice)
         : undefined
     );
-    return response.getData();
   }
 
   private async getMasterWallet(
     req: express.Request
   ): Promise<EthMasterWalletData> {
     return (
-      await req.sdk.eth.wallets.getMasterWallet(req.params.masterWalletId)
+      await this.getMasterWalletById(req.sdk, req.params.masterWalletId)
     ).getData();
   }
 
@@ -229,7 +232,8 @@ export default class WalletsController
   private async sendMasterWalletContractCall(
     req: express.Request
   ): Promise<EthTransaction> {
-    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
       req.params.masterWalletId
     );
 
@@ -249,7 +253,8 @@ export default class WalletsController
   }
 
   private async changeMasterWalletName(req: express.Request): Promise<void> {
-    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
       req.params.masterWalletId
     );
 
@@ -259,7 +264,8 @@ export default class WalletsController
   private async getMasterWalletBalance(
     req: express.Request
   ): Promise<MasterWalletBalanceResponse[]> {
-    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
       req.params.masterWalletId
     );
     const balances = await masterWallet.getBalance(
@@ -270,7 +276,8 @@ export default class WalletsController
   }
 
   private async getMasterWalletNonce(req: express.Request): Promise<Nonce> {
-    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
       req.params.masterWalletId
     );
 
@@ -282,12 +289,13 @@ export default class WalletsController
   private async sendMasterWalletCoin(
     req: express.Request
   ): Promise<EthTransaction> {
-    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
       req.params.masterWalletId
     );
 
     return await masterWallet.transfer(
-      req.body.ticker,
+      await this.getCoinByTicker(req.sdk, req.body.ticker),
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
@@ -304,7 +312,8 @@ export default class WalletsController
   private async replaceMasterWalletTransaction(
     req: express.Request
   ): Promise<EthTransaction> {
-    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
       req.params.masterWalletId
     );
 
@@ -319,36 +328,41 @@ export default class WalletsController
   private async sendMasterWalletBatchTransactions(
     req: express.Request
   ): Promise<EthTransaction[]> {
-    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
       req.params.masterWalletId
     );
 
     const batch = masterWallet.createBatchRequest(req.body.otpCode);
     const payloads: SignedMultiSigPayload[] = await Promise.all(
-      req.body.requests.map((request) => {
-        // TODO: should refactoring
-        if (this.isContractCallRequest(request)) {
-          request = request as ContractCallRequest;
-          return masterWallet.buildContractCallPayload(
-            request.contractAddress,
-            BNConverter.hexStringToBN(request.value),
-            request.data,
-            req.body.passphrase
-          );
-        }
+      req.body.requests.map(
+        (request): Promise<SignedMultiSigPayload> => {
+          // TODO: should refactoring
+          if (this.isContractCallRequest(request)) {
+            request = request as ContractCallRequest;
+            return masterWallet.buildContractCallPayload(
+              request.contractAddress,
+              BNConverter.hexStringToBN(request.value),
+              request.data,
+              req.body.passphrase
+            );
+          }
 
-        if (this.isTransferRequest(request)) {
-          request = request as TransferRequest;
-          return masterWallet.buildTransferPayload(
-            request.ticker,
-            request.to,
-            BNConverter.hexStringToBN(request.amount),
-            req.body.passphrase
-          );
-        }
+          if (this.isTransferRequest(request)) {
+            request = request as TransferRequest;
+            return this.getCoinByTicker(req.sdk, request.ticker).then((coin) =>
+              masterWallet.buildTransferPayload(
+                coin,
+                request.to,
+                BNConverter.hexStringToBN(request.amount),
+                req.body.passphrase
+              )
+            );
+          }
 
-        throw new Error("invalid batch transactions request format");
-      })
+          throw new Error("invalid batch transactions request format");
+        }
+      )
     );
     batch.addAll(payloads);
 
@@ -356,12 +370,13 @@ export default class WalletsController
   }
 
   private async flush(req: express.Request): Promise<EthTransaction> {
-    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
       req.params.masterWalletId
     );
 
     return await masterWallet.flush(
-      req.body.ticker,
+      await this.getCoinByTicker(req.sdk, req.body.ticker),
       req.body.userWalletIds,
       req.body.passphrase,
       req.body.otpCode,
@@ -389,7 +404,8 @@ export default class WalletsController
   private async getUserWallets(
     req: express.Request
   ): Promise<Pagination<EthUserWalletData>> {
-    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
       req.params.masterWalletId
     );
 
@@ -410,7 +426,8 @@ export default class WalletsController
   private async createUserWallet(
     req: express.Request
   ): Promise<EthUserWalletData> {
-    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
       req.params.masterWalletId
     );
 
@@ -498,7 +515,7 @@ export default class WalletsController
     );
 
     return await userWallet.transfer(
-      req.body.ticker,
+      await this.getCoinByTicker(req.sdk, req.body.ticker),
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
@@ -530,7 +547,8 @@ export default class WalletsController
   }
 
   private async changePassphrase(req: express.Request): Promise<void> {
-    const masterWallet = await req.sdk.eth.wallets.getMasterWallet(
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
       req.params.masterWalletId
     );
 
@@ -541,14 +559,77 @@ export default class WalletsController
     );
   }
 
+  @Cacheable({
+    cacheKey: (args) => args[1],
+    hashKey: "eth_coin",
+  })
+  private getCoinByTicker(sdk: SDK, ticker: string): Promise<Coin> {
+    return sdk.eth.coins.getCoin(ticker);
+  }
+
+  @Cacheable({
+    cacheKey: (args) => args[1],
+    hashKey: "eth_master_wallet",
+    ttlSeconds: 10, // should refresh master wallet due to whitelistActivated field
+    strategy: new DefaultFilterCacheStrategy(
+      (wallet: EthMasterWallet) =>
+        // should cache only if it is active
+        wallet.getData().status === WalletStatus.ACTIVE
+    ),
+  })
+  private getMasterWalletById(sdk: SDK, id: string): Promise<EthMasterWallet> {
+    return sdk.eth.wallets.getMasterWallet(id);
+  }
+
+  @CacheClear({
+    cacheKey: (args) => args[1],
+    hashKey: "eth_master_wallet",
+  })
+  private async retryCreateMasterWalletById(
+    sdk: SDK,
+    walletId: string,
+    gasPrice?: BN
+  ): Promise<EthMasterWalletData> {
+    return (
+      await sdk.eth.wallets.retryCreateMasterWallet(walletId, gasPrice)
+    ).getData();
+  }
+
+  @Cacheable({
+    cacheKey: (args) => args[1] + args[2],
+    hashKey: "eth_user_wallet",
+    strategy: new DefaultFilterCacheStrategy(
+      (wallet: EthUserWallet) =>
+        // should cache only if it is active
+        wallet.getData().status === WalletStatus.ACTIVE
+    ),
+  })
   private async getUserWalletByContext(
     sdk: SDK,
     masterWalletId: string,
     userWalletId: string
   ): Promise<EthUserWallet> {
-    return (
-      await sdk.eth.wallets.getMasterWallet(masterWalletId)
-    ).getUserWallet(userWalletId);
+    return (await this.getMasterWalletById(sdk, masterWalletId)).getUserWallet(
+      userWalletId
+    );
+  }
+
+  @CacheClear({
+    cacheKey: (args) => args[1] + args[2],
+    hashKey: "eth_user_wallet",
+  })
+  private async retryCreateUserWalletByContext(
+    sdk: SDK,
+    masterWalletId: string,
+    userWalletId: string,
+    gasPrice?: BN
+  ): Promise<EthUserWalletData> {
+    const masterWallet = await this.getMasterWalletById(sdk, masterWalletId);
+    const response = await masterWallet.retryCreateUserWallet(
+      userWalletId,
+      gasPrice
+    );
+    return response.getData();
   }
 
   private isContractCallRequest(request: any): request is ContractCallRequest {
