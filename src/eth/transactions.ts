@@ -104,7 +104,7 @@ export class Transactions {
     };
   }
 
-  public async getRawTransaction(
+  async getRawTransaction(
     transactionHash: string
   ): Promise<DetailedRawTransaction> {
     const response = await this.client.get<DetailedRawTransactionDTO>(
@@ -115,17 +115,17 @@ export class Transactions {
     );
   }
 
-  public async getTransaction(transactionId: string): Promise<Transaction> {
+  async getTransaction(transactionId: string): Promise<Transaction> {
     const response = await this.client.get<NoUndefinedField<TransactionDTO>>(
       `/transactions/${transactionId}`
     );
     return convertTransactionDTO(response);
   }
 
-  public async getTransactions(
+  async getTransactions(
     options?: TransactionPaginationOptions
   ): Promise<Pagination<Transaction>> {
-    const queryString: string = makeQueryString(options);
+    const queryString = makeQueryString(options);
     const data = await this.client.get<
       NoUndefinedField<PaginationTransactionDTO>
     >(`/transactions${queryString ? `?${queryString}` : ""}`);

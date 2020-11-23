@@ -40,7 +40,7 @@ export class EthKeychains implements Keychains {
     this.blockchain = blockchain;
   }
 
-  public create(password: string): KeyWithPriv {
+  create(password: string): KeyWithPriv {
     const entropy = crypto.randomBytes(512 / 8);
 
     const innerHex = keccak256(
@@ -67,11 +67,7 @@ export class EthKeychains implements Keychains {
     };
   }
 
-  public changePassword(
-    key: Key,
-    password: string,
-    newPassword: string
-  ): KeyWithPriv {
+  changePassword(key: Key, password: string, newPassword: string): KeyWithPriv {
     const priv = this.decrypt(key, password);
     const ecKey = secp256k1.keyFromPrivate(Buffer.from(priv.slice(2), "hex"));
     const publicKey = `0x${ecKey.getPublic(false, "hex").slice(2)}`;
@@ -86,7 +82,7 @@ export class EthKeychains implements Keychains {
     };
   }
 
-  public decrypt(key: Key, password: string): string {
+  decrypt(key: Key, password: string): string {
     try {
       return sjcl.decrypt(password, key.keyFile);
     } catch (error) {
@@ -101,7 +97,7 @@ export class EthKeychains implements Keychains {
     }
   }
 
-  public sign(key: Key, password: string, hexPayload: string): string {
+  sign(key: Key, password: string, hexPayload: string): string {
     const hashedMessage = keccak256(this.payloadToPrefixedMessage(hexPayload));
 
     const priv = this.decrypt(key, password);
@@ -116,7 +112,7 @@ export class EthKeychains implements Keychains {
     ]);
   }
 
-  public recoverAddressFromSignature(hexPayload: string, signature: string) {
+  recoverAddressFromSignature(hexPayload: string, signature: string) {
     const vals = decodeSignature(signature);
     const vrs = {
       v: Bytes.toNumber(vals[0]),

@@ -27,7 +27,7 @@ export class GasUsages {
     this.baseUrl = "/method-gas-usages";
   }
 
-  public async getMethodGasUsages(methodName: MethodName): Promise<Method> {
+  async getMethodGasUsages(methodName: MethodName): Promise<Method> {
     const balance = await this.client.get<NoUndefinedField<MethodGasUsageDTO>>(
       `${this.baseUrl}?name=${methodName}`
     );

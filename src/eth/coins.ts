@@ -16,12 +16,12 @@ export class Coins {
     this.client = client;
   }
 
-  public async getCoin(ticker: string): Promise<Coin> {
+  async getCoin(ticker: string): Promise<Coin> {
     const coinData = await this.client.get<CoinData>(`/coins/${ticker}`);
     return this.resolveCoin(coinData);
   }
 
-  public async getCoins(flag: boolean): Promise<Coin[]> {
+  async getCoins(flag: boolean): Promise<Coin[]> {
     const coinData = await this.client.get<CoinData[]>(`/coins?flag=${flag}`);
     return coinData.map((coinDatum) => this.resolveCoin(coinDatum));
   }

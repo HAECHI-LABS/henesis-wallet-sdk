@@ -6,11 +6,7 @@ import { Client } from "../httpClient";
 import { Keychains } from "../types";
 import { BlockchainType } from "../blockchain";
 import { RecoveryKit } from "../recoverykit";
-import {
-  EthMasterWallet,
-  EthMasterWalletData,
-  transformMasterWalletData,
-} from "./wallet";
+import { EthMasterWallet, transformMasterWalletData } from "./wallet";
 import { Wallets } from "../wallets";
 import { toChecksum } from "./keychains";
 import { keccak256s } from "./eth-core-lib/hash";
@@ -40,11 +36,10 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     this.blockchain = blockchain;
   }
 
-  public async getMasterWallet(id: string): Promise<EthMasterWallet> {
+  async getMasterWallet(id: string): Promise<EthMasterWallet> {
     const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
-
     return new EthMasterWallet(
       this.client,
       transformMasterWalletData(walletData),
@@ -53,7 +48,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     );
   }
 
-  public async getMasterWallets(
+  async getMasterWallets(
     options?: MasterWalletSearchOptions
   ): Promise<EthMasterWallet[]> {
     const queryString = makeQueryString(options);
@@ -62,10 +57,10 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
     return walletDatas.map(
-      (wallet) =>
+      (walletData) =>
         new EthMasterWallet(
           this.client,
-          transformMasterWalletData(wallet),
+          transformMasterWalletData(walletData),
           this.keychains,
           this.blockchain
         )
@@ -73,7 +68,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
   }
 
   // todo: henesis-keys
-  public async createRecoveryKit(
+  async createRecoveryKit(
     name: string,
     passphrase: string
   ): Promise<RecoveryKit> {
@@ -99,7 +94,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     );
   }
 
-  public async createMasterWalletWithKit(
+  async createMasterWalletWithKit(
     recoveryKit: RecoveryKit
   ): Promise<EthMasterWallet> {
     const walletData = await this.client.post<
@@ -119,7 +114,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     );
   }
 
-  public async createMasterWallet(
+  async createMasterWallet(
     name: string,
     passphrase: string,
     gasPrice?: BN
@@ -147,7 +142,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     );
   }
 
-  public async retryCreateMasterWallet(walletId: string, gasPrice?: BN) {
+  async retryCreateMasterWallet(walletId: string, gasPrice?: BN) {
     checkNullAndUndefinedParameter({ walletId });
     const response = await this.client.post<MasterWalletDTO>(
       `${this.baseUrl}/${walletId}/recreate`,
@@ -164,7 +159,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     );
   }
 
-  public verifyAddress(address: string): boolean {
+  verifyAddress(address: string): boolean {
     if (!/^(0x|0X)?[0-9a-fA-F]{40}$/i.test(address)) {
       return false;
     }

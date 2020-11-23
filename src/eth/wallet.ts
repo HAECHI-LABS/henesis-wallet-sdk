@@ -191,7 +191,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
   }
 
-  public async buildContractCallPayload(
+  async buildContractCallPayload(
     contractAddress: string,
     value: BN,
     data: string,
@@ -371,7 +371,7 @@ export class EthMasterWallet extends EthLikeWallet {
     return this.data.accountKey;
   }
 
-  updateAccountKey(key: Key) {
+  updateAccountKey(key: Key): void {
     this.data.accountKey = key;
   }
 
@@ -433,7 +433,7 @@ export class EthMasterWallet extends EthLikeWallet {
   }
 
   async getBalance(flag?: boolean, symbol?: string): Promise<Balance[]> {
-    const queryString: string = makeQueryString({ flag, symbol });
+    const queryString = makeQueryString({ flag, symbol });
     const balances = await this.client.get<
       NoUndefinedField<MasterWalletBalanceDTO>[]
     >(`${this.baseUrl}/balance${queryString ? `?${queryString}` : ""}`);
@@ -465,7 +465,7 @@ export class EthMasterWallet extends EthLikeWallet {
   async getUserWallets(
     options?: UserWalletPaginationOptions
   ): Promise<Pagination<EthUserWallet>> {
-    const queryString: string = makeQueryString(options);
+    const queryString = makeQueryString(options);
     const data = await this.client.get<
       NoUndefinedField<PaginationUserWalletDTO>
     >(`${this.baseUrl}/user-wallets${queryString ? `?${queryString}` : ""}`);
@@ -485,7 +485,7 @@ export class EthMasterWallet extends EthLikeWallet {
     };
   }
 
-  public async retryCreateUserWallet(walletId: string, gasPrice?: BN) {
+  async retryCreateUserWallet(walletId: string, gasPrice?: BN) {
     checkNullAndUndefinedParameter({ walletId });
     const response = await this.client.post<UserWalletDTO>(
       `${this.baseUrl}/user-wallets/${walletId}/recreate`,
@@ -505,13 +505,14 @@ export class EthMasterWallet extends EthLikeWallet {
     return this.data.id;
   }
 
-  async changeName(name: string) {
+  async changeName(name: string): Promise<void> {
     checkNullAndUndefinedParameter({ name });
+    const request: ChangeWalletNameRequest = {
+      name,
+    };
     const masterWalletData = await this.client.patch<MasterWalletDTO>(
       `${this.baseUrl}/name`,
-      {
-        name,
-      }
+      request
     );
     this.data.name = masterWalletData.name;
   }
@@ -523,7 +524,7 @@ export class EthMasterWallet extends EthLikeWallet {
     otpCode?: string,
     gasPrice?: BN,
     gasLimit?: BN
-  ) {
+  ): Promise<EthTransaction> {
     if (userWalletIds.length > 50 || userWalletIds.length == 0) {
       throw new Error(`only 1 ~ 50 accounts can be flushed at a time`);
     }
@@ -658,7 +659,7 @@ export class EthUserWallet extends EthLikeWallet {
     return this.userWalletData.id;
   }
 
-  async changeName(name: string) {
+  async changeName(name: string): Promise<void> {
     const request: ChangeWalletNameRequest = {
       name,
     };

@@ -28,6 +28,7 @@ import {
   RejectWithdrawalApprovalRequest,
   TransactionOutputDTO,
   TransactionDTO,
+  PatchWalletNameRequest,
 } from "../__generate__/btc";
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
@@ -132,7 +133,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     this.env = env;
   }
 
-  public async build(
+  async build(
     to: string,
     amount: BN,
     passphrase: string,
@@ -205,7 +206,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     return payload;
   }
 
-  public async transfer(
+  async transfer(
     to: string,
     amount: BN,
     passphrase: string,
@@ -252,7 +253,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     };
   }
 
-  public async getEstimatedFee(): Promise<BtcEstimatedFee> {
+  async getEstimatedFee(): Promise<BtcEstimatedFee> {
     const response = await this.client.get<EstimatedFeeDTO>(
       `${this.baseUrl}/estimated-fee`
     );
@@ -310,7 +311,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   getDepositAddresses(
     options?: DepositAddressPaginationOptions
   ): Promise<Pagination<DepositAddress>> {
-    const queryString: string = makeQueryString(options);
+    const queryString = makeQueryString(options);
     return this.client.get<Pagination<DepositAddressDTO>>(
       `${this.baseUrl}/deposit-addresses${queryString ? `?${queryString}` : ""}`
     );
@@ -365,13 +366,14 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     this.data.accountKey = key;
   }
 
-  async changeName(name: string) {
+  async changeName(name: string): Promise<void> {
     checkNullAndUndefinedParameter({ name });
+    const request: PatchWalletNameRequest = {
+      name,
+    };
     const btcWalletData = await this.client.patch<MasterWalletDTO>(
       `${this.baseUrl}/name`,
-      {
-        name,
-      }
+      request
     );
     this.data.name = btcWalletData.name;
   }
