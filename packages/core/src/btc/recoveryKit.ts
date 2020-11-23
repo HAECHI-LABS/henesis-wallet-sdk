@@ -30,7 +30,7 @@ export class BtcRecoveryKit extends RecoveryKit {
     this.walletId = walletId;
   }
 
-  get getWalletId(): string {
+  getWalletId(): string {
     return this.walletId;
   }
 }

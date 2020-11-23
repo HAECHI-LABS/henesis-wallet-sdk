@@ -146,7 +146,7 @@ export default abstract class AbstractController {
     }`;
   }
 
-  public getRoutes(): express.Router {
+  getRoutes(): express.Router {
     return this.router;
   }
 }

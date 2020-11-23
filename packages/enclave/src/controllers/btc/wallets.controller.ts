@@ -34,7 +34,7 @@ export default class WalletsController
     this.initRoutes();
   }
 
-  protected initRoutes() {
+  protected initRoutes(): void {
     this.router.get(`${this.path}`, this.promiseWrapper(this.getWallets));
     this.router.get(
       `${this.path}/:walletId`,

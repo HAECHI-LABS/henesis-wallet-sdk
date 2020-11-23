@@ -9,14 +9,14 @@ import { RawTransaction, Transaction } from "./transactions";
 import { TransactionHistory } from "./henesisKeys";
 
 export const convertTransactionDTO = (
-  transcationDTO: NoUndefinedField<TransactionDTO>
+  transactionDTO: NoUndefinedField<TransactionDTO>
 ): Transaction => {
-  const rawTransaction = transcationDTO.rawTransaction;
-  const signedMultiSigPayload = transcationDTO.signedMultiSigPayload;
+  const rawTransaction = transactionDTO.rawTransaction;
+  const signedMultiSigPayload = transactionDTO.signedMultiSigPayload;
   const multiSigPayload = signedMultiSigPayload?.multiSigPayload;
   return {
-    ...transcationDTO,
-    blockchain: transformBlockchainType(transcationDTO.blockchain),
+    ...transactionDTO,
+    blockchain: transformBlockchainType(transactionDTO.blockchain),
     signedMultiSigPayload: signedMultiSigPayload
       ? {
           ...signedMultiSigPayload,
@@ -32,9 +32,9 @@ export const convertTransactionDTO = (
         }
       : null,
     rawTransaction: convertRawTransactionDTO(rawTransaction),
-    fee: transcationDTO.fee,
-    estimatedFee: transcationDTO.estimatedFee,
-    isFeeDelegated: transcationDTO.isFeeDelegated,
+    fee: transactionDTO.fee,
+    estimatedFee: transactionDTO.estimatedFee,
+    isFeeDelegated: transactionDTO.isFeeDelegated,
   };
 };
 
@@ -63,12 +63,12 @@ export const convertRawTransactionDTO = (
 };
 
 export const convertTransactionHistoryDTO = (
-  transcationHistoryDTO: NoUndefinedField<TransactionHistoryDTO>
+  transactionHistoryDTO: NoUndefinedField<TransactionHistoryDTO>
 ): TransactionHistory => {
   return {
-    ...convertTransactionDTO(transcationHistoryDTO),
-    wallet: transcationHistoryDTO.wallet,
-    type: transcationHistoryDTO.type,
-    createdAt: transcationHistoryDTO.createdAt,
+    ...convertTransactionDTO(transactionHistoryDTO),
+    wallet: transactionHistoryDTO.wallet,
+    type: transactionHistoryDTO.type,
+    createdAt: transactionHistoryDTO.createdAt,
   };
 };

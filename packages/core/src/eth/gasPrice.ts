@@ -13,7 +13,7 @@ export class GasPrice {
     this.baseUrl = "/gas-price";
   }
 
-  public async getGasPrice(): Promise<BN> {
+  async getGasPrice(): Promise<BN> {
     const response = await this.client.get<GetGasPriceResponse>(
       `${this.baseUrl}`
     );

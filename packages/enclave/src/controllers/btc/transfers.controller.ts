@@ -45,7 +45,7 @@ export default class TransfersController
     this.initRoutes();
   }
 
-  protected initRoutes() {
+  protected initRoutes(): void {
     this.router.get(`${this.path}`, this.promiseWrapper(this.getTransfers));
     this.router.get(
       `${this.path}/:transferId`,

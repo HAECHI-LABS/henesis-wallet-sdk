@@ -1,7 +1,6 @@
 import express from "express";
 import { SDK } from "@haechi-labs/henesis-wallet-core";
 import { Env } from "@haechi-labs/henesis-wallet-core/lib/sdk";
-const packageJson = require("../../package.json");
 
 export default (
   req: express.Request,

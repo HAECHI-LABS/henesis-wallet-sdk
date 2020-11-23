@@ -15,7 +15,7 @@ export default class TransactionsController
     this.initRoutes();
   }
 
-  public initRoutes() {
+  initRoutes(): void {
     this.router.get(
       `${this.path}`,
       this.promiseWrapper(this.getAllTransactions)
