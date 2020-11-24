@@ -104,9 +104,10 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       name,
       encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
     };
-    const masterWalletResponse = await this.client.post<
-      CreateInactiveMasterWalletResponse
-    >(`${this.baseUrl}?type=inactive`, params);
+    const masterWalletResponse = await this.client.post<CreateInactiveMasterWalletResponse>(
+      `${this.baseUrl}?type=inactive`,
+      params
+    );
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
       aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))
