@@ -23,7 +23,7 @@ export class RecoveryKit {
 
   private readonly env: Env;
 
-  public constructor(
+  constructor(
     name: string,
     blockchain: BlockchainType,
     henesisKey: Key,

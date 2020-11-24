@@ -59,7 +59,10 @@ export class BtcKeyChains implements Keychains {
     }
   }
 
-  private encryptECPair(ecPair, password: string): string {
+  private encryptECPair(
+    ecPair: ECPair.ECPairInterface,
+    password: string
+  ): string {
     return this.encryptRawPrivateKey(
       ecPair.privateKey.toString("hex"),
       password
@@ -86,7 +89,7 @@ export class BtcKeyChains implements Keychains {
     return sjcl.encrypt(password, privateKey, encryptOptions);
   }
 
-  private decryptECPair(key: Key, password: string) {
+  private decryptECPair(key: Key, password: string): ECPair.ECPairInterface {
     const decryptedKey = this.decrypt(key, password);
     return ECPair.fromPrivateKey(
       Buffer.from(BNConverter.remove0x(decryptedKey), "hex"),

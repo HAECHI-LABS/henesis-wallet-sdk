@@ -1,5 +1,4 @@
 import {
-  MasterWalletDTO as EthMasterWalletDTO,
   UserWalletDTOBlockchainEnum,
   Blockchain as EthBlockchain,
 } from "./__generate__/eth";

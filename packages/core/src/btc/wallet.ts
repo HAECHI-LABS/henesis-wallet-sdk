@@ -122,7 +122,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   private readonly data: BtcMasterWalletData;
   private readonly env: Env;
 
-  public constructor(
+  constructor(
     data: BtcMasterWalletData,
     client: Client,
     keychains: Keychains,

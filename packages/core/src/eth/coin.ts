@@ -21,7 +21,7 @@ export abstract class Coin {
     this.walletContract = new new Web3().eth.Contract(walletAbi as AbiItem[]);
   }
 
-  public getCoinData(): CoinData {
+  getCoinData(): CoinData {
     return this.coinData;
   }
 
@@ -41,10 +41,7 @@ export abstract class Coin {
 
   abstract getName(): string;
 
-  abstract buildFlushData(
-    targetAddresses: string[],
-    tokenAddress?: string
-  ): string;
+  abstract buildFlushData(targetAddresses: string[]): string;
 
   getAttributes(): AttributesEnum[] {
     return this.coinData.attributes;
@@ -78,9 +75,9 @@ export class StandardErc20 extends Coin {
     };
   }
 
-  buildFlushData(targetAddresses: string[], tokenAddress: string) {
+  buildFlushData(targetAddresses: string[]): string {
     return this.walletContract.methods
-      .flushToken(tokenAddress, targetAddresses)
+      .flushToken(this.coinData.address, targetAddresses)
       .encodeABI();
   }
 }
@@ -123,9 +120,9 @@ export class NonStandardReturnTypeErc20 extends Coin {
     };
   }
 
-  buildFlushData(targetAddresses: string[], tokenAddress: string) {
+  buildFlushData(targetAddresses: string[]): string {
     return this.erc20Contract.methods
-      .flushToken(tokenAddress, targetAddresses)
+      .flushToken(this.coinData.address, targetAddresses)
       .encodeABI();
   }
 }
@@ -151,7 +148,7 @@ export class Eth extends Coin {
     };
   }
 
-  buildFlushData(targetAddresses: string[]) {
+  buildFlushData(targetAddresses: string[]): string {
     return this.walletContract.methods.flushEth(targetAddresses).encodeABI();
   }
 }
@@ -177,7 +174,7 @@ export class Klay extends Coin {
     };
   }
 
-  buildFlushData(targetAddresses: string[]) {
+  buildFlushData(targetAddresses: string[]): string {
     return this.walletContract.methods.flushKlay(targetAddresses).encodeABI();
   }
 }

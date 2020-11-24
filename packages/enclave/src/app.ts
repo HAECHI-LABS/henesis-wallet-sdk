@@ -9,7 +9,7 @@ export interface AppOption {
   controllers?: Controller[];
   middleWares?: MiddleWare[];
   cache?: {
-    max?: number;
+    maxSize?: number;
   };
 }
 
@@ -36,7 +36,7 @@ export class App {
     if (params.cache) {
       useAdapter(
         new LRUCache({
-          max: params.cache.max ? params.cache.max : 500,
+          max: params.cache.maxSize ? params.cache.maxSize : 500,
         }) as any
       );
     }
