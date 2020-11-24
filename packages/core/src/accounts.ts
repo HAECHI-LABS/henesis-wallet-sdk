@@ -1,5 +1,5 @@
 import { Client } from "./httpClient";
-import { Key, Token } from "./types";
+import { Token } from "./types";
 import {
   AccountDTO,
   LoginResponse,
