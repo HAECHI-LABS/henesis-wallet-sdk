@@ -9,8 +9,6 @@ import {
 import BN from "bn.js";
 import _ from "lodash";
 import { BNConverter } from "./utils/common";
-import { Transfer } from "./btc/transfers";
-import { EthTransaction } from "./eth/wallet";
 import { BlockchainType, transformBlockchainType } from "./blockchain";
 
 export import WithdrawalApprovalStatus = WithdrawalApprovalStatus;
@@ -54,7 +52,7 @@ export class WithdrawalApprovals {
   async getWithdrawalApprovals(
     options: PaginationOptions
   ): Promise<Pagination<WithdrawalApproval>> {
-    const queryString: string = makeQueryString(options);
+    const queryString = makeQueryString(options);
     const data = await this.client.get<PaginationWithdrawalApprovalDTO>(
       `${this.baseUrl}${queryString ? `?${queryString}` : ""}`
     );

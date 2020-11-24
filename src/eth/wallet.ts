@@ -225,18 +225,17 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     gasPrice?: BN,
     gasLimit?: BN
   ): Promise<EthTransaction> {
-    const localCoin =
-      typeof coin === "string" ? await this.coins.getCoin(coin) : coin;
+    const c = typeof coin === "string" ? await this.coins.getCoin(coin) : coin;
     return this.sendTransaction(
-      await this.buildTransferPayload(localCoin, to, amount, passphrase),
+      await this.buildTransferPayload(c, to, amount, passphrase),
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit || this.getGasLimitByTicker(localCoin)
+      gasLimit || this.getGasLimitByTicker(c)
     );
   }
 
-  public async buildTransferPayload(
+  async buildTransferPayload(
     coin: string | Coin,
     to: string,
     amount: BN,
@@ -248,15 +247,14 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       passphrase,
     });
 
-    const localCoin =
-      typeof coin === "string" ? await this.coins.getCoin(coin) : coin;
+    const c = typeof coin === "string" ? await this.coins.getCoin(coin) : coin;
     return this.signPayload(
-      await localCoin.buildTransferMultiSigPayload(this, to, amount),
+      await c.buildTransferMultiSigPayload(this, to, amount),
       passphrase
     );
   }
 
-  public createBatchRequest(otpCode?: string): BatchRequest {
+  createBatchRequest(otpCode?: string): BatchRequest {
     return new BatchRequest(
       (
         signedMultiSigPayloads: SignedMultiSigPayload[]
@@ -358,7 +356,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
 export class EthMasterWallet extends EthLikeWallet {
   private walletContract: Contract;
 
-  public constructor(
+  constructor(
     client: Client,
     data: EthMasterWalletData,
     keychains: Keychains,
@@ -490,7 +488,10 @@ export class EthMasterWallet extends EthLikeWallet {
     };
   }
 
-  async retryCreateUserWallet(walletId: string, gasPrice?: BN) {
+  async retryCreateUserWallet(
+    walletId: string,
+    gasPrice?: BN
+  ): Promise<EthUserWallet> {
     checkNullAndUndefinedParameter({ walletId });
     const response = await this.client.post<UserWalletDTO>(
       `${this.baseUrl}/user-wallets/${walletId}/recreate`,
@@ -533,8 +534,7 @@ export class EthMasterWallet extends EthLikeWallet {
     if (userWalletIds.length > 50 || userWalletIds.length == 0) {
       throw new Error(`only 1 ~ 50 accounts can be flushed at a time`);
     }
-    const localCoin =
-      typeof coin === "string" ? await this.coins.getCoin(coin) : coin;
+    const c = typeof coin === "string" ? await this.coins.getCoin(coin) : coin;
 
     const userWallets: Pagination<EthUserWallet> = await this.getUserWallets({
       ids: userWalletIds,
@@ -551,10 +551,7 @@ export class EthMasterWallet extends EthLikeWallet {
     }
 
     const multiSigPayload: MultiSigPayload = {
-      hexData: localCoin.buildFlushData(
-        userWalletAddresses,
-        localCoin.getCoinData().address
-      ),
+      hexData: c.buildFlushData(userWalletAddresses),
       walletNonce: await this.getNonce(),
       value: BNConverter.hexStringToBN("0x0"),
       toAddress: this.getAddress(),

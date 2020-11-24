@@ -48,7 +48,7 @@ export class HttpClient {
     return new AxiosMethodProxy(this, this.client) as any;
   }
 
-  private makeSDKClient() {
+  private makeSDKClient(): AxiosInstance {
     const client = this.makeClient();
     client.interceptors.request.use((config) => {
       config.data = ObjectConverter.toSnakeCase(config.data);
@@ -74,7 +74,7 @@ export class HttpClient {
     return client;
   }
 
-  private makeApiClient() {
+  private makeApiClient(): AxiosInstance {
     const client = this.makeClient();
     client.defaults.baseURL = removePrefixApi(client.defaults.baseURL);
     client.interceptors.request.use((config) => {
@@ -104,7 +104,7 @@ export class HttpClient {
     return client;
   }
 
-  private makeClient() {
+  private makeClient(): AxiosInstance {
     const client = axios.create({
       baseURL: this.baseUrl,
       timeout: 30000,

@@ -4,7 +4,6 @@ import { Pagination, PaginationOptions, Timestamp } from "../types";
 import { Client } from "../httpClient";
 import { makeQueryString } from "../utils/url";
 import {
-  RawTransactionDTO,
   PaginationTransactionDTO,
   TransactionDTO,
   TransactionStatus,
