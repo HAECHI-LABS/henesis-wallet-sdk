@@ -38,6 +38,7 @@ import {
   SignedMultiSigPayloadDTO,
   CreateMultiSigTransactionRequest,
   ChangeWalletNameRequest,
+  ReplaceTransactionRequest,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
@@ -152,15 +153,13 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     gasPrice?: BN
   ): Promise<EthTransaction> {
     checkNullAndUndefinedParameter({ transactionId });
-    // TODO: should change to different request type after fixing api
-    const request: CreateMultiSigTransactionRequest = {
+    const request: ReplaceTransactionRequest = {
       walletId: this.getId(),
       transactionId,
-      signedMultiSigPayload: null,
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
     };
     const response = await this.client.post<TransactionDTO>(
-      `/wallets/transactions`,
+      `/wallets/transactions/replace`,
       request
     );
     return {
