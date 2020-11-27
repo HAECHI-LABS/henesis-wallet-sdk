@@ -1755,6 +1755,31 @@ export interface RejectWithdrawalApprovalRequest {
 /**
  * 
  * @export
+ * @interface ReplaceTransactionRequest
+ */
+export interface ReplaceTransactionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReplaceTransactionRequest
+     */
+    walletId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReplaceTransactionRequest
+     */
+    transactionId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReplaceTransactionRequest
+     */
+    gasPrice?: string;
+}
+/**
+ * 
+ * @export
  * @interface RetryCreateWalletRequest
  */
 export interface RetryCreateWalletRequest {
@@ -2159,6 +2184,7 @@ export enum TransactionStatus {
     FAILED = 'FAILED',
     MINED = 'MINED',
     REVERTED = 'REVERTED',
+    INTERNALREVERTED = 'INTERNAL_REVERTED',
     CONFIRMED = 'CONFIRMED',
     REPLACED = 'REPLACED'
 }
@@ -5686,6 +5712,44 @@ export const EthWalletControllerApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
+         * @param {ReplaceTransactionRequest} replaceTransactionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        replaceTransaction: async (replaceTransactionRequest: ReplaceTransactionRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'replaceTransactionRequest' is not null or undefined
+            if (replaceTransactionRequest === null || replaceTransactionRequest === undefined) {
+                throw new RequiredError('replaceTransactionRequest','Required parameter replaceTransactionRequest was null or undefined when calling replaceTransaction.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/transactions/replace`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof replaceTransactionRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(replaceTransactionRequest !== undefined ? replaceTransactionRequest : {}) : (replaceTransactionRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} walletId 
          * @param {RetryCreateWalletRequest} retryCreateWalletRequest 
          * @param {*} [options] Override http request option.
@@ -6244,6 +6308,19 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @param {ReplaceTransactionRequest} replaceTransactionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async replaceTransaction(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
+            const localVarAxiosArgs = await EthWalletControllerApiAxiosParamCreator(configuration).replaceTransaction(replaceTransactionRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} walletId 
          * @param {RetryCreateWalletRequest} retryCreateWalletRequest 
          * @param {*} [options] Override http request option.
@@ -6558,6 +6635,15 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          */
         patchWalletWithdrawalPolicy(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO> {
             return EthWalletControllerApiFp(configuration).patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {ReplaceTransactionRequest} replaceTransactionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        replaceTransaction(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): AxiosPromise<TransactionDTO> {
+            return EthWalletControllerApiFp(configuration).replaceTransaction(replaceTransactionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6903,6 +6989,17 @@ export class EthWalletControllerApi extends BaseAPI {
      */
     public patchWalletWithdrawalPolicy(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any) {
         return EthWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ReplaceTransactionRequest} replaceTransactionRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public replaceTransaction(replaceTransactionRequest: ReplaceTransactionRequest, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).replaceTransaction(replaceTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
