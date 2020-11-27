@@ -2197,6 +2197,44 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAccountByEmail: async (email: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'email' is not null or undefined
+            if (email === null || email === undefined) {
+                throw new RequiredError('email','Required parameter email was null or undefined when calling getAccountByEmail.');
+            }
+            const localVarPath = `/api/v2/operation/accounts`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (email !== undefined) {
+                localVarQueryParameter['email'] = email;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2283,6 +2321,19 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAccountByEmail(email: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getAccountByEmail(email, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2326,6 +2377,15 @@ export const OperationControllerApiFactory = function (configuration?: Configura
         },
         /**
          * 
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAccountByEmail(email: string, options?: any): AxiosPromise<AccountDTO> {
+            return OperationControllerApiFp(configuration).getAccountByEmail(email, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2360,6 +2420,17 @@ export class OperationControllerApi extends BaseAPI {
      */
     public getAccount(accountId: string, options?: any) {
         return OperationControllerApiFp(this.configuration).getAccount(accountId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} email 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public getAccountByEmail(email: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).getAccountByEmail(email, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
