@@ -16,7 +16,7 @@ async function main() {
   const userWallet: EthUserWallet = await wallet.getUserWallet(
     "f2f719478e5ce9f1b45a44fab94b1556"
   );
-  console.log(await userWallet.getNonce());
+  console.log(userWallet.getNonce());
 }
 
 main().catch((e) => console.error(e));

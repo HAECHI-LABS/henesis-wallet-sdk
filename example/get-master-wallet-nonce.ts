@@ -13,7 +13,7 @@ async function main() {
   const wallet: EthMasterWallet = await sdk.eth.wallets.getMasterWallet(
     "3be5351bd52626108326f9ec44b7b633"
   );
-  console.log(await wallet.getNonce());
+  console.log(wallet.getNonce());
 }
 
 main().catch((e) => console.error(e));
