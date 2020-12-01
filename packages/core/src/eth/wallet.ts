@@ -26,7 +26,6 @@ import { Coins } from "./coins";
 import {
   TransactionDTO,
   BatchTransactionDTO,
-  NonceDTO,
   UserWalletDTO,
   BalanceDTO,
   MasterWalletBalanceDTO,
@@ -44,6 +43,7 @@ import _ from "lodash";
 import { ValidationParameterError } from "../error";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { Coin } from "./coin";
+import { randomBytes } from "crypto";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -207,7 +207,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     });
     const multiSigPayload: MultiSigPayload = {
       hexData: data,
-      walletNonce: await this.getNonce(),
+      walletNonce: this.getNonce(),
       value,
       toAddress: contractAddress,
       walletAddress: this.getAddress(),
@@ -338,9 +338,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     });
   }
 
-  async getNonce(): Promise<BN> {
-    const nonce = await this.client.get<NonceDTO>(`${this.baseUrl}/nonce`);
-    return BNConverter.hexStringToBN(String(nonce.nonce));
+  getNonce(): BN {
+    return BNConverter.hexStringToBN("0x" + randomBytes(32).toString("hex"));
   }
 
   protected getGasLimitByTicker(coin: Coin): BN {
@@ -384,7 +383,7 @@ export class EthMasterWallet extends EthLikeWallet {
     salt?: BN,
     otpCode?: string
   ): Promise<EthUserWallet> {
-    const nonce = await this.getNonce();
+    const nonce = this.getNonce();
     // generates 32byte(256 bit) randoma hex string and converts to BN when salt is not defined
     if (salt === undefined) {
       salt = Web3.utils.toBN(Web3.utils.randomHex(32));
@@ -551,7 +550,7 @@ export class EthMasterWallet extends EthLikeWallet {
 
     const multiSigPayload: MultiSigPayload = {
       hexData: c.buildFlushData(userWalletAddresses),
-      walletNonce: await this.getNonce(),
+      walletNonce: this.getNonce(),
       value: BNConverter.hexStringToBN("0x0"),
       toAddress: this.getAddress(),
       walletAddress: this.getAddress(),
@@ -624,11 +623,6 @@ export class EthUserWallet extends EthLikeWallet {
       `/wallets/${data.id}/user-wallets/${userWalletData.id}`
     );
     this.userWalletData = userWalletData;
-  }
-
-  async getNonce(): Promise<BN> {
-    const nonce = await this.client.get<NonceDTO>(`${this.baseUrl}/nonce`);
-    return BNConverter.hexStringToBN(String(nonce.nonce));
   }
 
   async getBalance(flag?: boolean, symbol?: string): Promise<Balance[]> {
