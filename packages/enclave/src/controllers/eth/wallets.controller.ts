@@ -282,7 +282,7 @@ export default class WalletsController
     );
 
     return {
-      nonce: BNConverter.bnToHexString(await masterWallet.getNonce()),
+      nonce: BNConverter.bnToHexString(masterWallet.getNonce()),
     };
   }
 
@@ -501,7 +501,7 @@ export default class WalletsController
     );
 
     return {
-      nonce: BNConverter.bnToHexString(await userWallet.getNonce()),
+      nonce: BNConverter.bnToHexString(userWallet.getNonce()),
     };
   }
 
