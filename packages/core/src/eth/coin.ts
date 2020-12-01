@@ -33,7 +33,7 @@ export abstract class Coin {
 
   protected async buildTransferMultiSigPayloadTemplate(wallet: EthLikeWallet) {
     return {
-      walletNonce: await wallet.getNonce(),
+      walletNonce: wallet.getNonce(),
       value: BNConverter.hexStringToBN("0x0"),
       walletAddress: wallet.getAddress(),
     };
