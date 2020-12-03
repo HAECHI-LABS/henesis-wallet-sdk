@@ -33,7 +33,9 @@ export const convertTransactionDTO = (
       : null,
     rawTransaction: convertRawTransactionDTO(rawTransaction),
     fee: BNConverter.hexStringToBN(String(transactionDTO.fee)),
-    estimatedFee: BNConverter.hexStringToBN(String(transactionDTO.estimatedFee)),
+    estimatedFee: BNConverter.hexStringToBN(
+      String(transactionDTO.estimatedFee)
+    ),
     isFeeDelegated: transactionDTO.isFeeDelegated,
   };
 };
