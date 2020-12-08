@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.7...v2.10.8) (2020-12-08)
+
+
+### Bug Fixes
+
+* fix bug when deleting get prefix ([6081712](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/608171285ab9bad29b7030ddd50f5f965172284c))
+
+
+
+
+
 ## [2.10.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.6...v2.10.7) (2020-12-08)
 
 
