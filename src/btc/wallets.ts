@@ -142,7 +142,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       },
     };
     const wallet = await this.client.post<MasterWalletDTO>(
-      `${this.baseUrl}/${recoveryKit.getWalletId}/activate`,
+      `${this.baseUrl}/${recoveryKit.getWalletId()}/activate`,
       params
     );
     return new BtcMasterWallet(
