@@ -141,8 +141,9 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
         keyFile: backupKey.keyFile,
       },
     };
+    const walletId = recoveryKit.getWalletId();
     const wallet = await this.client.post<MasterWalletDTO>(
-      `${this.baseUrl}/${recoveryKit.getWalletId()}/activate`,
+      `${this.baseUrl}/${walletId}/activate`,
       params
     );
     return new BtcMasterWallet(
