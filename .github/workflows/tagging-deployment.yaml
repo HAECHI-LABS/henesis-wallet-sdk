@@ -1,0 +1,61 @@
+name: tagging-deployment
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+      - v[0-9]+.[0-9]+.[0-9]+-RC.[0-9]+
+      - v[0-9]+.[0-9]+.[0-9]+-hotfix.[0-9]+
+
+jobs:
+  tagging-deployment:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.15]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: install
+        run: |
+          sudo apt install -y build-essential
+          npm install
+          npm run codegen
+          npm run bootstrap
+      - name: script
+        run: |
+          bash ./scripts/core.sh
+          bash ./scripts/enclave.sh
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
+      - name: deploy
+        env:
+          GITHUB_TAG: ${{ steps.get_version.outputs.version }}
+        run: bash ./scripts/deploy.sh prod
+      - name: Notification Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: Henesis Wallet SDK (Dev)
+          fields: repo,commit,message,author
+          mention: here
+          if_mention: failure,cancelled
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
