@@ -1,0 +1,63 @@
+name: Github Actions CI
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    tags:
+      - /^v[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z]+\.[0-9]+)?$/
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.15]
+    steps:
+      - uses: actions/checkout@v2.3.1
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: install
+        run: |
+          sudo apt install -y build-essential
+          npm install
+          npm run codegen
+          npm run bootstrap
+
+      - name: script
+        run: |
+          bash ./scripts/core.sh
+          bash ./scripts/enclave.sh
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    steps:
+      - name: login to docker hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: get tag
+        id: tag
+        run: |
+          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
+
+      - name: deploy docker
+        run: bash ./scripts/deploy.sh prod ${{ steps.tag.outputs.SOURCE_TAG }}
