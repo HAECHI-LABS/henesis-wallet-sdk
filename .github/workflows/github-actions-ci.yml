@@ -44,7 +44,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    if: startsWith(github.ref, '/refs/heads/l')
+    if: ${{ startsWith(github.ref, '/refs/heads/l') }}
     steps:
       - name: login to docker hub
         uses: docker/login-action@v1
