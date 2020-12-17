@@ -137,12 +137,14 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     to: string,
     amount: BN,
     passphrase: string,
-    otpCode?: string
+    otpCode?: string,
+    feeRate?: BN
   ): Promise<BtcCreateRawTransaction> {
     checkNullAndUndefinedParameter({ to, passphrase });
     const rawTransaction: BtcRawTransaction = await this.createRawTransaction(
       to,
-      amount
+      amount,
+      feeRate
     );
     const tx = new BitcoinTransaction();
     rawTransaction.inputs.forEach((input) => {
@@ -210,11 +212,12 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     to: string,
     amount: BN,
     passphrase: string,
-    otpCode?: string
+    otpCode?: string,
+    feeRate?: BN
   ): Promise<Transfer> {
     const transfer = await this.client.post<TransferDTO>(
       `${this.baseUrl}/transactions`,
-      await this.build(to, amount, passphrase, otpCode)
+      await this.build(to, amount, passphrase, otpCode, feeRate)
     );
 
     return convertTransferDTO(transfer);
@@ -222,13 +225,15 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
 
   private async createRawTransaction(
     to: string,
-    amount: BN
+    amount: BN,
+    feeRate?: BN
   ): Promise<BtcRawTransaction> {
     const response = await this.client.post<RawTransactionDTO>(
       `${this.baseUrl}/raw-transactions`,
       {
         to,
         amount: BNConverter.bnToHexString(amount),
+        feeRate: feeRate ? BNConverter.bnToHexString(feeRate) : undefined,
       }
     );
     return {
