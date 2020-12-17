@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.8...v2.10.9) (2020-12-17)
+
+
+### Features
+
+* add fee rate to btc ([6e63375](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6e6337585e49210b057cc66c4a5175745ef006fe))
+
+
+
+
+
 ## [2.10.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.7...v2.10.8) (2020-12-08)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
