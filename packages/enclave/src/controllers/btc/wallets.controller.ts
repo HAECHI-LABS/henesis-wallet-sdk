@@ -117,12 +117,12 @@ export default class WalletsController
 
   private async transfer(req: express.Request): Promise<TransferResponse> {
     const wallet = await this.getWalletById(req.sdk, req.params.walletId);
-
     const transfer: Transfer = await wallet.transfer(
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount),
       req.body.passphrase,
-      req.body.otpCode
+      req.body.otpCode,
+      req.body.feeRate ? BNConverter.hexStringToBN(req.body.feeRate) : undefined
     );
 
     return this.bnToHexString(transfer);
