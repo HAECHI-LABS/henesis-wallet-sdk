@@ -41,7 +41,10 @@ export abstract class Coin {
 
   abstract getName(): string;
 
-  abstract buildFlushData(targetAddresses: string[]): string;
+  abstract buildFlushData(
+    wallet: EthLikeWallet,
+    targetAddresses: string[]
+  ): string;
 
   getAttributes(): AttributesEnum[] {
     return this.coinData.attributes;
@@ -75,7 +78,7 @@ export class StandardErc20 extends Coin {
     };
   }
 
-  buildFlushData(targetAddresses: string[]): string {
+  buildFlushData(wallet: EthLikeWallet, targetAddresses: string[]): string {
     return this.walletContract.methods
       .flushToken(this.coinData.address, targetAddresses)
       .encodeABI();
@@ -120,8 +123,14 @@ export class NonStandardReturnTypeErc20 extends Coin {
     };
   }
 
-  buildFlushData(targetAddresses: string[]): string {
-    return this.erc20Contract.methods
+  buildFlushData(wallet: EthLikeWallet, targetAddresses: string[]): string {
+    if (wallet.getVersion() === "v1" || wallet.getVersion() === "v2") {
+      throw new Error(
+        `can't flush non standard erc20 token in ${wallet.getVersion()} version`
+      );
+    }
+
+    return this.walletContract.methods
       .flushToken(this.coinData.address, targetAddresses)
       .encodeABI();
   }
@@ -148,7 +157,7 @@ export class Eth extends Coin {
     };
   }
 
-  buildFlushData(targetAddresses: string[]): string {
+  buildFlushData(wallet: EthLikeWallet, targetAddresses: string[]): string {
     return this.walletContract.methods.flushEth(targetAddresses).encodeABI();
   }
 }
@@ -174,7 +183,7 @@ export class Klay extends Coin {
     };
   }
 
-  buildFlushData(targetAddresses: string[]): string {
+  buildFlushData(wallet: EthLikeWallet, targetAddresses: string[]): string {
     return this.walletContract.methods.flushKlay(targetAddresses).encodeABI();
   }
 }

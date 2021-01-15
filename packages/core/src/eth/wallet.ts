@@ -549,7 +549,7 @@ export class EthMasterWallet extends EthLikeWallet {
     }
 
     const multiSigPayload: MultiSigPayload = {
-      hexData: c.buildFlushData(userWalletAddresses),
+      hexData: c.buildFlushData(this, userWalletAddresses),
       walletNonce: this.getNonce(),
       value: BNConverter.hexStringToBN("0x0"),
       toAddress: this.getAddress(),
