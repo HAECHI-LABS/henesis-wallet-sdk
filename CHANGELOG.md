@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.9...v2.10.10) (2021-01-18)
+
+
+### Bug Fixes
+
+* fix non standard erc20 flush bug ([03fff84](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/03fff849f19a4f85c056b1e15a37f7019483dc9c))
+
+
+
+
+
 ## [2.10.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.8...v2.10.9) (2020-12-17)
 
 
