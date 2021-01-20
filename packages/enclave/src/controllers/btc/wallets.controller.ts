@@ -2,6 +2,7 @@ import AbstractController from "../controller";
 import { Controller } from "../../types";
 import express from "express";
 import {
+  BtcActivatingMasterWallet,
   BtcEstimatedFee,
   BtcMasterWallet,
   BtcMasterWalletData,
@@ -17,8 +18,15 @@ import {
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
 import { TransferResponse } from "./transfers.controller";
 import { Cacheable } from "@type-cacheable/core";
-import { WalletStatus } from "@haechi-labs/henesis-wallet-core/lib/wallet";
+import {
+  InactiveMasterWallet,
+  WalletStatus,
+} from "@haechi-labs/henesis-wallet-core/lib/wallet";
 import { DefaultFilterCacheStrategy } from "../../utils/cache";
+import {
+  HenesisError,
+  HttpStatus,
+} from "@haechi-labs/henesis-wallet-core/lib/error";
 
 export interface BalanceResponse
   extends Omit<Balance, "amount" | "spendableAmount"> {
@@ -42,7 +50,14 @@ export default class WalletsController
 
   protected initRoutes(): void {
     this.router.get(`${this.path}`, this.promiseWrapper(this.getWallets));
-
+    this.router.post(
+      `${this.path}`,
+      this.promiseWrapper(this.createInactiveMasterWallet, 201)
+    );
+    this.router.post(
+      `${this.path}/:walletId/activate`,
+      this.promiseWrapper(this.activateMasterWallet)
+    );
     this.router.get(
       `${this.path}/:walletId`,
       this.promiseWrapper(this.getWallet)
@@ -242,5 +257,22 @@ export default class WalletsController
     const wallet = await this.getWalletById(req.sdk, req.params.walletId);
 
     return wallet.changeName(req.body.name);
+  }
+
+  private createInactiveMasterWallet(
+    req: express.Request
+  ): Promise<InactiveMasterWallet> {
+    const type: string = <string>req.query.type;
+    if (type == undefined || type.toUpperCase() != WalletStatus.INACTIVE) {
+      throw new HenesisError(`type should be inactive`, HttpStatus.BAD_REQUEST);
+    }
+    return req.sdk.btc.wallets.createInactiveMasterWallet(req.body.name);
+  }
+
+  private async activateMasterWallet(
+    req: express.Request
+  ): Promise<BtcActivatingMasterWallet> {
+    const wallet = await this.getWalletById(req.sdk, req.params.walletId);
+    return wallet.activate(req.body.accountKey, req.body.backupKey);
   }
 }

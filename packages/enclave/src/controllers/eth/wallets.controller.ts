@@ -1,6 +1,7 @@
 import express from "express";
 import BN from "bn.js";
 import {
+  EthActivatingMasterWallet,
   EthMasterWallet,
   EthMasterWalletData,
   EthTransaction,
@@ -23,7 +24,14 @@ import AbstractController from "../controller";
 import { Controller } from "../../types";
 import { Cacheable, CacheClear } from "@type-cacheable/core";
 import { DefaultFilterCacheStrategy } from "../../utils/cache";
-import { WalletStatus } from "@haechi-labs/henesis-wallet-core/lib/wallet";
+import {
+  InactiveMasterWallet,
+  WalletStatus,
+} from "@haechi-labs/henesis-wallet-core/lib/wallet";
+import {
+  HenesisError,
+  HttpStatus,
+} from "@haechi-labs/henesis-wallet-core/lib/error";
 
 interface BalanceResponse
   extends Omit<Balance, "amount" | "spendableAmount" | "aggregatedAmount"> {
@@ -72,6 +80,11 @@ export default class WalletsController
     this.router.post(
       `${this.path}`,
       this.promiseWrapper(this.createMasterWallet, 201)
+    );
+
+    this.router.post(
+      `${this.path}/:masterWalletId/activate`,
+      this.promiseWrapper(this.activateMasterWallet)
     );
 
     this.router.post(
@@ -228,7 +241,17 @@ export default class WalletsController
 
   private async createMasterWallet(
     req: express.Request
-  ): Promise<EthMasterWalletData> {
+  ): Promise<EthMasterWalletData | InactiveMasterWallet> {
+    const type: string = <string>req.query.type;
+    if (type != undefined) {
+      if (type.toUpperCase() != WalletStatus.INACTIVE) {
+        throw new HenesisError(
+          `type '${type}' is not supported`,
+          HttpStatus.BAD_REQUEST
+        );
+      }
+      return req.sdk.eth.wallets.createInactiveMasterWallet(req.body.name);
+    }
     return (
       await req.sdk.eth.wallets.createMasterWallet(
         req.body.name,
@@ -693,5 +716,15 @@ export default class WalletsController
       request.to !== undefined &&
       request.amount !== undefined
     );
+  }
+
+  private async activateMasterWallet(
+    req: express.Request
+  ): Promise<EthActivatingMasterWallet> {
+    const wallet = await this.getMasterWalletById(
+      req.sdk,
+      req.params.masterWalletId
+    );
+    return wallet.activate(req.body.accountKey, req.body.backupKey);
   }
 }

@@ -2,7 +2,11 @@ import { Contract } from "web3-eth-contract/";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import BN from "bn.js";
-import { transformWalletStatus, WalletStatus } from "../wallet";
+import {
+  ActivatingMasterWallet,
+  transformWalletStatus,
+  WalletStatus,
+} from "../wallet";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
 import {
   Balance,
@@ -38,12 +42,15 @@ import {
   CreateMultiSigTransactionRequest,
   ChangeWalletNameRequest,
   ReplaceTransactionRequest,
+  ActivateMasterWalletRequest,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { Coin } from "./coin";
 import { randomBytes } from "crypto";
+import { keccak256 } from "./eth-core-lib/hash";
+import { toChecksum } from "./keychains";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -78,6 +85,8 @@ export interface EthWithdrawalApproveParams extends ApproveWithdrawal {
   gasLimit?: BN;
 }
 
+export class EthActivatingMasterWallet extends ActivatingMasterWallet {}
+
 function convertSignedMultiSigPayloadToDTO(
   signedMultiSigPayload: SignedMultiSigPayload
 ): SignedMultiSigPayloadDTO {
@@ -95,6 +104,11 @@ function convertSignedMultiSigPayloadToDTO(
       walletAddress: signedMultiSigPayload.multiSigPayload.walletAddress,
     },
   };
+}
+
+function getAddressFromPub(pub: String) {
+  const publicHash = keccak256(pub);
+  return toChecksum(`0x${publicHash.slice(-40)}`);
 }
 
 export const transformMasterWalletData = (
@@ -384,6 +398,39 @@ export class EthMasterWallet extends EthLikeWallet {
 
   updateAccountKey(key: Key): void {
     this.data.accountKey = key;
+  }
+
+  async activate(
+    accountKey: Key,
+    backupKey: Key
+  ): Promise<EthActivatingMasterWallet> {
+    checkNullAndUndefinedParameter({ accountKey, backupKey });
+    const params: ActivateMasterWalletRequest = {
+      accountKey: {
+        pub: accountKey.pub,
+        address: getAddressFromPub(accountKey.pub),
+        keyFile: undefined,
+      },
+      backupKey: {
+        pub: backupKey.pub,
+        address: getAddressFromPub(backupKey.pub),
+        keyFile: undefined,
+      },
+      gasPrice: undefined,
+    };
+    const masterWallet = await this.client.post<MasterWalletDTO>(
+      `${this.baseUrl}/activate`,
+      params
+    );
+    return new EthActivatingMasterWallet(
+      masterWallet.id,
+      masterWallet.name,
+      transformBlockchainType(masterWallet.blockchain),
+      masterWallet.address,
+      masterWallet.status,
+      masterWallet.createdAt,
+      masterWallet.updatedAt
+    );
   }
 
   async createUserWallet(

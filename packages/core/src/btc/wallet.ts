@@ -15,20 +15,26 @@ import {
   Transaction as BitcoinTransaction,
 } from "bitcoinjs-lib";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
-import { Wallet, WalletData, transformWalletStatus } from "../wallet";
+import {
+  ActivatingMasterWallet,
+  transformWalletStatus,
+  Wallet,
+  WalletData,
+} from "../wallet";
 import { BlockchainType } from "../blockchain";
 import {
-  DepositAddressDTO,
-  RawTransactionDTO,
-  EstimatedFeeDTO,
-  BalanceDTO,
-  MasterWalletDTO,
-  TransferDTO,
+  ActivateMasterWalletRequest,
   ApproveWithdrawalApprovalRequest,
-  RejectWithdrawalApprovalRequest,
-  TransactionOutputDTO,
-  TransactionDTO,
+  BalanceDTO,
+  DepositAddressDTO,
+  EstimatedFeeDTO,
+  MasterWalletDTO,
   PatchWalletNameRequest,
+  RawTransactionDTO,
+  RejectWithdrawalApprovalRequest,
+  TransactionDTO,
+  TransactionOutputDTO,
+  TransferDTO,
 } from "../__generate__/btc";
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
@@ -36,8 +42,8 @@ import _ from "lodash";
 import { Transfer } from "./transfers";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import {
-  getDepositAddressApi,
   createDepositAddressApi,
+  getDepositAddressApi,
 } from "../apis/btc/wallet";
 import { convertTransferDTO } from "./utils";
 
@@ -112,6 +118,8 @@ export interface DepositAddressPaginationOptions extends PaginationOptions {
 }
 
 export interface BtcWithdrawalApproveParams extends ApproveWithdrawal {}
+
+export class BtcActivatingMasterWallet extends ActivatingMasterWallet {}
 
 export const transformWalletData = (
   data: MasterWalletDTO
@@ -390,5 +398,35 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       request
     );
     this.data.name = btcWalletData.name;
+  }
+
+  async activate(
+    accountKey: Key,
+    backupKey: Key
+  ): Promise<BtcActivatingMasterWallet> {
+    checkNullAndUndefinedParameter({ accountKey, backupKey });
+    const params: ActivateMasterWalletRequest = {
+      accountKey: {
+        pub: accountKey.pub,
+        keyFile: undefined,
+      },
+      backupKey: {
+        pub: backupKey.pub,
+        keyFile: undefined,
+      },
+    };
+    const masterWallet = await this.client.post<MasterWalletDTO>(
+      `${this.baseUrl}/activate`,
+      params
+    );
+    return new BtcActivatingMasterWallet(
+      masterWallet.id,
+      masterWallet.name,
+      BlockchainType.BitCoin,
+      masterWallet.address,
+      masterWallet.status,
+      masterWallet.createdAt,
+      masterWallet.updatedAt
+    );
   }
 }

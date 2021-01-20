@@ -324,6 +324,12 @@ export interface CreateRawTransactionRequest {
      * @memberof CreateRawTransactionRequest
      */
     amount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRawTransactionRequest
+     */
+    feeRate?: string;
 }
 /**
  * 
