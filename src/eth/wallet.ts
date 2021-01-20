@@ -253,6 +253,16 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
   }
 
+  async createRawTransaction(
+    coin: string | Coin,
+    to: string,
+    amount: BN
+  ): Promise<MultiSigPayload> {
+    checkNullAndUndefinedParameter({ coin, to });
+    const c = typeof coin === "string" ? await this.coins.getCoin(coin) : coin;
+    return c.buildTransferMultiSigPayload(this, to, amount);
+  }
+
   createBatchRequest(otpCode?: string): BatchRequest {
     return new BatchRequest(
       (
