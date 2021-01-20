@@ -10,6 +10,7 @@ import {
 import {
   BNConverter,
   Coin,
+  MultiSigPayload,
   SDK,
   SignedMultiSigPayload,
 } from "@haechi-labs/henesis-wallet-core";
@@ -106,6 +107,11 @@ export default class WalletsController
     this.router.post(
       `${this.path}/:masterWalletId/flush`,
       this.promiseWrapper(this.flush, 201)
+    );
+
+    this.router.post(
+      `${this.path}/:masterWalletId/raw-transactions`,
+      this.promiseWrapper(this.createRawTransaction, 201)
     );
 
     this.router.get(
@@ -360,6 +366,21 @@ export default class WalletsController
       req.body.gasLimit
         ? BNConverter.hexStringToBN(req.body.gasLimit)
         : undefined
+    );
+  }
+
+  private async createRawTransaction(
+    req: express.Request
+  ): Promise<MultiSigPayload> {
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
+      req.params.masterWalletId
+    );
+
+    return masterWallet.createRawTransaction(
+      await this.getCoinByTicker(req.sdk, req.body.ticker),
+      req.body.to,
+      BNConverter.hexStringToBN(req.body.amount)
     );
   }
 
