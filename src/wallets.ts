@@ -49,4 +49,13 @@ export abstract class Wallets<T> {
   protected removeKeyFile(key: KeyWithPriv | Key): KeyWithPriv | Key {
     return _.omit(key, "keyFile");
   }
+
+  protected createDummyEncryptionKey(): string {
+    let dummyKey = "";
+    const length = 64;
+    for (let i = 0; i < length; i++) {
+      dummyKey += "f";
+    }
+    return dummyKey;
+  }
 }

@@ -11,12 +11,13 @@ import { Base64 } from "js-base64";
 import { BtcRecoveryKit } from "./recoveryKit";
 import { address as BitcoinAddress, networks } from "bitcoinjs-lib";
 import {
-  MasterWalletDTO,
+  ActivateMasterWalletRequest,
   CreateInactiveMasterWalletRequest,
   CreateInactiveMasterWalletResponse,
-  ActivateMasterWalletRequest,
+  MasterWalletDTO,
 } from "../__generate__/btc";
 import { checkNullAndUndefinedParameter } from "..";
+import { InactiveMasterWallet } from "../wallet";
 
 export class BtcWallets extends Wallets<BtcMasterWallet> {
   constructor(env: Env, client: Client, keychains: Keychains) {
@@ -151,6 +152,32 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       this.client,
       this.keychains,
       this.env
+    );
+  }
+
+  async createInactiveMasterWallet(
+    name: string
+  ): Promise<InactiveMasterWallet> {
+    checkNullAndUndefinedParameter({ name });
+    const params: CreateInactiveMasterWalletRequest = {
+      name,
+      encryptionKey: this.createDummyEncryptionKey(),
+    };
+    const masterWalletResponse = await this.client.post<CreateInactiveMasterWalletResponse>(
+      `${this.baseUrl}?type=inactive`,
+      params
+    );
+    return new InactiveMasterWallet(
+      masterWalletResponse.id,
+      masterWalletResponse.name,
+      BlockchainType.BitCoin,
+      {
+        pub: masterWalletResponse.henesisKey.pub,
+        keyFile: undefined,
+      },
+      masterWalletResponse.status,
+      masterWalletResponse.createdAt,
+      undefined
     );
   }
 }

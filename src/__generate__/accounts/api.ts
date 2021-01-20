@@ -82,6 +82,12 @@ export interface AccountDTO {
     accessToken: string;
     /**
      * 
+     * @type {HenesisLocale}
+     * @memberof AccountDTO
+     */
+    locale: HenesisLocale;
+    /**
+     * 
      * @type {string}
      * @memberof AccountDTO
      */
@@ -439,6 +445,29 @@ export interface ErrorResponse {
 /**
  * 
  * @export
+ * @interface HenesisLocale
+ */
+export interface HenesisLocale {
+    /**
+     * 
+     * @type {string}
+     * @memberof HenesisLocale
+     */
+    language?: HenesisLocaleLanguageEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum HenesisLocaleLanguageEnum {
+    KO = 'KO',
+    EN = 'EN'
+}
+
+/**
+ * 
+ * @export
  * @interface IdentityDTO
  */
 export interface IdentityDTO {
@@ -484,6 +513,12 @@ export interface IdentityDTO {
      * @memberof IdentityDTO
      */
     organizationSecret: string;
+    /**
+     * 
+     * @type {HenesisLocale}
+     * @memberof IdentityDTO
+     */
+    locale: HenesisLocale;
     /**
      * 
      * @type {string}
@@ -667,7 +702,48 @@ export interface LoginResponse {
      * @memberof LoginResponse
      */
     otp: OTPDTO;
+    /**
+     * 
+     * @type {HenesisLocale}
+     * @memberof LoginResponse
+     */
+    locale: HenesisLocale;
 }
+/**
+ * 
+ * @export
+ * @interface NotificationPayloadDto
+ */
+export interface NotificationPayloadDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationPayloadDto
+     */
+    language?: NotificationPayloadDtoLanguageEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationPayloadDto
+     */
+    title?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NotificationPayloadDto
+     */
+    content?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum NotificationPayloadDtoLanguageEnum {
+    KO = 'KO',
+    EN = 'EN'
+}
+
 /**
  * 
  * @export
@@ -676,23 +752,30 @@ export interface LoginResponse {
 export interface NotifyRequest {
     /**
      * 
-     * @type {Array<Role>}
+     * @type {Array<string>}
      * @memberof NotifyRequest
      */
-    targets?: Array<Role>;
+    targets?: Array<NotifyRequestTargetsEnum>;
     /**
      * 
-     * @type {string}
+     * @type {Array<NotificationPayloadDto>}
      * @memberof NotifyRequest
      */
-    title?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotifyRequest
-     */
-    content?: string;
+    payloads?: Array<NotificationPayloadDto>;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum NotifyRequestTargetsEnum {
+    COIN = 'COIN',
+    VIEWER = 'VIEWER',
+    ADMIN = 'ADMIN',
+    HAECHI = 'HAECHI',
+    SPENDER = 'SPENDER'
+}
+
 /**
  * 
  * @export
@@ -1011,6 +1094,12 @@ export interface SignUpRequest {
      * @memberof SignUpRequest
      */
     organizationId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUpRequest
+     */
+    language: string;
 }
 /**
  * 
@@ -1053,6 +1142,12 @@ export interface SignUpResponse {
      * @type {string}
      * @memberof SignUpResponse
      */
+    language: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SignUpResponse
+     */
     accessToken: string;
 }
 /**
@@ -1073,6 +1168,19 @@ export interface SimpleAccountDTO {
      * @memberof SimpleAccountDTO
      */
     email: string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateLanguageRequest
+ */
+export interface UpdateLanguageRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateLanguageRequest
+     */
+    newLanguage: string;
 }
 /**
  * 
@@ -1475,6 +1583,44 @@ export const AccountControllerApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
+         * @param {UpdateLanguageRequest} updateLanguageRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateLanguage: async (updateLanguageRequest: UpdateLanguageRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'updateLanguageRequest' is not null or undefined
+            if (updateLanguageRequest === null || updateLanguageRequest === undefined) {
+                throw new RequiredError('updateLanguageRequest','Required parameter updateLanguageRequest was null or undefined when calling updateLanguage.');
+            }
+            const localVarPath = `/api/v2/accounts/language`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof updateLanguageRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateLanguageRequest !== undefined ? updateLanguageRequest : {}) : (updateLanguageRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1733,6 +1879,19 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {UpdateLanguageRequest} updateLanguageRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateLanguage(updateLanguageRequest: UpdateLanguageRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).updateLanguage(updateLanguageRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1855,6 +2014,15 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {UpdateLanguageRequest} updateLanguageRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateLanguage(updateLanguageRequest: UpdateLanguageRequest, options?: any): AxiosPromise<void> {
+            return AccountControllerApiFp(configuration).updateLanguage(updateLanguageRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1972,6 +2140,17 @@ export class AccountControllerApi extends BaseAPI {
      */
     public signup(signUpRequest: SignUpRequest, options?: any) {
         return AccountControllerApiFp(this.configuration).signup(signUpRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {UpdateLanguageRequest} updateLanguageRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountControllerApi
+     */
+    public updateLanguage(updateLanguageRequest: UpdateLanguageRequest, options?: any) {
+        return AccountControllerApiFp(this.configuration).updateLanguage(updateLanguageRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2270,6 +2449,41 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationInfo: async (organizationId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            if (organizationId === null || organizationId === undefined) {
+                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling getOrganizationInfo.');
+            }
+            const localVarPath = `/api/v2/operation/organizations/{organizationId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2347,6 +2561,19 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizationInfo(organizationId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationInfoDTO>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getOrganizationInfo(organizationId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2392,6 +2619,15 @@ export const OperationControllerApiFactory = function (configuration?: Configura
          */
         getAllAccountsByOrganizationId(organizationId: string, options?: any): AxiosPromise<Array<AccountDTO>> {
             return OperationControllerApiFp(configuration).getAllAccountsByOrganizationId(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizationInfo(organizationId: string, options?: any): AxiosPromise<OrganizationInfoDTO> {
+            return OperationControllerApiFp(configuration).getOrganizationInfo(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2442,6 +2678,17 @@ export class OperationControllerApi extends BaseAPI {
      */
     public getAllAccountsByOrganizationId(organizationId: string, options?: any) {
         return OperationControllerApiFp(this.configuration).getAllAccountsByOrganizationId(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} organizationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public getOrganizationInfo(organizationId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).getOrganizationInfo(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

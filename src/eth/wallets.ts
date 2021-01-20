@@ -4,7 +4,7 @@ import * as BN from "bn.js";
 import { Env } from "../sdk";
 import { Client } from "../httpClient";
 import { Keychains } from "../types";
-import { BlockchainType } from "../blockchain";
+import { BlockchainType, transformBlockchainType } from "../blockchain";
 import { RecoveryKit } from "../recoverykit";
 import { EthMasterWallet, transformMasterWalletData } from "./wallet";
 import { Wallets } from "../wallets";
@@ -13,7 +13,12 @@ import { keccak256s } from "./eth-core-lib/hash";
 import { makeQueryString } from "../utils/url";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import { HenesisKeys } from "./henesisKeys";
-import { MasterWalletDTO } from "../__generate__/eth";
+import {
+  CreateInactiveMasterWalletRequest,
+  InactiveMasterWalletDTO,
+  MasterWalletDTO,
+} from "../__generate__/eth";
+import { InactiveMasterWallet } from "../wallet";
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -179,5 +184,28 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     }
 
     return true;
+  }
+
+  async createInactiveMasterWallet(
+    name: string
+  ): Promise<InactiveMasterWallet> {
+    checkNullAndUndefinedParameter({ name });
+    const params: CreateInactiveMasterWalletRequest = {
+      name,
+      encryptionKey: this.createDummyEncryptionKey(),
+    };
+    const masterWalletResponse = await this.client.post<InactiveMasterWalletDTO>(
+      `${this.baseUrl}?type=inactive`,
+      params
+    );
+    return new InactiveMasterWallet(
+      masterWalletResponse.id,
+      masterWalletResponse.name,
+      transformBlockchainType(masterWalletResponse.blockchain),
+      masterWalletResponse.henesisKey,
+      masterWalletResponse.status,
+      masterWalletResponse.createdAt,
+      masterWalletResponse.updatedAt
+    );
   }
 }
