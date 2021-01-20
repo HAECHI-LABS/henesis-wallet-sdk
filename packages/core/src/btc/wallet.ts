@@ -223,7 +223,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     return convertTransferDTO(transfer);
   }
 
-  private async createRawTransaction(
+  async createRawTransaction(
     to: string,
     amount: BN,
     feeRate?: BN

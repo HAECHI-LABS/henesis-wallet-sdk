@@ -5,6 +5,7 @@ import {
   BtcEstimatedFee,
   BtcMasterWallet,
   BtcMasterWalletData,
+  BtcRawTransaction,
   DepositAddress,
 } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
@@ -40,45 +41,60 @@ export default class WalletsController
 
   protected initRoutes(): void {
     this.router.get(`${this.path}`, this.promiseWrapper(this.getWallets));
+
     this.router.get(
       `${this.path}/:walletId`,
       this.promiseWrapper(this.getWallet)
     );
+
     this.router.patch(
       `${this.path}/:walletId/name`,
       this.promiseWrapper(this.changeWalletName)
     );
+
     this.router.patch(
       `${this.path}/:walletId/passphrase`,
       this.promiseWrapper(this.changePassphrase)
     );
+
     this.router.get(
       `${this.path}/:walletId/balance`,
       this.promiseWrapper(this.getWalletBalance)
     );
+
     this.router.get(
       `${this.path}/:walletId/estimated-fee`,
       this.promiseWrapper(this.getEstimatedFee)
     );
+
     this.router.post(
       `${this.path}/:walletId/deposit-addresses`,
       this.promiseWrapper(this.createDepositAddress)
     );
+
     this.router.get(
       `${this.path}/:walletId/deposit-addresses`,
       this.promiseWrapper(this.getDepositAddresses)
     );
+
     this.router.get(
       `${this.path}/:walletId/deposit-addresses/:depositAddressId`,
       this.promiseWrapper(this.getDepositAddress)
     );
+
     this.router.post(
       `${this.path}/verify-address`,
       this.promiseWrapper(this.verifyAddress)
     );
+
     this.router.post(
       `${this.path}/:walletId/transfer`,
       this.promiseWrapper(this.transfer)
+    );
+
+    this.router.post(
+      `${this.path}/:walletId/raw-transactions`,
+      this.promiseWrapper(this.createRawTransaction, 201)
     );
   }
 
@@ -126,6 +142,17 @@ export default class WalletsController
     );
 
     return this.bnToHexString(transfer);
+  }
+
+  private async createRawTransaction(
+    req: express.Request
+  ): Promise<BtcRawTransaction> {
+    const wallet = await this.getWalletById(req.sdk, req.params.walletId);
+    return wallet.createRawTransaction(
+      req.body.to,
+      BNConverter.hexStringToBN(req.body.amount),
+      req.body.feeRate ? BNConverter.hexStringToBN(req.body.feeRate) : undefined
+    );
   }
 
   private async getEstimatedFee(
