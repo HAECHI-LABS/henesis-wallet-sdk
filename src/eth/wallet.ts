@@ -291,7 +291,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     };
   }
 
-  protected async sendTransaction(
+  async sendTransaction(
     signedMultiSigPayload: SignedMultiSigPayload,
     walletId: string,
     otpCode?: string,
