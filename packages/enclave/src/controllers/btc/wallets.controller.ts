@@ -6,6 +6,7 @@ import {
   BtcMasterWallet,
   BtcMasterWalletData,
   BtcRawTransaction,
+  BtcSignedRawTransaction,
   DepositAddress,
 } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
@@ -96,6 +97,11 @@ export default class WalletsController
       `${this.path}/:walletId/raw-transactions`,
       this.promiseWrapper(this.createRawTransaction, 201)
     );
+
+    this.router.post(
+      `${this.path}/:walletId/signed-transactions`,
+      this.promiseWrapper(this.sendSignedTransaction, 201)
+    );
   }
 
   private async getWallets(
@@ -153,6 +159,16 @@ export default class WalletsController
       BNConverter.hexStringToBN(req.body.amount),
       req.body.feeRate ? BNConverter.hexStringToBN(req.body.feeRate) : undefined
     );
+  }
+
+  private async sendSignedTransaction(
+    req: express.Request
+  ): Promise<TransferResponse> {
+    const wallet = await this.getWalletById(req.sdk, req.params.walletId);
+    const transfer: Transfer = await wallet.sendSignedTransaction(
+      req.body as BtcSignedRawTransaction
+    );
+    return this.bnToHexString(transfer);
   }
 
   private async getEstimatedFee(

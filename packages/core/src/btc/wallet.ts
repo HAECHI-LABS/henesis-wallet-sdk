@@ -82,13 +82,17 @@ export interface BtcCreateTransactionOutput
   amount: string;
 }
 
-export interface BtcCreateRawTransaction {
+export interface BtcSignedRawTransactionRequest
+  extends BtcSignedRawTransaction {
+  otpCode?: string;
+}
+
+export interface BtcSignedRawTransaction {
   inputs: {
     transactionOutput: BtcCreateTransactionOutput;
     accountSignature: string;
   }[];
   outputs: BtcRawTransactionOutput[];
-  otpCode: string;
 }
 
 export interface BtcMasterWalletData extends WalletData {
@@ -137,9 +141,8 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     to: string,
     amount: BN,
     passphrase: string,
-    otpCode?: string,
     feeRate?: BN
-  ): Promise<BtcCreateRawTransaction> {
+  ): Promise<BtcSignedRawTransaction> {
     checkNullAndUndefinedParameter({ to, passphrase });
     const rawTransaction: BtcRawTransaction = await this.createRawTransaction(
       to,
@@ -184,10 +187,9 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       accountSigs.push(accountSig);
     }
 
-    const payload: BtcCreateRawTransaction = {
+    const payload: BtcSignedRawTransaction = {
       inputs: [],
       outputs: [],
-      otpCode: otpCode,
     };
 
     for (let i = 0; i < rawTransaction.inputs.length; i++) {
@@ -215,9 +217,18 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     otpCode?: string,
     feeRate?: BN
   ): Promise<Transfer> {
+    return this.sendSignedTransaction({
+      ...(await this.build(to, amount, passphrase, feeRate)),
+      otpCode: otpCode,
+    });
+  }
+
+  async sendSignedTransaction(
+    signedRawTransactionRequest: BtcSignedRawTransactionRequest
+  ): Promise<Transfer> {
     const transfer = await this.client.post<TransferDTO>(
       `${this.baseUrl}/transactions`,
-      await this.build(to, amount, passphrase, otpCode, feeRate)
+      signedRawTransactionRequest
     );
 
     return convertTransferDTO(transfer);
@@ -323,12 +334,10 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   async approve(params: BtcWithdrawalApproveParams): Promise<Transfer> {
-    const request: ApproveWithdrawalApprovalRequest = await this.build(
-      params.toAddress,
-      params.amount,
-      params.passphrase,
-      params.otpCode
-    );
+    const request: ApproveWithdrawalApprovalRequest = {
+      ...(await this.build(params.toAddress, params.amount, params.passphrase)),
+      otpCode: params.otpCode,
+    };
 
     const transfer = await this.client.post<TransferDTO>(
       `${this.withdrawalApprovalUrl}/${params.id}/approve`,
