@@ -114,6 +114,11 @@ export default class WalletsController
       this.promiseWrapper(this.createRawTransaction, 201)
     );
 
+    this.router.post(
+      `${this.path}/:masterWalletId/signed-transactions`,
+      this.promiseWrapper(this.sendSignedTransaction, 201)
+    );
+
     this.router.get(
       `${this.path}/:masterWalletId/user-wallets/:userWalletId`,
       this.promiseWrapper(this.getUserWallet)
@@ -381,6 +386,27 @@ export default class WalletsController
       await this.getCoinByTicker(req.sdk, req.body.ticker),
       req.body.to,
       BNConverter.hexStringToBN(req.body.amount)
+    );
+  }
+
+  private async sendSignedTransaction(
+    req: express.Request
+  ): Promise<EthTransaction> {
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
+      req.params.masterWalletId
+    );
+
+    return masterWallet.sendTransaction(
+      req.body as SignedMultiSigPayload,
+      masterWallet.getId(),
+      null,
+      req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+      req.body.gasLimit
+        ? BNConverter.hexStringToBN(req.body.gasLimit)
+        : undefined
     );
   }
 
