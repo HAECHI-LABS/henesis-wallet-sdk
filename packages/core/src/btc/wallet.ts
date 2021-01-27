@@ -28,6 +28,7 @@ import {
   BalanceDTO,
   DepositAddressDTO,
   EstimatedFeeDTO,
+  KeyDTO,
   MasterWalletDTO,
   PatchWalletNameRequest,
   RawTransactionDTO,
@@ -404,16 +405,15 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     accountKey: Key,
     backupKey: Key
   ): Promise<BtcActivatingMasterWallet> {
-    checkNullAndUndefinedParameter({ accountKey, backupKey });
     const params: ActivateMasterWalletRequest = {
       accountKey: {
         pub: accountKey.pub,
         keyFile: undefined,
-      },
+      } as KeyDTO,
       backupKey: {
         pub: backupKey.pub,
         keyFile: undefined,
-      },
+      } as KeyDTO,
     };
     const masterWallet = await this.client.post<MasterWalletDTO>(
       `${this.baseUrl}/activate`,
