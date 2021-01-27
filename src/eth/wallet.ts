@@ -43,6 +43,7 @@ import {
   ChangeWalletNameRequest,
   ReplaceTransactionRequest,
   ActivateMasterWalletRequest,
+  KeyDTO,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
@@ -106,7 +107,7 @@ function convertSignedMultiSigPayloadToDTO(
   };
 }
 
-function getAddressFromPub(pub: String) {
+function getAddressFromPub(pub: String): string {
   const publicHash = keccak256(pub);
   return toChecksum(`0x${publicHash.slice(-40)}`);
 }
@@ -404,18 +405,17 @@ export class EthMasterWallet extends EthLikeWallet {
     accountKey: Key,
     backupKey: Key
   ): Promise<EthActivatingMasterWallet> {
-    checkNullAndUndefinedParameter({ accountKey, backupKey });
     const params: ActivateMasterWalletRequest = {
       accountKey: {
         pub: accountKey.pub,
         address: getAddressFromPub(accountKey.pub),
         keyFile: undefined,
-      },
+      } as KeyDTO,
       backupKey: {
         pub: backupKey.pub,
         address: getAddressFromPub(backupKey.pub),
         keyFile: undefined,
-      },
+      } as KeyDTO,
       gasPrice: undefined,
     };
     const masterWallet = await this.client.post<MasterWalletDTO>(
