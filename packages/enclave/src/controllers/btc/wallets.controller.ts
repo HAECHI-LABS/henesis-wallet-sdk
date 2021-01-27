@@ -13,6 +13,7 @@ import {
 import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
 import {
   Balance,
+  Key,
   Pagination,
 } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
@@ -273,6 +274,9 @@ export default class WalletsController
     req: express.Request
   ): Promise<BtcActivatingMasterWallet> {
     const wallet = await this.getWalletById(req.sdk, req.params.walletId);
-    return wallet.activate(req.body.accountKey, req.body.backupKey);
+    return wallet.activate(
+      req.body.accountKey as Key,
+      req.body.backupKey as Key
+    );
   }
 }

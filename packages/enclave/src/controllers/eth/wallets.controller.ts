@@ -10,6 +10,7 @@ import {
 } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 import {
   Balance,
+  Key,
   Pagination,
 } from "@haechi-labs/henesis-wallet-core/lib/types";
 import {
@@ -725,6 +726,9 @@ export default class WalletsController
       req.sdk,
       req.params.masterWalletId
     );
-    return wallet.activate(req.body.accountKey, req.body.backupKey);
+    return wallet.activate(
+      req.body.accountKey as Key,
+      req.body.backupKey as Key
+    );
   }
 }
