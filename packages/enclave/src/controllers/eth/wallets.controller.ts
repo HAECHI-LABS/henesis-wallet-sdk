@@ -447,8 +447,22 @@ export default class WalletsController
       req.params.masterWalletId
     );
 
+    const signedMultiSigPayload = req.body.signedMultiSigPayload;
     return masterWallet.sendTransaction(
-      req.body as SignedMultiSigPayload,
+      {
+        signature: signedMultiSigPayload.signature,
+        multiSigPayload: {
+          walletAddress: signedMultiSigPayload.multiSigPayload.walletAddress,
+          toAddress: signedMultiSigPayload.multiSigPayload.toAddress,
+          value: BNConverter.hexStringToBN(
+            signedMultiSigPayload.multiSigPayload.value
+          ),
+          walletNonce: BNConverter.hexStringToBN(
+            signedMultiSigPayload.multiSigPayload.walletNonce
+          ),
+          hexData: signedMultiSigPayload.multiSigPayload.hexData,
+        },
+      },
       masterWallet.getId(),
       null,
       req.body.gasPrice
