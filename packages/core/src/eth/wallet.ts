@@ -50,8 +50,7 @@ import { ValidationParameterError } from "../error";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { Coin } from "./coin";
 import { randomBytes } from "crypto";
-import { keccak256 } from "./eth-core-lib/hash";
-import { toChecksum } from "./keychains";
+import EthCrypto from "eth-crypto";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -107,9 +106,9 @@ function convertSignedMultiSigPayloadToDTO(
   };
 }
 
-function getAddressFromPub(pub: String): string {
-  const publicHash = keccak256(pub);
-  return toChecksum(`0x${publicHash.slice(-40)}`);
+function getAddressFromPub(pub: string): string {
+  const pubKey = EthCrypto.publicKey.decompress(pub.slice(2));
+  return EthCrypto.publicKey.toAddress(pubKey);
 }
 
 export const transformMasterWalletData = (
