@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.11-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.11-RC.0...v2.10.11-alpha.0) (2021-02-26)
+
+
+### Features
+
+* add invoice mock func ([3330e22](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3330e228967545046fb526b82cddf9f4f9b8ad07))
+
+
+
+
+
 ## [2.10.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.9...v2.10.10) (2021-01-18)
 
 
