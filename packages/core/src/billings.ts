@@ -1,9 +1,10 @@
 import { Client } from "./httpClient";
-import { Pagination, PaginationOptions, Secret } from "./types";
+import { Pagination, PaginationOptions, Secret, Balance } from "./types";
 import { Account, AccountWithIps, Role } from "./accounts";
 import { makeQueryString } from "./utils/url";
 import { BlockchainType } from "./blockchain";
 import { SimplifiedCoinInternalDTO } from "./__generate__/eth";
+import BN from "bn.js";
 
 export interface Invoice {
   id: string;
@@ -33,7 +34,7 @@ export interface InvoiceExternalWithdrawals {
 
 export interface InvoiceTokenUsage {
   invoiceId: string;
-  coin: SimplifiedCoinInternalDTO;
+  coin: Balance;
   charge: number;
 }
 
@@ -79,31 +80,38 @@ export class Billings {
       startAt?: string;
       endAt?: string;
     } & PaginationOptions
-  ): Promise<InvoiceExternalWithdrawals[]> {
+  ): Promise<Pagination<InvoiceExternalWithdrawals>> {
     const queryString: string = makeQueryString({});
 
     // return this.client.get<BillingsInvoice>(
     //   `${this.baseUrl}/${orgId}/invoice${queryString ? `?${queryString}` : ""}`
     // );
-    return Promise.resolve([
-      {
-        id: "1",
-        invoiceId: "1",
-        wallet: {
+    return Promise.resolve({
+      results: [
+        {
           id: "1",
-          name: "test",
-          blockchain: BlockchainType.Ethereum,
+          invoiceId: "1",
+          wallet: {
+            id: "1",
+            name: "test",
+            blockchain: BlockchainType.Ethereum,
+          },
+          amount: "0",
+          coin: {
+            symbol: "ETH",
+            decimals: 18,
+          },
+          withdrawalTime: "10",
+          charge: 0,
+          source: "based on upbit",
         },
-        amount: "0",
-        coin: {
-          symbol: "ETH",
-          decimals: 18,
-        },
-        withdrawalTime: "10",
-        charge: 0,
-        source: "based on upbit",
+      ],
+      pagination: {
+        totalCount: 1,
+        nextUrl: "",
+        previousUrl: "",
       },
-    ]);
+    });
   }
 
   async getInvoiceTokenListingUsage(request: {
@@ -120,6 +128,10 @@ export class Billings {
       {
         invoiceId: "1",
         coin: {
+          coinId: 1,
+          coinType: "test",
+          amount: new BN(0),
+          name: "이더리움",
           symbol: "ETH",
           decimals: 18,
         },
