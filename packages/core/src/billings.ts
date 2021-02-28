@@ -81,7 +81,8 @@ export class Billings {
       endAt?: string;
     } & PaginationOptions
   ): Promise<Pagination<InvoiceExternalWithdrawals>> {
-    const queryString: string = makeQueryString({});
+    const { orgId, ...rest } = request;
+    const queryString: string = makeQueryString(rest);
 
     // return this.client.get<BillingsInvoice>(
     //   `${this.baseUrl}/${orgId}/invoice${queryString ? `?${queryString}` : ""}`
@@ -119,7 +120,8 @@ export class Billings {
     startAt?: string;
     endAt?: string;
   }): Promise<InvoiceTokenUsage[]> {
-    const queryString: string = makeQueryString({});
+    const { orgId, ...rest } = request;
+    const queryString: string = makeQueryString(rest);
 
     // return this.client.get<BillingsInvoice>(
     //   `${this.baseUrl}/${orgId}/invoice${queryString ? `?${queryString}` : ""}`
@@ -145,7 +147,8 @@ export class Billings {
     startAt?: string;
     endAt?: string;
   }): Promise<InvoiceMainnetUsage[]> {
-    const queryString: string = makeQueryString({});
+    const { orgId, ...rest } = request;
+    const queryString: string = makeQueryString(rest);
 
     // return this.client.get<BillingsInvoice>(
     //   `${this.baseUrl}/${orgId}/invoice${queryString ? `?${queryString}` : ""}`
