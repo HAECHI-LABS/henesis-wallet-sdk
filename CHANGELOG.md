@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.11-alpha.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.11-alpha.2...v2.10.11-alpha.3) (2021-03-01)
+
+
+### Bug Fixes
+
+* update get invoice response ([4c2bb4a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4c2bb4a8993e708f4a2748a1b0f3915feea5bd05))
+
+
+
+
+
 ## [2.10.11-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.11-alpha.1...v2.10.11-alpha.2) (2021-02-28)
 
 
