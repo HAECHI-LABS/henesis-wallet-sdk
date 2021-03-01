@@ -1,10 +1,11 @@
+import BN from "bn.js";
+
 import { Client } from "./httpClient";
 import { Pagination, PaginationOptions, Secret, Balance } from "./types";
 import { Account, AccountWithIps, Role } from "./accounts";
 import { makeQueryString } from "./utils/url";
 import { BlockchainType } from "./blockchain";
 import { SimplifiedCoinInternalDTO } from "./__generate__/eth";
-import BN from "bn.js";
 
 export interface Invoice {
   id: string;
@@ -15,6 +16,12 @@ export interface Invoice {
   withdrawalCharge: number;
   withdrawalFeeRate: number;
   tokenListingCharge: number;
+  vat: number;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+  mainnets: Array<{ blockchain: BlockchainType }>;
+  tokens: Balance[];
 }
 
 export interface InvoiceExternalWithdrawals {
@@ -55,7 +62,11 @@ export class Billings {
     this.client = client;
   }
 
-  async getInvoice(request: { orgId: string }): Promise<Invoice> {
+  async getInvoice(request: {
+    orgId: string;
+    year: string;
+    month: string;
+  }): Promise<Invoice> {
     const { orgId } = request;
     const queryString: string = makeQueryString({});
 
@@ -71,6 +82,25 @@ export class Billings {
       withdrawalCharge: 0,
       withdrawalFeeRate: 0,
       tokenListingCharge: 0,
+      vat: 0,
+      mainnets: [
+        {
+          blockchain: BlockchainType.BitCoin,
+        },
+      ],
+      startDate: String(new Date().valueOf()),
+      endDate: String(new Date().valueOf()),
+      createdAt: String(new Date().valueOf()),
+      tokens: [
+        {
+          coinId: 1,
+          coinType: "test",
+          amount: new BN(0),
+          name: "이더리움",
+          symbol: "ETH",
+          decimals: 18,
+        },
+      ],
     });
   }
 
