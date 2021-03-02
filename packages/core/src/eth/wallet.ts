@@ -23,7 +23,11 @@ import {
 import { Client } from "../httpClient";
 import BatchRequest from "./batch";
 import walletAbi from "../contracts/Wallet.json";
-import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
+import {
+  BNConverter,
+  checkNullAndUndefinedParameter,
+  HexConverter,
+} from "../utils/common";
 import { WalletData, Wallet } from "../wallet";
 import { makeQueryString } from "../utils/url";
 import { Coins } from "./coins";
@@ -51,8 +55,7 @@ import { ValidationParameterError } from "../error";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { Coin } from "./coin";
 import { randomBytes } from "crypto";
-import { keccak256 } from "./eth-core-lib/hash";
-import { toChecksum } from "./keychains";
+import EthCrypto from "eth-crypto";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -108,9 +111,9 @@ function convertSignedMultiSigPayloadToDTO(
   };
 }
 
-function getAddressFromPub(pub: String): string {
-  const publicHash = keccak256(pub);
-  return toChecksum(`0x${publicHash.slice(-40)}`);
+function getAddressFromCompressedPub(pub: string): string {
+  const pubKey = EthCrypto.publicKey.decompress(HexConverter.remove0x(pub));
+  return EthCrypto.publicKey.toAddress(pubKey);
 }
 
 export const transformMasterWalletData = (
@@ -435,12 +438,12 @@ export class EthMasterWallet extends EthLikeWallet {
     const params: ActivateMasterWalletRequest = {
       accountKey: {
         pub: accountKey.pub,
-        address: getAddressFromPub(accountKey.pub),
+        address: getAddressFromCompressedPub(accountKey.pub),
         keyFile: undefined,
       } as KeyDTO,
       backupKey: {
         pub: backupKey.pub,
-        address: getAddressFromPub(backupKey.pub),
+        address: getAddressFromCompressedPub(backupKey.pub),
         keyFile: undefined,
       } as KeyDTO,
       gasPrice: undefined,
