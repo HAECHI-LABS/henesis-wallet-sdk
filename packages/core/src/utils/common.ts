@@ -92,3 +92,19 @@ export function checkNullAndUndefinedParameter(requiredParams: object): void {
     }
   });
 }
+
+export class HexConverter {
+  static add0x(hexString: string): string {
+    if (hexString.length > 2 && hexString.substring(0, 2) == "0x") {
+      return hexString;
+    }
+    return `0x${hexString}`;
+  }
+
+  static remove0x(hexString: string): string {
+    if (hexString.length > 2 && hexString.substring(0, 2) == "0x") {
+      return hexString.substring(2);
+    }
+    return hexString;
+  }
+}
