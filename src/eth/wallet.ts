@@ -163,6 +163,10 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     return this.data.version;
   }
 
+  getVersionNumber(): number {
+    return parseInt(this.getVersion().substr(1));
+  }
+
   async replaceTransaction(
     transactionId: string,
     gasPrice?: BN
@@ -440,26 +444,28 @@ export class EthMasterWallet extends EthLikeWallet {
     salt?: BN,
     otpCode?: string
   ): Promise<EthUserWallet> {
-    const nonce = this.getNonce();
     // generates 32byte(256 bit) randoma hex string and converts to BN when salt is not defined
-    if (salt === undefined) {
+    if (salt === undefined || salt == null) {
       salt = Web3.utils.toBN(Web3.utils.randomHex(32));
     }
-    const data = this.walletContract.methods.createUserWallet(salt).encodeABI();
-    const multiSigPayload: MultiSigPayload = {
-      hexData: data,
-      walletNonce: nonce,
-      value: BNConverter.hexStringToBN("0x0"),
-      toAddress: this.getAddress(),
-      walletAddress: this.getAddress(),
-    };
 
+    let signedMultiSigPayloadDTO: SignedMultiSigPayloadDTO = null;
+    if (this.getVersionNumber() < 3) {
+      const multiSigPayload: MultiSigPayload = {
+        hexData: this.walletContract.methods.createUserWallet(salt).encodeABI(),
+        walletNonce: this.getNonce(),
+        value: BNConverter.hexStringToBN("0x0"),
+        toAddress: this.getAddress(),
+        walletAddress: this.getAddress(),
+      };
+      signedMultiSigPayloadDTO = convertSignedMultiSigPayloadToDTO(
+        this.signPayload(multiSigPayload, passphrase)
+      );
+    }
     const userWalletParams: CreateUserWalletRequest = {
       name,
       salt: BNConverter.bnToHexString(salt),
-      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
-        this.signPayload(multiSigPayload, passphrase)
-      ),
+      signedMultiSigPayload: signedMultiSigPayloadDTO,
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
       otpCode,
     };
