@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.11](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.11-RC.0...v2.10.11) (2021-03-05)
+
+
+### Bug Fixes
+
+* fix to create user wallet withou multisig ([727f815](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/727f81519e9e4a55ab7821b011c54aede5fcd288))
+
+
+
+
+
 ## [2.10.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.9...v2.10.10) (2021-01-18)
 
 
