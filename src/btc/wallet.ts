@@ -288,7 +288,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   getChain(): BlockchainType {
-    return BlockchainType.BitCoin;
+    return BlockchainType.BITCOIN;
   }
 
   async getBalance(): Promise<Balance[]> {
@@ -422,7 +422,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     return new BtcActivatingMasterWallet(
       masterWallet.id,
       masterWallet.name,
-      BlockchainType.BitCoin,
+      BlockchainType.BITCOIN,
       masterWallet.address,
       masterWallet.status,
       masterWallet.createdAt,

@@ -66,7 +66,7 @@ export class Accounts {
     identifier: string;
     accountId: string;
   }): Promise<void> {
-    const queryString: string = makeQueryString({
+    const queryString = makeQueryString({
       identifier: params.identifier,
       account_id: params.accountId,
     });
