@@ -16,15 +16,15 @@ export const transformBlockchainType = (
     EthBlockchain | AccountsBlockchain | UserWalletDTOBlockchainEnum,
     BlockchainType
   > = {
-    ETHEREUM: BlockchainType.Ethereum,
-    KLAYTN: BlockchainType.Klaytn,
-    BITCOIN: BlockchainType.BitCoin,
+    ETHEREUM: BlockchainType.ETHEREUM,
+    KLAYTN: BlockchainType.KLAYTN,
+    BITCOIN: BlockchainType.BITCOIN,
   };
   return byBlockchain[blockchain];
 };
 
 export enum BlockchainType {
-  Ethereum = "ETHEREUM",
-  Klaytn = "KLAYTN",
-  BitCoin = "BITCOIN",
+  ETHEREUM = "ETHEREUM",
+  KLAYTN = "KLAYTN",
+  BITCOIN = "BITCOIN",
 }
