@@ -153,9 +153,6 @@ export class Billings {
     const { orgId, ...rest } = request;
     const queryString: string = makeQueryString(rest);
 
-    // return this.client.get<BillingsInvoice>(
-    //   `${this.baseUrl}/${orgId}/invoice${queryString ? `?${queryString}` : ""}`
-    // );
     return Promise.resolve([
       {
         invoiceId: "1",
