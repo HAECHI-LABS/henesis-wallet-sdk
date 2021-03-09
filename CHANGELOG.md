@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.13](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.12...v2.10.13) (2021-03-09)
+
+
+### Bug Fixes
+
+* fix sign bug ([14cf8cc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/14cf8ccbd5487a94f6c95a89f9e58690ccebe5e9))
+
+
+
+
+
 ## [2.10.12](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.11...v2.10.12) (2021-03-05)
 
 **Note:** Version bump only for package henesis-wallet-sdk
