@@ -164,9 +164,13 @@ export class EthKeychains implements Keychains {
   }
 
   private blockchainPrefix(blockchain: BlockchainType): string {
-    const keys = Object.keys(BlockchainType).filter(
-      (x) => BlockchainType[x] == blockchain
-    );
-    return keys.length > 0 ? keys[0] : null;
+    switch (blockchain) {
+      case BlockchainType.ETHEREUM:
+        return "Ethereum";
+      case BlockchainType.KLAYTN:
+        return "Klaytn";
+      default:
+        throw new Error(`cannot resolve blockchain for sign`);
+    }
   }
 }
