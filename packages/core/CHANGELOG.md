@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.14-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.13...v2.10.14-alpha.0) (2021-03-09)
+
+
+### Features
+
+* add mock billing api ([4a22bac](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4a22bac8f6adfb3b25ce50598b1372f43bd38478))
+
+
+
+
+
 ## [2.10.13](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.12...v2.10.13) (2021-03-09)
 
 
