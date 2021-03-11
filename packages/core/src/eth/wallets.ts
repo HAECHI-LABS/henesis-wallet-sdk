@@ -6,7 +6,11 @@ import { Client } from "../httpClient";
 import { Keychains } from "../types";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
 import { RecoveryKit } from "../recoverykit";
-import { EthMasterWallet, transformMasterWalletData } from "./wallet";
+import {
+  EthMasterWallet,
+  EthMasterWalletV2,
+  transformMasterWalletData,
+} from "./wallet";
 import { Wallets } from "../wallets";
 import { toChecksum } from "./keychains";
 import { keccak256s } from "./eth-core-lib/hash";
@@ -46,6 +50,18 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       `${this.baseUrl}/${id}`
     );
     return new EthMasterWallet(
+      this.client,
+      transformMasterWalletData(walletData),
+      this.keychains,
+      this.blockchain
+    );
+  }
+
+  async getMasterWalletV2(id: string): Promise<EthMasterWalletV2> {
+    const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
+      `${this.baseUrl}/${id}`
+    );
+    return new EthMasterWalletV2(
       this.client,
       transformMasterWalletData(walletData),
       this.keychains,
