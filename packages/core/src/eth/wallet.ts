@@ -53,6 +53,7 @@ import { Coin } from "./coin";
 import { randomBytes } from "crypto";
 import { keccak256 } from "./eth-core-lib/hash";
 import { toChecksum } from "./keychains";
+import { Address } from "cluster";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -72,6 +73,9 @@ export interface EthMasterWalletData extends EthWalletData {
 }
 
 export interface EthUserWalletData
+  extends Omit<EthWalletData, "encryptionKey"> {}
+
+export interface EthDepositAddressData
   extends Omit<EthWalletData, "encryptionKey"> {}
 
 export interface UserWalletPaginationOptions extends PaginationOptions {
@@ -126,6 +130,16 @@ export const transformMasterWalletData = (
 export const transformUserWalletData = (
   data: UserWalletDTO
 ): EthUserWalletData => {
+  return {
+    ...data,
+    blockchain: transformBlockchainType(data.blockchain),
+    status: transformWalletStatus(data.status),
+  };
+};
+
+export const transformDepositAddressData = (
+  data: UserWalletDTO
+): EthDepositAddressData => {
   return {
     ...data,
     blockchain: transformBlockchainType(data.blockchain),
@@ -403,7 +417,288 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   }
 }
 
+interface FlushTransfer {
+  coinSymbol: string;
+  coinId: number;
+  amount: BN;
+  depositAddress: Address;
+  isFirst: Boolean;
+}
+
+export interface FlushHistory {
+  id: string;
+  blockchain: BlockchainType;
+  fee: BN;
+  hash: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  transfers: FlushTransfer[];
+}
+
 export class EthMasterWallet extends EthLikeWallet {
+  private walletContract: Contract;
+
+  constructor(
+    client: Client,
+    data: EthMasterWalletData,
+    keychains: Keychains,
+    blockchain: BlockchainType
+  ) {
+    super(client, data, keychains, blockchain, `/wallets/${data.id}`);
+    this.walletContract = new new Web3().eth.Contract(walletAbi as AbiItem[]);
+  }
+
+  getEncryptionKey(): string {
+    return this.data.encryptionKey;
+  }
+
+  getAccountKey(): Key {
+    return this.data.accountKey;
+  }
+
+  updateAccountKey(key: Key): void {
+    this.data.accountKey = key;
+  }
+
+  async activate(
+    accountKey: Key,
+    backupKey: Key
+  ): Promise<EthActivatingMasterWallet> {
+    const params: ActivateMasterWalletRequest = {
+      accountKey: {
+        pub: accountKey.pub,
+        address: getAddressFromPub(accountKey.pub),
+        keyFile: undefined,
+      } as KeyDTO,
+      backupKey: {
+        pub: backupKey.pub,
+        address: getAddressFromPub(backupKey.pub),
+        keyFile: undefined,
+      } as KeyDTO,
+      gasPrice: undefined,
+    };
+    const masterWallet = await this.client.post<MasterWalletDTO>(
+      `${this.baseUrl}/activate`,
+      params
+    );
+    return new EthActivatingMasterWallet(
+      masterWallet.id,
+      masterWallet.name,
+      transformBlockchainType(masterWallet.blockchain),
+      masterWallet.address,
+      masterWallet.status,
+      masterWallet.createdAt,
+      masterWallet.updatedAt
+    );
+  }
+
+  async createDepositAddress(
+    name: string,
+    passphrase: string,
+    gasPrice?: BN,
+    salt?: BN,
+    otpCode?: string
+  ): Promise<EthDepositAddress> {
+    // generates 32byte(256 bit) randoma hex string and converts to BN when salt is not defined
+    if (salt === undefined || salt == null) {
+      salt = Web3.utils.toBN(Web3.utils.randomHex(32));
+    }
+
+    let signedMultiSigPayloadDTO: SignedMultiSigPayloadDTO = null;
+    if (this.getVersionNumber() < 3) {
+      const multiSigPayload: MultiSigPayload = {
+        hexData: this.walletContract.methods.createUserWallet(salt).encodeABI(),
+        walletNonce: this.getNonce(),
+        value: BNConverter.hexStringToBN("0x0"),
+        toAddress: this.getAddress(),
+        walletAddress: this.getAddress(),
+      };
+      signedMultiSigPayloadDTO = convertSignedMultiSigPayloadToDTO(
+        this.signPayload(multiSigPayload, passphrase)
+      );
+    }
+    const userWalletParams: CreateUserWalletRequest = {
+      name,
+      salt: BNConverter.bnToHexString(salt),
+      signedMultiSigPayload: signedMultiSigPayloadDTO,
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      otpCode,
+    };
+    const userWalletData = await this.client.post<UserWalletDTO>(
+      `${this.baseUrl}/user-wallets`,
+      userWalletParams
+    );
+
+    return new EthDepositAddress(
+      this.client,
+      this.data,
+      this.keychains,
+      transformDepositAddressData(userWalletData),
+      this.blockchain
+    );
+  }
+
+  async getDepositAddress(walletId: string): Promise<EthDepositAddress> {
+    const userWalletData = await this.client.get<UserWalletDTO>(
+      `${this.baseUrl}/user-wallets/${walletId}`
+    );
+    return new EthDepositAddress(
+      this.client,
+      this.data,
+      this.keychains,
+      transformUserWalletData(userWalletData),
+      this.blockchain
+    );
+  }
+
+  async getBalance(flag?: boolean, symbol?: string): Promise<Balance[]> {
+    const queryString = makeQueryString({ flag, symbol });
+    const balances = await this.client.get<
+      NoUndefinedField<MasterWalletBalanceDTO>[]
+    >(`${this.baseUrl}/balance${queryString ? `?${queryString}` : ""}`);
+
+    return balances.map((balance) => ({
+      coinId: balance.coinId,
+      symbol: balance.symbol,
+      amount: BNConverter.hexStringToBN(String(balance.amount ?? "0x0")),
+      coinType: balance.coinType as any,
+      spendableAmount: BNConverter.hexStringToBN(
+        String(balance.spendableAmount ?? "0x0")
+      ),
+      name: balance.name,
+      aggregatedAmount: BNConverter.hexStringToBN(
+        String(balance.aggregatedAmount ?? "0x0")
+      ),
+      decimals: balance.decimals,
+    }));
+  }
+
+  getAddress(): string {
+    return this.data.address;
+  }
+
+  getData(): EthMasterWalletData {
+    return this.data;
+  }
+
+  async getDepositAddresses(
+    options?: UserWalletPaginationOptions
+  ): Promise<Pagination<EthDepositAddress>> {
+    const queryString = makeQueryString(options);
+    const data = await this.client.get<
+      NoUndefinedField<PaginationUserWalletDTO>
+    >(`${this.baseUrl}/user-wallets${queryString ? `?${queryString}` : ""}`);
+
+    return {
+      pagination: data.pagination,
+      results: data.results.map(
+        (data) =>
+          new EthDepositAddress(
+            this.client,
+            this.data,
+            this.keychains,
+            transformDepositAddressData(data),
+            this.blockchain
+          )
+      ),
+    };
+  }
+
+  async retryCreateDepositAddress(
+    walletId: string,
+    gasPrice?: BN
+  ): Promise<EthDepositAddress> {
+    checkNullAndUndefinedParameter({ walletId });
+    const response = await this.client.post<UserWalletDTO>(
+      `${this.baseUrl}/user-wallets/${walletId}/recreate`,
+      { gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined }
+    );
+
+    return new EthDepositAddress(
+      this.client,
+      this.data,
+      this.keychains,
+      transformDepositAddressData(response),
+      this.blockchain
+    );
+  }
+
+  getId(): string {
+    return this.data.id;
+  }
+
+  async changeName(name: string): Promise<void> {
+    checkNullAndUndefinedParameter({ name });
+    const request: ChangeWalletNameRequest = {
+      name,
+    };
+    const masterWalletData = await this.client.patch<MasterWalletDTO>(
+      `${this.baseUrl}/name`,
+      request
+    );
+    this.data.name = masterWalletData.name;
+  }
+  //todo: implement
+  async flush(
+    coin: string | Coin,
+    depositAddressIds: string[],
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN
+  ): Promise<EthTransaction> {
+    return null;
+  }
+
+  //todo implement
+  async getFlushHistory(
+    option?: PaginationOptions
+  ): Promise<Pagination<FlushHistory[]>> {
+    return null;
+  }
+
+  async approve(params: EthWithdrawalApproveParams): Promise<EthTransaction> {
+    const wallet = params.userWalletId
+      ? await this.getDepositAddress(params.userWalletId)
+      : this;
+
+    const coin = await this.coins.getCoin(params.coinSymbol);
+    const multiSigPayload = await coin.buildTransferMultiSigPayload(
+      wallet,
+      params.toAddress,
+      params.amount
+    );
+
+    const request: ApproveWithdrawalApprovalRequest = {
+      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
+        this.signPayload(multiSigPayload, params.passphrase)
+      ),
+      otpCode: params.otpCode,
+    };
+
+    const response = await this.client.post<TransactionDTO>(
+      `${this.withdrawalApprovalUrl}/${params.id}/approve`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
+  }
+
+  async reject(params: { id: string; otpCode: string }): Promise<void> {
+    const request: RejectWithdrawalApprovalRequest = {
+      otpCode: params.otpCode,
+    };
+    await this.client.post<void>(
+      `${this.withdrawalApprovalUrl}/${params.id}/reject`,
+      request
+    );
+  }
+}
+
+export class EthMasterWalletV2 extends EthLikeWallet {
   private walletContract: Contract;
 
   constructor(
@@ -786,6 +1081,183 @@ export class EthUserWallet extends EthLikeWallet {
   }
 
   updateAccountKey(key: Key) {
+    throw new Error("unimplemented method");
+  }
+}
+
+export class EthDepositAddress extends EthLikeWallet {
+  private readonly depositWalletData: EthDepositAddressData;
+
+  public constructor(
+    client: Client,
+    data: EthMasterWalletData,
+    keychains: Keychains,
+    depositWalletData: EthDepositAddressData,
+    blockchain: BlockchainType
+  ) {
+    super(
+      client,
+      data,
+      keychains,
+      blockchain,
+      `/wallets/${data.id}/user-wallets/${depositWalletData.id}`
+    );
+    this.depositWalletData = depositWalletData;
+  }
+
+  async getBalance(flag?: boolean, symbol?: string): Promise<Balance[]> {
+    const queryString: string = makeQueryString({ flag, symbol });
+    const balances = await this.client.get<BalanceDTO[]>(
+      `${this.baseUrl}/balance${queryString ? `?${queryString}` : ""}`
+    );
+
+    return balances.map((balance) => ({
+      coinId: balance.coinId,
+      symbol: balance.symbol,
+      amount: BNConverter.hexStringToBN(String(balance.amount ?? "0x0")),
+      coinType: balance.coinType as any,
+      spendableAmount: BNConverter.hexStringToBN(
+        String(balance.spendableAmount ?? "0x0")
+      ),
+      name: balance.name,
+      decimals: balance.decimals,
+    }));
+  }
+
+  getAddress(): string {
+    return this.depositWalletData.address;
+  }
+
+  getData(): EthDepositAddressData {
+    return this.depositWalletData;
+  }
+
+  getId(): string {
+    return this.depositWalletData.id;
+  }
+
+  async changeName(name: string): Promise<void> {
+    const request: ChangeWalletNameRequest = {
+      name,
+    };
+    const depositWalletData = await this.client.patch<UserWalletDTO>(
+      `${this.baseUrl}/name`,
+      request
+    );
+    this.depositWalletData.name = depositWalletData.name;
+  }
+
+  changePassphrase(
+    passphrase: string,
+    newPassphrase: string,
+    otpCode?: string
+  ): Promise<void> {
+    throw new Error("unimplemented method");
+  }
+
+  restorePassphrase(
+    encryptedPassphrase: string,
+    newPassphrase: string,
+    otpCode?: string
+  ): Promise<void> {
+    throw new Error("unimplemented method");
+  }
+
+  verifyEncryptedPassphrase(encryptedPassphrase: string): Promise<boolean> {
+    throw new Error("unimplemented method");
+  }
+
+  verifyPassphrase(passphrase: string): Promise<boolean> {
+    throw new Error("unimplemented method");
+  }
+
+  getEncryptionKey(): string {
+    return "";
+  }
+
+  getAccountKey(): Key {
+    throw new Error("unimplemented method");
+  }
+
+  updateAccountKey(key: Key) {
+    throw new Error("unimplemented method");
+  }
+  async replaceTransaction(
+    transactionId: string,
+    gasPrice?: BN
+  ): Promise<EthTransaction> {
+    throw new Error("unimplemented method");
+  }
+  async contractCall(
+    contractAddress: string,
+    value: BN,
+    data: string,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN
+  ): Promise<EthTransaction> {
+    throw new Error("unimplemented method");
+  }
+  async buildContractCallPayload(
+    contractAddress: string,
+    value: BN,
+    data: string,
+    passphrase: string
+  ): Promise<SignedMultiSigPayload> {
+    throw new Error("unimplemented method");
+  }
+  async transfer(
+    coin: string | Coin,
+    to: string,
+    amount: BN,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN
+  ): Promise<EthTransaction> {
+    throw new Error("unimplemented method");
+  }
+  async buildTransferPayload(
+    coin: string | Coin,
+    to: string,
+    amount: BN,
+    passphrase: string
+  ): Promise<SignedMultiSigPayload> {
+    throw new Error("unimplemented method");
+  }
+  async createRawTransaction(
+    coin: string | Coin,
+    to: string,
+    amount: BN
+  ): Promise<MultiSigPayload> {
+    throw new Error("unimplemented method");
+  }
+  protected signPayload(
+    multiSigPayload: MultiSigPayload,
+    passphrase: string
+  ): SignedMultiSigPayload {
+    throw new Error("unimplemented method");
+  }
+
+  async sendTransaction(
+    signedMultiSigPayload: SignedMultiSigPayload,
+    walletId: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN
+  ): Promise<EthTransaction> {
+    throw new Error("unimplemented method");
+  }
+
+  protected async sendBatchTransaction(
+    blockchain: BlockchainType,
+    signedMultiSigPayloads: SignedMultiSigPayload[],
+    walletId: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN
+  ): Promise<EthTransaction[]> {
     throw new Error("unimplemented method");
   }
 }
