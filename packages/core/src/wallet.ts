@@ -146,6 +146,34 @@ export class InactiveMasterWallet {
   }
 }
 
+export class InactiveMasterWalletV2 {
+  id: string;
+  name: string;
+  blockchain: BlockchainType;
+  henesisKey: Key;
+  status: WalletStatus;
+  createdAt: string;
+  updatedAt: string;
+
+  constructor(
+    id: string,
+    name: string,
+    blockchain: BlockchainType,
+    henesisKey: Key,
+    status: WalletStatus,
+    createdAt: string,
+    updatedAt: string
+  ) {
+    this.id = id;
+    this.name = name;
+    this.blockchain = blockchain;
+    this.henesisKey = henesisKey;
+    this.status = status;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+  }
+}
+
 // master wallet life cycle: (INACTIVE ->) CREATING -> ACTIVE
 // When activating master wallet, its status is changed to CREATING status.
 export class ActivatingMasterWallet {

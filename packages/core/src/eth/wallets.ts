@@ -22,7 +22,7 @@ import {
   InactiveMasterWalletDTO,
   MasterWalletDTO,
 } from "../__generate__/eth";
-import { InactiveMasterWallet } from "../wallet";
+import { InactiveMasterWallet, InactiveMasterWalletV2 } from "../wallet";
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -69,6 +69,24 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     );
   }
 
+  async getMasterWalletV2s(
+    options?: MasterWalletSearchOptions
+  ): Promise<EthMasterWalletV2[]> {
+    const queryString = makeQueryString(options);
+    const walletDatas = await this.client.get<
+      NoUndefinedField<MasterWalletDTO>[]
+    >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
+
+    return walletDatas.map(
+      (walletData) =>
+        new EthMasterWalletV2(
+          this.client,
+          transformMasterWalletData(walletData),
+          this.keychains,
+          this.blockchain
+        )
+    );
+  }
   async getMasterWallets(
     options?: MasterWalletSearchOptions
   ): Promise<EthMasterWallet[]> {
@@ -215,6 +233,94 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       params
     );
     return new InactiveMasterWallet(
+      masterWalletResponse.id,
+      masterWalletResponse.name,
+      transformBlockchainType(masterWalletResponse.blockchain),
+      masterWalletResponse.henesisKey,
+      masterWalletResponse.status,
+      masterWalletResponse.createdAt,
+      masterWalletResponse.updatedAt
+    );
+  }
+
+  async createMasterWalletV2WithKit(
+    recoveryKit: RecoveryKit
+  ): Promise<EthMasterWalletV2> {
+    const walletData = await this.client.post<
+      NoUndefinedField<MasterWalletDTO>
+    >(this.baseUrl, {
+      name: recoveryKit.getName(),
+      accountKey: recoveryKit.getAccountKey(),
+      backupKey: this.removeKeyFile(recoveryKit.getBackupKey()),
+      encryptionKey: recoveryKit.getEncryptionKey(),
+    });
+
+    return new EthMasterWalletV2(
+      this.client,
+      transformMasterWalletData(walletData),
+      this.keychains,
+      this.blockchain
+    );
+  }
+
+  async createMasterWalletV2(
+    name: string,
+    passphrase: string,
+    gasPrice?: BN
+  ): Promise<EthMasterWalletV2> {
+    checkNullAndUndefinedParameter({ name, passphrase });
+    const accountKey = this.keychains.create(passphrase);
+    const backupKey = this.keychains.create(passphrase);
+    const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
+    const walletData = await this.client.post<
+      NoUndefinedField<MasterWalletDTO>
+    >(this.baseUrl, {
+      name,
+      blockchain: this.blockchain,
+      accountKey: this.removePrivateKey(accountKey),
+      backupKey: this.removeKeyFile(this.removePrivateKey(backupKey)),
+      encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+    });
+
+    return new EthMasterWalletV2(
+      this.client,
+      transformMasterWalletData(walletData),
+      this.keychains,
+      this.blockchain
+    );
+  }
+
+  async retryCreateMasterWalletV2(walletId: string, gasPrice?: BN) {
+    checkNullAndUndefinedParameter({ walletId });
+    const response = await this.client.post<MasterWalletDTO>(
+      `${this.baseUrl}/${walletId}/recreate`,
+      {
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      }
+    );
+
+    return new EthMasterWalletV2(
+      this.client,
+      transformMasterWalletData(response),
+      this.keychains,
+      this.blockchain
+    );
+  }
+
+  async createInactiveMasterWalletV2(
+    name: string
+  ): Promise<InactiveMasterWalletV2> {
+    checkNullAndUndefinedParameter({ name });
+    const params: CreateInactiveMasterWalletRequest = {
+      name,
+      encryptionKey: this.createDummyEncryptionKey(),
+    };
+    const masterWalletResponse = await this.client.post<InactiveMasterWalletDTO>(
+      `${this.baseUrl}?type=inactive`,
+      params
+    );
+    return new InactiveMasterWalletV2(
       masterWalletResponse.id,
       masterWalletResponse.name,
       transformBlockchainType(masterWalletResponse.blockchain),
