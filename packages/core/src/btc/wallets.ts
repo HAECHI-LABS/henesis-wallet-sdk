@@ -17,7 +17,7 @@ import {
   MasterWalletDTO,
 } from "../__generate__/btc";
 import { checkNullAndUndefinedParameter } from "..";
-import { InactiveMasterWallet } from "../wallet";
+import { InactiveWallet } from "../wallet";
 
 export class BtcWallets extends Wallets<BtcMasterWallet> {
   constructor(env: Env, client: Client, keychains: Keychains) {
@@ -155,9 +155,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
     );
   }
 
-  async createInactiveMasterWallet(
-    name: string
-  ): Promise<InactiveMasterWallet> {
+  async createInactiveMasterWallet(name: string): Promise<InactiveWallet> {
     checkNullAndUndefinedParameter({ name });
     const params: CreateInactiveMasterWalletRequest = {
       name,
@@ -167,17 +165,18 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
       `${this.baseUrl}?type=inactive`,
       params
     );
-    return new InactiveMasterWallet(
-      masterWalletResponse.id,
-      masterWalletResponse.name,
-      BlockchainType.BITCOIN,
-      {
+
+    const { id, name: walletName, status, createdAt } = masterWalletResponse;
+    return {
+      id,
+      name: walletName,
+      blockchain: BlockchainType.BITCOIN,
+      henesisKey: {
         pub: masterWalletResponse.henesisKey.pub,
         keyFile: undefined,
       },
-      masterWalletResponse.status,
-      masterWalletResponse.createdAt,
-      undefined
-    );
+      status,
+      createdAt,
+    };
   }
 }
