@@ -96,7 +96,7 @@ export interface EthWithdrawalApproveParams extends ApproveWithdrawal {
   gasLimit?: BN;
 }
 
-export class EthActivatingMasterWallet extends ActivatingMasterWallet {}
+export type EthActivatingMasterWallet = ActivatingMasterWallet;
 
 function convertSignedMultiSigPayloadToDTO(
   signedMultiSigPayload: SignedMultiSigPayload
@@ -441,7 +441,7 @@ export interface FlushHistory {
   transfers: FlushTransfer[];
 }
 
-export class EthMasterWallet extends EthLikeWallet {
+export class EthWallet extends EthLikeWallet {
   private walletContract: Contract;
 
   constructor(
@@ -487,15 +487,25 @@ export class EthMasterWallet extends EthLikeWallet {
       `${this.baseUrl}/activate`,
       params
     );
-    return new EthActivatingMasterWallet(
-      masterWallet.id,
-      masterWallet.name,
-      transformBlockchainType(masterWallet.blockchain),
-      masterWallet.address,
-      masterWallet.status,
-      masterWallet.createdAt,
-      masterWallet.updatedAt
-    );
+    const {
+      id,
+      name: walletName,
+      blockchain,
+      address,
+      status,
+      createdAt,
+      updatedAt,
+    } = masterWallet;
+
+    return {
+      id,
+      name: walletName,
+      blockchain: transformBlockchainType(masterWallet.blockchain),
+      address,
+      status,
+      createdAt,
+      updatedAt,
+    };
   }
 
   async createDepositAddress(
@@ -703,7 +713,7 @@ export class EthMasterWallet extends EthLikeWallet {
   }
 }
 
-export class EthMasterWalletV2 extends EthLikeWallet {
+export class EthMasterWallet extends EthLikeWallet {
   private walletContract: Contract;
 
   constructor(
@@ -749,15 +759,25 @@ export class EthMasterWalletV2 extends EthLikeWallet {
       `${this.baseUrl}/activate`,
       params
     );
-    return new EthActivatingMasterWallet(
-      masterWallet.id,
-      masterWallet.name,
-      transformBlockchainType(masterWallet.blockchain),
-      masterWallet.address,
-      masterWallet.status,
-      masterWallet.createdAt,
-      masterWallet.updatedAt
-    );
+    const {
+      id,
+      name: walletName,
+      blockchain,
+      address,
+      status,
+      createdAt,
+      updatedAt,
+    } = masterWallet;
+
+    return {
+      id,
+      name: walletName,
+      blockchain: transformBlockchainType(masterWallet.blockchain),
+      address,
+      status,
+      createdAt,
+      updatedAt,
+    };
   }
 
   async createUserWallet(
