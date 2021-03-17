@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.14-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14-alpha.1...v2.10.14-alpha.2) (2021-03-17)
+
+
+### Bug Fixes
+
+* update mock v3 wallet id ([be6b494](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/be6b494e6ebe5c63e0f408fe2e528ea4b15581b4))
+
+
+### Features
+
+* add resendTransaction api ([1382e28](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1382e28fe94f87db1fda1b9cda1a42b26a7570ad))
+
+
+
+
+
 ## [2.10.14-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.13...v2.10.14-alpha.1) (2021-03-16)
 
 
