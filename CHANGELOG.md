@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.14-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14-alpha.3...v2.10.14-alpha.4) (2021-03-17)
+
+
+### Features
+
+* add mock flush histories ([3015559](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3015559f04845e0a2b4a80738bd7f8e12d0ce4e0))
+
+
+
+
+
 ## [2.10.14-alpha.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14-alpha.2...v2.10.14-alpha.3) (2021-03-17)
 
 
