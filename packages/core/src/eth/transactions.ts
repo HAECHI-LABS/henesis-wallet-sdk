@@ -28,7 +28,7 @@ export interface Transaction {
   keyId: string;
   hash: string;
   error: string;
-  signedMultiSigPayload: SignedMultiSigPayload;
+  signedMultiSigPayload: SignedMultiSigPayload | null;
   rawTransaction: RawTransaction;
   status: TransactionStatus;
   isFeeDelegated: boolean;
@@ -73,7 +73,7 @@ export const formatMultiSigPayload = (
 
 export interface SignedMultiSigPayload {
   signature: string;
-  multiSigPayload: MultiSigPayload;
+  multiSigPayload: MultiSigPayload | null;
 }
 
 export interface RawTransaction {
@@ -112,6 +112,18 @@ export class Transactions {
     return this.mappingDetailedRawTransactionDTOToDetailedRawTransaction(
       response
     );
+  }
+
+  async resendTransaction(params: {
+    transactionId: string;
+    gasPrice?: string;
+    gasLimit?: string;
+  }): Promise<Transaction> {
+    const { transactionId } = params;
+    const response = await this.client.get<NoUndefinedField<TransactionDTO>>(
+      `/transactions/${transactionId}/resend`
+    );
+    return convertTransactionDTO(response);
   }
 
   async getTransaction(transactionId: string): Promise<Transaction> {
