@@ -114,18 +114,6 @@ export class Transactions {
     );
   }
 
-  async resendTransaction(params: {
-    transactionId: string;
-    gasPrice?: string;
-    gasLimit?: string;
-  }): Promise<Transaction> {
-    const { transactionId } = params;
-    const response = await this.client.get<NoUndefinedField<TransactionDTO>>(
-      `/transactions/${transactionId}/resend`
-    );
-    return convertTransactionDTO(response);
-  }
-
   async getTransaction(transactionId: string): Promise<Transaction> {
     const response = await this.client.get<NoUndefinedField<TransactionDTO>>(
       `/transactions/${transactionId}`
