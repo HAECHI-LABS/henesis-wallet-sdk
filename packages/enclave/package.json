@@ -1,6 +1,6 @@
 {
   "name": "@haechi-labs/henesis-wallet-enclave",
-  "version": "2.10.14-alpha.1",
+  "version": "2.10.14-alpha.2",
   "description": "henesis wallet enclave module",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
@@ -27,7 +27,7 @@
     "preBootstrap:windows": "if exist node_modules rmdir /q /s node_modules"
   },
   "dependencies": {
-    "@haechi-labs/henesis-wallet-core": "^2.10.14-alpha.1",
+    "@haechi-labs/henesis-wallet-core": "^2.10.14-alpha.2",
     "@type-cacheable/core": "^9.0.1",
     "@type-cacheable/lru-cache-adapter": "^9.0.1",
     "cross-env": "^7.0.2",
