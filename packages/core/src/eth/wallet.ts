@@ -201,6 +201,21 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     };
   }
 
+  async resendTransaction(params: {
+    transactionId: string;
+    gasPrice?: string;
+    gasLimit?: string;
+  }): Promise<EthTransaction> {
+    const { transactionId } = params;
+    const response = await this.client.post<NoUndefinedField<TransactionDTO>>(
+      `/wallets/transactions/${transactionId}/resend`
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
+  }
+
   async contractCall(
     contractAddress: string,
     value: BN,
