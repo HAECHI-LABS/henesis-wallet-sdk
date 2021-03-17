@@ -75,15 +75,25 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       NoUndefinedField<MasterWalletDTO>[]
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
-    return walletDatas.map(
-      (walletData) =>
-        new EthWallet(
+    return walletDatas.map((walletData) => {
+      if (walletData.id === "b039b328c4880f64db6d1b35134a69cf") {
+        return new EthWallet(
           this.client,
-          transformMasterWalletData(walletData),
+          transformMasterWalletData({
+            ...walletData,
+            version: "v3",
+          }),
           this.keychains,
           this.blockchain
-        )
-    );
+        );
+      }
+      return new EthWallet(
+        this.client,
+        transformMasterWalletData(walletData),
+        this.keychains,
+        this.blockchain
+      );
+    });
   }
   async getMasterWallets(
     options?: MasterWalletSearchOptions
