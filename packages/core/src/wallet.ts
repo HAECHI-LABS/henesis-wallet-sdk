@@ -81,6 +81,7 @@ export interface WalletData {
   createdAt: string;
   updatedAt: string;
   status: WalletStatus;
+  version?: string;
 }
 
 export enum PolicyType {

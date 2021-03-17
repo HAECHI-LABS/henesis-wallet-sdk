@@ -60,7 +60,6 @@ export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
 
 export interface EthWalletData extends WalletData {
   blockchain: BlockchainType;
-  version: string;
   transactionId?: string | null;
   error?: string | null;
 }
