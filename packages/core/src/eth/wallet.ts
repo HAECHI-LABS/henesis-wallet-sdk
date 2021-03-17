@@ -422,15 +422,15 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   }
 }
 
-interface FlushTransfer {
+type FlushTransfer = {
   coinSymbol: string;
   coinId: number;
   amount: BN;
-  depositAddress: Address;
+  depositAddress: string;
   isFirst: Boolean;
-}
+};
 
-export interface FlushHistory {
+export type FlushHistory = {
   id: string;
   blockchain: BlockchainType;
   fee: BN;
@@ -439,7 +439,7 @@ export interface FlushHistory {
   createdAt: string;
   updatedAt: string;
   transfers: FlushTransfer[];
-}
+};
 
 export class EthWallet extends EthLikeWallet {
   private walletContract: Contract;
@@ -654,23 +654,64 @@ export class EthWallet extends EthLikeWallet {
     );
     this.data.name = masterWalletData.name;
   }
-  //todo: implement
+
   async flush(
-    coin: string | Coin,
-    depositAddressIds: string[],
+    flushTargets: Array<{ coinId: number; depositAddressId: string }>,
     passphrase: string,
     otpCode?: string,
     gasPrice?: BN,
     gasLimit?: BN
   ): Promise<EthTransaction> {
+    const response = await this.client.post<Pagination<FlushHistory[]>>(
+      `${this.baseUrl}/flush`,
+      {
+        flushTargets,
+        passphrase,
+        otpCode,
+        gasPrice,
+        gasLimit,
+      }
+    );
     return null;
   }
 
-  //todo implement
-  async getFlushHistory(
+  async getFlushHistories(
     option?: PaginationOptions
-  ): Promise<Pagination<FlushHistory[]>> {
-    return null;
+  ): Promise<Pagination<FlushHistory>> {
+    const queryString = makeQueryString(option);
+    const response = await this.client.get<Pagination<FlushHistory[]>>(
+      `${this.baseUrl}/flush-transactions${
+        queryString ? `?${queryString}` : ""
+      }`
+    );
+    const MOCK_DATA = {
+      pagination: {
+        nextUrl: null,
+        previousUrl: null,
+        totalCount: 1,
+      },
+      results: [
+        {
+          id: "948e61c20268f9477ca85d6ecef90859",
+          blockchain: BlockchainType.ETHEREUM,
+          fee: new BN("0"),
+          hash: "0x4ef3ba60c8710f45371835cddafabf33daa83e1d",
+          status: "REQUESTED",
+          createdAt: String(new Date().valueOf()),
+          updatedAt: String(new Date().valueOf()),
+          transfers: [
+            {
+              coinSymbol: "ETH",
+              coinId: 2,
+              amount: new BN("0"),
+              depositAddress: "0x4ef3ba60c8710f45371835cddafabf33daa83e1d",
+              isFirst: true,
+            },
+          ],
+        },
+      ],
+    };
+    return MOCK_DATA;
   }
 
   async approve(params: EthWithdrawalApproveParams): Promise<EthTransaction> {
