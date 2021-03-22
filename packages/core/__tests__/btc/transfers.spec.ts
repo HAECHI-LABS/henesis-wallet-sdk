@@ -1,5 +1,6 @@
 import {HttpClient} from "../../src/httpClient";
 import {BtcTransfers} from "../../src/btc/transfers";
+import { Env } from "../../src";
 
 describe.skip('BtcTransfer', () => {
   jest.setTimeout(50000);
@@ -10,6 +11,7 @@ describe.skip('BtcTransfer', () => {
           accessToken: 'accessToken',
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
+          env: Env.Local,
         }) as any,
       );
 
