@@ -12,6 +12,7 @@ describe.skip('BtcWallets', () => {
           accessToken: 'accessToken',
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
+          env: Env.Local,
         }) as any,
         new BtcKeyChains(Env.Local),
       );
@@ -33,6 +34,7 @@ describe.skip('BtcWallets', () => {
           accessToken: 'accessToken',
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
+          env: Env.Local,
         }) as any,
         new BtcKeyChains(Env.Local),
       );
@@ -47,6 +49,7 @@ describe.skip('BtcWallets', () => {
           accessToken: 'accessToken',
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
+          env: Env.Local,
         }) as any,
         new BtcKeyChains(Env.Local),
       );
@@ -61,6 +64,7 @@ describe.skip('BtcWallets', () => {
           accessToken: 'accessToken',
           secret: 'secret',
           url: 'http://localhost:8080/api/v2/btc',
+          env: Env.Local,
         }) as any,
         new BtcKeyChains(Env.Prod),
       );

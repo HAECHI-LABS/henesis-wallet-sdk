@@ -1,4 +1,5 @@
 import { ClientOptions, HttpClient } from '../src/httpClient';
+import { Env } from "../src";
 
 describe('HttpClient', () => {
   it('should sign correctly', () => {
@@ -6,6 +7,7 @@ describe('HttpClient', () => {
       accessToken: 'TemporaryToken',
       secret: 'WdiZiGKU3TPvRHRAprQ1ScBV3cNBd6b8QDmFlhSxM8k=',
       url: 'http://localhost:8080',
+      env: Env.Local,
     };
 
     const client: HttpClient = new HttpClient(options);
