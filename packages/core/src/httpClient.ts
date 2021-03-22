@@ -1,10 +1,13 @@
-import axios, { AxiosInstance } from "axios";
+import chalk from "chalk";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import hmacSHA256 from "crypto-js/hmac-sha256";
 import Base64 from "crypto-js/enc-base64";
 
 import { ObjectConverter } from "./utils/common";
 import { BlockchainType } from "./blockchain";
 import { makePrefixPathByBlockchainType, removePrefixApi } from "./utils/url";
+import { Env } from "./sdk";
+import { syntaxHighlight } from "./utils/chalk";
 
 const packageJson = require("../package.json");
 
@@ -12,6 +15,7 @@ export interface ClientOptions {
   accessToken: string;
   secret: string;
   url: string;
+  env: Env;
 }
 
 export interface Client {
@@ -39,10 +43,13 @@ export class HttpClient {
 
   private readonly secret: string;
 
+  private readonly env: Env;
+
   constructor(options: ClientOptions) {
     this.baseUrl = options.url;
     this.secret = options.secret;
     this.accessToken = options.accessToken;
+    this.env = options.env;
     this.client = this.makeSDKClient();
     this.apiClient = this.makeApiClient();
     return new AxiosMethodProxy(this, this.client) as any;
@@ -141,6 +148,24 @@ export class HttpClient {
 
       return config;
     });
+    if ([Env.Local, Env.Dev].some((env) => env === this.env)) {
+      client.interceptors.response.use(
+        (response) => {
+          const apiLogging = makeAPILogging(response);
+          console.log(chalk.green(`Status : ${apiLogging.response.status}`));
+          console.log(syntaxHighlight(apiLogging));
+          return response;
+        },
+        (error) => {
+          if (error.response) {
+            const apiLogging = makeAPILogging(error.response);
+            console.log(chalk.red(`Status : ${apiLogging.response.status}`));
+            console.log(syntaxHighlight(apiLogging));
+          }
+          return Promise.reject(error);
+        }
+      );
+    }
     return client;
   }
 
@@ -174,6 +199,39 @@ export const enhancedBlockchainClient = (
     patch<T = any>(url: string, data?: any): Promise<T> {
       return client.patch(`${prefixPath}${url}`, data);
     },
+  };
+};
+
+export const makeAPILogging = (source?: AxiosResponse) => {
+  if (!source) {
+    return;
+  }
+  const DEFAULT_CONTENT_TYPES_RX = /^(image)\/.*$/i;
+  const ignoreContentTypes = DEFAULT_CONTENT_TYPES_RX;
+  const config = source.config || {};
+
+  const request = {
+    url: `${config.baseURL ?? ""}${config.url}`,
+    method: config.method,
+    data: config.data || null,
+    headers: config.headers,
+    params: config.params || null,
+  };
+  const responseHeaders = source.headers || {};
+  const contentType =
+    responseHeaders["content-type"] || responseHeaders["Content-Type"];
+  const useRealBody =
+    (typeof source.data === "string" || typeof source.data === "object") &&
+    !ignoreContentTypes.test(contentType || "");
+  const body = useRealBody ? source.data : `~~~ skipped ~~~`;
+  const response = {
+    body,
+    status: source.status,
+    headers: responseHeaders,
+  };
+  return {
+    request,
+    response,
   };
 };
 

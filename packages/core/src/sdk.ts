@@ -51,6 +51,7 @@ export class SDK {
       secret: params.secret,
       accessToken: params.accessToken,
       url: baseUrl,
+      env,
     }) as any;
     this.withdrawalApproval = new WithdrawalApprovals(this.client);
     this.accounts = new Accounts(this.client);
