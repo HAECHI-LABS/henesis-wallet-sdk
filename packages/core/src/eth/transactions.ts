@@ -19,7 +19,7 @@ import Bytes from "./eth-core-lib/bytes";
 
 export type DetailedRawTransaction = RawTransaction & {
   fee: BN | null;
-}
+};
 
 export type Transaction = {
   id: string;
@@ -34,7 +34,7 @@ export type Transaction = {
   isFeeDelegated: boolean;
   fee?: BN;
   estimatedFee?: BN;
-}
+};
 
 export type TransactionPaginationOptions = PaginationOptions & {
   address?: string;
@@ -47,7 +47,7 @@ export type TransactionPaginationOptions = PaginationOptions & {
   statuses?: TransactionStatus[];
   types?: TransactionType[];
   keyId?: string;
-}
+};
 
 export type MultiSigPayload = {
   walletAddress: string;
@@ -55,7 +55,7 @@ export type MultiSigPayload = {
   value: BN;
   walletNonce: BN;
   hexData: string;
-}
+};
 
 export const formatMultiSigPayload = (
   multiSigPayload: MultiSigPayload
@@ -74,7 +74,7 @@ export const formatMultiSigPayload = (
 export type SignedMultiSigPayload = {
   signature: string;
   multiSigPayload: MultiSigPayload;
-}
+};
 
 export type RawTransaction = {
   nonce: BN;
@@ -83,7 +83,7 @@ export type RawTransaction = {
   to: string;
   value: BN;
   data: string;
-}
+};
 
 export class Transactions {
   private readonly client: Client;

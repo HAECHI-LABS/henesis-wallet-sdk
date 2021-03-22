@@ -48,51 +48,50 @@ import {
 } from "../apis/btc/wallet";
 import { convertTransferDTO } from "./utils";
 
-export type BtcTransaction
-  = Omit<
-    TransactionDTO,
-    "outputs" | "blockNumber" | "feeAmount" | "amount"
-  > & {
+export type BtcTransaction = Omit<
+  TransactionDTO,
+  "outputs" | "blockNumber" | "feeAmount" | "amount"
+> & {
   blockNumber?: BN;
   feeAmount?: BN;
   amount: BN;
   outputs: BtcTransactionOutput[];
-}
+};
 
 export type BtcEstimatedFee = {
   estimatedFee: string;
-}
+};
 
 export type BtcRawTransaction = {
   inputs: BtcRawTransactionInput[];
   outputs: BtcRawTransactionOutput[];
-}
+};
 
-export type BtcTransactionOutput
-  = Omit<TransactionOutputDTO, "amount"> & {
+export type BtcTransactionOutput = Omit<TransactionOutputDTO, "amount"> & {
   amount: BN;
-}
+};
 
 export type BtcRawTransactionInput = {
   redeemScript: string;
   transactionOutput: BtcTransactionOutput;
-}
+};
 
 export type BtcRawTransactionOutput = {
   to: string;
   amount: string;
   isChange: boolean;
-}
+};
 
-export type BtcCreateTransactionOutput
-  = Omit<BtcTransactionOutput, "amount"> & {
+export type BtcCreateTransactionOutput = Omit<
+  BtcTransactionOutput,
+  "amount"
+> & {
   amount: string;
-}
+};
 
-export type BtcSignedRawTransactionRequest
-  = BtcSignedRawTransaction & {
+export type BtcSignedRawTransactionRequest = BtcSignedRawTransaction & {
   otpCode?: string;
-}
+};
 
 export type BtcSignedRawTransaction = {
   inputs: {
@@ -100,13 +99,13 @@ export type BtcSignedRawTransaction = {
     accountSignature: string;
   }[];
   outputs: BtcRawTransactionOutput[];
-}
+};
 
 export type BtcMasterWalletData = WalletData & {
   orgId: string;
   accountKey: Key;
   whitelistActivated: boolean;
-}
+};
 
 export type DepositAddress = DepositAddressDTO;
 
@@ -116,7 +115,7 @@ export type DepositAddressPaginationOptions = PaginationOptions & {
   name?: string;
   id?: string;
   address?: string;
-}
+};
 
 export type BtcWithdrawalApproveParams = ApproveWithdrawal;
 

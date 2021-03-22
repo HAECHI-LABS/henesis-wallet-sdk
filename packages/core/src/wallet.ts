@@ -81,7 +81,7 @@ export type WalletData = {
   createdAt: string;
   updatedAt: string;
   status: WalletStatus;
-}
+};
 
 export enum PolicyType {
   DAILY = "DAILY",
@@ -109,7 +109,7 @@ export type WithdrawalPolicy = {
   walletType: WalletType;
   type: PolicyType;
   coinSymbol: string;
-}
+};
 
 export enum WalletStatus {
   ACTIVE = "ACTIVE",
@@ -193,7 +193,7 @@ export const transformWalletStatus = (
 
 export type AllowedAddressesPaginationOptions = PaginationOptions & {
   coinId?: number;
-}
+};
 
 export abstract class Wallet<T> {
   protected readonly client: Client;

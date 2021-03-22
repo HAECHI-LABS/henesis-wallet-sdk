@@ -16,7 +16,7 @@ export type ClientOptions = {
   secret: string;
   url: string;
   env: Env;
-}
+};
 
 export type Client = {
   get<T = any>(url: string): Promise<T>;
@@ -30,7 +30,7 @@ export type Client = {
   put<T = any>(url: string, data?: any): Promise<T>;
 
   patch<T = any>(url: string, data?: any): Promise<T>;
-}
+};
 
 export class HttpClient {
   private readonly baseUrl: string;

@@ -19,26 +19,29 @@ import {
 import { makeQueryString } from "../utils/url";
 import BN from "bn.js";
 
-export type SimplifiedTransactionInternal
-  = Omit<SimplifiedTransactionInternalDTO, "blockNumber"> & {
+export type SimplifiedTransactionInternal = Omit<
+  SimplifiedTransactionInternalDTO,
+  "blockNumber"
+> & {
   blockNumber: BN;
-}
+};
 
-export type ValueTransferEventInternal
-  = Omit<
-    ValueTransferEventInternalDTO,
-    "amount" | "confirmation" | "transaction"
-  > & {
+export type ValueTransferEventInternal = Omit<
+  ValueTransferEventInternalDTO,
+  "amount" | "confirmation" | "transaction"
+> & {
   amount: BN;
   confirmation: BN;
   transaction: SimplifiedTransactionInternal;
-}
+};
 
-export type CallEventInternal
-  = Omit<CallEventInternalDTO, "confirmation" | "transaction"> & {
+export type CallEventInternal = Omit<
+  CallEventInternalDTO,
+  "confirmation" | "transaction"
+> & {
   confirmation: BN;
   transaction: SimplifiedTransactionInternal;
-}
+};
 
 export class EthEvents {
   private readonly client: Client;

@@ -17,7 +17,7 @@ export enum ErrorCode {
 export type PropertyErrorParse = {
   name: string;
   type: string;
-}
+};
 
 export class HenesisError extends Error {
   public readonly httpStatus: HttpStatus;

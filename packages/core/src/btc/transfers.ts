@@ -24,29 +24,27 @@ export type TransferPaginationOptions = PaginationOptions & {
   transactionHash?: string;
   updatedAtGte?: Timestamp;
   updatedAtLt?: Timestamp;
-}
+};
 
-export type Transfer
-  = Omit<
-    TransferDTO,
-    "amount" | "feeAmount" | "confirmation" | "transaction"
-  > & {
+export type Transfer = Omit<
+  TransferDTO,
+  "amount" | "feeAmount" | "confirmation" | "transaction"
+> & {
   amount: BN;
   feeAmount: BN | null;
   confirmation: BN;
   transaction: BtcTransaction | null;
-}
+};
 
-export type TransferInternal
-  = Omit<
-    TransferInternalDTO,
-    "amount" | "feeAmount" | "confirmation" | "transaction"
-  > & {
+export type TransferInternal = Omit<
+  TransferInternalDTO,
+  "amount" | "feeAmount" | "confirmation" | "transaction"
+> & {
   amount: BN;
   feeAmount: BN | null;
   confirmation: BN;
   transaction: BtcTransaction | null;
-}
+};
 
 export class BtcTransfers {
   private readonly client: Client;

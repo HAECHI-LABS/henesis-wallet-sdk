@@ -13,7 +13,7 @@ export type Event = {
   orgId?: string;
   masterWalletId?: string;
   confirmation: BN;
-}
+};
 
 export type EthCallEvent = CallEvent;
 
@@ -21,7 +21,7 @@ export type CallEvent = Event & {
   fromAddress: string;
   toAddress: string;
   data: string;
-}
+};
 
 export type ValueTransferEvent = Event & {
   amount: BN;
@@ -32,7 +32,7 @@ export type ValueTransferEvent = Event & {
   transferType: TransferType;
   walletName: string;
   walletType: WalletType;
-}
+};
 
 export type EthValueTransferEvent = ValueTransferEvent;
 
@@ -49,12 +49,11 @@ export type EventPaginationOptions = PaginationOptions & {
   masterWalletId?: string;
   transactionId?: string;
   symbol?: string;
-}
+};
 
-export type ValueTransferEventPaginationOptions
-  = EventPaginationOptions & {
+export type ValueTransferEventPaginationOptions = EventPaginationOptions & {
   symbol?: string;
-}
+};
 
 export type EthEventPaginationOptions = EventPaginationOptions;
 

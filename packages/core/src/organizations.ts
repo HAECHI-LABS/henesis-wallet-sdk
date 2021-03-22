@@ -21,7 +21,7 @@ export type Organization = {
   name: string;
   secret: string;
   whitelistActivated: boolean;
-}
+};
 
 export type AllowedIp = {
   id: string;
@@ -29,7 +29,7 @@ export type AllowedIp = {
   location: string | null;
   label: string;
   createdAt: string;
-}
+};
 
 export type AllowedIpsPaginationOptions = PaginationOptions;
 

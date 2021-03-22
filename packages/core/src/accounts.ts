@@ -13,7 +13,7 @@ import { makeQueryString } from "./utils/url";
 
 export type AccountWithOTP = Account & {
   otp?: OTP;
-}
+};
 
 export type Account = {
   id: string;
@@ -22,16 +22,16 @@ export type Account = {
   lastName: string;
   accessToken?: string;
   roles: Role[];
-}
+};
 
 export type AccountWithIps = Account & {
   loginIps: LoginIpDTO[];
-}
+};
 
 export type OTP = {
   key: string;
   url: string;
-}
+};
 
 export import Role = Role;
 

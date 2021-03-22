@@ -19,7 +19,7 @@ export type SDKOptions = {
   secret: string;
   url?: string;
   env?: Env;
-}
+};
 
 export class SDK {
   public readonly accounts: Accounts;

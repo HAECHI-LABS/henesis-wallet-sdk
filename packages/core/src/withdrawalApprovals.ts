@@ -25,7 +25,7 @@ export type WithdrawalApproval = Omit<
 export type ApproveWithdrawal = WithdrawalApproval & {
   passphrase: string;
   otpCode: string;
-}
+};
 
 export class WithdrawalApprovals {
   private readonly client: Client;

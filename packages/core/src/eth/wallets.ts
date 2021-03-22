@@ -23,7 +23,7 @@ import { InactiveMasterWallet } from "../wallet";
 export type MasterWalletSearchOptions = {
   name?: string;
   sort?: string;
-}
+};
 
 export class EthWallets extends Wallets<EthMasterWallet> {
   private readonly henesisKey: HenesisKeys;

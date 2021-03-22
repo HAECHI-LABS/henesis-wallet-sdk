@@ -15,17 +15,17 @@ export type TransactionHistory = Transaction & {
   wallet: SimplifiedWalletDTO;
   type: TransactionType;
   createdAt: string;
-}
+};
 
 export type TransactionHistoryPaginationOptions = PaginationOptions & {
   transactionHash?: string;
   createdAtGte?: string;
   createdAtLt?: string;
-}
+};
 
 export type HenesisKey = Key & {
   feeDelegationEnabled: boolean;
-}
+};
 
 export class HenesisKeys {
   private readonly client: Client;

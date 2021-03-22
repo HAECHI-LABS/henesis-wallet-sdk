@@ -62,16 +62,15 @@ export type EthWalletData = WalletData & {
   version: string;
   transactionId?: string | null;
   error?: string | null;
-}
+};
 
 export type EthMasterWalletData = EthWalletData & {
   accountKey: Key;
   encryptionKey: string;
   whitelistActivated: boolean;
-}
+};
 
-export type EthUserWalletData
-  = Omit<EthWalletData, "encryptionKey">;
+export type EthUserWalletData = Omit<EthWalletData, "encryptionKey">;
 
 export type UserWalletPaginationOptions = PaginationOptions & {
   name?: string;
@@ -79,12 +78,12 @@ export type UserWalletPaginationOptions = PaginationOptions & {
   ids?: string[];
   address?: string;
   status?: WalletStatus;
-}
+};
 
 export type EthWithdrawalApproveParams = ApproveWithdrawal & {
   gasPrice?: BN;
   gasLimit?: BN;
-}
+};
 
 export class EthActivatingMasterWallet extends ActivatingMasterWallet {}
 

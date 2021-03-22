@@ -15,7 +15,7 @@ export type ModuleOptions = {
   client: Client;
   env: Env;
   blockchain: BlockchainType;
-}
+};
 
 export class EthModule {
   public readonly wallets: EthWallets;

@@ -15,7 +15,7 @@ export type Method = {
   blockchain: BlockchainType;
   name: MethodName;
   estimatedGasConsumption: BN;
-}
+};
 
 export class GasUsages {
   private readonly client: Client;
