@@ -2,12 +2,12 @@ import BN from "bn.js";
 import { Contract } from "web3-eth-contract";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
-import walletAbi from "../contracts/Wallet.json";
-import erc20Abi from "../contracts/ERC20.json";
-import { CoinDTO, CoinDTOAttributesEnum } from "../__generate__/eth";
-import { BNConverter } from "../utils/common";
-import { MultiSigPayload } from "./transactions";
-import { EthLikeWallet } from "./wallet";
+import walletAbi from "src/contracts/Wallet.json";
+import erc20Abi from "src/contracts/ERC20.json";
+import { CoinDTO, CoinDTOAttributesEnum } from "src/__generate__/eth";
+import { BNConverter } from "@utils/common";
+import { MultiSigPayload } from "@eth/transactions";
+import { EthLikeWallet } from "@eth/wallet";
 
 export import AttributesEnum = CoinDTOAttributesEnum;
 export type CoinData = CoinDTO;

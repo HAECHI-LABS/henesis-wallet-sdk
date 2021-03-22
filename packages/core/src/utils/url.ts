@@ -1,6 +1,6 @@
-import { Env } from "../sdk";
-import { BlockchainType } from "../blockchain";
-import { toSnakeCase } from "./string";
+import { Env } from "src/sdk";
+import { BlockchainType } from "src/blockchain";
+import { toSnakeCase } from "@utils/string";
 
 export const baseUrls = new Map<Env, string>();
 baseUrls.set(Env.Local, "http://localhost:8080/api/v2");

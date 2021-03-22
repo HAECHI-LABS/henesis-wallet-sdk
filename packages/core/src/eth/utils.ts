@@ -1,12 +1,12 @@
-import { BNConverter } from "../utils/common";
+import { BNConverter } from "@utils/common";
 import {
   RawTransactionDTO,
   TransactionDTO,
   TransactionHistoryDTO,
-} from "../__generate__/eth";
-import { transformBlockchainType } from "../blockchain";
-import { RawTransaction, Transaction } from "./transactions";
-import { TransactionHistory } from "./henesisKeys";
+} from "src/__generate__/eth";
+import { transformBlockchainType } from "src/blockchain";
+import { RawTransaction, Transaction } from "@eth/transactions";
+import { TransactionHistory } from "@eth/henesisKeys";
 
 export const convertTransactionDTO = (
   transactionDTO: NoUndefinedField<TransactionDTO>

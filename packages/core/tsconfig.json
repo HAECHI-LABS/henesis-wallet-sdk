@@ -4,12 +4,19 @@
     "module": "commonjs",
     "target": "es2017",
     "outDir": "./lib",
+    "baseUrl": "./src",
     "rootDir": "./src",
     "allowJs": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "typeRoots": ["typings", "node_modules/@types"],
-    "lib": ["dom"]
+    "lib": ["dom"],
+    "paths": {
+      "@btc/*": ["./btc/*"],
+      "@eth/*": ["./eth/*"],
+      "@utils/*": ["./utils/*"],
+      "src/*": ["./*"]
+    }
   },
   "include": ["./src"],
   "exclude": ["./__tests__"]

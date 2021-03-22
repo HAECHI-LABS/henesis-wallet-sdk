@@ -1,23 +1,23 @@
-import { Client } from "../httpClient";
-import { BtcMasterWallet, transformWalletData } from "./wallet";
-import { Wallets } from "../wallets";
+import { Client } from "src/httpClient";
+import { BtcMasterWallet, transformWalletData } from "@btc/wallet";
+import { Wallets } from "src/wallets";
 import aesjs from "aes-js";
-import { Keychains } from "../types";
-import { MasterWalletSearchOptions } from "../eth";
-import { makeQueryString } from "../utils/url";
-import { Env } from "../sdk";
-import { BlockchainType } from "../blockchain";
+import { Keychains } from "src/types";
+import { MasterWalletSearchOptions } from "@eth/index";
+import { makeQueryString } from "@utils/url";
+import { Env } from "src/sdk";
+import { BlockchainType } from "src/blockchain";
 import { Base64 } from "js-base64";
-import { BtcRecoveryKit } from "./recoveryKit";
+import { BtcRecoveryKit } from "@btc/recoveryKit";
 import { address as BitcoinAddress, networks } from "bitcoinjs-lib";
 import {
   ActivateMasterWalletRequest,
   CreateInactiveMasterWalletRequest,
   CreateInactiveMasterWalletResponse,
   MasterWalletDTO,
-} from "../__generate__/btc";
-import { checkNullAndUndefinedParameter } from "..";
-import { InactiveMasterWallet } from "../wallet";
+} from "src/__generate__/btc";
+import { checkNullAndUndefinedParameter } from "@utils/common";
+import { InactiveMasterWallet } from "src/wallet";
 
 export class BtcWallets extends Wallets<BtcMasterWallet> {
   constructor(env: Env, client: Client, keychains: Keychains) {

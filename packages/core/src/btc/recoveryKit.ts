@@ -1,7 +1,7 @@
-import { RecoveryKit } from "../recoverykit";
-import { BlockchainType } from "../blockchain";
-import { Key, KeyWithPriv } from "../types";
-import { Env } from "../sdk";
+import { RecoveryKit } from "src/recoverykit";
+import { BlockchainType } from "src/blockchain";
+import { Key, KeyWithPriv } from "src/types";
+import { Env } from "src/sdk";
 
 export class BtcRecoveryKit extends RecoveryKit {
   private readonly walletId: string;

@@ -6,27 +6,27 @@ import {
   ActivatingMasterWallet,
   transformWalletStatus,
   WalletStatus,
-} from "../wallet";
-import { BlockchainType, transformBlockchainType } from "../blockchain";
+} from "src/wallet";
+import { BlockchainType, transformBlockchainType } from "src/blockchain";
 import {
   Balance,
   Key,
   Keychains,
   Pagination,
   PaginationOptions,
-} from "../types";
+} from "src/types";
 import {
   formatMultiSigPayload,
   MultiSigPayload,
   SignedMultiSigPayload,
-} from "./transactions";
-import { Client } from "../httpClient";
-import BatchRequest from "./batch";
-import walletAbi from "../contracts/Wallet.json";
-import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
-import { WalletData, Wallet } from "../wallet";
-import { makeQueryString } from "../utils/url";
-import { Coins } from "./coins";
+} from "@eth/transactions";
+import { Client } from "src/httpClient";
+import BatchRequest from "@eth/batch";
+import walletAbi from "src/contracts/Wallet.json";
+import { BNConverter, checkNullAndUndefinedParameter } from "@utils/common";
+import { WalletData, Wallet } from "src/wallet";
+import { makeQueryString } from "@utils/url";
+import { Coins } from "@eth/coins";
 import {
   TransactionDTO,
   BatchTransactionDTO,
@@ -44,14 +44,14 @@ import {
   ReplaceTransactionRequest,
   ActivateMasterWalletRequest,
   KeyDTO,
-} from "../__generate__/eth";
+} from "src/__generate__/eth";
 import _ from "lodash";
-import { ValidationParameterError } from "../error";
-import { ApproveWithdrawal } from "../withdrawalApprovals";
-import { Coin } from "./coin";
+import { ValidationParameterError } from "src/error";
+import { ApproveWithdrawal } from "src/withdrawalApprovals";
+import { Coin } from "@eth/coin";
 import { randomBytes } from "crypto";
-import { keccak256 } from "./eth-core-lib/hash";
-import { toChecksum } from "./keychains";
+import { keccak256 } from "@eth/eth-core-lib/hash";
+import { toChecksum } from "@eth/keychains";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;

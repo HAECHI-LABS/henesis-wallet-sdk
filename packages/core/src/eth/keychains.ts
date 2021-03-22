@@ -1,12 +1,12 @@
 import crypto from "crypto";
 import elliptic from "elliptic";
-import { Key, Keychains, KeyWithPriv } from "../types";
-import { keccak256, keccak256s } from "./eth-core-lib/hash";
-import Bytes from "./eth-core-lib/bytes";
-import sjcl from "./eth-core-lib/sjcl";
-import { fromString } from "./eth-core-lib/nat";
-import { BlockchainType } from "../blockchain";
-import { PasswordInvalidError } from "../error";
+import { Key, Keychains, KeyWithPriv } from "src/types";
+import { keccak256, keccak256s } from "@eth/eth-core-lib/hash";
+import Bytes from "@eth/eth-core-lib/bytes";
+import sjcl from "@eth/eth-core-lib/sjcl";
+import { fromString } from "@eth/eth-core-lib/nat";
+import { BlockchainType } from "src/blockchain";
+import { PasswordInvalidError } from "src/error";
 
 const secp256k1 = new elliptic.ec("secp256k1"); // eslint-disable-line
 const BASE_V_VALUE = 27;

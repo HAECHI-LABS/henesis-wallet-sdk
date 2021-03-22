@@ -1,6 +1,6 @@
 import BN from "bn.js";
-import { Client } from "./httpClient";
-import { BlockchainType } from "./blockchain";
+import { Client } from "src/httpClient";
+import { BlockchainType } from "src/blockchain";
 import {
   Balance,
   Key,
@@ -8,7 +8,7 @@ import {
   KeyWithPriv,
   Pagination,
   PaginationOptions,
-} from "./types";
+} from "src/types";
 import aesjs from "aes-js";
 import { Base64 } from "js-base64";
 import {
@@ -25,9 +25,9 @@ import {
   ValidateIsAllowedAddressResponse as BtcValidateIsAllowedAddressResponse,
   WalletStatus as BtcWalletStatus,
   WithdrawalPolicyType as BtcWithdrawalPolicyType,
-} from "./__generate__/btc/api";
-import { BNConverter, checkNullAndUndefinedParameter } from "./utils/common";
-import { makeQueryString } from "./utils/url";
+} from "src/__generate__/btc/api";
+import { BNConverter, checkNullAndUndefinedParameter } from "@utils/common";
+import { makeQueryString } from "@utils/url";
 import {
   ActivateAllowedAddressesRequest as EthActivateAllowedAddressesRequest,
   KeyDTO as EthKeyDTO,
@@ -47,7 +47,7 @@ import {
   WalletStatus as EthWalletStatus,
   WhitelistType as EthWhitelistType,
   WithdrawalPolicyType as EthWithdrawalPolicyType,
-} from "./__generate__/eth/api";
+} from "src/__generate__/eth/api";
 export type InactivateAllowedAddressesRequest =
   | EthInactivateAllowedAddressesRequest
   | BtcInactivateAllowedAddressesRequest;

@@ -1,11 +1,11 @@
-import { Key, Keychains, KeyWithPriv } from "../types";
+import { Key, Keychains, KeyWithPriv } from "src/types";
 import { ECPair } from "bitcoinjs-lib";
 import { networks } from "bitcoinjs-lib";
-import sjcl from "../eth/eth-core-lib/sjcl";
+import sjcl from "@eth/eth-core-lib/sjcl";
 import crypto from "crypto";
-import { bytesToWord } from "../eth";
-import { BNConverter } from "../utils/common";
-import { Env } from "../sdk";
+import { bytesToWord } from "@eth/index";
+import { BNConverter } from "@utils/common";
+import { Env } from "src/sdk";
 
 export class BtcKeyChains implements Keychains {
   private env: Env;

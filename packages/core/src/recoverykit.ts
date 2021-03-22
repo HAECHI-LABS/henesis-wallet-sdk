@@ -1,10 +1,10 @@
 import PDFDocument from "pdfkit";
 import QRCode from "qrcode";
 import SVGtoPDF from "svg-to-pdfkit";
-import { BlockchainType } from "./blockchain";
-import { Key, KeyWithPriv } from "./types";
-import { logo } from "./resources/logo";
-import { Env } from "./sdk";
+import { BlockchainType } from "src/blockchain";
+import { Key, KeyWithPriv } from "src/types";
+import { logo } from "src/resources/logo";
+import { Env } from "src/sdk";
 
 export class RecoveryKit {
   private readonly name: string;

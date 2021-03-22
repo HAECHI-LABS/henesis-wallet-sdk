@@ -1,15 +1,15 @@
-import { Client } from "./httpClient";
-import { Pagination, PaginationOptions } from "./types";
-import { makeQueryString } from "./utils/url";
+import { Client } from "src/httpClient";
+import { Pagination, PaginationOptions } from "src/types";
+import { makeQueryString } from "@utils/url";
 import {
   PaginationWithdrawalApprovalDTO,
   WithdrawalApprovalDTO,
   WithdrawalApprovalStatus,
-} from "./__generate__/accounts";
+} from "src/__generate__/accounts";
 import BN from "bn.js";
 import _ from "lodash";
-import { BNConverter } from "./utils/common";
-import { BlockchainType, transformBlockchainType } from "./blockchain";
+import { BNConverter } from "@utils/common";
+import { BlockchainType, transformBlockchainType } from "src/blockchain";
 
 export import WithdrawalApprovalStatus = WithdrawalApprovalStatus;
 

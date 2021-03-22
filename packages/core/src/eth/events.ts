@@ -1,12 +1,12 @@
-import { Pagination } from "../types";
-import { Client } from "../httpClient";
-import { BNConverter } from "../utils/common";
+import { Pagination } from "src/types";
+import { Client } from "src/httpClient";
+import { BNConverter } from "@utils/common";
 import {
   EthCallEvent,
   EthEventPaginationOptions,
   EthValueTransferEvent,
   EthValueTransferEventPaginationOptions,
-} from "../events";
+} from "src/events";
 import {
   PaginationValueTransferEventDTO,
   PaginationCallEventDTO,
@@ -15,8 +15,8 @@ import {
   SimplifiedTransactionInternalDTO,
   CallEventInternalDTO,
   PaginationCallEventInternalDTO,
-} from "../__generate__/eth";
-import { makeQueryString } from "../utils/url";
+} from "src/__generate__/eth";
+import { makeQueryString } from "@utils/url";
 import BN from "bn.js";
 
 export interface SimplifiedTransactionInternal

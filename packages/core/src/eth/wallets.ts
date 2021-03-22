@@ -1,24 +1,24 @@
 import aesjs from "aes-js";
 import { Base64 } from "js-base64";
 import * as BN from "bn.js";
-import { Env } from "../sdk";
-import { Client } from "../httpClient";
-import { Keychains } from "../types";
-import { BlockchainType, transformBlockchainType } from "../blockchain";
-import { RecoveryKit } from "../recoverykit";
-import { EthMasterWallet, transformMasterWalletData } from "./wallet";
-import { Wallets } from "../wallets";
-import { toChecksum } from "./keychains";
-import { keccak256s } from "./eth-core-lib/hash";
-import { makeQueryString } from "../utils/url";
-import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
-import { HenesisKeys } from "./henesisKeys";
+import { Env } from "src/sdk";
+import { Client } from "src/httpClient";
+import { Keychains } from "src/types";
+import { BlockchainType, transformBlockchainType } from "src/blockchain";
+import { RecoveryKit } from "src/recoverykit";
+import { EthMasterWallet, transformMasterWalletData } from "@eth/wallet";
+import { Wallets } from "src/wallets";
+import { toChecksum } from "@eth/keychains";
+import { keccak256s } from "@eth/eth-core-lib/hash";
+import { makeQueryString } from "@utils/url";
+import { BNConverter, checkNullAndUndefinedParameter } from "@utils/common";
+import { HenesisKeys } from "@eth/henesisKeys";
 import {
   CreateInactiveMasterWalletRequest,
   InactiveMasterWalletDTO,
   MasterWalletDTO,
-} from "../__generate__/eth";
-import { InactiveMasterWallet } from "../wallet";
+} from "src/__generate__/eth";
+import { InactiveMasterWallet } from "src/wallet";
 
 export interface MasterWalletSearchOptions {
   name?: string;

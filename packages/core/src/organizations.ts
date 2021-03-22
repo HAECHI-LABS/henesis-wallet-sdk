@@ -1,6 +1,6 @@
-import { Client } from "./httpClient";
-import { Pagination, PaginationOptions, Secret } from "./types";
-import { Account, AccountWithIps, Role } from "./accounts";
+import { Client } from "src/httpClient";
+import { Pagination, PaginationOptions, Secret } from "src/types";
+import { Account, AccountWithIps, Role } from "src/accounts";
 import {
   OrganizationDTO,
   OrgAccountDTO,
@@ -13,8 +13,8 @@ import {
   ActivateAllowedIpsRequest,
   InactivateAllowedIpsRequest,
   PaginationAllowedIpDTO,
-} from "./__generate__/accounts";
-import { makeQueryString } from "./utils/url";
+} from "src/__generate__/accounts";
+import { makeQueryString } from "@utils/url";
 
 export interface Organization {
   id: string;

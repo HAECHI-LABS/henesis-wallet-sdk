@@ -3,11 +3,11 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 import hmacSHA256 from "crypto-js/hmac-sha256";
 import Base64 from "crypto-js/enc-base64";
 
-import { ObjectConverter } from "./utils/common";
-import { BlockchainType } from "./blockchain";
-import { makePrefixPathByBlockchainType, removePrefixApi } from "./utils/url";
-import { Env } from "./sdk";
-import { syntaxHighlight } from "./utils/chalk";
+import { ObjectConverter } from "@utils/common";
+import { BlockchainType } from "src/blockchain";
+import { makePrefixPathByBlockchainType, removePrefixApi } from "@utils/url";
+import { Env } from "src/sdk";
+import { syntaxHighlight } from "@utils/chalk";
 
 const packageJson = require("../package.json");
 

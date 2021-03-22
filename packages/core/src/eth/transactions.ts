@@ -1,21 +1,21 @@
 import * as BN from "bn.js";
-import { BlockchainType, transformBlockchainType } from "../blockchain";
-import { Pagination, PaginationOptions, Timestamp } from "../types";
-import { Client } from "../httpClient";
-import { makeQueryString } from "../utils/url";
+import { BlockchainType, transformBlockchainType } from "src/blockchain";
+import { Pagination, PaginationOptions, Timestamp } from "src/types";
+import { Client } from "src/httpClient";
+import { makeQueryString } from "@utils/url";
 import {
   PaginationTransactionDTO,
   TransactionDTO,
   TransactionStatus,
   DetailedRawTransactionDTO,
   TransactionType,
-} from "../__generate__/eth";
+} from "src/__generate__/eth";
 import _ from "lodash";
-import { convertTransactionDTO, convertRawTransactionDTO } from "./utils";
+import { convertTransactionDTO, convertRawTransactionDTO } from "@eth/utils";
 
 export import TransactionStatus = TransactionStatus;
-import { BNConverter } from "../utils/common";
-import Bytes from "./eth-core-lib/bytes";
+import { BNConverter } from "@utils/common";
+import Bytes from "@eth/eth-core-lib/bytes";
 
 export interface DetailedRawTransaction extends RawTransaction {
   fee: BN | null;

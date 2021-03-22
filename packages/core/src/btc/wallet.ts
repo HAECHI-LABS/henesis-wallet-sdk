@@ -1,4 +1,4 @@
-import { Client } from "../httpClient";
+import { Client } from "src/httpClient";
 import BN from "bn.js";
 import {
   Balance,
@@ -7,21 +7,21 @@ import {
   Pagination,
   PaginationOptions,
   Timestamp,
-} from "../types";
+} from "src/types";
 import {
   address,
   networks,
   script,
   Transaction as BitcoinTransaction,
 } from "bitcoinjs-lib";
-import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
+import { BNConverter, checkNullAndUndefinedParameter } from "@utils/common";
 import {
   ActivatingMasterWallet,
   transformWalletStatus,
   Wallet,
   WalletData,
-} from "../wallet";
-import { BlockchainType } from "../blockchain";
+} from "src/wallet";
+import { BlockchainType } from "src/blockchain";
 import {
   ActivateMasterWalletRequest,
   ApproveWithdrawalApprovalRequest,
@@ -36,17 +36,17 @@ import {
   TransactionDTO,
   TransactionOutputDTO,
   TransferDTO,
-} from "../__generate__/btc";
-import { makeQueryString } from "../utils/url";
-import { Env } from "../sdk";
+} from "src/__generate__/btc";
+import { makeQueryString } from "@utils/url";
+import { Env } from "src/sdk";
 import _ from "lodash";
-import { Transfer } from "./transfers";
-import { ApproveWithdrawal } from "../withdrawalApprovals";
+import { Transfer } from "@btc/transfers";
+import { ApproveWithdrawal } from "src/withdrawalApprovals";
 import {
   createDepositAddressApi,
   getDepositAddressApi,
-} from "../apis/btc/wallet";
-import { convertTransferDTO } from "./utils";
+} from "src/apis/btc/wallet";
+import { convertTransferDTO } from "@btc/utils";
 
 export interface BtcTransaction
   extends Omit<

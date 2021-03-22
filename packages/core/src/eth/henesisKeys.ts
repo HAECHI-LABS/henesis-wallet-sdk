@@ -1,15 +1,16 @@
-import { Client } from "../httpClient";
-import { Balance, Key, Pagination, PaginationOptions } from "../types";
+import { Client } from "src/httpClient";
+import { Balance, Key, Pagination, PaginationOptions } from "src/types";
 import {
   BalanceDTO,
   HenesisKeyDTO,
   PaginationTransactionHistoryDTO,
   SimplifiedWalletDTO,
   TransactionType,
-} from "../__generate__/eth";
-import { BNConverter, Transaction } from "../";
-import { makeQueryString } from "../utils/url";
-import { convertTransactionHistoryDTO } from "./utils";
+} from "src/__generate__/eth";
+import { Transaction } from "@eth/transactions";
+import { BNConverter } from "@utils/common"
+import { makeQueryString } from "@utils/url";
+import { convertTransactionHistoryDTO } from "@eth/utils";
 
 export interface TransactionHistory extends Transaction {
   wallet: SimplifiedWalletDTO;

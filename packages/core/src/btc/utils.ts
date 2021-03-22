@@ -2,10 +2,10 @@ import {
   TransactionDTO as BtcTransactionDTO,
   TransferDTO,
   TransferInternalDTO,
-} from "../__generate__/btc";
-import { Transfer, TransferInternal } from "./transfers";
-import { BtcTransaction, BtcTransactionOutput } from "./wallet";
-import { BNConverter } from "../utils/common";
+} from "src/__generate__/btc";
+import { Transfer, TransferInternal } from "@btc/transfers";
+import { BtcTransaction, BtcTransactionOutput } from "@btc/wallet";
+import { BNConverter } from "@utils/common";
 
 export const convertTransactionDTO = (
   transaction: BtcTransactionDTO

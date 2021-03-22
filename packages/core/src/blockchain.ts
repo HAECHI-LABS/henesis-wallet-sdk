@@ -2,8 +2,8 @@ import {
   UserWalletDTOBlockchainEnum,
   Blockchain as EthBlockchain,
   Blockchain,
-} from "./__generate__/eth";
-import { Blockchain as AccountsBlockchain } from "./__generate__/accounts";
+} from "src/__generate__/eth";
+import { Blockchain as AccountsBlockchain } from "src/__generate__/accounts";
 
 export const transformBlockchainType = (
   blockchain:

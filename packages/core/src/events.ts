@@ -1,6 +1,6 @@
 import * as BN from "bn.js";
-import { PaginationOptions, Timestamp } from "./types";
-import { TransferType, EventStatus, WalletType } from "./__generate__/eth";
+import { PaginationOptions, Timestamp } from "src/types";
+import { TransferType, EventStatus, WalletType } from "src/__generate__/eth";
 
 export interface Event {
   id: number;

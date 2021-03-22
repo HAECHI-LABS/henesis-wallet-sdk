@@ -1,4 +1,4 @@
-import { Client } from "../httpClient";
+import { Client } from "src/httpClient";
 import {
   Coin,
   StandardErc20,
@@ -7,7 +7,7 @@ import {
   NonStandardReturnTypeErc20,
   CoinData,
   AttributesEnum,
-} from "./coin";
+} from "@eth/coin";
 
 export class Coins {
   private readonly client: Client;

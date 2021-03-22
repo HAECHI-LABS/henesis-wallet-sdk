@@ -1,15 +1,15 @@
-import { EthWallets } from "./wallets";
-import { Keychains } from "../types";
-import { EthEvents } from "./events";
-import { GasUsages } from "./gasUsages";
-import { Transactions } from "./transactions";
-import { Env } from "../sdk";
-import { Client } from "../httpClient";
-import { EthKeychains } from "./keychains";
-import { BlockchainType } from "../blockchain";
-import { HenesisKeys } from "./henesisKeys";
-import { Coins } from "./coins";
-import { GasPrice } from "./gasPrice";
+import { EthWallets } from "@eth/wallets";
+import { Keychains } from "src/types";
+import { EthEvents } from "@eth/events";
+import { GasUsages } from "@eth/gasUsages";
+import { Transactions } from "@eth/transactions";
+import { Env } from "src/sdk";
+import { Client } from "src/httpClient";
+import { EthKeychains } from "@eth/keychains";
+import { BlockchainType } from "src/blockchain";
+import { HenesisKeys } from "@eth/henesisKeys";
+import { Coins } from "@eth/coins";
+import { GasPrice } from "@eth/gasPrice";
 
 export interface ModuleOptions {
   client: Client;

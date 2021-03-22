@@ -1,8 +1,8 @@
-import { MasterWalletSearchOptions } from "./eth";
-import { RecoveryKit } from "./recoverykit";
-import { Client } from "./httpClient";
-import { Key, Keychains, KeyWithPriv } from "./types";
-import { Env } from "./sdk";
+import { MasterWalletSearchOptions } from "@eth/index";
+import { RecoveryKit } from "src/recoverykit";
+import { Client } from "src/httpClient";
+import { Key, Keychains, KeyWithPriv } from "src/types";
+import { Env } from "src/sdk";
 import Web3 from "web3";
 import pbkdf2 from "pbkdf2";
 import _ from "lodash";

@@ -1,8 +1,8 @@
 import BN from "bn.js";
-import { BlockchainType, transformBlockchainType } from "../blockchain";
-import { Client } from "../httpClient";
-import { BNConverter } from "../utils/common";
-import { MethodGasUsageDTO } from "../__generate__/eth";
+import { BlockchainType, transformBlockchainType } from "src/blockchain";
+import { Client } from "src/httpClient";
+import { BNConverter } from "@utils/common";
+import { MethodGasUsageDTO } from "src/__generate__/eth";
 
 export enum MethodName {
   TRANSFER = "transfer",

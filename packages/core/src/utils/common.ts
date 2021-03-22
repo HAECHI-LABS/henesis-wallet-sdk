@@ -3,9 +3,9 @@ import BN from "bn.js";
 import {
   toCamelCase as toStringCamelCase,
   toSnakeCase as toStringSnakeCase,
-} from "./string";
+} from "@utils/string";
 import _ from "lodash";
-import { FormatInvalidError, ValidationParameterError } from "../error";
+import { FormatInvalidError, ValidationParameterError } from "src/error";
 
 const packageJson = require("../../package.json");
 

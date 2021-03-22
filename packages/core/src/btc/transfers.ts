@@ -1,7 +1,7 @@
-import { Pagination, PaginationOptions, Timestamp } from "../types";
-import { Client } from "../httpClient";
-import { makeQueryString } from "../utils/url";
-import { BtcTransaction } from "./wallet";
+import { Pagination, PaginationOptions, Timestamp } from "src/types";
+import { Client } from "src/httpClient";
+import { makeQueryString } from "@utils/url";
+import { BtcTransaction } from "@btc/wallet";
 import {
   PaginationTransferDTO,
   TransferDTO,
@@ -9,7 +9,7 @@ import {
   TransferStatus,
   TransferInternalDTO,
   PaginationTransferInternalDTO,
-} from "../__generate__/btc";
+} from "src/__generate__/btc";
 import BN from "bn.js";
 
 export import TransferStatus = TransferStatus;

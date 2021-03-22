@@ -1,11 +1,11 @@
-import { Accounts } from "./accounts";
-import { Organizations } from "./organizations";
-import { HttpClient, Client, enhancedBlockchainClient } from "./httpClient";
-import { EthModule, KlayModule } from "./eth";
-import { baseUrls } from "./utils/url";
-import { BtcModule } from "./btc";
-import { BlockchainType } from "./blockchain";
-import { WithdrawalApprovals } from "./withdrawalApprovals";
+import { Accounts } from "src/accounts";
+import { Organizations } from "src/organizations";
+import { HttpClient, Client, enhancedBlockchainClient } from "src/httpClient";
+import { EthModule, KlayModule } from "@eth/index";
+import { baseUrls } from "@utils/url";
+import { BtcModule } from "@btc/index";
+import { BlockchainType } from "src/blockchain";
+import { WithdrawalApprovals } from "src/withdrawalApprovals";
 
 export const enum Env {
   Local,

@@ -1,7 +1,7 @@
-import { GetGasPriceResponse } from "../__generate__/eth";
+import { GetGasPriceResponse } from "src/__generate__/eth";
 import * as BN from "bn.js";
-import { Client } from "../httpClient";
-import { BNConverter } from "..";
+import { Client } from "src/httpClient";
+import { BNConverter } from "@utils/common";
 
 export class GasPrice {
   private readonly client: Client;

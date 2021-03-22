@@ -1,8 +1,8 @@
-import { Client } from "../httpClient";
-import { ModuleOptions } from "../module";
-import { BtcWallets } from "./wallets";
-import { BtcKeyChains } from "./keychains";
-import { BtcTransfers } from "./transfers";
+import { Client } from "src/httpClient";
+import { ModuleOptions } from "src/module";
+import { BtcWallets } from "@btc/wallets";
+import { BtcKeyChains } from "@btc/keychains";
+import { BtcTransfers } from "@btc/transfers";
 
 export class BtcModule {
   public readonly wallets: BtcWallets;

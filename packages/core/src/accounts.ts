@@ -1,5 +1,5 @@
-import { Client } from "./httpClient";
-import { Token } from "./types";
+import { Client } from "src/httpClient";
+import { Token } from "src/types";
 import {
   AccountDTO,
   LoginResponse,
@@ -8,8 +8,8 @@ import {
   AccessTokenDTO,
   Role,
   LoginIpDTO,
-} from "./__generate__/accounts";
-import { makeQueryString } from "./utils/url";
+} from "src/__generate__/accounts";
+import { makeQueryString } from "@utils/url";
 
 export interface AccountWithOTP extends Account {
   otp?: OTP;

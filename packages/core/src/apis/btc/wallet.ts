@@ -1,10 +1,11 @@
 import _ from "lodash";
 import { AxiosInstance } from "axios";
+
 import {
   WalletControllerApiFactory,
   CreateDepositAddressRequest,
-} from "../../__generate__/btc/api";
-import { Client } from "../../httpClient";
+} from "src/__generate__/btc/api";
+import { Client } from "src/httpClient";
 
 const walletControllerApi = (client: Client) => {
   const apiClient: AxiosInstance = _.get(client, ["apiClient"]);
