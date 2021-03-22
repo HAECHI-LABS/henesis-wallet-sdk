@@ -8,7 +8,7 @@ async function main() {
     accessToken: process.env.ACCESS_TOKEN,
     secret: process.env.SECRET,
     url: process.env.URL,
-    env: Env.Dev,
+    env: Env.Local,
   });
 
   const ethWallets: EthMasterWallet[] = await sdk.eth.wallets.getMasterWallets();
