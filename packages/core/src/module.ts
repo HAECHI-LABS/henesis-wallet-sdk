@@ -1,7 +1,7 @@
 import { Client } from "./httpClient";
 import { Env } from "./sdk";
 
-export interface ModuleOptions {
+export type ModuleOptions = {
   client: Client;
   env: Env;
 }

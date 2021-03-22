@@ -2,7 +2,7 @@ import * as BN from "bn.js";
 import { PaginationOptions, Timestamp } from "./types";
 import { TransferType, EventStatus, WalletType } from "./__generate__/eth";
 
-export interface Event {
+export type Event = {
   id: number;
   createdAt: string;
   updatedAt: string;
@@ -17,13 +17,13 @@ export interface Event {
 
 export type EthCallEvent = CallEvent;
 
-export interface CallEvent extends Event {
+export type CallEvent = Event & {
   fromAddress: string;
   toAddress: string;
   data: string;
 }
 
-export interface ValueTransferEvent extends Event {
+export type ValueTransferEvent = Event & {
   amount: BN;
   decimals: number;
   coinSymbol: string;
@@ -36,7 +36,7 @@ export interface ValueTransferEvent extends Event {
 
 export type EthValueTransferEvent = ValueTransferEvent;
 
-export interface EventPaginationOptions extends PaginationOptions {
+export type EventPaginationOptions = PaginationOptions & {
   address?: string;
   toAddress?: string;
   fromAddress?: string;
@@ -51,8 +51,8 @@ export interface EventPaginationOptions extends PaginationOptions {
   symbol?: string;
 }
 
-export interface ValueTransferEventPaginationOptions
-  extends EventPaginationOptions {
+export type ValueTransferEventPaginationOptions
+  = EventPaginationOptions & {
   symbol?: string;
 }
 

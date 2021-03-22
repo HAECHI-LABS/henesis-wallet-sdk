@@ -1,6 +1,6 @@
 import BN from "bn.js";
 
-export interface Keychains {
+export type Keychains = {
   create(password: string): KeyWithPriv;
 
   changePassword(key: Key, password: string, newPassword: string): KeyWithPriv;
@@ -10,7 +10,7 @@ export interface Keychains {
   sign(key: Key, password: string, hexPayload: string): string;
 }
 
-export interface Balance {
+export type Balance = {
   coinId: number | null;
   coinType: string;
   amount: BN;
@@ -21,25 +21,25 @@ export interface Balance {
   decimals: number;
 }
 
-export interface Key {
+export type Key = {
   address?: string;
   pub: string;
   keyFile?: string;
 }
 
-export interface KeyWithPriv extends Key {
+export type KeyWithPriv = Key & {
   priv: string;
 }
 
 export type Timestamp = number;
 
-export interface PaginationOptions {
+export type PaginationOptions = {
   page?: number;
   size?: number;
   sort?: string;
 }
 
-export interface Pagination<T> {
+export type Pagination<T> = {
   pagination: {
     nextUrl: string;
     previousUrl: string;
@@ -48,10 +48,10 @@ export interface Pagination<T> {
   results: T[];
 }
 
-export interface Secret {
+export type Secret = {
   secret: string;
 }
 
-export interface Token {
+export type Token = {
   accessToken: string;
 }

@@ -11,11 +11,11 @@ import {
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
 
-export interface AccountWithOTP extends Account {
+export type AccountWithOTP = Account & {
   otp?: OTP;
 }
 
-export interface Account {
+export type Account = {
   id: string;
   email: string;
   firstName: string;
@@ -24,11 +24,11 @@ export interface Account {
   roles: Role[];
 }
 
-export interface AccountWithIps extends Account {
+export type AccountWithIps = Account & {
   loginIps: LoginIpDTO[];
 }
 
-export interface OTP {
+export type OTP = {
   key: string;
   url: string;
 }

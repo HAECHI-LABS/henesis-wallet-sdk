@@ -11,7 +11,7 @@ import { HenesisKeys } from "./henesisKeys";
 import { Coins } from "./coins";
 import { GasPrice } from "./gasPrice";
 
-export interface ModuleOptions {
+export type ModuleOptions = {
   client: Client;
   env: Env;
   blockchain: BlockchainType;

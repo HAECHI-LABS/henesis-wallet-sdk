@@ -22,7 +22,7 @@ export type WithdrawalApproval = Omit<
   blockchain: BlockchainType;
 };
 
-export interface ApproveWithdrawal extends WithdrawalApproval {
+export type ApproveWithdrawal = WithdrawalApproval & {
   passphrase: string;
   otpCode: string;
 }

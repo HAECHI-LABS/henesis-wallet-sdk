@@ -11,19 +11,19 @@ import { BNConverter, Transaction } from "../";
 import { makeQueryString } from "../utils/url";
 import { convertTransactionHistoryDTO } from "./utils";
 
-export interface TransactionHistory extends Transaction {
+export type TransactionHistory = Transaction & {
   wallet: SimplifiedWalletDTO;
   type: TransactionType;
   createdAt: string;
 }
 
-export interface TransactionHistoryPaginationOptions extends PaginationOptions {
+export type TransactionHistoryPaginationOptions = PaginationOptions & {
   transactionHash?: string;
   createdAtGte?: string;
   createdAtLt?: string;
 }
 
-export interface HenesisKey extends Key {
+export type HenesisKey = Key & {
   feeDelegationEnabled: boolean;
 }
 

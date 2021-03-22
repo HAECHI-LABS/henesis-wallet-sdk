@@ -20,7 +20,7 @@ import {
 } from "../__generate__/eth";
 import { InactiveMasterWallet } from "../wallet";
 
-export interface MasterWalletSearchOptions {
+export type MasterWalletSearchOptions = {
   name?: string;
   sort?: string;
 }

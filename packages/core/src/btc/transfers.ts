@@ -16,7 +16,7 @@ export import TransferStatus = TransferStatus;
 export import TransferType = TransferType;
 import { convertTransferInternalDTO, convertTransferDTO } from "./utils";
 
-export interface TransferPaginationOptions extends PaginationOptions {
+export type TransferPaginationOptions = PaginationOptions & {
   walletId?: string;
   type?: TransferType;
   status?: TransferStatus;
@@ -26,22 +26,22 @@ export interface TransferPaginationOptions extends PaginationOptions {
   updatedAtLt?: Timestamp;
 }
 
-export interface Transfer
-  extends Omit<
+export type Transfer
+  = Omit<
     TransferDTO,
     "amount" | "feeAmount" | "confirmation" | "transaction"
-  > {
+  > & {
   amount: BN;
   feeAmount: BN | null;
   confirmation: BN;
   transaction: BtcTransaction | null;
 }
 
-export interface TransferInternal
-  extends Omit<
+export type TransferInternal
+  = Omit<
     TransferInternalDTO,
     "amount" | "feeAmount" | "confirmation" | "transaction"
-  > {
+  > & {
   amount: BN;
   feeAmount: BN | null;
   confirmation: BN;

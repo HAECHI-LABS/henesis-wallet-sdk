@@ -14,7 +14,7 @@ export const enum Env {
   Prod,
 }
 
-export interface SDKOptions {
+export type SDKOptions = {
   accessToken: string;
   secret: string;
   url?: string;

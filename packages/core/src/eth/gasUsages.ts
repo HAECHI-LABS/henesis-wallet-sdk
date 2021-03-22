@@ -10,7 +10,7 @@ export enum MethodName {
   CREATE_MASTER_WALLET = "createMasterWallet",
 }
 
-export interface Method {
+export type Method = {
   id: string;
   blockchain: BlockchainType;
   name: MethodName;

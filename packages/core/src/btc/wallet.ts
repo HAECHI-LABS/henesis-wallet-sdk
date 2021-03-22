@@ -48,53 +48,53 @@ import {
 } from "../apis/btc/wallet";
 import { convertTransferDTO } from "./utils";
 
-export interface BtcTransaction
-  extends Omit<
+export type BtcTransaction
+  = Omit<
     TransactionDTO,
     "outputs" | "blockNumber" | "feeAmount" | "amount"
-  > {
+  > & {
   blockNumber?: BN;
   feeAmount?: BN;
   amount: BN;
   outputs: BtcTransactionOutput[];
 }
 
-export interface BtcEstimatedFee {
+export type BtcEstimatedFee = {
   estimatedFee: string;
 }
 
-export interface BtcRawTransaction {
+export type BtcRawTransaction = {
   inputs: BtcRawTransactionInput[];
   outputs: BtcRawTransactionOutput[];
 }
 
-export interface BtcTransactionOutput
-  extends Omit<TransactionOutputDTO, "amount"> {
+export type BtcTransactionOutput
+  = Omit<TransactionOutputDTO, "amount"> & {
   amount: BN;
 }
 
-export interface BtcRawTransactionInput {
+export type BtcRawTransactionInput = {
   redeemScript: string;
   transactionOutput: BtcTransactionOutput;
 }
 
-export interface BtcRawTransactionOutput {
+export type BtcRawTransactionOutput = {
   to: string;
   amount: string;
   isChange: boolean;
 }
 
-export interface BtcCreateTransactionOutput
-  extends Omit<BtcTransactionOutput, "amount"> {
+export type BtcCreateTransactionOutput
+  = Omit<BtcTransactionOutput, "amount"> & {
   amount: string;
 }
 
-export interface BtcSignedRawTransactionRequest
-  extends BtcSignedRawTransaction {
+export type BtcSignedRawTransactionRequest
+  = BtcSignedRawTransaction & {
   otpCode?: string;
 }
 
-export interface BtcSignedRawTransaction {
+export type BtcSignedRawTransaction = {
   inputs: {
     transactionOutput: BtcCreateTransactionOutput;
     accountSignature: string;
@@ -102,7 +102,7 @@ export interface BtcSignedRawTransaction {
   outputs: BtcRawTransactionOutput[];
 }
 
-export interface BtcMasterWalletData extends WalletData {
+export type BtcMasterWalletData = WalletData & {
   orgId: string;
   accountKey: Key;
   whitelistActivated: boolean;
@@ -110,7 +110,7 @@ export interface BtcMasterWalletData extends WalletData {
 
 export type DepositAddress = DepositAddressDTO;
 
-export interface DepositAddressPaginationOptions extends PaginationOptions {
+export type DepositAddressPaginationOptions = PaginationOptions & {
   start?: Timestamp;
   end?: Timestamp;
   name?: string;
@@ -118,7 +118,7 @@ export interface DepositAddressPaginationOptions extends PaginationOptions {
   address?: string;
 }
 
-export interface BtcWithdrawalApproveParams extends ApproveWithdrawal {}
+export type BtcWithdrawalApproveParams = ApproveWithdrawal;
 
 export class BtcActivatingMasterWallet extends ActivatingMasterWallet {}
 

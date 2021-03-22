@@ -11,14 +11,14 @@ import { syntaxHighlight } from "./utils/chalk";
 
 const packageJson = require("../package.json");
 
-export interface ClientOptions {
+export type ClientOptions = {
   accessToken: string;
   secret: string;
   url: string;
   env: Env;
 }
 
-export interface Client {
+export type Client = {
   get<T = any>(url: string): Promise<T>;
 
   delete<T = any>(url: string, config?: any): Promise<T>;

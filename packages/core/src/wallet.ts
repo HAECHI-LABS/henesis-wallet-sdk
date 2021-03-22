@@ -73,7 +73,7 @@ export type ValidateAllowedAddressRequest =
 export type ValidateAllowedAddressResponse =
   | BtcValidateIsAllowedAddressResponse
   | EthValidateIsAllowedAddressResponse;
-export interface WalletData {
+export type WalletData = {
   id: string;
   name: string;
   address: string;
@@ -103,7 +103,7 @@ export const transformPolicyType = (
 
 export import WalletType = EthWalletType;
 
-export interface WithdrawalPolicy {
+export type WithdrawalPolicy = {
   id: string;
   limitAmount: BN;
   walletType: WalletType;
@@ -191,7 +191,7 @@ export const transformWalletStatus = (
   return byWalletStatus[status];
 };
 
-export interface AllowedAddressesPaginationOptions extends PaginationOptions {
+export type AllowedAddressesPaginationOptions = PaginationOptions & {
   coinId?: number;
 }
 

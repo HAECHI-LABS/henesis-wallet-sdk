@@ -14,7 +14,7 @@ export enum ErrorCode {
   INTERNAL_SERVER = 5000,
 }
 
-export interface PropertyErrorParse {
+export type PropertyErrorParse = {
   name: string;
   type: string;
 }

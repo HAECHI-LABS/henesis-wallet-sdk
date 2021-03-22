@@ -17,11 +17,11 @@ export import TransactionStatus = TransactionStatus;
 import { BNConverter } from "../utils/common";
 import Bytes from "./eth-core-lib/bytes";
 
-export interface DetailedRawTransaction extends RawTransaction {
+export type DetailedRawTransaction = RawTransaction & {
   fee: BN | null;
 }
 
-export interface Transaction {
+export type Transaction = {
   id: string;
   blockchain: BlockchainType;
   sender: string;
@@ -36,7 +36,7 @@ export interface Transaction {
   estimatedFee?: BN;
 }
 
-export interface TransactionPaginationOptions extends PaginationOptions {
+export type TransactionPaginationOptions = PaginationOptions & {
   address?: string;
   toAddress?: string;
   fromAddress?: string;
@@ -49,7 +49,7 @@ export interface TransactionPaginationOptions extends PaginationOptions {
   keyId?: string;
 }
 
-export interface MultiSigPayload {
+export type MultiSigPayload = {
   walletAddress: string;
   toAddress: string;
   value: BN;
@@ -71,12 +71,12 @@ export const formatMultiSigPayload = (
   ).slice(2)}${multiSigPayload.hexData.slice(2)}`;
 };
 
-export interface SignedMultiSigPayload {
+export type SignedMultiSigPayload = {
   signature: string;
   multiSigPayload: MultiSigPayload;
 }
 
-export interface RawTransaction {
+export type RawTransaction = {
   nonce: BN;
   gasPrice: BN;
   gasLimit: BN;

@@ -16,14 +16,14 @@ import {
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
 
-export interface Organization {
+export type Organization = {
   id: string;
   name: string;
   secret: string;
   whitelistActivated: boolean;
 }
 
-export interface AllowedIp {
+export type AllowedIp = {
   id: string;
   ipAddress: string;
   location: string | null;
@@ -31,7 +31,7 @@ export interface AllowedIp {
   createdAt: string;
 }
 
-export interface AllowedIpsPaginationOptions extends PaginationOptions {}
+export type AllowedIpsPaginationOptions = PaginationOptions;
 
 export class Organizations {
   private readonly client: Client;

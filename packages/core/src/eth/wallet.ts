@@ -57,23 +57,23 @@ export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
 };
 
-export interface EthWalletData extends WalletData {
+export type EthWalletData = WalletData & {
   blockchain: BlockchainType;
   version: string;
   transactionId?: string | null;
   error?: string | null;
 }
 
-export interface EthMasterWalletData extends EthWalletData {
+export type EthMasterWalletData = EthWalletData & {
   accountKey: Key;
   encryptionKey: string;
   whitelistActivated: boolean;
 }
 
-export interface EthUserWalletData
-  extends Omit<EthWalletData, "encryptionKey"> {}
+export type EthUserWalletData
+  = Omit<EthWalletData, "encryptionKey">;
 
-export interface UserWalletPaginationOptions extends PaginationOptions {
+export type UserWalletPaginationOptions = PaginationOptions & {
   name?: string;
   id?: string;
   ids?: string[];
@@ -81,7 +81,7 @@ export interface UserWalletPaginationOptions extends PaginationOptions {
   status?: WalletStatus;
 }
 
-export interface EthWithdrawalApproveParams extends ApproveWithdrawal {
+export type EthWithdrawalApproveParams = ApproveWithdrawal & {
   gasPrice?: BN;
   gasLimit?: BN;
 }
