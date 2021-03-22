@@ -8,7 +8,7 @@ async function main() {
     accessToken: process.env.ACCESS_TOKEN,
     secret: process.env.SECRET,
     url: process.env.URL,
-    env: Env.Dev,
+    env: Env.Local,
   });
 
   const account: Account = await sdk.accounts.login(
