@@ -1,4 +1,4 @@
-import { SDK } from "../src";
+import { SDK, Env } from "../src";
 import "dotenv/config";
 
 async function main() {
@@ -6,6 +6,7 @@ async function main() {
     accessToken: process.env.ACCESS_TOKEN,
     secret: process.env.SECRET,
     url: process.env.URL,
+    env: Env.Dev,
   });
 
   const wallet = await sdk.btc.wallets.createMasterWallet(
@@ -15,4 +16,4 @@ async function main() {
   console.log(wallet);
 }
 
-main().catch((e) => console.error(e));
+main();

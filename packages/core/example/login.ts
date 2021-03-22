@@ -1,5 +1,5 @@
 /// <reference path="../src/typings/index.d.ts" />
-import { SDK } from "../src";
+import { SDK, Env } from "../src";
 import { Account } from "../src/accounts";
 import "dotenv/config";
 
@@ -8,6 +8,7 @@ async function main() {
     accessToken: process.env.ACCESS_TOKEN,
     secret: process.env.SECRET,
     url: process.env.URL,
+    env: Env.Dev,
   });
 
   const account: Account = await sdk.accounts.login(
@@ -17,4 +18,4 @@ async function main() {
   console.log(account);
 }
 
-main().catch((e) => console.error(e));
+main();

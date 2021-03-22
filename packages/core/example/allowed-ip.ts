@@ -1,5 +1,5 @@
 /// <reference path="../src/typings/index.d.ts" />
-import { SDK } from "../src";
+import { SDK, Env } from "../src";
 import "dotenv/config";
 
 async function main() {
@@ -7,6 +7,7 @@ async function main() {
     accessToken: process.env.ACCESS_TOKEN,
     secret: process.env.SECRET,
     url: process.env.URL,
+    env: Env.Dev,
   });
   console.log(await sdk.organizations.activateAllowedIps("otp"));
   console.log(await sdk.organizations.inactivateAllowedIps("otp"));
@@ -25,4 +26,4 @@ async function main() {
   console.log(await sdk.organizations.deleteAllowedIp("id", "otp"));
 }
 
-main().catch((e) => console.error(e));
+main();
