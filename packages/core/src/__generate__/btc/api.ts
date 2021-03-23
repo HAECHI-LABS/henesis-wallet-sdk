@@ -1352,6 +1352,256 @@ export enum WithdrawalPolicyType {
 
 
 /**
+ * AdminControllerApi - axios parameter creator
+ * @export
+ */
+export const AdminControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDepositAddresses: async (specs: object, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'specs' is not null or undefined
+            if (specs === null || specs === undefined) {
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getDepositAddresses.');
+            }
+            const localVarPath = `/api/v2/btc/admin/deposit-addresses`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (specs !== undefined) {
+                localVarQueryParameter['specs'] = specs;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWallets: async (specs: object, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'specs' is not null or undefined
+            if (specs === null || specs === undefined) {
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getMasterWallets.');
+            }
+            const localVarPath = `/api/v2/btc/admin/master-wallets`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (specs !== undefined) {
+                localVarQueryParameter['specs'] = specs;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransfers1: async (specs: object, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'specs' is not null or undefined
+            if (specs === null || specs === undefined) {
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getTransfers1.');
+            }
+            const localVarPath = `/api/v2/btc/admin/transfers`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (specs !== undefined) {
+                localVarQueryParameter['specs'] = specs;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdminControllerApi - functional programming interface
+ * @export
+ */
+export const AdminControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDepositAddresses(specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getDepositAddresses(specs, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMasterWallets(specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getMasterWallets(specs, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTransfers1(specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getTransfers1(specs, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * AdminControllerApi - factory interface
+ * @export
+ */
+export const AdminControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDepositAddresses(specs: object, options?: any): AxiosPromise<void> {
+            return AdminControllerApiFp(configuration).getDepositAddresses(specs, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWallets(specs: object, options?: any): AxiosPromise<void> {
+            return AdminControllerApiFp(configuration).getMasterWallets(specs, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {object} specs 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransfers1(specs: object, options?: any): AxiosPromise<void> {
+            return AdminControllerApiFp(configuration).getTransfers1(specs, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AdminControllerApi - object-oriented interface
+ * @export
+ * @class AdminControllerApi
+ * @extends {BaseAPI}
+ */
+export class AdminControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {object} specs 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminControllerApi
+     */
+    public getDepositAddresses(specs: object, options?: any) {
+        return AdminControllerApiFp(this.configuration).getDepositAddresses(specs, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {object} specs 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminControllerApi
+     */
+    public getMasterWallets(specs: object, options?: any) {
+        return AdminControllerApiFp(this.configuration).getMasterWallets(specs, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {object} specs 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminControllerApi
+     */
+    public getTransfers1(specs: object, options?: any) {
+        return AdminControllerApiFp(this.configuration).getTransfers1(specs, options).then((request) => request(this.axios, this.basePath));
+    }
+
+}
+
+
+/**
  * InternalControllerApi - axios parameter creator
  * @export
  */
@@ -1363,10 +1613,10 @@ export const InternalControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfer: async (transferId: string, options: any = {}): Promise<RequestArgs> => {
+        getTransfer1: async (transferId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'transferId' is not null or undefined
             if (transferId === null || transferId === undefined) {
-                throw new RequiredError('transferId','Required parameter transferId was null or undefined when calling getTransfer.');
+                throw new RequiredError('transferId','Required parameter transferId was null or undefined when calling getTransfer1.');
             }
             const localVarPath = `/api/v2/btc/internal/transfers/{transferId}`
                 .replace(`{${"transferId"}}`, encodeURIComponent(String(transferId)));
@@ -1399,14 +1649,14 @@ export const InternalControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfers: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+        getTransfers2: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransfers.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransfers2.');
             }
             // verify required parameter 'specs' is not null or undefined
             if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getTransfers.');
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getTransfers2.');
             }
             const localVarPath = `/api/v2/btc/internal/transfers`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1454,8 +1704,8 @@ export const InternalControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransfer(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferInternalDTO>> {
-            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getTransfer(transferId, options);
+        async getTransfer1(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getTransfer1(transferId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1468,8 +1718,8 @@ export const InternalControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransfers(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferInternalDTO>> {
-            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getTransfers(pageable, specs, options);
+        async getTransfers2(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getTransfers2(pageable, specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1490,8 +1740,8 @@ export const InternalControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfer(transferId: string, options?: any): AxiosPromise<TransferInternalDTO> {
-            return InternalControllerApiFp(configuration).getTransfer(transferId, options).then((request) => request(axios, basePath));
+        getTransfer1(transferId: string, options?: any): AxiosPromise<TransferInternalDTO> {
+            return InternalControllerApiFp(configuration).getTransfer1(transferId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1500,8 +1750,8 @@ export const InternalControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfers(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransferInternalDTO> {
-            return InternalControllerApiFp(configuration).getTransfers(pageable, specs, options).then((request) => request(axios, basePath));
+        getTransfers2(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransferInternalDTO> {
+            return InternalControllerApiFp(configuration).getTransfers2(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1520,8 +1770,8 @@ export class InternalControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof InternalControllerApi
      */
-    public getTransfer(transferId: string, options?: any) {
-        return InternalControllerApiFp(this.configuration).getTransfer(transferId, options).then((request) => request(this.axios, this.basePath));
+    public getTransfer1(transferId: string, options?: any) {
+        return InternalControllerApiFp(this.configuration).getTransfer1(transferId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1532,8 +1782,8 @@ export class InternalControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof InternalControllerApi
      */
-    public getTransfers(pageable: Pageable, specs: object, options?: any) {
-        return InternalControllerApiFp(this.configuration).getTransfers(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    public getTransfers2(pageable: Pageable, specs: object, options?: any) {
+        return InternalControllerApiFp(this.configuration).getTransfers2(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -1551,10 +1801,10 @@ export const TransferControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfer1: async (transferId: string, options: any = {}): Promise<RequestArgs> => {
+        getTransfer: async (transferId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'transferId' is not null or undefined
             if (transferId === null || transferId === undefined) {
-                throw new RequiredError('transferId','Required parameter transferId was null or undefined when calling getTransfer1.');
+                throw new RequiredError('transferId','Required parameter transferId was null or undefined when calling getTransfer.');
             }
             const localVarPath = `/api/v2/btc/transfers/{transferId}`
                 .replace(`{${"transferId"}}`, encodeURIComponent(String(transferId)));
@@ -1587,14 +1837,14 @@ export const TransferControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfers1: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+        getTransfers: async (pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransfers1.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransfers.');
             }
             // verify required parameter 'specs' is not null or undefined
             if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getTransfers1.');
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getTransfers.');
             }
             const localVarPath = `/api/v2/btc/transfers`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1642,8 +1892,8 @@ export const TransferControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransfer1(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>> {
-            const localVarAxiosArgs = await TransferControllerApiAxiosParamCreator(configuration).getTransfer1(transferId, options);
+        async getTransfer(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>> {
+            const localVarAxiosArgs = await TransferControllerApiAxiosParamCreator(configuration).getTransfer(transferId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1656,8 +1906,8 @@ export const TransferControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransfers1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferDTO>> {
-            const localVarAxiosArgs = await TransferControllerApiAxiosParamCreator(configuration).getTransfers1(pageable, specs, options);
+        async getTransfers(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferDTO>> {
+            const localVarAxiosArgs = await TransferControllerApiAxiosParamCreator(configuration).getTransfers(pageable, specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1678,8 +1928,8 @@ export const TransferControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfer1(transferId: string, options?: any): AxiosPromise<TransferDTO> {
-            return TransferControllerApiFp(configuration).getTransfer1(transferId, options).then((request) => request(axios, basePath));
+        getTransfer(transferId: string, options?: any): AxiosPromise<TransferDTO> {
+            return TransferControllerApiFp(configuration).getTransfer(transferId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1688,8 +1938,8 @@ export const TransferControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfers1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransferDTO> {
-            return TransferControllerApiFp(configuration).getTransfers1(pageable, specs, options).then((request) => request(axios, basePath));
+        getTransfers(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransferDTO> {
+            return TransferControllerApiFp(configuration).getTransfers(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1708,8 +1958,8 @@ export class TransferControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TransferControllerApi
      */
-    public getTransfer1(transferId: string, options?: any) {
-        return TransferControllerApiFp(this.configuration).getTransfer1(transferId, options).then((request) => request(this.axios, this.basePath));
+    public getTransfer(transferId: string, options?: any) {
+        return TransferControllerApiFp(this.configuration).getTransfer(transferId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1720,8 +1970,8 @@ export class TransferControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TransferControllerApi
      */
-    public getTransfers1(pageable: Pageable, specs: object, options?: any) {
-        return TransferControllerApiFp(this.configuration).getTransfers1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    public getTransfers(pageable: Pageable, specs: object, options?: any) {
+        return TransferControllerApiFp(this.configuration).getTransfers(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -2289,18 +2539,18 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDepositAddresses: async (walletId: string, pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+        getDepositAddresses1: async (walletId: string, pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getDepositAddresses.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getDepositAddresses1.');
             }
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getDepositAddresses.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getDepositAddresses1.');
             }
             // verify required parameter 'specs' is not null or undefined
             if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getDepositAddresses.');
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getDepositAddresses1.');
             }
             const localVarPath = `/api/v2/btc/wallets/{walletId}/deposit-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -2410,10 +2660,10 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets: async (specs: object, options: any = {}): Promise<RequestArgs> => {
+        getMasterWallets1: async (specs: object, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'specs' is not null or undefined
             if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getMasterWallets.');
+                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getMasterWallets1.');
             }
             const localVarPath = `/api/v2/btc/wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3003,8 +3253,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDepositAddresses(walletId: string, pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationDepositAddressDTO>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getDepositAddresses(walletId, pageable, specs, options);
+        async getDepositAddresses1(walletId: string, pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationDepositAddressDTO>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getDepositAddresses1(walletId, pageable, specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3042,8 +3292,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMasterWallets(specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getMasterWallets(specs, options);
+        async getMasterWallets1(specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getMasterWallets1(specs, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3308,8 +3558,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDepositAddresses(walletId: string, pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationDepositAddressDTO> {
-            return WalletControllerApiFp(configuration).getDepositAddresses(walletId, pageable, specs, options).then((request) => request(axios, basePath));
+        getDepositAddresses1(walletId: string, pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationDepositAddressDTO> {
+            return WalletControllerApiFp(configuration).getDepositAddresses1(walletId, pageable, specs, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3335,8 +3585,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets(specs: object, options?: any): AxiosPromise<Array<MasterWalletDTO>> {
-            return WalletControllerApiFp(configuration).getMasterWallets(specs, options).then((request) => request(axios, basePath));
+        getMasterWallets1(specs: object, options?: any): AxiosPromise<Array<MasterWalletDTO>> {
+            return WalletControllerApiFp(configuration).getMasterWallets1(specs, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3593,8 +3843,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getDepositAddresses(walletId: string, pageable: Pageable, specs: object, options?: any) {
-        return WalletControllerApiFp(this.configuration).getDepositAddresses(walletId, pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    public getDepositAddresses1(walletId: string, pageable: Pageable, specs: object, options?: any) {
+        return WalletControllerApiFp(this.configuration).getDepositAddresses1(walletId, pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3626,8 +3876,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getMasterWallets(specs: object, options?: any) {
-        return WalletControllerApiFp(this.configuration).getMasterWallets(specs, options).then((request) => request(this.axios, this.basePath));
+    public getMasterWallets1(specs: object, options?: any) {
+        return WalletControllerApiFp(this.configuration).getMasterWallets1(specs, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
