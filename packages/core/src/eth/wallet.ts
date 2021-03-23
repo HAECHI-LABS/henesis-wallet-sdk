@@ -189,7 +189,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   }
 
   async resendTransaction(
-    request: Omit<ResendTransactionRequest, "walletId">
+    request: ResendTransactionRequest
   ): Promise<EthTransaction> {
     const response = await this.client.post<NoUndefinedField<TransactionDTO>>(
       `/wallets/transactions/resend`,
