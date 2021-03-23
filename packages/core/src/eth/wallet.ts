@@ -44,6 +44,7 @@ import {
   ReplaceTransactionRequest,
   ActivateMasterWalletRequest,
   KeyDTO,
+  ResendTransactionRequest,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
@@ -179,6 +180,19 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     };
     const response = await this.client.post<TransactionDTO>(
       `/wallets/transactions/replace`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
+  }
+
+  async resendTransaction(
+    request: Omit<ResendTransactionRequest, "walletId">
+  ): Promise<EthTransaction> {
+    const response = await this.client.post<NoUndefinedField<TransactionDTO>>(
+      `/wallets/transactions/resend`,
       request
     );
     return {
