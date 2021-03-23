@@ -119,7 +119,7 @@ export enum WalletStatus {
   INACTIVE = "INACTIVE",
 }
 
-export type InactiveWallet = {
+export interface InactiveWallet {
   id: string;
   name: string;
   blockchain: BlockchainType;
@@ -129,11 +129,11 @@ export type InactiveWallet = {
   updatedAt?: string;
 };
 
-export type InactiveMasterWallet = InactiveWallet;
+export interface InactiveMasterWallet extends InactiveWallet {}
 
 // master wallet life cycle: (INACTIVE ->) CREATING -> ACTIVE
 // When activating master wallet, its status is changed to CREATING status.
-export type ActivatingMasterWallet = {
+export interface ActivatingMasterWallet {
   id: string;
   name: string;
   blockchain: BlockchainType;
