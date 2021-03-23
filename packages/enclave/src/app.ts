@@ -1,7 +1,8 @@
-import express from "express";
+import express, { Express } from "express";
 import { Controller, MiddleWare } from "./types";
 import LRUCache from "lru-cache";
 import { useAdapter } from "@type-cacheable/lru-cache-adapter";
+import { RegisterRoutes as registerRoutes } from "../build/routes";
 
 export interface AppOption {
   port?: number;
@@ -30,9 +31,7 @@ export class App {
     if (params.middleWares) {
       this.applyMiddleWares(params.middleWares);
     }
-    if (params.controllers) {
-      this.routeController(params.controllers);
-    }
+    this.routeController(this.application);
     if (params.cache) {
       useAdapter(
         new LRUCache({
@@ -42,10 +41,8 @@ export class App {
     }
   }
 
-  private routeController(controllers?: Controller[]) {
-    controllers.forEach((controller) => {
-      this.application.use("/", controller.getRoutes());
-    });
+  private routeController(application) {
+    registerRoutes(application);
   }
 
   private applyMiddleWares(middleWares: MiddleWare[]) {
