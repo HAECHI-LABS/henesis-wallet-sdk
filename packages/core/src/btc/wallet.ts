@@ -120,7 +120,7 @@ export interface DepositAddressPaginationOptions extends PaginationOptions {
 
 export interface BtcWithdrawalApproveParams extends ApproveWithdrawal {}
 
-export type BtcActivatingMasterWallet = ActivatingMasterWallet;
+export interface BtcActivatingMasterWallet extends ActivatingMasterWallet {}
 
 export const transformWalletData = (
   data: MasterWalletDTO
