@@ -127,7 +127,7 @@ export interface InactiveWallet {
   status: WalletStatus;
   createdAt: string;
   updatedAt?: string;
-};
+}
 
 export interface InactiveMasterWallet extends InactiveWallet {}
 
@@ -141,7 +141,7 @@ export interface ActivatingMasterWallet {
   status: WalletStatus;
   createdAt: string;
   updatedAt: string;
-};
+}
 
 export const transformWalletStatus = (
   status: BtcWalletStatus | EthWalletStatus
