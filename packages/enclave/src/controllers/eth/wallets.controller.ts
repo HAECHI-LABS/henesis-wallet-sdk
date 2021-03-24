@@ -120,7 +120,7 @@ export default class WalletsController
 
     this.router.post(
       `${this.path}/:masterWalletId/transactions/resend`,
-      this.promiseWrapper(this.resendMasterWalletTransaction, 201)
+      this.promiseWrapper(this.resendMasterWalletTransaction, 202)
     );
 
     this.router.post(
