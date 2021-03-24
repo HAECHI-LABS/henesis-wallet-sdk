@@ -373,15 +373,15 @@ export default class WalletsController
       req.params.masterWalletId
     );
 
-    return await masterWallet.resendTransaction({
-      transactionId: req.body.transactionId,
-      gasPrice: req.body.gasPrice
+    return await masterWallet.resendTransaction(
+      req.body.transactionId,
+      req.body.gasPrice
         ? BNConverter.hexStringToBN(req.body.gasPrice)
         : undefined,
-      gasLimit: req.body.gasLimit
+      req.body.gasLimit
         ? BNConverter.hexStringToBN(req.body.gasLimit)
-        : undefined,
-    });
+        : undefined
+    );
   }
 
   private async sendMasterWalletBatchTransactions(
