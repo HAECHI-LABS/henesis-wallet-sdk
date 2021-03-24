@@ -188,16 +188,14 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     };
   }
 
-  async resendTransaction(
-    params: {
-      transactionId: string;
-      gasPrice?: BN;
-      gasLimit?: BN;
-    }
-  ): Promise<EthTransaction> {
+  async resendTransaction(params: {
+    transactionId: string;
+    gasPrice?: BN;
+    gasLimit?: BN;
+  }): Promise<EthTransaction> {
     const { transactionId, gasPrice, gasLimit } = params;
     checkNullAndUndefinedParameter({ transactionId });
-    const request: ReplaceTransactionRequest = {
+    const request: ResendTransactionRequest = {
       walletId: this.getId(),
       transactionId,
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
