@@ -119,6 +119,11 @@ export default class WalletsController
     );
 
     this.router.post(
+      `${this.path}/:masterWalletId/transactions/resend`,
+      this.promiseWrapper(this.resendMasterWalletTransaction, 201)
+    );
+
+    this.router.post(
       `${this.path}/:masterWalletId/batch-transactions`,
       this.promiseWrapper(this.sendMasterWalletBatchTransactions, 201)
     );
