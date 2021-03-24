@@ -1,5 +1,5 @@
 import express from "express";
-import { MiddleWare } from "../types";
+import { MiddleWare } from "../src/types";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 import url, { UrlWithStringQuery } from "url";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";

@@ -1,0 +1,629 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"CoinDTO": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"ticker": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"blockchain": {
+						"type": "string"
+					},
+					"decimals": {
+						"type": "number",
+						"format": "double"
+					},
+					"attributes": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"ticker",
+					"address",
+					"description",
+					"blockchain",
+					"decimals",
+					"attributes"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EventStatus": {
+				"enum": [
+					"PENDING_APPROVAL",
+					"REJECTED",
+					"REQUESTED",
+					"PENDING",
+					"FAILED",
+					"REVERTED",
+					"REPLACED",
+					"MINED",
+					"CONFIRMED"
+				],
+				"type": "string"
+			},
+			"BN": {
+				"type": "string"
+			},
+			"EthCallEvent": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/EventStatus"
+					},
+					"transactionHash": {
+						"type": "string"
+					},
+					"walletId": {
+						"type": "string"
+					},
+					"transactionId": {
+						"type": "string"
+					},
+					"orgId": {
+						"type": "string"
+					},
+					"masterWalletId": {
+						"type": "string"
+					},
+					"confirmation": {
+						"$ref": "#/components/schemas/BN"
+					},
+					"fromAddress": {
+						"type": "string"
+					},
+					"toAddress": {
+						"type": "string"
+					},
+					"data": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"status",
+					"walletId",
+					"confirmation",
+					"fromAddress",
+					"toAddress",
+					"data"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pagination_EthCallEvent_": {
+				"properties": {
+					"pagination": {
+						"properties": {
+							"totalCount": {
+								"type": "number",
+								"format": "double"
+							},
+							"previousUrl": {
+								"type": "string"
+							},
+							"nextUrl": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"totalCount",
+							"previousUrl",
+							"nextUrl"
+						],
+						"type": "object"
+					},
+					"results": {
+						"items": {
+							"$ref": "#/components/schemas/EthCallEvent"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"pagination",
+					"results"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Timestamp": {
+				"type": "number",
+				"format": "double"
+			},
+			"TransferType": {
+				"enum": [
+					"WITHDRAWAL",
+					"DEPOSIT"
+				],
+				"type": "string"
+			},
+			"WalletType": {
+				"enum": [
+					"MASTER_WALLET",
+					"USER_WALLET"
+				],
+				"type": "string"
+			},
+			"ValueTransferEvent": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/EventStatus"
+					},
+					"transactionHash": {
+						"type": "string"
+					},
+					"walletId": {
+						"type": "string"
+					},
+					"transactionId": {
+						"type": "string"
+					},
+					"orgId": {
+						"type": "string"
+					},
+					"masterWalletId": {
+						"type": "string"
+					},
+					"confirmation": {
+						"$ref": "#/components/schemas/BN"
+					},
+					"amount": {
+						"$ref": "#/components/schemas/BN"
+					},
+					"decimals": {
+						"type": "number",
+						"format": "double"
+					},
+					"coinSymbol": {
+						"type": "string"
+					},
+					"from": {
+						"type": "string"
+					},
+					"to": {
+						"type": "string"
+					},
+					"transferType": {
+						"$ref": "#/components/schemas/TransferType"
+					},
+					"walletName": {
+						"type": "string"
+					},
+					"walletType": {
+						"$ref": "#/components/schemas/WalletType"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"status",
+					"walletId",
+					"confirmation",
+					"amount",
+					"decimals",
+					"coinSymbol",
+					"from",
+					"to",
+					"transferType",
+					"walletName",
+					"walletType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pagination_ValueTransferEvent_": {
+				"properties": {
+					"pagination": {
+						"properties": {
+							"totalCount": {
+								"type": "number",
+								"format": "double"
+							},
+							"previousUrl": {
+								"type": "string"
+							},
+							"nextUrl": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"totalCount",
+							"previousUrl",
+							"nextUrl"
+						],
+						"type": "object"
+					},
+					"results": {
+						"items": {
+							"$ref": "#/components/schemas/ValueTransferEvent"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"pagination",
+					"results"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "@haechi-labs/henesis-wallet-enclave",
+		"version": "2.10.13",
+		"description": "henesis wallet enclave module",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {
+			"name": "Haechi-labs ",
+			"email": "haechi@haechi.io"
+		}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/api/v2/eth/coins/{coinTicker}": {
+			"get": {
+				"operationId": "GetCoin",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CoinDTO"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"id": 2,
+											"name": "Ethereum",
+											"ticker": "ETH",
+											"description": "",
+											"blockchain": "ETHEREUM",
+											"decimals": 18,
+											"attributes": []
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "coinTicker",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v2/eth/coins": {
+			"get": {
+				"operationId": "GetCoins",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CoinDTO"
+									},
+									"type": "array"
+								},
+								"examples": {
+									"Example 1": {
+										"value": [
+											{
+												"id": 2,
+												"name": "Ethereum",
+												"ticker": "ETH",
+												"description": "",
+												"blockchain": "ETHEREUM",
+												"decimals": 18,
+												"attributes": []
+											}
+										]
+									}
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/api/v2/eth/events/call-events": {
+			"get": {
+				"operationId": "GetCallEvents",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Pagination_EthCallEvent_"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "address",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "toAddress",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "fromAddress",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "transactionHash",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "updatedAtGte",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Timestamp"
+						}
+					},
+					{
+						"in": "query",
+						"name": "updatedAtLt",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Timestamp"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/EventStatus"
+						}
+					},
+					{
+						"in": "query",
+						"name": "walletId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "orgId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "masterWalletId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "transactionId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "symbol",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api/v2/eth/events/value-transfer-events": {
+			"get": {
+				"operationId": "GetValueTransferEvents",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Pagination_ValueTransferEvent_"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "address",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "toAddress",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "fromAddress",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "transactionHash",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "updatedAtGte",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Timestamp"
+						}
+					},
+					{
+						"in": "query",
+						"name": "updatedAtLt",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/Timestamp"
+						}
+					},
+					{
+						"in": "query",
+						"name": "status",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/EventStatus"
+						}
+					},
+					{
+						"in": "query",
+						"name": "walletId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "orgId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "masterWalletId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "transactionId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "symbol",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

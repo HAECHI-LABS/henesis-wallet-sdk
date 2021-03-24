@@ -17,14 +17,14 @@ import {
 } from "@haechi-labs/henesis-wallet-core";
 
 import AbstractController from "../controller";
-import { Controller } from "../../types";
+import { Controller } from "../../src/types";
 import {
   Balance,
   Key,
   Pagination,
 } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { Cacheable, CacheClear } from "@type-cacheable/core";
-import { DefaultFilterCacheStrategy } from "../../utils/cache";
+import { DefaultFilterCacheStrategy } from "../../src/utils/cache";
 import {
   InactiveMasterWallet,
   WalletStatus,

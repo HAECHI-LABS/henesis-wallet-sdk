@@ -1,5 +1,5 @@
 import AbstractController from "../controller";
-import { Controller } from "../../types";
+import { Controller } from "../../src/types";
 import express from "express";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 import {

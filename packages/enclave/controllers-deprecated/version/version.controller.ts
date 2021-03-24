@@ -1,5 +1,5 @@
-import AbstractController from "./../controller";
-import { Controller } from "../../types";
+import AbstractController from "../controller";
+import { Controller } from "../../src/types";
 
 export interface EnclaveVersionDTO {
   version: string;

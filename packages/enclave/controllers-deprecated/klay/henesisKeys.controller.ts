@@ -2,7 +2,7 @@ import express from "express";
 import { Balance, Key } from "@haechi-labs/henesis-wallet-core/lib/types";
 
 import AbstractController from "../controller";
-import { Controller } from "../../types";
+import { Controller } from "../../src/types";
 
 export default class HenesisKeysController
   extends AbstractController

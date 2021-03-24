@@ -2,12 +2,12 @@ import express from "express";
 import { Method, MethodName } from "@haechi-labs/henesis-wallet-core";
 
 import AbstractController from "../controller";
-import { Controller } from "../../types";
+import { Controller } from "../../src/types";
 
 export default class GasUsagesController
   extends AbstractController
   implements Controller {
-  private path = "/api/v2/klay";
+  private path = "/api/v2/eth";
 
   constructor() {
     super();
@@ -23,7 +23,7 @@ export default class GasUsagesController
 
   private async getMethodGasUsages(req: express.Request): Promise<Method> {
     return this.bnToHexString(
-      await req.sdk.klay.gasUsages.getMethodGasUsages(
+      await req.sdk.eth.gasUsages.getMethodGasUsages(
         req.query.name as MethodName
       )
     );

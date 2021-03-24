@@ -1,5 +1,5 @@
 import AbstractController from "../controller";
-import { Controller } from "../../types";
+import { Controller } from "../../src/types";
 import express from "express";
 import {
   BtcActivatingMasterWallet,
@@ -23,7 +23,7 @@ import {
   InactiveMasterWallet,
   WalletStatus,
 } from "@haechi-labs/henesis-wallet-core/lib/wallet";
-import { DefaultFilterCacheStrategy } from "../../utils/cache";
+import { DefaultFilterCacheStrategy } from "../../src/utils/cache";
 import {
   HenesisError,
   HttpStatus,

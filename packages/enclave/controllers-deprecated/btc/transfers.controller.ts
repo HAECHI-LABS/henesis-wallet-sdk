@@ -1,5 +1,5 @@
 import AbstractController from "../controller";
-import { Controller } from "../../types";
+import { Controller } from "../../src/types";
 import express from "express";
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
 import {

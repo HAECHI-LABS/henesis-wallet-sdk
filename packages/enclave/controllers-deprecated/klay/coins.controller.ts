@@ -1,7 +1,7 @@
 import express from "express";
 
 import AbstractController from "../controller";
-import { Controller } from "../../types";
+import { Controller } from "../../src/types";
 import { CoinData } from "@haechi-labs/henesis-wallet-core";
 
 export default class CoinsController

@@ -6,7 +6,7 @@ import {
 } from "@haechi-labs/henesis-wallet-core/lib/events";
 
 import AbstractController from "../controller";
-import { Controller } from "../../types";
+import { Controller } from "../../src/types";
 
 export default class EventsController
   extends AbstractController
