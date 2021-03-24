@@ -360,6 +360,25 @@ export default class WalletsController
     );
   }
 
+  private async resendMasterWalletTransaction(
+    req: express.Request
+  ): Promise<EthTransaction> {
+    const masterWallet = await this.getMasterWalletById(
+      req.sdk,
+      req.params.masterWalletId
+    );
+
+    return await masterWallet.resendTransaction({
+      transactionId: req.body.transactionId,
+      gasPrice: req.body.gasPrice
+        ? BNConverter.hexStringToBN(req.body.gasPrice)
+        : undefined,
+      gasLimit: req.body.gasLimit
+        ? BNConverter.hexStringToBN(req.body.gasLimit)
+        : undefined,
+    });
+  }
+
   private async sendMasterWalletBatchTransactions(
     req: express.Request
   ): Promise<EthTransaction[]> {
