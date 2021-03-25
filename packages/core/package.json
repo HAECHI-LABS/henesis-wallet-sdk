@@ -21,6 +21,7 @@
     "test:integration": "jest --config ./jest-integration.json",
     "type-check": "tsc --noEmit",
     "build": "rm -rf ./lib && tsc",
+    "build:test": "rm -rf ../../lib && tsc --outDir '../../lib'",
     "build:windows": "npm run preBuild:windows && mkdir lib && tsc",
     "eslint": "./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src",
     "eslint:fix": "./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src --fix",
