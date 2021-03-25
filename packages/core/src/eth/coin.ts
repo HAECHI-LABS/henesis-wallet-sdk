@@ -18,7 +18,9 @@ export abstract class Coin {
 
   protected constructor(coinData: CoinData) {
     this.coinData = coinData;
-    this.walletContract = new new Web3().eth.Contract(walletAbi as AbiItem[]);
+    this.walletContract = new new Web3().eth.Contract(
+      walletAbi as AbiItem[]
+    ) as any;
   }
 
   getCoinData(): CoinData {
@@ -90,7 +92,9 @@ export class NonStandardReturnTypeErc20 extends Coin {
 
   constructor(coinData: CoinData) {
     super(coinData);
-    this.erc20Contract = new new Web3().eth.Contract(erc20Abi as AbiItem[]);
+    this.erc20Contract = new new Web3().eth.Contract(
+      erc20Abi as AbiItem[]
+    ) as any;
   }
 
   getAddress(): string {

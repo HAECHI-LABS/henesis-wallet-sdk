@@ -413,7 +413,9 @@ export class EthMasterWallet extends EthLikeWallet {
     blockchain: BlockchainType
   ) {
     super(client, data, keychains, blockchain, `/wallets/${data.id}`);
-    this.walletContract = new new Web3().eth.Contract(walletAbi as AbiItem[]);
+    this.walletContract = new new Web3().eth.Contract(
+      walletAbi as AbiItem[]
+    ) as any;
   }
 
   getEncryptionKey(): string {
