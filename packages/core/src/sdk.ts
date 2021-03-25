@@ -7,6 +7,7 @@ import { BtcModule } from "./btc";
 import { BlockchainType } from "./blockchain";
 import { WithdrawalApprovals } from "./withdrawalApprovals";
 import { Billings } from "./billings";
+import { Notices } from "./notices";
 
 export const enum Env {
   Local,
@@ -24,6 +25,8 @@ export interface SDKOptions {
 
 export class SDK {
   public readonly accounts: Accounts;
+
+  public readonly notices: Notices;
 
   public readonly billings: Billings;
 
@@ -57,6 +60,7 @@ export class SDK {
     }) as any;
     this.withdrawalApproval = new WithdrawalApprovals(this.client);
     this.accounts = new Accounts(this.client);
+    this.notices = new Notices(this.client);
     this.billings = new Billings(this.client);
     this.organizations = new Organizations(this.client);
     this.klay = new KlayModule({
