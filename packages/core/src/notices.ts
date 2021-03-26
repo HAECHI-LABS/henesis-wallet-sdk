@@ -13,7 +13,7 @@ export class Notices {
     this.client = client;
   }
 
-  notices(): Promise<Notice[]> {
+  getNotices(): Promise<Notice[]> {
     return Promise.resolve([
       {
         id: "1",
@@ -21,5 +21,5 @@ export class Notices {
     ]);
   }
 
-  getNotice(request: { noticeId: string; seen: boolean }) {}
+  updateNotice(request: { noticeId: string; seen: boolean }) {}
 }
