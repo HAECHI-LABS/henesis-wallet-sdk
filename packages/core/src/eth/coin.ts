@@ -1,6 +1,7 @@
 import BN from "bn.js";
-import { Contract } from "web3-eth-contract";
 import Web3 from "web3";
+import { Contract } from "web3-eth-contract";
+
 import { AbiItem } from "web3-utils";
 import walletAbi from "../contracts/Wallet.json";
 import erc20Abi from "../contracts/ERC20.json";
