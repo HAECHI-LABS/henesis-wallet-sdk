@@ -1,6 +1,7 @@
 import BN from "bn.js";
-import { Contract } from "web3-eth-contract";
 import Web3 from "web3";
+import { Contract } from "web3/node_modules/web3-eth-contract/types/index";
+
 import { AbiItem } from "web3-utils";
 import walletAbi from "../contracts/Wallet.json";
 import erc20Abi from "../contracts/ERC20.json";
@@ -18,9 +19,7 @@ export abstract class Coin {
 
   protected constructor(coinData: CoinData) {
     this.coinData = coinData;
-    this.walletContract = new new Web3().eth.Contract(
-      walletAbi as AbiItem[]
-    ) as any;
+    this.walletContract = new new Web3().eth.Contract(walletAbi as AbiItem[]);
   }
 
   getCoinData(): CoinData {
