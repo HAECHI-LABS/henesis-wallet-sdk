@@ -91,9 +91,7 @@ export class NonStandardReturnTypeErc20 extends Coin {
 
   constructor(coinData: CoinData) {
     super(coinData);
-    this.erc20Contract = new new Web3().eth.Contract(
-      erc20Abi as AbiItem[]
-    ) as any;
+    this.erc20Contract = new new Web3().eth.Contract(erc20Abi as AbiItem[]);
   }
 
   getAddress(): string {
