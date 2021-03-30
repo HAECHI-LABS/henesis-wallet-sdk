@@ -1,6 +1,6 @@
 import { Controller } from "@nestjs/common";
 
-@Controller("/api/v2/klay/version")
+@Controller("/version")
 export default class VersionController {}
 // todo: delete when implementation is done
 // import AbstractController from "./../controller";

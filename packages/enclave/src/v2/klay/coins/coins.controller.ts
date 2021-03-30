@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import express from "express";
 import { CoinsService } from "./coins.service";
-import { CoinDTO } from "../../dto";
+import { CoinDTO } from "../dto/coin.dto";
 
 @Controller("/v2/klay/coins")
 export class CoinsController {

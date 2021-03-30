@@ -1,6 +1,7 @@
 import { EventsService } from "./events.service";
-import { CallEventDTO, ValueTransferEventDTO } from "../../dto";
 import { Controller, Get } from "@nestjs/common";
+import { ValueTransferEventDTO } from "../dto/value-transfer-event.dto";
+import { CallEventDTO } from "../dto/call-event.dto";
 
 @Controller("/v2/eth/events")
 export class EventsController {
@@ -18,6 +19,7 @@ export class EventsController {
     return null;
   }
 }
+
 // todo: delete when implementation is done
 // import express from "express";
 // import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";

@@ -1,6 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
 import { EventsService } from "./events.service";
-import { CallEventDTO, ValueTransferEventDTO } from "../../dto";
+import { ValueTransferEventDTO } from "../dto/value-transfer-event.dto";
+import { CallEventDTO } from "../dto/call-event.dto";
 
 @Controller("/v2/klay/events")
 export class EventsController {

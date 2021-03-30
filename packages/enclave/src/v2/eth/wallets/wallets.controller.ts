@@ -1,11 +1,9 @@
 import { Controller, Get, Patch, Post } from "@nestjs/common";
-import {
-  BalanceDTO,
-  MasterWalletDTO,
-  TransactionDTO,
-  UserWalletDTO,
-  WalletNonceDTO,
-} from "../../dto";
+import { MasterWalletDTO } from "../dto/master-wallet.dto";
+import { TransactionDTO } from "../dto/transaction.dto";
+import { BalanceDTO } from "../dto/balance.dto";
+import { WalletNonceDTO } from "../dto/wallet-nonce.dto";
+import { UserWalletDTO } from "../dto/user-wallet.dto";
 
 @Controller("/v2/eth/wallets")
 export class WalletsController {
@@ -14,113 +12,136 @@ export class WalletsController {
   public async getMasterWallets(): Promise<MasterWalletDTO[]> {
     return null;
   }
+
   // todo: implement
   @Post("/")
   public async createMasterWallet(): Promise<MasterWalletDTO> {
     return null;
   }
+
   // todo: implement
   @Post("/:masterWalletId/activate")
   public async activateMasterWallet(): Promise<MasterWalletDTO> {
     return null;
   }
+
   // todo: implement
   @Post("/:masterWalletId/contract-call")
   public async sendMasterWalletContractCall(): Promise<TransactionDTO> {
     return null;
   }
+
   // todo: implement
   @Patch("/:masterWalletId/name")
   public async changeMasterWalletName() {
     return null;
   }
+
   // todo: implement
   @Get("/:masterWalletId/balance")
   public async getMasterWalletBalance(): Promise<BalanceDTO> {
     return null;
   }
+
   // todo: implement
   @Get("/:masterWalletId/nonce")
   public async getMasterWalletNonce(): Promise<WalletNonceDTO> {
     return null;
   }
+
   // todo: implement
   @Post("/:masterWalletId/transfer")
   public async sendMasterWalletCoin(): Promise<TransactionDTO> {
     return null;
   }
+
   // todo: implement
   @Post("/:masterWalletId/batch-transaction")
   public async sendMasterWalletBatchTransactions(): Promise<TransactionDTO[]> {
     return null;
   }
+
   // todo: implement
   @Post("/:masterWalletId/flush")
   public async flush(): Promise<TransactionDTO> {
     return null;
   }
+
   // todo: implement
   @Post("/:masterWalletId/raw-transactions")
   public async createRawTransaction(): Promise<TransactionDTO> {
     return null;
   }
+
   // todo: implement
   @Post("/:masterWalletId/signed-transactions")
   public async sendSignedTransaction(): Promise<TransactionDTO> {
     return null;
   }
+
   // todo: implement
   @Get("/:masterWalletId/user-wallets/:userWalletId")
   public async getUserWallet(): Promise<UserWalletDTO> {
     return null;
   }
+
   // todo: implement
   @Get("/:masterWalletId/user-wallets")
   public async getUserWallets(): Promise<UserWalletDTO[]> {
     return null;
   }
+
   // todo: implement
   @Post("/:masterWalletId/user-wallets")
   public async createUserWallet(): Promise<UserWalletDTO> {
     return null;
   }
+
   // todo: implement
   @Post("/:masterWalletId/user-wallets/:userWalletId/contract-call")
   public async sendUserWalletContractCall(): Promise<TransactionDTO> {
     return null;
   }
+
   // todo: implement
   @Patch("/:masterWalletId/user-wallets/:userWalletId/name")
   public async changeUserWalletName() {}
+
   // todo: implement
   @Get("/:masterWalletId/user-wallets/:userWalletId/balance")
   public async getUserWalletBalance(): Promise<BalanceDTO> {
     return null;
   }
+
   // todo: implement
   @Get("/:masterWalletId/user-wallets/:userWalletId/nonce")
   public async getUserWalletNonce(): Promise<WalletNonceDTO> {
     return null;
   }
+
   // todo: implement
   @Post("/:masterWalletId/user-wallets/:userWalletId/transfer")
   public async sendUserWalletCoin(): Promise<TransactionDTO> {
     return null;
   }
+
   // todo: implement
   @Patch("/:masterWalletId/passphrase")
   public async changePassphrase() {}
+
   // todo: implement
   @Post("/:masterWalletId/recreate")
   public async retryCreateMasterWallet(): Promise<MasterWalletDTO> {
     return null;
   }
+
   // todo: implement
   @Post("/:masterWalletId/user-wallets/:userWalletId/recreate")
   public async retryCreateUserWallet(): Promise<MasterWalletDTO> {
     return null;
   }
 }
+
 // todo: delete when implementation is done
 // import express from "express";
 // import BN from "bn.js";

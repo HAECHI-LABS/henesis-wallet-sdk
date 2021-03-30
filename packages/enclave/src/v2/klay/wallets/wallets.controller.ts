@@ -1,11 +1,9 @@
 import { Controller, Get, Patch, Post } from "@nestjs/common";
-import {
-  BalanceDTO,
-  MasterWalletDTO,
-  TransactionDTO,
-  UserWalletDTO,
-  WalletNonceDTO,
-} from "../../dto";
+import { MasterWalletDTO } from "../dto/master-wallet.dto";
+import { TransactionDTO } from "../dto/transaction.dto";
+import { BalanceDTO } from "../dto/balance.dto";
+import { WalletNonceDTO } from "../dto/wallet-nonce.dto";
+import { UserWalletDTO } from "../dto/user-wallet.dto";
 
 @Controller("/v2/klay/wallets")
 export class WalletsController {
