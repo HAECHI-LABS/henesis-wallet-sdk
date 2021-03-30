@@ -1,14 +1,12 @@
 import { Controller, Get, Patch, Post } from "@nestjs/common";
-import {
-  BtcBalanceDTO,
-  BtcDepositAddressDTO,
-  BtcEstimationFeeDTO,
-  BtcRawTransactionDTO,
-  BtcSignedRawTransactionDTO,
-  BtcWalletDTO,
-  TransferDTO,
-} from "../../dto";
 import { WalletsService } from "./wallets.service";
+import { WalletDto } from "../dto/wallet.dto";
+import { BalanceDto } from "../dto/balance.dto";
+import { EstimationFeeDto } from "../dto/estimation-fee.dto";
+import { DepositAddressDto } from "../dto/deposit-address.dto";
+import { TransferDTO } from "../dto/transfer.dto";
+import { RawTransactionDto } from "../dto/raw-transaction.dto";
+import { SignedRawTransactionDto } from "../dto/signed-raw-transaction.dto";
 
 @Controller("/v2/btc/wallets")
 export class WalletsController {
@@ -16,25 +14,25 @@ export class WalletsController {
 
   // todo: implement
   @Get("/")
-  public async getWallets(): Promise<BtcWalletDTO[]> {
+  public async getWallets(): Promise<WalletDto[]> {
     return null;
   }
 
   // todo: implement
   @Post("/")
-  public async createInactiveMasterWallet(): Promise<BtcWalletDTO> {
+  public async createInactiveMasterWallet(): Promise<WalletDto> {
     return null;
   }
 
   // todo: implement
   @Post("/:walletId/activate")
-  public async activateMasterWallet(): Promise<BtcWalletDTO> {
+  public async activateMasterWallet(): Promise<WalletDto> {
     return null;
   }
 
   // todo: implement
   @Get("/:walletId")
-  public async getWallet(): Promise<BtcWalletDTO> {
+  public async getWallet(): Promise<WalletDto> {
     return null;
   }
 
@@ -48,31 +46,31 @@ export class WalletsController {
 
   // todo: implement
   @Get("/:walletId/balance")
-  public async getWalletBalance(): Promise<BtcBalanceDTO> {
+  public async getWalletBalance(): Promise<BalanceDto> {
     return null;
   }
 
   // todo: implement
   @Get("/:walletId/estimated-fee")
-  public async getEstimatedFee(): Promise<BtcEstimationFeeDTO> {
+  public async getEstimatedFee(): Promise<EstimationFeeDto> {
     return null;
   }
 
   // todo: implement
   @Post("/:walletId/deposit-addresses")
-  public async createDepositAddress(): Promise<BtcDepositAddressDTO> {
+  public async createDepositAddress(): Promise<DepositAddressDto> {
     return null;
   }
 
   // todo: implement
   @Get("/:walletId/deposit-addresses")
-  public async getDepositAddresses(): Promise<BtcDepositAddressDTO[]> {
+  public async getDepositAddresses(): Promise<DepositAddressDto[]> {
     return null;
   }
 
   // todo: implement
   @Get("/:walletId/deposit-addresses/:depositAddressId")
-  public async getDepositAddress(): Promise<BtcDepositAddressDTO> {
+  public async getDepositAddress(): Promise<DepositAddressDto> {
     return null;
   }
 
@@ -90,16 +88,17 @@ export class WalletsController {
 
   // todo: implement
   @Post("/:walletId/raw-transactions")
-  public async createRawTransaction(): Promise<BtcRawTransactionDTO> {
+  public async createRawTransaction(): Promise<RawTransactionDto> {
     return null;
   }
 
   // todo: implement
   @Post("/:walletId/signed-transactions")
-  public async sendSignedTransaction(): Promise<BtcSignedRawTransactionDTO> {
+  public async sendSignedTransaction(): Promise<SignedRawTransactionDto> {
     return null;
   }
 }
+
 // todo: delete when implementation is done
 // import AbstractController from "../../controller";
 // import { Controller } from "../../types";

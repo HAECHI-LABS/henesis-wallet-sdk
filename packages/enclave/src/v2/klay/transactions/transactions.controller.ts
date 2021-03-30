@@ -1,5 +1,5 @@
 import { Controller, Get } from "@nestjs/common";
-import { TransactionDTO } from "../../dto";
+import { TransactionDTO } from "../dto/transaction.dto";
 
 @Controller("/v2/klay/transactions")
 export class TransactionsController {

@@ -1,5 +1,5 @@
 import { Controller, Get } from "@nestjs/common";
-import { TransactionDTO } from "../../dto";
+import { TransactionDTO } from "../dto/transaction.dto";
 
 @Controller("/v2/eth/transactions")
 export class TransactionsController {
@@ -15,6 +15,7 @@ export class TransactionsController {
     return null;
   }
 }
+
 // todo: delete when implementation is done
 // import express from "express";
 // import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";

@@ -1,6 +1,6 @@
 import { GasUsagesService } from "./gas-usages.service";
-import { MethodGasUsageDTO } from "../../dto";
 import { Controller, Get } from "@nestjs/common";
+import { MethodGasUsageDTO } from "../dto/method-gas-usage.dto";
 
 @Controller("/v2/eth/gas-usages")
 export class GasUsagesController {
@@ -12,6 +12,7 @@ export class GasUsagesController {
     return null;
   }
 }
+
 // todo: delete when implementation is done
 // import express from "express";
 // import { Method, MethodName } from "@haechi-labs/henesis-wallet-core";

@@ -1,6 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
 import { HenesisKeysService } from "./henesis-keys.service";
-import { BalanceDTO, KeyDTO } from "../../dto";
+import { KeyDTO } from "../dto/key.dto";
+import { BalanceDTO } from "../dto/balance.dto";
 
 @Controller("/v2/eth/henesis-keys")
 export class HenesisKeysController {

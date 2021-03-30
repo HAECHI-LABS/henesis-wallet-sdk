@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 import { TransfersService } from "./transfers.service";
-import { TransferDTO } from "../../dto";
+import { TransferDTO } from "../dto/transfer.dto";
 
 @Controller("/v2/btc/transfers")
 export class TransfersController {
