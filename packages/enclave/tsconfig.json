@@ -6,12 +6,14 @@
     "outDir": "./lib",
     "rootDir": "./src",
     "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "declaration": true
   },
-  "include": ["./src"]
+  "include": ["./src/**/*"]
 }
