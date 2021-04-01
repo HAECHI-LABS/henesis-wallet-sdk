@@ -25,7 +25,8 @@ export function OptionalQueries(...queries) {
 type Entity = Function;
 
 export class PaginationResponse<Entity> {
-  @ApiModelProperty({ type: Object, isArray: true }) // will be overwritten
+  // will be overwritten at function ApiPaginationResponse
+  @ApiModelProperty({ type: Object, isArray: true })
   public results: Entity[];
 
   @ApiModelPropertyOptional()

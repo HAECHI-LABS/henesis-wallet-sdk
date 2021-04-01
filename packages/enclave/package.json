@@ -18,6 +18,7 @@
     "test": "jest --passWithNoTests",
     "type-check": "tsc --noEmit",
     "build": "rm -rf ./lib && nest build",
+    "build:spec": "cross-env BUILD_SWAGGER_SPEC=true nest start",
     "build:windows": "npm run preBuild:windows && mkdir lib && tsc",
     "eslint": "./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src",
     "eslint:fix": "./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src --fix",
@@ -42,7 +43,8 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.6.6",
     "swagger-ui-express": "^4.1.6",
-    "ts-node": "^8.6.2"
+    "ts-node": "^8.6.2",
+    "js-yaml": "4.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "7.6.0",

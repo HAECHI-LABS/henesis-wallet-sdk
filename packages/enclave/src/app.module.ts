@@ -6,7 +6,7 @@ import { LoggerMiddleware } from "./middlewares/logger";
 import { CamelCaseConvertor } from "./middlewares/camel-case-convertor";
 import VersionController from "./version/version.controller";
 
-// todo: cache config, port confisg, host name, trusty proxy?
+// todo: cache config, port config, host name, trusty proxy?
 @Module({
   imports: [ApiV3Module],
   controllers: [VersionController],
