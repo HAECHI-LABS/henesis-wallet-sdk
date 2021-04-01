@@ -23,6 +23,7 @@ import {
   MasterWalletDTO,
 } from "../__generate__/eth";
 import { InactiveWallet, InactiveMasterWallet } from "../wallet";
+import { isLessThanWalletV3 } from "../utils/wallet";
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -75,7 +76,36 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       NoUndefinedField<MasterWalletDTO>[]
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
+    return walletDatas
+      .filter((walletData) => !isLessThanWalletV3(walletData.version))
+      .map((walletData) => {
+        return new EthWallet(
+          this.client,
+          transformMasterWalletData(walletData),
+          this.keychains,
+          this.blockchain
+        );
+      });
+  }
+
+  async getAllWallets(
+    options?: MasterWalletSearchOptions
+  ): Promise<Array<EthWallet | EthMasterWallet>> {
+    const queryString = makeQueryString(options);
+    const walletDatas = await this.client.get<
+      NoUndefinedField<MasterWalletDTO>[]
+    >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
+
     return walletDatas.map((walletData) => {
+      const { version } = walletData;
+      if (isLessThanWalletV3(version)) {
+        return new EthMasterWallet(
+          this.client,
+          transformMasterWalletData(walletData),
+          this.keychains,
+          this.blockchain
+        );
+      }
       return new EthWallet(
         this.client,
         transformMasterWalletData(walletData),
@@ -84,6 +114,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       );
     });
   }
+
   async getMasterWallets(
     options?: MasterWalletSearchOptions
   ): Promise<EthMasterWallet[]> {
@@ -92,15 +123,17 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       NoUndefinedField<MasterWalletDTO>[]
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
-    return walletDatas.map(
-      (walletData) =>
-        new EthMasterWallet(
-          this.client,
-          transformMasterWalletData(walletData),
-          this.keychains,
-          this.blockchain
-        )
-    );
+    return walletDatas
+      .filter((walletData) => isLessThanWalletV3(walletData.version))
+      .map(
+        (walletData) =>
+          new EthMasterWallet(
+            this.client,
+            transformMasterWalletData(walletData),
+            this.keychains,
+            this.blockchain
+          )
+      );
   }
 
   // todo: henesis-keys
