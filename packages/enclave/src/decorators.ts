@@ -1,24 +1,40 @@
-import { ApiImplicitQuery } from "@nestjs/swagger/dist/decorators/api-implicit-query.decorator";
-import { applyDecorators, Type } from "@nestjs/common";
-import { ApiOkResponse, ApiResponse } from "@nestjs/swagger";
+import { applyDecorators } from "@nestjs/common";
+import {
+  ApiOkResponse,
+  ApiParam,
+  ApiParamOptions,
+  ApiQuery,
+  ApiQueryOptions,
+} from "@nestjs/swagger";
 import { PaginationMetadata } from "./v3/eth/dto/pagination.dto";
 import {
   ApiModelProperty,
   ApiModelPropertyOptional,
 } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
-export function OptionalQueries(...queries) {
+export function PathParams(...paramsOptions: ApiParamOptions[]) {
   return function (
     target: any,
     propertyKey: string,
     descriptor: TypedPropertyDescriptor<any>
   ) {
-    let result = target;
-    for (let i = 0; i < queries.length; i++) {
-      const dec = ApiImplicitQuery({ name: queries[i], required: false });
-      result = dec(result, propertyKey, descriptor);
-    }
-    return result;
+    return paramsOptions.reduce(
+      (acc, cur) => ApiParam(cur)(acc, propertyKey, descriptor),
+      target
+    );
+  };
+}
+
+export function Queries(...queriesOptions: ApiQueryOptions[]) {
+  return function (
+    target: any,
+    propertyKey: string,
+    descriptor: TypedPropertyDescriptor<any>
+  ) {
+    return queriesOptions.reduce(
+      (acc, cur) => ApiQuery(cur)(acc, propertyKey, descriptor),
+      target
+    );
   };
 }
 

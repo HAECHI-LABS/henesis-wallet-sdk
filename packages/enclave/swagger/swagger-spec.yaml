@@ -1,11 +1,12 @@
 openapi: 3.0.0
 info:
-  title: api example
+  title: Enclave API
   description: The Enclave API description
   version: '1.0'
   contact: {}
 tags: []
-servers: []
+servers:
+  - url: http://localhost:3000
 components:
   schemas:
     CoinDTO:
@@ -546,10 +547,12 @@ paths:
   /api/v3/ethereum/coins:
     get:
       operationId: CoinsController_getCoins
+      summary: 전체 코인 목록 조회하기
       parameters:
         - name: flag
-          required: false
+          required: true
           in: query
+          description: 비트베리 여부
           schema:
             type: boolean
       responses:
@@ -562,14 +565,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/CoinDTO'
       tags: &ref_0
-        - v3/ethereum/coins
+        - coins
   /api/v3/ethereum/coins/{coinId}:
     get:
       operationId: CoinsController_getCoin
+      summary: 코인 정보 조회하기
       parameters:
         - name: coinId
           required: true
           in: path
+          description: Henesis에서 부여한 Coin의 ID
           schema:
             type: string
       responses:
@@ -583,50 +588,62 @@ paths:
   /api/v3/ethereum/call-events:
     get:
       operationId: CallEventsController_getCallEvents
+      summary: 스마트 컨트랙트 호출 내역 조회하기
       parameters:
         - name: walletId
           required: false
           in: query
+          description: 지갑 ID
           schema:
             type: string
         - name: transactionId
           required: false
           in: query
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
           schema:
             type: string
         - name: transactionHash
           required: false
           in: query
+          description: 트랜잭션 해시
           schema:
             type: string
         - name: status
           required: false
           in: query
+          description: 트랜잭션 상태
           schema:
             type: string
         - name: ticker
           required: false
           in: query
+          description: 코인의 기호
           schema:
             type: string
         - name: updatedAtGte
           required: false
           in: query
+          description: 'updatedAt이 해당 시점과 같거나 그보다 이후인 트랜잭션 조회 (형식: ms, UNIX time) '
           schema:
             type: string
         - name: updatedAtLt
           required: false
           in: query
+          description: 'updatedAt이 해당 시점보다 이전인 트랜잭션 조회 (형식: ms, UNIX time) '
           schema:
             type: string
         - name: size
           required: false
           in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
           schema:
             type: number
         - name: page
           required: false
           in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
           schema:
             type: number
       responses:
@@ -637,59 +654,72 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForCallEventDTO'
       tags:
-        - v3/ethereum/call-events
+        - call-events
   /api/v3/ethereum/transfers:
     get:
       operationId: TransfersController_getTransfers
+      summary: 전체 입출금 목록 조회하기
       parameters:
         - name: ticker
           required: false
           in: query
+          description: 코인의 기호
           schema:
             type: string
         - name: depositAddressId
           required: false
           in: query
+          description: 입금 주소 ID
           schema:
             type: string
         - name: walletId
           required: false
           in: query
+          description: 지갑 ID
           schema:
             type: string
         - name: transactionId
           required: false
           in: query
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
           schema:
             type: string
         - name: transactionHash
           required: false
           in: query
+          description: 트랜잭션 해시
           schema:
             type: string
         - name: status
           required: false
           in: query
+          description: 트랜잭션 상태
           schema:
             type: string
         - name: updatedAtGte
           required: false
           in: query
+          description: 'updatedAt이 해당 시점과 같거나 그보다 이후인 트랜잭션 조회 (형식: ms, UNIX time) '
           schema:
             type: string
         - name: updatedAtLt
           required: false
           in: query
+          description: 'updatedAt이 해당 시점보다 이전인 트랜잭션 조회 (형식: ms, UNIX time) '
           schema:
             type: string
         - name: size
           required: false
           in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
           schema:
             type: number
         - name: page
           required: false
           in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
           schema:
             type: number
       responses:
@@ -700,10 +730,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForTransferDTO'
       tags:
-        - v3/ethereum/transfers
+        - transfers
   /api/v3/ethereum/fee-wallets/balance:
     get:
       operationId: FeeWalletsController_getBalance
+      summary: 가스비 지갑 잔고 조회하기
       parameters: []
       responses:
         '200':
@@ -713,14 +744,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
       tags:
-        - v3/ethereum/fee-wallets
+        - fee-wallets
   /api/v3/ethereum/transactions/{transactionId}:
     get:
       operationId: TransactionsController_getTransaction
+      summary: 개별 트랜잭션 조회하기
       parameters:
         - name: transactionId
           required: true
           in: path
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
           schema:
             type: string
       responses:
@@ -731,16 +766,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
       tags: &ref_1
-        - v3/ethereum/transactions
+        - transactions
   /api/v3/ethereum/transactions/{transactionId}/replace:
     post:
       operationId: TransactionsController_repalceTransaction
-      summary: ''
-      description: eslint-disable
+      summary: 트랜잭션 교체하기
       parameters:
         - name: transactionId
           required: true
           in: path
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
           schema:
             type: string
       requestBody:
@@ -760,10 +797,12 @@ paths:
   /api/v3/ethereum/wallets:
     get:
       operationId: WalletsController_getWallets
+      summary: 전체 지갑 목록 조회하기
       parameters:
         - name: name
           required: false
           in: query
+          description: 지갑 이름
           schema:
             type: string
       responses:
@@ -775,15 +814,15 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/WalletDTO'
-      tags: &ref_2
-        - v3/ethereum/wallets
   /api/v3/ethereum/wallets/{walletId}:
     get:
       operationId: WalletsController_getWallet
+      summary: 지갑 정보 조회하기
       parameters:
         - name: walletId
           required: true
           in: path
+          description: 지갑 ID
           schema:
             type: string
       responses:
@@ -793,14 +832,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
-      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/balance:
     get:
       operationId: WalletsController_getBalanceOfWallet
+      summary: 지갑 잔고 조회하기
       parameters:
         - name: walletId
           required: true
           in: path
+          description: 지갑 ID
           schema:
             type: string
       responses:
@@ -810,14 +850,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
-      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/name:
     patch:
       operationId: WalletsController_changeWalletName
+      summary: 지갑 이름 변경하기
       parameters:
         - name: walletId
           required: true
           in: path
+          description: 지갑 ID
           schema:
             type: string
       requestBody:
@@ -835,14 +876,15 @@ paths:
                 type: object
         '204':
           description: ''
-      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/transfer:
     post:
       operationId: WalletsController_sendCoin
+      summary: 지갑에서 코인 전송하기
       parameters:
         - name: walletId
           required: true
           in: path
+          description: 지갑 ID
           schema:
             type: string
       requestBody:
@@ -858,14 +900,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/transactions:
     post:
       operationId: WalletsController_callContract
+      summary: 지갑에서 스마트 컨트랙트 호출하기
       parameters:
         - name: walletId
           required: true
           in: path
+          description: 지갑 ID
           schema:
             type: string
       requestBody:
@@ -881,14 +924,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/flush:
     post:
       operationId: WalletsController_flush
+      summary: 입금 주소 잔액을 모두 끌어오기
       parameters:
         - name: walletId
           required: true
           in: path
+          description: 지갑 ID
           schema:
             type: string
       requestBody:
@@ -904,34 +948,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FlushDTO'
-      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses:
     get:
       operationId: WalletsController_getDepositAddresses
+      summary: 전체 입금 주소 목록 조회하기
       parameters:
         - name: walletId
           required: true
           in: path
+          description: 지갑 ID
           schema:
             type: string
         - name: name
           required: false
           in: query
+          description: 지갑 이름
           schema:
             type: string
         - name: address
           required: false
           in: query
+          description: 입금 주소
           schema:
             type: string
         - name: size
           required: false
           in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
           schema:
             type: number
         - name: page
           required: false
           in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
           schema:
             type: number
       responses:
@@ -941,13 +990,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForDepositAddressDTO'
-      tags: *ref_2
     post:
       operationId: WalletsController_createDepositAddress
+      summary: 입금 주소 생성하기
       parameters:
         - name: walletId
           required: true
           in: path
+          description: 지갑 ID
           schema:
             type: string
       requestBody:
@@ -963,19 +1013,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}:
     get:
       operationId: WalletsController_getDepositAddress
+      summary: 입금 주소 정보 조회하기
       parameters:
         - name: walletId
           required: true
           in: path
+          description: 지갑 ID
           schema:
             type: string
         - name: depositAddressId
           required: true
           in: path
+          description: 입금 주소 ID
           schema:
             type: string
       responses:
@@ -985,19 +1037,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}/balance:
     get:
       operationId: WalletsController_getBalanceOfDepositAddress
+      summary: 입금 주소 잔고 조회하기
       parameters:
         - name: walletId
           required: true
           in: path
+          description: 지갑 ID
           schema:
             type: string
         - name: depositAddressId
           required: true
           in: path
+          description: 입금 주소 ID
           schema:
             type: string
       responses:
@@ -1007,4 +1061,3 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
-      tags: *ref_2

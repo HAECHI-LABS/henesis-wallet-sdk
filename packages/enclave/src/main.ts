@@ -22,10 +22,11 @@ async function bootstrap() {
 
   // swagger settings
   const config = new DocumentBuilder()
-    .setTitle("api example")
+    .setTitle("Enclave API")
     .setDescription("The Enclave API description")
     .setVersion("1.0")
     .build();
+  config.servers = [{ url: "http://localhost:3000" }];
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api-docs", app, document);
 

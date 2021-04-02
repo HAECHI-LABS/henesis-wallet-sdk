@@ -1,15 +1,14 @@
 import { MiddlewareConsumer, Module } from "@nestjs/common";
-import { ApiV2Module } from "./v2/api.v2.module";
-import { ApiV3Module } from "./v3/api.v3.module";
 import { SdkMiddleware } from "./middlewares/sdk-injector";
 import { LoggerMiddleware } from "./middlewares/logger";
 import { CamelCaseConvertor } from "./middlewares/camel-case-convertor";
-import VersionController from "./version/version.controller";
+import { RouterModule, Routes } from "nest-router";
+import { routes } from "./routes";
+import { VersionModule } from "./version/version.module";
 
 // todo: cache config, port config, host name, trusty proxy?
 @Module({
-  imports: [ApiV3Module],
-  controllers: [VersionController],
+  imports: [RouterModule.forRoutes(routes), VersionModule.register()],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

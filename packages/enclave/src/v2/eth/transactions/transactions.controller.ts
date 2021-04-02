@@ -1,7 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
 import { TransactionDTO } from "../dto/transaction.dto";
 
-@Controller("/v2/eth/transactions")
+@Controller("transactions")
 export class TransactionsController {
   // todo: implement
   @Get("/")

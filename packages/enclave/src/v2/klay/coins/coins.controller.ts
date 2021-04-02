@@ -3,7 +3,7 @@ import express from "express";
 import { CoinsService } from "./coins.service";
 import { CoinDTO } from "../dto/coin.dto";
 
-@Controller("/v2/klay/coins")
+@Controller("coins")
 export class CoinsController {
   constructor(private readonly coinsService: CoinsService) {}
 

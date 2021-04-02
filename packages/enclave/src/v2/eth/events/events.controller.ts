@@ -3,7 +3,7 @@ import { Controller, Get } from "@nestjs/common";
 import { ValueTransferEventDTO } from "../dto/value-transfer-event.dto";
 import { CallEventDTO } from "../dto/call-event.dto";
 
-@Controller("/v2/eth/events")
+@Controller("events")
 export class EventsController {
   constructor(private readonly eventsController: EventsService) {}
 

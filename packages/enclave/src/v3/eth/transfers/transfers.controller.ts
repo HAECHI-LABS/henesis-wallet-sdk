@@ -3,31 +3,43 @@ import { TransfersService } from "./transfers.service";
 import { TransferDTO } from "../dto/transfer.dto";
 import { Status } from "../dto/enums/status.enum";
 import express from "express";
-import { ApiPaginationResponse, OptionalQueries } from "../../../decorators";
+import { ApiPaginationResponse, Queries } from "../../../decorators";
 import { PaginationDTO } from "../dto/pagination.dto";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+  DEPOSIT_ADDRESS_ID_OPTIONAL,
+  PAGE_OPTIONAL,
+  SIZE_OPTIONAL,
+  STATUS_OPTIONAL,
+  TICKER_OPTIONAL,
+  TRANSACTION_HASH_OPTIONAL,
+  TRANSACTION_ID_OPTIONAL,
+  UPDATED_AT_GTE_OPTIONAL,
+  UPDATED_AT_LE_OPTIONAL,
+  WALLET_ID_OPTIONAL,
+} from "../dto/params";
 
-@Controller("/v3/ethereum/transfers")
-@ApiTags("v3/ethereum/transfers")
+@Controller("transfers")
+@ApiTags("transfers")
 export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
 
   @Get("/")
-  // optional
-  @OptionalQueries(
-    "ticker",
-    "depositAddressId",
-    "walletId",
-    "transactionId",
-    "transactionHash",
-    "status",
-    "updatedAtGte",
-    "updatedAtLt",
-    "size",
-    "page"
+  @Queries(
+    TICKER_OPTIONAL,
+    DEPOSIT_ADDRESS_ID_OPTIONAL,
+    WALLET_ID_OPTIONAL,
+    TRANSACTION_ID_OPTIONAL,
+    TRANSACTION_HASH_OPTIONAL,
+    STATUS_OPTIONAL,
+    UPDATED_AT_GTE_OPTIONAL,
+    UPDATED_AT_LE_OPTIONAL,
+    SIZE_OPTIONAL,
+    PAGE_OPTIONAL
   )
   // pagination type
   @ApiPaginationResponse(TransferDTO)
+  @ApiOperation({ summary: "전체 입출금 목록 조회하기" })
   public async getTransfers(
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,
