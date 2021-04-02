@@ -45,8 +45,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.6.6",
     "swagger-ui-express": "^4.1.6",
-    "ts-node": "^8.6.2",
-    "js-yaml": "4.0.0"
+    "ts-node": "^8.6.2"
   },
   "devDependencies": {
     "@nestjs/cli": "7.6.0",
