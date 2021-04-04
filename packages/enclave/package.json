@@ -12,7 +12,7 @@
   "scripts": {
     "start": "nest start",
     "start:local": "cross-env NODE_ENV=local nest start --watch",
-    "start:dev": "cross-env NODE_ENV=development nest start --watch",
+    "start:dev": "cross-env NODE_ENV=development nest start --debug",
     "start:test": "cross-env NODE_ENV=test nest start --watch",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
     "test": "jest --passWithNoTests",
@@ -28,13 +28,15 @@
     "preBootstrap:windows": "if exist node_modules rmdir /q /s node_modules"
   },
   "dependencies": {
-    "@haechi-labs/henesis-wallet-core": "^2.10.13",
+    "@haechi-labs/henesis-wallet-core": "2.10.14-alpha.11",
     "@nestjs/common": "^7.6.15",
     "@nestjs/core": "^7.6.15",
     "@nestjs/platform-express": "^7.6.15",
     "@nestjs/swagger": "^4.8.0",
     "@type-cacheable/core": "^9.0.1",
     "@type-cacheable/lru-cache-adapter": "^9.0.1",
+    "axios": "^0.21.1",
+    "cache-manager": "^3.4.3",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "js-yaml": "4.0.0",
@@ -93,4 +95,3 @@
   },
   "gitHead": "ca83cd8dcac533beb9e12d76ed1047fb29d8aea7"
 }
-

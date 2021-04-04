@@ -2,20 +2,27 @@ import {
   Body,
   Controller,
   Get,
+  HttpStatus,
   Param,
   Patch,
   Post,
   Query,
+  Request,
 } from "@nestjs/common";
 import { WalletsService } from "./wallets.service";
 import {
-  ApiHeaders,
+  ApiBadRequestResponse,
+  ApiExtraModels,
   ApiNoContentResponse,
   ApiOperation,
+  ApiResponse,
   ApiTags,
+  getSchemaPath,
 } from "@nestjs/swagger";
 import {
   ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
   PathParams,
   Queries,
 } from "../../../decorators";
@@ -40,127 +47,228 @@ import {
   TRANSACTION_ID_REQUIRED,
   WALLET_ID_REQUIRED,
 } from "../dto/params";
-import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
+import express from "express";
+import {
+  DepositAddressNotFoundException,
+  NoWalletNameException,
+  TransactionIdNotFoundException,
+  WalletNotFoundException,
+} from "../dto/exceptions.dto";
+import { ReplaceTransactionRequestDTO } from "../transactions/dto/replace-transaction-request.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
+@ApiExtraModels(
+  WalletNotFoundException,
+  NoWalletNameException,
+  DepositAddressNotFoundException
+)
+@AuthErrorResponses()
+@AuthHeaders()
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
   @Get("/")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @Queries(NAME_OPTIONAL)
   @ApiOperation({
     summary: "전체 지갑 목록 조회하기",
     description: "모든 지갑의 목록을 조회합니다.",
   })
-  getWallets(@Query("name") name?: string): Promise<WalletDTO[]> {
-    return null;
+  public async getWallets(
+    @Request() request: express.Request,
+    @Query("name") name?: string
+  ): Promise<WalletDTO[]> {
+    return await this.walletsService.getWallets(request.sdk, name);
   }
 
   @Get("/:walletId")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @PathParams(WALLET_ID_REQUIRED)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    type: WalletNotFoundException,
+  })
   @ApiOperation({
     summary: "지갑 정보 조회하기",
     description: "특정 지갑의 정보를 조회합니다.",
   })
-  getWallet(@Param("walletId") walletId: string): Promise<WalletDTO> {
-    return null;
+  public async getWallet(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string
+  ): Promise<WalletDTO> {
+    return await this.walletsService.getWallet(request.sdk, walletId);
   }
 
   @Get("/:walletId/balance")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @PathParams(WALLET_ID_REQUIRED)
   @Queries(TICKER_OPTIONAL)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    type: WalletNotFoundException,
+  })
   @ApiOperation({
     summary: "지갑 잔고 조회하기",
     description: "특정 지갑의 잔고를 조회합니다.",
   })
-  getBalanceOfWallet(
+  public async getBalanceOfWallet(
+    @Request() request: express.Request,
     @Param("walletId") walletId: string,
     @Query("ticker") ticker: string
-  ): Promise<BalanceDTO> {
-    return null;
+  ): Promise<BalanceDTO[]> {
+    return await this.walletsService.getBalanceOfWallet(
+      request.sdk,
+      walletId,
+      ticker
+    );
   }
 
   @Patch("/:walletId/name")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @PathParams(WALLET_ID_REQUIRED)
   @ApiNoContentResponse()
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: "다음과 같은 bad request 에러가 발생할 수 있습니다.",
+    schema: {
+      oneOf: [
+        { $ref: getSchemaPath(WalletNotFoundException) },
+        { $ref: getSchemaPath(NoWalletNameException) },
+      ],
+    },
+  })
   @ApiOperation({
     summary: "지갑 이름 변경하기",
     description: "특정 지갑의 이름을 변경합니다.",
   })
-  changeWalletName(
+  public async changeWalletName(
+    @Request() request: express.Request,
     @Param("walletId") walletId: string,
     @Body() changeWalletName: ChangeWalletNameRequestDTO
   ) {
-    return null;
+    await this.walletsService.changeWalletName(
+      request.sdk,
+      walletId,
+      changeWalletName
+    );
   }
 
   @Post("/:walletId/transfer")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @PathParams(WALLET_ID_REQUIRED)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    type: WalletNotFoundException,
+  })
   @ApiOperation({
     summary: "지갑에서 코인 전송하기",
     description: "특정 지갑에서 가상자산을 송금합니다.",
   })
-  sendCoin(
+  public async sendCoin(
+    @Request() request: express.Request,
     @Param("walletId") walletId: string,
     @Body() sendCoinRequest: SendCoinRequestDTO
   ): Promise<TransactionDTO> {
-    return null;
+    return await this.walletsService.sendCoin(
+      request.sdk,
+      walletId,
+      sendCoinRequest
+    );
   }
 
   @Post("/:walletId/transactions")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @PathParams(WALLET_ID_REQUIRED)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    type: WalletNotFoundException,
+  })
   @ApiOperation({
     summary: "지갑에서 스마트 컨트랙트 호출하기",
     description:
       "특정 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
   })
-  callContract(
+  public async callContract(
+    @Request() request: express.Request,
     @Param("walletId") walletId: string,
     @Body() createTransactionRequest: CreateTransactionRequestDTO
   ): Promise<TransactionDTO> {
-    return null;
+    return await this.walletsService.callContract(
+      request.sdk,
+      walletId,
+      createTransactionRequest
+    );
+  }
+
+  @Post("/:walletId/transactions/:transactionId")
+  @PathParams(WALLET_ID_REQUIRED, TRANSACTION_ID_REQUIRED)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    type: WalletNotFoundException,
+  })
+  @ApiBadRequestResponse({
+    description: "transaction id가 없을 때 발생합니다",
+    type: TransactionIdNotFoundException,
+  })
+  @ApiOperation({
+    summary: "트랜잭션 교체",
+    description: "트랜잭션을 교체합니다",
+  })
+  public async replaceTransaction(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Param("transactionId") transactionId: string,
+    @Body() replaceTransactionRequest: ReplaceTransactionRequestDTO
+  ): Promise<TransactionDTO> {
+    return await this.walletsService.replaceTransaction(
+      request.sdk,
+      walletId,
+      transactionId,
+      replaceTransactionRequest
+    );
   }
 
   @Post("/:walletId/flush")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @PathParams(WALLET_ID_REQUIRED)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    type: WalletNotFoundException,
+  })
   @ApiOperation({
     summary: "입금 주소 잔액을 모두 끌어오기",
     description:
       "원화 입금 주소의 특정 코인/토큰 잔액을 모두 상위의 지갑으로 끌어옵니다.",
   })
-  flush(
+  public async flush(
+    @Request() request: express.Request,
     @Param("walletId") walletId: string,
     @Body() createFlushRequest: CreateFlushRequestDTO
-  ): Promise<FlushDTO> {
-    return null;
+  ): Promise<TransactionDTO> {
+    return TransactionDTO.fromEthTransaction(
+      await this.walletsService.flush(request.sdk, walletId, createFlushRequest)
+    );
   }
 
   @Patch("/:walletId/transactions/:transactionId")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @PathParams(WALLET_ID_REQUIRED, TRANSACTION_ID_REQUIRED)
   @ApiNoContentResponse()
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    type: WalletNotFoundException,
+  })
   @ApiOperation({
     summary: "트랜잭션 다시 전송하기",
     description:
       "네트워크 사정 등으로 채굴이 지연됐을때, 블록체인에 트랜잭션을 다시 전송합니다.",
   })
-  resendTransaction(
+  async resendTransaction(
+    @Request() request: express.Request,
     @Param("walletId") walletId: string,
     @Param("transactionId") transactionId: string
   ) {
-    return;
+    return await this.walletsService.resendTransaction(
+      request.sdk,
+      walletId,
+      transactionId
+    );
   }
 
   @Get("/:walletId/deposit-addresses")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @PathParams(WALLET_ID_REQUIRED)
   @Queries(
     NAME_OPTIONAL,
@@ -169,60 +277,103 @@ export class WalletsController {
     PAGE_OPTIONAL
   )
   @ApiPaginationResponse(DepositAddressDTO)
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    type: WalletNotFoundException,
+  })
   @ApiOperation({
     summary: "전체 입금 주소 목록 조회하기",
     description: "특정 지갑에 속한 모든 입금 주소 조회합니다.",
   })
-  getDepositAddresses(
+  public async getDepositAddresses(
+    @Request() request: express.Request,
     @Param("walletId") walletId: string,
     @Query("name") name?: string,
     @Query("address") address?: string,
     @Query("size") size: number = 15,
     @Query("page") page: number = 0
   ): Promise<PaginationDTO<DepositAddressDTO>> {
-    return null;
+    return await this.walletsService.getDepositAddresses(
+      request.sdk,
+      walletId,
+      {
+        walletId,
+        name,
+        address,
+        size,
+        page,
+      }
+    );
   }
 
   @Post("/:walletId/deposit-addresses")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @PathParams(WALLET_ID_REQUIRED)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    type: WalletNotFoundException,
+  })
   @ApiOperation({
     summary: "입금 주소 생성하기",
     description: "특정 지갑 하위에 새로운 입금 주소 생성합니다",
   })
-  createDepositAddress(
+  public async createDepositAddress(
+    @Request() request: express.Request,
     @Param("walletId") walletId: string,
     @Body() createDepositAddress: CreateDepositAddressRequestDTO
   ): Promise<DepositAddressDTO> {
-    return null;
+    return await this.walletsService.createDepositAddress(
+      request.sdk,
+      walletId,
+      createDepositAddress
+    );
   }
 
   @Get("/:walletId/deposit-addresses/:depositAddressId")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: "다음과 같은 bad request 에러가 발생할 수 있습니다.",
+    schema: {
+      oneOf: [
+        { $ref: getSchemaPath(WalletNotFoundException) },
+        { $ref: getSchemaPath(DepositAddressNotFoundException) },
+      ],
+    },
+  })
   @ApiOperation({
     summary: "입금 주소 정보 조회하기",
     description: "특정 입금 주소를 조회합니다.",
   })
-  getDepositAddress(
+  public async getDepositAddress(
+    @Request() request: express.Request,
     @Param("walletId") walletId: string,
     @Param("depositAddressId") depositAddressId: string
   ): Promise<DepositAddressDTO> {
-    return null;
+    return await this.walletsService.getDepositAddress(
+      request.sdk,
+      walletId,
+      depositAddressId
+    );
   }
 
   @Get("/:walletId/deposit-addresses/:depositAddressId/balance")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
+  @Queries(TICKER_OPTIONAL)
   @ApiOperation({
     summary: "입금 주소 잔고 조회하기",
     description: "특정 입금 주소의 잔액을 조회합니다.",
   })
-  getBalanceOfDepositAddress(
+  public async getBalanceOfDepositAddress(
+    @Request() request: express.Request,
     @Param("walletId") walletId: string,
-    @Param("depositAddressId") depositAddressId: string
-  ): Promise<BalanceDTO> {
-    return null;
+    @Param("depositAddressId") depositAddressId: string,
+    @Query("ticker") ticker?: string
+  ): Promise<BalanceDTO[]> {
+    return await this.walletsService.getBalanceOfDepositAddress(
+      request.sdk,
+      walletId,
+      depositAddressId,
+      ticker
+    );
   }
 }

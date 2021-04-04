@@ -1,11 +1,15 @@
-import { Controller, Get, Query, Request } from "@nestjs/common";
+import { Controller, Get, HttpStatus, Query, Request } from "@nestjs/common";
 import { TransfersService } from "./transfers.service";
 import { TransferDTO } from "../dto/transfer.dto";
-import { Status } from "../dto/enums/status.enum";
 import express from "express";
-import { ApiPaginationResponse, Queries } from "../../../decorators";
+import {
+  ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
+  Queries,
+} from "../../../decorators";
 import { PaginationDTO } from "../dto/pagination.dto";
-import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import {
   DEPOSIT_ADDRESS_ID_OPTIONAL,
   PAGE_OPTIONAL,
@@ -18,10 +22,13 @@ import {
   UPDATED_AT_LE_OPTIONAL,
   WALLET_ID_OPTIONAL,
 } from "../dto/params";
-import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
+import { InvalidStatusException } from "../dto/exceptions.dto";
+import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 @Controller("transfers")
 @ApiTags("transfers")
+@AuthErrorResponses()
+@AuthHeaders()
 export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
 
@@ -38,9 +45,12 @@ export class TransfersController {
     SIZE_OPTIONAL,
     PAGE_OPTIONAL
   )
-  // pagination type
   @ApiPaginationResponse(TransferDTO)
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: "올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.",
+    type: InvalidStatusException,
+  })
   @ApiOperation({
     summary: "전체 입출금 목록 조회하기",
     description: "모든 지갑의 가상자산 입출금 내역을 조회합니다.",
@@ -52,12 +62,23 @@ export class TransfersController {
     @Query("walletId") walletId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
-    @Query("status") status?: Status,
+    @Query("status") status?: EventStatus,
     @Query("updatedAtGte") updatedAtGte?: string,
     @Query("updatedAtLt") updatedAtLt?: string,
     @Query("size") size: number = 15,
     @Query("page") page: number = 0
   ): Promise<PaginationDTO<TransferDTO>> {
-    return null;
+    return await this.transfersService.getTransfers(request.sdk, {
+      ticker,
+      depositAddressId,
+      walletId,
+      transactionId,
+      transactionHash,
+      status,
+      updatedAtGte,
+      updatedAtLt,
+      size,
+      page,
+    });
   }
 }

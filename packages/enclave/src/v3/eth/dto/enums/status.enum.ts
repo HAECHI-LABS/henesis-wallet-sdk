@@ -1,7 +1,0 @@
-export enum Status {
-  REQUESTED = "REQUESTED",
-  PENDING = "PENDING",
-  MINED = "MINED",
-  CONFIRMED = "CONFIRMED",
-  FAILED = "FAILED",
-}

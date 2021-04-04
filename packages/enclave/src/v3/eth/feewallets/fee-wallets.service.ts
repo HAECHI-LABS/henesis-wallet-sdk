@@ -4,7 +4,9 @@ import { BalanceDTO } from "../dto/balance.dto";
 
 @Injectable()
 export class FeeWalletsService {
-  public async getBalance(skd: SDK): Promise<BalanceDTO> {
-    return null;
+  public async getBalance(sdk: SDK): Promise<BalanceDTO> {
+    return BalanceDTO.fromBalance(
+      await sdk.eth.henesisKeys.getHenesisKeyBalance()
+    );
   }
 }

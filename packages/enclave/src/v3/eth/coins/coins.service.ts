@@ -1,4 +1,4 @@
-import { SDK } from "@haechi-labs/henesis-wallet-core";
+import { Coin, SDK } from "@haechi-labs/henesis-wallet-core";
 import { Injectable } from "@nestjs/common";
 import { CoinDTO } from "../dto/coin.dto";
 
@@ -6,11 +6,12 @@ import { CoinDTO } from "../dto/coin.dto";
 export class CoinsService {
   public constructor() {}
 
-  public async getCoins(flag: boolean = false, sdk: SDK): Promise<CoinDTO[]> {
-    return null;
+  public async getCoins(sdk: SDK, flag: boolean = false): Promise<CoinDTO[]> {
+    const coins: Coin[] = await sdk.eth.coins.getCoins(flag);
+    return coins.map(CoinDTO.fromCoin);
   }
 
   public async getCoin(coinId: string, sdk: SDK): Promise<CoinDTO> {
-    return null;
+    return CoinDTO.fromCoin(await sdk.eth.coins.getCoin(coinId));
   }
 }
