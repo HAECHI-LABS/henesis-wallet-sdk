@@ -1,19 +1,47 @@
-import { Controller, Get, Param, Query, Request } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Query,
+  Request,
+} from "@nestjs/common";
 import { CoinsService } from "./coins.service";
-import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+  ApiExtraModels,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
 import { CoinDTO } from "../dto/coin.dto";
 import express from "express";
-import { PathParams, Queries } from "../../../decorators";
+import {
+  AuthErrorResponses,
+  AuthHeaders,
+  PathParams,
+  Queries,
+} from "../../../decorators";
 import { COIN_REQUIRED, FLAG_REQUIRED } from "../dto/params";
-import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
+import {
+  AccessTokenNotProvidedException,
+  InvalidAccessIpException,
+  InvalidAccessTokenException,
+  NoCoinException,
+} from "../dto/exceptions.dto";
 
 @Controller("coins")
 @ApiTags("coins")
+@ApiExtraModels(
+  InvalidAccessIpException,
+  InvalidAccessTokenException,
+  AccessTokenNotProvidedException
+)
+@AuthErrorResponses()
+@AuthHeaders()
 export class CoinsController {
   public constructor(private readonly coinsService: CoinsService) {}
 
   @Get()
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @Queries(FLAG_REQUIRED)
   @ApiOperation({
     summary: "전체 코인 목록 조회하기",
@@ -24,12 +52,16 @@ export class CoinsController {
     @Request() request: express.Request,
     @Query("flag") flag?: boolean
   ): Promise<CoinDTO[]> {
-    return await this.coinsService.getCoins(flag, request.sdk);
+    return await this.coinsService.getCoins(request.sdk, flag);
   }
 
   @Get("/:coinId")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @PathParams(COIN_REQUIRED)
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: "코인 정보가 없을 때 response 입니다",
+    type: NoCoinException,
+  })
   @ApiOperation({
     summary: "코인 정보 조회하기",
     description:

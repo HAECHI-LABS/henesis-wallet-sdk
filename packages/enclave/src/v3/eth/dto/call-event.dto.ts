@@ -1,5 +1,6 @@
-import { Status } from "./enums/status.enum";
-import { Blockchain } from "./enums/blockchain.enum";
+import { EthCallEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
+import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
 
 export class CallEventDTO {
   /**
@@ -16,7 +17,7 @@ export class CallEventDTO {
    * 트랜잭션 상태
    * @example CONFIRMED
    */
-  status: Status;
+  status: EventStatus;
   /**
    * 지갑 ID
    * @example ae40b1b3dd953e5592c21e58be30d807
@@ -62,5 +63,22 @@ export class CallEventDTO {
    * 메인넷 종류
    * @example ethereum
    */
-  blockchain: Blockchain;
+  blockchain: BlockchainType;
+
+  public static fromCallEvent(event: EthCallEvent): CallEventDTO {
+    return {
+      id: event.id.toString(),
+      data: event.data,
+      status: event.status,
+      walletId: event.masterWalletId,
+      orgId: event.orgId,
+      transactionId: event.transactionId,
+      toAddress: event.toAddress,
+      fromAddress: event.fromAddress,
+      transactionHash: event.transactionHash,
+      createdAt: event.createdAt,
+      updatedAt: event.updatedAt,
+      blockchain: BlockchainType.ETHEREUM,
+    };
+  }
 }

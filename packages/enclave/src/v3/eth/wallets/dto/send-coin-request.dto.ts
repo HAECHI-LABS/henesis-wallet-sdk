@@ -15,7 +15,7 @@ export class SendCoinRequestDTO {
    * 암호화폐의 양 (단위: wei, peb)
    * @example 100000000
    */
-  amount: number;
+  amount: string;
   /**
    * 지갑의 비밀번호
    * @example passphrase

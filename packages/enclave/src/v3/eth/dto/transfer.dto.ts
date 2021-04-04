@@ -1,12 +1,15 @@
-import { Status } from "./enums/status.enum";
-import { TransferType } from "./enums/transfer-type.enum";
+import { ValueTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
+import {
+  EventStatus,
+  TransferType,
+} from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 export class TransferDTO {
   /**
    * 코인/토큰 입출금 내역의 ID
    * @example 375031
    */
-  id: string;
+  id: number;
   /**
    * 출금 주소
    * @example 0x1f10ecbd971eab345ea19e96dc237b1fbd63de96
@@ -21,12 +24,12 @@ export class TransferDTO {
    * 암호화폐의 양
    * @example 1000000000
    */
-  amount: number;
+  amount: string;
   /**
    * 트랜잭션 상태
    * @example CONFIRMED
    */
-  status: Status;
+  status: EventStatus;
   /**
    * 지갑이 속한 팀(Organization)의 ID
    * @example 31cafc79bd437e1b8e7b8209e399d3f3
@@ -82,4 +85,26 @@ export class TransferDTO {
    * @example ETH 실비 정산
    */
   name: string;
+
+  static fromValueTransferEvent(event: ValueTransferEvent): TransferDTO {
+    return {
+      id: event.id,
+      from: event.from,
+      to: event.to,
+      amount: event.amount.toString(10),
+      status: event.status,
+      orgId: event.orgId,
+      decimals: event.decimals,
+      walletId: event.masterWalletId,
+      depositAddressId:
+        event.masterWalletId == event.walletId ? null : event.walletId,
+      ticker: event.coinSymbol,
+      transferType: event.transferType,
+      transactionId: event.transactionId,
+      transactionHash: event.transactionHash,
+      createdAt: event.createdAt,
+      updatedAt: event.updatedAt,
+      name: event.walletName,
+    } as TransferDTO;
+  }
 }
