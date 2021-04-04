@@ -1,5 +1,6 @@
-import { Blockchain } from "./enums/blockchain.enum";
 import { WalletStatus } from "@haechi-labs/henesis-wallet-core/lib/wallet";
+import { EthWallet } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
+import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
 
 export class WalletDTO {
   /**
@@ -21,7 +22,7 @@ export class WalletDTO {
    * 메인넷 종류
    * @example ethereum
    */
-  blockchain: Blockchain;
+  blockchain: BlockchainType;
   /**
    * 지갑 생성 시간 (형식: ms, UNIX time)
    * @example 1612411568760
@@ -47,4 +48,19 @@ export class WalletDTO {
    * @example v4
    */
   version: string;
+
+  static fromEthWallet(wallet: EthWallet): WalletDTO {
+    const walletData = wallet.getData();
+    return {
+      id: wallet.getId(),
+      name: walletData.name,
+      address: walletData.address,
+      blockchain: walletData.blockchain,
+      createdAt: walletData.createdAt,
+      updatedAt: walletData.updatedAt,
+      status: walletData.status,
+      whitelistActivated: walletData.whitelistActivated,
+      version: walletData.version,
+    } as WalletDTO;
+  }
 }

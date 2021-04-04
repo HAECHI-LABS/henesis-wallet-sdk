@@ -1,5 +1,6 @@
-import { Blockchain } from "./enums/blockchain.enum";
-import { CoinAttributes } from "./enums/attributes.enum";
+import { Coin } from "@haechi-labs/henesis-wallet-core";
+import { CoinDTOAttributesEnum } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import { Blockchain } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 export class CoinDTO {
   /**
@@ -46,5 +47,19 @@ export class CoinDTO {
   /**
    * 코인의 메타 데이터
    */
-  attributes: CoinAttributes;
+  attributes: CoinDTOAttributesEnum[];
+
+  static fromCoin(coin: Coin): CoinDTO {
+    const coinData = coin.getCoinData();
+    return {
+      id: coinData.id,
+      name: coinData.name,
+      ticker: coinData.symbol,
+      address: coinData.address,
+      description: coinData.desc,
+      decimals: coinData.decimals,
+      blockchain: coinData.blockchain,
+      attributes: coinData.attributes,
+    };
+  }
 }
