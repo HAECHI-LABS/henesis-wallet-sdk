@@ -8,7 +8,7 @@ import erc20Abi from "../contracts/ERC20.json";
 import { CoinDTO, CoinDTOAttributesEnum } from "../__generate__/eth";
 import { BNConverter } from "../utils/common";
 import { MultiSigPayload } from "./transactions";
-import { EthLikeWallet } from "./wallet";
+import { EthLikeWallet } from "./abstractWallet";
 
 export import AttributesEnum = CoinDTOAttributesEnum;
 export type CoinData = CoinDTO;
