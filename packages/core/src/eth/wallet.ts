@@ -59,6 +59,11 @@ import { keccak256 } from "./eth-core-lib/hash";
 import { toChecksum } from "./keychains";
 import { Address } from "cluster";
 import EthCrypto from "eth-crypto";
+import {
+  EthDepositAddress,
+  transformDepositAddressData,
+} from "./depositAddress";
+import { transformUserWalletData, EthUserWallet } from "./userWallet";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -75,12 +80,6 @@ export interface EthMasterWalletData extends EthWalletData {
   encryptionKey: string;
   whitelistActivated: boolean;
 }
-
-export interface EthUserWalletData
-  extends Omit<EthWalletData, "encryptionKey"> {}
-
-export interface EthDepositAddressData
-  extends Omit<EthWalletData, "encryptionKey"> {}
 
 export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;
@@ -124,26 +123,6 @@ function getAddressFromCompressedPub(pub: string): string {
 export const transformMasterWalletData = (
   data: MasterWalletDTO
 ): EthMasterWalletData => {
-  return {
-    ...data,
-    blockchain: transformBlockchainType(data.blockchain),
-    status: transformWalletStatus(data.status),
-  };
-};
-
-export const transformUserWalletData = (
-  data: UserWalletDTO
-): EthUserWalletData => {
-  return {
-    ...data,
-    blockchain: transformBlockchainType(data.blockchain),
-    status: transformWalletStatus(data.status),
-  };
-};
-
-export const transformDepositAddressData = (
-  data: UserWalletDTO
-): EthDepositAddressData => {
   return {
     ...data,
     blockchain: transformBlockchainType(data.blockchain),
@@ -453,6 +432,69 @@ export class EthWallet extends EthLikeWallet {
     this.walletContract = new new Web3().eth.Contract(walletAbi as AbiItem[]);
   }
 
+  resendTransaction(transactionId: string, gasPrice?: BN) {
+    return super.resendTransaction(transactionId, gasPrice);
+  }
+
+  contractCall(
+    contractAddress: string,
+    value: BN,
+    data: string,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN
+  ): Promise<EthTransaction> {
+    return super.contractCall(
+      contractAddress,
+      value,
+      data,
+      passphrase,
+      otpCode,
+      gasPrice
+    );
+  }
+
+  transfer(
+    coin: string | Coin,
+    to: string,
+    amount: BN,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN
+  ): Promise<EthTransaction> {
+    return super.transfer(coin, to, amount, passphrase, otpCode, gasPrice);
+  }
+
+  sendTransaction(
+    signedMultiSigPayload: SignedMultiSigPayload,
+    walletId: string,
+    otpCode?: string,
+    gasPrice?: BN
+  ): Promise<EthTransaction> {
+    return super.sendTransaction(
+      signedMultiSigPayload,
+      walletId,
+      otpCode,
+      gasPrice
+    );
+  }
+
+  sendBatchTransaction(
+    blockchain: BlockchainType,
+    signedMultiSigPayloads: SignedMultiSigPayload[],
+    walletId: string,
+    otpCode?: string,
+    gasPrice?: BN
+  ): Promise<EthTransaction[]> {
+    return super.sendBatchTransaction(
+      blockchain,
+      signedMultiSigPayloads,
+      walletId,
+      otpCode,
+      gasPrice
+    );
+  }
+
   getEncryptionKey(): string {
     return this.data.encryptionKey;
   }
@@ -555,7 +597,7 @@ export class EthWallet extends EthLikeWallet {
 
   async getDepositAddress(walletId: string): Promise<EthDepositAddress> {
     const userWalletData = await this.client.get<UserWalletDTO>(
-      `${this.baseUrl}/user-wallets/${walletId}`
+      `${this.baseUrl}/deposit-addresses/${walletId}`
     );
     return new EthDepositAddress(
       this.client,
@@ -602,7 +644,9 @@ export class EthWallet extends EthLikeWallet {
     const queryString = makeQueryString(options);
     const data = await this.client.get<
       NoUndefinedField<PaginationUserWalletDTO>
-    >(`${this.baseUrl}/user-wallets${queryString ? `?${queryString}` : ""}`);
+    >(
+      `${this.baseUrl}/deposit-addresses${queryString ? `?${queryString}` : ""}`
+    );
 
     return {
       pagination: data.pagination,
@@ -656,19 +700,13 @@ export class EthWallet extends EthLikeWallet {
 
   async flush(
     flushTargets: Array<{ coinId: number; depositAddressId: string }>,
-    passphrase: string,
-    otpCode?: string,
-    gasPrice?: BN,
-    gasLimit?: BN
+    gasPrice?: BN
   ): Promise<EthTransaction> {
     const response = await this.client.post<Pagination<FlushHistory[]>>(
       `${this.baseUrl}/flush`,
       {
-        flushTargets,
-        passphrase,
-        otpCode,
+        targets: flushTargets,
         gasPrice,
-        gasLimit,
       }
     );
     return null;
@@ -1048,281 +1086,5 @@ export class EthMasterWallet extends EthLikeWallet {
       `${this.withdrawalApprovalUrl}/${params.id}/reject`,
       request
     );
-  }
-}
-
-export class EthUserWallet extends EthLikeWallet {
-  private readonly userWalletData: EthUserWalletData;
-
-  public constructor(
-    client: Client,
-    data: EthMasterWalletData,
-    keychains: Keychains,
-    userWalletData: EthUserWalletData,
-    blockchain: BlockchainType
-  ) {
-    super(
-      client,
-      data,
-      keychains,
-      blockchain,
-      `/wallets/${data.id}/user-wallets/${userWalletData.id}`
-    );
-    this.userWalletData = userWalletData;
-  }
-
-  async getBalance(flag?: boolean, symbol?: string): Promise<Balance[]> {
-    const queryString: string = makeQueryString({ flag, symbol });
-    const balances = await this.client.get<BalanceDTO[]>(
-      `${this.baseUrl}/balance${queryString ? `?${queryString}` : ""}`
-    );
-
-    return balances.map((balance) => ({
-      coinId: balance.coinId,
-      symbol: balance.symbol,
-      amount: BNConverter.hexStringToBN(String(balance.amount ?? "0x0")),
-      coinType: balance.coinType as any,
-      spendableAmount: BNConverter.hexStringToBN(
-        String(balance.spendableAmount ?? "0x0")
-      ),
-      name: balance.name,
-      decimals: balance.decimals,
-    }));
-  }
-
-  getAddress(): string {
-    return this.userWalletData.address;
-  }
-
-  getData(): EthUserWalletData {
-    return this.userWalletData;
-  }
-
-  getId(): string {
-    return this.userWalletData.id;
-  }
-
-  async changeName(name: string): Promise<void> {
-    const request: ChangeWalletNameRequest = {
-      name,
-    };
-    const userWalletData = await this.client.patch<UserWalletDTO>(
-      `${this.baseUrl}/name`,
-      request
-    );
-    this.userWalletData.name = userWalletData.name;
-  }
-
-  changePassphrase(
-    passphrase: string,
-    newPassphrase: string,
-    otpCode?: string
-  ): Promise<void> {
-    throw new Error("unimplemented method");
-  }
-
-  restorePassphrase(
-    encryptedPassphrase: string,
-    newPassphrase: string,
-    otpCode?: string
-  ): Promise<void> {
-    throw new Error("unimplemented method");
-  }
-
-  verifyEncryptedPassphrase(encryptedPassphrase: string): Promise<boolean> {
-    throw new Error("unimplemented method");
-  }
-
-  verifyPassphrase(passphrase: string): Promise<boolean> {
-    throw new Error("unimplemented method");
-  }
-
-  getEncryptionKey(): string {
-    return "";
-  }
-
-  getAccountKey(): Key {
-    throw new Error("unimplemented method");
-  }
-
-  updateAccountKey(key: Key) {
-    throw new Error("unimplemented method");
-  }
-}
-
-export class EthDepositAddress extends EthLikeWallet {
-  private readonly depositWalletData: EthDepositAddressData;
-
-  public constructor(
-    client: Client,
-    data: EthMasterWalletData,
-    keychains: Keychains,
-    depositWalletData: EthDepositAddressData,
-    blockchain: BlockchainType
-  ) {
-    super(
-      client,
-      data,
-      keychains,
-      blockchain,
-      `/wallets/${data.id}/user-wallets/${depositWalletData.id}`
-    );
-    this.depositWalletData = depositWalletData;
-  }
-
-  async getBalance(flag?: boolean, symbol?: string): Promise<Balance[]> {
-    const queryString: string = makeQueryString({ flag, symbol });
-    const balances = await this.client.get<BalanceDTO[]>(
-      `${this.baseUrl}/balance${queryString ? `?${queryString}` : ""}`
-    );
-
-    return balances.map((balance) => ({
-      coinId: balance.coinId,
-      symbol: balance.symbol,
-      amount: BNConverter.hexStringToBN(String(balance.amount ?? "0x0")),
-      coinType: balance.coinType as any,
-      spendableAmount: BNConverter.hexStringToBN(
-        String(balance.spendableAmount ?? "0x0")
-      ),
-      name: balance.name,
-      decimals: balance.decimals,
-    }));
-  }
-
-  getAddress(): string {
-    return this.depositWalletData.address;
-  }
-
-  getData(): EthDepositAddressData {
-    return this.depositWalletData;
-  }
-
-  getId(): string {
-    return this.depositWalletData.id;
-  }
-
-  async changeName(name: string): Promise<void> {
-    const request: ChangeWalletNameRequest = {
-      name,
-    };
-    const depositWalletData = await this.client.patch<UserWalletDTO>(
-      `${this.baseUrl}/name`,
-      request
-    );
-    this.depositWalletData.name = depositWalletData.name;
-  }
-
-  changePassphrase(
-    passphrase: string,
-    newPassphrase: string,
-    otpCode?: string
-  ): Promise<void> {
-    throw new Error("unimplemented method");
-  }
-
-  restorePassphrase(
-    encryptedPassphrase: string,
-    newPassphrase: string,
-    otpCode?: string
-  ): Promise<void> {
-    throw new Error("unimplemented method");
-  }
-
-  verifyEncryptedPassphrase(encryptedPassphrase: string): Promise<boolean> {
-    throw new Error("unimplemented method");
-  }
-
-  verifyPassphrase(passphrase: string): Promise<boolean> {
-    throw new Error("unimplemented method");
-  }
-
-  getEncryptionKey(): string {
-    return "";
-  }
-
-  getAccountKey(): Key {
-    throw new Error("unimplemented method");
-  }
-
-  updateAccountKey(key: Key) {
-    throw new Error("unimplemented method");
-  }
-  async replaceTransaction(
-    transactionId: string,
-    gasPrice?: BN
-  ): Promise<EthTransaction> {
-    throw new Error("unimplemented method");
-  }
-  async contractCall(
-    contractAddress: string,
-    value: BN,
-    data: string,
-    passphrase: string,
-    otpCode?: string,
-    gasPrice?: BN,
-    gasLimit?: BN
-  ): Promise<EthTransaction> {
-    throw new Error("unimplemented method");
-  }
-  async buildContractCallPayload(
-    contractAddress: string,
-    value: BN,
-    data: string,
-    passphrase: string
-  ): Promise<SignedMultiSigPayload> {
-    throw new Error("unimplemented method");
-  }
-  async transfer(
-    coin: string | Coin,
-    to: string,
-    amount: BN,
-    passphrase: string,
-    otpCode?: string,
-    gasPrice?: BN,
-    gasLimit?: BN
-  ): Promise<EthTransaction> {
-    throw new Error("unimplemented method");
-  }
-  async buildTransferPayload(
-    coin: string | Coin,
-    to: string,
-    amount: BN,
-    passphrase: string
-  ): Promise<SignedMultiSigPayload> {
-    throw new Error("unimplemented method");
-  }
-  async createRawTransaction(
-    coin: string | Coin,
-    to: string,
-    amount: BN
-  ): Promise<MultiSigPayload> {
-    throw new Error("unimplemented method");
-  }
-  protected signPayload(
-    multiSigPayload: MultiSigPayload,
-    passphrase: string
-  ): SignedMultiSigPayload {
-    throw new Error("unimplemented method");
-  }
-
-  async sendTransaction(
-    signedMultiSigPayload: SignedMultiSigPayload,
-    walletId: string,
-    otpCode?: string,
-    gasPrice?: BN,
-    gasLimit?: BN
-  ): Promise<EthTransaction> {
-    throw new Error("unimplemented method");
-  }
-
-  protected async sendBatchTransaction(
-    blockchain: BlockchainType,
-    signedMultiSigPayloads: SignedMultiSigPayload[],
-    walletId: string,
-    otpCode?: string,
-    gasPrice?: BN,
-    gasLimit?: BN
-  ): Promise<EthTransaction[]> {
-    throw new Error("unimplemented method");
   }
 }
