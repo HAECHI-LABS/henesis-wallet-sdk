@@ -51,7 +51,6 @@ import {
   ResendTransactionRequest,
 } from "../__generate__/eth";
 import _ from "lodash";
-import { ValidationParameterError } from "../error";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { Coin } from "./coin";
 import { randomBytes } from "crypto";
@@ -64,22 +63,12 @@ import {
   transformDepositAddressData,
 } from "./depositAddress";
 import { transformUserWalletData, EthUserWallet } from "./userWallet";
-
-export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
-  blockchain: BlockchainType;
-};
-
-export interface EthWalletData extends WalletData {
-  blockchain: BlockchainType;
-  transactionId?: string | null;
-  error?: string | null;
-}
-
-export interface EthMasterWalletData extends EthWalletData {
-  accountKey: Key;
-  encryptionKey: string;
-  whitelistActivated: boolean;
-}
+import {
+  EthLikeWallet,
+  EthMasterWalletData,
+  EthTransaction,
+  convertSignedMultiSigPayloadToDTO,
+} from "./abstractWallet";
 
 export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;

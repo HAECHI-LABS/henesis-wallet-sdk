@@ -9,7 +9,11 @@ import {
   ChangeWalletNameRequest,
 } from "../__generate__/eth";
 import _ from "lodash";
-import { EthWalletData, EthLikeWallet, EthMasterWalletData } from "./wallet";
+import {
+  EthWalletData,
+  EthLikeWallet,
+  EthMasterWalletData,
+} from "./abstractWallet";
 import { transformWalletStatus } from "../wallet";
 
 export const transformUserWalletData = (
