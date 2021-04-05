@@ -72,6 +72,12 @@ export class Accounts {
     });
   }
 
+  async verifyEmail(email: string) {
+    await this.client.post(`${this.baseUrl}/email/verify`, {
+      email,
+    });
+  }
+
   async verify(params: {
     identifier: string;
     accountId: string;
