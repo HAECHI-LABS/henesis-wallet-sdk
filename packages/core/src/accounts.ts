@@ -8,6 +8,8 @@ import {
   AccessTokenDTO,
   Role,
   LoginIpDTO,
+  SignUpRequest,
+  SignUpResponse,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
 
@@ -34,6 +36,7 @@ export interface OTP {
 }
 
 export import Role = Role;
+import { accountSignup } from "./apis/accounts";
 
 export class Accounts {
   private readonly client: Client;
@@ -59,6 +62,13 @@ export class Accounts {
       email,
       password,
       otpCode,
+    });
+  }
+
+  signup(params: SignUpRequest): Promise<SignUpResponse> {
+    return accountSignup({
+      client: this.client,
+      request: params,
     });
   }
 
