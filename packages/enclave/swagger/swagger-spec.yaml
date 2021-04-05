@@ -522,7 +522,42 @@ components:
       properties: {}
     DepositAddressDTO:
       type: object
-      properties: {}
+      properties:
+        id:
+          type: string
+          description: 입금 주소 ID
+          example: a1f9e4c33ea9f51974490fd1c30efb3e
+        name:
+          type: string
+          description: 입금 주소 이름
+          example: deposit-address-1
+        blockchain:
+          description: 블록체인 플랫폼
+          example: ETHEREUM
+          enum:
+            - ETHEREUM
+            - KLAYTN
+            - BITCOIN
+          type: string
+        createdAt:
+          type: string
+          description: '지갑 생성 시간 (단위: ms, UNIX time)'
+          example: '1614582860091'
+        updatedAt:
+          type: string
+          description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
+          example: '1614582928222'
+        version:
+          type: string
+          description: 입금 주소 버전
+          example: v4
+      required:
+        - id
+        - name
+        - blockchain
+        - createdAt
+        - updatedAt
+        - version
     GetManyResponseForDepositAddressDTO:
       type: object
       properties:
@@ -548,6 +583,7 @@ paths:
     get:
       operationId: CoinsController_getCoins
       summary: 전체 코인 목록 조회하기
+      description: Henesis Wallet에서 지원하는 모든 가상자산(토큰, 코인)을 조회합니다.
       parameters:
         - name: flag
           required: true
@@ -555,6 +591,16 @@ paths:
           description: 비트베리 여부
           schema:
             type: boolean
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -570,11 +616,22 @@ paths:
     get:
       operationId: CoinsController_getCoin
       summary: 코인 정보 조회하기
+      description: Henesis Wallet에서 지원하는 특정 가상자산(토큰, 코인)을 조회합니다.
       parameters:
         - name: coinId
           required: true
           in: path
           description: Henesis에서 부여한 Coin의 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
       responses:
@@ -589,6 +646,7 @@ paths:
     get:
       operationId: CallEventsController_getCallEvents
       summary: 스마트 컨트랙트 호출 내역 조회하기
+      description: 내가 발생시킨 스마트 컨트랙트 호출 내역을 조회합니다.
       parameters:
         - name: walletId
           required: false
@@ -646,6 +704,16 @@ paths:
           description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
           schema:
             type: number
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -659,6 +727,7 @@ paths:
     get:
       operationId: TransfersController_getTransfers
       summary: 전체 입출금 목록 조회하기
+      description: 모든 지갑의 가상자산 입출금 내역을 조회합니다.
       parameters:
         - name: ticker
           required: false
@@ -722,6 +791,16 @@ paths:
           description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
           schema:
             type: number
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -734,8 +813,19 @@ paths:
   /api/v3/ethereum/fee-wallets/balance:
     get:
       operationId: FeeWalletsController_getBalance
-      summary: 가스비 지갑 잔고 조회하기
-      parameters: []
+      summary: 수수료 지갑 잔고 조회하기
+      description: 수수료 지갑의 잔액을 조회합니다.
+      parameters:
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -749,6 +839,7 @@ paths:
     get:
       operationId: TransactionsController_getTransaction
       summary: 개별 트랜잭션 조회하기
+      description: 내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.
       parameters:
         - name: transactionId
           required: true
@@ -756,6 +847,16 @@ paths:
           description: >-
             트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
             개념입니다.)
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
       responses:
@@ -780,6 +881,16 @@ paths:
             개념입니다.)
           schema:
             type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -798,11 +909,22 @@ paths:
     get:
       operationId: WalletsController_getWallets
       summary: 전체 지갑 목록 조회하기
+      description: 모든 지갑의 목록을 조회합니다.
       parameters:
         - name: name
           required: false
           in: query
           description: 지갑 이름
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
       responses:
@@ -814,15 +936,28 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/WalletDTO'
+      tags: &ref_2
+        - wallets
   /api/v3/ethereum/wallets/{walletId}:
     get:
       operationId: WalletsController_getWallet
       summary: 지갑 정보 조회하기
+      description: 특정 지갑의 정보를 조회합니다.
       parameters:
         - name: walletId
           required: true
           in: path
           description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
       responses:
@@ -832,15 +967,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
+      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/balance:
     get:
       operationId: WalletsController_getBalanceOfWallet
       summary: 지갑 잔고 조회하기
+      description: 특정 지갑의 잔고를 조회합니다.
       parameters:
         - name: walletId
           required: true
           in: path
           description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
       responses:
@@ -850,15 +997,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
+      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/name:
     patch:
       operationId: WalletsController_changeWalletName
       summary: 지갑 이름 변경하기
+      description: 특정 지갑의 이름을 변경합니다.
       parameters:
         - name: walletId
           required: true
           in: path
           description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
       requestBody:
@@ -876,15 +1035,27 @@ paths:
                 type: object
         '204':
           description: ''
+      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/transfer:
     post:
       operationId: WalletsController_sendCoin
       summary: 지갑에서 코인 전송하기
+      description: 특정 지갑에서 가상자산을 송금합니다.
       parameters:
         - name: walletId
           required: true
           in: path
           description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
       requestBody:
@@ -900,15 +1071,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
+      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/transactions:
     post:
       operationId: WalletsController_callContract
       summary: 지갑에서 스마트 컨트랙트 호출하기
+      description: 특정 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
       parameters:
         - name: walletId
           required: true
           in: path
           description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
       requestBody:
@@ -924,15 +1107,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
+      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/flush:
     post:
       operationId: WalletsController_flush
       summary: 입금 주소 잔액을 모두 끌어오기
+      description: 원하 입금 주소의 특정 코인/토큰 잔액을 모두 상위의 지갑으로 끌어옵니다.
       parameters:
         - name: walletId
           required: true
           in: path
           description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
       requestBody:
@@ -948,10 +1143,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FlushDTO'
+      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses:
     get:
       operationId: WalletsController_getDepositAddresses
       summary: 전체 입금 주소 목록 조회하기
+      description: 특정 지갑에 속한 모든 입금 주소 조회합니다.
       parameters:
         - name: walletId
           required: true
@@ -983,6 +1180,16 @@ paths:
           description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
           schema:
             type: number
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -990,14 +1197,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForDepositAddressDTO'
+      tags: *ref_2
     post:
       operationId: WalletsController_createDepositAddress
       summary: 입금 주소 생성하기
+      description: 특정 지갑 하위에 새로운 입금 주소 생성합니다
       parameters:
         - name: walletId
           required: true
           in: path
           description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
       requestBody:
@@ -1013,10 +1232,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
+      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}:
     get:
       operationId: WalletsController_getDepositAddress
       summary: 입금 주소 정보 조회하기
+      description: 특정 입금 주소를 조회합니다.
       parameters:
         - name: walletId
           required: true
@@ -1028,6 +1249,16 @@ paths:
           required: true
           in: path
           description: 입금 주소 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
       responses:
@@ -1037,10 +1268,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
+      tags: *ref_2
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}/balance:
     get:
       operationId: WalletsController_getBalanceOfDepositAddress
       summary: 입금 주소 잔고 조회하기
+      description: 특정 입금 주소의 잔액을 조회합니다.
       parameters:
         - name: walletId
           required: true
@@ -1054,6 +1287,16 @@ paths:
           description: 입금 주소 ID
           schema:
             type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -1061,3 +1304,4 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
+      tags: *ref_2

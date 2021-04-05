@@ -5,7 +5,7 @@ import { Status } from "../dto/enums/status.enum";
 import express from "express";
 import { ApiPaginationResponse, Queries } from "../../../decorators";
 import { PaginationDTO } from "../dto/pagination.dto";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
 import {
   DEPOSIT_ADDRESS_ID_OPTIONAL,
   PAGE_OPTIONAL,
@@ -18,6 +18,7 @@ import {
   UPDATED_AT_LE_OPTIONAL,
   WALLET_ID_OPTIONAL,
 } from "../dto/params";
+import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
 
 @Controller("transfers")
 @ApiTags("transfers")
@@ -39,7 +40,11 @@ export class TransfersController {
   )
   // pagination type
   @ApiPaginationResponse(TransferDTO)
-  @ApiOperation({ summary: "전체 입출금 목록 조회하기" })
+  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
+  @ApiOperation({
+    summary: "전체 입출금 목록 조회하기",
+    description: "모든 지갑의 가상자산 입출금 내역을 조회합니다.",
+  })
   public async getTransfers(
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,

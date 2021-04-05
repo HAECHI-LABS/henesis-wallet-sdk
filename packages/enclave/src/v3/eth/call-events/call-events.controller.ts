@@ -5,7 +5,7 @@ import express from "express";
 import { Status } from "../dto/enums/status.enum";
 import { ApiPaginationResponse, Queries } from "../../../decorators";
 import { PaginationDTO } from "../dto/pagination.dto";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
 import {
   PAGE_OPTIONAL,
   SIZE_OPTIONAL,
@@ -17,6 +17,7 @@ import {
   UPDATED_AT_LE_OPTIONAL,
   WALLET_ID_OPTIONAL,
 } from "../dto/params";
+import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
 
 @Controller("/call-events")
 @ApiTags("call-events")
@@ -24,6 +25,7 @@ export class CallEventsController {
   constructor(private readonly callEventsService: CallEventsService) {}
 
   @Get("/")
+  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @Queries(
     WALLET_ID_OPTIONAL,
     TRANSACTION_ID_OPTIONAL,
@@ -36,7 +38,10 @@ export class CallEventsController {
     PAGE_OPTIONAL
   )
   @ApiPaginationResponse(CallEventDTO)
-  @ApiOperation({ summary: "스마트 컨트랙트 호출 내역 조회하기" })
+  @ApiOperation({
+    summary: "스마트 컨트랙트 호출 내역 조회하기",
+    description: "내가 발생시킨 스마트 컨트랙트 호출 내역을 조회합니다.",
+  })
   public async getCallEvents(
     @Request() request: express.Request,
     @Query("walletId") walletId?: string,
