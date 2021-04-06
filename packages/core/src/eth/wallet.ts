@@ -246,34 +246,10 @@ export class EthWallet extends EthLikeWallet {
 
   async createDepositAddress(
     name: string,
-    passphrase: string,
-    gasPrice?: BN,
-    salt?: BN,
     otpCode?: string
   ): Promise<EthDepositAddress> {
-    // generates 32byte(256 bit) randoma hex string and converts to BN when salt is not defined
-    if (salt === undefined || salt == null) {
-      salt = Web3.utils.toBN(Web3.utils.randomHex(32));
-    }
-
-    let signedMultiSigPayloadDTO: SignedMultiSigPayloadDTO = null;
-    if (this.getVersionNumber() < 3) {
-      const multiSigPayload: MultiSigPayload = {
-        hexData: this.walletContract.methods.createUserWallet(salt).encodeABI(),
-        walletNonce: this.getNonce(),
-        value: BNConverter.hexStringToBN("0x0"),
-        toAddress: this.getAddress(),
-        walletAddress: this.getAddress(),
-      };
-      signedMultiSigPayloadDTO = convertSignedMultiSigPayloadToDTO(
-        this.signPayload(multiSigPayload, passphrase)
-      );
-    }
-    const userWalletParams: CreateUserWalletRequest = {
+    const userWalletParams = {
       name,
-      salt: BNConverter.bnToHexString(salt),
-      signedMultiSigPayload: signedMultiSigPayloadDTO,
-      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
       otpCode,
     };
     const userWalletData = await this.client.post<UserWalletDTO>(
@@ -292,13 +268,13 @@ export class EthWallet extends EthLikeWallet {
 
   async getDepositAddress(walletId: string): Promise<EthDepositAddress> {
     const userWalletData = await this.client.get<UserWalletDTO>(
-      `${this.baseUrl}/deposit-addresses/${walletId}`
+      `${this.baseUrl}/user-wallets/${walletId}`
     );
     return new EthDepositAddress(
       this.client,
       this.data,
       this.keychains,
-      transformUserWalletData(userWalletData),
+      transformDepositAddressData(userWalletData),
       this.blockchain
     );
   }
@@ -339,9 +315,7 @@ export class EthWallet extends EthLikeWallet {
     const queryString = makeQueryString(options);
     const data = await this.client.get<
       NoUndefinedField<PaginationUserWalletDTO>
-    >(
-      `${this.baseUrl}/deposit-addresses${queryString ? `?${queryString}` : ""}`
-    );
+    >(`${this.baseUrl}/user-wallets${queryString ? `?${queryString}` : ""}`);
 
     return {
       pagination: data.pagination,
