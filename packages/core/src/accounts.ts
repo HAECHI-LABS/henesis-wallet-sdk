@@ -73,9 +73,12 @@ export class Accounts {
   }
 
   async verifyEmail(email: string) {
-    await this.client.post(`${this.baseUrl}/email/verify`, {
+    const queryString = makeQueryString({
       email,
     });
+    await this.client.get(
+      `${this.baseUrl}/email/verify${queryString ? `?${queryString}` : ""}`
+    );
   }
 
   async verify(params: {
