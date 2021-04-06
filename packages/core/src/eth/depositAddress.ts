@@ -44,7 +44,7 @@ export class EthDepositAddress extends EthLikeWallet {
       data,
       keychains,
       blockchain,
-      `/wallets/${data.id}/deposit-addresses/${depositWalletData.id}`
+      `/wallets/${data.id}/user-wallets/${depositWalletData.id}`
     );
     this.depositWalletData = depositWalletData;
   }
