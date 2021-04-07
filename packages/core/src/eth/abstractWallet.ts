@@ -14,7 +14,11 @@ import {
 } from "./transactions";
 import { Client } from "../httpClient";
 import BatchRequest from "./batch";
-import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
+import {
+  BNConverter,
+  checkNullAndUndefinedParameter,
+  HexConverter,
+} from "../utils/common";
 import { WalletData, Wallet } from "../wallet";
 import { Coins } from "./coins";
 import {
@@ -29,6 +33,10 @@ import _ from "lodash";
 import { ValidationParameterError } from "../error";
 import { Coin } from "./coin";
 import { randomBytes } from "crypto";
+import { keccak256 } from "./eth-core-lib/hash";
+import { toChecksum } from "./keychains";
+import { Address } from "cluster";
+import EthCrypto from "eth-crypto";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -63,6 +71,11 @@ export function convertSignedMultiSigPayloadToDTO(
       walletAddress: signedMultiSigPayload.multiSigPayload.walletAddress,
     },
   };
+}
+
+export function getAddressFromCompressedPub(pub: string): string {
+  const pubKey = EthCrypto.publicKey.decompress(HexConverter.remove0x(pub));
+  return EthCrypto.publicKey.toAddress(pubKey);
 }
 
 export abstract class EthLikeWallet extends Wallet<EthTransaction> {
