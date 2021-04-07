@@ -8,24 +8,24 @@ import {
   AccessTokenDTO,
   Role,
   LoginIpDTO,
+  SignUpRequest,
+  SignUpResponse,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
+import { accountSignup } from "./apis/accounts";
 
 export interface AccountWithOTP extends Account {
   otp?: OTP;
 }
 
-export interface Account {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  accessToken?: string;
-  roles: Role[];
-}
+export interface Account extends AccountDTO {}
 
 export interface AccountWithIps extends Account {
   loginIps: LoginIpDTO[];
+}
+
+interface AccountLogin extends Account {
+  isTempPassword: boolean;
 }
 
 export interface OTP {
@@ -47,19 +47,30 @@ export class Accounts {
   }
 
   me(): Promise<Account> {
-    return this.client.get<AccountDTO>(`${this.baseUrl}/me`);
+    return this.client.get<Account>(`${this.baseUrl}/me`);
   }
 
   login(
     email: string,
     password: string,
     otpCode?: string
-  ): Promise<AccountWithOTP> {
-    return this.client.post<LoginResponse>(`${this.baseUrl}/login`, {
+  ): Promise<AccountLogin> {
+    return this.client.post<AccountLogin>(`${this.baseUrl}/login`, {
       email,
       password,
       otpCode,
     });
+  }
+
+  signup(params: SignUpRequest): Promise<SignUpResponse> {
+    return accountSignup({
+      client: this.client,
+      request: params,
+    });
+  }
+
+  async verifyEmail(email: string) {
+    await this.client.post(`${this.baseUrl}/email-verify`, { email });
   }
 
   async verify(params: {
