@@ -33,6 +33,8 @@ export interface AllowedIp {
 
 export interface AllowedIpsPaginationOptions extends PaginationOptions {}
 
+export interface OrganizationAccount extends OrgAccountDTO {}
+
 export class Organizations {
   private readonly client: Client;
 
@@ -46,8 +48,8 @@ export class Organizations {
     return this.client.get<OrganizationDTO>(`${this.baseUrl}/me`);
   }
 
-  getAccounts(): Promise<AccountWithIps[]> {
-    return this.client.get<OrgAccountDTO[]>(`${this.baseUrl}/accounts`);
+  getAccounts(): Promise<OrganizationAccount[]> {
+    return this.client.get<OrganizationAccount[]>(`${this.baseUrl}/accounts`);
   }
 
   createSecret(): Promise<Secret> {
@@ -59,13 +61,10 @@ export class Organizations {
     role: Role,
     otpCode?: string
   ): Promise<Account> {
-    return this.client.patch<AccountDTO>(
-      `${this.baseUrl}/accounts/${accountId}`,
-      {
-        role,
-        otpCode,
-      }
-    );
+    return this.client.patch<Account>(`${this.baseUrl}/accounts/${accountId}`, {
+      role,
+      otpCode,
+    });
   }
 
   async addAllowedIP(params: {
