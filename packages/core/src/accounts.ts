@@ -12,6 +12,7 @@ import {
   SignUpResponse,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
+import { accountSignup } from "./apis/accounts";
 
 export interface AccountWithOTP extends Account {
   otp?: OTP;
@@ -33,7 +34,6 @@ export interface OTP {
 }
 
 export import Role = Role;
-import { accountSignup } from "./apis/accounts";
 
 export class Accounts {
   private readonly client: Client;
