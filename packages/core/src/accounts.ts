@@ -24,7 +24,7 @@ export interface AccountWithIps extends Account {
   loginIps: LoginIpDTO[];
 }
 
-export interface AccountLogin extends Account {
+export interface AccountLogin extends LoginResponse {
   isTempPassword: boolean;
 }
 
