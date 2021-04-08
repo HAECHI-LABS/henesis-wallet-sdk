@@ -10,7 +10,7 @@ async function main() {
     url: process.env.URL,
   });
 
-  const wallet: EthWallet = await sdk.eth.wallets.getMasterWallet(
+  const wallet: EthWallet = await sdk.eth.wallets.getWallet(
     "c69c0890824c1f2533d39ba7f146869e"
   );
   // valid case
@@ -28,4 +28,4 @@ async function main() {
   );
 }
 
-main().catch((e) => console.error(e));
+main();

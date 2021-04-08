@@ -1,16 +1,18 @@
 /// <reference path="../src/typings/index.d.ts" />
-import { SDK } from "../src";
-import { EthWallet, EthUserWallet } from "../src/eth/wallet";
+import { SDK, Env } from "../src";
+import { EthMasterWallet } from "../src/eth/wallet";
 import "dotenv/config";
+import { EthUserWallet } from "../src/eth/userWallet";
 
 async function main() {
   const sdk = new SDK({
     accessToken: process.env.ACCESS_TOKEN,
     secret: process.env.SECRET,
     url: process.env.URL,
+    env: Env.Local,
   });
 
-  const wallet: EthWallet = await sdk.eth.wallets.getMasterWallet(
+  const wallet: EthMasterWallet = await sdk.eth.wallets.getMasterWallet(
     "4b0945c3e21d6fba4703d56c94a786de"
   );
   const userWallet: EthUserWallet = await wallet.createUserWallet(
@@ -21,4 +23,4 @@ async function main() {
   console.log(userWallet.getData());
 }
 
-main().catch((e) => console.error(e));
+main();
