@@ -24,7 +24,6 @@ export const signup = async ({
   return response.data;
 };
 
-
 export const verifyEmail = async ({
   client,
   request,
