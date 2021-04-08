@@ -1,6 +1,5 @@
 /// <reference path="../src/typings/index.d.ts" />
-import { SDK } from "../src";
-import { EthWallet, EthUserWallet } from "../src/eth/wallet";
+import { SDK, Env } from "../src";
 import "dotenv/config";
 import { Pagination } from "../src/types";
 
@@ -9,12 +8,13 @@ async function main() {
     accessToken: process.env.ACCESS_TOKEN,
     secret: process.env.SECRET,
     url: process.env.URL,
+    env: Env.Local,
   });
 
-  const wallet: EthWallet = await sdk.eth.wallets.getMasterWallet(
+  const wallet = await sdk.eth.wallets.getMasterWallet(
     "3be5351bd52626108326f9ec44b7b633"
   );
-  const userWallets: Pagination<EthUserWallet> = await wallet.getUserWallets({
+  const userWallets = await wallet.getUserWallets({
     name: "wallet",
   });
 
@@ -23,4 +23,4 @@ async function main() {
   });
 }
 
-main().catch((e) => console.error(e));
+main();

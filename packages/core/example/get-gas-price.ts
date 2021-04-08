@@ -9,9 +9,7 @@ async function main() {
     env: Env.Local,
   });
 
-  console.log(
-    await sdk.eth.gasPrice.getGasPrice()
-  );
+  console.log(await sdk.eth.gasPrice.getGasPrice());
 }
 
 main();
