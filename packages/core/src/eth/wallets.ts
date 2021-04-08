@@ -23,7 +23,7 @@ import {
   MasterWalletDTO,
 } from "../__generate__/eth";
 import { InactiveWallet, InactiveMasterWallet } from "../wallet";
-import { isLessThanWalletV3 } from "../utils/wallet";
+import { isLessThanWalletV4 } from "../utils/wallet";
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -50,7 +50,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
-    if (isLessThanWalletV3(walletData.version)) {
+    if (isLessThanWalletV4(walletData.version)) {
       throw new Error("wallet does not exist");
     }
     return new EthMasterWallet(
@@ -65,7 +65,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
-    if (!isLessThanWalletV3(walletData.version)) {
+    if (!isLessThanWalletV4(walletData.version)) {
       throw new Error("wallet does not exist");
     }
     return new EthWallet(
@@ -83,7 +83,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
     return walletDatas
-      .filter((walletData) => !isLessThanWalletV3(walletData.version))
+      .filter((walletData) => !isLessThanWalletV4(walletData.version))
       .map((walletData) => {
         return new EthWallet(
           this.client,
@@ -104,7 +104,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
 
     return walletDatas.map((walletData) => {
       const { version } = walletData;
-      if (isLessThanWalletV3(version)) {
+      if (isLessThanWalletV4(version)) {
         return new EthMasterWallet(
           this.client,
           transformMasterWalletData(walletData),
@@ -130,7 +130,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
     return walletDatas
-      .filter((walletData) => isLessThanWalletV3(walletData.version))
+      .filter((walletData) => isLessThanWalletV4(walletData.version))
       .map(
         (walletData) =>
           new EthMasterWallet(
