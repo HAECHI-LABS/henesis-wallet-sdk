@@ -13,8 +13,11 @@ import {
   EthLikeWallet,
   EthWalletData,
   EthMasterWalletData,
+  EthTransaction,
 } from "./abstractWallet";
 import { transformWalletStatus } from "../wallet";
+import BN from "bn.js";
+import { Coin } from "./coin";
 
 export const transformDepositAddressData = (
   data: UserWalletDTO
@@ -89,6 +92,30 @@ export class EthDepositAddress extends EthLikeWallet {
       request
     );
     this.depositWalletData.name = depositWalletData.name;
+  }
+
+  transfer(
+    coin: string | Coin,
+    to: string,
+    amount: BN,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN
+  ): Promise<EthTransaction> {
+    throw new Error("unimplemented method");
+  }
+
+  contractCall(
+    contractAddress: string,
+    value: BN,
+    data: string,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN
+  ): Promise<EthTransaction> {
+    throw new Error("unimplemented method");
   }
 
   changePassphrase(
