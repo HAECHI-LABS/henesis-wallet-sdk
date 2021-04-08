@@ -54,6 +54,19 @@ export interface ActivateMasterWalletRequest {
 /**
  * 
  * @export
+ * @interface Address
+ */
+export interface Address {
+    /**
+     * 
+     * @type {string}
+     * @memberof Address
+     */
+    value?: string;
+}
+/**
+ * 
+ * @export
  * @interface AllowedAddressDTO
  */
 export interface AllowedAddressDTO {
@@ -523,6 +536,55 @@ export interface EstimatedFeeDTO {
 /**
  * 
  * @export
+ * @interface ExternalWithdrawalSearchCondition
+ */
+export interface ExternalWithdrawalSearchCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalWithdrawalSearchCondition
+     */
+    status?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalWithdrawalSearchCondition
+     */
+    updatedAtGte?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalWithdrawalSearchCondition
+     */
+    updatedAtLt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalWithdrawalSearchCondition
+     */
+    createdAtGte?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalWithdrawalSearchCondition
+     */
+    createdAtLt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalWithdrawalSearchCondition
+     */
+    orgId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExternalWithdrawalSearchCondition
+     */
+    walletId?: string;
+}
+/**
+ * 
+ * @export
  * @interface InactivateAllowedAddressesRequest
  */
 export interface InactivateAllowedAddressesRequest {
@@ -710,6 +772,25 @@ export interface PaginationMeta {
 /**
  * 
  * @export
+ * @interface PaginationSimplifiedTransferDTO
+ */
+export interface PaginationSimplifiedTransferDTO {
+    /**
+     * 
+     * @type {PaginationMeta}
+     * @memberof PaginationSimplifiedTransferDTO
+     */
+    pagination: PaginationMeta;
+    /**
+     * 
+     * @type {Array<SimplifiedTransferDTO>}
+     * @memberof PaginationSimplifiedTransferDTO
+     */
+    results: Array<SimplifiedTransferDTO>;
+}
+/**
+ * 
+ * @export
  * @interface PaginationTransferDTO
  */
 export interface PaginationTransferDTO {
@@ -744,6 +825,25 @@ export interface PaginationTransferInternalDTO {
      * @memberof PaginationTransferInternalDTO
      */
     results: Array<TransferInternalDTO>;
+}
+/**
+ * 
+ * @export
+ * @interface PaginationWalletDTO
+ */
+export interface PaginationWalletDTO {
+    /**
+     * 
+     * @type {PaginationMeta}
+     * @memberof PaginationWalletDTO
+     */
+    pagination: PaginationMeta;
+    /**
+     * 
+     * @type {Array<WalletDTO>}
+     * @memberof PaginationWalletDTO
+     */
+    results: Array<WalletDTO>;
 }
 /**
  * 
@@ -897,6 +997,95 @@ export interface RejectWithdrawalApprovalRequest {
      */
     otpCode?: string;
 }
+/**
+ * 
+ * @export
+ * @interface SimplifiedTransferDTO
+ */
+export interface SimplifiedTransferDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedTransferDTO
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedTransferDTO
+     */
+    amount?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedTransferDTO
+     */
+    type?: SimplifiedTransferDTOTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedTransferDTO
+     */
+    status?: SimplifiedTransferDTOStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedTransferDTO
+     */
+    orgId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedTransferDTO
+     */
+    walletId?: string;
+    /**
+     * 
+     * @type {Address}
+     * @memberof SimplifiedTransferDTO
+     */
+    receivedAt?: Address;
+    /**
+     * 
+     * @type {Address}
+     * @memberof SimplifiedTransferDTO
+     */
+    sendTo?: Address;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedTransferDTO
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedTransferDTO
+     */
+    updatedAt?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SimplifiedTransferDTOTypeEnum {
+    WITHDRAWAL = 'WITHDRAWAL',
+    DEPOSIT = 'DEPOSIT'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SimplifiedTransferDTOStatusEnum {
+    PENDINGAPPROVAL = 'PENDING_APPROVAL',
+    REJECTED = 'REJECTED',
+    PENDING = 'PENDING',
+    MINED = 'MINED',
+    CONFIRMED = 'CONFIRMED',
+    REQUESTED = 'REQUESTED'
+}
+
 /**
  * 
  * @export
@@ -1217,6 +1406,61 @@ export interface TransferInternalDTO {
 /**
  * 
  * @export
+ * @interface TransferSearchCondition
+ */
+export interface TransferSearchCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    status?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    updatedAtGte?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    updatedAtLt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    createdAtGte?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    createdAtLt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    orgId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    walletId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    transferType?: string;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 export enum TransferStatus {
@@ -1263,6 +1507,168 @@ export interface ValidateIsAllowedAddressResponse {
      * @memberof ValidateIsAllowedAddressResponse
      */
     isValid: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface WalletDTO
+ */
+export interface WalletDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    blockchain?: WalletDTOBlockchainEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    type?: WalletDTOTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    status?: WalletDTOStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    address?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    walletId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    orgId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    walletName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    createdAt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    updatedAt?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum WalletDTOBlockchainEnum {
+    ETHEREUM = 'ETHEREUM',
+    KLAYTN = 'KLAYTN',
+    BITCOIN = 'BITCOIN'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum WalletDTOTypeEnum {
+    MASTERWALLET = 'MASTER_WALLET',
+    DEPOSITADDRESS = 'DEPOSIT_ADDRESS'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum WalletDTOStatusEnum {
+    ACTIVE = 'ACTIVE',
+    INACTIVE = 'INACTIVE',
+    CREATING = 'CREATING'
+}
+
+/**
+ * 
+ * @export
+ * @interface WalletSearchCondition
+ */
+export interface WalletSearchCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletSearchCondition
+     */
+    status?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletSearchCondition
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletSearchCondition
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletSearchCondition
+     */
+    address?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletSearchCondition
+     */
+    updatedAtGte?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletSearchCondition
+     */
+    updatedAtLt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletSearchCondition
+     */
+    createdAtGte?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletSearchCondition
+     */
+    createdAtLt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletSearchCondition
+     */
+    orgId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletSearchCondition
+     */
+    walletId?: string;
 }
 /**
  * 
@@ -1359,14 +1765,19 @@ export const AdminControllerApiAxiosParamCreator = function (configuration?: Con
     return {
         /**
          * 
-         * @param {object} specs 
+         * @param {Pageable} pageable 
+         * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDepositAddresses: async (specs: object, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'specs' is not null or undefined
-            if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getDepositAddresses.');
+        getDepositAddresses: async (pageable: Pageable, condition: WalletSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getDepositAddresses.');
+            }
+            // verify required parameter 'condition' is not null or undefined
+            if (condition === null || condition === undefined) {
+                throw new RequiredError('condition','Required parameter condition was null or undefined when calling getDepositAddresses.');
             }
             const localVarPath = `/api/v2/btc/admin/deposit-addresses`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1378,8 +1789,12 @@ export const AdminControllerApiAxiosParamCreator = function (configuration?: Con
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (specs !== undefined) {
-                localVarQueryParameter['specs'] = specs;
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (condition !== undefined) {
+                localVarQueryParameter['condition'] = condition;
             }
 
 
@@ -1397,14 +1812,66 @@ export const AdminControllerApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * 
-         * @param {object} specs 
+         * @param {Pageable} pageable 
+         * @param {ExternalWithdrawalSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets: async (specs: object, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'specs' is not null or undefined
-            if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getMasterWallets.');
+        getExternalWithdrawals: async (pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getExternalWithdrawals.');
+            }
+            // verify required parameter 'condition' is not null or undefined
+            if (condition === null || condition === undefined) {
+                throw new RequiredError('condition','Required parameter condition was null or undefined when calling getExternalWithdrawals.');
+            }
+            const localVarPath = `/api/v2/btc/admin/external-withdrawals`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (condition !== undefined) {
+                localVarQueryParameter['condition'] = condition;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {WalletSearchCondition} condition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMasterWallets: async (pageable: Pageable, condition: WalletSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getMasterWallets.');
+            }
+            // verify required parameter 'condition' is not null or undefined
+            if (condition === null || condition === undefined) {
+                throw new RequiredError('condition','Required parameter condition was null or undefined when calling getMasterWallets.');
             }
             const localVarPath = `/api/v2/btc/admin/master-wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1416,8 +1883,12 @@ export const AdminControllerApiAxiosParamCreator = function (configuration?: Con
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (specs !== undefined) {
-                localVarQueryParameter['specs'] = specs;
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (condition !== undefined) {
+                localVarQueryParameter['condition'] = condition;
             }
 
 
@@ -1435,14 +1906,19 @@ export const AdminControllerApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * 
-         * @param {object} specs 
+         * @param {Pageable} pageable 
+         * @param {TransferSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfers1: async (specs: object, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'specs' is not null or undefined
-            if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getTransfers1.');
+        getTransfers1: async (pageable: Pageable, condition: TransferSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransfers1.');
+            }
+            // verify required parameter 'condition' is not null or undefined
+            if (condition === null || condition === undefined) {
+                throw new RequiredError('condition','Required parameter condition was null or undefined when calling getTransfers1.');
             }
             const localVarPath = `/api/v2/btc/admin/transfers`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1454,8 +1930,12 @@ export const AdminControllerApiAxiosParamCreator = function (configuration?: Con
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (specs !== undefined) {
-                localVarQueryParameter['specs'] = specs;
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (condition !== undefined) {
+                localVarQueryParameter['condition'] = condition;
             }
 
 
@@ -1482,12 +1962,13 @@ export const AdminControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {object} specs 
+         * @param {Pageable} pageable 
+         * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDepositAddresses(specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getDepositAddresses(specs, options);
+        async getDepositAddresses(pageable: Pageable, condition: WalletSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
+            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getDepositAddresses(pageable, condition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1495,12 +1976,13 @@ export const AdminControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {object} specs 
+         * @param {Pageable} pageable 
+         * @param {ExternalWithdrawalSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMasterWallets(specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getMasterWallets(specs, options);
+        async getExternalWithdrawals(pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationSimplifiedTransferDTO>> {
+            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawals(pageable, condition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1508,12 +1990,27 @@ export const AdminControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {object} specs 
+         * @param {Pageable} pageable 
+         * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransfers1(specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getTransfers1(specs, options);
+        async getMasterWallets(pageable: Pageable, condition: WalletSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
+            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getMasterWallets(pageable, condition, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {TransferSearchCondition} condition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTransfers1(pageable: Pageable, condition: TransferSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationSimplifiedTransferDTO>> {
+            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getTransfers1(pageable, condition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1530,30 +2027,43 @@ export const AdminControllerApiFactory = function (configuration?: Configuration
     return {
         /**
          * 
-         * @param {object} specs 
+         * @param {Pageable} pageable 
+         * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDepositAddresses(specs: object, options?: any): AxiosPromise<void> {
-            return AdminControllerApiFp(configuration).getDepositAddresses(specs, options).then((request) => request(axios, basePath));
+        getDepositAddresses(pageable: Pageable, condition: WalletSearchCondition, options?: any): AxiosPromise<PaginationWalletDTO> {
+            return AdminControllerApiFp(configuration).getDepositAddresses(pageable, condition, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {object} specs 
+         * @param {Pageable} pageable 
+         * @param {ExternalWithdrawalSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets(specs: object, options?: any): AxiosPromise<void> {
-            return AdminControllerApiFp(configuration).getMasterWallets(specs, options).then((request) => request(axios, basePath));
+        getExternalWithdrawals(pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<PaginationSimplifiedTransferDTO> {
+            return AdminControllerApiFp(configuration).getExternalWithdrawals(pageable, condition, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {object} specs 
+         * @param {Pageable} pageable 
+         * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfers1(specs: object, options?: any): AxiosPromise<void> {
-            return AdminControllerApiFp(configuration).getTransfers1(specs, options).then((request) => request(axios, basePath));
+        getMasterWallets(pageable: Pageable, condition: WalletSearchCondition, options?: any): AxiosPromise<PaginationWalletDTO> {
+            return AdminControllerApiFp(configuration).getMasterWallets(pageable, condition, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {TransferSearchCondition} condition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransfers1(pageable: Pageable, condition: TransferSearchCondition, options?: any): AxiosPromise<PaginationSimplifiedTransferDTO> {
+            return AdminControllerApiFp(configuration).getTransfers1(pageable, condition, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1567,35 +2077,50 @@ export const AdminControllerApiFactory = function (configuration?: Configuration
 export class AdminControllerApi extends BaseAPI {
     /**
      * 
-     * @param {object} specs 
+     * @param {Pageable} pageable 
+     * @param {WalletSearchCondition} condition 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminControllerApi
      */
-    public getDepositAddresses(specs: object, options?: any) {
-        return AdminControllerApiFp(this.configuration).getDepositAddresses(specs, options).then((request) => request(this.axios, this.basePath));
+    public getDepositAddresses(pageable: Pageable, condition: WalletSearchCondition, options?: any) {
+        return AdminControllerApiFp(this.configuration).getDepositAddresses(pageable, condition, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {object} specs 
+     * @param {Pageable} pageable 
+     * @param {ExternalWithdrawalSearchCondition} condition 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminControllerApi
      */
-    public getMasterWallets(specs: object, options?: any) {
-        return AdminControllerApiFp(this.configuration).getMasterWallets(specs, options).then((request) => request(this.axios, this.basePath));
+    public getExternalWithdrawals(pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options?: any) {
+        return AdminControllerApiFp(this.configuration).getExternalWithdrawals(pageable, condition, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {object} specs 
+     * @param {Pageable} pageable 
+     * @param {WalletSearchCondition} condition 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminControllerApi
      */
-    public getTransfers1(specs: object, options?: any) {
-        return AdminControllerApiFp(this.configuration).getTransfers1(specs, options).then((request) => request(this.axios, this.basePath));
+    public getMasterWallets(pageable: Pageable, condition: WalletSearchCondition, options?: any) {
+        return AdminControllerApiFp(this.configuration).getMasterWallets(pageable, condition, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Pageable} pageable 
+     * @param {TransferSearchCondition} condition 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminControllerApi
+     */
+    public getTransfers1(pageable: Pageable, condition: TransferSearchCondition, options?: any) {
+        return AdminControllerApiFp(this.configuration).getTransfers1(pageable, condition, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -2535,11 +3060,11 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
          * 
          * @param {string} walletId 
          * @param {Pageable} pageable 
-         * @param {object} specs 
+         * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDepositAddresses1: async (walletId: string, pageable: Pageable, specs: object, options: any = {}): Promise<RequestArgs> => {
+        getDepositAddresses1: async (walletId: string, pageable: Pageable, condition: WalletSearchCondition, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
                 throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getDepositAddresses1.');
@@ -2548,9 +3073,9 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
             if (pageable === null || pageable === undefined) {
                 throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getDepositAddresses1.');
             }
-            // verify required parameter 'specs' is not null or undefined
-            if (specs === null || specs === undefined) {
-                throw new RequiredError('specs','Required parameter specs was null or undefined when calling getDepositAddresses1.');
+            // verify required parameter 'condition' is not null or undefined
+            if (condition === null || condition === undefined) {
+                throw new RequiredError('condition','Required parameter condition was null or undefined when calling getDepositAddresses1.');
             }
             const localVarPath = `/api/v2/btc/wallets/{walletId}/deposit-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -2567,8 +3092,8 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
                 localVarQueryParameter['pageable'] = pageable;
             }
 
-            if (specs !== undefined) {
-                localVarQueryParameter['specs'] = specs;
+            if (condition !== undefined) {
+                localVarQueryParameter['condition'] = condition;
             }
 
 
@@ -3249,12 +3774,12 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * 
          * @param {string} walletId 
          * @param {Pageable} pageable 
-         * @param {object} specs 
+         * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDepositAddresses1(walletId: string, pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationDepositAddressDTO>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getDepositAddresses1(walletId, pageable, specs, options);
+        async getDepositAddresses1(walletId: string, pageable: Pageable, condition: WalletSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationDepositAddressDTO>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getDepositAddresses1(walletId, pageable, condition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3554,12 +4079,12 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * 
          * @param {string} walletId 
          * @param {Pageable} pageable 
-         * @param {object} specs 
+         * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDepositAddresses1(walletId: string, pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationDepositAddressDTO> {
-            return WalletControllerApiFp(configuration).getDepositAddresses1(walletId, pageable, specs, options).then((request) => request(axios, basePath));
+        getDepositAddresses1(walletId: string, pageable: Pageable, condition: WalletSearchCondition, options?: any): AxiosPromise<PaginationDepositAddressDTO> {
+            return WalletControllerApiFp(configuration).getDepositAddresses1(walletId, pageable, condition, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3838,13 +4363,13 @@ export class WalletControllerApi extends BaseAPI {
      * 
      * @param {string} walletId 
      * @param {Pageable} pageable 
-     * @param {object} specs 
+     * @param {WalletSearchCondition} condition 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getDepositAddresses1(walletId: string, pageable: Pageable, specs: object, options?: any) {
-        return WalletControllerApiFp(this.configuration).getDepositAddresses1(walletId, pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    public getDepositAddresses1(walletId: string, pageable: Pageable, condition: WalletSearchCondition, options?: any) {
+        return WalletControllerApiFp(this.configuration).getDepositAddresses1(walletId, pageable, condition, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
