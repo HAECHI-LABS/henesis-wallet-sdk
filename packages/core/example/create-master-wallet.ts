@@ -1,3 +1,4 @@
+/// <reference path="../src/typings/index.d.ts" />
 import { SDK, Env } from "../src";
 import "dotenv/config";
 

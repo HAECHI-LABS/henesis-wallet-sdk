@@ -1,7 +1,7 @@
-/// <reference path="../src/typings/index.d.ts" />
-import { SDK, Env } from "../src";
+/// <reference path="../../src/typings/index.d.ts" />
+import { SDK, Env } from "../../src";
 import "dotenv/config";
-import { Pagination } from "../src/types";
+import { Pagination } from "../../src/types";
 
 async function main() {
   const sdk = new SDK({
@@ -11,10 +11,10 @@ async function main() {
     env: Env.Local,
   });
 
-  const wallet = await sdk.eth.wallets.getMasterWallet(
+  const wallet = await sdk.eth.wallets.getWallet(
     "3be5351bd52626108326f9ec44b7b633"
   );
-  const userWallets = await wallet.getUserWallets({
+  const userWallets = await wallet.getDepositAddresses({
     name: "wallet",
   });
 

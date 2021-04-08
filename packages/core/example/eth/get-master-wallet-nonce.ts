@@ -1,6 +1,6 @@
-/// <reference path="../src/typings/index.d.ts" />
-import { SDK, Env } from "../src";
-import { EthWallet } from "../src/eth/wallet";
+/// <reference path="../../src/typings/index.d.ts" />
+import { SDK, Env } from "../../src";
+import { EthWallet } from "../../src/eth/wallet";
 import "dotenv/config";
 
 async function main() {
@@ -12,10 +12,9 @@ async function main() {
   });
 
   const wallet = await sdk.eth.wallets.getMasterWallet(
-    "9efbb37b3cc2e78c389ad389ce9d05ef"
+    "3be5351bd52626108326f9ec44b7b633"
   );
-  await wallet.changeName("name-changed");
-  console.log(wallet.getData());
+  console.log(wallet.getNonce());
 }
 
 main();

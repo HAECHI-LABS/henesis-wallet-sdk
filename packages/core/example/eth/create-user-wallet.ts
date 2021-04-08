@@ -1,5 +1,5 @@
-/// <reference path="../src/typings/index.d.ts" />
-import { SDK, Env } from "../src";
+/// <reference path="../../src/typings/index.d.ts" />
+import { SDK, Env } from "../../src";
 import "dotenv/config";
 
 async function main() {
