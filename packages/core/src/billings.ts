@@ -51,8 +51,6 @@ export interface InvoiceMainnetUsage {
   charge: number;
 }
 
-export interface AllowedIpsPaginationOptions extends PaginationOptions {}
-
 export class Billings {
   private readonly client: Client;
 
