@@ -14,11 +14,11 @@ async function main() {
   const wallet = await sdk.eth.wallets.getWallet(
     "3be5351bd52626108326f9ec44b7b633"
   );
-  const userWallets = await wallet.getDepositAddresses({
+  const depositAddresses = await wallet.getDepositAddresses({
     name: "wallet",
   });
 
-  userWallets.results.forEach((value) => {
+  depositAddresses.results.forEach((value) => {
     console.log(value.getData());
   });
 }

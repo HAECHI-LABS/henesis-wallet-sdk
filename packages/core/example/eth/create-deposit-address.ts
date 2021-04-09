@@ -13,9 +13,9 @@ async function main() {
   const wallet = await sdk.eth.wallets.getWallet(
     "4b0945c3e21d6fba4703d56c94a786de"
   );
-  const userWallet = await wallet.createDepositAddress("wallet");
+  const depositAddress = await wallet.createDepositAddress("wallet");
 
-  console.log(userWallet.getData());
+  console.log(depositAddress.getData());
 }
 
 main();
