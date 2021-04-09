@@ -115,8 +115,8 @@ export class EthUserWallet extends EthLikeWallet {
     throw new Error("unimplemented method");
   }
 
-  getEncryptionKey(): string {
-    return "";
+  getEncryptionKey() {
+    return null;
   }
 
   getAccountKey(): Key {

@@ -177,7 +177,7 @@ export abstract class Wallet<T> {
   abstract getAddress(): string;
   abstract getId(): string;
   abstract changeName(name: string);
-  abstract getEncryptionKey(): string;
+  abstract getEncryptionKey(): string | null;
   abstract getAccountKey(): Key;
   abstract updateAccountKey(key: Key);
   protected recoverPassphrase(encryptedPassphrase: string): string {
