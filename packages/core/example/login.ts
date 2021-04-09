@@ -1,6 +1,5 @@
 /// <reference path="../src/typings/index.d.ts" />
 import { SDK, Env } from "../src";
-import { Account } from "../src/accounts";
 import "dotenv/config";
 
 async function main() {
@@ -11,10 +10,7 @@ async function main() {
     env: Env.Local,
   });
 
-  const account: Account = await sdk.accounts.login(
-    "haechi@haechi.io",
-    "password"
-  );
+  const account = await sdk.accounts.login("haechi@haechi.io", "password");
   console.log(account);
 }
 
