@@ -13,6 +13,7 @@ export class Notices {
     this.client = client;
   }
 
+  // todo: implement
   getNotices(): Promise<Notice[]> {
     return Promise.resolve([
       {

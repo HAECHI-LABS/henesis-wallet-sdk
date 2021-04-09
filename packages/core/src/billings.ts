@@ -68,9 +68,7 @@ export class Billings {
     const { orgId } = request;
     const queryString: string = makeQueryString({});
 
-    // return this.client.get<BillingsInvoice>(
-    //   `${this.baseUrl}/${orgId}/invoice${queryString ? `?${queryString}` : ""}`
-    // );
+    // todo: implement
     return Promise.resolve({
       id: "1",
       orgName: "test",
@@ -112,9 +110,7 @@ export class Billings {
     const { orgId, ...rest } = request;
     const queryString: string = makeQueryString(rest);
 
-    // return this.client.get<BillingsInvoice>(
-    //   `${this.baseUrl}/${orgId}/invoice${queryString ? `?${queryString}` : ""}`
-    // );
+    // todo: implement
     return Promise.resolve({
       results: [
         {
@@ -151,9 +147,7 @@ export class Billings {
     const { orgId, ...rest } = request;
     const queryString: string = makeQueryString(rest);
 
-    // return this.client.get<BillingsInvoice>(
-    //   `${this.baseUrl}/${orgId}/invoice${queryString ? `?${queryString}` : ""}`
-    // );
+    // todo: implement
     return Promise.resolve([
       {
         invoiceId: "1",
@@ -178,9 +172,7 @@ export class Billings {
     const { orgId, ...rest } = request;
     const queryString: string = makeQueryString(rest);
 
-    // return this.client.get<BillingsInvoice>(
-    //   `${this.baseUrl}/${orgId}/invoice${queryString ? `?${queryString}` : ""}`
-    // );
+    // todo: implement
     return Promise.resolve([
       {
         invoiceId: "1",
