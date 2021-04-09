@@ -28,7 +28,7 @@ export interface Transaction {
   keyId: string;
   hash: string;
   error: string;
-  signedMultiSigPayload: SignedMultiSigPayload;
+  signedMultiSigPayload: SignedMultiSigPayload | null;
   rawTransaction: RawTransaction;
   status: TransactionStatus;
   isFeeDelegated: boolean;
@@ -73,7 +73,7 @@ export const formatMultiSigPayload = (
 
 export interface SignedMultiSigPayload {
   signature: string;
-  multiSigPayload: MultiSigPayload;
+  multiSigPayload: MultiSigPayload | null;
 }
 
 export interface RawTransaction {

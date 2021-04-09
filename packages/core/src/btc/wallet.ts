@@ -120,7 +120,7 @@ export interface DepositAddressPaginationOptions extends PaginationOptions {
 
 export interface BtcWithdrawalApproveParams extends ApproveWithdrawal {}
 
-export class BtcActivatingMasterWallet extends ActivatingMasterWallet {}
+export interface BtcActivatingMasterWallet extends ActivatingMasterWallet {}
 
 export const transformWalletData = (
   data: MasterWalletDTO
@@ -419,14 +419,23 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
       `${this.baseUrl}/activate`,
       params
     );
-    return new BtcActivatingMasterWallet(
-      masterWallet.id,
-      masterWallet.name,
-      BlockchainType.BITCOIN,
-      masterWallet.address,
-      masterWallet.status,
-      masterWallet.createdAt,
-      masterWallet.updatedAt
-    );
+    const {
+      id,
+      name: walletName,
+      address,
+      status,
+      createdAt,
+      updatedAt,
+    } = masterWallet;
+
+    return {
+      id,
+      name: walletName,
+      blockchain: BlockchainType.BITCOIN,
+      address,
+      status,
+      createdAt,
+      updatedAt,
+    };
   }
 }

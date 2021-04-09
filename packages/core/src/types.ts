@@ -31,7 +31,7 @@ export interface KeyWithPriv extends Key {
   priv: string;
 }
 
-export type Timestamp = number;
+export type Timestamp = string;
 
 export interface PaginationOptions {
   page?: number;

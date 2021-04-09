@@ -1,6 +1,6 @@
-/// <reference path="../src/typings/index.d.ts" />
-import { SDK, Env } from "../src";
-import { EthMasterWallet } from "../src/eth/wallet";
+/// <reference path="../../src/typings/index.d.ts" />
+import { SDK, Env } from "../../src";
+import { EthWallet } from "../../src/eth/wallet";
 import "dotenv/config";
 
 async function main() {
@@ -11,7 +11,7 @@ async function main() {
     env: Env.Local,
   });
 
-  const wallet: EthMasterWallet = await sdk.eth.wallets.getMasterWallet(
+  const wallet = await sdk.eth.wallets.getMasterWallet(
     "3be5351bd52626108326f9ec44b7b633"
   );
   console.log(

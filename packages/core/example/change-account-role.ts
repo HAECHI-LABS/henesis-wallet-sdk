@@ -18,4 +18,4 @@ async function main() {
   console.log(account);
 }
 
-main().catch((e) => console.error(e));
+main();
