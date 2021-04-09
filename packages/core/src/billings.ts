@@ -60,6 +60,7 @@ export class Billings {
     this.client = client;
   }
 
+  // todo: implement
   async getInvoice(request: {
     orgId: string;
     year: string;
@@ -68,7 +69,6 @@ export class Billings {
     const { orgId } = request;
     const queryString: string = makeQueryString({});
 
-    // todo: implement
     return Promise.resolve({
       id: "1",
       orgName: "test",
@@ -100,6 +100,7 @@ export class Billings {
     });
   }
 
+  // todo: implement
   async getInvoiceExternalWithdrawals(
     request: {
       orgId: string;
@@ -110,7 +111,6 @@ export class Billings {
     const { orgId, ...rest } = request;
     const queryString: string = makeQueryString(rest);
 
-    // todo: implement
     return Promise.resolve({
       results: [
         {
@@ -139,6 +139,7 @@ export class Billings {
     });
   }
 
+  // todo: implement
   async getInvoiceTokenListingUsage(request: {
     orgId: string;
     startAt?: string;
@@ -147,7 +148,6 @@ export class Billings {
     const { orgId, ...rest } = request;
     const queryString: string = makeQueryString(rest);
 
-    // todo: implement
     return Promise.resolve([
       {
         invoiceId: "1",
@@ -164,6 +164,7 @@ export class Billings {
     ]);
   }
 
+  // todo: implement
   async getInvoiceMainnetUsage(request: {
     orgId: string;
     startAt?: string;
@@ -172,7 +173,6 @@ export class Billings {
     const { orgId, ...rest } = request;
     const queryString: string = makeQueryString(rest);
 
-    // todo: implement
     return Promise.resolve([
       {
         invoiceId: "1",

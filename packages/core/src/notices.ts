@@ -22,5 +22,6 @@ export class Notices {
     ]);
   }
 
+  // todo: implement
   updateNotice(request: { noticeId: string; seen: boolean }) {}
 }
