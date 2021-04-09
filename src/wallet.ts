@@ -81,6 +81,7 @@ export interface WalletData {
   createdAt: string;
   updatedAt: string;
   status: WalletStatus;
+  version?: string;
 }
 
 export enum PolicyType {
@@ -118,37 +119,21 @@ export enum WalletStatus {
   INACTIVE = "INACTIVE",
 }
 
-export class InactiveMasterWallet {
+export interface InactiveWallet {
   id: string;
   name: string;
   blockchain: BlockchainType;
   henesisKey: Key;
   status: WalletStatus;
   createdAt: string;
-  updatedAt: string;
-
-  constructor(
-    id: string,
-    name: string,
-    blockchain: BlockchainType,
-    henesisKey: Key,
-    status: WalletStatus,
-    createdAt: string,
-    updatedAt: string
-  ) {
-    this.id = id;
-    this.name = name;
-    this.blockchain = blockchain;
-    this.henesisKey = henesisKey;
-    this.status = status;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-  }
+  updatedAt?: string;
 }
+
+export interface InactiveMasterWallet extends InactiveWallet {}
 
 // master wallet life cycle: (INACTIVE ->) CREATING -> ACTIVE
 // When activating master wallet, its status is changed to CREATING status.
-export class ActivatingMasterWallet {
+export interface ActivatingMasterWallet {
   id: string;
   name: string;
   blockchain: BlockchainType;
@@ -156,24 +141,6 @@ export class ActivatingMasterWallet {
   status: WalletStatus;
   createdAt: string;
   updatedAt: string;
-
-  constructor(
-    id: string,
-    name: string,
-    blockchain: BlockchainType,
-    address: string,
-    status: WalletStatus,
-    createdAt: string,
-    updatedAt: string
-  ) {
-    this.id = id;
-    this.name = name;
-    this.blockchain = blockchain;
-    this.address = address;
-    this.status = status;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-  }
 }
 
 export const transformWalletStatus = (
@@ -210,7 +177,7 @@ export abstract class Wallet<T> {
   abstract getAddress(): string;
   abstract getId(): string;
   abstract changeName(name: string);
-  abstract getEncryptionKey(): string;
+  abstract getEncryptionKey(): string | null;
   abstract getAccountKey(): Key;
   abstract updateAccountKey(key: Key);
   protected recoverPassphrase(encryptedPassphrase: string): string {

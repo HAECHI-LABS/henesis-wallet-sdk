@@ -18,7 +18,7 @@ async function main() {
     firstName: "dev",
     lastName: "haechi",
     organizationId: "575a431dc73615a9e65648180bbd4fbb",
-    language: "ko",
+    language: "KO",
   });
   console.log(account);
 }
