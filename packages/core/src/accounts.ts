@@ -12,7 +12,10 @@ import {
   SignUpResponse,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
-import { accountSignup } from "./apis/accounts";
+import {
+  signup as accountSignup,
+  verifyEmail as accountVerifyEmail,
+} from "./apis/accounts";
 
 export interface AccountWithOTP extends Account {
   otp?: OTP;
@@ -24,9 +27,7 @@ export interface AccountWithIps extends Account {
   loginIps: LoginIpDTO[];
 }
 
-interface AccountLogin extends Account {
-  isTempPassword: boolean;
-}
+export interface AccountLogin extends LoginResponse {}
 
 export interface OTP {
   key: string;
@@ -70,7 +71,10 @@ export class Accounts {
   }
 
   async verifyEmail(email: string) {
-    await this.client.post(`${this.baseUrl}/email-verify`, { email });
+    await accountVerifyEmail({
+      client: this.client,
+      request: { email },
+    });
   }
 
   async verify(params: {

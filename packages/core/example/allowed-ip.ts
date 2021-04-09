@@ -13,16 +13,20 @@ async function main() {
   console.log(await sdk.organizations.inactivateAllowedIps("otp"));
   console.log(await sdk.organizations.getAllowedIP("id"));
   console.log(await sdk.organizations.getAllowedIPs());
-  console.log(await sdk.organizations.addAllowedIP({
-    ipAddress: "ipAddress",
-    label: "label",
-    otpCode: "otp",
-  }));
-  console.log(await sdk.organizations.patchAllowedIpLabel({
-    id: "id",
-    label: "label",
-    otpCode: "otp",
-  }));
+  console.log(
+    await sdk.organizations.addAllowedIP({
+      ipAddress: "ipAddress",
+      label: "label",
+      otpCode: "otp",
+    })
+  );
+  console.log(
+    await sdk.organizations.patchAllowedIpLabel({
+      id: "id",
+      label: "label",
+      otpCode: "otp",
+    })
+  );
   console.log(await sdk.organizations.deleteAllowedIp("id", "otp"));
 }
 

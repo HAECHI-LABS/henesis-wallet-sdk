@@ -6,7 +6,11 @@ import { Client } from "../httpClient";
 import { Keychains } from "../types";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
 import { RecoveryKit } from "../recoverykit";
-import { EthMasterWallet, transformMasterWalletData } from "./wallet";
+import {
+  EthWallet,
+  EthMasterWallet,
+  transformMasterWalletData,
+} from "./wallet";
 import { Wallets } from "../wallets";
 import { toChecksum } from "./keychains";
 import { keccak256s } from "./eth-core-lib/hash";
@@ -18,7 +22,8 @@ import {
   InactiveMasterWalletDTO,
   MasterWalletDTO,
 } from "../__generate__/eth";
-import { InactiveMasterWallet } from "../wallet";
+import { InactiveWallet, InactiveMasterWallet } from "../wallet";
+import { isLessThanWalletV4 } from "../utils/wallet";
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -45,12 +50,75 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
+    if (isLessThanWalletV4(walletData.version)) {
+      throw new Error("wallet does not exist");
+    }
     return new EthMasterWallet(
       this.client,
       transformMasterWalletData(walletData),
       this.keychains,
       this.blockchain
     );
+  }
+
+  async getWallet(id: string): Promise<EthWallet> {
+    const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
+      `${this.baseUrl}/${id}`
+    );
+    if (!isLessThanWalletV4(walletData.version)) {
+      throw new Error("wallet does not exist");
+    }
+    return new EthWallet(
+      this.client,
+      transformMasterWalletData(walletData),
+      this.keychains,
+      this.blockchain
+    );
+  }
+
+  async getWallets(options?: MasterWalletSearchOptions): Promise<EthWallet[]> {
+    const queryString = makeQueryString(options);
+    const walletDatas = await this.client.get<
+      NoUndefinedField<MasterWalletDTO>[]
+    >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
+
+    return walletDatas
+      .filter((walletData) => !isLessThanWalletV4(walletData.version))
+      .map((walletData) => {
+        return new EthWallet(
+          this.client,
+          transformMasterWalletData(walletData),
+          this.keychains,
+          this.blockchain
+        );
+      });
+  }
+
+  async getAllWallets(
+    options?: MasterWalletSearchOptions
+  ): Promise<Array<EthWallet | EthMasterWallet>> {
+    const queryString = makeQueryString(options);
+    const walletDatas = await this.client.get<
+      NoUndefinedField<MasterWalletDTO>[]
+    >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
+
+    return walletDatas.map((walletData) => {
+      const { version } = walletData;
+      if (isLessThanWalletV4(version)) {
+        return new EthMasterWallet(
+          this.client,
+          transformMasterWalletData(walletData),
+          this.keychains,
+          this.blockchain
+        );
+      }
+      return new EthWallet(
+        this.client,
+        transformMasterWalletData(walletData),
+        this.keychains,
+        this.blockchain
+      );
+    });
   }
 
   async getMasterWallets(
@@ -61,15 +129,17 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       NoUndefinedField<MasterWalletDTO>[]
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
-    return walletDatas.map(
-      (walletData) =>
-        new EthMasterWallet(
-          this.client,
-          transformMasterWalletData(walletData),
-          this.keychains,
-          this.blockchain
-        )
-    );
+    return walletDatas
+      .filter((walletData) => isLessThanWalletV4(walletData.version))
+      .map(
+        (walletData) =>
+          new EthMasterWallet(
+            this.client,
+            transformMasterWalletData(walletData),
+            this.keychains,
+            this.blockchain
+          )
+      );
   }
 
   // todo: henesis-keys
@@ -198,14 +268,116 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       `${this.baseUrl}?type=inactive`,
       params
     );
-    return new InactiveMasterWallet(
-      masterWalletResponse.id,
-      masterWalletResponse.name,
-      transformBlockchainType(masterWalletResponse.blockchain),
-      masterWalletResponse.henesisKey,
-      masterWalletResponse.status,
-      masterWalletResponse.createdAt,
-      masterWalletResponse.updatedAt
+    const {
+      id,
+      name: walletName,
+      blockchain,
+      henesisKey,
+      status,
+      createdAt,
+      updatedAt,
+    } = masterWalletResponse;
+    return {
+      id,
+      name: walletName,
+      blockchain: transformBlockchainType(blockchain),
+      henesisKey,
+      status,
+      createdAt,
+      updatedAt,
+    };
+  }
+
+  async createWalletWithKit(recoveryKit: RecoveryKit): Promise<EthWallet> {
+    const walletData = await this.client.post<
+      NoUndefinedField<MasterWalletDTO>
+    >(this.baseUrl, {
+      name: recoveryKit.getName(),
+      accountKey: recoveryKit.getAccountKey(),
+      backupKey: this.removeKeyFile(recoveryKit.getBackupKey()),
+      encryptionKey: recoveryKit.getEncryptionKey(),
+    });
+
+    return new EthWallet(
+      this.client,
+      transformMasterWalletData(walletData),
+      this.keychains,
+      this.blockchain
     );
+  }
+
+  async createWallet(
+    name: string,
+    passphrase: string,
+    gasPrice?: BN
+  ): Promise<EthWallet> {
+    checkNullAndUndefinedParameter({ name, passphrase });
+    const accountKey = this.keychains.create(passphrase);
+    const backupKey = this.keychains.create(passphrase);
+    const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
+    const walletData = await this.client.post<
+      NoUndefinedField<MasterWalletDTO>
+    >(this.baseUrl, {
+      name,
+      blockchain: this.blockchain,
+      accountKey: this.removePrivateKey(accountKey),
+      backupKey: this.removeKeyFile(this.removePrivateKey(backupKey)),
+      encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+    });
+
+    return new EthWallet(
+      this.client,
+      transformMasterWalletData(walletData),
+      this.keychains,
+      this.blockchain
+    );
+  }
+
+  async retryCreateWallet(walletId: string, gasPrice?: BN) {
+    checkNullAndUndefinedParameter({ walletId });
+    const response = await this.client.post<MasterWalletDTO>(
+      `${this.baseUrl}/${walletId}/recreate`,
+      {
+        gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      }
+    );
+
+    return new EthWallet(
+      this.client,
+      transformMasterWalletData(response),
+      this.keychains,
+      this.blockchain
+    );
+  }
+
+  async createInactiveWallet(name: string): Promise<InactiveWallet> {
+    checkNullAndUndefinedParameter({ name });
+    const params: CreateInactiveMasterWalletRequest = {
+      name,
+      encryptionKey: this.createDummyEncryptionKey(),
+    };
+    const masterWalletResponse = await this.client.post<InactiveMasterWalletDTO>(
+      `${this.baseUrl}?type=inactive`,
+      params
+    );
+    const {
+      id,
+      name: walletName,
+      blockchain,
+      henesisKey,
+      status,
+      createdAt,
+      updatedAt,
+    } = masterWalletResponse;
+    return {
+      id,
+      name: walletName,
+      blockchain: transformBlockchainType(blockchain),
+      henesisKey,
+      status,
+      createdAt,
+      updatedAt,
+    };
   }
 }
