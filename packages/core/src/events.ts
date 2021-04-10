@@ -9,19 +9,6 @@ import {
   ValueTransferEventSearchCondition,
 } from "./__generate__/eth";
 
-interface Event {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  status: EventStatus;
-  transactionHash?: string;
-  walletId: string;
-  transactionId?: string;
-  orgId?: string;
-  masterWalletId?: string;
-  confirmation: BN;
-}
-
 interface CallEvent extends Omit<CallEventDTO, "confirmation"> {
   fromAddress: string;
   toAddress: string;
@@ -29,8 +16,7 @@ interface CallEvent extends Omit<CallEventDTO, "confirmation"> {
   confirmation: BN;
 }
 
-// CallEventDTO
-export type EthCallEvent = CallEvent;
+export interface EthCallEvent extends CallEvent {}
 
 interface ValueTransferEvent
   extends Omit<
@@ -38,7 +24,7 @@ interface ValueTransferEvent
     "amount" | "blockchain" | "confirmation" | "blockHash"
   > {}
 
-export type EthValueTransferEvent = ValueTransferEvent;
+export interface EthValueTransferEvent extends ValueTransferEvent {}
 
 interface ValueTransferEventPaginationOptions
   extends PaginationOptions,
