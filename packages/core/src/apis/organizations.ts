@@ -36,9 +36,9 @@ export const getInvoice = async ({
 }: {
   client: Client;
   request: {
+    orgId: string;
     year: string;
     month: string;
-    organizationId: string;
   };
 }): Promise<InvoiceResponse> => {
   return {
@@ -94,9 +94,9 @@ export const getPreviousWithdrawalFeeInvoice = async ({
 }: {
   client: Client;
   request: {
+    orgId: string;
     year: string;
     month: string;
-    organizationId: string;
   };
 }): Promise<PreviousWithdrawalFeeInvoiceResponse> => {
   return {
@@ -115,7 +115,7 @@ export const getPreviousWithdrawalFeeInvoice = async ({
   };
 };
 
-interface TokenListingChargeResponse {
+export interface TokenListingChargeResponse {
   id: string;
   billingYear: number;
   billingMonth: number;
@@ -136,9 +136,9 @@ export const getPreviousMonthNewTokenListingCharge = async ({
 }: {
   client: Client;
   request: {
+    orgId: string;
     year: string;
     month: string;
-    organizationId: string;
   };
 }): Promise<TokenListingChargeResponse> => {
   return {
@@ -163,9 +163,9 @@ export const getThisMonthTokenListingCharge = async ({
 }: {
   client: Client;
   request: {
+    orgId: string;
     year: string;
     month: string;
-    organizationId: string;
   };
 }): Promise<TokenListingChargeResponse> => {
   return {
