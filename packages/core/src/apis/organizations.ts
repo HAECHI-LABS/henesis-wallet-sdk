@@ -1,10 +1,6 @@
 import _ from "lodash";
 import { AxiosInstance } from "axios";
-import {
-  AccountControllerApiFactory,
-  SignUpRequest,
-  VerifyEmailRequest,
-} from "../__generate__/accounts/api";
+import { AccountControllerApiFactory } from "../__generate__/accounts/api";
 
 import { Client } from "../httpClient";
 
@@ -29,6 +25,66 @@ export interface InvoiceResponse {
   endDate: string;
   chargedAt: string;
 }
+
+export interface TokenListingChargeHistory {
+  id: string;
+  startDate: string;
+  endDate: string;
+  coin: {
+    id: string;
+    name: string;
+    symbol: string;
+    source: string;
+  };
+  charge: string;
+  isExempted: boolean; // (해치 오딧으로 인한) 면제 여부
+}
+
+export interface TokenListingChargeResponse {
+  id: string;
+  billingYear: number;
+  billingMonth: number;
+  organization: {
+    id: string;
+    name: string;
+  };
+  prevMonthTokenListingCharge: string;
+  tokenListingChargeHistories: Array<TokenListingChargeHistory>;
+  startDate: string;
+  endDate: string;
+  chargedAt: string;
+}
+
+export interface PreviousWithdrawalFeeInvoiceResponse {
+  id: string;
+  billingYear: number;
+  billingMonth: number;
+  organization: {
+    id: string;
+    name: string;
+  };
+  prevMonthWithdrawalFee: string;
+  tokenListingChargeHistories: Array<TokenListingChargeHistory>;
+  startDate: string;
+  endDate: string;
+  chargedAt: string;
+}
+
+const MOCK_TOKEN_LISTING_CHARGE_HISTORIES: TokenListingChargeHistory[] = [
+  {
+    id: "1",
+    startDate: String(new Date().valueOf()),
+    endDate: String(new Date().valueOf()),
+    coin: {
+      id: "1",
+      name: "test",
+      symbol: "ETH",
+      source: "test",
+    },
+    charge: "0",
+    isExempted: false,
+  },
+];
 
 export const getInvoice = async ({
   client,
@@ -59,35 +115,6 @@ export const getInvoice = async ({
   };
 };
 
-export interface TokenListingChargeHistory {
-  id: string;
-  startDate: string;
-  endDate: string;
-  coin: {
-    id: string;
-    name: string;
-    symbol: string;
-    source: string;
-  };
-  charge: string;
-  isExempted: boolean; // (해치 오딧으로 인한) 면제 여부
-}
-
-export interface PreviousWithdrawalFeeInvoiceResponse {
-  id: string;
-  billingYear: number;
-  billingMonth: number;
-  organization: {
-    id: string;
-    name: string;
-  };
-  prevMonthWithdrawalFee: string;
-  tokenListingChargeHistories: Array<TokenListingChargeHistory>;
-  startDate: string;
-  endDate: string;
-  chargedAt: string;
-}
-
 export const getPreviousWithdrawalFeeInvoice = async ({
   client,
   request,
@@ -108,27 +135,12 @@ export const getPreviousWithdrawalFeeInvoice = async ({
       name: "test",
     },
     prevMonthWithdrawalFee: "0",
-    tokenListingChargeHistories: [],
+    tokenListingChargeHistories: MOCK_TOKEN_LISTING_CHARGE_HISTORIES,
     startDate: String(new Date().valueOf()),
     endDate: String(new Date().valueOf()),
     chargedAt: String(new Date().valueOf()),
   };
 };
-
-export interface TokenListingChargeResponse {
-  id: string;
-  billingYear: number;
-  billingMonth: number;
-  organization: {
-    id: string;
-    name: string;
-  };
-  prevMonthTokenListingCharge: string;
-  tokenListingChargeHistories: Array<TokenListingChargeHistory>;
-  startDate: string;
-  endDate: string;
-  chargedAt: string;
-}
 
 export const getPreviousMonthNewTokenListingCharge = async ({
   client,
@@ -150,7 +162,7 @@ export const getPreviousMonthNewTokenListingCharge = async ({
       name: "test",
     },
     prevMonthTokenListingCharge: "0",
-    tokenListingChargeHistories: [],
+    tokenListingChargeHistories: MOCK_TOKEN_LISTING_CHARGE_HISTORIES,
     startDate: String(new Date().valueOf()),
     endDate: String(new Date().valueOf()),
     chargedAt: String(new Date().valueOf()),
@@ -177,7 +189,7 @@ export const getThisMonthTokenListingCharge = async ({
       name: "test",
     },
     prevMonthTokenListingCharge: "0",
-    tokenListingChargeHistories: [],
+    tokenListingChargeHistories: MOCK_TOKEN_LISTING_CHARGE_HISTORIES,
     startDate: String(new Date().valueOf()),
     endDate: String(new Date().valueOf()),
     chargedAt: String(new Date().valueOf()),
