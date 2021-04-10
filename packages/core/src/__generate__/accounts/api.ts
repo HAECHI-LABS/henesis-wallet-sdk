@@ -2990,6 +2990,82 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getAllBillingPlans: async (organizationId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            if (organizationId === null || organizationId === undefined) {
+                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling getAllBillingPlans.');
+            }
+            const localVarPath = `/api/v2/operation/organizations/{organizationId}/billing-plans`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} organizationId 
+         * @param {string} billingPlanId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingPlan: async (organizationId: string, billingPlanId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            if (organizationId === null || organizationId === undefined) {
+                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling getBillingPlan.');
+            }
+            // verify required parameter 'billingPlanId' is not null or undefined
+            if (billingPlanId === null || billingPlanId === undefined) {
+                throw new RequiredError('billingPlanId','Required parameter billingPlanId was null or undefined when calling getBillingPlan.');
+            }
+            const localVarPath = `/api/v2/operation/organizations/{organizationId}/billing-plans/{billingPlanId}`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+                .replace(`{${"billingPlanId"}}`, encodeURIComponent(String(billingPlanId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getOrganizationInfo: async (organizationId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             if (organizationId === null || organizationId === undefined) {
@@ -3258,6 +3334,33 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async getAllBillingPlans(organizationId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BillingPlanDTO>>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getAllBillingPlans(organizationId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} organizationId 
+         * @param {string} billingPlanId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBillingPlan(organizationId: string, billingPlanId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingPlanDTO>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getBillingPlan(organizationId, billingPlanId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async getOrganizationInfo(organizationId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationInfoDTO>> {
             const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getOrganizationInfo(organizationId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
@@ -3389,6 +3492,25 @@ export const OperationControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getAllBillingPlans(organizationId: string, options?: any): AxiosPromise<Array<BillingPlanDTO>> {
+            return OperationControllerApiFp(configuration).getAllBillingPlans(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} organizationId 
+         * @param {string} billingPlanId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBillingPlan(organizationId: string, billingPlanId: string, options?: any): AxiosPromise<BillingPlanDTO> {
+            return OperationControllerApiFp(configuration).getBillingPlan(organizationId, billingPlanId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getOrganizationInfo(organizationId: string, options?: any): AxiosPromise<OrganizationInfoDTO> {
             return OperationControllerApiFp(configuration).getOrganizationInfo(organizationId, options).then((request) => request(axios, basePath));
         },
@@ -3511,6 +3633,29 @@ export class OperationControllerApi extends BaseAPI {
      */
     public getAllAccountsByOrganizationId(organizationId: string, options?: any) {
         return OperationControllerApiFp(this.configuration).getAllAccountsByOrganizationId(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} organizationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public getAllBillingPlans(organizationId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).getAllBillingPlans(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} organizationId 
+     * @param {string} billingPlanId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public getBillingPlan(organizationId: string, billingPlanId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).getBillingPlan(organizationId, billingPlanId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
