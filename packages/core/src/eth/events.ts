@@ -3,7 +3,7 @@ import { Client } from "../httpClient";
 import { BNConverter } from "../utils/common";
 import {
   EthCallEvent,
-  EthEventPaginationOptions,
+  EthCallEventPaginationOptions,
   EthValueTransferEvent,
   EthValueTransferEventPaginationOptions,
 } from "../events";
@@ -48,7 +48,7 @@ export class EthEvents {
   }
 
   async getCallEvents(
-    options?: EthEventPaginationOptions
+    options?: EthCallEventPaginationOptions
   ): Promise<Pagination<EthCallEvent>> {
     const queryString = makeQueryString(options);
     const data = await this.client.get<PaginationCallEventDTO>(
@@ -86,7 +86,7 @@ export class EthEvents {
   }
 
   async getInternalCallEvents(
-    options?: EthEventPaginationOptions
+    options?: EthCallEventPaginationOptions
   ): Promise<Pagination<CallEventInternal>> {
     const queryString = makeQueryString(options);
     const data = await this.client.get<PaginationCallEventInternalDTO>(
