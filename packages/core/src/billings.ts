@@ -5,7 +5,7 @@ import { Pagination, PaginationOptions, Secret, Balance } from "./types";
 import { Account, AccountWithIps, Role } from "./accounts";
 import { makeQueryString } from "./utils/url";
 import { BlockchainType } from "./blockchain";
-import { SimplifiedCoinInternalDTO } from "./__generate__/eth";
+import { SimplifiedCoinInternalDTO, CoinType } from "./__generate__/eth";
 
 export interface Invoice {
   id: string;
@@ -90,7 +90,7 @@ export class Billings {
       tokens: [
         {
           coinId: 1,
-          coinType: "test",
+          coinType: CoinType.ETHEREUM,
           amount: new BN(0),
           name: "이더리움",
           symbol: "ETH",
@@ -153,7 +153,7 @@ export class Billings {
         invoiceId: "1",
         coin: {
           coinId: 1,
-          coinType: "test",
+          coinType: CoinType.ETHEREUM,
           amount: new BN(0),
           name: "이더리움",
           symbol: "ETH",

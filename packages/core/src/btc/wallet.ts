@@ -47,6 +47,7 @@ import {
   getDepositAddressApi,
 } from "../apis/btc/wallet";
 import { convertTransferDTO } from "./utils";
+import { CoinType } from "../__generate__/eth";
 
 export interface BtcTransaction
   extends Omit<
@@ -303,7 +304,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
         spendableAmount: BNConverter.hexStringToBN(
           String(response.spendableBalance)
         ),
-        coinType: "BTC",
+        coinType: CoinType.BITCOIN,
         name: "비트코인",
         decimals: 8,
       },

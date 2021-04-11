@@ -1,4 +1,5 @@
 import BN from "bn.js";
+import { CoinType, MasterWalletBalanceDTO } from "./__generate__/eth";
 
 export interface Keychains {
   create(password: string): KeyWithPriv;
@@ -10,15 +11,15 @@ export interface Keychains {
   sign(key: Key, password: string, hexPayload: string): string;
 }
 
-export interface Balance {
-  coinId: number | null;
-  coinType: string;
+export interface Balance
+  extends Omit<
+    MasterWalletBalanceDTO,
+    "amount" | "coinId" | "spendableAmount" | "aggregatedAmount"
+  > {
   amount: BN;
+  coinId: number | null;
   spendableAmount?: BN;
-  name: string;
-  symbol: string;
   aggregatedAmount?: BN;
-  decimals: number;
 }
 
 export interface Key {
