@@ -1,61 +1,55 @@
+import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
+import { Key } from "@haechi-labs/henesis-wallet-core/lib/types";
+import { WalletStatus } from "@haechi-labs/henesis-wallet-core/lib/wallet";
 import { ApiProperty } from "@nestjs/swagger";
-import { EventDTO } from "./event.dto";
-import * as BN from "bn.js";
 
-export class ValueTransferEventDTO extends EventDTO {
+export class InactiveMasterWalletDTO {
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  amount: BN;
+  id: string;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  decimals: number;
+  name: string;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  coinSymbol: string;
+  blockchain: BlockchainType;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  from: string;
+  henesisKey: Key;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  to: string;
+  status: WalletStatus;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  transferType: string;
+  createdAt: string;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  walletName: string;
-
-  /**
-   * 지갑 ID
-   * @example ETH
-   */
-  @ApiProperty()
-  walletType: string;
+  updatedAt: string;
 }

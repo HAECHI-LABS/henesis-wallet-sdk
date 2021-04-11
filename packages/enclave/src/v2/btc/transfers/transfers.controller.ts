@@ -1,20 +1,43 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import { TransfersService } from "./transfers.service";
 import { TransferDTO } from "../dto/transfer.dto";
+import { ApiOperation } from "@nestjs/swagger";
+import express from "express";
+import { PaginationDTO } from "../dto/pagination.dto";
 
-@Controller("/v2/btc/transfers")
+@Controller("transfers")
 export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
 
-  // todo: implement
   @Get("/")
-  public async getTransfers(): Promise<TransferDTO> {
+  @ApiOperation({
+    summary: "입출금 내역 조회하기",
+    description: "입출금 내역을 조회합니다.",
+  }) // todo: name query / ApiPaginationResponse(TransferDTO)
+  public async getTransfers(
+    @Request() request: express.Request,
+    @Query("type") type?: string,
+    @Query("walletId") walletId?: string,
+    @Query("status") status?: string,
+    @Query("address") address?: string,
+    @Query("transactionHash") transactionHash?: string,
+    @Query("updatedAtGte") updatedAtGte?: string,
+    @Query("updatedAtLt") updatedAtLt?: string,
+    @Query("size") size?: string,
+    @Query("page") page?: string
+  ): Promise<PaginationDTO<TransferDTO>> {
     return null;
   }
 
-  // todo: implement
   @Get("/:transferId")
-  public async getTransfer(): Promise<TransferDTO[]> {
+  @ApiOperation({
+    summary: "특정 입출금 내역 조회하기",
+    description: "특정 입출금 내역을 조회합니다.",
+  })
+  public async getTransfer(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string
+  ): Promise<TransferDTO> {
     return null;
   }
 }

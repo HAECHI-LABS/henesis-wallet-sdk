@@ -1,100 +1,228 @@
-import { Controller, Get, Patch, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Request,
+} from "@nestjs/common";
 import { WalletsService } from "./wallets.service";
-import { WalletDto } from "../dto/wallet.dto";
-import { BalanceDto } from "../dto/balance.dto";
+import { WalletDTO } from "../dto/wallet.dto";
+import { BalanceDTO } from "../dto/balance.dto";
 import { EstimationFeeDto } from "../dto/estimation-fee.dto";
-import { DepositAddressDto } from "../dto/deposit-address.dto";
+import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import { TransferDTO } from "../dto/transfer.dto";
-import { RawTransactionDto } from "../dto/raw-transaction.dto";
-import { SignedRawTransactionDto } from "../dto/signed-raw-transaction.dto";
+import { BtcRawTransactionDTO } from "../dto/btc-raw-transaction.dto";
+import { SignedRawTransactionDTO } from "../dto/signed-raw-transaction.dto";
+import { ApiOperation } from "@nestjs/swagger";
+import express from "express";
+import { CreateInactiveMasterWalletRequestDTO } from "../dto/create-inactive-master-wallet-request.dto";
+import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
+import { ChangePassphraseRequestDTO } from "../dto/change-passphrase-request.dto";
+import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
+import { ActivateMasterWalletRequestDTO } from "../dto/activate-master-wallet-request.dto";
+import { VerifyAddressRequestDTO } from "../dto/verify-address-request.dto";
+import { TransferRequestDTO } from "../dto/transfer-request.dto";
+import { CreateRawTransactionRequestDTO } from "../dto/create-raw-transaction-request.dto";
+import { SendSignedTransactionRequestDTO } from "../dto/send-signed-transaction-request.dto";
 
-@Controller("/v2/btc/wallets")
+@Controller("wallets")
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
-  // todo: implement
   @Get("/")
-  public async getWallets(): Promise<WalletDto[]> {
+  @ApiOperation({
+    summary: "전체 지갑 목록 조회하기",
+    description: "전체 지갑 목록을 조회합니다.",
+  }) // todo: name query
+  public async getWallets(
+    @Request() request: express.Request,
+    @Query("name") walletName?: string
+  ): Promise<WalletDTO[]> {
     return null;
   }
 
-  // todo: implement
   @Post("/")
-  public async createInactiveMasterWallet(): Promise<WalletDto> {
+  @ApiOperation({
+    summary: "지갑 생성하기",
+    description: "지갑을 생성합니다.",
+  })
+  public async createInactiveMasterWallet(
+    @Request() request: express.Request,
+    @Body()
+    createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequestDTO
+  ): Promise<WalletDTO> {
     return null;
   }
 
   // todo: implement
   @Post("/:walletId/activate")
-  public async activateMasterWallet(): Promise<WalletDto> {
+  @ApiOperation({
+    summary: "지갑 활성화하기",
+    description: "지갑을 활성화합니다.",
+  })
+  public async activateMasterWallet(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Body()
+    activateMasterWalletRequestDTO: ActivateMasterWalletRequestDTO
+  ): Promise<WalletDTO> {
     return null;
   }
 
-  // todo: implement
   @Get("/:walletId")
-  public async getWallet(): Promise<WalletDto> {
+  @ApiOperation({
+    summary: "지갑 정보 조회하기",
+    description: "특정 지갑의 상세 정보를 조회합니다.",
+  })
+  public async getWallet(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string
+  ): Promise<WalletDTO> {
     return null;
   }
 
-  // todo: implement
   @Patch("/:walletId/name")
-  public async changeWalletName() {}
+  @ApiOperation({
+    summary: "지갑 정보 변경하기",
+    description: "특정 지갑의 이름을 변경합니다.",
+  })
+  public async changeWalletName(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Body()
+    changeWalletNameRequestDTO: ChangeWalletNameRequestDTO
+  ) {}
 
-  // todo: implement
   @Patch("/:walletId/passphrase")
-  public async changePassphrase() {}
+  @ApiOperation({
+    summary: "지갑 비밀번호 변경하기",
+    description: "특정 지갑의 비밀번호를 변경합니다.",
+  })
+  public async changePassphrase(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Body()
+    changePassphraseRequestDTO: ChangePassphraseRequestDTO
+  ) {}
 
-  // todo: implement
   @Get("/:walletId/balance")
-  public async getWalletBalance(): Promise<BalanceDto> {
+  @ApiOperation({
+    summary: "지갑 잔고 조회하기",
+    description: "특정 지갑의 잔고를 변경합니다.",
+  })
+  public async getWalletBalance(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string
+  ): Promise<BalanceDTO> {
     return null;
   }
 
-  // todo: implement
   @Get("/:walletId/estimated-fee")
-  public async getEstimatedFee(): Promise<EstimationFeeDto> {
+  @ApiOperation({
+    summary: "예상 수수료 조회하기",
+    description: "예상 수수료를 조회합니다.",
+  })
+  public async getEstimatedFee(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string
+  ): Promise<EstimationFeeDto> {
     return null;
   }
 
-  // todo: implement
   @Post("/:walletId/deposit-addresses")
-  public async createDepositAddress(): Promise<DepositAddressDto> {
+  @ApiOperation({
+    summary: "입금 주소 생성하기",
+    description: "입금 주소를 생성합니다.",
+  })
+  public async createDepositAddress(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Body()
+    createDepositAddressRequestDTO: CreateDepositAddressRequestDTO
+  ): Promise<DepositAddressDTO> {
     return null;
   }
 
-  // todo: implement
   @Get("/:walletId/deposit-addresses")
-  public async getDepositAddresses(): Promise<DepositAddressDto[]> {
+  @ApiOperation({
+    summary: "전체 입금 주소 목록 조회하기",
+    description: "특정 지갑에 속한 모든 입금 주소 목록을 조회합니다.",
+  }) // todo: id, address, name query
+  public async getDepositAddresses(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Query("id") id?: string,
+    @Query("address") address?: string,
+    @Query("name") name?: string
+  ): Promise<DepositAddressDTO[]> {
     return null;
   }
 
-  // todo: implement
   @Get("/:walletId/deposit-addresses/:depositAddressId")
-  public async getDepositAddress(): Promise<DepositAddressDto> {
+  @ApiOperation({
+    summary: "입금 주소 정보 조회하기",
+    description: "특정 입금 주소 정보를 조회합니다.",
+  }) // todo: name query
+  public async getDepositAddress(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Param("depositAddressId") depositAddressId: string,
+    @Query("name") name?: string
+  ): Promise<DepositAddressDTO> {
     return null;
   }
 
-  // todo: implement
   @Post("/verify-address")
-  public async verifyAddress(): Promise<boolean> {
+  @ApiOperation({
+    summary: "입금 주소 검증하기",
+    description: "특정 입금 주소를 검증합니다.",
+  })
+  public async verifyAddress(
+    @Request() request: express.Request,
+    @Body() verifyAddressRequestDTO: VerifyAddressRequestDTO
+  ): Promise<boolean> {
     return null;
   }
 
-  // todo: implement
   @Post("/:walletId/transfer")
-  public async transfer(): Promise<TransferDTO> {
+  @ApiOperation({
+    summary: "transfer",
+    description: "transfer",
+  })
+  public async transfer(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Body() transferRequestDTO: TransferRequestDTO
+  ): Promise<TransferDTO> {
     return null;
   }
 
-  // todo: implement
   @Post("/:walletId/raw-transactions")
-  public async createRawTransaction(): Promise<RawTransactionDto> {
+  @ApiOperation({
+    summary: "raw 트랜잭션 전송하기",
+    description: "raw 트랜잭션 전송합니다.",
+  })
+  public async createRawTransaction(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Body() createRawTransactionRequestDTO: CreateRawTransactionRequestDTO
+  ): Promise<BtcRawTransactionDTO> {
     return null;
   }
 
-  // todo: implement
   @Post("/:walletId/signed-transactions")
-  public async sendSignedTransaction(): Promise<SignedRawTransactionDto> {
+  @ApiOperation({
+    summary: "signed 트랜잭션 전송하기",
+    description: "signed 트랜잭션 전송합니다.",
+  })
+  public async sendSignedTransaction(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Body() sendSignedTransactionRequestDTO: SendSignedTransactionRequestDTO
+  ): Promise<SignedRawTransactionDTO> {
     return null;
   }
 }

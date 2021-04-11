@@ -1,143 +1,289 @@
-import { Controller, Get, Patch, Post } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Patch,
+  Post,
+  Query,
+  Request,
+} from "@nestjs/common";
 import { MasterWalletDTO } from "../dto/master-wallet.dto";
 import { TransactionDTO } from "../dto/transaction.dto";
 import { BalanceDTO } from "../dto/balance.dto";
 import { WalletNonceDTO } from "../dto/wallet-nonce.dto";
 import { UserWalletDTO } from "../dto/user-wallet.dto";
+import { ApiOperation } from "@nestjs/swagger";
+import express from "express";
+import { CreateMasterWalletRequestDTO } from "../dto/create-master-wallet-request.dto";
+import { ActivateMasterWalletRequestDTO } from "../dto/activate-master-wallet-request.dto";
+import { SendMasterWalletContractCallRequestDTO } from "../dto/send-master-wallet-contract-call-request.dto";
+import { ChangeMasterWalletNameRequestDTO } from "../dto/change-master-wallet-name-request.dto";
+import { SendMasterWalletCoinRequestDTO } from "../dto/send-master-wallet-coin-request.dto";
+import { SendMasterWalletBatchTransactionsRequestDTO } from "../dto/send-master-wallet-batch-transactions-request.dto";
 
-@Controller("/v2/eth/wallets")
+@Controller("wallets")
 export class WalletsController {
-  // todo: implement
   @Get("/")
-  public async getMasterWallets(): Promise<MasterWalletDTO[]> {
+  @ApiOperation({
+    summary: "전체 마스터 지갑 목록 조회하기",
+    description: "모든 마스터 지갑 목록을 조회합니다.",
+  }) // query
+  public async getMasterWallets(
+    @Request() request: express.Request,
+    @Query("name") name?: string
+  ): Promise<MasterWalletDTO[]> {
     return null;
   }
 
-  // todo: implement
   @Post("/")
-  public async createMasterWallet(): Promise<MasterWalletDTO> {
+  @ApiOperation({
+    summary: "마스터 지갑 생성하기",
+    description: "마스터 지갑을 생성합니다.",
+  })
+  public async createMasterWallet(
+    @Request() request: express.Request,
+    @Body() createMasterWalletRequestDTO: CreateMasterWalletRequestDTO
+  ): Promise<MasterWalletDTO> {
     return null;
   }
 
-  // todo: implement
   @Post("/:masterWalletId/activate")
-  public async activateMasterWallet(): Promise<MasterWalletDTO> {
+  @ApiOperation({
+    summary: "마스터 지갑 활성화하기",
+    description: "마스터 지갑을 활성화합니다.",
+  })
+  public async activateMasterWallet(
+    @Request() request: express.Request,
+    @Body() activateMasterWalletRequestDTO: ActivateMasterWalletRequestDTO
+  ): Promise<MasterWalletDTO> {
     return null;
   }
 
-  // todo: implement
   @Post("/:masterWalletId/contract-call")
-  public async sendMasterWalletContractCall(): Promise<TransactionDTO> {
+  @ApiOperation({
+    summary: "마스터 지갑에서 스마트 컨트랙트 호출하기",
+    description:
+      "특정 마스터 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
+  })
+  public async sendMasterWalletContractCall(
+    @Request() request: express.Request,
+    @Body()
+    sendMasterWalletContractCallRequestDTO: SendMasterWalletContractCallRequestDTO
+  ): Promise<TransactionDTO> {
     return null;
   }
 
-  // todo: implement
   @Patch("/:masterWalletId/name")
-  public async changeMasterWalletName() {
+  @ApiOperation({
+    summary: "마스터 지갑 이름 변경하기",
+    description: "특정 마스터 지갑의 이름을 변경합니다.",
+  })
+  public async changeMasterWalletName(
+    @Request() request: express.Request,
+    @Body() changeMasterWalletNameRequestDTO: ChangeMasterWalletNameRequestDTO
+  ) {
     return null;
   }
 
-  // todo: implement
   @Get("/:masterWalletId/balance")
-  public async getMasterWalletBalance(): Promise<BalanceDTO> {
+  @ApiOperation({
+    summary: "마스터 지갑 잔고 조회하기",
+    description: "특정 마스터 지갑의 잔액을 조회합니다.",
+  }) // todo: query
+  public async getMasterWalletBalance(
+    @Request() request: express.Request,
+    @Query("flag") flag?: boolean,
+    @Query("symbol") symbol?: string
+  ): Promise<BalanceDTO> {
     return null;
   }
 
-  // todo: implement
   @Get("/:masterWalletId/nonce")
-  public async getMasterWalletNonce(): Promise<WalletNonceDTO> {
+  @ApiOperation({
+    summary: "마스터 지갑 논스 조회하기",
+    description: "특정 마스터 지갑의 nonce를 조회합니다.",
+  })
+  public async getMasterWalletNonce(
+    @Request() request: express.Request
+  ): Promise<WalletNonceDTO> {
     return null;
   }
 
-  // todo: implement
   @Post("/:masterWalletId/transfer")
-  public async sendMasterWalletCoin(): Promise<TransactionDTO> {
+  @ApiOperation({
+    summary: "마스터 지갑에서 코인/토큰 전송하기",
+    description: "특정 마스터 지갑에서 가상자산을 송금합니다.",
+  })
+  public async sendMasterWalletCoin(
+    @Request() request: express.Request,
+    @Body() sendMasterWalletCoinRequestDTO: SendMasterWalletCoinRequestDTO
+  ): Promise<TransactionDTO> {
     return null;
   }
 
-  // todo: implement
-  @Post("/:masterWalletId/batch-transaction")
-  public async sendMasterWalletBatchTransactions(): Promise<TransactionDTO[]> {
+  @Post("/:masterWalletId/batch-transactions")
+  @ApiOperation({
+    summary: "마스터 지갑에서 여러 트랜잭션들을 모아서 호출하기",
+    description:
+      "특정 마스터 지갑에서 여러 트랜잭션을 모아 한꺼번에 발생니다.\n" +
+      "최대 10개까지 보낼 수 있습니다.",
+  })
+  public async sendMasterWalletBatchTransactions(
+    @Request() request: express.Request,
+    @Body()
+    sendMasterWalletBatchTransactionsRequestDTO: SendMasterWalletBatchTransactionsRequestDTO
+  ): Promise<TransactionDTO[]> {
     return null;
   }
 
-  // todo: implement
   @Post("/:masterWalletId/flush")
-  public async flush(): Promise<TransactionDTO> {
+  @ApiOperation({
+    summary: "사용자 지갑 잔액을 모두 끌어오기",
+    description:
+      "여러 사용자 지갑의 특정 코인/토큰 잔액을 모두 상위의 마스터 지갑으로 끌어옵니다.",
+  })
+  public async flush(
+    @Request() request: express.Request
+  ): Promise<TransactionDTO> {
     return null;
   }
 
-  // todo: implement
   @Post("/:masterWalletId/raw-transactions")
-  public async createRawTransaction(): Promise<TransactionDTO> {
+  @ApiOperation({
+    summary: "모든 트랜잭션 정보 조회하기",
+    description: "내가 발생시킨 모든 트랜잭션의 정보를 조회합니다.",
+  })
+  public async createRawTransaction(
+    @Request() request: express.Request
+  ): Promise<TransactionDTO> {
     return null;
   }
 
-  // todo: implement
   @Post("/:masterWalletId/signed-transactions")
-  public async sendSignedTransaction(): Promise<TransactionDTO> {
+  @ApiOperation({
+    summary: "모든 트랜잭션 정보 조회하기",
+    description: "내가 발생시킨 모든 트랜잭션의 정보를 조회합니다.",
+  })
+  public async sendSignedTransaction(
+    @Request() request: express.Request
+  ): Promise<TransactionDTO> {
     return null;
   }
 
-  // todo: implement
   @Get("/:masterWalletId/user-wallets/:userWalletId")
-  public async getUserWallet(): Promise<UserWalletDTO> {
+  @ApiOperation({
+    summary: "사용자 지갑 정보 조회하기",
+    description: "특정 사용자 지갑을 조회합니다.",
+  })
+  public async getUserWallet(
+    @Request() request: express.Request
+  ): Promise<UserWalletDTO> {
     return null;
   }
 
-  // todo: implement
   @Get("/:masterWalletId/user-wallets")
-  public async getUserWallets(): Promise<UserWalletDTO[]> {
+  @ApiOperation({
+    summary: "전체 사용자 지갑 목록 조회하기",
+    description: "특정 마스터 지갑에 속한 모든 사용자 지갑 목록을 조회합니다.",
+  })
+  public async getUserWallets(
+    @Request() request: express.Request
+  ): Promise<UserWalletDTO[]> {
     return null;
   }
 
-  // todo: implement
   @Post("/:masterWalletId/user-wallets")
-  public async createUserWallet(): Promise<UserWalletDTO> {
+  @ApiOperation({
+    summary: "사용자 지갑 생성하기",
+    description: "특정 마스터 지갑 하위에 새로운 사용자 지갑을 생성합니다.",
+  })
+  public async createUserWallet(
+    @Request() request: express.Request
+  ): Promise<UserWalletDTO> {
     return null;
   }
 
-  // todo: implement
   @Post("/:masterWalletId/user-wallets/:userWalletId/contract-call")
-  public async sendUserWalletContractCall(): Promise<TransactionDTO> {
+  @ApiOperation({
+    summary: "사용자 지갑에서 스마트 컨트랙트 호출하기",
+    description:
+      "사용자 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
+  })
+  public async sendUserWalletContractCall(
+    @Request() request: express.Request
+  ): Promise<TransactionDTO> {
     return null;
   }
 
-  // todo: implement
   @Patch("/:masterWalletId/user-wallets/:userWalletId/name")
-  public async changeUserWalletName() {}
+  @ApiOperation({
+    summary: "사용자 지갑 이름 변경하기",
+    description: "특정 사용자 지갑의 이름을 변경합니다.",
+  })
+  public async changeUserWalletName(@Request() request: express.Request) {}
 
-  // todo: implement
   @Get("/:masterWalletId/user-wallets/:userWalletId/balance")
-  public async getUserWalletBalance(): Promise<BalanceDTO> {
+  @ApiOperation({
+    summary: "사용자 지갑 잔고 조회하기",
+    description: "특정 사용자 지갑의 잔액을 조회합니다.",
+  })
+  public async getUserWalletBalance(
+    @Request() request: express.Request
+  ): Promise<BalanceDTO> {
     return null;
   }
 
-  // todo: implement
   @Get("/:masterWalletId/user-wallets/:userWalletId/nonce")
-  public async getUserWalletNonce(): Promise<WalletNonceDTO> {
+  @ApiOperation({
+    summary: "사용자 지갑 논스 조회하기",
+    description: "특정 사용자 지갑의 nonce를 조회합니다.",
+  })
+  public async getUserWalletNonce(
+    @Request() request: express.Request
+  ): Promise<WalletNonceDTO> {
     return null;
   }
 
-  // todo: implement
   @Post("/:masterWalletId/user-wallets/:userWalletId/transfer")
-  public async sendUserWalletCoin(): Promise<TransactionDTO> {
+  @ApiOperation({
+    summary: "사용자 지갑에서 코인/토큰 전송하기",
+    description: "특정 사용자 지갑에서 가상자산을 전송합니다.",
+  })
+  public async sendUserWalletCoin(
+    @Request() request: express.Request
+  ): Promise<TransactionDTO> {
     return null;
   }
 
-  // todo: implement
   @Patch("/:masterWalletId/passphrase")
-  public async changePassphrase() {}
+  @ApiOperation({
+    summary: "마스터 지갑 비밀번호 변경하기",
+    description: "특정 마스터 지갑의 비밀번호를 변경합니다.",
+  })
+  public async changePassphrase(@Request() request: express.Request) {}
 
-  // todo: implement
   @Post("/:masterWalletId/recreate")
-  public async retryCreateMasterWallet(): Promise<MasterWalletDTO> {
+  @ApiOperation({
+    summary: "마스터 지갑 재생성하기",
+    description: "마스터 지갑을 재생성합니다.",
+  })
+  public async retryCreateMasterWallet(
+    @Request() request: express.Request
+  ): Promise<MasterWalletDTO> {
     return null;
   }
 
-  // todo: implement
   @Post("/:masterWalletId/user-wallets/:userWalletId/recreate")
-  public async retryCreateUserWallet(): Promise<MasterWalletDTO> {
+  @ApiOperation({
+    summary: "사용자 지갑 생성 실패시 재시도하기",
+    description:
+      "특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.\n" +
+      "\n" +
+      "만약 사용자 지갑 생성 트랜잭션이 장시간 채굴 대기중(Pending)이어서 gasPrice를 높여 재시도하고 싶다면, '마스터 지갑에서 발생한 트랜잭션 교체하기' API를 사용하세요.",
+  })
+  public async retryCreateUserWallet(
+    @Request() request: express.Request
+  ): Promise<MasterWalletDTO> {
     return null;
   }
 }

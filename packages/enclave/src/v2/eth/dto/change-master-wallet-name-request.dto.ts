@@ -1,10 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class WalletNonceDTO {
+export class ChangeMasterWalletNameRequestDTO {
   /**
-   * nonce
+   * 지갑 이름
    * @example ETH
    */
   @ApiProperty()
-  nonce: string;
+  name: string;
 }

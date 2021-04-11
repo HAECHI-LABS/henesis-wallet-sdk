@@ -1,17 +1,30 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Query, Request } from "@nestjs/common";
 import { TransactionDTO } from "../dto/transaction.dto";
+import { ApiOperation } from "@nestjs/swagger";
+import { PaginationDTO } from "../../btc/dto/pagination.dto";
+import express from "express";
 
-@Controller("/v2/eth/transactions")
+@Controller("transactions")
 export class TransactionsController {
-  // todo: implement
   @Get("/")
-  public async getTransactions(): Promise<TransactionDTO[]> {
+  @ApiOperation({
+    summary: "모든 트랜잭션 정보 조회하기",
+    description: "내가 발생시킨 모든 트랜잭션의 정보를 조회합니다.",
+  }) // todo: query / ApiPaginationResponse(ValueTransferEventDTO)
+  public async getTransactions(
+    @Request() request: express.Request
+  ): Promise<PaginationDTO<TransactionDTO>> {
     return null;
   }
 
-  // todo: implement
   @Get("/:transactionId")
-  public async getTransaction(): Promise<TransactionDTO> {
+  @ApiOperation({
+    summary: "특정 트랜잭션 정보 조회하기",
+    description: "내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.",
+  })
+  public async getTransaction(
+    @Request() request: express.Request
+  ): Promise<TransactionDTO> {
     return null;
   }
 }

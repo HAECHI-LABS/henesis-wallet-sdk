@@ -1,61 +1,74 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { EventDTO } from "./event.dto";
 import * as BN from "bn.js";
+import { ApiProperty } from "@nestjs/swagger";
 
-export class ValueTransferEventDTO extends EventDTO {
+export class EventDTO {
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  amount: BN;
-
-  /**
-   * 지갑 ID
-   * @example ETH
-   */
-  @ApiProperty()
-  decimals: number;
+  id: number;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  coinSymbol: string;
+  createdAt: string;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  from: string;
+  updatedAt: string;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  to: string;
+  status: string;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  transferType: string;
+  transactionHash?: string;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  walletName: string;
+  walletId: string;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  walletType: string;
+  transactionId?: string;
+
+  /**
+   * 지갑 ID
+   * @example ETH
+   */
+  @ApiProperty()
+  orgId?: string;
+
+  /**
+   * 지갑 ID
+   * @example ETH
+   */
+  @ApiProperty()
+  masterWalletId?: string;
+
+  /**
+   * 지갑 ID
+   * @example ETH
+   */
+  @ApiProperty()
+  confirmation: BN;
 }

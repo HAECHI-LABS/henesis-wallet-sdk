@@ -1,24 +1,31 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
-export class KeyDTO {
+export class CreateMasterWalletRequestDTO {
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiPropertyOptional()
-  address?: string;
+  type?: string;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
-  pub: string;
+  name: String;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiPropertyOptional()
-  keyFile?: string;
+  passphrase?: string;
+
+  /**
+   * 지갑 ID
+   * @example ETH
+   */
+  @ApiPropertyOptional()
+  gasPrice?: string;
 }

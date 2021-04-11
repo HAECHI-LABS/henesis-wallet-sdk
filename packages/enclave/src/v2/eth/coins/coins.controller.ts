@@ -2,13 +2,18 @@ import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import express from "express";
 import { CoinsService } from "./coins.service";
 import { CoinDTO } from "../dto/coin.dto";
+import { ApiOperation } from "@nestjs/swagger";
 
-@Controller("/v2/eth/coins")
+@Controller("coins")
 export class CoinsController {
   constructor(private readonly coinsService: CoinsService) {}
 
-  // todo: implement
   @Get("/")
+  @ApiOperation({
+    summary: "전체 코인/토큰 목록 조회하기",
+    description:
+      "Henesis Wallet에서 지원하는 모든 가상자산(토큰, 코인)을 조회합니다.",
+  })
   public async getCoins(
     @Request() request: express.Request,
     @Query("flag") flag?: boolean
@@ -16,8 +21,12 @@ export class CoinsController {
     return null;
   }
 
-  // todo: implement
-  @Get(":ticker")
+  @Get("/:ticker")
+  @ApiOperation({
+    summary: "코인/토큰 정보 조회하기",
+    description:
+      "Henesis Wallet에서 지원하는 특정 가상자산(토큰, 코인)을 조회합니다.",
+  })
   public async getCoin(
     @Request() request: express.Request,
     @Param("ticker") ticker: string

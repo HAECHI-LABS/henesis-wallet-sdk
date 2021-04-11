@@ -1,19 +1,49 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { WalletStatus } from "@haechi-labs/henesis-wallet-core/lib/wallet";
 import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
-import * as BN from "bn.js";
-import {
-  RawTransaction,
-  SignedMultiSigPayload,
-  TransactionStatus,
-} from "@haechi-labs/henesis-wallet-core";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
-export class TransactionDTO {
+export class WalletDTO {
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiProperty()
   id: string;
+
+  /**
+   * 지갑 ID
+   * @example ETH
+   */
+  @ApiProperty()
+  name: string;
+
+  /**
+   * 지갑 ID
+   * @example ETH
+   */
+  @ApiProperty()
+  address: string;
+
+  /**
+   * 지갑 ID
+   * @example ETH
+   */
+  @ApiProperty()
+  createdAt: string;
+
+  /**
+   * 지갑 ID
+   * @example ETH
+   */
+  @ApiProperty()
+  updatedAt: string;
+
+  /**
+   * 지갑 ID
+   * @example ETH
+   */
+  @ApiProperty()
+  status: WalletStatus;
 
   /**
    * 지갑 ID
@@ -27,68 +57,19 @@ export class TransactionDTO {
    * @example ETH
    */
   @ApiProperty()
-  sender: string;
-
-  /**
-   * 지갑 ID
-   * @example ETH
-   */
-  @ApiProperty()
-  keyId: string;
-
-  /**
-   * 지갑 ID
-   * @example ETH
-   */
-  @ApiProperty()
-  hash: string;
-
-  /**
-   * 지갑 ID
-   * @example ETH
-   */
-  @ApiProperty()
-  error: string;
-
-  /**
-   * 지갑 ID
-   * @example ETH
-   */
-  @ApiProperty()
-  signedMultiSigPayload: SignedMultiSigPayload;
-
-  /**
-   * 지갑 ID
-   * @example ETH
-   */
-  @ApiProperty()
-  rawTransaction: RawTransaction;
-
-  /**
-   * 지갑 ID
-   * @example ETH
-   */
-  @ApiProperty()
-  status: TransactionStatus;
-
-  /**
-   * 지갑 ID
-   * @example ETH
-   */
-  @ApiProperty()
-  isFeeDelegated: boolean;
+  version: string;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiPropertyOptional()
-  fee?: BN;
+  transactionId?: string | null;
 
   /**
    * 지갑 ID
    * @example ETH
    */
   @ApiPropertyOptional()
-  estimatedFee?: BN;
+  error?: string | null;
 }
