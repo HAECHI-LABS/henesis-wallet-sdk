@@ -16,20 +16,9 @@ import {
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
 
-export interface Organization {
-  id: string;
-  name: string;
-  secret: string;
-  whitelistActivated: boolean;
-}
+export interface Organization extends OrganizationDTO {}
 
-export interface AllowedIp {
-  id: string;
-  ipAddress: string;
-  location: string | null;
-  label: string;
-  createdAt: string;
-}
+export interface AllowedIp extends AllowedIpDTO {}
 
 export interface AllowedIpsPaginationOptions extends PaginationOptions {}
 
@@ -79,7 +68,7 @@ export class Organizations {
       `${this.baseUrl}/allowed-ips`,
       request
     );
-    return this.convertAllowedIpDTO(result);
+    return result;
   }
 
   async getAllowedIPs(
@@ -91,7 +80,7 @@ export class Organizations {
     );
     return {
       pagination: result.pagination,
-      results: result.results.map(this.convertAllowedIpDTO),
+      results: result.results,
     };
   }
 
@@ -99,7 +88,7 @@ export class Organizations {
     const result: AllowedIpDTO = await this.client.get<AllowedIpDTO>(
       `${this.baseUrl}/allowed-ips/${id}`
     );
-    return this.convertAllowedIpDTO(result);
+    return result;
   }
 
   async patchAllowedIpLabel(params: {
@@ -115,7 +104,7 @@ export class Organizations {
       `${this.baseUrl}/allowed-ips/${params.id}/label`,
       request
     );
-    return this.convertAllowedIpDTO(result);
+    return result;
   }
 
   async deleteAllowedIp(id: string, otpCode: string): Promise<void> {
@@ -145,12 +134,5 @@ export class Organizations {
       `${this.baseUrl}/inactivate-allowed-ips`,
       request
     );
-  }
-
-  private convertAllowedIpDTO(dto: AllowedIpDTO): AllowedIp {
-    return {
-      ...dto,
-      location: dto.location ?? null,
-    };
   }
 }
