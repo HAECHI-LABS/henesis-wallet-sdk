@@ -23,7 +23,6 @@ import {
   MasterWalletDTO,
 } from "../__generate__/eth";
 import { InactiveWallet, InactiveMasterWallet } from "../wallet";
-import { isLessThanWalletV4 } from "../utils/wallet";
 
 export interface MasterWalletSearchOptions {
   name?: string;
@@ -50,9 +49,6 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
-    if (isLessThanWalletV4(walletData.version)) {
-      throw new Error("wallet does not exist");
-    }
     return new EthMasterWallet(
       this.client,
       transformMasterWalletData(walletData),
@@ -69,17 +65,15 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       NoUndefinedField<MasterWalletDTO>[]
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
-    return walletDatas
-      .filter((walletData) => isLessThanWalletV4(walletData.version))
-      .map(
-        (walletData) =>
-          new EthMasterWallet(
-            this.client,
-            transformMasterWalletData(walletData),
-            this.keychains,
-            this.blockchain
-          )
-      );
+    return walletDatas.map(
+      (walletData) =>
+        new EthMasterWallet(
+          this.client,
+          transformMasterWalletData(walletData),
+          this.keychains,
+          this.blockchain
+        )
+    );
   }
 
   // todo: henesis-keys
