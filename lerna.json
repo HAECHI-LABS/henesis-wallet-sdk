@@ -1,11 +1,18 @@
 {
-  "packages": ["packages/*"],
-  "version": "2.10.14-alpha.7",
+  "packages": [
+    "packages/*"
+  ],
+  "version": "2.10.14-alpha.8",
   "command": {
     "version": {
       "conventionalCommits": true,
       "message": "chore(release): publish %s"
     }
   },
-  "ignoreChanges": ["*.md", "*.json", "*.txt", "test/**"]
+  "ignoreChanges": [
+    "*.md",
+    "*.json",
+    "*.txt",
+    "test/**"
+  ]
 }
