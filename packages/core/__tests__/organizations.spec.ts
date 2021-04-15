@@ -81,7 +81,7 @@ describe('Organizations', () => {
         secret: 'secret',
         url: 'http://localhost:8080/api/v1',
       });
-      const accounts: Account[] = await sdk.organizations.getAccounts();
+      const accounts = await sdk.organizations.getAccounts();
       expect(accounts).toEqual(expectedReturn);
     });
   });

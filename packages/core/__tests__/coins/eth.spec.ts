@@ -1,7 +1,7 @@
 import BN from "bn.js";
 import { CoinData, Eth } from "../../src/eth";
 import { Blockchain } from "../../src/__generate__/eth";
-import { EthLikeWallet } from "../../src/eth/wallet";
+import { EthLikeWallet } from "../../src/eth/abstractWallet";
 
 describe("Eth", () => {
   let eth: Eth;
