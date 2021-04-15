@@ -3,11 +3,15 @@ import BN from "bn.js";
 import {
   EthActivatingMasterWallet,
   EthMasterWallet,
-  EthMasterWalletData,
-  EthTransaction,
+} from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
+import {
   EthUserWallet,
   EthUserWalletData,
-} from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
+} from "@haechi-labs/henesis-wallet-core/lib/eth/userWallet";
+import {
+  EthTransaction,
+  EthMasterWalletData,
+} from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import {
   Balance,
   Key,
