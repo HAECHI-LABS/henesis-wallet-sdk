@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.14-alpha.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.13...v2.10.14-alpha.9) (2021-04-15)
+
+
+### Bug Fixes
+
+* add resendtransaction route ([847d9a8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/847d9a8e4989f8ad3dc1a82894354dc51e400da7))
+* fixed param object ([134616b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/134616b20deda09f3079bab393e4697d3fad45dc))
+* update enclave sdk version ([599b05d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/599b05d5199bc7fe5540d0f2ddd0290c1d0c524b))
+* update resend response status 201 -> 202 ([8d91133](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8d91133d3fd445f0a8a4e2da68c920cf5e8a15d9))
+
+
+### Features
+
+* add resend transaction api ([0590857](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/05908570a9351a1f9605296feb69ab5938d80b76))
+
+
+
+
+
 ## [2.10.14-alpha.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.13...v2.10.14-alpha.8) (2021-04-15)
 
 
