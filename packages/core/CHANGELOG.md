@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.14-alpha.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.13...v2.10.14-alpha.7) (2021-04-15)
+
+
+### Bug Fixes
+
+* add dev env, remove console error ([e301b92](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e301b92e11448a6893d0e66935ad14f03eec93ab))
+* add wallet id params ([e82cabc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e82cabcfeadf33d483eb480eefc78c6284607dc6))
+* change local env ([b2cdd59](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b2cdd59f87dbb498ab5bb780374059801bee7633))
+* fix to get address from compressed public key ([4ebbd21](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4ebbd219d2dbb6c5ffaad7c35c256238c9206245))
+* fixed param object ([9fa81a2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9fa81a203aa67b6ed3b5f62ce476dcd4054a9aa2))
+* fixed resend request type ([4b40ba4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4b40ba4535752b5bcbe7fd42b6c98e5a7dbbb363))
+* fixed test failed ([f183402](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f1834029ecbf9b65c7e9d8c84207913daaf5e16d))
+* remove eth v3 ([58a82a4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/58a82a4ff25af9cfe769390a8f666b82d056dda4))
+* remove version v4 condition ([bfbca29](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/bfbca2921cdc81556fdf38bd2bca795fa5d4b2ec))
+* update resend transaction params ([f5b08b1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f5b08b179c36794e717fa7b5010260addeb3703f))
+
+
+### Features
+
+* add logging if call api local, dev ([8409861](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8409861e43c9b2f69c916fe78d2a7b827037f08c))
+* add resendTransaction api ([384d1b3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/384d1b34addcbdcd4422e76ab3962a0da710b4f8))
+* add signup api ([#377](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/377)) ([307f073](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/307f073a1afba46600c5dcc020c050864214ed0f))
+
+
+
+
+
 ## [2.10.14-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14-alpha.4...v2.10.14-alpha.5) (2021-03-17)
 
 

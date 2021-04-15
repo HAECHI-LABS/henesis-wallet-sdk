@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.14-alpha.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.13...v2.10.14-alpha.7) (2021-04-15)
+
+
+### Bug Fixes
+
+* add resendtransaction route ([6929bb8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6929bb8a14d6f319a7e9e4f20239f4097f17c2a1))
+* fixed param object ([9fa81a2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9fa81a203aa67b6ed3b5f62ce476dcd4054a9aa2))
+* update resend response status 201 -> 202 ([d91fe4d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d91fe4d7db7529a7f58e96763448e2d8fb2999cd))
+
+
+### Features
+
+* add resend transaction api ([53d2960](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/53d2960e486d50a714c2adbba04778aaedc8ebf5))
+* hot reload, nest swagger plugin enabled ([6e8736c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6e8736c3df1094ccaeae863aa9523014fc7cdae6))
+* migrate to nestjs V2(interface) ([f011195](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f01119581b7fb754c775270b5241e13072c41927))
+
+
+
+
+
 ## [2.10.14-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14-alpha.4...v2.10.14-alpha.5) (2021-03-17)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
