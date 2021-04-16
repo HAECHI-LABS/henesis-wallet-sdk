@@ -12,10 +12,6 @@ import {
   SignUpResponse,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
-import {
-  signup as accountSignup,
-  verifyEmail as accountVerifyEmail,
-} from "./apis/accounts";
 
 export interface AccountWithOTP extends Account {
   otp?: OTP;
