@@ -63,18 +63,15 @@ export class Accounts {
     });
   }
 
-  signup(params: SignUpRequest): Promise<SignUpResponse> {
-    return accountSignup({
-      client: this.client,
-      request: params,
-    });
+  async signup(params: SignUpRequest): Promise<SignUpResponse> {
+    return await this.client.post<SignUpResponse>(
+      `${this.baseUrl}/signup`,
+      params
+    );
   }
 
   async verifyEmail(email: string) {
-    await accountVerifyEmail({
-      client: this.client,
-      request: { email },
-    });
+    await this.client.post(`${this.baseUrl}/verify-email`, { email });
   }
 
   async verify(params: {
