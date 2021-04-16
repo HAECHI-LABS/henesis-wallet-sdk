@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.14-alpha.11](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14-alpha.10...v2.10.14-alpha.11) (2021-04-16)
+
+
+### Bug Fixes
+
+* remove account api ([8b5c100](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8b5c100b332fab4df1181bf88bf0ca9c38e68a31))
+
+
+
+
+
 ## [2.10.14-alpha.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14-alpha.9...v2.10.14-alpha.10) (2021-04-16)
 
 
