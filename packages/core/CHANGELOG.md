@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.14-alpha.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14-alpha.9...v2.10.14-alpha.10) (2021-04-16)
+
+
+### Bug Fixes
+
+* fixed verifym email, signup ([847aa89](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/847aa89c6c3f990b8e1578edcbdb20acebcac0bc))
+
+
+
+
+
 ## [2.10.14-alpha.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.13...v2.10.14-alpha.9) (2021-04-15)
 
 
