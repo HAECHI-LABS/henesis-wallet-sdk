@@ -146,72 +146,6 @@ export interface AllowedIpDTO {
 /**
  * 
  * @export
- * @interface BillingPlanDTO
- */
-export interface BillingPlanDTO {
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingPlanDTO
-     */
-    id: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingPlanDTO
-     */
-    organizationId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingPlanDTO
-     */
-    billingType: BillingPlanDTOBillingTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof BillingPlanDTO
-     */
-    withdrawalFeeRate?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingPlanDTO
-     */
-    defaultCoinListingChargeKrw: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingPlanDTO
-     */
-    contractDate: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingPlanDTO
-     */
-    startDate: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BillingPlanDTO
-     */
-    endDate: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum BillingPlanDTOBillingTypeEnum {
-    CHARGE = 'MAINNET_CHARGE',
-    CHARGEANDWITHDRAWALFEE = 'MAINNET_CHARGE_AND_WITHDRAWAL_FEE',
-    CHARGEORWITHDRAWALFEE = 'MAINNET_CHARGE_OR_WITHDRAWAL_FEE'
-}
-
-/**
- * 
- * @export
  * @enum {string}
  */
 export enum Blockchain {
@@ -342,49 +276,6 @@ export enum ClientIdentityMethodEnum {
 /**
  * 
  * @export
- * @interface CoinListingDTO
- */
-export interface CoinListingDTO {
-    /**
-     * 
-     * @type {string}
-     * @memberof CoinListingDTO
-     */
-    id: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CoinListingDTO
-     */
-    organizationId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CoinListingDTO
-     */
-    coinId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CoinListingDTO
-     */
-    chargeKrw: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CoinListingDTO
-     */
-    isExempted: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CoinListingDTO
-     */
-    coinListingDate: string;
-}
-/**
- * 
- * @export
  * @interface CreateAllowedIpRequest
  */
 export interface CreateAllowedIpRequest {
@@ -406,91 +297,6 @@ export interface CreateAllowedIpRequest {
      * @memberof CreateAllowedIpRequest
      */
     otpCode: string;
-}
-/**
- * 
- * @export
- * @interface CreateBillingPlanRequest
- */
-export interface CreateBillingPlanRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateBillingPlanRequest
-     */
-    billingType: CreateBillingPlanRequestBillingTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof CreateBillingPlanRequest
-     */
-    withdrawalFeeRate: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateBillingPlanRequest
-     */
-    defaultCoinListingChargeKrw: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateBillingPlanRequest
-     */
-    contractDate: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateBillingPlanRequest
-     */
-    startDate: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateBillingPlanRequest
-     */
-    endDate: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum CreateBillingPlanRequestBillingTypeEnum {
-    CHARGE = 'MAINNET_CHARGE',
-    CHARGEANDWITHDRAWALFEE = 'MAINNET_CHARGE_AND_WITHDRAWAL_FEE',
-    CHARGEORWITHDRAWALFEE = 'MAINNET_CHARGE_OR_WITHDRAWAL_FEE'
-}
-
-/**
- * 
- * @export
- * @interface CreateCoinListingRequest
- */
-export interface CreateCoinListingRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateCoinListingRequest
-     */
-    coinId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateCoinListingRequest
-     */
-    chargeKrw?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateCoinListingRequest
-     */
-    isExempted: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateCoinListingRequest
-     */
-    coinListingDate: string;
 }
 /**
  * 
@@ -603,19 +409,6 @@ export interface DeleteAllowedIpRequest {
      * @memberof DeleteAllowedIpRequest
      */
     otpCode: string;
-}
-/**
- * 
- * @export
- * @interface DeleteCoinListingRequest
- */
-export interface DeleteCoinListingRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof DeleteCoinListingRequest
-     */
-    coinId: string;
 }
 /**
  * 
@@ -1387,67 +1180,6 @@ export interface SimpleAccountDTO {
      * @memberof SimpleAccountDTO
      */
     email: string;
-}
-/**
- * 
- * @export
- * @interface UpdateBillingPlanChargeRequest
- */
-export interface UpdateBillingPlanChargeRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateBillingPlanChargeRequest
-     */
-    billingType: UpdateBillingPlanChargeRequestBillingTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateBillingPlanChargeRequest
-     */
-    withdrawalFeeRate?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateBillingPlanChargeRequest
-     */
-    defaultCoinListingChargeKrw: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum UpdateBillingPlanChargeRequestBillingTypeEnum {
-    CHARGE = 'MAINNET_CHARGE',
-    CHARGEANDWITHDRAWALFEE = 'MAINNET_CHARGE_AND_WITHDRAWAL_FEE',
-    CHARGEORWITHDRAWALFEE = 'MAINNET_CHARGE_OR_WITHDRAWAL_FEE'
-}
-
-/**
- * 
- * @export
- * @interface UpdateBillingPlanPeriodRequest
- */
-export interface UpdateBillingPlanPeriodRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateBillingPlanPeriodRequest
-     */
-    contractDate: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateBillingPlanPeriodRequest
-     */
-    startDate: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateBillingPlanPeriodRequest
-     */
-    endDate: string;
 }
 /**
  * 
@@ -2705,179 +2437,6 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
     return {
         /**
          * 
-         * @param {string} organizationId 
-         * @param {CreateBillingPlanRequest} createBillingPlanRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBillingPlan: async (organizationId: string, createBillingPlanRequest: CreateBillingPlanRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling createBillingPlan.');
-            }
-            // verify required parameter 'createBillingPlanRequest' is not null or undefined
-            if (createBillingPlanRequest === null || createBillingPlanRequest === undefined) {
-                throw new RequiredError('createBillingPlanRequest','Required parameter createBillingPlanRequest was null or undefined when calling createBillingPlan.');
-            }
-            const localVarPath = `/api/v2/operation/organizations/{organizationId}/billing-plans`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof createBillingPlanRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createBillingPlanRequest !== undefined ? createBillingPlanRequest : {}) : (createBillingPlanRequest || "");
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {CreateCoinListingRequest} createCoinListingRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createCoinListing: async (organizationId: string, createCoinListingRequest: CreateCoinListingRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling createCoinListing.');
-            }
-            // verify required parameter 'createCoinListingRequest' is not null or undefined
-            if (createCoinListingRequest === null || createCoinListingRequest === undefined) {
-                throw new RequiredError('createCoinListingRequest','Required parameter createCoinListingRequest was null or undefined when calling createCoinListing.');
-            }
-            const localVarPath = `/api/v2/operation/organizations/{organizationId}/coin-listing`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof createCoinListingRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createCoinListingRequest !== undefined ? createCoinListingRequest : {}) : (createCoinListingRequest || "");
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {string} billingPlanId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteBillingPlan: async (organizationId: string, billingPlanId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling deleteBillingPlan.');
-            }
-            // verify required parameter 'billingPlanId' is not null or undefined
-            if (billingPlanId === null || billingPlanId === undefined) {
-                throw new RequiredError('billingPlanId','Required parameter billingPlanId was null or undefined when calling deleteBillingPlan.');
-            }
-            const localVarPath = `/api/v2/operation/organizations/{organizationId}/billing-plans/{billingPlanId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
-                .replace(`{${"billingPlanId"}}`, encodeURIComponent(String(billingPlanId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {DeleteCoinListingRequest} deleteCoinListingRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteCoinListing: async (organizationId: string, deleteCoinListingRequest: DeleteCoinListingRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling deleteCoinListing.');
-            }
-            // verify required parameter 'deleteCoinListingRequest' is not null or undefined
-            if (deleteCoinListingRequest === null || deleteCoinListingRequest === undefined) {
-                throw new RequiredError('deleteCoinListingRequest','Required parameter deleteCoinListingRequest was null or undefined when calling deleteCoinListing.');
-            }
-            const localVarPath = `/api/v2/operation/organizations/{organizationId}/coin-listing`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof deleteCoinListingRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(deleteCoinListingRequest !== undefined ? deleteCoinListingRequest : {}) : (deleteCoinListingRequest || "");
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {string} accountId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2990,82 +2549,6 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllBillingPlans: async (organizationId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling getAllBillingPlans.');
-            }
-            const localVarPath = `/api/v2/operation/organizations/{organizationId}/billing-plans`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {string} billingPlanId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBillingPlan: async (organizationId: string, billingPlanId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling getBillingPlan.');
-            }
-            // verify required parameter 'billingPlanId' is not null or undefined
-            if (billingPlanId === null || billingPlanId === undefined) {
-                throw new RequiredError('billingPlanId','Required parameter billingPlanId was null or undefined when calling getBillingPlan.');
-            }
-            const localVarPath = `/api/v2/operation/organizations/{organizationId}/billing-plans/{billingPlanId}`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
-                .replace(`{${"billingPlanId"}}`, encodeURIComponent(String(billingPlanId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         getOrganizationInfo: async (organizationId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             if (organizationId === null || organizationId === undefined) {
@@ -3124,106 +2607,6 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {string} billingPlanId 
-         * @param {UpdateBillingPlanChargeRequest} updateBillingPlanChargeRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateBillingPlanCharge: async (organizationId: string, billingPlanId: string, updateBillingPlanChargeRequest: UpdateBillingPlanChargeRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling updateBillingPlanCharge.');
-            }
-            // verify required parameter 'billingPlanId' is not null or undefined
-            if (billingPlanId === null || billingPlanId === undefined) {
-                throw new RequiredError('billingPlanId','Required parameter billingPlanId was null or undefined when calling updateBillingPlanCharge.');
-            }
-            // verify required parameter 'updateBillingPlanChargeRequest' is not null or undefined
-            if (updateBillingPlanChargeRequest === null || updateBillingPlanChargeRequest === undefined) {
-                throw new RequiredError('updateBillingPlanChargeRequest','Required parameter updateBillingPlanChargeRequest was null or undefined when calling updateBillingPlanCharge.');
-            }
-            const localVarPath = `/api/v2/operation/organizations/{organizationId}/billing-plans/{billingPlanId}/charge`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
-                .replace(`{${"billingPlanId"}}`, encodeURIComponent(String(billingPlanId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof updateBillingPlanChargeRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateBillingPlanChargeRequest !== undefined ? updateBillingPlanChargeRequest : {}) : (updateBillingPlanChargeRequest || "");
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {string} billingPlanId 
-         * @param {UpdateBillingPlanPeriodRequest} updateBillingPlanPeriodRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateBillingPlanPeriod: async (organizationId: string, billingPlanId: string, updateBillingPlanPeriodRequest: UpdateBillingPlanPeriodRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling updateBillingPlanPeriod.');
-            }
-            // verify required parameter 'billingPlanId' is not null or undefined
-            if (billingPlanId === null || billingPlanId === undefined) {
-                throw new RequiredError('billingPlanId','Required parameter billingPlanId was null or undefined when calling updateBillingPlanPeriod.');
-            }
-            // verify required parameter 'updateBillingPlanPeriodRequest' is not null or undefined
-            if (updateBillingPlanPeriodRequest === null || updateBillingPlanPeriodRequest === undefined) {
-                throw new RequiredError('updateBillingPlanPeriodRequest','Required parameter updateBillingPlanPeriodRequest was null or undefined when calling updateBillingPlanPeriod.');
-            }
-            const localVarPath = `/api/v2/operation/organizations/{organizationId}/billing-plans/{billingPlanId}/period`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
-                .replace(`{${"billingPlanId"}}`, encodeURIComponent(String(billingPlanId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof updateBillingPlanPeriodRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateBillingPlanPeriodRequest !== undefined ? updateBillingPlanPeriodRequest : {}) : (updateBillingPlanPeriodRequest || "");
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -3233,62 +2616,6 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
  */
 export const OperationControllerApiFp = function(configuration?: Configuration) {
     return {
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {CreateBillingPlanRequest} createBillingPlanRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createBillingPlan(organizationId: string, createBillingPlanRequest: CreateBillingPlanRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingPlanDTO>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).createBillingPlan(organizationId, createBillingPlanRequest, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {CreateCoinListingRequest} createCoinListingRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createCoinListing(organizationId: string, createCoinListingRequest: CreateCoinListingRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinListingDTO>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).createCoinListing(organizationId, createCoinListingRequest, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {string} billingPlanId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteBillingPlan(organizationId: string, billingPlanId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).deleteBillingPlan(organizationId, billingPlanId, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {DeleteCoinListingRequest} deleteCoinListingRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteCoinListing(organizationId: string, deleteCoinListingRequest: DeleteCoinListingRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).deleteCoinListing(organizationId, deleteCoinListingRequest, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
         /**
          * 
          * @param {string} accountId 
@@ -3334,33 +2661,6 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllBillingPlans(organizationId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BillingPlanDTO>>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getAllBillingPlans(organizationId, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {string} billingPlanId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getBillingPlan(organizationId: string, billingPlanId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingPlanDTO>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getBillingPlan(organizationId, billingPlanId, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         async getOrganizationInfo(organizationId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationInfoDTO>> {
             const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getOrganizationInfo(organizationId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
@@ -3380,36 +2680,6 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
                 return axios.request(axiosRequestArgs);
             };
         },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {string} billingPlanId 
-         * @param {UpdateBillingPlanChargeRequest} updateBillingPlanChargeRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateBillingPlanCharge(organizationId: string, billingPlanId: string, updateBillingPlanChargeRequest: UpdateBillingPlanChargeRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingPlanDTO>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).updateBillingPlanCharge(organizationId, billingPlanId, updateBillingPlanChargeRequest, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {string} billingPlanId 
-         * @param {UpdateBillingPlanPeriodRequest} updateBillingPlanPeriodRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateBillingPlanPeriod(organizationId: string, billingPlanId: string, updateBillingPlanPeriodRequest: UpdateBillingPlanPeriodRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BillingPlanDTO>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).updateBillingPlanPeriod(organizationId, billingPlanId, updateBillingPlanPeriodRequest, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
     }
 };
 
@@ -3419,46 +2689,6 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
  */
 export const OperationControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {CreateBillingPlanRequest} createBillingPlanRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBillingPlan(organizationId: string, createBillingPlanRequest: CreateBillingPlanRequest, options?: any): AxiosPromise<BillingPlanDTO> {
-            return OperationControllerApiFp(configuration).createBillingPlan(organizationId, createBillingPlanRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {CreateCoinListingRequest} createCoinListingRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createCoinListing(organizationId: string, createCoinListingRequest: CreateCoinListingRequest, options?: any): AxiosPromise<CoinListingDTO> {
-            return OperationControllerApiFp(configuration).createCoinListing(organizationId, createCoinListingRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {string} billingPlanId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteBillingPlan(organizationId: string, billingPlanId: string, options?: any): AxiosPromise<void> {
-            return OperationControllerApiFp(configuration).deleteBillingPlan(organizationId, billingPlanId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {DeleteCoinListingRequest} deleteCoinListingRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteCoinListing(organizationId: string, deleteCoinListingRequest: DeleteCoinListingRequest, options?: any): AxiosPromise<void> {
-            return OperationControllerApiFp(configuration).deleteCoinListing(organizationId, deleteCoinListingRequest, options).then((request) => request(axios, basePath));
-        },
         /**
          * 
          * @param {string} accountId 
@@ -3492,25 +2722,6 @@ export const OperationControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllBillingPlans(organizationId: string, options?: any): AxiosPromise<Array<BillingPlanDTO>> {
-            return OperationControllerApiFp(configuration).getAllBillingPlans(organizationId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {string} billingPlanId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBillingPlan(organizationId: string, billingPlanId: string, options?: any): AxiosPromise<BillingPlanDTO> {
-            return OperationControllerApiFp(configuration).getBillingPlan(organizationId, billingPlanId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         getOrganizationInfo(organizationId: string, options?: any): AxiosPromise<OrganizationInfoDTO> {
             return OperationControllerApiFp(configuration).getOrganizationInfo(organizationId, options).then((request) => request(axios, basePath));
         },
@@ -3522,28 +2733,6 @@ export const OperationControllerApiFactory = function (configuration?: Configura
         getOrganizationsInfo(options?: any): AxiosPromise<Array<OrganizationInfoDTO>> {
             return OperationControllerApiFp(configuration).getOrganizationsInfo(options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {string} billingPlanId 
-         * @param {UpdateBillingPlanChargeRequest} updateBillingPlanChargeRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateBillingPlanCharge(organizationId: string, billingPlanId: string, updateBillingPlanChargeRequest: UpdateBillingPlanChargeRequest, options?: any): AxiosPromise<BillingPlanDTO> {
-            return OperationControllerApiFp(configuration).updateBillingPlanCharge(organizationId, billingPlanId, updateBillingPlanChargeRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} organizationId 
-         * @param {string} billingPlanId 
-         * @param {UpdateBillingPlanPeriodRequest} updateBillingPlanPeriodRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateBillingPlanPeriod(organizationId: string, billingPlanId: string, updateBillingPlanPeriodRequest: UpdateBillingPlanPeriodRequest, options?: any): AxiosPromise<BillingPlanDTO> {
-            return OperationControllerApiFp(configuration).updateBillingPlanPeriod(organizationId, billingPlanId, updateBillingPlanPeriodRequest, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -3554,54 +2743,6 @@ export const OperationControllerApiFactory = function (configuration?: Configura
  * @extends {BaseAPI}
  */
 export class OperationControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} organizationId 
-     * @param {CreateBillingPlanRequest} createBillingPlanRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OperationControllerApi
-     */
-    public createBillingPlan(organizationId: string, createBillingPlanRequest: CreateBillingPlanRequest, options?: any) {
-        return OperationControllerApiFp(this.configuration).createBillingPlan(organizationId, createBillingPlanRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} organizationId 
-     * @param {CreateCoinListingRequest} createCoinListingRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OperationControllerApi
-     */
-    public createCoinListing(organizationId: string, createCoinListingRequest: CreateCoinListingRequest, options?: any) {
-        return OperationControllerApiFp(this.configuration).createCoinListing(organizationId, createCoinListingRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} organizationId 
-     * @param {string} billingPlanId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OperationControllerApi
-     */
-    public deleteBillingPlan(organizationId: string, billingPlanId: string, options?: any) {
-        return OperationControllerApiFp(this.configuration).deleteBillingPlan(organizationId, billingPlanId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} organizationId 
-     * @param {DeleteCoinListingRequest} deleteCoinListingRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OperationControllerApi
-     */
-    public deleteCoinListing(organizationId: string, deleteCoinListingRequest: DeleteCoinListingRequest, options?: any) {
-        return OperationControllerApiFp(this.configuration).deleteCoinListing(organizationId, deleteCoinListingRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @param {string} accountId 
@@ -3642,29 +2783,6 @@ export class OperationControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OperationControllerApi
      */
-    public getAllBillingPlans(organizationId: string, options?: any) {
-        return OperationControllerApiFp(this.configuration).getAllBillingPlans(organizationId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} organizationId 
-     * @param {string} billingPlanId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OperationControllerApi
-     */
-    public getBillingPlan(organizationId: string, billingPlanId: string, options?: any) {
-        return OperationControllerApiFp(this.configuration).getBillingPlan(organizationId, billingPlanId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} organizationId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OperationControllerApi
-     */
     public getOrganizationInfo(organizationId: string, options?: any) {
         return OperationControllerApiFp(this.configuration).getOrganizationInfo(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
@@ -3677,32 +2795,6 @@ export class OperationControllerApi extends BaseAPI {
      */
     public getOrganizationsInfo(options?: any) {
         return OperationControllerApiFp(this.configuration).getOrganizationsInfo(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} organizationId 
-     * @param {string} billingPlanId 
-     * @param {UpdateBillingPlanChargeRequest} updateBillingPlanChargeRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OperationControllerApi
-     */
-    public updateBillingPlanCharge(organizationId: string, billingPlanId: string, updateBillingPlanChargeRequest: UpdateBillingPlanChargeRequest, options?: any) {
-        return OperationControllerApiFp(this.configuration).updateBillingPlanCharge(organizationId, billingPlanId, updateBillingPlanChargeRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} organizationId 
-     * @param {string} billingPlanId 
-     * @param {UpdateBillingPlanPeriodRequest} updateBillingPlanPeriodRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OperationControllerApi
-     */
-    public updateBillingPlanPeriod(organizationId: string, billingPlanId: string, updateBillingPlanPeriodRequest: UpdateBillingPlanPeriodRequest, options?: any) {
-        return OperationControllerApiFp(this.configuration).updateBillingPlanPeriod(organizationId, billingPlanId, updateBillingPlanPeriodRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
