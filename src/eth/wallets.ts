@@ -50,7 +50,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
-    if (isLessThanWalletV4(walletData.version)) {
+    if (!isLessThanWalletV4(walletData.version)) {
       throw new Error("wallet does not exist");
     }
     return new EthMasterWallet(
@@ -65,7 +65,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
-    if (!isLessThanWalletV4(walletData.version)) {
+    if (isLessThanWalletV4(walletData.version)) {
       throw new Error("wallet does not exist");
     }
     return new EthWallet(
