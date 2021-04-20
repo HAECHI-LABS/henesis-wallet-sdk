@@ -3,7 +3,7 @@ import { HenesisKeysService } from "./henesis-keys.service";
 import { KeyDTO } from "../dto/key.dto";
 import { BalanceDTO } from "../dto/balance.dto";
 
-@Controller("/v2/klay/henesis-keys")
+@Controller("henesis-keys")
 export class HenesisKeysController {
   constructor(private readonly henesisKeysService: HenesisKeysService) {}
 

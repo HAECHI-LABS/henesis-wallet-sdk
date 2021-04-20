@@ -8,7 +8,7 @@ import { TransferDTO } from "../dto/transfer.dto";
 import { RawTransactionDto } from "../dto/raw-transaction.dto";
 import { SignedRawTransactionDto } from "../dto/signed-raw-transaction.dto";
 
-@Controller("/v2/btc/wallets")
+@Controller("wallets")
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 

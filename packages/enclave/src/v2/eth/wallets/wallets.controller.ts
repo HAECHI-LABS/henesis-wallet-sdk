@@ -5,7 +5,7 @@ import { BalanceDTO } from "../dto/balance.dto";
 import { WalletNonceDTO } from "../dto/wallet-nonce.dto";
 import { UserWalletDTO } from "../dto/user-wallet.dto";
 
-@Controller("/v2/eth/wallets")
+@Controller("wallets")
 export class WalletsController {
   // todo: implement
   @Get("/")

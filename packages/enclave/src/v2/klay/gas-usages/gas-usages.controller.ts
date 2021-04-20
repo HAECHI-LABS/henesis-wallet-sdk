@@ -2,7 +2,7 @@ import { Controller, Get } from "@nestjs/common";
 import { GasUsagesService } from "./gas-usages.service";
 import { MethodGasUsageDTO } from "../dto/method-gas-usage.dto";
 
-@Controller("/v2/klay/gas-usages")
+@Controller("gas-usages")
 export class GasUsagesController {
   constructor(private readonly gasUsagesService: GasUsagesService) {}
 
