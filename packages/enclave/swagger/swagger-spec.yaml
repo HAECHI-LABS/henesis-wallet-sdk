@@ -1,0 +1,1353 @@
+openapi: 3.0.0
+info:
+  title: Enclave API
+  description: The Enclave API description
+  version: '1.0'
+  contact: {}
+tags: []
+servers:
+  - url: http://localhost:3000
+components:
+  schemas:
+    CoinDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Henesis에서 부여한 Coin의 ID
+          example: 11
+        name:
+          type: string
+          description: 코인 이름
+          example: ethereum
+        ticker:
+          type: string
+          description: 코인의 기호
+          example: ETH
+        address:
+          type: string
+          description: 코인 컨트랙트 주소
+          example: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+        description:
+          type: string
+          description: 코인 설명
+          example: 이더리움
+        decimals:
+          type: number
+          description: 코인의 소수점 자릿수
+          example: 18
+        blockchain:
+          description: 코인이 발행된 메인넷
+          enum:
+            - ETHEREUM
+            - KLAYTN
+            - BITCOIN
+          type: string
+        attributes:
+          description: 코인의 메타 데이터
+          enum:
+            - ERC20_STANDARD
+            - ERC20_NON_STANDARD_RETURN_TYPE
+            - ERC20_REBASE
+          type: string
+      required:
+        - id
+        - name
+        - ticker
+        - address
+        - description
+        - decimals
+        - blockchain
+        - attributes
+    CallEventDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 스마트 컨트랙트 호출 내역의 ID
+          example: '375031'
+        data:
+          type: string
+          description: 컨트랙트 호출시 사용된 data
+          example: >-
+            0xa9059cbb0000000000000000000000001f10ecbd971eab345ea19e96dc237b1fbd63de9600000000000000000000000000000000000000000000000000000000000f4240
+        status:
+          type: string
+          description: 트랜잭션 상태
+          example: CONFIRMED
+          enum:
+            - REQUESTED
+            - PENDING
+            - MINED
+            - CONFIRMED
+            - FAILED
+        walletId:
+          type: string
+          description: 지갑 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
+        orgId:
+          type: string
+          description: 지갑이 속한 팀(Organization)의 ID
+          example: 31cafc79bd437e1b8e7b8209e399d3f3
+        transactionId:
+          type: string
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          example: 8c87c578d7568edc156f831cf03c3ff0
+        toAddress:
+          type: string
+          description: 호출한 스마트 컨트랙트 주소
+          example: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+        fromAddress:
+          type: string
+          description: 호출한 지갑의 주소
+          example: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
+        transactionHash:
+          type: string
+          description: 트랜잭션 해시
+          example: '0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f'
+        createdAt:
+          type: string
+          description: '트랜잭션 생성 시간 (형식: ms, UNIX time)'
+          example: '1612411568760'
+        updatedAt:
+          type: string
+          description: '트랜잭션 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)'
+          example: '1612411724023'
+        blockchain:
+          type: string
+          description: 메인넷 종류
+          example: ethereum
+          enum:
+            - ETHEREUM
+            - KLAYTN
+            - BITCOIN
+      required:
+        - id
+        - data
+        - status
+        - walletId
+        - orgId
+        - transactionId
+        - toAddress
+        - fromAddress
+        - transactionHash
+        - createdAt
+        - updatedAt
+        - blockchain
+    PaginationMetadata:
+      type: object
+      properties:
+        nextUrl:
+          type: string
+          description: 다음 pagination url
+          example: http://localhost:3000/api/v2/eth/value-transfer-events?page=2
+        previousUrl:
+          type: string
+          description: 이전 pagination url
+          example: http://localhost:3000/api/v2/eth/value-transfer-events?page=1
+        totalCount:
+          type: number
+          description: 총 갯수
+      required:
+        - nextUrl
+        - previousUrl
+        - totalCount
+    GetManyResponseForCallEventDTO:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CallEventDTO'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - results
+    TransferDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 코인/토큰 입출금 내역의 ID
+          example: '375031'
+        from:
+          type: string
+          description: 출금 주소
+          example: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
+        to:
+          type: string
+          description: 입금 주소
+          example: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+        amount:
+          type: number
+          description: 암호화폐의 양
+          example: 1000000000
+        status:
+          type: string
+          description: 트랜잭션 상태
+          example: CONFIRMED
+          enum:
+            - REQUESTED
+            - PENDING
+            - MINED
+            - CONFIRMED
+            - FAILED
+        orgId:
+          type: string
+          description: 지갑이 속한 팀(Organization)의 ID
+          example: 31cafc79bd437e1b8e7b8209e399d3f3
+        decimals:
+          type: number
+          description: 암호화폐의 소수점 자릿수
+          example: 18
+        walletId:
+          type: string
+          description: 입출금 지갑 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
+        depositAddressId:
+          type: string
+          description: 입금 주소 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
+        ticker:
+          type: string
+          description: 암호화폐의 기호
+          example: USDT
+        transferType:
+          type: string
+          description: 입출금 타입
+          example: WITHDRAWAL
+          enum:
+            - WITHDRAWAL
+            - DEPOSIT
+        transactionId:
+          type: string
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          example: 8c87c578d7568edc156f831cf03c3ff0
+        transactionHash:
+          type: string
+          description: 트랜잭션 해시
+          example: '0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f'
+        createdAt:
+          type: string
+          description: '트랜잭션 생성 시간 (형식: ms, UNIX time)'
+          example: '1612411568760'
+        updatedAt:
+          type: string
+          description: '트랜잭션 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)'
+          example: '1612411724023'
+        name:
+          type: string
+          description: 해당 내역의 지갑 또는 입금 주소의 이름
+      required:
+        - id
+        - from
+        - to
+        - amount
+        - status
+        - orgId
+        - decimals
+        - walletId
+        - depositAddressId
+        - ticker
+        - transferType
+        - transactionId
+        - transactionHash
+        - createdAt
+        - updatedAt
+        - name
+    GetManyResponseForTransferDTO:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferDTO'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - results
+    BalanceDTO:
+      type: object
+      properties:
+        coinId:
+          type: string
+          description: Henesis에서 부여한 Coin의 ID
+          example: '11'
+        amount:
+          type: number
+          description: '확정된 잔액 (단위: wei, peb)'
+          example: 1000000000000
+        spendableAmount:
+          type: number
+          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei, peb)'
+          example: 1000000000000
+        name:
+          type: string
+          description: 코인 이름
+          example: ethereum
+        ticker:
+          type: string
+          description: 코인의 기호
+          example: ETH
+        decimals:
+          type: number
+          description: 코인의 소수점 자릿수
+          example: 18
+      required:
+        - coinId
+        - amount
+        - spendableAmount
+        - name
+        - ticker
+        - decimals
+    TransactionDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다, 블록체인에서 부여하는 트랜잭션 해시와
+            다른 개념입니다)
+          example: b549bfaaa74d1c4244ecc655738b1984
+        blockchain:
+          description: 메인넷 종류
+          enum:
+            - ETHEREUM
+            - KLAYTN
+            - BITCOIN
+          type: string
+        hash:
+          type: string
+          description: 트랜잭션 해시 (트랜잭션 상태가 REQUESTED일 때는 존재하지 않습니다)
+          example: '0x8a1ef722a2884d53a86874c8ba19bcf267bb0b8a81da00c14ddc6457cf1eaf96'
+        error:
+          type: string
+          description: 트랜잭션 전송 시 발생한 에러
+        status:
+          description: 트랜잭션 상태
+          enum:
+            - REQUESTED
+            - PENDING
+            - MINED
+            - CONFIRMED
+            - FAILED
+          type: string
+        fee:
+          type: number
+          description: 트랜잭션 수수료
+          example: 10000000
+        createdAt:
+          type: string
+          description: '트랜잭션 생성 시간 (형식: ms, UNIX time)'
+          example: '1614582928222'
+        updatedAt:
+          type: string
+          description: '트랜잭션 상태가 변한 시간 (형식: ms, UNIX time)'
+          example: '1612411724023'
+      required:
+        - id
+        - blockchain
+        - hash
+        - error
+        - status
+        - fee
+        - createdAt
+        - updatedAt
+    ReplaceTransactionRequestDTO:
+      type: object
+      properties:
+        gasPrice:
+          type: number
+          description: >-
+            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
+            값으로 설정합니다.
+    WalletDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 지갑 ID
+          example: a75611f2e624c08ecfb7df4218b318bc
+        name:
+          type: string
+          description: 지갑 이름
+          example: test-wallet
+        address:
+          type: string
+          description: 지갑 주소
+          example: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
+        blockchain:
+          description: 메인넷 종류
+          example: ethereum
+          enum:
+            - ETHEREUM
+            - KLAYTN
+            - BITCOIN
+          type: string
+        createdAt:
+          type: string
+          description: '지갑 생성 시간 (형식: ms, UNIX time)'
+          example: '1612411568760'
+        updatedAt:
+          type: string
+          description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
+          example: '1612411724023'
+        status:
+          description: 지갑 상태
+          example: ACTIVE
+          enum:
+            - ACTIVE
+            - CREATING
+            - FAILED
+            - INACTIVE
+          type: string
+        whitelistActivated:
+          type: boolean
+          description: 출금 주소 화이트리스팅의 활성화 유무
+          example: false
+        version:
+          type: string
+          description: 컨트랙트 버전
+          example: v4
+      required:
+        - id
+        - name
+        - address
+        - blockchain
+        - createdAt
+        - updatedAt
+        - status
+        - whitelistActivated
+        - version
+    ChangeWalletNameRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 지갑의 새로운 이름
+      required:
+        - name
+    SendCoinRequestDTO:
+      type: object
+      properties:
+        gasPrice:
+          type: number
+          description: >-
+            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
+            값으로 설정합니다.
+        ticker:
+          type: string
+          description: 암호화폐의 기호 (ticker)
+          example: ETH
+        to:
+          type: string
+          description: 암호화폐의 받을 지갑 주소
+          example: '0xab28d146e860e0b132695c941f706d783a158345'
+        amount:
+          type: number
+          description: '암호화폐의 양 (단위: wei, peb)'
+          example: 100000000
+        passphrase:
+          type: string
+          description: 지갑의 비밀번호
+          example: passphrase
+      required:
+        - ticker
+        - to
+        - amount
+        - passphrase
+    CreateTransactionRequestDTO:
+      type: object
+      properties:
+        value:
+          type: number
+          description: 트랜잭션에 담을 암호화폐의 양
+          example: 0
+        gasPrice:
+          type: number
+          description: >-
+            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
+            값으로 설정합니다.
+        to:
+          type: string
+          description: 트랜잭션을 보낼 스마트 컨트랙트 주소
+          example: '0xc10f954e2be747e1d9d47948b2c15e5b71c5d9c8'
+        data:
+          type: string
+          description: 트랜잭션에 담을 데이터
+          example: '0x0'
+        passphrase:
+          type: string
+          description: 지갑의 비밀번호
+          example: passphrase
+      required:
+        - to
+        - data
+        - passphrase
+    Target:
+      type: object
+      properties:
+        coinId:
+          type: string
+          description: Henesis에서 부여한 Coin의 ID
+          example: '11'
+        depositAddressId:
+          type: string
+          description: 입금 주소 ID
+          example: c2bd6506cb56a6baaff32653ac77ef49
+      required:
+        - coinId
+        - depositAddressId
+    CreateFlushRequestDTO:
+      type: object
+      properties:
+        gasPrice:
+          type: number
+          description: >-
+            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
+            값으로 설정합니다.
+        ticker:
+          type: string
+          description: 암호화폐의 기호 (ticker)
+          example: ETH
+        targets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Target'
+      required:
+        - ticker
+        - targets
+    FlushDTO:
+      type: object
+      properties: {}
+    DepositAddressDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 입금 주소 ID
+          example: a1f9e4c33ea9f51974490fd1c30efb3e
+        name:
+          type: string
+          description: 입금 주소 이름
+          example: deposit-address-1
+        blockchain:
+          description: 메인넷 종류
+          example: ETHEREUM
+          enum:
+            - ETHEREUM
+            - KLAYTN
+            - BITCOIN
+          type: string
+        createdAt:
+          type: string
+          description: '지갑 생성 시간 (단위: ms, UNIX time)'
+          example: '1614582860091'
+        updatedAt:
+          type: string
+          description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
+          example: '1614582928222'
+        version:
+          type: string
+          description: 입금 주소 버전
+          example: v4
+      required:
+        - id
+        - name
+        - blockchain
+        - createdAt
+        - updatedAt
+        - version
+    GetManyResponseForDepositAddressDTO:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DepositAddressDTO'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - results
+    CreateDepositAddressRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 입금 주소 이름
+          example: test-deposit-address
+      required:
+        - name
+paths:
+  /api/v3/ethereum/coins:
+    get:
+      operationId: CoinsController_getCoins
+      summary: 전체 코인 목록 조회하기
+      description: Henesis Wallet에서 지원하는 모든 가상자산(토큰, 코인)을 조회합니다.
+      parameters:
+        - name: flag
+          required: true
+          in: query
+          description: 비트베리 여부
+          schema:
+            type: boolean
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CoinDTO'
+      tags: &ref_0
+        - coins
+  /api/v3/ethereum/coins/{coinId}:
+    get:
+      operationId: CoinsController_getCoin
+      summary: 코인 정보 조회하기
+      description: Henesis Wallet에서 지원하는 특정 가상자산(토큰, 코인)을 조회합니다.
+      parameters:
+        - name: coinId
+          required: true
+          in: path
+          description: Henesis에서 부여한 Coin의 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoinDTO'
+      tags: *ref_0
+  /api/v3/ethereum/call-events:
+    get:
+      operationId: CallEventsController_getCallEvents
+      summary: 스마트 컨트랙트 호출 내역 조회하기
+      description: 내가 발생시킨 스마트 컨트랙트 호출 내역을 조회합니다.
+      parameters:
+        - name: walletId
+          required: false
+          in: query
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: transactionId
+          required: false
+          in: query
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          schema:
+            type: string
+        - name: transactionHash
+          required: false
+          in: query
+          description: 트랜잭션 해시
+          schema:
+            type: string
+        - name: status
+          required: false
+          in: query
+          description: 트랜잭션 상태
+          schema:
+            type: string
+        - name: ticker
+          required: false
+          in: query
+          description: 코인의 기호
+          schema:
+            type: string
+        - name: updatedAtGte
+          required: false
+          in: query
+          description: 'updatedAt이 해당 시점과 같거나 그보다 이후인 트랜잭션 조회 (형식: ms, UNIX time) '
+          schema:
+            type: string
+        - name: updatedAtLt
+          required: false
+          in: query
+          description: 'updatedAt이 해당 시점보다 이전인 트랜잭션 조회 (형식: ms, UNIX time) '
+          schema:
+            type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForCallEventDTO'
+      tags:
+        - call-events
+  /api/v3/ethereum/transfers:
+    get:
+      operationId: TransfersController_getTransfers
+      summary: 전체 입출금 목록 조회하기
+      description: 모든 지갑의 가상자산 입출금 내역을 조회합니다.
+      parameters:
+        - name: ticker
+          required: false
+          in: query
+          description: 코인의 기호
+          schema:
+            type: string
+        - name: depositAddressId
+          required: false
+          in: query
+          description: 입금 주소 ID
+          schema:
+            type: string
+        - name: walletId
+          required: false
+          in: query
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: transactionId
+          required: false
+          in: query
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          schema:
+            type: string
+        - name: transactionHash
+          required: false
+          in: query
+          description: 트랜잭션 해시
+          schema:
+            type: string
+        - name: status
+          required: false
+          in: query
+          description: 트랜잭션 상태
+          schema:
+            type: string
+        - name: updatedAtGte
+          required: false
+          in: query
+          description: 'updatedAt이 해당 시점과 같거나 그보다 이후인 트랜잭션 조회 (형식: ms, UNIX time) '
+          schema:
+            type: string
+        - name: updatedAtLt
+          required: false
+          in: query
+          description: 'updatedAt이 해당 시점보다 이전인 트랜잭션 조회 (형식: ms, UNIX time) '
+          schema:
+            type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForTransferDTO'
+      tags:
+        - transfers
+  /api/v3/ethereum/fee-wallets/balance:
+    get:
+      operationId: FeeWalletsController_getBalance
+      summary: 수수료 지갑 잔고 조회하기
+      description: 수수료 지갑의 잔액을 조회합니다.
+      parameters:
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceDTO'
+      tags:
+        - fee-wallets
+  /api/v3/ethereum/transactions/{transactionId}:
+    get:
+      operationId: TransactionsController_getTransaction
+      summary: 개별 트랜잭션 조회하기
+      description: 내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.
+      parameters:
+        - name: transactionId
+          required: true
+          in: path
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+      tags: &ref_1
+        - transactions
+  /api/v3/ethereum/transactions/{transactionId}/replace:
+    post:
+      operationId: TransactionsController_repalceTransaction
+      summary: 트랜잭션 교체하기
+      parameters:
+        - name: transactionId
+          required: true
+          in: path
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceTransactionRequestDTO'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+      tags: *ref_1
+  /api/v3/ethereum/wallets:
+    get:
+      operationId: WalletsController_getWallets
+      summary: 전체 지갑 목록 조회하기
+      description: 모든 지갑의 목록을 조회합니다.
+      parameters:
+        - name: name
+          required: false
+          in: query
+          description: 지갑 이름
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WalletDTO'
+      tags: &ref_2
+        - wallets
+  /api/v3/ethereum/wallets/{walletId}:
+    get:
+      operationId: WalletsController_getWallet
+      summary: 지갑 정보 조회하기
+      description: 특정 지갑의 정보를 조회합니다.
+      parameters:
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletDTO'
+      tags: *ref_2
+  /api/v3/ethereum/wallets/{walletId}/balance:
+    get:
+      operationId: WalletsController_getBalanceOfWallet
+      summary: 지갑 잔고 조회하기
+      description: 특정 지갑의 잔고를 조회합니다.
+      parameters:
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: ticker
+          required: false
+          in: query
+          description: 코인의 기호
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceDTO'
+      tags: *ref_2
+  /api/v3/ethereum/wallets/{walletId}/name:
+    patch:
+      operationId: WalletsController_changeWalletName
+      summary: 지갑 이름 변경하기
+      description: 특정 지갑의 이름을 변경합니다.
+      parameters:
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeWalletNameRequestDTO'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+        '204':
+          description: ''
+      tags: *ref_2
+  /api/v3/ethereum/wallets/{walletId}/transfer:
+    post:
+      operationId: WalletsController_sendCoin
+      summary: 지갑에서 코인 전송하기
+      description: 특정 지갑에서 가상자산을 송금합니다.
+      parameters:
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendCoinRequestDTO'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+      tags: *ref_2
+  /api/v3/ethereum/wallets/{walletId}/transactions:
+    post:
+      operationId: WalletsController_callContract
+      summary: 지갑에서 스마트 컨트랙트 호출하기
+      description: 특정 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
+      parameters:
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTransactionRequestDTO'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+      tags: *ref_2
+  /api/v3/ethereum/wallets/{walletId}/flush:
+    post:
+      operationId: WalletsController_flush
+      summary: 입금 주소 잔액을 모두 끌어오기
+      description: 원화 입금 주소의 특정 코인/토큰 잔액을 모두 상위의 지갑으로 끌어옵니다.
+      parameters:
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFlushRequestDTO'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlushDTO'
+      tags: *ref_2
+  /api/v3/ethereum/wallets/{walletId}/transactions/{transactionId}:
+    patch:
+      operationId: WalletsController_resendTransaction
+      summary: 트랜잭션 다시 전송하기
+      description: 네트워크 사정 등으로 채굴이 지연됐을때, 블록체인에 트랜잭션을 다시 전송합니다.
+      parameters:
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: transactionId
+          required: true
+          in: path
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+        '204':
+          description: ''
+      tags: *ref_2
+  /api/v3/ethereum/wallets/{walletId}/deposit-addresses:
+    get:
+      operationId: WalletsController_getDepositAddresses
+      summary: 전체 입금 주소 목록 조회하기
+      description: 특정 지갑에 속한 모든 입금 주소 조회합니다.
+      parameters:
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: name
+          required: false
+          in: query
+          description: 지갑 이름
+          schema:
+            type: string
+        - name: address
+          required: false
+          in: query
+          description: 입금 주소
+          schema:
+            type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForDepositAddressDTO'
+      tags: *ref_2
+    post:
+      operationId: WalletsController_createDepositAddress
+      summary: 입금 주소 생성하기
+      description: 특정 지갑 하위에 새로운 입금 주소 생성합니다
+      parameters:
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDepositAddressRequestDTO'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositAddressDTO'
+      tags: *ref_2
+  /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}:
+    get:
+      operationId: WalletsController_getDepositAddress
+      summary: 입금 주소 정보 조회하기
+      description: 특정 입금 주소를 조회합니다.
+      parameters:
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: depositAddressId
+          required: true
+          in: path
+          description: 입금 주소 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositAddressDTO'
+      tags: *ref_2
+  /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}/balance:
+    get:
+      operationId: WalletsController_getBalanceOfDepositAddress
+      summary: 입금 주소 잔고 조회하기
+      description: 특정 입금 주소의 잔액을 조회합니다.
+      parameters:
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: depositAddressId
+          required: true
+          in: path
+          description: 입금 주소 ID
+          schema:
+            type: string
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceDTO'
+      tags: *ref_2
