@@ -1,8 +1,5 @@
 import { Client } from "./httpClient";
-
-export interface Notice {
-  id: string;
-}
+import { NoticeDTO, UpdateNoticeRequest } from "./__generate__/accounts";
 
 export class Notices {
   private readonly client: Client;
@@ -13,15 +10,12 @@ export class Notices {
     this.client = client;
   }
 
-  // todo: implement
-  getNotices(): Promise<Notice[]> {
-    return Promise.resolve([
-      {
-        id: "1",
-      },
-    ]);
+  getNotices(): Promise<NoticeDTO[]> {
+    return this.client.get(`${this.baseUrl}`);
   }
 
-  // todo: implement
-  updateNotice(request: { noticeId: string; seen: boolean }) {}
+  async updateNotice(request: { noticeId: string } & UpdateNoticeRequest) {
+    const { noticeId, ...rest } = request;
+    await this.client.patch(`${this.baseUrl}/${noticeId}`, rest);
+  }
 }
