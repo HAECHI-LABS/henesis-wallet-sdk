@@ -239,7 +239,7 @@ export class EthWallet extends EthLikeWallet {
 
   async createDepositAddress(
     name: string,
-    passphrase: string,
+    passphrase?: string,
     gasPrice?: BN,
     salt?: BN,
     otpCode?: string
@@ -250,7 +250,7 @@ export class EthWallet extends EthLikeWallet {
     }
 
     let signedMultiSigPayloadDTO: SignedMultiSigPayloadDTO = null;
-    if (this.getVersionNumber() < 3) {
+    if (this.getVersionNumber() < 3 && passphrase === undefined) {
       const multiSigPayload: MultiSigPayload = {
         hexData: this.walletContract.methods.createUserWallet(salt).encodeABI(),
         walletNonce: this.getNonce(),
