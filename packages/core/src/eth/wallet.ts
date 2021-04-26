@@ -239,10 +239,34 @@ export class EthWallet extends EthLikeWallet {
 
   async createDepositAddress(
     name: string,
+    passphrase: string,
+    gasPrice?: BN,
+    salt?: BN,
     otpCode?: string
   ): Promise<EthDepositAddress> {
-    const userWalletParams = {
+    // generates 32byte(256 bit) randoma hex string and converts to BN when salt is not defined
+    if (salt === undefined || salt == null) {
+      salt = Web3.utils.toBN(Web3.utils.randomHex(32));
+    }
+
+    let signedMultiSigPayloadDTO: SignedMultiSigPayloadDTO = null;
+    if (this.getVersionNumber() < 3) {
+      const multiSigPayload: MultiSigPayload = {
+        hexData: this.walletContract.methods.createUserWallet(salt).encodeABI(),
+        walletNonce: this.getNonce(),
+        value: BNConverter.hexStringToBN("0x0"),
+        toAddress: this.getAddress(),
+        walletAddress: this.getAddress(),
+      };
+      signedMultiSigPayloadDTO = convertSignedMultiSigPayloadToDTO(
+        this.signPayload(multiSigPayload, passphrase)
+      );
+    }
+    const userWalletParams: CreateUserWalletRequest = {
       name,
+      salt: BNConverter.bnToHexString(salt),
+      signedMultiSigPayload: signedMultiSigPayloadDTO,
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
       otpCode,
     };
     const userWalletData = await this.client.post<UserWalletDTO>(
