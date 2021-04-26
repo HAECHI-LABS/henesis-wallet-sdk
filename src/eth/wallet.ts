@@ -262,23 +262,23 @@ export class EthWallet extends EthLikeWallet {
         this.signPayload(multiSigPayload, passphrase)
       );
     }
-    const userWalletParams: CreateUserWalletRequest = {
+    const depositAddressParams: CreateUserWalletRequest = {
       name,
       salt: BNConverter.bnToHexString(salt),
       signedMultiSigPayload: signedMultiSigPayloadDTO,
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
       otpCode,
     };
-    const userWalletData = await this.client.post<UserWalletDTO>(
+    const depositAddressData = await this.client.post<UserWalletDTO>(
       `${this.baseUrl}/user-wallets`,
-      userWalletParams
+      depositAddressParams
     );
 
     return new EthDepositAddress(
       this.client,
       this.data,
       this.keychains,
-      transformDepositAddressData(userWalletData),
+      transformDepositAddressData(depositAddressData),
       this.blockchain
     );
   }
