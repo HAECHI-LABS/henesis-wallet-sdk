@@ -301,6 +301,19 @@ export interface CreateAllowedIpRequest {
 /**
  * 
  * @export
+ * @interface CreateNoticeRequest
+ */
+export interface CreateNoticeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateNoticeRequest
+     */
+    title: string;
+}
+/**
+ * 
+ * @export
  * @interface CreateOrganizationRequest
  */
 export interface CreateOrganizationRequest {
@@ -727,6 +740,12 @@ export interface NoticeDTO {
      * @memberof NoticeDTO
      */
     id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NoticeDTO
+     */
+    title: string;
     /**
      * 
      * @type {boolean}
@@ -1216,15 +1235,28 @@ export interface UpdateLanguageRequest {
 /**
  * 
  * @export
+ * @interface UpdateNoticeIsSeenRequest
+ */
+export interface UpdateNoticeIsSeenRequest {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateNoticeIsSeenRequest
+     */
+    isSeen: boolean;
+}
+/**
+ * 
+ * @export
  * @interface UpdateNoticeRequest
  */
 export interface UpdateNoticeRequest {
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof UpdateNoticeRequest
      */
-    isSeen: boolean;
+    title: string;
 }
 /**
  * 
@@ -2469,6 +2501,79 @@ export const NoticeControllerApiAxiosParamCreator = function (configuration?: Co
     return {
         /**
          * 
+         * @param {CreateNoticeRequest} createNoticeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNotice: async (createNoticeRequest: CreateNoticeRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createNoticeRequest' is not null or undefined
+            if (createNoticeRequest === null || createNoticeRequest === undefined) {
+                throw new RequiredError('createNoticeRequest','Required parameter createNoticeRequest was null or undefined when calling createNotice.');
+            }
+            const localVarPath = `/api/v2/notices`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createNoticeRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createNoticeRequest !== undefined ? createNoticeRequest : {}) : (createNoticeRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} noticeId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteNotice: async (noticeId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'noticeId' is not null or undefined
+            if (noticeId === null || noticeId === undefined) {
+                throw new RequiredError('noticeId','Required parameter noticeId was null or undefined when calling deleteNotice.');
+            }
+            const localVarPath = `/api/v2/notices/{noticeId}`
+                .replace(`{${"noticeId"}}`, encodeURIComponent(String(noticeId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2512,7 +2617,7 @@ export const NoticeControllerApiAxiosParamCreator = function (configuration?: Co
             if (updateNoticeRequest === null || updateNoticeRequest === undefined) {
                 throw new RequiredError('updateNoticeRequest','Required parameter updateNoticeRequest was null or undefined when calling updateNotice.');
             }
-            const localVarPath = `/api/v2/notices/{noticeId}`
+            const localVarPath = `/api/v2/notices/{noticeId}/title`
                 .replace(`{${"noticeId"}}`, encodeURIComponent(String(noticeId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -2540,6 +2645,50 @@ export const NoticeControllerApiAxiosParamCreator = function (configuration?: Co
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} noticeId 
+         * @param {UpdateNoticeIsSeenRequest} updateNoticeIsSeenRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateNoticeIsSeen: async (noticeId: string, updateNoticeIsSeenRequest: UpdateNoticeIsSeenRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'noticeId' is not null or undefined
+            if (noticeId === null || noticeId === undefined) {
+                throw new RequiredError('noticeId','Required parameter noticeId was null or undefined when calling updateNoticeIsSeen.');
+            }
+            // verify required parameter 'updateNoticeIsSeenRequest' is not null or undefined
+            if (updateNoticeIsSeenRequest === null || updateNoticeIsSeenRequest === undefined) {
+                throw new RequiredError('updateNoticeIsSeenRequest','Required parameter updateNoticeIsSeenRequest was null or undefined when calling updateNoticeIsSeen.');
+            }
+            const localVarPath = `/api/v2/notices/{noticeId}/is-seen`
+                .replace(`{${"noticeId"}}`, encodeURIComponent(String(noticeId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof updateNoticeIsSeenRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateNoticeIsSeenRequest !== undefined ? updateNoticeIsSeenRequest : {}) : (updateNoticeIsSeenRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2549,6 +2698,32 @@ export const NoticeControllerApiAxiosParamCreator = function (configuration?: Co
  */
 export const NoticeControllerApiFp = function(configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @param {CreateNoticeRequest} createNoticeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createNotice(createNoticeRequest: CreateNoticeRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await NoticeControllerApiAxiosParamCreator(configuration).createNotice(createNoticeRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} noticeId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteNotice(noticeId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await NoticeControllerApiAxiosParamCreator(configuration).deleteNotice(noticeId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
         /**
          * 
          * @param {*} [options] Override http request option.
@@ -2575,6 +2750,20 @@ export const NoticeControllerApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {string} noticeId 
+         * @param {UpdateNoticeIsSeenRequest} updateNoticeIsSeenRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateNoticeIsSeen(noticeId: string, updateNoticeIsSeenRequest: UpdateNoticeIsSeenRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await NoticeControllerApiAxiosParamCreator(configuration).updateNoticeIsSeen(noticeId, updateNoticeIsSeenRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -2584,6 +2773,24 @@ export const NoticeControllerApiFp = function(configuration?: Configuration) {
  */
 export const NoticeControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     return {
+        /**
+         * 
+         * @param {CreateNoticeRequest} createNoticeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNotice(createNoticeRequest: CreateNoticeRequest, options?: any): AxiosPromise<void> {
+            return NoticeControllerApiFp(configuration).createNotice(createNoticeRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} noticeId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteNotice(noticeId: string, options?: any): AxiosPromise<void> {
+            return NoticeControllerApiFp(configuration).deleteNotice(noticeId, options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @param {*} [options] Override http request option.
@@ -2602,6 +2809,16 @@ export const NoticeControllerApiFactory = function (configuration?: Configuratio
         updateNotice(noticeId: string, updateNoticeRequest: UpdateNoticeRequest, options?: any): AxiosPromise<void> {
             return NoticeControllerApiFp(configuration).updateNotice(noticeId, updateNoticeRequest, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {string} noticeId 
+         * @param {UpdateNoticeIsSeenRequest} updateNoticeIsSeenRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateNoticeIsSeen(noticeId: string, updateNoticeIsSeenRequest: UpdateNoticeIsSeenRequest, options?: any): AxiosPromise<void> {
+            return NoticeControllerApiFp(configuration).updateNoticeIsSeen(noticeId, updateNoticeIsSeenRequest, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -2612,6 +2829,28 @@ export const NoticeControllerApiFactory = function (configuration?: Configuratio
  * @extends {BaseAPI}
  */
 export class NoticeControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateNoticeRequest} createNoticeRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NoticeControllerApi
+     */
+    public createNotice(createNoticeRequest: CreateNoticeRequest, options?: any) {
+        return NoticeControllerApiFp(this.configuration).createNotice(createNoticeRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} noticeId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NoticeControllerApi
+     */
+    public deleteNotice(noticeId: string, options?: any) {
+        return NoticeControllerApiFp(this.configuration).deleteNotice(noticeId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {*} [options] Override http request option.
@@ -2632,6 +2871,18 @@ export class NoticeControllerApi extends BaseAPI {
      */
     public updateNotice(noticeId: string, updateNoticeRequest: UpdateNoticeRequest, options?: any) {
         return NoticeControllerApiFp(this.configuration).updateNotice(noticeId, updateNoticeRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} noticeId 
+     * @param {UpdateNoticeIsSeenRequest} updateNoticeIsSeenRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NoticeControllerApi
+     */
+    public updateNoticeIsSeen(noticeId: string, updateNoticeIsSeenRequest: UpdateNoticeIsSeenRequest, options?: any) {
+        return NoticeControllerApiFp(this.configuration).updateNoticeIsSeen(noticeId, updateNoticeIsSeenRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
