@@ -1,5 +1,5 @@
 import { Client } from "./httpClient";
-import { NoticeDTO, UpdateNoticeRequest } from "./__generate__/accounts";
+import { NoticeDTO, UpdateNoticeIsSeenRequest } from "./__generate__/accounts";
 
 export class Notices {
   private readonly client: Client;
@@ -14,8 +14,10 @@ export class Notices {
     return this.client.get(`${this.baseUrl}`);
   }
 
-  async updateNotice(request: { noticeId: string } & UpdateNoticeRequest) {
+  async updateNoticeIsSeen(
+    request: { noticeId: string } & UpdateNoticeIsSeenRequest
+  ) {
     const { noticeId, ...rest } = request;
-    await this.client.patch(`${this.baseUrl}/${noticeId}`, rest);
+    await this.client.patch(`${this.baseUrl}/${noticeId}/is-seen`, rest);
   }
 }
