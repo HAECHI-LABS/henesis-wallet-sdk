@@ -1,17 +1,40 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Param, Request } from "@nestjs/common";
 import { TransactionDTO } from "../dto/transaction.dto";
+import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
+import express from "express";
+import { PaginationDTO } from "../../eth/dto/pagination.dto";
+import { ApiPaginationResponse, PathParams } from "../../../decorators";
+import { ValueTransferEventDTO } from "../../eth/dto/value-transfer-event.dto";
+import { PARAM_TRANSACTION_ID } from "../../eth/dto/params";
 
 @Controller("transactions")
+@ApiTags("transactions")
 export class TransactionsController {
-  // todo: implement
   @Get("/")
-  public async getTransactions(): Promise<TransactionDTO[]> {
+  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
+  @ApiOperation({
+    summary: "모든 트랜잭션 정보 조회하기",
+    description: "내가 발생시킨 모든 트랜잭션의 정보를 조회합니다.",
+  })
+  @ApiPaginationResponse(ValueTransferEventDTO)
+  public async getTransactions(
+    @Request() request: express.Request
+  ): Promise<PaginationDTO<TransactionDTO>> {
     return null;
   }
 
-  // todo: implement
   @Get("/:transactionId")
-  public async getTransaction(): Promise<TransactionDTO> {
+  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
+  @ApiOperation({
+    summary: "특정 트랜잭션 정보 조회하기",
+    description: "내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.",
+  })
+  @PathParams(PARAM_TRANSACTION_ID)
+  public async getTransaction(
+    @Request() request: express.Request,
+    @Param("transactionId") transactionId: string
+  ): Promise<TransactionDTO> {
     return null;
   }
 }

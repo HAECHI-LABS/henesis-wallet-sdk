@@ -1,21 +1,37 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Request } from "@nestjs/common";
 import { HenesisKeysService } from "./henesis-keys.service";
 import { KeyDTO } from "../dto/key.dto";
 import { BalanceDTO } from "../dto/balance.dto";
+import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
+import express from "express";
+import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
 
 @Controller("henesis-keys")
+@ApiTags("henesis-keys")
 export class HenesisKeysController {
   constructor(private readonly henesisKeysService: HenesisKeysService) {}
 
-  // todo: implement
   @Get("/me")
-  public async getHenesisKey(): Promise<KeyDTO> {
+  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
+  @ApiOperation({
+    summary: "Henesis Key 조회하기",
+    description: "Henesis Key를 조회합니다.",
+  })
+  public async getHenesisKey(
+    @Request() request: express.Request
+  ): Promise<KeyDTO> {
     return null;
   }
 
-  // todo: implement
   @Get("/balance")
-  public async getHenesisKeyBalance(): Promise<BalanceDTO> {
+  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
+  @ApiOperation({
+    summary: "수수료 지갑 잔액 조회하기",
+    description: "수수료 지갑의 잔액을 조회합니다.",
+  })
+  public async getHenesisKeyBalance(
+    @Request() request: express.Request
+  ): Promise<BalanceDTO> {
     return null;
   }
 }
