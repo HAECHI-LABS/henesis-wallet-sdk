@@ -1,2 +1,10 @@
-// todo: define
-export class WalletNonceDTO {}
+import { ApiProperty } from "@nestjs/swagger";
+
+export class WalletNonceDTO {
+  /**
+   * nonce
+   * @example ETH
+   */
+
+  nonce: string;
+}

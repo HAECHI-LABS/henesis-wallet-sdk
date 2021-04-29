@@ -1,20 +1,77 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import { TransfersService } from "./transfers.service";
 import { TransferDTO } from "../dto/transfer.dto";
+import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
+import express from "express";
+import { PaginationDTO } from "../dto/pagination.dto";
+import {
+  ApiPaginationResponse,
+  PathParams,
+  Queries,
+} from "../../../decorators";
+import {
+  QUERY_TRANSFERS_ADDRESS_OPTIONAL,
+  QUERY_TRANSFERS_PAGE_OPTIONAL,
+  QUERY_TRANSFERS_SIZE_OPTIONAL,
+  QUERY_TRANSFERS_STATUS_OPTIONAL,
+  QUERY_TRANSFERS_TRANSACTION_HASH_OPTIONAL,
+  QUERY_TRANSFERS_TYPE_OPTIONAL,
+  QUERY_TRANSFERS_UPDATED_AT_GTE_OPTIONAL,
+  QUERY_TRANSFERS_UPDATED_AT_LT_OPTIONAL,
+  QUERY_TRANSFERS_WALLET_ID_OPTIONAL,
+} from "../dto/queries";
+import { PARAM_WALLET_ID } from "../dto/params";
+import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
 
 @Controller("transfers")
+@ApiTags("transfers")
 export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
 
-  // todo: implement
   @Get("/")
-  public async getTransfers(): Promise<TransferDTO> {
+  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
+  @ApiOperation({
+    summary: "입출금 내역 조회하기",
+    description: "입출금 내역을 조회합니다.",
+  })
+  @ApiPaginationResponse(TransferDTO)
+  @Queries(
+    QUERY_TRANSFERS_TYPE_OPTIONAL,
+    QUERY_TRANSFERS_WALLET_ID_OPTIONAL,
+    QUERY_TRANSFERS_STATUS_OPTIONAL,
+    QUERY_TRANSFERS_ADDRESS_OPTIONAL,
+    QUERY_TRANSFERS_TRANSACTION_HASH_OPTIONAL,
+    QUERY_TRANSFERS_UPDATED_AT_GTE_OPTIONAL,
+    QUERY_TRANSFERS_UPDATED_AT_LT_OPTIONAL,
+    QUERY_TRANSFERS_SIZE_OPTIONAL,
+    QUERY_TRANSFERS_PAGE_OPTIONAL
+  )
+  public async getTransfers(
+    @Request() request: express.Request,
+    @Query("type") type?: string,
+    @Query("walletId") walletId?: string,
+    @Query("status") status?: string,
+    @Query("address") address?: string,
+    @Query("transactionHash") transactionHash?: string,
+    @Query("updatedAtGte") updatedAtGte?: string,
+    @Query("updatedAtLt") updatedAtLt?: string,
+    @Query("size") size?: string,
+    @Query("page") page?: string
+  ): Promise<PaginationDTO<TransferDTO>> {
     return null;
   }
 
-  // todo: implement
   @Get("/:transferId")
-  public async getTransfer(): Promise<TransferDTO[]> {
+  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
+  @ApiOperation({
+    summary: "특정 입출금 내역 조회하기",
+    description: "특정 입출금 내역을 조회합니다.",
+  })
+  @PathParams(PARAM_WALLET_ID)
+  public async getTransfer(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string
+  ): Promise<TransferDTO> {
     return null;
   }
 }
