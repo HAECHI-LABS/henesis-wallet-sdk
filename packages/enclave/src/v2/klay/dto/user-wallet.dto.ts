@@ -1,2 +1,3 @@
-// todo: define
-export class UserWalletDTO {}
+import { WalletDTO } from "./wallet.dto";
+
+export class UserWalletDTO extends WalletDTO {}

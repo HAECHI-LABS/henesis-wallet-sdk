@@ -1,14 +1,28 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Query, Request } from "@nestjs/common";
 import { GasUsagesService } from "./gas-usages.service";
 import { MethodGasUsageDTO } from "../dto/method-gas-usage.dto";
+import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
+import { Queries } from "../../../decorators";
+import { QUERY_WALLET_NAME_OPTIONAL } from "../../btc/dto/queries";
+import express from "express";
 
 @Controller("gas-usages")
+@ApiTags("gas-usages")
 export class GasUsagesController {
   constructor(private readonly gasUsagesService: GasUsagesService) {}
 
-  // todo: implement
   @Get("/method-gas-usages")
-  public async getMethodGasUsages(): Promise<MethodGasUsageDTO> {
+  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
+  @ApiOperation({
+    summary: "입출금 내역 조회하기",
+    description: "입출금 내역을 조회합니다.",
+  })
+  @Queries(QUERY_WALLET_NAME_OPTIONAL)
+  public async getMethodGasUsages(
+    @Request() request: express.Request,
+    @Query("name") name?: string
+  ): Promise<MethodGasUsageDTO> {
     return null;
   }
 }
