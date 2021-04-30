@@ -1313,10 +1313,10 @@ export interface FlushTransactionDTO {
     id: string;
     /**
      * 
-     * @type {string}
+     * @type {Blockchain}
      * @memberof FlushTransactionDTO
      */
-    blockchain: string;
+    blockchain: Blockchain;
     /**
      * 
      * @type {string}
