@@ -45,8 +45,13 @@ import {
   ActivateMasterWalletRequest,
   KeyDTO,
   ResendTransactionRequest,
+  FlushRequest,
+  PaginationFlushTransactionDTO,
+  TransactionStatus,
+  FlushTransactionValueTransferEventDTOStatus,
+  FlushTransactionDTO,
 } from "../__generate__/eth";
-import _ from "lodash";
+import _, { result } from "lodash";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { Coin } from "./coin";
 import { randomBytes } from "crypto";
@@ -89,19 +94,20 @@ export const transformMasterWalletData = (
 };
 
 type FlushTransfer = {
+  id: number;
+  amount: BN;
+  status: FlushTransactionValueTransferEventDTOStatus;
   coinSymbol: string;
   coinId: number;
-  amount: BN;
   depositAddress: string;
-  isFirst: Boolean;
 };
 
-export type FlushHistory = {
+export type FlushTransaction = {
   id: string;
   blockchain: BlockchainType;
   fee: BN;
-  hash: string;
-  status: string;
+  hash?: string;
+  status: TransactionStatus;
   createdAt: string;
   updatedAt: string;
   transfers: FlushTransfer[];
@@ -388,53 +394,64 @@ export class EthWallet extends EthLikeWallet {
     flushTargets: Array<{ coinId: number; depositAddressId: string }>,
     gasPrice?: BN
   ): Promise<EthTransaction> {
-    const response = await this.client.post<Pagination<FlushHistory[]>>(
+    const request: FlushRequest = {
+      targets: flushTargets,
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+    };
+    const response = await this.client.post<TransactionDTO>(
       `${this.baseUrl}/flush`,
-      {
-        targets: flushTargets,
-        gasPrice,
-      }
+      request
     );
-    return null;
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
   }
 
-  async getFlushHistories(
+  async getFlushTransactions(
     option?: PaginationOptions
-  ): Promise<Pagination<FlushHistory>> {
+  ): Promise<Pagination<FlushTransaction>> {
     const queryString = makeQueryString(option);
-    const response = await this.client.get<Pagination<FlushHistory[]>>(
+    const response = await this.client.get<PaginationFlushTransactionDTO>(
       `${this.baseUrl}/flush-transactions${
         queryString ? `?${queryString}` : ""
       }`
     );
-    const MOCK_DATA = {
-      pagination: {
-        nextUrl: null,
-        previousUrl: null,
-        totalCount: 1,
-      },
-      results: [
-        {
-          id: "948e61c20268f9477ca85d6ecef90859",
-          blockchain: BlockchainType.ETHEREUM,
-          fee: new BN("0"),
-          hash: "0x4ef3ba60c8710f45371835cddafabf33daa83e1d",
-          status: "REQUESTED",
-          createdAt: String(new Date().valueOf()),
-          updatedAt: String(new Date().valueOf()),
-          transfers: [
-            {
-              coinSymbol: "ETH",
-              coinId: 2,
-              amount: new BN("0"),
-              depositAddress: "0x4ef3ba60c8710f45371835cddafabf33daa83e1d",
-              isFirst: true,
-            },
-          ],
-        },
-      ],
+    return {
+      pagination: response.pagination,
+      results: response.results.map((result) => {
+        return {
+          ...result,
+          fee: BNConverter.hexStringToBN(String(result.fee ?? "0x0")),
+          blockchain: result.blockchain as any,
+          transfers: result.transfers.map((transfer) => {
+            return {
+              ...transfer,
+              amount: BNConverter.hexStringToBN(
+                String(transfer.amount ?? "0x0")
+              ),
+            };
+          }),
+        };
+      }),
     };
-    return MOCK_DATA;
+  }
+
+  async getFlushTransaction(transactionId: string): Promise<FlushTransaction> {
+    const response = await this.client.get<FlushTransactionDTO>(
+      `${this.baseUrl}/flush-transactions/${transactionId}`
+    );
+    return {
+      ...response,
+      fee: BNConverter.hexStringToBN(String(response.fee ?? "0x0")),
+      blockchain: response.blockchain as any,
+      transfers: response.transfers.map((transfer) => {
+        return {
+          ...transfer,
+          amount: BNConverter.hexStringToBN(String(transfer.amount ?? "0x0")),
+        };
+      }),
+    };
   }
 
   async approve(params: EthWithdrawalApproveParams): Promise<EthTransaction> {
