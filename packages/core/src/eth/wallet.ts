@@ -423,7 +423,7 @@ export class EthWallet extends EthLikeWallet {
         return {
           ...result,
           fee: BNConverter.hexStringToBN(String(result.fee ?? "0x0")),
-          blockchain: result.blockchain as any,
+          blockchain: transformBlockchainType(result.blockchain),
           transfers: result.transfers.map((transfer) => {
             return {
               ...transfer,
@@ -444,7 +444,7 @@ export class EthWallet extends EthLikeWallet {
     return {
       ...response,
       fee: BNConverter.hexStringToBN(String(response.fee ?? "0x0")),
-      blockchain: response.blockchain as any,
+      blockchain: transformBlockchainType(response.blockchain),
       transfers: response.transfers.map((transfer) => {
         return {
           ...transfer,
