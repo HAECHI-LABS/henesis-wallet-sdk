@@ -93,7 +93,7 @@ export const transformMasterWalletData = (
   };
 };
 
-type FlushTransfer = {
+export type FlushTransfer = {
   id: number;
   amount: BN;
   status: FlushTransactionValueTransferEventDTOStatus;
