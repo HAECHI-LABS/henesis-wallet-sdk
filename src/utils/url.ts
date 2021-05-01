@@ -29,7 +29,7 @@ export const makeQueryString = (options?: object) => {
     return "";
   }
   return Object.keys(options)
-    .filter((key) => !!options[key])
+    .filter((key) => options[key] !== undefined)
     .map((key) => `${toSnakeCase(key)}=${options[key]}`)
     .join("&");
 };
