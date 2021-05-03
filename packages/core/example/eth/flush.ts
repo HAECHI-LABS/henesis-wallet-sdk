@@ -12,12 +12,12 @@ async function main() {
   });
 
   const wallet = await sdk.eth.wallets.getWallet(
-    "3be5351bd52626108326f9ec44b7b633"
+    "138008b437538393d7e283a2f623b5a5"
   );
   const response = await wallet.flush([
     {
-      coinId: 1,
-      depositAddressId: "depositAddressId",
+      coinId: 2,
+      depositAddressId: "3d3816e69d2a6e5e40359c739ee618c6",
     },
   ]);
   console.log(response);
