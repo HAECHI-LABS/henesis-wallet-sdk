@@ -11,14 +11,8 @@ import {
 import { MasterWalletDTO } from "../dto/master-wallet.dto";
 import { TransactionDTO } from "../dto/transaction.dto";
 import { BalanceDTO } from "../dto/balance.dto";
-import { WalletNonceDTO } from "../dto/wallet-nonce.dto";
 import { UserWalletDTO } from "../dto/user-wallet.dto";
-import {
-  ApiHeaders,
-  ApiNoContentResponse,
-  ApiOperation,
-  ApiTags,
-} from "@nestjs/swagger";
+import { ApiNoContentResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import { CreateMasterWalletRequestDTO } from "../dto/create-master-wallet-request.dto";
 import { ActivateMasterWalletRequestDTO } from "../dto/activate-master-wallet-request.dto";
@@ -26,7 +20,6 @@ import { SendMasterWalletContractCallRequestDTO } from "../dto/send-master-walle
 import { ChangeMasterWalletNameRequestDTO } from "../dto/change-master-wallet-name-request.dto";
 import { SendMasterWalletCoinRequestDTO } from "../dto/send-master-wallet-coin-request.dto";
 import { SendMasterWalletBatchTransactionsRequestDTO } from "../dto/send-master-wallet-batch-transactions-request.dto";
-import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
 import {
   ApiPaginationResponse,
   AuthErrorResponses,
@@ -46,19 +39,15 @@ import {
 } from "../dto/queries";
 import { PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID } from "../dto/params";
 import { FlushRequestDTO } from "../dto/flush-request.dto";
-import { CreateRawTransactionRequestDTO } from "../dto/create-raw-transaction-request.dto";
-import { SendSignedTransactionRequestDTO } from "../dto/send-signed-transaction-request.dto";
 import { PaginationDTO } from "../dto/pagination.dto";
 import { CreateUserWalletRequestDTO } from "../dto/create-user-wallet-request.dto";
 import { SendUserWalletContractCallRequestDTO } from "../dto/send-user-wallet-contract-call-request.dto";
 import { ChangeUserWalletNameRequestDTO } from "../dto/change-user-wallet-name-request.dto";
 import { SendUserWalletCoinRequestDTO } from "../dto/send-user-wallet-coin-request.dto";
-import { ChangePassphraseRequestDTO } from "../dto/change-passphrase-request.dto";
 import { RetryCreateMasterWalletRequestDTO } from "../dto/retry-create-master-wallet-request.dto";
 import { RetryCreateUserWalletRequestDTO } from "../dto/retry-create-user-wallet-request.dto";
 import { WalletsService } from "./wallets.service";
 import { InactiveMasterWalletDTO } from "../dto/inactive-master-wallet.dto";
-import { MultiSigPayloadDTO } from "../dto/multi-sig-payload.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -170,22 +159,6 @@ export class WalletsController {
       masterWalletId,
       flag,
       symbol
-    );
-  }
-
-  @Get("/:masterWalletId/nonce")
-  @ApiOperation({
-    summary: "마스터 지갑 논스 조회하기",
-    description: "특정 마스터 지갑의 nonce를 조회합니다.",
-  })
-  @PathParams(PARAM_MASTER_WALLET_ID)
-  public async getMasterWalletNonce(
-    @Request() request: express.Request,
-    @Param("masterWalletId") masterWalletId: string
-  ): Promise<WalletNonceDTO> {
-    return await this.walletsService.getMasterWalletNonce(
-      request.sdk,
-      masterWalletId
     );
   }
 
@@ -383,24 +356,6 @@ export class WalletsController {
     );
   }
 
-  @Get("/:masterWalletId/user-wallets/:userWalletId/nonce")
-  @ApiOperation({
-    summary: "사용자 지갑 논스 조회하기",
-    description: "특정 사용자 지갑의 nonce를 조회합니다.",
-  })
-  @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
-  public async getUserWalletNonce(
-    @Request() request: express.Request,
-    @Param("masterWalletId") masterWalletId: string,
-    @Param("userWalletId") userWalletId: string
-  ): Promise<WalletNonceDTO> {
-    return await this.walletsService.getUserWalletNonce(
-      request.sdk,
-      masterWalletId,
-      userWalletId
-    );
-  }
-
   @Post("/:masterWalletId/user-wallets/:userWalletId/transfer")
   @ApiOperation({
     summary: "사용자 지갑에서 코인/토큰 전송하기",
@@ -418,25 +373,6 @@ export class WalletsController {
       masterWalletId,
       userWalletId,
       sendUserWalletCoinRequestDTO
-    );
-  }
-
-  @Patch("/:masterWalletId/passphrase")
-  @ApiOperation({
-    summary: "마스터 지갑 비밀번호 변경하기",
-    description: "특정 마스터 지갑의 비밀번호를 변경합니다.",
-  })
-  @PathParams(PARAM_MASTER_WALLET_ID)
-  @ApiNoContentResponse()
-  public async changePassphrase(
-    @Request() request: express.Request,
-    @Param("masterWalletId") masterWalletId: string,
-    @Body() changePassphraseRequestDTO: ChangePassphraseRequestDTO
-  ) {
-    await this.walletsService.changePassphrase(
-      request.sdk,
-      masterWalletId,
-      changePassphraseRequestDTO
     );
   }
 

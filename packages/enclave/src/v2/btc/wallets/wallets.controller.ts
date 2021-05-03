@@ -13,25 +13,12 @@ import { WalletDTO } from "../dto/wallet.dto";
 import { BalanceDTO } from "../dto/balance.dto";
 import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import { TransferDTO } from "../dto/transfer.dto";
-import { BtcRawTransactionDTO } from "../dto/btc-raw-transaction.dto";
-import { SignedRawTransactionDTO } from "../dto/signed-raw-transaction.dto";
-import {
-  ApiHeaders,
-  ApiNoContentResponse,
-  ApiOperation,
-  ApiTags,
-} from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import { CreateInactiveMasterWalletRequestDTO } from "../dto/create-inactive-master-wallet-request.dto";
-import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
-import { ChangePassphraseRequestDTO } from "../dto/change-passphrase-request.dto";
 import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
 import { ActivateMasterWalletRequestDTO } from "../dto/activate-master-wallet-request.dto";
-import { VerifyAddressRequestDTO } from "../dto/verify-address-request.dto";
 import { TransferRequestDTO } from "../dto/transfer-request.dto";
-import { CreateRawTransactionRequestDTO } from "../dto/create-raw-transaction-request.dto";
-import { SendSignedTransactionRequestDTO } from "../dto/send-signed-transaction-request.dto";
-import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
 import {
   ApiPaginationResponse,
   AuthErrorResponses,
@@ -47,7 +34,6 @@ import {
   QUERY_WALLET_NAME_OPTIONAL,
 } from "../dto/queries";
 import { PaginationDTO } from "../dto/pagination.dto";
-import { EstimationFeeDTO } from "../dto/estimation-fee.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -117,46 +103,6 @@ export class WalletsController {
     return await this.walletsService.getWallet(request.sdk, walletId);
   }
 
-  @Patch("/:walletId/name")
-  @ApiOperation({
-    summary: "지갑 정보 변경하기",
-    description: "특정 지갑의 이름을 변경합니다.",
-  })
-  @PathParams(PARAM_WALLET_ID)
-  @ApiNoContentResponse()
-  public async changeWalletName(
-    @Request() request: express.Request,
-    @Param("walletId") walletId: string,
-    @Body()
-    changeWalletNameRequestDTO: ChangeWalletNameRequestDTO
-  ) {
-    await this.walletsService.changeWalletName(
-      request.sdk,
-      walletId,
-      changeWalletNameRequestDTO
-    );
-  }
-
-  @Patch("/:walletId/passphrase")
-  @ApiOperation({
-    summary: "지갑 비밀번호 변경하기",
-    description: "특정 지갑의 비밀번호를 변경합니다.",
-  })
-  @PathParams(PARAM_WALLET_ID)
-  @ApiNoContentResponse()
-  public async changePassphrase(
-    @Request() request: express.Request,
-    @Param("walletId") walletId: string,
-    @Body()
-    changePassphraseRequestDTO: ChangePassphraseRequestDTO
-  ) {
-    await this.walletsService.changePassphrase(
-      request.sdk,
-      walletId,
-      changePassphraseRequestDTO
-    );
-  }
-
   @Get("/:walletId/balance")
   @ApiOperation({
     summary: "지갑 잔고 조회하기",
@@ -168,19 +114,6 @@ export class WalletsController {
     @Param("walletId") walletId: string
   ): Promise<BalanceDTO[]> {
     return await this.walletsService.getWalletBalance(request.sdk, walletId);
-  }
-
-  @Get("/:walletId/estimated-fee")
-  @ApiOperation({
-    summary: "예상 수수료 조회하기",
-    description: "예상 수수료를 조회합니다.",
-  })
-  @PathParams(PARAM_WALLET_ID)
-  public async getEstimatedFee(
-    @Request() request: express.Request,
-    @Param("walletId") walletId: string
-  ): Promise<EstimationFeeDTO> {
-    return await this.walletsService.getEstimatedFee(request.sdk, walletId);
   }
 
   @Post("/:walletId/deposit-addresses")
@@ -245,21 +178,6 @@ export class WalletsController {
       request.sdk,
       walletId,
       depositAddressId
-    );
-  }
-
-  @Post("/verify-address")
-  @ApiOperation({
-    summary: "입금 주소 검증하기",
-    description: "특정 입금 주소를 검증합니다.",
-  })
-  public async verifyAddress(
-    @Request() request: express.Request,
-    @Body() verifyAddressRequestDTO: VerifyAddressRequestDTO
-  ): Promise<boolean> {
-    return await this.walletsService.verifyAddress(
-      request.sdk,
-      verifyAddressRequestDTO
     );
   }
 

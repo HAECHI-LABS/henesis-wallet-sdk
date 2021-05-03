@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import {
   BNConverter,
   Coin,
-  MultiSigPayload,
   SDK,
   SignedMultiSigPayload,
 } from "@haechi-labs/henesis-wallet-core";
@@ -21,7 +20,6 @@ import { TransactionDTO } from "../dto/transaction.dto";
 import { SendMasterWalletContractCallRequestDTO } from "../dto/send-master-wallet-contract-call-request.dto";
 import { ChangeMasterWalletNameRequestDTO } from "../dto/change-master-wallet-name-request.dto";
 import { BalanceDTO } from "../dto/balance.dto";
-import { WalletNonceDTO } from "../dto/wallet-nonce.dto";
 import { SendMasterWalletCoinRequestDTO } from "../dto/send-master-wallet-coin-request.dto";
 import {
   ContractCallRequest,
@@ -30,9 +28,6 @@ import {
 } from "../dto/send-master-wallet-batch-transactions-request.dto";
 import BN from "bn.js";
 import { FlushRequestDTO } from "../dto/flush-request.dto";
-import { CreateRawTransactionRequestDTO } from "../dto/create-raw-transaction-request.dto";
-import { MultiSigPayloadDTO } from "../dto/multi-sig-payload.dto";
-import { SendSignedTransactionRequestDTO } from "../dto/send-signed-transaction-request.dto";
 import { UserWalletDTO } from "../dto/user-wallet.dto";
 import {
   EthUserWallet,
@@ -43,7 +38,6 @@ import { CreateUserWalletRequestDTO } from "../dto/create-user-wallet-request.dt
 import { SendUserWalletContractCallRequestDTO } from "../dto/send-user-wallet-contract-call-request.dto";
 import { ChangeUserWalletNameRequestDTO } from "../dto/change-user-wallet-name-request.dto";
 import { SendUserWalletCoinRequestDTO } from "../dto/send-user-wallet-coin-request.dto";
-import { ChangePassphraseRequestDTO } from "../dto/change-passphrase-request.dto";
 import { RetryCreateMasterWalletRequestDTO } from "../dto/retry-create-master-wallet-request.dto";
 import { RetryCreateUserWalletRequestDTO } from "../dto/retry-create-user-wallet-request.dto";
 import { EthMasterWalletData } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
@@ -163,20 +157,6 @@ export class WalletsService {
       symbol ? String(symbol) : null
     );
     return balances.map(BalanceDTO.fromBalance);
-  }
-
-  public async getMasterWalletNonce(
-    sdk: SDK,
-    masterWalletId: string
-  ): Promise<WalletNonceDTO> {
-    const masterWallet = await WalletsService.getMasterWalletById(
-      sdk,
-      masterWalletId
-    );
-
-    return {
-      nonce: BNConverter.bnToHexString(masterWallet.getNonce()),
-    };
   }
 
   public async sendMasterWalletCoin(
@@ -412,22 +392,6 @@ export class WalletsService {
     return balances.map(BalanceDTO.fromBalance);
   }
 
-  public async getUserWalletNonce(
-    sdk: SDK,
-    masterWalletId: string,
-    userWalletId: string
-  ): Promise<WalletNonceDTO> {
-    const userWallet = await WalletsService.getUserWalletByContext(
-      sdk,
-      masterWalletId,
-      userWalletId
-    );
-
-    return {
-      nonce: BNConverter.bnToHexString(userWallet.getNonce()),
-    };
-  }
-
   public async sendUserWalletCoin(
     sdk: SDK,
     masterWalletId: string,
@@ -455,23 +419,6 @@ export class WalletsService {
       sendUserWalletCoinRequestDTO.gasLimit
         ? BNConverter.hexStringToBN(sendUserWalletCoinRequestDTO.gasLimit)
         : undefined
-    );
-  }
-
-  public async changePassphrase(
-    sdk: SDK,
-    masterWalletId: string,
-    changePassphraseRequestDTO: ChangePassphraseRequestDTO
-  ): Promise<void> {
-    const masterWallet = await WalletsService.getMasterWalletById(
-      sdk,
-      masterWalletId
-    );
-
-    return await masterWallet.changePassphrase(
-      changePassphraseRequestDTO.passphrase,
-      changePassphraseRequestDTO.newPassphrase,
-      null
     );
   }
 

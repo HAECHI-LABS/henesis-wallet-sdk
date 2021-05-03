@@ -3,26 +3,14 @@ import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
 import { WalletDTO } from "../dto/wallet.dto";
 import { CreateInactiveMasterWalletRequestDTO } from "../dto/create-inactive-master-wallet-request.dto";
 import { ActivateMasterWalletRequestDTO } from "../dto/activate-master-wallet-request.dto";
-import {
-  BtcMasterWallet,
-  BtcSignedRawTransaction,
-} from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
+import { BtcMasterWallet } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { Key } from "@haechi-labs/henesis-wallet-core/lib/types";
-import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
-import { ChangePassphraseRequestDTO } from "../dto/change-passphrase-request.dto";
 import { BalanceDTO } from "../dto/balance.dto";
-import { EstimationFeeDTO } from "../dto/estimation-fee.dto";
-import { EstimatedFeeDTO } from "@haechi-labs/henesis-wallet-core/lib/__generate__/btc";
 import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
 import { PaginationDTO } from "../dto/pagination.dto";
-import { VerifyAddressRequestDTO } from "../dto/verify-address-request.dto";
 import { TransferRequestDTO } from "../dto/transfer-request.dto";
 import { TransferDTO } from "../dto/transfer.dto";
-import { SignedRawTransactionDTO } from "../dto/signed-raw-transaction.dto";
-import { SendSignedTransactionRequestDTO } from "../dto/send-signed-transaction-request.dto";
-import { CreateRawTransactionRequestDTO } from "../dto/create-raw-transaction-request.dto";
-import { BtcRawTransactionDTO } from "../dto/btc-raw-transaction.dto";
 
 @Injectable()
 export class WalletsService {
@@ -68,30 +56,6 @@ export class WalletsService {
     );
   }
 
-  public async changeWalletName(
-    sdk: SDK,
-    walletId: string,
-    changeWalletNameRequestDTO: ChangeWalletNameRequestDTO
-  ): Promise<void> {
-    const wallet = await this.getWalletById(sdk, walletId);
-
-    return wallet.changeName(changeWalletNameRequestDTO.name);
-  }
-
-  public async changePassphrase(
-    sdk: SDK,
-    walletId: string,
-    changePassphraseRequestDTO: ChangePassphraseRequestDTO
-  ): Promise<void> {
-    const wallet = await this.getWalletById(sdk, walletId);
-
-    return wallet.changePassphrase(
-      changePassphraseRequestDTO.passphrase,
-      changePassphraseRequestDTO.newPassphrase,
-      null
-    );
-  }
-
   public async getWalletBalance(
     sdk: SDK,
     walletId: string
@@ -100,15 +64,6 @@ export class WalletsService {
 
     const balances = await wallet.getBalance();
     return balances.map(BalanceDTO.fromBalance);
-  }
-
-  public async getEstimatedFee(
-    sdk: SDK,
-    walletId: string
-  ): Promise<EstimatedFeeDTO> {
-    const wallet = await this.getWalletById(sdk, walletId);
-
-    return EstimationFeeDTO.fromBTCEstimatedFee(await wallet.getEstimatedFee());
   }
 
   public async createDepositAddress(
@@ -153,13 +108,6 @@ export class WalletsService {
     return DepositAddressDTO.fromDepositAddress(
       await wallet.getDepositAddress(depositAddressId)
     );
-  }
-
-  public async verifyAddress(
-    sdk: SDK,
-    verifyAddressRequestDTO: VerifyAddressRequestDTO
-  ): Promise<boolean> {
-    return sdk.btc.wallets.verifyAddress(verifyAddressRequestDTO.address);
   }
 
   public async transfer(

@@ -11,15 +11,8 @@ import {
 import { MasterWalletDTO } from "../dto/master-wallet.dto";
 import { TransactionDTO } from "../dto/transaction.dto";
 import { BalanceDTO } from "../dto/balance.dto";
-import { WalletNonceDTO } from "../dto/wallet-nonce.dto";
 import { UserWalletDTO } from "../dto/user-wallet.dto";
-import {
-  ApiHeaders,
-  ApiNoContentResponse,
-  ApiOperation,
-  ApiTags,
-} from "@nestjs/swagger";
-import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
+import { ApiNoContentResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import {
   ApiPaginationResponse,
   AuthErrorResponses,
@@ -49,13 +42,10 @@ import {
 import { SendMasterWalletCoinRequestDTO } from "../../eth/dto/send-master-wallet-coin-request.dto";
 import { SendMasterWalletBatchTransactionsRequestDTO } from "../../eth/dto/send-master-wallet-batch-transactions-request.dto";
 import { FlushRequestDTO } from "../../eth/dto/flush-request.dto";
-import { CreateRawTransactionRequestDTO } from "../../eth/dto/create-raw-transaction-request.dto";
-import { SendSignedTransactionRequestDTO } from "../../eth/dto/send-signed-transaction-request.dto";
 import { CreateUserWalletRequestDTO } from "../../eth/dto/create-user-wallet-request.dto";
 import { SendUserWalletContractCallRequestDTO } from "../../eth/dto/send-user-wallet-contract-call-request.dto";
 import { ChangeUserWalletNameRequestDTO } from "../../eth/dto/change-user-wallet-name-request.dto";
 import { SendUserWalletCoinRequestDTO } from "../../eth/dto/send-user-wallet-coin-request.dto";
-import { ChangePassphraseRequestDTO } from "../../eth/dto/change-passphrase-request.dto";
 import { RetryCreateMasterWalletRequestDTO } from "../../eth/dto/retry-create-master-wallet-request.dto";
 import { RetryCreateUserWalletRequestDTO } from "../../eth/dto/retry-create-user-wallet-request.dto";
 import { PaginationDTO } from "../../eth/dto/pagination.dto";
@@ -140,19 +130,6 @@ export class WalletsController {
     @Query("flag") flag?: boolean,
     @Query("symbol") symbol?: string
   ): Promise<BalanceDTO> {
-    return null;
-  }
-
-  @Get("/:masterWalletId/nonce")
-  @ApiOperation({
-    summary: "마스터 지갑 논스 조회하기",
-    description: "특정 마스터 지갑의 nonce를 조회합니다.",
-  })
-  @PathParams(PARAM_MASTER_WALLET_ID)
-  public async getMasterWalletNonce(
-    @Request() request: express.Request,
-    @Param("masterWalletId") masterWalletId: string
-  ): Promise<WalletNonceDTO> {
     return null;
   }
 
@@ -298,20 +275,6 @@ export class WalletsController {
     return null;
   }
 
-  @Get("/:masterWalletId/user-wallets/:userWalletId/nonce")
-  @ApiOperation({
-    summary: "사용자 지갑 논스 조회하기",
-    description: "특정 사용자 지갑의 nonce를 조회합니다.",
-  })
-  @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
-  public async getUserWalletNonce(
-    @Request() request: express.Request,
-    @Param("masterWalletId") masterWalletId: string,
-    @Param("userWalletId") userWalletId: string
-  ): Promise<WalletNonceDTO> {
-    return null;
-  }
-
   @Post("/:masterWalletId/user-wallets/:userWalletId/transfer")
   @ApiOperation({
     summary: "사용자 지갑에서 코인/토큰 전송하기",
@@ -326,19 +289,6 @@ export class WalletsController {
   ): Promise<TransactionDTO> {
     return null;
   }
-
-  @Patch("/:masterWalletId/passphrase")
-  @ApiOperation({
-    summary: "마스터 지갑 비밀번호 변경하기",
-    description: "특정 마스터 지갑의 비밀번호를 변경합니다.",
-  })
-  @PathParams(PARAM_MASTER_WALLET_ID)
-  @ApiNoContentResponse()
-  public async changePassphrase(
-    @Request() request: express.Request,
-    @Param("masterWalletId") masterWalletId: string,
-    @Body() changePassphraseRequestDTO: ChangePassphraseRequestDTO
-  ) {}
 
   @Post("/:masterWalletId/recreate")
   @ApiOperation({
