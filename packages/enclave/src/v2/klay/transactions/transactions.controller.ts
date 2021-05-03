@@ -7,7 +7,6 @@ import {
   PathParams,
   Queries,
 } from "../../../decorators";
-import { ValueTransferEventDTO } from "../../eth/dto/value-transfer-event.dto";
 import { PARAM_TRANSACTION_ID } from "../../eth/dto/params";
 import { TransactionsService } from "../../eth/transactions/transactions.service";
 import {
@@ -55,7 +54,7 @@ export class TransactionsController {
     QUERY_SIZE_OPTIONAL,
     QUERY_SORT_OPTIONAL
   )
-  @ApiPaginationResponse(ValueTransferEventDTO)
+  @ApiPaginationResponse(TransactionDTO)
   public async getTransactions(
     @Request() request: express.Request,
     @Query("address") address?: string,

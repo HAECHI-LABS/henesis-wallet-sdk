@@ -4,22 +4,22 @@ import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 
 export class CallEventDTO extends EventDTO {
   /**
-   * 지갑 ID
-   * @example ETH
+   * 호출한 스마트 컨트랙트 주소
+   * @example 0x4c49f0ead605aca868364769c9a4ef24930810b5
    */
 
   fromAddress: string;
 
   /**
-   * 지갑 ID
-   * @example ETH
+   * 호출한 스마트 컨트랙트 주소
+   * @example 0xe3d9325576bf491c2f35e92b020b7b990557f545
    */
 
   toAddress: string;
 
   /**
-   * 지갑 ID
-   * @example ETH
+   * data
+   * @example 0x6eea436c
    */
 
   data: string;
