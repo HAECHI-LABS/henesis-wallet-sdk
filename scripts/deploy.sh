@@ -5,8 +5,8 @@ if [[ $1 = "prod" ]]; then
   TAG="$GITHUB_TAG"
 fi
 
-docker build -t haechi/sdk-enclave:latest .
-docker push haechi/sdk-enclave:latest
+docker build -t haechi/api-proxy:latest .
+docker push haechi/api-proxy:latest
 
-docker tag haechi/sdk-enclave:latest haechi/sdk-enclave:${TAG}
-docker push haechi/sdk-enclave:${TAG}
+docker tag haechi/api-proxy:latest haechi/api-proxy:${TAG}
+docker push haechi/api-proxy:${TAG}
