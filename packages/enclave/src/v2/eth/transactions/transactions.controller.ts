@@ -1,18 +1,15 @@
 import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import { TransactionDTO } from "../dto/transaction.dto";
-import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import {
   ApiPaginationResponse,
-  AuthErrorResponses,
-  AuthHeaders,
   PathParams,
   Queries,
 } from "../../../decorators";
 import { ValueTransferEventDTO } from "../dto/value-transfer-event.dto";
 import { PARAM_TRANSACTION_ID } from "../dto/params";
 import { PaginationDTO } from "../dto/pagination.dto";
-import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
 import { TransactionsService } from "./transactions.service";
 import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { TransactionStatus } from "@haechi-labs/henesis-wallet-core";
@@ -35,8 +32,6 @@ import {
 
 @Controller("transactions")
 @ApiTags("transactions")
-@AuthErrorResponses()
-@AuthHeaders()
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
@@ -111,52 +106,3 @@ export class TransactionsController {
     );
   }
 }
-
-// todo: delete when implementation is done
-// import express from "express";
-// import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
-// import { Transaction } from "@haechi-labs/henesis-wallet-core";
-//
-// import AbstractController from "../../controller";
-// import { Controller } from "../../types";
-//
-// export default class TransactionsController
-//   extends AbstractController
-//   implements Controller {
-//   private path = "/api/v2/eth/transactions";
-//
-//   constructor() {
-//     super();
-//     this.initRoutes();
-//   }
-//
-//   initRoutes(): void {
-//     this.router.get(
-//       `${this.path}`,
-//       this.promiseWrapper(this.getAllTransactions)
-//     );
-//
-//     this.router.get(
-//       `${this.path}/:transactionId`,
-//       this.promiseWrapper(this.getTransaction)
-//     );
-//   }
-//
-//   private async getAllTransactions(
-//     req: express.Request
-//   ): Promise<Pagination<Transaction>> {
-//     const transaction = await req.sdk.eth.transactions.getTransactions(
-//       req.query
-//     );
-//     return this.pagination<Transaction>(req, {
-//       pagination: transaction.pagination,
-//       results: transaction.results.map((c) => this.bnToHexString(c)),
-//     });
-//   }
-//
-//   private async getTransaction(req: express.Request): Promise<Transaction> {
-//     return this.bnToHexString(
-//       await req.sdk.eth.transactions.getTransaction(req.params.transactionId)
-//     );
-//   }
-// }

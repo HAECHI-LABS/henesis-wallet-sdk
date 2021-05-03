@@ -3,7 +3,10 @@ import {
   BtcActivatingMasterWallet,
   BtcMasterWallet,
 } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
-import { InactiveMasterWallet } from "@haechi-labs/henesis-wallet-core/lib/wallet";
+import {
+  InactiveMasterWallet,
+  WalletStatus,
+} from "@haechi-labs/henesis-wallet-core/lib/wallet";
 
 export class WalletDTO {
   /**
@@ -46,7 +49,7 @@ export class WalletDTO {
    * 지갑 상태
    * @example INACTIVE, CREATING, ACTIVE
    */
-  status: string;
+  status: WalletStatus;
 
   /**
    * 지갑이 속한 팀(Org)의 ID

@@ -2,15 +2,10 @@ import { Controller, Get, Request } from "@nestjs/common";
 import { HenesisKeysService } from "./henesis-keys.service";
 import { KeyDTO } from "../dto/key.dto";
 import { BalanceDTO } from "../dto/balance.dto";
-import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
-import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
-import { AuthErrorResponses, AuthHeaders } from "../../../decorators";
-
 @Controller("henesis-keys")
 @ApiTags("henesis-keys")
-@AuthErrorResponses()
-@AuthHeaders()
 export class HenesisKeysController {
   constructor(private readonly henesisKeysService: HenesisKeysService) {}
 

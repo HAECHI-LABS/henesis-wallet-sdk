@@ -1,15 +1,7 @@
 import { Controller, Get, Query, Request } from "@nestjs/common";
 import { EventsService } from "./events.service";
-import { ValueTransferEventDTO } from "../dto/value-transfer-event.dto";
-import { CallEventDTO } from "../dto/call-event.dto";
-import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
-import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
-import {
-  ApiPaginationResponse,
-  AuthErrorResponses,
-  AuthHeaders,
-  Queries,
-} from "../../../decorators";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiPaginationResponse, Queries } from "../../../decorators";
 import {
   QUERY_EVENT_MASTER_WALLET_ID_OPTIONAL,
   QUERY_EVENT_PAGE_OPTIONAL,
@@ -24,13 +16,15 @@ import {
 } from "../../eth/dto/queries";
 import express from "express";
 import { PaginationDTO } from "../../eth/dto/pagination.dto";
+import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
+import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import { ValueTransferEventDTO } from "../../eth/dto/value-transfer-event.dto";
+import { CallEventDTO } from "../../eth/dto/call-event.dto";
 
 @Controller("events")
 @ApiTags("events")
-@AuthErrorResponses()
-@AuthHeaders()
 export class EventsController {
-  constructor(private readonly eventsController: EventsService) {}
+  constructor(private readonly eventsService: EventsService) {}
 
   @Get("/value-transfer-events")
   @ApiOperation({
@@ -57,13 +51,25 @@ export class EventsController {
     @Query("masterWalletId") masterWalletId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
-    @Query("status") status?: string,
-    @Query("updatedAtGte") updatedAtGte?: string,
-    @Query("updatedAtLt") updatedAtLt?: string,
-    @Query("size") size?: string,
-    @Query("page") page?: string
+    @Query("status") status?: EventStatus,
+    @Query("updatedAtGte") updatedAtGte?: Timestamp,
+    @Query("updatedAtLt") updatedAtLt?: Timestamp,
+    @Query("size") size?: number,
+    @Query("page") page?: number
   ): Promise<PaginationDTO<ValueTransferEventDTO>> {
-    return null;
+    return await this.eventsService.getValueTransferEvents(
+      request.sdk,
+      symbol,
+      walletId,
+      masterWalletId,
+      transactionId,
+      transactionHash,
+      status,
+      updatedAtGte,
+      updatedAtLt,
+      size,
+      page
+    );
   }
 
   @Get("/call-events")
@@ -84,73 +90,28 @@ export class EventsController {
   )
   @ApiPaginationResponse(CallEventDTO)
   public async getCallEvents(
+    @Request() request: express.Request,
     @Query("walletId") walletId?: string,
     @Query("masterWalletId") masterWalletId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
-    @Query("status") status?: string,
-    @Query("updatedAtGte") updatedAtGte?: string,
-    @Query("updatedAtLt") updatedAtLt?: string,
-    @Query("size") size?: string,
-    @Query("page") page?: string
+    @Query("status") status?: EventStatus,
+    @Query("updatedAtGte") updatedAtGte?: Timestamp,
+    @Query("updatedAtLt") updatedAtLt?: Timestamp,
+    @Query("size") size?: number,
+    @Query("page") page?: number
   ): Promise<PaginationDTO<CallEventDTO>> {
-    return null;
+    return await this.eventsService.getCallEvents(
+      request.sdk,
+      walletId,
+      masterWalletId,
+      transactionId,
+      transactionHash,
+      status,
+      updatedAtGte,
+      updatedAtLt,
+      size,
+      page
+    );
   }
 }
-
-// todo: delete when implementation is done
-// import AbstractController from "../../controller";
-// import { Controller } from "../../../types";
-// import express from "express";
-// import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
-// import {
-//   EthCallEvent,
-//   EthValueTransferEvent,
-// } from "@haechi-labs/henesis-wallet-core/lib/events";
-//
-// export interface EthValueTransferEventResponse
-//   extends Omit<EthValueTransferEvent, "amount"> {
-//   amount: string;
-// }
-//
-// export default class EventsController
-//   extends AbstractController
-//   implements Controller {
-//   private path = "/api/v2/klay";
-//
-//   constructor() {
-//     super();
-//     this.initRoutes();
-//   }
-//
-//   initRoutes(): void {
-//     this.router.get(
-//       `${this.path}/call-events`,
-//       this.promiseWrapper(this.getCallEvents)
-//     );
-//
-//     this.router.get(
-//       `${this.path}/value-transfer-events`,
-//       this.promiseWrapper(this.getValueTransferEvents)
-//     );
-//   }
-//
-//   private async getCallEvents(
-//     req: express.Request
-//   ): Promise<Pagination<EthCallEvent>> {
-//     return this.pagination<EthCallEvent>(
-//       req,
-//       await req.sdk.klay.events.getCallEvents(req.query)
-//     );
-//   }
-//
-//   private async getValueTransferEvents(
-//     req: express.Request
-//   ): Promise<Pagination<EthValueTransferEventResponse>> {
-//     const events = await req.sdk.klay.events.getValueTransferEvents(req.query);
-//     return this.pagination<EthValueTransferEvent>(req, {
-//       pagination: events.pagination,
-//       results: events.results.map((t) => this.bnToHexString(t)),
-//     });
-//   }
-// }

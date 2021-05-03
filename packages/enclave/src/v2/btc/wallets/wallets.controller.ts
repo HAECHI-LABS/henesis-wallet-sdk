@@ -37,8 +37,6 @@ import { PaginationDTO } from "../dto/pagination.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
-@AuthErrorResponses()
-@AuthHeaders()
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
