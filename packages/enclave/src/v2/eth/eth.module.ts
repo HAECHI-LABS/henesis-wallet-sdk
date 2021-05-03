@@ -9,6 +9,7 @@ import { EventsService } from "./events/events.service";
 import { HenesisKeysService } from "./henesis-keys/henesis-keys.service";
 import { TransactionsService } from "./transactions/transactions.service";
 import { WalletsService } from "./wallets/wallets.service";
+import ExtraModelController from "./extra-model.controller";
 
 @Module({
   controllers: [
@@ -17,6 +18,7 @@ import { WalletsService } from "./wallets/wallets.service";
     HenesisKeysController,
     TransactionsController,
     WalletsController,
+    ExtraModelController,
   ],
   providers: [
     CoinsService,
