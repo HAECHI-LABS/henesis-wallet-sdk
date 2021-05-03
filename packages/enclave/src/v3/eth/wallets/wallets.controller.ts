@@ -30,7 +30,6 @@ import { WalletDTO } from "../dto/wallet.dto";
 import { PaginationDTO } from "../dto/pagination.dto";
 import { BalanceDTO } from "../dto/balance.dto";
 import { TransactionDTO } from "../dto/transaction.dto";
-import { FlushDTO } from "../dto/flush.dto";
 import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import { ChangeWalletNameRequestDTO } from "./dto/change-wallet-name-request.dto";
 import { SendCoinRequestDTO } from "./dto/send-coin-request.dto";

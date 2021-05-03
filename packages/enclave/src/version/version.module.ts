@@ -9,7 +9,10 @@ export class VersionModule {
     const imports = [];
     if (process.env.API_VERSION == "v2") {
       imports.push(ApiV2Module);
+    } else if (process.env.API_VERSION == "v3") {
+      imports.push(ApiV3Module);
     } else {
+      imports.push(ApiV2Module);
       imports.push(ApiV3Module);
     }
     return {

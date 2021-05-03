@@ -13,6 +13,11 @@ COPY  tsconfig.json /
 
 RUN yarn bootstrap
 
+# todo: change to api-proxy
 WORKDIR /packages/enclave
+
+RUN yarn build
+
+ENTRYPOINT ["node", "lib/main.js"]
 
 EXPOSE 3000
