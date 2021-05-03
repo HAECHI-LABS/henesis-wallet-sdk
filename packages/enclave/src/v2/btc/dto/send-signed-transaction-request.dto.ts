@@ -1,6 +1,10 @@
 import { BtcRawTransactionOutputDTO } from "./btc-raw-transaction-output.dto";
-import { ApiProperty } from "@nestjs/swagger";
 import { BtcTransactionOutputDTO } from "./btc-transaction-output.dto";
+
+interface Input {
+  transactionOutput: BtcTransactionOutputDTO;
+  accountSignature: string;
+}
 
 export class SendSignedTransactionRequestDTO {
   /**
@@ -8,10 +12,7 @@ export class SendSignedTransactionRequestDTO {
    * @example ETH
    */
 
-  inputs: {
-    transactionOutput: BtcTransactionOutputDTO;
-    accountSignature: string;
-  }[];
+  inputs: Input[];
 
   /**
    * 지갑 ID

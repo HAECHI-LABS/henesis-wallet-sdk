@@ -1,7 +1,6 @@
 import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
 import { Key } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { WalletStatus } from "@haechi-labs/henesis-wallet-core/lib/wallet";
-import { ApiProperty } from "@nestjs/swagger";
 
 export class InactiveMasterWalletDTO {
   /**

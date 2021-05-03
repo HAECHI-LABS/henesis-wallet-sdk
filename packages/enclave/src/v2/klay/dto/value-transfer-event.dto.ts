@@ -1,6 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
 import { EventDTO } from "./event.dto";
-import * as BN from "bn.js";
 
 export class ValueTransferEventDTO extends EventDTO {
   /**

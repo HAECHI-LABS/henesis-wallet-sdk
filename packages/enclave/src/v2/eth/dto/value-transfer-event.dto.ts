@@ -1,6 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger";
 import { EventDTO } from "./event.dto";
-import * as BN from "bn.js";
+import { EthValueTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
+import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 
 export class ValueTransferEventDTO extends EventDTO {
   /**
@@ -58,4 +58,31 @@ export class ValueTransferEventDTO extends EventDTO {
    */
 
   walletType: string;
+
+  static fromETHValueTransferEvent(
+    event: EthValueTransferEvent
+  ): ValueTransferEventDTO {
+    return {
+      id: event.id,
+      createdAt: event.createdAt,
+      updatedAt: event.updatedAt,
+      status: event.status,
+      transactionHash: event.transactionHash,
+      walletId: event.walletId,
+      transactionId: event.transactionId,
+      orgId: event.orgId,
+      masterWalletId: event.masterWalletId,
+      confirmation: event.confirmation
+        ? BNConverter.bnToHexString(event.confirmation)
+        : null,
+      amount: event.amount ? BNConverter.bnToHexString(event.amount) : null,
+      decimals: event.decimals,
+      coinSymbol: event.coinSymbol,
+      from: event.from,
+      to: event.to,
+      transferType: event.transferType,
+      walletName: event.walletName,
+      walletType: event.walletType,
+    };
+  }
 }

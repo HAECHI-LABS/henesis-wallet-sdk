@@ -5,14 +5,16 @@ import { BalanceDTO } from "../dto/balance.dto";
 import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
+import { AuthErrorResponses, AuthHeaders } from "../../../decorators";
 
 @Controller("henesis-keys")
 @ApiTags("henesis-keys")
+@AuthErrorResponses()
+@AuthHeaders()
 export class HenesisKeysController {
   constructor(private readonly henesisKeysService: HenesisKeysService) {}
 
   @Get("/me")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "Henesis Key 조회하기",
     description: "Henesis Key를 조회합니다.",
@@ -20,11 +22,10 @@ export class HenesisKeysController {
   public async getHenesisKey(
     @Request() request: express.Request
   ): Promise<KeyDTO> {
-    return null;
+    return await this.henesisKeysService.getHenesisKey(request.sdk);
   }
 
   @Get("/balance")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "수수료 지갑 잔액 조회하기",
     description: "수수료 지갑의 잔액을 조회합니다.",
@@ -32,9 +33,10 @@ export class HenesisKeysController {
   public async getHenesisKeyBalance(
     @Request() request: express.Request
   ): Promise<BalanceDTO> {
-    return null;
+    return await this.henesisKeysService.getHenesisKeyBalance(request.sdk);
   }
 }
+
 // todo: delete when implementation is done
 // import express from "express";
 // import { Balance, Key } from "@haechi-labs/henesis-wallet-core/lib/types";

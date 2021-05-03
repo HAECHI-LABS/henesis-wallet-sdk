@@ -1,5 +1,3 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-
 export class CreateMasterWalletRequestDTO {
   /**
    * 지갑 ID
@@ -13,7 +11,7 @@ export class CreateMasterWalletRequestDTO {
    * @example ETH
    */
 
-  name: String;
+  name: string;
 
   /**
    * 지갑 ID

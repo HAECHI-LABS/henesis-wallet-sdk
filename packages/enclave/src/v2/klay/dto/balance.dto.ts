@@ -1,6 +1,3 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import BN from "bn.js";
-
 export class BalanceDTO {
   /**
    * 지갑 ID

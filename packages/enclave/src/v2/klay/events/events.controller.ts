@@ -4,7 +4,12 @@ import { ValueTransferEventDTO } from "../dto/value-transfer-event.dto";
 import { CallEventDTO } from "../dto/call-event.dto";
 import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
-import { ApiPaginationResponse, Queries } from "../../../decorators";
+import {
+  ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
+  Queries,
+} from "../../../decorators";
 import {
   QUERY_EVENT_MASTER_WALLET_ID_OPTIONAL,
   QUERY_EVENT_PAGE_OPTIONAL,
@@ -22,11 +27,12 @@ import { PaginationDTO } from "../../eth/dto/pagination.dto";
 
 @Controller("events")
 @ApiTags("events")
+@AuthErrorResponses()
+@AuthHeaders()
 export class EventsController {
   constructor(private readonly eventsController: EventsService) {}
 
   @Get("/value-transfer-events")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "코인/토큰 입출금 내역 조회하기",
     description: "모든 지갑의 가상자산 입출금 내역을 조회합니다.",
@@ -61,7 +67,6 @@ export class EventsController {
   }
 
   @Get("/call-events")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "스마트 컨트랙트 호출 내역 조회하기",
     description: "내가 발생시킨 스마트 컨트랙트 호출 내역을 조회합니다.",
@@ -92,6 +97,7 @@ export class EventsController {
     return null;
   }
 }
+
 // todo: delete when implementation is done
 // import AbstractController from "../../controller";
 // import { Controller } from "../../../types";

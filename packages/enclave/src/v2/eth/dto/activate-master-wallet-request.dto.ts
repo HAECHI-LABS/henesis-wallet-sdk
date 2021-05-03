@@ -1,4 +1,3 @@
-import { ApiProperty } from "@nestjs/swagger";
 import { KeyDTO } from "./key.dto";
 
 export class ActivateMasterWalletRequestDTO {

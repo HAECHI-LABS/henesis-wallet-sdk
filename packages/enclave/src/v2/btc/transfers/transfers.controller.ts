@@ -6,6 +6,8 @@ import express from "express";
 import { PaginationDTO } from "../dto/pagination.dto";
 import {
   ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
   PathParams,
   Queries,
 } from "../../../decorators";
@@ -20,16 +22,16 @@ import {
   QUERY_TRANSFERS_UPDATED_AT_LT_OPTIONAL,
   QUERY_TRANSFERS_WALLET_ID_OPTIONAL,
 } from "../dto/queries";
-import { PARAM_WALLET_ID } from "../dto/params";
-import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
+import { PARAM_TRANSFER_ID } from "../dto/params";
 
 @Controller("transfers")
 @ApiTags("transfers")
+@AuthErrorResponses()
+@AuthHeaders()
 export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
 
   @Get("/")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "입출금 내역 조회하기",
     description: "입출금 내역을 조회합니다.",
@@ -58,21 +60,30 @@ export class TransfersController {
     @Query("size") size?: string,
     @Query("page") page?: string
   ): Promise<PaginationDTO<TransferDTO>> {
-    return null;
+    return await this.transfersService.getTransfers(request.sdk, {
+      type,
+      walletId,
+      status,
+      address,
+      transactionHash,
+      updatedAtGte,
+      updatedAtLt,
+      size,
+      page,
+    });
   }
 
   @Get("/:transferId")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "특정 입출금 내역 조회하기",
     description: "특정 입출금 내역을 조회합니다.",
   })
-  @PathParams(PARAM_WALLET_ID)
+  @PathParams(PARAM_TRANSFER_ID)
   public async getTransfer(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string
+    @Param("transferId") transferId: string
   ): Promise<TransferDTO> {
-    return null;
+    return await this.transfersService.getTransfer(request.sdk, transferId);
   }
 }
 

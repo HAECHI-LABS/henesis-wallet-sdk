@@ -4,17 +4,23 @@ import { CoinsService } from "./coins.service";
 import { CoinDTO } from "../dto/coin.dto";
 import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
-import { PathParams, Queries } from "../../../decorators";
+import {
+  AuthErrorResponses,
+  AuthHeaders,
+  PathParams,
+  Queries,
+} from "../../../decorators";
 import { PARAM_COIN_TICKER } from "../../eth/dto/params";
 import { QUERY_COIN_FLAG_OPTIONAL } from "../../eth/dto/queries";
 
 @Controller("coins")
 @ApiTags("coins")
+@AuthErrorResponses()
+@AuthHeaders()
 export class CoinsController {
   constructor(private readonly coinsService: CoinsService) {}
 
   @Get("/")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "전체 코인/토큰 목록 조회하기",
     description:
@@ -29,7 +35,6 @@ export class CoinsController {
   }
 
   @Get(":ticker")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "코인/토큰 정보 조회하기",
     description:

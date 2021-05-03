@@ -22,6 +22,8 @@ import {
 import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
 import {
   ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
   PathParams,
   Queries,
 } from "../../../decorators";
@@ -60,9 +62,10 @@ import { PaginationDTO } from "../../eth/dto/pagination.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
+@AuthErrorResponses()
+@AuthHeaders()
 export class WalletsController {
   @Get("/")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "전체 마스터 지갑 목록 조회하기",
     description: "모든 마스터 지갑 목록을 조회합니다.",
@@ -76,7 +79,6 @@ export class WalletsController {
   }
 
   @Post("/")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 생성하기",
     description: "마스터 지갑을 생성합니다.",
@@ -89,7 +91,6 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/activate")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 활성화하기",
     description: "마스터 지갑을 활성화합니다.",
@@ -102,7 +103,6 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/contract-call")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑에서 스마트 컨트랙트 호출하기",
     description:
@@ -117,7 +117,6 @@ export class WalletsController {
   }
 
   @Patch("/:masterWalletId/name")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 이름 변경하기",
     description: "특정 마스터 지갑의 이름을 변경합니다.",
@@ -131,7 +130,6 @@ export class WalletsController {
   }
 
   @Get("/:masterWalletId/balance")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 잔고 조회하기",
     description: "특정 마스터 지갑의 잔액을 조회합니다.",
@@ -146,7 +144,6 @@ export class WalletsController {
   }
 
   @Get("/:masterWalletId/nonce")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 논스 조회하기",
     description: "특정 마스터 지갑의 nonce를 조회합니다.",
@@ -160,7 +157,6 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/transfer")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑에서 코인/토큰 전송하기",
     description: "특정 마스터 지갑에서 가상자산을 송금합니다.",
@@ -173,7 +169,6 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/batch-transactions")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑에서 여러 트랜잭션들을 모아서 호출하기",
     description:
@@ -189,7 +184,6 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/flush")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 잔액을 모두 끌어오기",
     description:
@@ -204,38 +198,7 @@ export class WalletsController {
     return null;
   }
 
-  @Post("/:masterWalletId/raw-transactions")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
-  @ApiOperation({
-    summary: "모든 트랜잭션 정보 조회하기",
-    description: "내가 발생시킨 모든 트랜잭션의 정보를 조회합니다.",
-  })
-  @PathParams(PARAM_MASTER_WALLET_ID)
-  public async createRawTransaction(
-    @Request() request: express.Request,
-    @Param("masterWalletId") masterWalletId: string,
-    @Body() createRawTransactionRequestDTO: CreateRawTransactionRequestDTO
-  ): Promise<TransactionDTO> {
-    return null;
-  }
-
-  @Post("/:masterWalletId/signed-transactions")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
-  @ApiOperation({
-    summary: "모든 트랜잭션 정보 조회하기",
-    description: "내가 발생시킨 모든 트랜잭션의 정보를 조회합니다.",
-  })
-  @PathParams(PARAM_MASTER_WALLET_ID)
-  public async sendSignedTransaction(
-    @Request() request: express.Request,
-    @Param("masterWalletId") masterWalletId: string,
-    @Body() sendSignedTransactionRequestDTO: SendSignedTransactionRequestDTO
-  ): Promise<TransactionDTO> {
-    return null;
-  }
-
   @Get("/:masterWalletId/user-wallets/:userWalletId")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 정보 조회하기",
     description: "특정 사용자 지갑을 조회합니다.",
@@ -250,7 +213,6 @@ export class WalletsController {
   }
 
   @Get("/:masterWalletId/user-wallets")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "전체 사용자 지갑 목록 조회하기",
     description: "특정 마스터 지갑에 속한 모든 사용자 지갑 목록을 조회합니다.",
@@ -275,7 +237,6 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/user-wallets")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 생성하기",
     description: "특정 마스터 지갑 하위에 새로운 사용자 지갑을 생성합니다.",
@@ -290,7 +251,6 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/user-wallets/:userWalletId/contract-call")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑에서 스마트 컨트랙트 호출하기",
     description:
@@ -308,7 +268,6 @@ export class WalletsController {
   }
 
   @Patch("/:masterWalletId/user-wallets/:userWalletId/name")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 이름 변경하기",
     description: "특정 사용자 지갑의 이름을 변경합니다.",
@@ -323,7 +282,6 @@ export class WalletsController {
   ) {}
 
   @Get("/:masterWalletId/user-wallets/:userWalletId/balance")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 잔고 조회하기",
     description: "특정 사용자 지갑의 잔액을 조회합니다.",
@@ -341,7 +299,6 @@ export class WalletsController {
   }
 
   @Get("/:masterWalletId/user-wallets/:userWalletId/nonce")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 논스 조회하기",
     description: "특정 사용자 지갑의 nonce를 조회합니다.",
@@ -356,7 +313,6 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/user-wallets/:userWalletId/transfer")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑에서 코인/토큰 전송하기",
     description: "특정 사용자 지갑에서 가상자산을 전송합니다.",
@@ -372,7 +328,6 @@ export class WalletsController {
   }
 
   @Patch("/:masterWalletId/passphrase")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 비밀번호 변경하기",
     description: "특정 마스터 지갑의 비밀번호를 변경합니다.",
@@ -386,7 +341,6 @@ export class WalletsController {
   ) {}
 
   @Post("/:masterWalletId/recreate")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 재생성하기",
     description: "마스터 지갑을 재생성합니다.",
@@ -401,7 +355,6 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/user-wallets/:userWalletId/recreate")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 생성 실패시 재시도하기",
     description:
@@ -419,6 +372,7 @@ export class WalletsController {
     return null;
   }
 }
+
 // todo: delete when implementation is done
 // import express from "express";
 // import BN from "bn.js";

@@ -1,5 +1,3 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-
 export class SendMasterWalletCoinRequestDTO {
   /**
    * 지갑 이름
@@ -28,13 +26,6 @@ export class SendMasterWalletCoinRequestDTO {
    */
 
   passphrase: string;
-
-  /**
-   * 지갑 이름
-   * @example ETH
-   */
-
-  otpCode: string;
 
   /**
    * 지갑 이름

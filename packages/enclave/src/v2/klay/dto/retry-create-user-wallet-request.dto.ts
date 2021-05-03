@@ -1,5 +1,3 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-
 export class RetryCreateUserWalletRequestDTO {
   /**
    * 변경할 지갑 이름

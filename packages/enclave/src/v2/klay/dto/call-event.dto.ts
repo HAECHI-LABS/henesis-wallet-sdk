@@ -1,5 +1,4 @@
 import { EventDTO } from "./event.dto";
-import { ApiProperty } from "@nestjs/swagger";
 
 export class CallEventDTO extends EventDTO {
   /**

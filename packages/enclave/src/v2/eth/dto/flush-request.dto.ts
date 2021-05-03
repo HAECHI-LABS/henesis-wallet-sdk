@@ -1,5 +1,3 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-
 export class FlushRequestDTO {
   /**
    * 지갑 ID
@@ -21,13 +19,6 @@ export class FlushRequestDTO {
    */
 
   passphrase: string;
-
-  /**
-   * 지갑 ID
-   * @example ETH
-   */
-
-  otpCode: string;
 
   /**
    * 지갑 ID

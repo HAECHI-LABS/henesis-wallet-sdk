@@ -29,6 +29,8 @@ import { SendMasterWalletBatchTransactionsRequestDTO } from "../dto/send-master-
 import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
 import {
   ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
   PathParams,
   Queries,
 } from "../../../decorators";
@@ -42,7 +44,6 @@ import {
   QUERY_WALLETS_SIZE_OPTIONAL,
   QUERY_WALLETS_SORT_OPTIONAL,
 } from "../dto/queries";
-import { PARAM_WALLET_ID } from "../../btc/dto/params";
 import { PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID } from "../dto/params";
 import { FlushRequestDTO } from "../dto/flush-request.dto";
 import { CreateRawTransactionRequestDTO } from "../dto/create-raw-transaction-request.dto";
@@ -55,12 +56,18 @@ import { SendUserWalletCoinRequestDTO } from "../dto/send-user-wallet-coin-reque
 import { ChangePassphraseRequestDTO } from "../dto/change-passphrase-request.dto";
 import { RetryCreateMasterWalletRequestDTO } from "../dto/retry-create-master-wallet-request.dto";
 import { RetryCreateUserWalletRequestDTO } from "../dto/retry-create-user-wallet-request.dto";
+import { WalletsService } from "./wallets.service";
+import { InactiveMasterWalletDTO } from "../dto/inactive-master-wallet.dto";
+import { MultiSigPayloadDTO } from "../dto/multi-sig-payload.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
+@AuthErrorResponses()
+@AuthHeaders()
 export class WalletsController {
+  constructor(private readonly walletsService: WalletsService) {}
+
   @Get("/")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "전체 마스터 지갑 목록 조회하기",
     description: "모든 마스터 지갑 목록을 조회합니다.",
@@ -70,11 +77,10 @@ export class WalletsController {
     @Request() request: express.Request,
     @Query("name") name?: string
   ): Promise<MasterWalletDTO[]> {
-    return null;
+    return await this.walletsService.getMasterWallets(request.sdk, name);
   }
 
   @Post("/")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 생성하기",
     description: "마스터 지갑을 생성합니다.",
@@ -82,69 +88,92 @@ export class WalletsController {
   public async createMasterWallet(
     @Request() request: express.Request,
     @Body() createMasterWalletRequestDTO: CreateMasterWalletRequestDTO
-  ): Promise<MasterWalletDTO> {
-    return null;
+  ): Promise<MasterWalletDTO | InactiveMasterWalletDTO> {
+    return await this.walletsService.createMasterWallet(
+      request.sdk,
+      createMasterWalletRequestDTO
+    );
   }
 
   @Post("/:masterWalletId/activate")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 활성화하기",
     description: "마스터 지갑을 활성화합니다.",
   })
+  @PathParams(PARAM_MASTER_WALLET_ID)
   public async activateMasterWallet(
     @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
     @Body() activateMasterWalletRequestDTO: ActivateMasterWalletRequestDTO
   ): Promise<MasterWalletDTO> {
-    return null;
+    return await this.walletsService.activateMasterWallet(
+      request.sdk,
+      masterWalletId,
+      activateMasterWalletRequestDTO
+    );
   }
 
   @Post("/:masterWalletId/contract-call")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑에서 스마트 컨트랙트 호출하기",
     description:
       "특정 마스터 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
   })
+  @PathParams(PARAM_MASTER_WALLET_ID)
   public async sendMasterWalletContractCall(
     @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
     @Body()
     sendMasterWalletContractCallRequestDTO: SendMasterWalletContractCallRequestDTO
   ): Promise<TransactionDTO> {
-    return null;
+    return await this.walletsService.sendMasterWalletContractCall(
+      request.sdk,
+      masterWalletId,
+      sendMasterWalletContractCallRequestDTO
+    );
   }
 
   @Patch("/:masterWalletId/name")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 이름 변경하기",
     description: "특정 마스터 지갑의 이름을 변경합니다.",
   })
+  @PathParams(PARAM_MASTER_WALLET_ID)
   @ApiNoContentResponse()
   public async changeMasterWalletName(
     @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
     @Body() changeMasterWalletNameRequestDTO: ChangeMasterWalletNameRequestDTO
   ) {
-    return null;
+    await this.walletsService.changeMasterWalletName(
+      request.sdk,
+      masterWalletId,
+      changeMasterWalletNameRequestDTO
+    );
   }
 
   @Get("/:masterWalletId/balance")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 잔고 조회하기",
     description: "특정 마스터 지갑의 잔액을 조회합니다.",
   })
+  @PathParams(PARAM_MASTER_WALLET_ID)
   @Queries(QUERY_FLAG_OPTIONAL, QUERY_SYMBOL_OPTIONAL)
   public async getMasterWalletBalance(
     @Request() request: express.Request,
-    @Query("flag") flag?: boolean,
+    @Param("masterWalletId") masterWalletId: string,
+    @Query("flag") flag?: string,
     @Query("symbol") symbol?: string
-  ): Promise<BalanceDTO> {
-    return null;
+  ): Promise<BalanceDTO[]> {
+    return await this.walletsService.getMasterWalletBalance(
+      request.sdk,
+      masterWalletId,
+      flag,
+      symbol
+    );
   }
 
   @Get("/:masterWalletId/nonce")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 논스 조회하기",
     description: "특정 마스터 지갑의 nonce를 조회합니다.",
@@ -154,40 +183,52 @@ export class WalletsController {
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string
   ): Promise<WalletNonceDTO> {
-    return null;
+    return await this.walletsService.getMasterWalletNonce(
+      request.sdk,
+      masterWalletId
+    );
   }
 
   @Post("/:masterWalletId/transfer")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑에서 코인/토큰 전송하기",
     description: "특정 마스터 지갑에서 가상자산을 송금합니다.",
   })
+  @PathParams(PARAM_MASTER_WALLET_ID)
   public async sendMasterWalletCoin(
     @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
     @Body() sendMasterWalletCoinRequestDTO: SendMasterWalletCoinRequestDTO
   ): Promise<TransactionDTO> {
-    return null;
+    return await this.walletsService.sendMasterWalletCoin(
+      request.sdk,
+      masterWalletId,
+      sendMasterWalletCoinRequestDTO
+    );
   }
 
   @Post("/:masterWalletId/batch-transactions")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑에서 여러 트랜잭션들을 모아서 호출하기",
     description:
       "특정 마스터 지갑에서 여러 트랜잭션을 모아 한꺼번에 발생니다.\n" +
       "최대 10개까지 보낼 수 있습니다.",
   })
+  @PathParams(PARAM_MASTER_WALLET_ID)
   public async sendMasterWalletBatchTransactions(
     @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
     @Body()
     sendMasterWalletBatchTransactionsRequestDTO: SendMasterWalletBatchTransactionsRequestDTO
   ): Promise<TransactionDTO[]> {
-    return null;
+    return await this.walletsService.sendMasterWalletBatchTransactions(
+      request.sdk,
+      masterWalletId,
+      sendMasterWalletBatchTransactionsRequestDTO
+    );
   }
 
   @Post("/:masterWalletId/flush")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 잔액을 모두 끌어오기",
     description:
@@ -199,41 +240,14 @@ export class WalletsController {
     @Param("masterWalletId") masterWalletId: string,
     @Body() flushRequestDTO: FlushRequestDTO
   ): Promise<TransactionDTO> {
-    return null;
-  }
-
-  @Post("/:masterWalletId/raw-transactions")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
-  @ApiOperation({
-    summary: "모든 트랜잭션 정보 조회하기",
-    description: "내가 발생시킨 모든 트랜잭션의 정보를 조회합니다.",
-  })
-  @PathParams(PARAM_MASTER_WALLET_ID)
-  public async createRawTransaction(
-    @Request() request: express.Request,
-    @Param("masterWalletId") masterWalletId: string,
-    @Body() createRawTransactionRequestDTO: CreateRawTransactionRequestDTO
-  ): Promise<TransactionDTO> {
-    return null;
-  }
-
-  @Post("/:masterWalletId/signed-transactions")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
-  @ApiOperation({
-    summary: "모든 트랜잭션 정보 조회하기",
-    description: "내가 발생시킨 모든 트랜잭션의 정보를 조회합니다.",
-  })
-  @PathParams(PARAM_MASTER_WALLET_ID)
-  public async sendSignedTransaction(
-    @Request() request: express.Request,
-    @Param("masterWalletId") masterWalletId: string,
-    @Body() sendSignedTransactionRequestDTO: SendSignedTransactionRequestDTO
-  ): Promise<TransactionDTO> {
-    return null;
+    return await this.walletsService.flush(
+      request.sdk,
+      masterWalletId,
+      flushRequestDTO
+    );
   }
 
   @Get("/:masterWalletId/user-wallets/:userWalletId")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 정보 조회하기",
     description: "특정 사용자 지갑을 조회합니다.",
@@ -244,15 +258,19 @@ export class WalletsController {
     @Param("masterWalletId") masterWalletId: string,
     @Param("userWalletId") userWalletId: string
   ): Promise<UserWalletDTO> {
-    return null;
+    return await this.walletsService.getUserWallet(
+      request.sdk,
+      masterWalletId,
+      userWalletId
+    );
   }
 
   @Get("/:masterWalletId/user-wallets")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "전체 사용자 지갑 목록 조회하기",
     description: "특정 마스터 지갑에 속한 모든 사용자 지갑 목록을 조회합니다.",
   })
+  @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
   @Queries(
     QUERY_WALLETS_PAGE_OPTIONAL,
     QUERY_WALLETS_SIZE_OPTIONAL,
@@ -263,17 +281,25 @@ export class WalletsController {
   @ApiPaginationResponse(UserWalletDTO)
   public async getUserWallets(
     @Request() request: express.Request,
-    @Query("page") page: string,
-    @Query("size") size: string,
-    @Query("sort") sort: string,
-    @Query("name") name: string,
-    @Query("address") address: string
+    @Param("masterWalletId") masterWalletId: string,
+    @Query("page") page?: string,
+    @Query("size") size?: string,
+    @Query("sort") sort?: string,
+    @Query("name") name?: string,
+    @Query("address") address?: string
   ): Promise<PaginationDTO<UserWalletDTO>> {
-    return null;
+    return await this.walletsService.getUserWallets(
+      request.sdk,
+      masterWalletId,
+      page,
+      size,
+      sort,
+      name,
+      address
+    );
   }
 
   @Post("/:masterWalletId/user-wallets")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 생성하기",
     description: "특정 마스터 지갑 하위에 새로운 사용자 지갑을 생성합니다.",
@@ -284,11 +310,14 @@ export class WalletsController {
     @Param("masterWalletId") masterWalletId: string,
     @Body() createUserWalletRequestDTO: CreateUserWalletRequestDTO
   ): Promise<UserWalletDTO> {
-    return null;
+    return await this.walletsService.createUserWallet(
+      request.sdk,
+      masterWalletId,
+      createUserWalletRequestDTO
+    );
   }
 
   @Post("/:masterWalletId/user-wallets/:userWalletId/contract-call")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑에서 스마트 컨트랙트 호출하기",
     description:
@@ -302,11 +331,15 @@ export class WalletsController {
     @Body()
     sendUserWalletContractCallRequestDTO: SendUserWalletContractCallRequestDTO
   ): Promise<TransactionDTO> {
-    return null;
+    return await this.walletsService.sendUserWalletContractCall(
+      request.sdk,
+      masterWalletId,
+      userWalletId,
+      sendUserWalletContractCallRequestDTO
+    );
   }
 
   @Patch("/:masterWalletId/user-wallets/:userWalletId/name")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 이름 변경하기",
     description: "특정 사용자 지갑의 이름을 변경합니다.",
@@ -318,10 +351,16 @@ export class WalletsController {
     @Param("masterWalletId") masterWalletId: string,
     @Param("userWalletId") userWalletId: string,
     @Body() changeUserWalletNameRequestDTO: ChangeUserWalletNameRequestDTO
-  ) {}
+  ) {
+    await this.walletsService.changeUserWalletName(
+      request.sdk,
+      masterWalletId,
+      userWalletId,
+      changeUserWalletNameRequestDTO
+    );
+  }
 
   @Get("/:masterWalletId/user-wallets/:userWalletId/balance")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 잔고 조회하기",
     description: "특정 사용자 지갑의 잔액을 조회합니다.",
@@ -332,14 +371,19 @@ export class WalletsController {
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
     @Param("userWalletId") userWalletId: string,
-    @Query("flag") flag: boolean,
-    @Query("symbol") symbol: string
-  ): Promise<BalanceDTO> {
-    return null;
+    @Query("flag") flag?: string,
+    @Query("symbol") symbol?: string
+  ): Promise<BalanceDTO[]> {
+    return await this.walletsService.getUserWalletBalance(
+      request.sdk,
+      masterWalletId,
+      userWalletId,
+      flag,
+      symbol
+    );
   }
 
   @Get("/:masterWalletId/user-wallets/:userWalletId/nonce")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 논스 조회하기",
     description: "특정 사용자 지갑의 nonce를 조회합니다.",
@@ -350,11 +394,14 @@ export class WalletsController {
     @Param("masterWalletId") masterWalletId: string,
     @Param("userWalletId") userWalletId: string
   ): Promise<WalletNonceDTO> {
-    return null;
+    return await this.walletsService.getUserWalletNonce(
+      request.sdk,
+      masterWalletId,
+      userWalletId
+    );
   }
 
   @Post("/:masterWalletId/user-wallets/:userWalletId/transfer")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑에서 코인/토큰 전송하기",
     description: "특정 사용자 지갑에서 가상자산을 전송합니다.",
@@ -366,11 +413,15 @@ export class WalletsController {
     @Param("userWalletId") userWalletId: string,
     @Body() sendUserWalletCoinRequestDTO: SendUserWalletCoinRequestDTO
   ): Promise<TransactionDTO> {
-    return null;
+    return await this.walletsService.sendUserWalletCoin(
+      request.sdk,
+      masterWalletId,
+      userWalletId,
+      sendUserWalletCoinRequestDTO
+    );
   }
 
   @Patch("/:masterWalletId/passphrase")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 비밀번호 변경하기",
     description: "특정 마스터 지갑의 비밀번호를 변경합니다.",
@@ -381,10 +432,15 @@ export class WalletsController {
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
     @Body() changePassphraseRequestDTO: ChangePassphraseRequestDTO
-  ) {}
+  ) {
+    await this.walletsService.changePassphrase(
+      request.sdk,
+      masterWalletId,
+      changePassphraseRequestDTO
+    );
+  }
 
   @Post("/:masterWalletId/recreate")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "마스터 지갑 재생성하기",
     description: "마스터 지갑을 재생성합니다.",
@@ -395,11 +451,14 @@ export class WalletsController {
     @Param("masterWalletId") masterWalletId: string,
     @Body() retryCreateMasterWalletRequestDTO: RetryCreateMasterWalletRequestDTO
   ): Promise<MasterWalletDTO> {
-    return null;
+    return await this.walletsService.retryCreateMasterWallet(
+      request.sdk,
+      masterWalletId,
+      retryCreateMasterWalletRequestDTO
+    );
   }
 
   @Post("/:masterWalletId/user-wallets/:userWalletId/recreate")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "사용자 지갑 생성 실패시 재시도하기",
     description:
@@ -413,8 +472,13 @@ export class WalletsController {
     @Param("masterWalletId") masterWalletId: string,
     @Param("userWalletId") userWalletId: string,
     @Body() retryCreateUserWalletRequestDTO: RetryCreateUserWalletRequestDTO
-  ): Promise<MasterWalletDTO> {
-    return null;
+  ): Promise<UserWalletDTO> {
+    return await this.walletsService.retryCreateUserWallet(
+      request.sdk,
+      masterWalletId,
+      userWalletId,
+      retryCreateUserWalletRequestDTO
+    );
   }
 }
 

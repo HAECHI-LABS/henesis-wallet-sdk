@@ -1,6 +1,6 @@
 import { BtcRawTransactionInputDTO } from "./btc-raw-transaction-input.dto";
 import { BtcRawTransactionOutputDTO } from "./btc-raw-transaction-output.dto";
-import { ApiProperty } from "@nestjs/swagger";
+import { BtcRawTransaction } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 
 export class BtcRawTransactionDTO {
   /**
@@ -16,4 +16,17 @@ export class BtcRawTransactionDTO {
    */
 
   outputs: BtcRawTransactionOutputDTO[];
+
+  static fromBTCRawTransaction(
+    transaction: BtcRawTransaction
+  ): BtcRawTransactionDTO {
+    return {
+      inputs: transaction.inputs.map(
+        BtcRawTransactionInputDTO.fromBTCRawTransactionInput
+      ),
+      outputs: transaction.outputs.map(
+        BtcRawTransactionOutputDTO.fromBTCRawTransactionOutput
+      ),
+    };
+  }
 }

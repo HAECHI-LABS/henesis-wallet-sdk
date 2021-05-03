@@ -5,7 +5,12 @@ import { CallEventDTO } from "../dto/call-event.dto";
 import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import { PaginationDTO } from "../dto/pagination.dto";
-import { ApiPaginationResponse, Queries } from "../../../decorators";
+import {
+  ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
+  Queries,
+} from "../../../decorators";
 import {
   QUERY_EVENT_MASTER_WALLET_ID_OPTIONAL,
   QUERY_EVENT_PAGE_OPTIONAL,
@@ -19,14 +24,17 @@ import {
   QUERY_EVENT_WALLET_ID_OPTIONAL,
 } from "../dto/queries";
 import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
+import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
 
 @Controller("events")
 @ApiTags("events")
+@AuthErrorResponses()
+@AuthHeaders()
 export class EventsController {
-  constructor(private readonly eventsController: EventsService) {}
+  constructor(private readonly eventsService: EventsService) {}
 
   @Get("/value-transfer-events")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "코인/토큰 입출금 내역 조회하기",
     description: "모든 지갑의 가상자산 입출금 내역을 조회합니다.",
@@ -51,17 +59,28 @@ export class EventsController {
     @Query("masterWalletId") masterWalletId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
-    @Query("status") status?: string,
-    @Query("updatedAtGte") updatedAtGte?: string,
-    @Query("updatedAtLt") updatedAtLt?: string,
-    @Query("size") size?: string,
-    @Query("page") page?: string
+    @Query("status") status?: EventStatus,
+    @Query("updatedAtGte") updatedAtGte?: Timestamp,
+    @Query("updatedAtLt") updatedAtLt?: Timestamp,
+    @Query("size") size?: number,
+    @Query("page") page?: number
   ): Promise<PaginationDTO<ValueTransferEventDTO>> {
-    return null;
+    return await this.eventsService.getValueTransferEvents(
+      request.sdk,
+      symbol,
+      walletId,
+      masterWalletId,
+      transactionId,
+      transactionHash,
+      status,
+      updatedAtGte,
+      updatedAtLt,
+      size,
+      page
+    );
   }
 
   @Get("/call-events")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "스마트 컨트랙트 호출 내역 조회하기",
     description: "내가 발생시킨 스마트 컨트랙트 호출 내역을 조회합니다.",
@@ -79,17 +98,29 @@ export class EventsController {
   )
   @ApiPaginationResponse(CallEventDTO)
   public async getCallEvents(
+    @Request() request: express.Request,
     @Query("walletId") walletId?: string,
     @Query("masterWalletId") masterWalletId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
-    @Query("status") status?: string,
-    @Query("updatedAtGte") updatedAtGte?: string,
-    @Query("updatedAtLt") updatedAtLt?: string,
-    @Query("size") size?: string,
-    @Query("page") page?: string
+    @Query("status") status?: EventStatus,
+    @Query("updatedAtGte") updatedAtGte?: Timestamp,
+    @Query("updatedAtLt") updatedAtLt?: Timestamp,
+    @Query("size") size?: number,
+    @Query("page") page?: number
   ): Promise<PaginationDTO<CallEventDTO>> {
-    return null;
+    return await this.eventsService.getCallEvents(
+      request.sdk,
+      walletId,
+      masterWalletId,
+      transactionId,
+      transactionHash,
+      status,
+      updatedAtGte,
+      updatedAtLt,
+      size,
+      page
+    );
   }
 }
 

@@ -1,5 +1,4 @@
 import { WalletDTO } from "./wallet.dto";
-import { ApiProperty } from "@nestjs/swagger";
 import { KeyDTO } from "./key.dto";
 
 export class MasterWalletDTO extends WalletDTO {
@@ -8,19 +7,19 @@ export class MasterWalletDTO extends WalletDTO {
    * @example ETH
    */
 
-  accountKey: KeyDTO;
+  accountKey?: KeyDTO;
 
   /**
    * 지갑 ID
    * @example ETH
    */
 
-  encryptionKey: string;
+  encryptionKey?: string;
 
   /**
    * 지갑 ID
    * @example ETH
    */
 
-  whitelistActivated: boolean;
+  whitelistActivated?: boolean;
 }

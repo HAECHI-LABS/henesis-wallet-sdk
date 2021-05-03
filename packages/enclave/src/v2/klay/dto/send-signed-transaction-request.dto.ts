@@ -1,5 +1,3 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-
 export class SendSignedTransactionRequestDTO {
   /**
    * 지갑 ID

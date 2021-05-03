@@ -1,5 +1,5 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import BN from "bn.js";
+import { Balance } from "@haechi-labs/henesis-wallet-core/lib/types";
+import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 
 export class BalanceDTO {
   /**
@@ -57,4 +57,21 @@ export class BalanceDTO {
    */
 
   decimals: number;
+
+  static fromBalance(balance: Balance): BalanceDTO {
+    return {
+      coinId: balance.coinId,
+      coinType: balance.coinType,
+      amount: balance.amount ? BNConverter.bnToHexString(balance.amount) : null,
+      spendableAmount: balance.spendableAmount
+        ? BNConverter.bnToHexString(balance.spendableAmount)
+        : null,
+      name: balance.name,
+      symbol: balance.symbol,
+      aggregatedAmount: balance.aggregatedAmount
+        ? BNConverter.bnToHexString(balance.aggregatedAmount)
+        : null,
+      decimals: balance.decimals,
+    };
+  }
 }

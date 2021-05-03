@@ -1,11 +1,5 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
-import * as BN from "bn.js";
-import {
-  RawTransaction,
-  SignedMultiSigPayload,
-  TransactionStatus,
-} from "@haechi-labs/henesis-wallet-core";
+import { TransactionStatus } from "@haechi-labs/henesis-wallet-core";
 
 export class TransactionDTO {
   /**

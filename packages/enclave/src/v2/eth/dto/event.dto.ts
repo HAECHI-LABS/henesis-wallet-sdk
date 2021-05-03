@@ -1,6 +1,3 @@
-import * as BN from "bn.js";
-import { ApiProperty } from "@nestjs/swagger";
-
 export class EventDTO {
   /**
    * 지갑 ID

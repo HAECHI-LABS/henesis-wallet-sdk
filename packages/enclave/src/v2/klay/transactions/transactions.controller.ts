@@ -4,15 +4,21 @@ import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
 import express from "express";
 import { PaginationDTO } from "../../eth/dto/pagination.dto";
-import { ApiPaginationResponse, PathParams } from "../../../decorators";
+import {
+  ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
+  PathParams,
+} from "../../../decorators";
 import { ValueTransferEventDTO } from "../../eth/dto/value-transfer-event.dto";
 import { PARAM_TRANSACTION_ID } from "../../eth/dto/params";
 
 @Controller("transactions")
 @ApiTags("transactions")
+@AuthErrorResponses()
+@AuthHeaders()
 export class TransactionsController {
   @Get("/")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "모든 트랜잭션 정보 조회하기",
     description: "내가 발생시킨 모든 트랜잭션의 정보를 조회합니다.",
@@ -25,7 +31,6 @@ export class TransactionsController {
   }
 
   @Get("/:transactionId")
-  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "특정 트랜잭션 정보 조회하기",
     description: "내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.",
@@ -38,6 +43,7 @@ export class TransactionsController {
     return null;
   }
 }
+
 // todo: delete when implementation is done
 // import express from "express";
 // import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";

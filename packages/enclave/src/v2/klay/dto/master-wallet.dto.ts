@@ -1,5 +1,4 @@
 import { WalletDTO } from "./wallet.dto";
-import { ApiProperty } from "@nestjs/swagger";
 import { KeyDTO } from "./key.dto";
 
 export class MasterWalletDTO extends WalletDTO {

@@ -1,6 +1,5 @@
 import { WalletStatus } from "@haechi-labs/henesis-wallet-core/lib/wallet";
 import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
 export class WalletDTO {
   /**
@@ -57,7 +56,7 @@ export class WalletDTO {
    * @example ETH
    */
 
-  version: string;
+  version?: string;
 
   /**
    * 지갑 ID
