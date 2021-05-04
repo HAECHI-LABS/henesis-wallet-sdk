@@ -49,6 +49,13 @@ export class WalletsService {
     );
   }
 
+  public async getMasterWallet(
+    sdk: SDK,
+    masterWalletId: string
+  ): Promise<MasterWalletDTO> {
+    return (await sdk.eth.wallets.getMasterWallet(masterWalletId)).getData();
+  }
+
   public async sendMasterWalletContractCall(
     sdk: SDK,
     masterWalletId: string,

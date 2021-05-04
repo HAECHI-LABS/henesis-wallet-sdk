@@ -69,6 +69,22 @@ export class WalletsController {
     return await this.walletsService.getMasterWallets(request.sdk, name);
   }
 
+  @Get("/:masterWalletId")
+  @ApiOperation({
+    summary: "마스터 지갑 조회하기",
+    description: "마스터 지갑 목록을 조회합니다.",
+  })
+  @PathParams(PARAM_MASTER_WALLET_ID)
+  public async getMasterWallet(
+    @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string
+  ): Promise<MasterWalletDTO> {
+    return await this.walletsService.getMasterWallet(
+      request.sdk,
+      masterWalletId
+    );
+  }
+
   @Post("/:masterWalletId/contract-call")
   @ApiOperation({
     summary: "마스터 지갑에서 스마트 컨트랙트 호출하기",
