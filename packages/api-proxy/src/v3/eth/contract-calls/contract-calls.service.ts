@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 import { SDK } from "@haechi-labs/henesis-wallet-core";
-import { CallEventDTO } from "../dto/call-event.dto";
+import { ContractCallsDTO } from "../dto/contract-calls.dto";
 import { PaginationDTO } from "../dto/pagination.dto";
 
 @Injectable()
-export class CallEventsService {
+export class ContractCallsService {
   async getCallEvents(
     sdk: SDK,
     options: {
@@ -19,7 +19,7 @@ export class CallEventsService {
       transactionHash: string;
       status: EventStatus;
     }
-  ): Promise<PaginationDTO<CallEventDTO>> {
+  ): Promise<PaginationDTO<ContractCallsDTO>> {
     const result = await sdk.eth.events.getCallEvents({
       walletId: options.walletId,
       symbol: options.ticker,
@@ -32,7 +32,7 @@ export class CallEventsService {
     });
     return {
       pagination: result.pagination,
-      results: result.results.map(CallEventDTO.fromCallEvent),
+      results: result.results.map(ContractCallsDTO.fromCallEvent),
     };
   }
 }
