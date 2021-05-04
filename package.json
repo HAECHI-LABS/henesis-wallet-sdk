@@ -79,7 +79,7 @@
     ],
     "globals": {
       "ts-jest": {
-        "diagnostics": true
+        "diagnostics": false
       }
     },
     "testEnvironment": "node"
