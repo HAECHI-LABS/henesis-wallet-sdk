@@ -1,5 +1,5 @@
 import { Controller, Get, Request } from "@nestjs/common";
-import { FeeWalletsService } from "./fee-wallets.service";
+import { FeeWalletService } from "./fee-wallet.service";
 import { BalanceDTO } from "../dto/balance.dto";
 import express from "express";
 import { ApiExtraModels, ApiOperation, ApiTags } from "@nestjs/swagger";
@@ -10,8 +10,8 @@ import {
 } from "../dto/exceptions.dto";
 import { AuthErrorResponses, AuthHeaders } from "../../../decorators";
 
-@Controller("fee-wallets")
-@ApiTags("fee-wallets")
+@Controller("fee-wallet")
+@ApiTags("fee-wallet")
 @ApiExtraModels(
   InvalidAccessIpException,
   InvalidAccessTokenException,
@@ -19,8 +19,8 @@ import { AuthErrorResponses, AuthHeaders } from "../../../decorators";
 )
 @AuthErrorResponses()
 @AuthHeaders()
-export class FeeWalletsController {
-  constructor(private readonly feeWalletsService: FeeWalletsService) {}
+export class FeeWalletController {
+  constructor(private readonly feeWalletsService: FeeWalletService) {}
 
   @Get("/balance")
   @ApiOperation({

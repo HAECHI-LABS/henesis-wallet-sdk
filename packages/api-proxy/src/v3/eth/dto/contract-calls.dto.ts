@@ -2,7 +2,7 @@ import { EthCallEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
 import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
 
-export class CallEventDTO {
+export class ContractCallsDTO {
   /**
    * 스마트 컨트랙트 호출 내역의 ID
    * @example 375031
@@ -65,7 +65,7 @@ export class CallEventDTO {
    */
   blockchain: BlockchainType;
 
-  public static fromCallEvent(event: EthCallEvent): CallEventDTO {
+  public static fromCallEvent(event: EthCallEvent): ContractCallsDTO {
     return {
       id: event.id.toString(),
       data: event.data,
