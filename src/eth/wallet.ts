@@ -48,6 +48,7 @@ import {
   FlushRequest,
   PaginationFlushTransactionDTO,
   TransactionStatus,
+  FlushQuerySearchCondition,
   FlushTransactionValueTransferEventDTO,
   FlushTransactionValueTransferEventDTOStatus,
   FlushTransactionDTO,
@@ -408,7 +409,7 @@ export class EthWallet extends EthLikeWallet {
   }
 
   async getFlushTransactions(
-    option?: PaginationOptions
+    option?: PaginationOptions & FlushQuerySearchCondition
   ): Promise<Pagination<FlushTransaction>> {
     const queryString = makeQueryString(option);
     const response = await this.client.get<PaginationFlushTransactionDTO>(
