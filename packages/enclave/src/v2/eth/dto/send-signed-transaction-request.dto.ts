@@ -1,4 +1,17 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import * as BN from "bn.js";
+
+interface MultiSigPayload {
+  walletAddress: string;
+  toAddress: string;
+  value: string;
+  walletNonce: string;
+  hexData: string;
+}
+
+interface SignedMultiSigPayload {
+  signature: string;
+  multiSigPayload: MultiSigPayload | null;
+}
 
 export class SendSignedTransactionRequestDTO {
   /**
@@ -6,7 +19,7 @@ export class SendSignedTransactionRequestDTO {
    * @example ETH
    */
 
-  signedMultiSigPayload: string;
+  signedMultiSigPayload: SignedMultiSigPayload;
 
   /**
    * 지갑 ID

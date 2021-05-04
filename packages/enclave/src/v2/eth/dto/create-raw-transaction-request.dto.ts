@@ -1,5 +1,3 @@
-import { ApiProperty } from "@nestjs/swagger";
-
 export class CreateRawTransactionRequestDTO {
   /**
    * 지갑 ID

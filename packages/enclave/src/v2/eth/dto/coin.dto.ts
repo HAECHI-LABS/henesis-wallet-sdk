@@ -1,49 +1,49 @@
 export class CoinDTO {
   /**
-   * 코인 id
-   * @example 2
+   * 암호화폐 ID
+   * @example 576
    */
   id: number;
 
   /**
-   * 코인 이름
-   * @example 2
+   * 암호화폐 이름
+   * @example Ampleforth
    */
   name: string;
 
   /**
-   * 코인 synbol
-   * @example 2
+   * 암호화폐의 기호 (symbol)
+   * @example AMPL
    */
   symbol: string;
 
   /**
-   * 코인 주소
-   * @example 2
+   * 암호화폐 주소
+   * @example 0x35b1dc534959fa547047a3dcdf1eb1eebd704561
    */
   address: string;
 
   /**
-   * 코인 desc
-   * @example 2
+   * 암호화폐 설명
+   * @example AMPL
    */
-  desc: string;
+  desc?: string;
 
   /**
-   * 코인 blockchain
-   * @example 2
+   * 암호화폐가 발행된 블록체인 플랫폼
+   * @example ETHEREUM
    */
   blockchain: string;
 
   /**
-   * 코인 decimals
-   * @example 2
+   * 암호화폐의 소수점 자릿수
+   * @example 9
    */
   decimals: number;
 
   /**
-   * 코인 attributes
-   * @example 2
+   * 암호화폐의 메타 데이터
+   * @example ["ERC20_STANDARD", "ERC20_REBASE"]
    */
   attributes: string[];
 }

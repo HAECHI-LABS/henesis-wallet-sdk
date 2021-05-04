@@ -1,37 +1,29 @@
-import { ApiProperty } from "@nestjs/swagger";
-
 export class TransferRequestDTO {
   /**
    * 받을 주소
-   * @example: name
+   * @example: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
    */
 
   to: string;
 
   /**
    * 보낼 금액
-   * @example: name
+   * @example: 0x12
    */
 
   amount: string;
 
   /**
    * 비밀번호
-   * @example: name
+   * @example: passphrase
    */
 
   passphrase: string;
 
   /**
-   * OTP 코드
-   * @example: name
-   */
-
-  otpCode: string;
-
-  /**
-   * 수수료율
-   * @example: name
+   * 트랜잭션 vbyte당 지불할 fee 가격 (단위: satoshi)
+   (16진법, 맨 앞에 반드시 '0x' 붙여야 함) (v2.10.9 이상 지원)
+   * @example: 0xDB
    */
 
   feeRate: string;

@@ -1,30 +1,28 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-
 export class CreateUserWalletRequestDTO {
   /**
-   * 지갑 ID
-   * @example ETH
+   * 지갑 이름
+   * @example bit
    */
 
   name: string;
 
   /**
-   * 지갑 ID
-   * @example ETH
+   * 지갑 비밀번호
+   * @example passphrase
    */
 
   passphrase: string;
 
   /**
-   * 지갑 ID
-   * @example ETH
+   * 트랜잭션에 사용할 gas price (단위: wei, peb)
+   * @example 0x1
    */
 
   gasPrice: string;
 
   /**
-   * 지갑 ID
-   * @example ETH
+   * salt
+   * @example salt
    */
 
   salt: string;

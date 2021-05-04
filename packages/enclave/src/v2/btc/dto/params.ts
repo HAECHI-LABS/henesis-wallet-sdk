@@ -6,6 +6,12 @@ export const PARAM_WALLET_ID: ApiParamOptions = {
   description: "지갑 ID",
 };
 
+export const PARAM_TRANSFER_ID: ApiParamOptions = {
+  name: "transferId",
+  required: true,
+  description: "TRANSFER ID",
+};
+
 export const PARAM_DEPOSIT_ADDRESS_ID: ApiParamOptions = {
   name: "depositAddressId",
   required: true,
