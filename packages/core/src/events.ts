@@ -53,7 +53,7 @@ export interface EventPaginationOptions extends PaginationOptions {
 
 export interface ValueTransferEventPaginationOptions
   extends EventPaginationOptions {
-  symbol?: string;
+  transferType?: TransferType;
 }
 
 export type EthEventPaginationOptions = EventPaginationOptions;

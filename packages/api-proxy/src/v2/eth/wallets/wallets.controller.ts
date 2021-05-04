@@ -46,6 +46,7 @@ import { RetryCreateMasterWalletRequestDTO } from "../dto/retry-create-master-wa
 import { RetryCreateUserWalletRequestDTO } from "../dto/retry-create-user-wallet-request.dto";
 import { WalletsService } from "./wallets.service";
 
+
 @Controller("wallets")
 @ApiTags("wallets")
 @AuthErrorResponses()
