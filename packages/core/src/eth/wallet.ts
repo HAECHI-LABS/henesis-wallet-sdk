@@ -392,11 +392,13 @@ export class EthWallet extends EthLikeWallet {
 
   async flush(
     flushTargets: Array<{ coinId: number; depositAddressId: string }>,
-    gasPrice?: BN
+    gasPrice?: BN,
+    gasLimit?: BN
   ): Promise<EthTransaction> {
     const request: FlushRequest = {
       targets: flushTargets,
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
     };
     const response = await this.client.post<TransactionDTO>(
       `${this.baseUrl}/flush`,
