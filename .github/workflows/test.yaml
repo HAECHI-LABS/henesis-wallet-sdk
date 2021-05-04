@@ -32,4 +32,4 @@ jobs:
       - name: script
         run: |
           bash ./scripts/core.sh
-          bash ./scripts/enclave.sh
+          bash ./scripts/api-proxy.sh

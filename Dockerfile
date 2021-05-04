@@ -13,8 +13,7 @@ COPY  tsconfig.json /
 
 RUN yarn bootstrap
 
-# todo: change to api-proxy
-WORKDIR /packages/enclave
+WORKDIR /packages/api-proxy
 
 RUN yarn build
 
