@@ -14,14 +14,14 @@ import { BalanceDTO } from "../dto/balance.dto";
 import { UserWalletDTO } from "../dto/user-wallet.dto";
 import { ApiNoContentResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
-import { CreateMasterWalletRequestDTO } from "../dto/create-master-wallet-request.dto";
-import { ActivateMasterWalletRequestDTO } from "../dto/activate-master-wallet-request.dto";
 import { SendMasterWalletContractCallRequestDTO } from "../dto/send-master-wallet-contract-call-request.dto";
 import { ChangeMasterWalletNameRequestDTO } from "../dto/change-master-wallet-name-request.dto";
 import { SendMasterWalletCoinRequestDTO } from "../dto/send-master-wallet-coin-request.dto";
 import { SendMasterWalletBatchTransactionsRequestDTO } from "../dto/send-master-wallet-batch-transactions-request.dto";
 import {
   ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
   PathParams,
   Queries,
 } from "../../../decorators";
@@ -49,6 +49,8 @@ import { InactiveMasterWalletDTO } from "../dto/inactive-master-wallet.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
+@AuthErrorResponses()
+@AuthHeaders()
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
@@ -63,39 +65,6 @@ export class WalletsController {
     @Query("name") name?: string
   ): Promise<MasterWalletDTO[]> {
     return await this.walletsService.getMasterWallets(request.sdk, name);
-  }
-
-  @Post("/")
-  @ApiOperation({
-    summary: "마스터 지갑 생성하기",
-    description: "마스터 지갑을 생성합니다.",
-  })
-  public async createMasterWallet(
-    @Request() request: express.Request,
-    @Body() createMasterWalletRequestDTO: CreateMasterWalletRequestDTO
-  ): Promise<MasterWalletDTO | InactiveMasterWalletDTO> {
-    return await this.walletsService.createMasterWallet(
-      request.sdk,
-      createMasterWalletRequestDTO
-    );
-  }
-
-  @Post("/:masterWalletId/activate")
-  @ApiOperation({
-    summary: "마스터 지갑 활성화하기",
-    description: "마스터 지갑을 활성화합니다.",
-  })
-  @PathParams(PARAM_MASTER_WALLET_ID)
-  public async activateMasterWallet(
-    @Request() request: express.Request,
-    @Param("masterWalletId") masterWalletId: string,
-    @Body() activateMasterWalletRequestDTO: ActivateMasterWalletRequestDTO
-  ): Promise<MasterWalletDTO> {
-    return await this.walletsService.activateMasterWallet(
-      request.sdk,
-      masterWalletId,
-      activateMasterWalletRequestDTO
-    );
   }
 
   @Post("/:masterWalletId/contract-call")

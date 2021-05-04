@@ -126,34 +126,43 @@ export class TransactionDTO {
       estimatedFee: transaction.estimatedFee
         ? BNConverter.bnToHexString(transaction.estimatedFee)
         : null,
-      signedMultiSigPayload: {
-        signature: transaction.signedMultiSigPayload.signature,
-        multiSigPayload: {
-          walletAddress:
-            transaction.signedMultiSigPayload.multiSigPayload.walletAddress,
-          toAddress:
-            transaction.signedMultiSigPayload.multiSigPayload.toAddress,
-          value: BNConverter.bnToHexString(
-            transaction.signedMultiSigPayload.multiSigPayload.value
-          ),
-          walletNonce: BNConverter.bnToHexString(
-            transaction.signedMultiSigPayload.multiSigPayload.walletNonce
-          ),
-          hexData: transaction.signedMultiSigPayload.multiSigPayload.hexData,
-        },
-      },
-      rawTransaction: {
-        nonce: BNConverter.bnToHexString(transaction.rawTransaction.nonce),
-        gasPrice: BNConverter.bnToHexString(
-          transaction.rawTransaction.gasPrice
-        ),
-        gasLimit: BNConverter.bnToHexString(
-          transaction.rawTransaction.gasLimit
-        ),
-        to: transaction.rawTransaction.to,
-        value: BNConverter.bnToHexString(transaction.rawTransaction.value),
-        data: transaction.rawTransaction.data,
-      },
+      signedMultiSigPayload: transaction.signedMultiSigPayload
+        ? {
+            signature: transaction.signedMultiSigPayload.signature,
+            multiSigPayload: transaction.signedMultiSigPayload.multiSigPayload
+              ? {
+                  walletAddress:
+                    transaction.signedMultiSigPayload.multiSigPayload
+                      .walletAddress,
+                  toAddress:
+                    transaction.signedMultiSigPayload.multiSigPayload.toAddress,
+                  value: BNConverter.bnToHexString(
+                    transaction.signedMultiSigPayload.multiSigPayload.value
+                  ),
+                  walletNonce: BNConverter.bnToHexString(
+                    transaction.signedMultiSigPayload.multiSigPayload
+                      .walletNonce
+                  ),
+                  hexData:
+                    transaction.signedMultiSigPayload.multiSigPayload.hexData,
+                }
+              : null,
+          }
+        : null,
+      rawTransaction: transaction.rawTransaction
+        ? {
+            nonce: BNConverter.bnToHexString(transaction.rawTransaction.nonce),
+            gasPrice: BNConverter.bnToHexString(
+              transaction.rawTransaction.gasPrice
+            ),
+            gasLimit: BNConverter.bnToHexString(
+              transaction.rawTransaction.gasLimit
+            ),
+            to: transaction.rawTransaction.to,
+            value: BNConverter.bnToHexString(transaction.rawTransaction.value),
+            data: transaction.rawTransaction.data,
+          }
+        : null,
     };
   }
 }

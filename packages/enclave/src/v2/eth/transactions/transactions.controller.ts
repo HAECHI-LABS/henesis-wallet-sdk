@@ -4,6 +4,8 @@ import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import {
   ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
   PathParams,
   Queries,
 } from "../../../decorators";
@@ -31,6 +33,8 @@ import {
 
 @Controller("transactions")
 @ApiTags("transactions")
+@AuthErrorResponses()
+@AuthHeaders()
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 

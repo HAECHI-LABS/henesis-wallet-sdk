@@ -1,7 +1,12 @@
 import { Controller, Get, Query, Request } from "@nestjs/common";
 import { EventsService } from "./events.service";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { ApiPaginationResponse, Queries } from "../../../decorators";
+import {
+  ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
+  Queries,
+} from "../../../decorators";
 import {
   QUERY_EVENT_MASTER_WALLET_ID_OPTIONAL,
   QUERY_EVENT_PAGE_OPTIONAL,
@@ -23,6 +28,8 @@ import { CallEventDTO } from "../../eth/dto/call-event.dto";
 
 @Controller("events")
 @ApiTags("events")
+@AuthErrorResponses()
+@AuthHeaders()
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 

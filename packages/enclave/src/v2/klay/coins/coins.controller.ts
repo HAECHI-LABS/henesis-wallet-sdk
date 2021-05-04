@@ -1,24 +1,21 @@
 import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import express from "express";
 import { CoinsService } from "./coins.service";
-import { ApiExtraModels, ApiOperation, ApiTags } from "@nestjs/swagger";
-import { PathParams, Queries } from "../../../decorators";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+  AuthErrorResponses,
+  AuthHeaders,
+  PathParams,
+  Queries,
+} from "../../../decorators";
 import { PARAM_COIN_TICKER } from "../../eth/dto/params";
 import { QUERY_COIN_FLAG_OPTIONAL } from "../../eth/dto/queries";
-import {
-  AccessTokenNotProvidedException,
-  InvalidAccessIpException,
-  InvalidAccessTokenException,
-} from "../../../extra-model.dto";
 import { CoinDTO } from "../../eth/dto/coin.dto";
 
 @Controller("coins")
 @ApiTags("coins")
-@ApiExtraModels(
-  InvalidAccessIpException,
-  InvalidAccessTokenException,
-  AccessTokenNotProvidedException
-)
+@AuthErrorResponses()
+@AuthHeaders()
 export class CoinsController {
   constructor(private readonly coinsService: CoinsService) {}
 

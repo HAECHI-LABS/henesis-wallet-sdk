@@ -15,12 +15,12 @@ import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import { TransferDTO } from "../dto/transfer.dto";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
-import { CreateInactiveMasterWalletRequestDTO } from "../dto/create-inactive-master-wallet-request.dto";
 import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
-import { ActivateMasterWalletRequestDTO } from "../dto/activate-master-wallet-request.dto";
 import { TransferRequestDTO } from "../dto/transfer-request.dto";
 import {
   ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
   PathParams,
   Queries,
 } from "../../../decorators";
@@ -35,6 +35,8 @@ import { PaginationDTO } from "../dto/pagination.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
+@AuthErrorResponses()
+@AuthHeaders()
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
@@ -49,41 +51,6 @@ export class WalletsController {
     @Query("name") walletName?: string
   ): Promise<WalletDTO[]> {
     return await this.walletsService.getWallets(request.sdk, walletName);
-  }
-
-  @Post("/")
-  @ApiOperation({
-    summary: "지갑 생성하기",
-    description: "지갑을 생성합니다.",
-  })
-  public async createInactiveMasterWallet(
-    @Request() request: express.Request,
-    @Body()
-    createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequestDTO
-  ): Promise<WalletDTO> {
-    return await this.walletsService.createInactiveMasterWallet(
-      request.sdk,
-      createInactiveMasterWalletRequest
-    );
-  }
-
-  @Post("/:walletId/activate")
-  @ApiOperation({
-    summary: "지갑 활성화하기",
-    description: "지갑을 활성화합니다.",
-  })
-  @PathParams(PARAM_WALLET_ID)
-  public async activateMasterWallet(
-    @Request() request: express.Request,
-    @Param("walletId") walletId: string,
-    @Body()
-    activateMasterWalletRequestDTO: ActivateMasterWalletRequestDTO
-  ): Promise<WalletDTO> {
-    return await this.walletsService.activateMasterWallet(
-      request.sdk,
-      walletId,
-      activateMasterWalletRequestDTO
-    );
   }
 
   @Get("/:walletId")

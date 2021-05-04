@@ -26,6 +26,8 @@ import { PARAM_TRANSFER_ID } from "../dto/params";
 
 @Controller("transfers")
 @ApiTags("transfers")
+@AuthErrorResponses()
+@AuthHeaders()
 export class TransfersController {
   constructor(private readonly transfersService: TransfersService) {}
 

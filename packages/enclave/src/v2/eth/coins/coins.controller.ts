@@ -3,12 +3,19 @@ import express from "express";
 import { CoinsService } from "./coins.service";
 import { CoinDTO } from "../dto/coin.dto";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { PathParams, Queries } from "../../../decorators";
+import {
+  AuthErrorResponses,
+  AuthHeaders,
+  PathParams,
+  Queries,
+} from "../../../decorators";
 import { QUERY_COIN_FLAG_OPTIONAL } from "../dto/queries";
 import { PARAM_COIN_TICKER } from "../dto/params";
 
 @Controller("coins")
 @ApiTags("coins")
+@AuthErrorResponses()
+@AuthHeaders()
 export class CoinsController {
   constructor(private readonly coinsService: CoinsService) {}
 

@@ -5,7 +5,12 @@ import { CallEventDTO } from "../dto/call-event.dto";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import { PaginationDTO } from "../dto/pagination.dto";
-import { ApiPaginationResponse, Queries } from "../../../decorators";
+import {
+  ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
+  Queries,
+} from "../../../decorators";
 import {
   QUERY_EVENT_MASTER_WALLET_ID_OPTIONAL,
   QUERY_EVENT_PAGE_OPTIONAL,
@@ -23,6 +28,8 @@ import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
 
 @Controller("events")
 @ApiTags("events")
+@AuthErrorResponses()
+@AuthHeaders()
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 

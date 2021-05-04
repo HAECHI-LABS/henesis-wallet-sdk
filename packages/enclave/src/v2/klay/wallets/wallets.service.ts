@@ -6,14 +6,6 @@ import {
   SignedMultiSigPayload,
 } from "@haechi-labs/henesis-wallet-core";
 import { MasterWalletDTO } from "../../eth/dto/master-wallet.dto";
-import { CreateMasterWalletRequestDTO } from "../../eth/dto/create-master-wallet-request.dto";
-import { InactiveMasterWalletDTO } from "../../eth/dto/inactive-master-wallet.dto";
-import { WalletStatus } from "@haechi-labs/henesis-wallet-core/lib/wallet";
-import {
-  HenesisError,
-  HttpStatus,
-} from "@haechi-labs/henesis-wallet-core/lib/error";
-import { ActivateMasterWalletRequestDTO } from "../../eth/dto/activate-master-wallet-request.dto";
 import { Key } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { SendMasterWalletContractCallRequestDTO } from "../../eth/dto/send-master-wallet-contract-call-request.dto";
 import { TransactionDTO } from "../../eth/dto/transaction.dto";
@@ -55,48 +47,6 @@ export class WalletsService {
 
     return (await sdk.klay.wallets.getMasterWallets(options)).map((c) =>
       c.getData()
-    );
-  }
-
-  public async createMasterWallet(
-    sdk: SDK,
-    createMasterWalletRequestDTO: CreateMasterWalletRequestDTO
-  ): Promise<MasterWalletDTO | InactiveMasterWalletDTO> {
-    const type: string = createMasterWalletRequestDTO.type;
-    if (type != undefined) {
-      if (type.toUpperCase() != WalletStatus.INACTIVE) {
-        throw new HenesisError(
-          `type '${type}' is not supported`,
-          HttpStatus.BAD_REQUEST
-        );
-      }
-      return (await sdk.klay.wallets.createInactiveMasterWallet(
-        createMasterWalletRequestDTO.name
-      )) as InactiveMasterWalletDTO;
-    }
-    return (
-      await sdk.klay.wallets.createMasterWallet(
-        createMasterWalletRequestDTO.name,
-        createMasterWalletRequestDTO.passphrase,
-        createMasterWalletRequestDTO.gasPrice
-          ? BNConverter.hexStringToBN(createMasterWalletRequestDTO.gasPrice)
-          : undefined
-      )
-    ).getData();
-  }
-
-  public async activateMasterWallet(
-    sdk: SDK,
-    masterWalletId: string,
-    activateMasterWalletRequestDTO: ActivateMasterWalletRequestDTO
-  ): Promise<MasterWalletDTO> {
-    const wallet = await WalletsService.getMasterWalletById(
-      sdk,
-      masterWalletId
-    );
-    return wallet.activate(
-      activateMasterWalletRequestDTO.accountKey as Key,
-      activateMasterWalletRequestDTO.backupKey as Key
     );
   }
 

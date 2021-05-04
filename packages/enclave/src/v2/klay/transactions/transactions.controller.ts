@@ -4,6 +4,8 @@ import express from "express";
 import { PaginationDTO } from "../../eth/dto/pagination.dto";
 import {
   ApiPaginationResponse,
+  AuthErrorResponses,
+  AuthHeaders,
   PathParams,
   Queries,
 } from "../../../decorators";
@@ -31,6 +33,8 @@ import { TransactionType } from "@haechi-labs/henesis-wallet-core/lib/__generate
 
 @Controller("transactions")
 @ApiTags("transactions")
+@AuthErrorResponses()
+@AuthHeaders()
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 

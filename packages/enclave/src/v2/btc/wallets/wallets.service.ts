@@ -1,10 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
 import { WalletDTO } from "../dto/wallet.dto";
-import { CreateInactiveMasterWalletRequestDTO } from "../dto/create-inactive-master-wallet-request.dto";
-import { ActivateMasterWalletRequestDTO } from "../dto/activate-master-wallet-request.dto";
 import { BtcMasterWallet } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
-import { Key } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { BalanceDTO } from "../dto/balance.dto";
 import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
@@ -23,31 +20,6 @@ export class WalletsService {
     const options = walletName ? { name: walletName } : {};
     const wallets = await sdk.btc.wallets.getMasterWallets(options);
     return wallets.map(WalletDTO.fromBTCMasterWallet);
-  }
-
-  public async createInactiveMasterWallet(
-    sdk: SDK,
-    createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequestDTO
-  ): Promise<WalletDTO> {
-    return WalletDTO.fromInactiveMasterWallet(
-      await sdk.btc.wallets.createInactiveMasterWallet(
-        createInactiveMasterWalletRequest.name
-      )
-    );
-  }
-
-  public async activateMasterWallet(
-    sdk: SDK,
-    walletId: string,
-    activateMasterWalletRequestDTO: ActivateMasterWalletRequestDTO
-  ): Promise<WalletDTO> {
-    const wallet = await this.getWalletById(sdk, walletId);
-    return WalletDTO.fromBTCActivatingMasterWallet(
-      await wallet.activate(
-        activateMasterWalletRequestDTO.accountKey as Key,
-        activateMasterWalletRequestDTO.backupKey as Key
-      )
-    );
   }
 
   public async getWallet(sdk: SDK, walletId: string): Promise<WalletDTO> {
