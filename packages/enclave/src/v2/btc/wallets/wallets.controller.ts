@@ -21,8 +21,6 @@ import { ActivateMasterWalletRequestDTO } from "../dto/activate-master-wallet-re
 import { TransferRequestDTO } from "../dto/transfer-request.dto";
 import {
   ApiPaginationResponse,
-  AuthErrorResponses,
-  AuthHeaders,
   PathParams,
   Queries,
 } from "../../../decorators";

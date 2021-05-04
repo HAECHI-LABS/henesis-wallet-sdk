@@ -2,15 +2,15 @@ import { KeyDTO } from "./key.dto";
 
 export class ActivateMasterWalletRequestDTO {
   /**
-   * 지갑 ID
-   * @example ETH
+   * 계정 키
+   * @example KEY
    */
 
   accountKey: KeyDTO;
 
   /**
-   * 지갑 ID
-   * @example ETH
+   * 백업 키
+   * @example KEY
    */
 
   backupKey: KeyDTO;

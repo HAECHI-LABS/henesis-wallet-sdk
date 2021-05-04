@@ -1,7 +1,7 @@
 export class ChangeMasterWalletNameRequestDTO {
   /**
-   * 지갑 이름
-   * @example ETH
+   * 마스터 지갑의 새로운 이름
+   * @example bit
    */
 
   name: string;
