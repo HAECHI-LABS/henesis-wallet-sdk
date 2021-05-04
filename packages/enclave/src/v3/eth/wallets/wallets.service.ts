@@ -110,10 +110,11 @@ export class WalletsService {
     request: CreateFlushRequestDTO
   ) {
     const wallet: EthWallet = await sdk.eth.wallets.getWallet(walletId);
-    if (request.gasPrice) {
-      return wallet.flush(request.targets as any[], new BN(request.gasPrice));
-    }
-    return wallet.flush(request.targets as any[]);
+    return wallet.flush(
+      request.targets as any[],
+      request.gasPrice ? new BN(request.gasPrice) : null,
+      request.gasLimit ? new BN(request.gasLimit) : null
+    );
   }
 
   public async getDepositAddresses(
