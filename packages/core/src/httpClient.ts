@@ -148,7 +148,7 @@ export class HttpClient {
 
       return config;
     });
-    if ([Env.Local, Env.Dev].some((env) => env === this.env)) {
+    if ([Env.Local].some((env) => env === this.env)) {
       client.interceptors.response.use(
         (response) => {
           const apiLogging = makeAPILogging(response);
