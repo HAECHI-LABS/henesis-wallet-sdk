@@ -21,4 +21,10 @@ export class CreateFlushRequestDTO {
    */
   @ApiPropertyOptional()
   gasPrice: number;
+  /**
+   * 트랜잭션에 사용할 gas limit (단위: wei) null일 경우, Henesis가 자동으로 설정합니다.
+   * @example: 10000000000
+   */
+  @ApiPropertyOptional()
+  gasLimit: number;
 }
