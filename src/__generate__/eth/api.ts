@@ -1279,6 +1279,12 @@ export interface FlushRequest {
      * @memberof FlushRequest
      */
     gasPrice?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FlushRequest
+     */
+    gasLimit?: string;
 }
 /**
  * 
