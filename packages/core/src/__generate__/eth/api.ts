@@ -1264,6 +1264,55 @@ export interface ExternalWithdrawalSearchCondition {
 /**
  * 
  * @export
+ * @interface FlushQuerySearchCondition
+ */
+export interface FlushQuerySearchCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof FlushQuerySearchCondition
+     */
+    status?: FlushQuerySearchConditionStatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof FlushQuerySearchCondition
+     */
+    coinId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof FlushQuerySearchCondition
+     */
+    transactionId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FlushQuerySearchCondition
+     */
+    transactionHash?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum FlushQuerySearchConditionStatusEnum {
+    PENDINGAPPROVAL = 'PENDING_APPROVAL',
+    REJECTED = 'REJECTED',
+    REQUESTED = 'REQUESTED',
+    PENDING = 'PENDING',
+    FAILED = 'FAILED',
+    MINED = 'MINED',
+    REVERTED = 'REVERTED',
+    INTERNALREVERTED = 'INTERNAL_REVERTED',
+    CONFIRMED = 'CONFIRMED',
+    REPLACED = 'REPLACED'
+}
+
+/**
+ * 
+ * @export
  * @interface FlushRequest
  */
 export interface FlushRequest {
@@ -1372,6 +1421,12 @@ export interface FlushTransactionValueTransferEventDTO {
      * @memberof FlushTransactionValueTransferEventDTO
      */
     id: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FlushTransactionValueTransferEventDTO
+     */
+    decimals: number;
     /**
      * 
      * @type {string}
@@ -6368,10 +6423,11 @@ export const EthWalletControllerApiAxiosParamCreator = function (configuration?:
          * 
          * @param {string} walletId 
          * @param {Pageable} pageable 
+         * @param {FlushQuerySearchCondition} searchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlushTransactions: async (walletId: string, pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getFlushTransactions: async (walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
                 throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getFlushTransactions.');
@@ -6379,6 +6435,10 @@ export const EthWalletControllerApiAxiosParamCreator = function (configuration?:
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
                 throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getFlushTransactions.');
+            }
+            // verify required parameter 'searchCondition' is not null or undefined
+            if (searchCondition === null || searchCondition === undefined) {
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getFlushTransactions.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/flush-transactions`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -6393,6 +6453,10 @@ export const EthWalletControllerApiAxiosParamCreator = function (configuration?:
 
             if (pageable !== undefined) {
                 localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (searchCondition !== undefined) {
+                localVarQueryParameter['searchCondition'] = searchCondition;
             }
 
 
@@ -7502,11 +7566,12 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * 
          * @param {string} walletId 
          * @param {Pageable} pageable 
+         * @param {FlushQuerySearchCondition} searchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFlushTransactions(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushTransactionDTO>> {
-            const localVarAxiosArgs = await EthWalletControllerApiAxiosParamCreator(configuration).getFlushTransactions(walletId, pageable, options);
+        async getFlushTransactions(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushTransactionDTO>> {
+            const localVarAxiosArgs = await EthWalletControllerApiAxiosParamCreator(configuration).getFlushTransactions(walletId, pageable, searchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -7949,11 +8014,12 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * 
          * @param {string} walletId 
          * @param {Pageable} pageable 
+         * @param {FlushQuerySearchCondition} searchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlushTransactions(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationFlushTransactionDTO> {
-            return EthWalletControllerApiFp(configuration).getFlushTransactions(walletId, pageable, options).then((request) => request(axios, basePath));
+        getFlushTransactions(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): AxiosPromise<PaginationFlushTransactionDTO> {
+            return EthWalletControllerApiFp(configuration).getFlushTransactions(walletId, pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8329,12 +8395,13 @@ export class EthWalletControllerApi extends BaseAPI {
      * 
      * @param {string} walletId 
      * @param {Pageable} pageable 
+     * @param {FlushQuerySearchCondition} searchCondition 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EthWalletControllerApi
      */
-    public getFlushTransactions(walletId: string, pageable: Pageable, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).getFlushTransactions(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
+    public getFlushTransactions(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getFlushTransactions(walletId, pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
