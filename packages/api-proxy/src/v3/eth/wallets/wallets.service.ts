@@ -16,6 +16,7 @@ import {
   UserWalletPaginationOptions,
 } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 import { ReplaceTransactionRequestDTO } from "../transactions/dto/replace-transaction-request.dto";
+import { EthTransaction } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 
 @Injectable()
 export class WalletsService {
@@ -170,7 +171,11 @@ export class WalletsService {
     );
   }
 
-  async resendTransaction(sdk: SDK, walletId: string, transactionId: string) {
+  async resendTransaction(
+    sdk: SDK,
+    walletId: string,
+    transactionId: string
+  ): Promise<EthTransaction> {
     const wallet = await sdk.eth.wallets.getWallet(walletId);
     return await wallet.resendTransaction(transactionId);
   }

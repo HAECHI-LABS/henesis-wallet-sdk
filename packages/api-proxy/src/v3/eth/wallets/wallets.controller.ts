@@ -171,7 +171,7 @@ export class WalletsController {
     );
   }
 
-  @Post("/:walletId/transactions")
+  @Post("/:walletId/contract-calls")
   @PathParams(WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
@@ -194,7 +194,7 @@ export class WalletsController {
     );
   }
 
-  @Post("/:walletId/transactions/:transactionId")
+  @Post("/:walletId/transactions/:transactionId/replace")
   @PathParams(WALLET_ID_REQUIRED, TRANSACTION_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
@@ -243,9 +243,8 @@ export class WalletsController {
     );
   }
 
-  @Patch("/:walletId/transactions/:transactionId")
+  @Post("/:walletId/transactions/:transactionId/resend")
   @PathParams(WALLET_ID_REQUIRED, TRANSACTION_ID_REQUIRED)
-  @ApiNoContentResponse()
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
     type: WalletNotFoundException,
@@ -259,11 +258,13 @@ export class WalletsController {
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
     @Param("transactionId") transactionId: string
-  ) {
-    return await this.walletsService.resendTransaction(
-      request.sdk,
-      walletId,
-      transactionId
+  ): Promise<TransactionDTO> {
+    return TransactionDTO.fromEthTransaction(
+      await this.walletsService.resendTransaction(
+        request.sdk,
+        walletId,
+        transactionId
+      )
     );
   }
 

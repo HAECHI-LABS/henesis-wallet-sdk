@@ -1,6 +1,6 @@
 import { Controller, Get, HttpStatus, Query, Request } from "@nestjs/common";
-import { CallEventsService } from "./call-events.service";
-import { CallEventDTO } from "../dto/call-event.dto";
+import { ContractCallsService } from "./contract-calls.service";
+import { ContractCallsDTO } from "../dto/contract-calls.dto";
 import express from "express";
 import {
   ApiPaginationResponse,
@@ -34,8 +34,8 @@ import {
 } from "../dto/exceptions.dto";
 import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
-@Controller("/call-events")
-@ApiTags("call-events")
+@Controller("/contract-calls")
+@ApiTags("contract-calls")
 @ApiExtraModels(
   InvalidAccessIpException,
   InvalidAccessTokenException,
@@ -43,8 +43,8 @@ import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/e
 )
 @AuthErrorResponses()
 @AuthHeaders()
-export class CallEventsController {
-  constructor(private readonly callEventsService: CallEventsService) {}
+export class ContractCallsController {
+  constructor(private readonly callEventsService: ContractCallsService) {}
 
   @Get("/")
   @Queries(
@@ -58,7 +58,7 @@ export class CallEventsController {
     SIZE_OPTIONAL,
     PAGE_OPTIONAL
   )
-  @ApiPaginationResponse(CallEventDTO)
+  @ApiPaginationResponse(ContractCallsDTO)
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
     description: "올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.",
@@ -79,7 +79,7 @@ export class CallEventsController {
     @Query("updatedAtLt") updatedAtLt?: string,
     @Query("size") size: number = 15,
     @Query("page") page: number = 0
-  ): Promise<PaginationDTO<CallEventDTO>> {
+  ): Promise<PaginationDTO<ContractCallsDTO>> {
     return await this.callEventsService.getCallEvents(request.sdk, {
       walletId,
       transactionId,
