@@ -48,6 +48,7 @@ import {
   FlushRequest,
   PaginationFlushTransactionDTO,
   TransactionStatus,
+  FlushTransactionValueTransferEventDTO,
   FlushTransactionValueTransferEventDTOStatus,
   FlushTransactionDTO,
 } from "../__generate__/eth";
@@ -93,23 +94,19 @@ export const transformMasterWalletData = (
   };
 };
 
-export type FlushTransfer = {
-  id: number;
+export type FlushTransfer = Omit<
+  FlushTransactionValueTransferEventDTO,
+  "amount" | ""
+> & {
   amount: BN;
-  status: FlushTransactionValueTransferEventDTOStatus;
-  coinSymbol: string;
-  coinId: number;
-  depositAddress: string;
 };
 
-export type FlushTransaction = {
-  id: string;
+export type FlushTransaction = Omit<
+  FlushTransactionDTO,
+  "blockchain" | "fee" | "transfers"
+> & {
   blockchain: BlockchainType;
   fee: BN;
-  hash?: string;
-  status: TransactionStatus;
-  createdAt: string;
-  updatedAt: string;
   transfers: FlushTransfer[];
 };
 
