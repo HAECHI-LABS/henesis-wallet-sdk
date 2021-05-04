@@ -10,8 +10,8 @@ import { CamelCaseConvertor } from "./middlewares/camel-case-convertor";
 import { RouterModule, Routes } from "nest-router";
 import { routes } from "./routes";
 import { VersionModule } from "./version/version.module";
+import VersionController from "./version/version.controller";
 
-// todo: cache config, port config, host name, trusty proxy?
 @Module({
   imports: [RouterModule.forRoutes(routes), VersionModule.register()],
 })
