@@ -1,7 +1,7 @@
 {
-  "name": "@haechi-labs/henesis-wallet-enclave",
-  "version": "2.10.13",
-  "description": "henesis wallet enclave module",
+  "name": "@haechi-labs/henesis-wallet-api-proxy",
+  "version": "2.10.14",
+  "description": "henesis wallet api proxy",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
   "license": "ISC",
