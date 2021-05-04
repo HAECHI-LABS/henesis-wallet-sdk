@@ -45,7 +45,6 @@ import { SendUserWalletCoinRequestDTO } from "../dto/send-user-wallet-coin-reque
 import { RetryCreateMasterWalletRequestDTO } from "../dto/retry-create-master-wallet-request.dto";
 import { RetryCreateUserWalletRequestDTO } from "../dto/retry-create-user-wallet-request.dto";
 import { WalletsService } from "./wallets.service";
-import { InactiveMasterWalletDTO } from "../dto/inactive-master-wallet.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -65,6 +64,22 @@ export class WalletsController {
     @Query("name") name?: string
   ): Promise<MasterWalletDTO[]> {
     return await this.walletsService.getMasterWallets(request.sdk, name);
+  }
+
+  @Get("/:masterWalletId")
+  @ApiOperation({
+    summary: "마스터 지갑 조회하기",
+    description: "마스터 지갑 목록을 조회합니다.",
+  })
+  @PathParams(PARAM_MASTER_WALLET_ID)
+  public async getMasterWallet(
+    @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string
+  ): Promise<MasterWalletDTO> {
+    return await this.walletsService.getMasterWallet(
+      request.sdk,
+      masterWalletId
+    );
   }
 
   @Post("/:masterWalletId/contract-call")
