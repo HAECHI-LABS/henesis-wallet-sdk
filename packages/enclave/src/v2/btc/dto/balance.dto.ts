@@ -1,6 +1,3 @@
-import { Balance } from "@haechi-labs/henesis-wallet-core/lib/types";
-import { BNConverter } from "@haechi-labs/henesis-wallet-core";
-
 export class BalanceDTO {
   /**
    * 암호화폐 타입
@@ -22,25 +19,13 @@ export class BalanceDTO {
 
   /**
    * 암호화폐 이름
-   * @example 비트코인
+   * @example ETH
    */
   name?: string;
 
   /**
    * 암호화폐 심볼 (ticker)
-   * @example BTC
+   * @example ETH
    */
   symbol?: string;
-
-  static fromBalance(balance: Balance): BalanceDTO {
-    return {
-      coinType: balance.coinType,
-      amount: balance.amount ? BNConverter.bnToHexString(balance.amount) : null,
-      spendableAmount: balance.spendableAmount
-        ? BNConverter.bnToHexString(balance.spendableAmount)
-        : null,
-      name: balance.name,
-      symbol: balance.symbol,
-    };
-  }
 }

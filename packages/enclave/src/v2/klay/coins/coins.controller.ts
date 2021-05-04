@@ -1,25 +1,20 @@
 import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import express from "express";
 import { CoinsService } from "./coins.service";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import {
-  AuthErrorResponses,
-  AuthHeaders,
-  PathParams,
-  Queries,
-} from "../../../decorators";
+import { CoinDTO } from "../dto/coin.dto";
+import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { AUTHORIZATION, X_HENESIS_SECRET } from "../../../headers";
+import { PathParams, Queries } from "../../../decorators";
 import { PARAM_COIN_TICKER } from "../../eth/dto/params";
 import { QUERY_COIN_FLAG_OPTIONAL } from "../../eth/dto/queries";
-import { CoinDTO } from "../../eth/dto/coin.dto";
 
 @Controller("coins")
 @ApiTags("coins")
-@AuthErrorResponses()
-@AuthHeaders()
 export class CoinsController {
   constructor(private readonly coinsService: CoinsService) {}
 
   @Get("/")
+  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "전체 코인/토큰 목록 조회하기",
     description:
@@ -28,12 +23,13 @@ export class CoinsController {
   @Queries(QUERY_COIN_FLAG_OPTIONAL)
   public async getCoins(
     @Request() request: express.Request,
-    @Query("flag") flag?: string
+    @Query("flag") flag?: boolean
   ): Promise<CoinDTO[]> {
-    return await this.coinsService.getCoins(request.sdk, flag);
+    return null;
   }
 
   @Get(":ticker")
+  @ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION])
   @ApiOperation({
     summary: "코인/토큰 정보 조회하기",
     description:
@@ -44,6 +40,33 @@ export class CoinsController {
     @Request() request: express.Request,
     @Param("ticker") ticker: string
   ): Promise<CoinDTO> {
-    return await this.coinsService.getCoin(request.sdk, ticker);
+    return null;
   }
 }
+
+// todo: delete when implementation is done
+// export default class CoinsController
+//   extends AbstractController
+//   implements Controller {
+//   private path = "/api/v2/klay/coins";
+//
+//   constructor() {
+//     super();
+//     this.initRoutes();
+//   }
+//
+//   initRoutes(): void {
+//     this.router.get(`${this.path}/:ticker`, this.promiseWrapper(this.getCoin));
+//     this.router.get(`${this.path}`, this.promiseWrapper(this.getAllCoins));
+//   }
+//
+//   private async getCoin(req: express.Request): Promise<CoinData> {
+//     return (await req.sdk.klay.coins.getCoin(req.params.ticker)).getCoinData();
+//   }
+//
+//   private async getAllCoins(req: express.Request): Promise<CoinData[]> {
+//     return (
+//       await req.sdk.klay.coins.getCoins(req.query.flag === "true")
+//     ).map((c) => c.getCoinData());
+//   }
+// }

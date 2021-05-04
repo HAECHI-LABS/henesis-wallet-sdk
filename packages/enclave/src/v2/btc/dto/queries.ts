@@ -1,11 +1,5 @@
 import { ApiQueryOptions } from "@nestjs/swagger";
 
-export const QUERY_METHOD_NAME_REQUIRED: ApiQueryOptions = {
-  name: "name",
-  required: true,
-  description: "method 이름",
-};
-
 export const QUERY_WALLET_NAME_OPTIONAL: ApiQueryOptions = {
   name: "name",
   required: false,

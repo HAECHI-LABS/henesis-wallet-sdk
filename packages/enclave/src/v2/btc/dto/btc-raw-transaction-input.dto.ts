@@ -1,5 +1,5 @@
 import { BtcTransactionOutputDTO } from "./btc-transaction-output.dto";
-import { BtcRawTransactionInput } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class BtcRawTransactionInputDTO {
   /**
@@ -15,15 +15,4 @@ export class BtcRawTransactionInputDTO {
    */
 
   transactionOutput: BtcTransactionOutputDTO;
-
-  static fromBTCRawTransactionInput(
-    input: BtcRawTransactionInput
-  ): BtcRawTransactionInputDTO {
-    return {
-      redeemScript: input.redeemScript,
-      transactionOutput: BtcTransactionOutputDTO.fromBTCTransactionOutput(
-        input.transactionOutput
-      ),
-    };
-  }
 }

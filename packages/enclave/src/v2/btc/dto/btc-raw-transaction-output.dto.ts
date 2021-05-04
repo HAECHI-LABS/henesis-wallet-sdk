@@ -1,4 +1,4 @@
-import { BtcRawTransactionOutput } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class BtcRawTransactionOutputDTO {
   /**
@@ -21,14 +21,4 @@ export class BtcRawTransactionOutputDTO {
    */
 
   isChange: boolean;
-
-  static fromBTCRawTransactionOutput(
-    output: BtcRawTransactionOutput
-  ): BtcRawTransactionOutputDTO {
-    return {
-      to: output.to,
-      amount: output.amount,
-      isChange: output.isChange,
-    };
-  }
 }

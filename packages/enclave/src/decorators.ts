@@ -1,4 +1,4 @@
-import { applyDecorators } from "@nestjs/common";
+import { applyDecorators, HttpStatus } from "@nestjs/common";
 import {
   ApiHeaders,
   ApiOkResponse,
@@ -6,21 +6,22 @@ import {
   ApiParamOptions,
   ApiQuery,
   ApiQueryOptions,
+  ApiResponse,
   ApiUnauthorizedResponse,
   getSchemaPath,
+  refs,
 } from "@nestjs/swagger";
 import { PaginationMetadata } from "./v3/eth/dto/pagination.dto";
 import {
   ApiModelProperty,
   ApiModelPropertyOptional,
 } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
-
-import { AUTHORIZATION, X_HENESIS_SECRET } from "./headers";
 import {
   AccessTokenNotProvidedException,
   InvalidAccessIpException,
   InvalidAccessTokenException,
-} from "./extra-model.dto";
+} from "./v3/eth/dto/exceptions.dto";
+import { AUTHORIZATION, X_HENESIS_SECRET } from "./headers";
 
 export function PathParams(...paramsOptions: ApiParamOptions[]) {
   return function (
