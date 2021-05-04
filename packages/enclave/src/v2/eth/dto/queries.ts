@@ -123,3 +123,81 @@ export const QUERY_WALLETS_ADDRESS_OPTIONAL: ApiQueryOptions = {
   required: false,
   description: "ADDRESS",
 };
+
+export const QUERY_TRANSACTIONS_ADDRESS_OPTIONAL: ApiQueryOptions = {
+  name: "address",
+  required: false,
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+};
+
+export const QUERY_TRANSACTIONS_TO_ADDRESS_OPTIONAL: ApiQueryOptions = {
+  name: "toAddress",
+  required: false,
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+};
+
+export const QUERY_TRANSACTIONS_FROM_ADDRESS_OPTIONAL: ApiQueryOptions = {
+  name: "fromAddress",
+  required: false,
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+};
+
+export const QUERY_TRANSACTIONS_TRANSACTION_HASH_OPTIONAL: ApiQueryOptions = {
+  name: "transactionHash",
+  required: false,
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+};
+
+export const QUERY_TRANSACTIONS_START_OPTIONAL: ApiQueryOptions = {
+  name: "start",
+  required: false,
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+};
+
+export const QUERY_TRANSACTIONS_END_OPTIONAL: ApiQueryOptions = {
+  name: "end",
+  required: false,
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+};
+
+export const QUERY_TRANSACTIONS_STATUS_OPTIONAL: ApiQueryOptions = {
+  name: "status",
+  required: false,
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+};
+
+export const QUERY_TRANSACTIONS_STATUSES_OPTIONAL: ApiQueryOptions = {
+  name: "statuses",
+  required: false,
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+};
+
+export const QUERY_TRANSACTIONS_TYPES_OPTIONAL: ApiQueryOptions = {
+  name: "page",
+  required: false,
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+};
+
+export const QUERY_TRANSACTIONS_KEY_ID_OPTIONAL: ApiQueryOptions = {
+  name: "keyId",
+  required: false,
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+};
+
+export const QUERY_PAGE_OPTIONAL: ApiQueryOptions = {
+  name: "page",
+  required: false,
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+};
+
+export const QUERY_SIZE_OPTIONAL: ApiQueryOptions = {
+  name: "size",
+  required: false,
+  description: "한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)",
+};
+
+export const QUERY_SORT_OPTIONAL: ApiQueryOptions = {
+  name: "sort",
+  required: false,
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+};
