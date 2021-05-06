@@ -35,6 +35,7 @@ export interface Transaction {
   fee?: BN;
   estimatedFee?: BN;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface TransactionPaginationOptions extends PaginationOptions {

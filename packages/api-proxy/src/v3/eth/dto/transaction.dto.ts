@@ -52,9 +52,8 @@ export class TransactionDTO {
       error: transaction.error,
       status: transaction.status,
       fee: transaction.fee, // todo: fix sdk! unify fee's type (string/BN)
-      // todo: missing updatedAt from Transaction object.
       createdAt: transaction.createdAt,
-      updatedAt: "",
+      updatedAt: transaction.updatedAt,
     };
   }
 
@@ -66,9 +65,8 @@ export class TransactionDTO {
       error: transaction.error,
       status: transaction.status,
       fee: transaction.fee.toString(10), // todo: fix sdk! unify fee's type (string/BN)
-      // todo: missing updatedAt from Transaction object.
       createdAt: transaction.createdAt,
-      updatedAt: "",
+      updatedAt: transaction.updatedAt,
     };
   }
 }

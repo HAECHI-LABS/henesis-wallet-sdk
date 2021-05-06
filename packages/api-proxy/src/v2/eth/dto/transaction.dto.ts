@@ -112,6 +112,18 @@ export class TransactionDTO {
 
   rawTransaction?: RawTransactionDTO;
 
+  /**
+   * 트랜잭션 생성 시간 (형식: ms, UNIX time)
+   * @example 1614582928222
+   */
+  createdAt: string;
+
+  /**
+   * 트랜잭션 상태가 변한 시간 (형식: ms, UNIX time)
+   * @example 1612411724023
+   */
+  updatedAt: string;
+
   static fromTransaction(transaction: Transaction): TransactionDTO {
     return {
       id: transaction.id,
@@ -122,6 +134,8 @@ export class TransactionDTO {
       error: transaction.error,
       status: transaction.status,
       isFeeDelegated: transaction.isFeeDelegated,
+      createdAt: transaction.createdAt,
+      updatedAt: transaction.updatedAt,
       fee: transaction.fee ? BNConverter.bnToHexString(transaction.fee) : null,
       estimatedFee: transaction.estimatedFee
         ? BNConverter.bnToHexString(transaction.estimatedFee)

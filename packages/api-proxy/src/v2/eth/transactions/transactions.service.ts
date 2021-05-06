@@ -4,11 +4,13 @@ import { PaginationDTO } from "../dto/pagination.dto";
 import { TransactionDTO } from "../dto/transaction.dto";
 import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { TransactionType } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import { ApiPaginationResponse } from "../../../decorators";
 
 @Injectable()
 export class TransactionsService {
   public constructor() {}
 
+  @ApiPaginationResponse(TransactionDTO)
   public async getTransactions(
     sdk: SDK,
     address?: string,
