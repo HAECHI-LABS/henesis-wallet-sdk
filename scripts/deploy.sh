@@ -5,8 +5,8 @@ if [[ $1 = "prod" ]]; then
   TAG="$GITHUB_TAG"
 fi
 
-docker build -t haechi/api-proxy:latest .
-docker push haechi/api-proxy:latest
+docker build -t haechi/henesis-api-proxy:latest .
+docker push haechi/henesis-api-proxy:latest
 
-docker tag haechi/api-proxy:latest haechi/api-proxy:${TAG}
-docker push haechi/api-proxy:${TAG}
+docker tag haechi/henesis-api-proxy:latest haechi/henesis-api-proxy:${TAG}
+docker push haechi/henesis-api-proxy:${TAG}
