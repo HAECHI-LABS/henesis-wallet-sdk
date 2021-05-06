@@ -12,7 +12,7 @@ npm build
 node lib/main.js
 
 # or docker run
-docker run -e API_VERSION=v3 -e NODE_ENV=test haechi/api-proxy
+docker run -e API_VERSION=v3 -e NODE_ENV=test haechi/henesis-api-proxy
 ```
 
 ## Envorinment Vairables
