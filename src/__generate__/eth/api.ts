@@ -1269,10 +1269,10 @@ export interface ExternalWithdrawalSearchCondition {
 export interface FlushQuerySearchCondition {
     /**
      * 
-     * @type {string}
+     * @type {TransactionStatus}
      * @memberof FlushQuerySearchCondition
      */
-    status?: FlushQuerySearchConditionStatusEnum;
+    status?: TransactionStatus;
     /**
      * 
      * @type {number}
@@ -1292,24 +1292,6 @@ export interface FlushQuerySearchCondition {
      */
     transactionHash?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum FlushQuerySearchConditionStatusEnum {
-    PENDINGAPPROVAL = 'PENDING_APPROVAL',
-    REJECTED = 'REJECTED',
-    REQUESTED = 'REQUESTED',
-    PENDING = 'PENDING',
-    FAILED = 'FAILED',
-    MINED = 'MINED',
-    REVERTED = 'REVERTED',
-    INTERNALREVERTED = 'INTERNAL_REVERTED',
-    CONFIRMED = 'CONFIRMED',
-    REPLACED = 'REPLACED'
-}
-
 /**
  * 
  * @export
@@ -2574,6 +2556,12 @@ export interface TransactionDTO {
      * @memberof TransactionDTO
      */
     createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransactionDTO
+     */
+    updatedAt: string;
 }
 /**
  * 
@@ -2671,6 +2659,12 @@ export interface TransactionHistoryDTO {
      * @memberof TransactionHistoryDTO
      */
     createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransactionHistoryDTO
+     */
+    updatedAt: string;
 }
 /**
  * 
