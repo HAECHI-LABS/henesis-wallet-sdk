@@ -521,7 +521,8 @@ export interface CoinDTO {
 export enum CoinDTOAttributesEnum {
     STANDARD = 'ERC20_STANDARD',
     NONSTANDARDRETURNTYPE = 'ERC20_NON_STANDARD_RETURN_TYPE',
-    REBASE = 'ERC20_REBASE'
+    REBASE = 'ERC20_REBASE',
+    PAUSABLE = 'ERC20_PAUSABLE'
 }
 
 /**
@@ -679,7 +680,8 @@ export interface CreateCoinRequest {
 export enum CreateCoinRequestAttributesEnum {
     STANDARD = 'ERC20_STANDARD',
     NONSTANDARDRETURNTYPE = 'ERC20_NON_STANDARD_RETURN_TYPE',
-    REBASE = 'ERC20_REBASE'
+    REBASE = 'ERC20_REBASE',
+    PAUSABLE = 'ERC20_PAUSABLE'
 }
 
 /**
@@ -1275,12 +1277,6 @@ export interface FlushQuerySearchCondition {
     status?: TransactionStatus;
     /**
      * 
-     * @type {number}
-     * @memberof FlushQuerySearchCondition
-     */
-    coinId?: number;
-    /**
-     * 
      * @type {string}
      * @memberof FlushQuerySearchCondition
      */
@@ -1291,6 +1287,12 @@ export interface FlushQuerySearchCondition {
      * @memberof FlushQuerySearchCondition
      */
     transactionHash?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof FlushQuerySearchCondition
+     */
+    coinId?: number;
 }
 /**
  * 
@@ -2791,7 +2793,8 @@ export interface UpdateCoinRequest {
 export enum UpdateCoinRequestAttributesEnum {
     STANDARD = 'ERC20_STANDARD',
     NONSTANDARDRETURNTYPE = 'ERC20_NON_STANDARD_RETURN_TYPE',
-    REBASE = 'ERC20_REBASE'
+    REBASE = 'ERC20_REBASE',
+    PAUSABLE = 'ERC20_PAUSABLE'
 }
 
 /**
@@ -3584,10 +3587,10 @@ export const EthAdminControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoin1: async (coinId: number, options: any = {}): Promise<RequestArgs> => {
+        getCoin: async (coinId: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'coinId' is not null or undefined
             if (coinId === null || coinId === undefined) {
-                throw new RequiredError('coinId','Required parameter coinId was null or undefined when calling getCoin1.');
+                throw new RequiredError('coinId','Required parameter coinId was null or undefined when calling getCoin.');
             }
             const localVarPath = `/api/v2/eth/admin/coins/{coinId}`
                 .replace(`{${"coinId"}}`, encodeURIComponent(String(coinId)));
@@ -3666,10 +3669,10 @@ export const EthAdminControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets1: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getMasterWallets: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getMasterWallets1.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getMasterWallets.');
             }
             const localVarPath = `/api/v2/eth/admin/master-wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3704,10 +3707,10 @@ export const EthAdminControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWallets1: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getUserWallets: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getUserWallets1.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getUserWallets.');
             }
             const localVarPath = `/api/v2/eth/admin/user-wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3743,14 +3746,14 @@ export const EthAdminControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents1: async (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options: any = {}): Promise<RequestArgs> => {
+        getValueTransferEvents: async (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents1.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents.');
             }
             // verify required parameter 'searchCondition' is not null or undefined
             if (searchCondition === null || searchCondition === undefined) {
-                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getValueTransferEvents1.');
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getValueTransferEvents.');
             }
             const localVarPath = `/api/v2/eth/admin/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3798,8 +3801,8 @@ export const EthAdminControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCoin1(coinId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
-            const localVarAxiosArgs = await EthAdminControllerApiAxiosParamCreator(configuration).getCoin1(coinId, options);
+        async getCoin(coinId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await EthAdminControllerApiAxiosParamCreator(configuration).getCoin(coinId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3825,8 +3828,8 @@ export const EthAdminControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMasterWallets1(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
-            const localVarAxiosArgs = await EthAdminControllerApiAxiosParamCreator(configuration).getMasterWallets1(pageable, options);
+        async getMasterWallets(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
+            const localVarAxiosArgs = await EthAdminControllerApiAxiosParamCreator(configuration).getMasterWallets(pageable, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3838,8 +3841,8 @@ export const EthAdminControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserWallets1(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
-            const localVarAxiosArgs = await EthAdminControllerApiAxiosParamCreator(configuration).getUserWallets1(pageable, options);
+        async getUserWallets(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
+            const localVarAxiosArgs = await EthAdminControllerApiAxiosParamCreator(configuration).getUserWallets(pageable, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3852,8 +3855,8 @@ export const EthAdminControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getValueTransferEvents1(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>> {
-            const localVarAxiosArgs = await EthAdminControllerApiAxiosParamCreator(configuration).getValueTransferEvents1(pageable, searchCondition, options);
+        async getValueTransferEvents(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>> {
+            const localVarAxiosArgs = await EthAdminControllerApiAxiosParamCreator(configuration).getValueTransferEvents(pageable, searchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3874,8 +3877,8 @@ export const EthAdminControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoin1(coinId: number, options?: any): AxiosPromise<CoinDTO> {
-            return EthAdminControllerApiFp(configuration).getCoin1(coinId, options).then((request) => request(axios, basePath));
+        getCoin(coinId: number, options?: any): AxiosPromise<CoinDTO> {
+            return EthAdminControllerApiFp(configuration).getCoin(coinId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3893,8 +3896,8 @@ export const EthAdminControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets1(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO> {
-            return EthAdminControllerApiFp(configuration).getMasterWallets1(pageable, options).then((request) => request(axios, basePath));
+        getMasterWallets(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO> {
+            return EthAdminControllerApiFp(configuration).getMasterWallets(pageable, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3902,8 +3905,8 @@ export const EthAdminControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWallets1(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO> {
-            return EthAdminControllerApiFp(configuration).getUserWallets1(pageable, options).then((request) => request(axios, basePath));
+        getUserWallets(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO> {
+            return EthAdminControllerApiFp(configuration).getUserWallets(pageable, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3912,8 +3915,8 @@ export const EthAdminControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents1(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO> {
-            return EthAdminControllerApiFp(configuration).getValueTransferEvents1(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO> {
+            return EthAdminControllerApiFp(configuration).getValueTransferEvents(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3932,8 +3935,8 @@ export class EthAdminControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthAdminControllerApi
      */
-    public getCoin1(coinId: number, options?: any) {
-        return EthAdminControllerApiFp(this.configuration).getCoin1(coinId, options).then((request) => request(this.axios, this.basePath));
+    public getCoin(coinId: number, options?: any) {
+        return EthAdminControllerApiFp(this.configuration).getCoin(coinId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3955,8 +3958,8 @@ export class EthAdminControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthAdminControllerApi
      */
-    public getMasterWallets1(pageable: Pageable, options?: any) {
-        return EthAdminControllerApiFp(this.configuration).getMasterWallets1(pageable, options).then((request) => request(this.axios, this.basePath));
+    public getMasterWallets(pageable: Pageable, options?: any) {
+        return EthAdminControllerApiFp(this.configuration).getMasterWallets(pageable, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3966,8 +3969,8 @@ export class EthAdminControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthAdminControllerApi
      */
-    public getUserWallets1(pageable: Pageable, options?: any) {
-        return EthAdminControllerApiFp(this.configuration).getUserWallets1(pageable, options).then((request) => request(this.axios, this.basePath));
+    public getUserWallets(pageable: Pageable, options?: any) {
+        return EthAdminControllerApiFp(this.configuration).getUserWallets(pageable, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3978,8 +3981,8 @@ export class EthAdminControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthAdminControllerApi
      */
-    public getValueTransferEvents1(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) {
-        return EthAdminControllerApiFp(this.configuration).getValueTransferEvents1(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    public getValueTransferEvents(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) {
+        return EthAdminControllerApiFp(this.configuration).getValueTransferEvents(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -4108,10 +4111,10 @@ export const EthCoinControllerApiAxiosParamCreator = function (configuration?: C
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoin: async (symbol: string, options: any = {}): Promise<RequestArgs> => {
+        getCoin1: async (symbol: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'symbol' is not null or undefined
             if (symbol === null || symbol === undefined) {
-                throw new RequiredError('symbol','Required parameter symbol was null or undefined when calling getCoin.');
+                throw new RequiredError('symbol','Required parameter symbol was null or undefined when calling getCoin1.');
             }
             const localVarPath = `/api/v2/eth/coins/{symbol}`
                 .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
@@ -4229,8 +4232,8 @@ export const EthCoinControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCoin(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
-            const localVarAxiosArgs = await EthCoinControllerApiAxiosParamCreator(configuration).getCoin(symbol, options);
+        async getCoin1(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await EthCoinControllerApiAxiosParamCreator(configuration).getCoin1(symbol, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -4291,8 +4294,8 @@ export const EthCoinControllerApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoin(symbol: string, options?: any): AxiosPromise<CoinDTO> {
-            return EthCoinControllerApiFp(configuration).getCoin(symbol, options).then((request) => request(axios, basePath));
+        getCoin1(symbol: string, options?: any): AxiosPromise<CoinDTO> {
+            return EthCoinControllerApiFp(configuration).getCoin1(symbol, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4353,8 +4356,8 @@ export class EthCoinControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthCoinControllerApi
      */
-    public getCoin(symbol: string, options?: any) {
-        return EthCoinControllerApiFp(this.configuration).getCoin(symbol, options).then((request) => request(this.axios, this.basePath));
+    public getCoin1(symbol: string, options?: any) {
+        return EthCoinControllerApiFp(this.configuration).getCoin1(symbol, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5181,14 +5184,14 @@ export const EthInternalControllerApiAxiosParamCreator = function (configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents: async (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options: any = {}): Promise<RequestArgs> => {
+        getValueTransferEvents1: async (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents1.');
             }
             // verify required parameter 'searchCondition' is not null or undefined
             if (searchCondition === null || searchCondition === undefined) {
-                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getValueTransferEvents.');
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getValueTransferEvents1.');
             }
             const localVarPath = `/api/v2/eth/internal/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -5251,8 +5254,8 @@ export const EthInternalControllerApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getValueTransferEvents(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventInternalDTO>> {
-            const localVarAxiosArgs = await EthInternalControllerApiAxiosParamCreator(configuration).getValueTransferEvents(pageable, searchCondition, options);
+        async getValueTransferEvents1(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventInternalDTO>> {
+            const localVarAxiosArgs = await EthInternalControllerApiAxiosParamCreator(configuration).getValueTransferEvents1(pageable, searchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -5284,8 +5287,8 @@ export const EthInternalControllerApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventInternalDTO> {
-            return EthInternalControllerApiFp(configuration).getValueTransferEvents(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents1(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventInternalDTO> {
+            return EthInternalControllerApiFp(configuration).getValueTransferEvents1(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5317,8 +5320,8 @@ export class EthInternalControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthInternalControllerApi
      */
-    public getValueTransferEvents(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) {
-        return EthInternalControllerApiFp(this.configuration).getValueTransferEvents(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    public getValueTransferEvents1(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) {
+        return EthInternalControllerApiFp(this.configuration).getValueTransferEvents1(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -6652,10 +6655,10 @@ export const EthWalletControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets: async (sort: Sort, options: any = {}): Promise<RequestArgs> => {
+        getMasterWallets1: async (sort: Sort, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'sort' is not null or undefined
             if (sort === null || sort === undefined) {
-                throw new RequiredError('sort','Required parameter sort was null or undefined when calling getMasterWallets.');
+                throw new RequiredError('sort','Required parameter sort was null or undefined when calling getMasterWallets1.');
             }
             const localVarPath = `/api/v2/eth/wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6819,14 +6822,14 @@ export const EthWalletControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWallets: async (walletId: string, pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getUserWallets1: async (walletId: string, pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWallets.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWallets1.');
             }
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getUserWallets.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getUserWallets1.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7643,8 +7646,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMasterWallets(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>> {
-            const localVarAxiosArgs = await EthWalletControllerApiAxiosParamCreator(configuration).getMasterWallets(sort, options);
+        async getMasterWallets1(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>> {
+            const localVarAxiosArgs = await EthWalletControllerApiAxiosParamCreator(configuration).getMasterWallets1(sort, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -7700,8 +7703,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserWallets(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationUserWalletDTO>> {
-            const localVarAxiosArgs = await EthWalletControllerApiAxiosParamCreator(configuration).getUserWallets(walletId, pageable, options);
+        async getUserWallets1(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationUserWalletDTO>> {
+            const localVarAxiosArgs = await EthWalletControllerApiAxiosParamCreator(configuration).getUserWallets1(walletId, pageable, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -8067,8 +8070,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>> {
-            return EthWalletControllerApiFp(configuration).getMasterWallets(sort, options).then((request) => request(axios, basePath));
+        getMasterWallets1(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>> {
+            return EthWalletControllerApiFp(configuration).getMasterWallets1(sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8108,8 +8111,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWallets(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationUserWalletDTO> {
-            return EthWalletControllerApiFp(configuration).getUserWallets(walletId, pageable, options).then((request) => request(axios, basePath));
+        getUserWallets1(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationUserWalletDTO> {
+            return EthWalletControllerApiFp(configuration).getUserWallets1(walletId, pageable, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8461,8 +8464,8 @@ export class EthWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthWalletControllerApi
      */
-    public getMasterWallets(sort: Sort, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).getMasterWallets(sort, options).then((request) => request(this.axios, this.basePath));
+    public getMasterWallets1(sort: Sort, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getMasterWallets1(sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -8510,8 +8513,8 @@ export class EthWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthWalletControllerApi
      */
-    public getUserWallets(walletId: string, pageable: Pageable, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).getUserWallets(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
+    public getUserWallets1(walletId: string, pageable: Pageable, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getUserWallets1(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9072,10 +9075,10 @@ export const KlayAdminControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoin2: async (coinId: number, options: any = {}): Promise<RequestArgs> => {
+        getCoin3: async (coinId: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'coinId' is not null or undefined
             if (coinId === null || coinId === undefined) {
-                throw new RequiredError('coinId','Required parameter coinId was null or undefined when calling getCoin2.');
+                throw new RequiredError('coinId','Required parameter coinId was null or undefined when calling getCoin3.');
             }
             const localVarPath = `/api/v2/klay/admin/coins/{coinId}`
                 .replace(`{${"coinId"}}`, encodeURIComponent(String(coinId)));
@@ -9154,10 +9157,10 @@ export const KlayAdminControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets2: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getMasterWallets3: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getMasterWallets2.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getMasterWallets3.');
             }
             const localVarPath = `/api/v2/klay/admin/master-wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -9192,10 +9195,10 @@ export const KlayAdminControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWallets2: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getUserWallets3: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getUserWallets2.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getUserWallets3.');
             }
             const localVarPath = `/api/v2/klay/admin/user-wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -9231,14 +9234,14 @@ export const KlayAdminControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents3: async (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options: any = {}): Promise<RequestArgs> => {
+        getValueTransferEvents4: async (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents3.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents4.');
             }
             // verify required parameter 'searchCondition' is not null or undefined
             if (searchCondition === null || searchCondition === undefined) {
-                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getValueTransferEvents3.');
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getValueTransferEvents4.');
             }
             const localVarPath = `/api/v2/klay/admin/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -9286,8 +9289,8 @@ export const KlayAdminControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCoin2(coinId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
-            const localVarAxiosArgs = await KlayAdminControllerApiAxiosParamCreator(configuration).getCoin2(coinId, options);
+        async getCoin3(coinId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await KlayAdminControllerApiAxiosParamCreator(configuration).getCoin3(coinId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -9313,8 +9316,8 @@ export const KlayAdminControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMasterWallets2(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
-            const localVarAxiosArgs = await KlayAdminControllerApiAxiosParamCreator(configuration).getMasterWallets2(pageable, options);
+        async getMasterWallets3(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
+            const localVarAxiosArgs = await KlayAdminControllerApiAxiosParamCreator(configuration).getMasterWallets3(pageable, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -9326,8 +9329,8 @@ export const KlayAdminControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserWallets2(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
-            const localVarAxiosArgs = await KlayAdminControllerApiAxiosParamCreator(configuration).getUserWallets2(pageable, options);
+        async getUserWallets3(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
+            const localVarAxiosArgs = await KlayAdminControllerApiAxiosParamCreator(configuration).getUserWallets3(pageable, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -9340,8 +9343,8 @@ export const KlayAdminControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getValueTransferEvents3(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>> {
-            const localVarAxiosArgs = await KlayAdminControllerApiAxiosParamCreator(configuration).getValueTransferEvents3(pageable, searchCondition, options);
+        async getValueTransferEvents4(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>> {
+            const localVarAxiosArgs = await KlayAdminControllerApiAxiosParamCreator(configuration).getValueTransferEvents4(pageable, searchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -9362,8 +9365,8 @@ export const KlayAdminControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoin2(coinId: number, options?: any): AxiosPromise<CoinDTO> {
-            return KlayAdminControllerApiFp(configuration).getCoin2(coinId, options).then((request) => request(axios, basePath));
+        getCoin3(coinId: number, options?: any): AxiosPromise<CoinDTO> {
+            return KlayAdminControllerApiFp(configuration).getCoin3(coinId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9381,8 +9384,8 @@ export const KlayAdminControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets2(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO> {
-            return KlayAdminControllerApiFp(configuration).getMasterWallets2(pageable, options).then((request) => request(axios, basePath));
+        getMasterWallets3(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO> {
+            return KlayAdminControllerApiFp(configuration).getMasterWallets3(pageable, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9390,8 +9393,8 @@ export const KlayAdminControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWallets2(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO> {
-            return KlayAdminControllerApiFp(configuration).getUserWallets2(pageable, options).then((request) => request(axios, basePath));
+        getUserWallets3(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO> {
+            return KlayAdminControllerApiFp(configuration).getUserWallets3(pageable, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9400,8 +9403,8 @@ export const KlayAdminControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents3(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO> {
-            return KlayAdminControllerApiFp(configuration).getValueTransferEvents3(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents4(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO> {
+            return KlayAdminControllerApiFp(configuration).getValueTransferEvents4(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -9420,8 +9423,8 @@ export class KlayAdminControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayAdminControllerApi
      */
-    public getCoin2(coinId: number, options?: any) {
-        return KlayAdminControllerApiFp(this.configuration).getCoin2(coinId, options).then((request) => request(this.axios, this.basePath));
+    public getCoin3(coinId: number, options?: any) {
+        return KlayAdminControllerApiFp(this.configuration).getCoin3(coinId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9443,8 +9446,8 @@ export class KlayAdminControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayAdminControllerApi
      */
-    public getMasterWallets2(pageable: Pageable, options?: any) {
-        return KlayAdminControllerApiFp(this.configuration).getMasterWallets2(pageable, options).then((request) => request(this.axios, this.basePath));
+    public getMasterWallets3(pageable: Pageable, options?: any) {
+        return KlayAdminControllerApiFp(this.configuration).getMasterWallets3(pageable, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9454,8 +9457,8 @@ export class KlayAdminControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayAdminControllerApi
      */
-    public getUserWallets2(pageable: Pageable, options?: any) {
-        return KlayAdminControllerApiFp(this.configuration).getUserWallets2(pageable, options).then((request) => request(this.axios, this.basePath));
+    public getUserWallets3(pageable: Pageable, options?: any) {
+        return KlayAdminControllerApiFp(this.configuration).getUserWallets3(pageable, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9466,8 +9469,8 @@ export class KlayAdminControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayAdminControllerApi
      */
-    public getValueTransferEvents3(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) {
-        return KlayAdminControllerApiFp(this.configuration).getValueTransferEvents3(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    public getValueTransferEvents4(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) {
+        return KlayAdminControllerApiFp(this.configuration).getValueTransferEvents4(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -9596,10 +9599,10 @@ export const KlayCoinControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoin3: async (symbol: string, options: any = {}): Promise<RequestArgs> => {
+        getCoin2: async (symbol: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'symbol' is not null or undefined
             if (symbol === null || symbol === undefined) {
-                throw new RequiredError('symbol','Required parameter symbol was null or undefined when calling getCoin3.');
+                throw new RequiredError('symbol','Required parameter symbol was null or undefined when calling getCoin2.');
             }
             const localVarPath = `/api/v2/klay/coins/{symbol}`
                 .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
@@ -9717,8 +9720,8 @@ export const KlayCoinControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCoin3(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
-            const localVarAxiosArgs = await KlayCoinControllerApiAxiosParamCreator(configuration).getCoin3(symbol, options);
+        async getCoin2(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await KlayCoinControllerApiAxiosParamCreator(configuration).getCoin2(symbol, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -9779,8 +9782,8 @@ export const KlayCoinControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoin3(symbol: string, options?: any): AxiosPromise<CoinDTO> {
-            return KlayCoinControllerApiFp(configuration).getCoin3(symbol, options).then((request) => request(axios, basePath));
+        getCoin2(symbol: string, options?: any): AxiosPromise<CoinDTO> {
+            return KlayCoinControllerApiFp(configuration).getCoin2(symbol, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9841,8 +9844,8 @@ export class KlayCoinControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayCoinControllerApi
      */
-    public getCoin3(symbol: string, options?: any) {
-        return KlayCoinControllerApiFp(this.configuration).getCoin3(symbol, options).then((request) => request(this.axios, this.basePath));
+    public getCoin2(symbol: string, options?: any) {
+        return KlayCoinControllerApiFp(this.configuration).getCoin2(symbol, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10669,14 +10672,14 @@ export const KlayInternalControllerApiAxiosParamCreator = function (configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents4: async (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options: any = {}): Promise<RequestArgs> => {
+        getValueTransferEvents3: async (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents4.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getValueTransferEvents3.');
             }
             // verify required parameter 'searchCondition' is not null or undefined
             if (searchCondition === null || searchCondition === undefined) {
-                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getValueTransferEvents4.');
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getValueTransferEvents3.');
             }
             const localVarPath = `/api/v2/klay/internal/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -10739,8 +10742,8 @@ export const KlayInternalControllerApiFp = function(configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getValueTransferEvents4(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventInternalDTO>> {
-            const localVarAxiosArgs = await KlayInternalControllerApiAxiosParamCreator(configuration).getValueTransferEvents4(pageable, searchCondition, options);
+        async getValueTransferEvents3(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventInternalDTO>> {
+            const localVarAxiosArgs = await KlayInternalControllerApiAxiosParamCreator(configuration).getValueTransferEvents3(pageable, searchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -10772,8 +10775,8 @@ export const KlayInternalControllerApiFactory = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getValueTransferEvents4(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventInternalDTO> {
-            return KlayInternalControllerApiFp(configuration).getValueTransferEvents4(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents3(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventInternalDTO> {
+            return KlayInternalControllerApiFp(configuration).getValueTransferEvents3(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -10805,8 +10808,8 @@ export class KlayInternalControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayInternalControllerApi
      */
-    public getValueTransferEvents4(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) {
-        return KlayInternalControllerApiFp(this.configuration).getValueTransferEvents4(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    public getValueTransferEvents3(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) {
+        return KlayInternalControllerApiFp(this.configuration).getValueTransferEvents3(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -12002,10 +12005,10 @@ export const KlayWalletControllerApiAxiosParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets3: async (sort: Sort, options: any = {}): Promise<RequestArgs> => {
+        getMasterWallets2: async (sort: Sort, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'sort' is not null or undefined
             if (sort === null || sort === undefined) {
-                throw new RequiredError('sort','Required parameter sort was null or undefined when calling getMasterWallets3.');
+                throw new RequiredError('sort','Required parameter sort was null or undefined when calling getMasterWallets2.');
             }
             const localVarPath = `/api/v2/klay/wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -12169,14 +12172,14 @@ export const KlayWalletControllerApiAxiosParamCreator = function (configuration?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWallets3: async (walletId: string, pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getUserWallets2: async (walletId: string, pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWallets3.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWallets2.');
             }
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getUserWallets3.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getUserWallets2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -12912,8 +12915,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMasterWallets3(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>> {
-            const localVarAxiosArgs = await KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWallets3(sort, options);
+        async getMasterWallets2(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>> {
+            const localVarAxiosArgs = await KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWallets2(sort, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -12969,8 +12972,8 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserWallets3(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationUserWalletDTO>> {
-            const localVarAxiosArgs = await KlayWalletControllerApiAxiosParamCreator(configuration).getUserWallets3(walletId, pageable, options);
+        async getUserWallets2(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationUserWalletDTO>> {
+            const localVarAxiosArgs = await KlayWalletControllerApiAxiosParamCreator(configuration).getUserWallets2(walletId, pageable, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -13292,8 +13295,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets3(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>> {
-            return KlayWalletControllerApiFp(configuration).getMasterWallets3(sort, options).then((request) => request(axios, basePath));
+        getMasterWallets2(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>> {
+            return KlayWalletControllerApiFp(configuration).getMasterWallets2(sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -13333,8 +13336,8 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserWallets3(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationUserWalletDTO> {
-            return KlayWalletControllerApiFp(configuration).getUserWallets3(walletId, pageable, options).then((request) => request(axios, basePath));
+        getUserWallets2(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationUserWalletDTO> {
+            return KlayWalletControllerApiFp(configuration).getUserWallets2(walletId, pageable, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -13640,8 +13643,8 @@ export class KlayWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayWalletControllerApi
      */
-    public getMasterWallets3(sort: Sort, options?: any) {
-        return KlayWalletControllerApiFp(this.configuration).getMasterWallets3(sort, options).then((request) => request(this.axios, this.basePath));
+    public getMasterWallets2(sort: Sort, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getMasterWallets2(sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13689,8 +13692,8 @@ export class KlayWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KlayWalletControllerApi
      */
-    public getUserWallets3(walletId: string, pageable: Pageable, options?: any) {
-        return KlayWalletControllerApiFp(this.configuration).getUserWallets3(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
+    public getUserWallets2(walletId: string, pageable: Pageable, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getUserWallets2(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
