@@ -24,4 +24,5 @@ PORT=3000 # port to open. default: 3000
 BUILD_SWAGGER=false # build swagger file and exit(swagger/swagger-spec.yaml), default: false
 API_VERSION="" # specify api version(v2, v3). default: N/A(V2,V3 activate)
 NODE_ENV="" # specify environment (test, local, development, production) default: production
+MAINNET="" # specify v2 mainnet (ethereum,klaytn, bitcoin) 
 ```
