@@ -1,9 +1,8 @@
 declare type Response = any;
 
 type Subtract<T, V> = Pick<T, Exclude<keyof T, keyof V>>;
-type RetrieveAsyncFunc<
-  T extends (...args: any[]) => any
-> = ReturnType<T> extends Promise<infer U> ? U : never;
+type RetrieveAsyncFunc<T extends (...args: any[]) => any> =
+  ReturnType<T> extends Promise<infer U> ? U : never;
 type RemoveKeys<T, K extends Array<keyof T>> = Pick<
   T,
   Exclude<keyof T, K[keyof K]>
