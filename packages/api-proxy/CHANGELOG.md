@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14...v3.0.1) (2021-05-11)
+
+
+### Bug Fixes
+
+* add DTO for /api/version controller ([e9ab9c8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e9ab9c82df4d4243cfb5f3ce5964c614e85e2dc3))
+* upgraded version to 3.0.0 ([1725b8e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1725b8ebe854b82f565e5deb8d53d813669af326))
+
+
+### Features
+
+* build swagger saperated by mainnet ([45f26af](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/45f26afac7c33e680a5727b022193055300d6587))
+
+
+
+
+
 ## [2.10.14-alpha.11](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14-alpha.10...v2.10.14-alpha.11) (2021-04-16)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-enclave
