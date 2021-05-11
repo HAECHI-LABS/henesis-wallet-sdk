@@ -57,7 +57,7 @@ export function AuthErrorResponses() {
     ApiUnauthorizedResponse({
       description: "아래와 같은 인증 에러가 발생할 수 있습니다.",
       schema: {
-        oneOf: [
+        anyOf: [
           { $ref: getSchemaPath(InvalidAccessTokenException) },
           { $ref: getSchemaPath(AccessTokenNotProvidedException) },
           { $ref: getSchemaPath(InvalidAccessIpException) },

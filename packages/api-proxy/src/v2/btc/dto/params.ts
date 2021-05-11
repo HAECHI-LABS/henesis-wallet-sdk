@@ -15,5 +15,5 @@ export const PARAM_TRANSFER_ID: ApiParamOptions = {
 export const PARAM_DEPOSIT_ADDRESS_ID: ApiParamOptions = {
   name: "depositAddressId",
   required: true,
-  description: "depositAddress ID",
+  description: "입금 주소 ID",
 };

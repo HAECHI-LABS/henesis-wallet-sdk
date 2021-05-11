@@ -1,0 +1,711 @@
+openapi: 3.0.0
+info:
+  title: API PROXYv2bitcoin
+  description: The API PROXY description
+  version: '1.0'
+  contact: {}
+tags: []
+servers:
+  - url: http://localhost:3000
+components:
+  schemas:
+    BtcTransactionOutputDTO:
+      type: object
+      properties:
+        address:
+          type: string
+          description: 해당 UTXO를 소유한 주소
+        amount:
+          type: string
+          description: 'Output에 포함된 암호화폐의 양 (단위: satoshi) (형식: 16진법)'
+        transactionId:
+          type: string
+          description: 트랜잭션 ID
+        outputIndex:
+          type: number
+          description: 해당 Output이 같은 트랜잭션에 포함된 여러 UTXO 중에 몇 번째 Output인지 나타내는 값
+        scriptPubKey:
+          type: string
+          description: scriptPubKey
+        isChange:
+          type: boolean
+          description: 전송 후 잔액을 자신의 지갑으로 다시 보내는 Output인가?
+      required:
+        - address
+        - amount
+        - transactionId
+        - outputIndex
+        - scriptPubKey
+        - isChange
+    BtcTransactionDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "트랜잭션 ID\r\n   (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인 트랜잭션 해시와 다른 개념입니다.)"
+        transactionHash:
+          type: string
+          description: 온체인 트랜잭션 해시
+        blockNumber:
+          type: string
+          description: 블록
+        amount:
+          type: string
+          description: '전송할 암호화폐의 양 (단위: satoshi) (형식: 16진법)'
+        feeAmount:
+          type: string
+          description: 수수료 금액
+        createdAt:
+          type: string
+          description: '트랜잭션이 생성된 시간 (형식: ms, UNIX time)'
+        updatedAt:
+          type: string
+          description: '트랜잭션 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)'
+        hex:
+          type: string
+          description: 블록체인에 전파된 트랜잭션 Body의 raw data
+        outputs:
+          description: 트랜잭션을 통해 생성된 UTXO의 Output
+          type: array
+          items:
+            $ref: '#/components/schemas/BtcTransactionOutputDTO'
+      required:
+        - id
+        - transactionHash
+        - amount
+        - createdAt
+        - updatedAt
+        - hex
+        - outputs
+    TransferDTO:
+      type: object
+      properties:
+        transaction:
+          description: 해당 전송(Transfer)이 포함되는 온체인 트랜잭션의 정보
+          example: BtcTransaction
+          allOf:
+            - $ref: '#/components/schemas/BtcTransactionDTO'
+        walletId:
+          type: string
+          description: 지갑 ID
+          example: 2d855c98bd183d14f7d9a1805327afff
+        amount:
+          type: string
+          description: '전송할 암호화폐의 양 (단위: satoshi) (형식: 16진법)'
+          example: '0x1'
+        status:
+          type: string
+          description: 전송(Transfer) 상태
+        id:
+          type: string
+          description: 전송(Transfer) ID
+          example: 7074aaec177f02559e1b1c9e63816359
+        outputIndex:
+          type: number
+          description: >-
+            해당 전송(Transfer)을 통해 발생한 Output이 같은 트랜잭션에 포함된 여러 UTXO 중에 몇 번째 Output
+            인지?
+          example: 0
+        receivedAt:
+          type: string
+          description: 받는 주소
+          example: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
+        sendTo:
+          type: string
+          description: 보내는 주소
+          example: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
+        withdrawalApprovalId:
+          type: string
+          description: 출금 한도를 초과할 경우 생성된 출금 요청의 ID
+          example: 7074aaec177f02559e1b1c9e63816359
+        type:
+          type: string
+          description: 전송(Transfer) 타입
+        createdAt:
+          type: string
+          description: '전송(Transfer)이 생성된 시간 (형식: ms, UNIX time)'
+          example: '1620042252520'
+        updatedAt:
+          type: string
+          description: '전송(Transfer) 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)'
+          example: '1620042252520'
+        feeAmount:
+          type: string
+          description: '사용된 수수료의 양 (단위: satoshi) (형식: 16진법)'
+          example: '0x2ee'
+        confirmation:
+          type: string
+          description: 지갑 ID
+          example: '0x0'
+      required:
+        - transaction
+        - walletId
+        - amount
+        - status
+        - id
+        - type
+        - createdAt
+        - updatedAt
+        - confirmation
+    PaginationMetadata:
+      type: object
+      properties:
+        nextUrl:
+          type: string
+          description: 다음 pagination url
+          example: http://localhost:3000/api/v2/eth/value-transfer-events?page=2
+        previousUrl:
+          type: string
+          description: 이전 pagination url
+          example: http://localhost:3000/api/v2/eth/value-transfer-events?page=1
+        totalCount:
+          type: number
+          description: 총 갯수
+      required:
+        - nextUrl
+        - previousUrl
+        - totalCount
+    GetManyResponseForTransferDTO:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferDTO'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - results
+    KeyDTO:
+      type: object
+      properties:
+        address:
+          type: string
+          description: Key의 주소
+          example: ETH
+        pub:
+          type: string
+          description: Key의 Pub Key 정보
+          example: ETH
+        keyFile:
+          type: string
+          description: Key의 Private Key를 암호화한 값
+          example: ETH
+      required:
+        - pub
+    WalletDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 지갑 ID
+          example: cce4f485764767f256155390873668b3
+        name:
+          type: string
+          description: 지갑 이름
+          example: bit
+        address:
+          type: string
+          description: 지갑 주소
+          example: 2Mx6o4HZfPyV1QrYNv26jCGMwAPpDnVzq1z
+        encryptionKey:
+          type: string
+          description: 지갑 비밀번호를 복구하기 위해, 암호화하는 데에 쓰인 키
+          example: b72355635b2f5db7d603a73ad37d2460e28d93ad12df6da85fff4b18fe374ae3
+        createdAt:
+          type: string
+          description: 지갑 생성 시간
+          example: '1599116098462'
+        updatedAt:
+          type: string
+          description: 지갑 변경 시간
+          example: '1599116105566'
+        status:
+          description: 지갑 상태
+          enum:
+            - ACTIVE
+            - CREATING
+            - FAILED
+            - INACTIVE
+          type: string
+        orgId:
+          type: string
+          description: 지갑이 속한 팀(Org)의 ID
+          example: 575a431dc73615a9e65648180bbd4fbb
+        accountKey:
+          description: 지갑을 서명할 때 쓰이는 Account Key 정보
+          example: Key
+          allOf:
+            - $ref: '#/components/schemas/KeyDTO'
+        whitelistActivated:
+          type: boolean
+          description: 출금 주소 화이트리스팅의 활성화 유무
+          example: false
+      required:
+        - id
+        - name
+        - createdAt
+        - updatedAt
+        - status
+        - whitelistActivated
+    BalanceDTO:
+      type: object
+      properties:
+        coinType:
+          type: string
+          description: 암호화폐 타입
+          example: BTC
+        amount:
+          type: string
+          description: '총 잔액 (확정된 잔액) (단위: satoshi) (형식: 16진법)'
+          example: '0xDBE16A831'
+        spendableAmount:
+          type: string
+          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액) (단위: satoshi) (형식: 16진법)'
+          example: '0xDBE16A831'
+        name:
+          type: string
+          description: 암호화폐 이름
+          example: 비트코인
+        symbol:
+          type: string
+          description: 암호화폐 심볼 (ticker)
+          example: BTC
+    CreateDepositAddressRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 입금 주소 이름
+          example: btc-depositAddress
+      required:
+        - name
+    DepositAddressDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 입금 주소 ID
+          example: 94fd6a94ed199d660acf55e2f2943a7c
+        name:
+          type: string
+          description: 입금 주소 이름
+          example: bit
+        address:
+          type: string
+          description: 입금 주소
+          example: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
+        pub:
+          type: string
+          description: 입금 주소 공개키
+          example: '0x022bf2a47ce5027831a3587ecd9f2d0d1e590a227ea576f61598ee84405e0479c1'
+        createdAt:
+          type: string
+          description: '입금 주소 생성 시간 (단위: ms, UNIX time)'
+          example: '1620041696849'
+      required:
+        - id
+        - name
+        - address
+        - pub
+        - createdAt
+    GetManyResponseForDepositAddressDTO:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DepositAddressDTO'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - results
+    TransferRequestDTO:
+      type: object
+      properties:
+        to:
+          type: string
+          description: 받을 주소
+        amount:
+          type: string
+          description: 보낼 금액
+        passphrase:
+          type: string
+          description: 비밀번호
+        feeRate:
+          type: string
+          description: "트랜잭션 byte당 지불할 fee 가격 (단위: satoshi)\r\n   (16진법, 맨 앞에 반드시 '0x' 붙여야 함) (v2.10.9 이상 지원)"
+      required:
+        - to
+        - amount
+        - passphrase
+        - feeRate
+    InvalidAccessIpException:
+      type: object
+      properties:
+        message:
+          type: string
+          example: ip '106.101.128.133' is not allowed
+        code:
+          type: number
+          example: 4008
+      required:
+        - message
+        - code
+    InvalidAccessTokenException:
+      type: object
+      properties:
+        message:
+          type: string
+          example: expired or invalid access token and signature
+        code:
+          type: number
+          example: 4001
+      required:
+        - message
+        - code
+    AccessTokenNotProvidedException:
+      type: object
+      properties:
+        message:
+          type: string
+          example: access token not provided
+        code:
+          type: number
+          example: 4001
+      required:
+        - message
+        - code
+paths:
+  /api/v2/btc/transfers:
+    get:
+      operationId: TransfersController_getTransfers
+      summary: 입출금 내역 조회하기
+      description: 입출금 내역을 조회합니다.
+      parameters:
+        - &ref_0
+          name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - &ref_1
+          name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+        - name: type
+          required: false
+          in: query
+          description: '거래 타입 '
+          schema:
+            type: string
+        - name: walletId
+          required: false
+          in: query
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: status
+          required: false
+          in: query
+          description: 거래 상태
+          schema:
+            type: string
+        - name: address
+          required: false
+          in: query
+          description: 입금 주소 또는 출금 주소
+          schema:
+            type: string
+        - name: transactionHash
+          required: false
+          in: query
+          description: 온체인 트랜잭션 해시
+          schema:
+            type: string
+        - name: updatedAtGte
+          required: false
+          in: query
+          description: 전송 상태가 마지막으로 변경된 시점(updatedAt)이 특정 시점과 같거나 그보다 이후인 전송 내역 조회
+          schema:
+            type: string
+        - name: updatedAtLt
+          required: false
+          in: query
+          description: 전송 상태가 마지막으로 변경된 시점(updatedAt)이 특정 시점보다 이전인 전송 내역 조회
+          schema:
+            type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForTransferDTO'
+        '401': &ref_2
+          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
+      tags: &ref_3
+        - transfers
+  /api/v2/btc/transfers/{transferId}:
+    get:
+      operationId: TransfersController_getTransfer
+      summary: 특정 입출금 내역 조회하기
+      description: 특정 입출금 내역을 조회합니다.
+      parameters:
+        - *ref_0
+        - *ref_1
+        - name: transferId
+          required: true
+          in: path
+          description: TRANSFER ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferDTO'
+        '401': *ref_2
+      tags: *ref_3
+  /api/v2/btc/wallets:
+    get:
+      operationId: WalletsController_getWallets
+      summary: 전체 지갑 목록 조회하기
+      description: 전체 지갑 목록을 조회합니다.
+      parameters:
+        - &ref_4
+          name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - &ref_5
+          name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          schema:
+            type: string
+        - name: name
+          required: false
+          in: query
+          description: 지갑 이름
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WalletDTO'
+        '401': &ref_6
+          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
+      tags: &ref_7
+        - wallets
+  /api/v2/btc/wallets/{walletId}:
+    get:
+      operationId: WalletsController_getWallet
+      summary: 지갑 정보 조회하기
+      description: 특정 지갑의 상세 정보를 조회합니다.
+      parameters:
+        - *ref_4
+        - *ref_5
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletDTO'
+        '401': *ref_6
+      tags: *ref_7
+  /api/v2/btc/wallets/{walletId}/balance:
+    get:
+      operationId: WalletsController_getWalletBalance
+      summary: 지갑 잔고 조회하기
+      description: 특정 지갑의 잔고를 변경합니다.
+      parameters:
+        - *ref_4
+        - *ref_5
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 지갑 잔고 조회
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BalanceDTO'
+        '401': *ref_6
+      tags: *ref_7
+  /api/v2/btc/wallets/{walletId}/deposit-addresses:
+    post:
+      operationId: WalletsController_createDepositAddress
+      summary: 입금 주소 생성하기
+      description: 입금 주소를 생성합니다.
+      parameters:
+        - *ref_4
+        - *ref_5
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDepositAddressRequestDTO'
+      responses:
+        '201':
+          description: 입금 주소가 성공적으로 생성
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositAddressDTO'
+        '401': *ref_6
+      tags: *ref_7
+    get:
+      operationId: WalletsController_getDepositAddresses
+      summary: 전체 입금 주소 목록 조회하기
+      description: 특정 지갑에 속한 모든 입금 주소 목록을 조회합니다.
+      parameters:
+        - *ref_4
+        - *ref_5
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: id
+          required: false
+          in: query
+          description: 입금 주소 ID
+          schema:
+            type: string
+        - name: address
+          required: false
+          in: query
+          description: 입금 주소
+          schema:
+            type: string
+        - name: name
+          required: false
+          in: query
+          description: 입금 주소 이름
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForDepositAddressDTO'
+        '401': *ref_6
+      tags: *ref_7
+  /api/v2/btc/wallets/{walletId}/deposit-addresses/{depositAddressId}:
+    get:
+      operationId: WalletsController_getDepositAddress
+      summary: 입금 주소 정보 조회하기
+      description: 특정 입금 주소 정보를 조회합니다.
+      parameters:
+        - *ref_4
+        - *ref_5
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: depositAddressId
+          required: true
+          in: path
+          description: 입금 주소 ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositAddressDTO'
+        '401': *ref_6
+      tags: *ref_7
+  /api/v2/btc/wallets/{walletId}/transfer:
+    post:
+      operationId: WalletsController_transfer
+      summary: transfer
+      description: transfer
+      parameters:
+        - *ref_4
+        - *ref_5
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRequestDTO'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferDTO'
+        '401': *ref_6
+      tags: *ref_7

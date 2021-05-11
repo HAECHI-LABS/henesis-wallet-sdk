@@ -7,56 +7,48 @@ export class ValueTransferEventDTO extends EventDTO {
    * 암호화폐의 양
    * @example 0x2386f26fc10000
    */
-
   amount: string;
 
   /**
    * 암호화폐의 소수점 자릿수
    * @example 18
    */
-
   decimals: number;
 
   /**
    * 암호화폐의 기호 (symbol)
    * @example ETH
    */
-
   coinSymbol: string;
 
   /**
    * 출금 주소
    * @example 0xd5fcc938ad42a56f1c60e7bd41f646ad844b2273
    */
-
-  from: string;
+  "from": string;
 
   /**
    * 입금 주소
    * @example 0xb659b6db08cdb7c24bd35b72222807c2567086f3
    */
-
   to: string;
 
   /**
    * 입출금 타입
    * @example WITHDRAWAL
    */
-
   transferType: string;
 
   /**
    * 해당 내역의 지갑 이름
    * @example bit
    */
-
   walletName: string;
 
   /**
    * 해당 내역의 지갑 종류
    * @example MASTER_WALLET
    */
-
   walletType: string;
 
   static fromETHValueTransferEvent(

@@ -13,7 +13,13 @@ import { WalletDTO } from "../dto/wallet.dto";
 import { BalanceDTO } from "../dto/balance.dto";
 import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import { TransferDTO } from "../dto/transfer.dto";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from "@nestjs/swagger";
 import express from "express";
 import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
 import { TransferRequestDTO } from "../dto/transfer-request.dto";
@@ -33,8 +39,8 @@ import {
 } from "../dto/queries";
 import { PaginationDTO } from "../dto/pagination.dto";
 
-@Controller("wallets")
 @ApiTags("wallets")
+@Controller("wallets")
 @AuthErrorResponses()
 @AuthHeaders()
 export class WalletsController {
@@ -67,6 +73,11 @@ export class WalletsController {
   }
 
   @Get("/:walletId/balance")
+  @ApiOkResponse({
+    description: "지갑 잔고 조회",
+    type: BalanceDTO,
+    isArray: true,
+  })
   @ApiOperation({
     summary: "지갑 잔고 조회하기",
     description: "특정 지갑의 잔고를 변경합니다.",
@@ -80,12 +91,16 @@ export class WalletsController {
   }
 
   @Post("/:walletId/deposit-addresses")
+  @ApiCreatedResponse({
+    description: "입금 주소가 성공적으로 생성",
+    type: DepositAddressDTO,
+  })
   @ApiOperation({
     summary: "입금 주소 생성하기",
     description: "입금 주소를 생성합니다.",
   })
   @PathParams(PARAM_WALLET_ID)
-  public async createDepositAddress(
+  async createDepositAddress(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
     @Body()

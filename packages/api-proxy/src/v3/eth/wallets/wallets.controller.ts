@@ -17,6 +17,7 @@ import {
   ApiOperation,
   ApiResponse,
   ApiTags,
+  ApiUnauthorizedResponse,
   getSchemaPath,
 } from "@nestjs/swagger";
 import {
@@ -123,8 +124,7 @@ export class WalletsController {
   @Patch("/:walletId/name")
   @PathParams(WALLET_ID_REQUIRED)
   @ApiNoContentResponse()
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
+  @ApiBadRequestResponse({
     description: "다음과 같은 bad request 에러가 발생할 수 있습니다.",
     schema: {
       oneOf: [

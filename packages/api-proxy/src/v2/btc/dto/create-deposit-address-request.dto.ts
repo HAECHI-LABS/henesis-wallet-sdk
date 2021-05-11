@@ -1,8 +1,7 @@
 export class CreateDepositAddressRequestDTO {
   /**
    * 입금 주소 이름
-   * @example: name
+   * @example btc-depositAddress
    */
-
   name: string;
 }

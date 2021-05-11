@@ -34,7 +34,7 @@ export class TransferDTO {
   id: string;
 
   /**
-   * 해당 전송(Transfer)을 통해 발생한 Output이 같은 트랜잭션에 포함된 여러 UTXO 중에 몇 번째 Output인지?
+   * 해당 전송(Transfer)을 통해 발생한 Output이 같은 트랜잭션에 포함된 여러 UTXO 중에 몇 번째 Output 인지?
    * @example 0
    */
   outputIndex?: number;

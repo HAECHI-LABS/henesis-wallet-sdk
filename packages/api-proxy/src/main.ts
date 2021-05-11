@@ -26,7 +26,7 @@ async function bootstrap() {
   const app = await createApp();
   // swagger settings
   const config = new DocumentBuilder()
-    .setTitle("API PROXY")
+    .setTitle(`API PROXY${process.env.API_VERSION + process.env.ENDPOINT}`)
     .setDescription("The API PROXY description")
     .setVersion("1.0")
     .build();
@@ -35,7 +35,12 @@ async function bootstrap() {
   SwaggerModule.setup("api-docs", app, document);
 
   if (BUILD_SWAGGER) {
-    fs.writeFileSync("./swagger/swagger-spec.yaml", yaml.dump(document));
+    fs.writeFileSync(
+      `./swagger/swagger-spec${
+        process.env.API_VERSION ? `-${process.env.API_VERSION}` : ""
+      }${process.env.ENDPOINT ? `-${process.env.ENDPOINT}` : ""}.yaml`,
+      yaml.dump(document)
+    );
     return;
   }
   await app.listen(PORT);

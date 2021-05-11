@@ -3,17 +3,15 @@ import { BtcRawTransactionInput } from "@haechi-labs/henesis-wallet-core/lib/btc
 
 export class BtcRawTransactionInputDTO {
   /**
-   * 수수료 금액
-   * @example: name
+   * redeemScript
+   * @example: script
    */
-
   redeemScript: string;
 
   /**
-   * 수수료 금액
-   * @example: name
+   * 트랜잭션을 통해 생성된 UTXO의 Output
+   * @example: BtcTransactionOutputDTO
    */
-
   transactionOutput: BtcTransactionOutputDTO;
 
   static fromBTCRawTransactionInput(

@@ -1,5 +1,6 @@
 import { Balance } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
+import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export class BalanceDTO {
   /**

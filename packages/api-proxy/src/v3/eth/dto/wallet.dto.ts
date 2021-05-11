@@ -5,7 +5,6 @@ import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain"
 export class WalletDTO {
   /**
    * 지갑 ID
-   * @example a75611f2e624c08ecfb7df4218b318bc
    */
   id: string;
   /**

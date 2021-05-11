@@ -1,12 +1,12 @@
 import BN from "bn.js";
 
-export interface ContractCallRequest {
+export class ContractCallRequest {
   contractAddress: string;
   value: string;
   data: string;
 }
 
-export interface TransferRequest {
+export class TransferRequest {
   ticker: string;
   to: string;
   amount: string;
