@@ -70,7 +70,7 @@ export class WalletsService {
         new BN(request.amount),
         request.passphrase,
         null,
-        new BN(request.gasPrice)
+        request.gasPrice ? new BN(request.gasPrice) : null
       )
     );
   }
@@ -88,7 +88,7 @@ export class WalletsService {
         request.data,
         request.passphrase,
         null,
-        new BN(request.gasPrice)
+        request.gasPrice ? new BN(request.gasPrice) : null
       )
     );
   }
@@ -101,7 +101,10 @@ export class WalletsService {
   ): Promise<TransactionDTO> {
     const wallet: EthWallet = await sdk.eth.wallets.getWallet(walletId);
     return TransactionDTO.fromEthTransaction(
-      await wallet.replaceTransaction(transactionId, new BN(request.gasPrice))
+      await wallet.replaceTransaction(
+        transactionId,
+        request.gasPrice ? new BN(request.gasPrice) : null
+      )
     );
   }
 
