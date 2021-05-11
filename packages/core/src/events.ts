@@ -58,4 +58,5 @@ export interface ValueTransferEventPaginationOptions
 
 export type EthEventPaginationOptions = EventPaginationOptions;
 
-export type EthValueTransferEventPaginationOptions = ValueTransferEventPaginationOptions;
+export type EthValueTransferEventPaginationOptions =
+  ValueTransferEventPaginationOptions;
