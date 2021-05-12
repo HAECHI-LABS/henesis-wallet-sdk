@@ -18,10 +18,11 @@ import {
 
 import { AUTHORIZATION, X_HENESIS_SECRET } from "./headers";
 import {
-  AccessTokenNotProvidedException,
+  ACCESS_TOKEN_NOT_PROVIDED_EXCEPTION_EXAMPLE,
+  AccessTokenNotProvidedException, INVALID_ACCESS_IP_EXCEPTION_EXAMPLE, INVALID_ACCESS_TOKEN_EXCEPTION_EXAMPLE,
   InvalidAccessIpException,
-  InvalidAccessTokenException,
-} from "./extra-model.dto";
+  InvalidAccessTokenException
+} from './extra-model.dto';
 import { getTypeReferenceAsString } from '@nestjs/swagger/dist/plugin/utils/plugin-utils';
 
 export function PathParams(...paramsOptions: ApiParamOptions[]) {
@@ -60,15 +61,22 @@ export function AuthErrorResponses() {
       description: "아래와 같은 인증 에러가 발생할 수 있습니다.",
       content: {
         "application/json": {
+          schema: {
+            allOf: [
+              { $ref: getSchemaPath(InvalidAccessTokenException) },
+              { $ref: getSchemaPath(AccessTokenNotProvidedException) },
+              { $ref: getSchemaPath(InvalidAccessIpException) }
+            ]
+          },
           examples: {
-            InvalidAccessToken: {
-              $ref: getSchemaPath(InvalidAccessTokenException)
+            "invalidAccessToken": {
+              value: INVALID_ACCESS_TOKEN_EXCEPTION_EXAMPLE
             },
-            AccessTokenNotProvided: {
-              $ref: getSchemaPath(AccessTokenNotProvidedException)
+            "accessTokenNotProvided": {
+              value: ACCESS_TOKEN_NOT_PROVIDED_EXCEPTION_EXAMPLE
             },
-            InvalidAccessIp: {
-              $ref: getSchemaPath(InvalidAccessIpException)
+            "invalidAccessIp": {
+              value: INVALID_ACCESS_IP_EXCEPTION_EXAMPLE
             }
           }
         }

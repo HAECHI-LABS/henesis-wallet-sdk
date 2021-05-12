@@ -1,35 +1,52 @@
+import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
+
+export const INVALID_ACCESS_TOKEN_EXCEPTION_EXAMPLE: InvalidAccessTokenException = {
+  message: "expired or invalid access token and signature",
+  code: 4001
+}
+
+export const ACCESS_TOKEN_NOT_PROVIDED_EXCEPTION_EXAMPLE: AccessTokenNotProvidedException = {
+  message: "access token not provided",
+  code: 4001
+}
+
+export const INVALID_ACCESS_IP_EXCEPTION_EXAMPLE: InvalidAccessIpException = {
+  message: "ip '106.101.128.133' is not allowed",
+  code: 4008
+}
+
 export class InvalidAccessTokenException {
-  /**
-   * @example "expired or invalid access token and signature"
-   */
+  @ApiModelProperty({
+    example: INVALID_ACCESS_TOKEN_EXCEPTION_EXAMPLE.message
+  })
   message: string;
 
-  /**
-   * @example 4001
-   */
+  @ApiModelProperty({
+    example: INVALID_ACCESS_TOKEN_EXCEPTION_EXAMPLE.code
+  })
   code: number;
 }
 
 export class AccessTokenNotProvidedException {
-  /**
-   * @example "access token not provided"
-   */
+  @ApiModelProperty({
+    example: ACCESS_TOKEN_NOT_PROVIDED_EXCEPTION_EXAMPLE.message
+  })
   message: string;
 
-  /**
-   * @example 4001
-   */
+  @ApiModelProperty({
+    example: ACCESS_TOKEN_NOT_PROVIDED_EXCEPTION_EXAMPLE.code
+  })
   code: number;
 }
 
 export class InvalidAccessIpException {
-  /**
-   * @example "ip '106.101.128.133' is not allowed"
-   */
+  @ApiModelProperty({
+    example: INVALID_ACCESS_IP_EXCEPTION_EXAMPLE.message
+  })
   message: string;
 
-  /**
-   * @example 4008
-   */
+  @ApiModelProperty({
+    example: INVALID_ACCESS_IP_EXCEPTION_EXAMPLE.code
+  })
   code: number;
 }

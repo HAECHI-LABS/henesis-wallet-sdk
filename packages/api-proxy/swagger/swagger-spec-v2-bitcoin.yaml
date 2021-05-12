@@ -278,6 +278,7 @@ components:
           type: string
           description: 입금 주소 이름
           example: btc-depositAddress
+          default: btc-depositAddress
       required:
         - name
     DepositAddressDTO:
@@ -287,27 +288,31 @@ components:
           type: string
           description: 입금 주소 ID
           example: 94fd6a94ed199d660acf55e2f2943a7c
+          default: 94fd6a94ed199d660acf55e2f2943a7c
         name:
           type: string
           description: 입금 주소 이름
           example: bit
+          default: bit
         address:
           type: string
           description: 입금 주소
           example: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
+          default: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
         pub:
           type: string
           description: 입금 주소 공개키
           example: '0x022bf2a47ce5027831a3587ecd9f2d0d1e590a227ea576f61598ee84405e0479c1'
+          default: '0x022bf2a47ce5027831a3587ecd9f2d0d1e590a227ea576f61598ee84405e0479c1'
         createdAt:
           type: string
           description: '입금 주소 생성 시간 (단위: ms, UNIX time)'
           example: '1620041696849'
+          default: '1620041696849'
       required:
         - id
         - name
         - address
-        - pub
         - createdAt
     GetManyResponseForDepositAddressDTO:
       type: object
@@ -460,13 +465,24 @@ paths:
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
           content:
             application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
-                InvalidAccessToken:
-                  $ref: '#/components/schemas/InvalidAccessTokenException'
-                AccessTokenNotProvided:
-                  $ref: '#/components/schemas/AccessTokenNotProvidedException'
-                InvalidAccessIp:
-                  $ref: '#/components/schemas/InvalidAccessIpException'
+                invalidAccessToken:
+                  value: &ref_4
+                    message: expired or invalid access token and signature
+                    code: 4001
+                accessTokenNotProvided:
+                  value: &ref_5
+                    message: access token not provided
+                    code: 4001
+                invalidAccessIp:
+                  value: &ref_6
+                    message: ip '106.101.128.133' is not allowed
+                    code: 4008
       tags: &ref_3
         - transfers
   /api/v2/btc/transfers/{transferId}:
@@ -498,13 +514,13 @@ paths:
       summary: 전체 지갑 목록 조회하기
       description: 전체 지갑 목록을 조회합니다.
       parameters:
-        - &ref_4
+        - &ref_7
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_5
+        - &ref_8
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
@@ -525,18 +541,23 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/WalletDTO'
-        '401': &ref_6
+        '401': &ref_9
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
           content:
             application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
-                InvalidAccessToken:
-                  $ref: '#/components/schemas/InvalidAccessTokenException'
-                AccessTokenNotProvided:
-                  $ref: '#/components/schemas/AccessTokenNotProvidedException'
-                InvalidAccessIp:
-                  $ref: '#/components/schemas/InvalidAccessIpException'
-      tags: &ref_7
+                invalidAccessToken:
+                  value: *ref_4
+                accessTokenNotProvided:
+                  value: *ref_5
+                invalidAccessIp:
+                  value: *ref_6
+      tags: &ref_10
         - wallets
   /api/v2/btc/wallets/{walletId}:
     get:
@@ -544,8 +565,8 @@ paths:
       summary: 지갑 정보 조회하기
       description: 특정 지갑의 상세 정보를 조회합니다.
       parameters:
-        - *ref_4
-        - *ref_5
+        - *ref_7
+        - *ref_8
         - name: walletId
           required: true
           in: path
@@ -559,16 +580,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
-        '401': *ref_6
-      tags: *ref_7
+        '401': *ref_9
+      tags: *ref_10
   /api/v2/btc/wallets/{walletId}/balance:
     get:
       operationId: WalletsController_getWalletBalance
       summary: 지갑 잔고 조회하기
       description: 특정 지갑의 잔고를 변경합니다.
       parameters:
-        - *ref_4
-        - *ref_5
+        - *ref_7
+        - *ref_8
         - name: walletId
           required: true
           in: path
@@ -584,16 +605,16 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/BalanceDTO'
-        '401': *ref_6
-      tags: *ref_7
+        '401': *ref_9
+      tags: *ref_10
   /api/v2/btc/wallets/{walletId}/deposit-addresses:
     post:
       operationId: WalletsController_createDepositAddress
       summary: 입금 주소 생성하기
       description: 입금 주소를 생성합니다.
       parameters:
-        - *ref_4
-        - *ref_5
+        - *ref_7
+        - *ref_8
         - name: walletId
           required: true
           in: path
@@ -613,15 +634,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-        '401': *ref_6
-      tags: *ref_7
+              example:
+                id: 94fd6a94ed199d660acf55e2f2943a7c
+                name: bit
+                address: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
+                pub: >-
+                  0x022bf2a47ce5027831a3587ecd9f2d0d1e590a227ea576f61598ee84405e0479c1
+                createdAt: '1620041696849'
+        '401': *ref_9
+      tags: *ref_10
     get:
       operationId: WalletsController_getDepositAddresses
       summary: 전체 입금 주소 목록 조회하기
       description: 특정 지갑에 속한 모든 입금 주소 목록을 조회합니다.
       parameters:
-        - *ref_4
-        - *ref_5
+        - *ref_7
+        - *ref_8
         - name: walletId
           required: true
           in: path
@@ -653,16 +681,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForDepositAddressDTO'
-        '401': *ref_6
-      tags: *ref_7
+        '401': *ref_9
+      tags: *ref_10
   /api/v2/btc/wallets/{walletId}/deposit-addresses/{depositAddressId}:
     get:
       operationId: WalletsController_getDepositAddress
       summary: 입금 주소 정보 조회하기
       description: 특정 입금 주소 정보를 조회합니다.
       parameters:
-        - *ref_4
-        - *ref_5
+        - *ref_7
+        - *ref_8
         - name: walletId
           required: true
           in: path
@@ -682,16 +710,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-        '401': *ref_6
-      tags: *ref_7
+        '401': *ref_9
+      tags: *ref_10
   /api/v2/btc/wallets/{walletId}/transfer:
     post:
       operationId: WalletsController_transfer
       summary: 지갑에서 코인 전송하기
       description: 특정 지갑에서 가상자산을 전송합니다.
       parameters:
-        - *ref_4
-        - *ref_5
+        - *ref_7
+        - *ref_8
         - name: walletId
           required: true
           in: path
@@ -711,5 +739,5 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransferDTO'
-        '401': *ref_6
-      tags: *ref_7
+        '401': *ref_9
+      tags: *ref_10
