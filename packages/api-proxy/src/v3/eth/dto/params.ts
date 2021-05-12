@@ -89,6 +89,11 @@ export const COIN_REQUIRED: ApiParamOptions = {
   required: true,
   description: "Henesis에서 부여한 Coin의 ID",
 };
+export const TRANSFER_TYPE_OPTIONAL: ApiParamOptions = {
+  name: "transferType",
+  required: false,
+  description: "트랜잭션의 종류(입금, 출금)",
+};
 
 export const QUERY_TRANSACTIONS_ADDRESS_OPTIONAL: ApiQueryOptions = {
   name: "address",
