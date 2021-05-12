@@ -3,13 +3,13 @@ import { TransfersService } from "./transfers.service";
 import { TransferDTO } from "../dto/transfer.dto";
 import express from "express";
 import {
-  ApiPaginationResponse,
+  ApiPaginationResponse, ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
-  Queries,
-} from "../../../decorators";
-import { PaginationDTO } from "../dto/pagination.dto";
-import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+  Queries
+} from '../../../decorators';
+import { EXAMPLE_ETHEREUM_PAGINATION_TRANSFER_DTO, PaginationDTO } from '../dto/pagination.dto';
+import { ApiBadRequestResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   DEPOSIT_ADDRESS_ID_OPTIONAL,
   PAGE_OPTIONAL,
@@ -22,7 +22,7 @@ import {
   UPDATED_AT_LE_OPTIONAL,
   WALLET_ID_OPTIONAL,
 } from "../dto/params";
-import { InvalidStatusException } from "../dto/exceptions.dto";
+import { EXAMPLE_INVALID_STATUS_EXCEPTION_DTO, InvalidStatusException } from '../dto/exceptions.dto';
 import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 @Controller("transfers")
@@ -45,11 +45,10 @@ export class TransfersController {
     SIZE_OPTIONAL,
     PAGE_OPTIONAL
   )
-  @ApiPaginationResponse(TransferDTO)
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
+  @ApiPaginationResponse(TransferDTO, EXAMPLE_ETHEREUM_PAGINATION_TRANSFER_DTO)
+  @ApiBadRequestResponse({
     description: "올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.",
-    type: InvalidStatusException,
+    content: ApiResponseContentGenerator(InvalidStatusException, EXAMPLE_INVALID_STATUS_EXCEPTION_DTO)
   })
   @ApiOperation({
     summary: "전체 입출금 목록 조회하기",

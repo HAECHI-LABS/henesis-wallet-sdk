@@ -3,18 +3,19 @@ import { ContractCallsService } from "./contract-calls.service";
 import { ContractCallsDTO } from "../dto/contract-calls.dto";
 import express from "express";
 import {
-  ApiPaginationResponse,
+  ApiPaginationResponse, ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
-  Queries,
-} from "../../../decorators";
-import { PaginationDTO } from "../dto/pagination.dto";
+  Queries
+} from '../../../decorators';
+import { EXAMPLE_ETHEREUM_PAGINATION_CONTRACT_CALLS_DTO, PaginationDTO } from '../dto/pagination.dto';
 import {
+  ApiBadRequestResponse,
   ApiExtraModels,
   ApiOperation,
   ApiResponse,
-  ApiTags,
-} from "@nestjs/swagger";
+  ApiTags
+} from '@nestjs/swagger';
 import {
   PAGE_OPTIONAL,
   SIZE_OPTIONAL,
@@ -27,11 +28,11 @@ import {
   WALLET_ID_OPTIONAL,
 } from "../dto/params";
 import {
-  AccessTokenNotProvidedException,
+  AccessTokenNotProvidedException, EXAMPLE_INVALID_STATUS_EXCEPTION_DTO,
   InvalidAccessIpException,
   InvalidAccessTokenException,
-  InvalidStatusException,
-} from "../dto/exceptions.dto";
+  InvalidStatusException
+} from '../dto/exceptions.dto';
 import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 @Controller("/contract-calls")
@@ -58,11 +59,10 @@ export class ContractCallsController {
     SIZE_OPTIONAL,
     PAGE_OPTIONAL
   )
-  @ApiPaginationResponse(ContractCallsDTO)
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
+  @ApiPaginationResponse(ContractCallsDTO, EXAMPLE_ETHEREUM_PAGINATION_CONTRACT_CALLS_DTO)
+  @ApiBadRequestResponse({
     description: "올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.",
-    type: InvalidStatusException,
+    content: ApiResponseContentGenerator(InvalidStatusException, EXAMPLE_INVALID_STATUS_EXCEPTION_DTO)
   })
   @ApiOperation({
     summary: "스마트 컨트랙트 호출 내역 조회하기",

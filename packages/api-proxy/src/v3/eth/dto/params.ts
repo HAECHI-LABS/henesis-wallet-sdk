@@ -77,7 +77,7 @@ export const PAGE_OPTIONAL: ApiQueryOptions = {
 export const FLAG_REQUIRED: ApiQueryOptions = {
   name: "flag",
   required: true,
-  description: "비트베리 여부",
+  description: "FLAG OPTION",
 };
 export const NAME_OPTIONAL: ApiQueryOptions = {
   name: "name",

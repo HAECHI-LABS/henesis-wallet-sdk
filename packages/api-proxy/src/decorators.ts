@@ -18,8 +18,10 @@ import {
 
 import { AUTHORIZATION, X_HENESIS_SECRET } from "./headers";
 import {
-  ACCESS_TOKEN_NOT_PROVIDED_EXCEPTION_EXAMPLE,
-  AccessTokenNotProvidedException, INVALID_ACCESS_IP_EXCEPTION_EXAMPLE, INVALID_ACCESS_TOKEN_EXCEPTION_EXAMPLE,
+  AccessTokenNotProvidedException,
+  EXAMPLE_ACCESS_TOKEN_NOT_PROVIDED_EXCEPTION,
+  EXAMPLE_INVALID_ACCESS_IP_EXCEPTION,
+  EXAMPLE_INVALID_ACCESS_TOKEN_EXCEPTION,
   InvalidAccessIpException,
   InvalidAccessTokenException
 } from './extra-model.dto';
@@ -60,28 +62,11 @@ export function AuthErrorResponses() {
   return applyDecorators(
     ApiUnauthorizedResponse({
       description: "아래와 같은 인증 에러가 발생할 수 있습니다.",
-      content: {
-        "application/json": {
-          schema: {
-            allOf: [
-              { $ref: getSchemaPath(InvalidAccessTokenException) },
-              { $ref: getSchemaPath(AccessTokenNotProvidedException) },
-              { $ref: getSchemaPath(InvalidAccessIpException) }
-            ]
-          },
-          examples: {
-            "invalidAccessToken": {
-              value: INVALID_ACCESS_TOKEN_EXCEPTION_EXAMPLE
-            },
-            "accessTokenNotProvided": {
-              value: ACCESS_TOKEN_NOT_PROVIDED_EXCEPTION_EXAMPLE
-            },
-            "invalidAccessIp": {
-              value: INVALID_ACCESS_IP_EXCEPTION_EXAMPLE
-            }
-          }
-        }
-      }
+      content: ApiResponseContentsGenerator([
+        { model: InvalidAccessTokenException, example: EXAMPLE_INVALID_ACCESS_TOKEN_EXCEPTION },
+        { model: AccessTokenNotProvidedException, example: EXAMPLE_ACCESS_TOKEN_NOT_PROVIDED_EXCEPTION },
+        { model: InvalidAccessIpException, example: EXAMPLE_INVALID_ACCESS_IP_EXCEPTION }
+      ])
     })
   );
 }
@@ -98,7 +83,7 @@ export class PaginationResponse<Entity> {
 }
 
 // ref: https://github.com/nestjs/swagger/issues/86
-export function ApiPaginationResponse(type: Entity, example: any) {
+export function ApiPaginationResponse(type: Entity, example?: any) {
   class PaginationResponseForEntity<Entity> extends PaginationResponse<Entity> {
     @ApiModelProperty({ type, isArray: true })
     public results: Entity[];
@@ -120,6 +105,29 @@ export function ApiResponseContentGenerator(model: string | Function, example: a
         $ref: getSchemaPath(model)
       },
       example: example
+    }
+  }
+}
+
+export function ApiResponseContentsGenerator(
+  typeExample: {
+    model: string | Function,
+    example: any
+  }[]
+): ContentObject {
+  return {
+    "application/json": {
+      schema: {
+        allOf: typeExample.map(value => {
+          return { $ref: getSchemaPath(value.model) }
+        })
+      },
+      examples: Object.create(typeExample.map(value => {
+        const name = value.model.toString();
+        return {
+          [name]: value.example
+        }
+      }))
     }
   }
 }

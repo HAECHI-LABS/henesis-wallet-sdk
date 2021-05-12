@@ -1,14 +1,14 @@
 import { Controller, Get, Request } from "@nestjs/common";
 import { FeeWalletService } from "./fee-wallet.service";
-import { BalanceDTO } from "../dto/balance.dto";
+import { BalanceDTO, EXAMPLE_ETHEREUM_BALANCE_DTO } from '../dto/balance.dto';
 import express from "express";
-import { ApiExtraModels, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiExtraModels, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   AccessTokenNotProvidedException,
   InvalidAccessIpException,
   InvalidAccessTokenException,
 } from "../dto/exceptions.dto";
-import { AuthErrorResponses, AuthHeaders } from "../../../decorators";
+import { ApiResponseContentGenerator, AuthErrorResponses, AuthHeaders } from '../../../decorators';
 
 @Controller("fee-wallet")
 @ApiTags("fee-wallet")
@@ -23,6 +23,9 @@ export class FeeWalletController {
   constructor(private readonly feeWalletsService: FeeWalletService) {}
 
   @Get("/balance")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(BalanceDTO, EXAMPLE_ETHEREUM_BALANCE_DTO)
+  })
   @ApiOperation({
     summary: "수수료 지갑 잔고 조회하기",
     description: "수수료 지갑의 잔액을 조회합니다.",

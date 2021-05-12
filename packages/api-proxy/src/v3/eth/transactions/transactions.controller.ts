@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import { TransactionsService } from "./transactions.service";
 import express from "express";
-import { TransactionDTO } from "../dto/transaction.dto";
-import { ApiBadRequestResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { EXAMPLE_ETHEREUM_TRANSACTION_DTO, TransactionDTO } from '../dto/transaction.dto';
+import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   QUERY_TRANSACTIONS_ADDRESS_OPTIONAL,
   QUERY_TRANSACTIONS_END_OPTIONAL,
@@ -17,18 +17,18 @@ import {
   TRANSACTION_ID_REQUIRED,
 } from "../dto/params";
 import {
-  ApiPaginationResponse,
+  ApiPaginationResponse, ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
   PaginationResponse,
   PathParams,
-  Queries,
-} from "../../../decorators";
-import { TransactionIdNotFoundException } from "../dto/exceptions.dto";
+  Queries
+} from '../../../decorators';
+import { EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO, TransactionIdNotFoundException } from '../dto/exceptions.dto';
 import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { TransactionType } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 import { TransactionStatus } from "@haechi-labs/henesis-wallet-core";
-import { PaginationDTO } from "../dto/pagination.dto";
+import { EXAMPLE_ETHEREUM_PAGINATION_TRANSACTION_DTO, PaginationDTO } from '../dto/pagination.dto';
 
 @Controller("transactions")
 @ApiTags("transactions")
@@ -38,10 +38,16 @@ export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Get("/:transactionId")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(TransactionDTO, EXAMPLE_ETHEREUM_TRANSACTION_DTO)
+  })
   @PathParams(TRANSACTION_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "transaction id가 없을 때 발생합니다",
-    type: TransactionIdNotFoundException,
+    content: ApiResponseContentGenerator(
+      TransactionIdNotFoundException,
+      EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO
+    )
   })
   @ApiOperation({
     summary: "개별 트랜잭션 조회하기",
@@ -71,7 +77,7 @@ export class TransactionsController {
     QUERY_TRANSACTIONS_TYPES_OPTIONAL,
     QUERY_TRANSACTIONS_KEY_ID_OPTIONAL
   )
-  @ApiPaginationResponse(TransactionDTO)
+  @ApiPaginationResponse(TransactionDTO, EXAMPLE_ETHEREUM_PAGINATION_TRANSACTION_DTO)
   @ApiOperation({
     summary: "트랜잭션 목록 조회하기",
     description: "트랜잭션 목록을 조회합니다.",
