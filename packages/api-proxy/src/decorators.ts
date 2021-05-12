@@ -24,6 +24,7 @@ import {
   InvalidAccessTokenException
 } from './extra-model.dto';
 import { getTypeReferenceAsString } from '@nestjs/swagger/dist/plugin/utils/plugin-utils';
+import { ContentObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
 
 export function PathParams(...paramsOptions: ApiParamOptions[]) {
   return function (
@@ -108,4 +109,15 @@ export function ApiPaginationResponse(type: Entity) {
   });
 
   return applyDecorators(ApiOkResponse({ type: PaginationResponseForEntity }));
+}
+
+export function ApiResponseContentGenerator(model: string | Function, example: any): ContentObject {
+  return {
+    "application/json": {
+      schema: {
+        $ref: getSchemaPath(model)
+      },
+      example: example
+    }
+  }
 }

@@ -288,27 +288,22 @@ components:
           type: string
           description: 입금 주소 ID
           example: 94fd6a94ed199d660acf55e2f2943a7c
-          default: 94fd6a94ed199d660acf55e2f2943a7c
         name:
           type: string
           description: 입금 주소 이름
           example: bit
-          default: bit
         address:
           type: string
           description: 입금 주소
           example: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
-          default: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
         pub:
           type: string
           description: 입금 주소 공개키
           example: '0x022bf2a47ce5027831a3587ecd9f2d0d1e590a227ea576f61598ee84405e0479c1'
-          default: '0x022bf2a47ce5027831a3587ecd9f2d0d1e590a227ea576f61598ee84405e0479c1'
         createdAt:
           type: string
           description: '입금 주소 생성 시간 (단위: ms, UNIX time)'
           example: '1620041696849'
-          default: '1620041696849'
       required:
         - id
         - name
@@ -629,7 +624,6 @@ paths:
               $ref: '#/components/schemas/CreateDepositAddressRequestDTO'
       responses:
         '201':
-          description: 입금 주소가 성공적으로 생성
           content:
             application/json:
               schema:
@@ -641,6 +635,7 @@ paths:
                 pub: >-
                   0x022bf2a47ce5027831a3587ecd9f2d0d1e590a227ea576f61598ee84405e0479c1
                 createdAt: '1620041696849'
+          description: ''
         '401': *ref_9
       tags: *ref_10
     get:

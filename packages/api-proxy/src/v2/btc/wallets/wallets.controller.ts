@@ -11,7 +11,10 @@ import {
 import { WalletsService } from "./wallets.service";
 import { WalletDTO } from "../dto/wallet.dto";
 import { BalanceDTO } from "../dto/balance.dto";
-import { DEFAULT_DepositAddressDTO, DepositAddressDTO } from '../dto/deposit-address.dto';
+import {
+  DepositAddressDTO,
+  EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO
+} from '../dto/deposit-address.dto';
 import { TransferDTO } from "../dto/transfer.dto";
 import {
   ApiBody,
@@ -24,12 +27,12 @@ import express from "express";
 import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
 import { TransferRequestDTO } from "../dto/transfer-request.dto";
 import {
-  ApiPaginationResponse,
+  ApiPaginationResponse, ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries,
-} from "../../../decorators";
+  Queries
+} from '../../../decorators';
 import { PARAM_DEPOSIT_ADDRESS_ID, PARAM_WALLET_ID } from "../dto/params";
 import {
   QUERY_DEPOSIT_ADDRESS_ADDRESS_OPTIONAL,
@@ -92,15 +95,7 @@ export class WalletsController {
 
   @Post("/:walletId/deposit-addresses")
   @ApiCreatedResponse({
-    description: "입금 주소가 성공적으로 생성",
-    content: {
-      "application/json": {
-        schema: {
-          $ref: getSchemaPath(DepositAddressDTO)
-        },
-        example: DEFAULT_DepositAddressDTO
-      }
-    }
+    content: ApiResponseContentGenerator(DepositAddressDTO, EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO)
   })
   @ApiOperation({
     summary: "입금 주소 생성하기",
