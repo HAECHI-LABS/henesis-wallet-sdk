@@ -9,13 +9,13 @@ import {
   Request,
 } from "@nestjs/common";
 import { WalletsService } from "./wallets.service";
-import { WalletDTO } from "../dto/wallet.dto";
-import { BalanceDTO } from "../dto/balance.dto";
+import { EXAMPLE_BITCOIN_WALLET_DTO, WalletDTO } from '../dto/wallet.dto';
+import { BalanceDTO, EXAMPLE_BITCOIN_BALANCE_DTO } from '../dto/balance.dto';
 import {
   DepositAddressDTO,
   EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO
 } from '../dto/deposit-address.dto';
-import { TransferDTO } from "../dto/transfer.dto";
+import { EXAMPLE_BITCOIN_TRANSFER_DTO, TransferDTO } from '../dto/transfer.dto';
 import {
   ApiBody,
   ApiCreatedResponse,
@@ -40,7 +40,7 @@ import {
   QUERY_DEPOSIT_ADDRESS_NAME_OPTIONAL,
   QUERY_WALLET_NAME_OPTIONAL,
 } from "../dto/queries";
-import { PaginationDTO } from "../dto/pagination.dto";
+import { EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO, PaginationDTO } from '../dto/pagination.dto';
 
 @ApiTags("wallets")
 @Controller("wallets")
@@ -50,6 +50,10 @@ export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
   @Get("/")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(WalletDTO, EXAMPLE_BITCOIN_WALLET_DTO),
+    isArray: true
+  })
   @ApiOperation({
     summary: "전체 지갑 목록 조회하기",
     description: "전체 지갑 목록을 조회합니다.",
@@ -63,6 +67,9 @@ export class WalletsController {
   }
 
   @Get("/:walletId")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(WalletDTO, EXAMPLE_BITCOIN_WALLET_DTO)
+  })
   @ApiOperation({
     summary: "지갑 정보 조회하기",
     description: "특정 지갑의 상세 정보를 조회합니다.",
@@ -77,8 +84,7 @@ export class WalletsController {
 
   @Get("/:walletId/balance")
   @ApiOkResponse({
-    description: "지갑 잔고 조회",
-    type: BalanceDTO,
+    content: ApiResponseContentGenerator(BalanceDTO, EXAMPLE_BITCOIN_BALANCE_DTO),
     isArray: true,
   })
   @ApiOperation({
@@ -126,7 +132,7 @@ export class WalletsController {
     QUERY_DEPOSIT_ADDRESS_NAME_OPTIONAL
   )
   @PathParams(PARAM_WALLET_ID)
-  @ApiPaginationResponse(DepositAddressDTO)
+  @ApiPaginationResponse(DepositAddressDTO, EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO)
   public async getDepositAddresses(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -144,6 +150,9 @@ export class WalletsController {
   }
 
   @Get("/:walletId/deposit-addresses/:depositAddressId")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(DepositAddressDTO, EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO)
+  })
   @ApiOperation({
     summary: "입금 주소 정보 조회하기",
     description: "특정 입금 주소 정보를 조회합니다.",
@@ -162,6 +171,9 @@ export class WalletsController {
   }
 
   @Post("/:walletId/transfer")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(TransferDTO, EXAMPLE_BITCOIN_TRANSFER_DTO)
+  })
   @ApiOperation({
     summary: "지갑에서 코인 전송하기",
     description: "특정 지갑에서 가상자산을 전송합니다.",

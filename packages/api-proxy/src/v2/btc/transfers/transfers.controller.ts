@@ -1,16 +1,16 @@
 import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import { TransfersService } from "./transfers.service";
-import { TransferDTO } from "../dto/transfer.dto";
-import { ApiHeaders, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { EXAMPLE_BITCOIN_TRANSFER_DTO, TransferDTO } from '../dto/transfer.dto';
+import { ApiHeaders, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import express from "express";
-import { PaginationDTO } from "../dto/pagination.dto";
+import { EXAMPLE_BITCOIN_PAGINATION_TRANSFER_DTO, PaginationDTO } from '../dto/pagination.dto';
 import {
-  ApiPaginationResponse,
+  ApiPaginationResponse, ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries,
-} from "../../../decorators";
+  Queries
+} from '../../../decorators';
 import {
   QUERY_TRANSFERS_ADDRESS_OPTIONAL,
   QUERY_TRANSFERS_PAGE_OPTIONAL,
@@ -36,7 +36,7 @@ export class TransfersController {
     summary: "입출금 내역 조회하기",
     description: "입출금 내역을 조회합니다.",
   })
-  @ApiPaginationResponse(TransferDTO)
+  @ApiPaginationResponse(TransferDTO, EXAMPLE_BITCOIN_PAGINATION_TRANSFER_DTO)
   @Queries(
     QUERY_TRANSFERS_TYPE_OPTIONAL,
     QUERY_TRANSFERS_WALLET_ID_OPTIONAL,
@@ -74,6 +74,9 @@ export class TransfersController {
   }
 
   @Get("/:transferId")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(TransferDTO, EXAMPLE_BITCOIN_TRANSFER_DTO)
+  })
   @ApiOperation({
     summary: "특정 입출금 내역 조회하기",
     description: "특정 입출금 내역을 조회합니다.",

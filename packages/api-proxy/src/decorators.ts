@@ -98,7 +98,7 @@ export class PaginationResponse<Entity> {
 }
 
 // ref: https://github.com/nestjs/swagger/issues/86
-export function ApiPaginationResponse(type: Entity) {
+export function ApiPaginationResponse(type: Entity, example: any) {
   class PaginationResponseForEntity<Entity> extends PaginationResponse<Entity> {
     @ApiModelProperty({ type, isArray: true })
     public results: Entity[];
@@ -108,7 +108,9 @@ export function ApiPaginationResponse(type: Entity) {
     value: `GetManyResponseFor${type.name}`,
   });
 
-  return applyDecorators(ApiOkResponse({ type: PaginationResponseForEntity }));
+  return applyDecorators(ApiOkResponse({
+    content: ApiResponseContentGenerator(PaginationResponseForEntity, example)
+  }));
 }
 
 export function ApiResponseContentGenerator(model: string | Function, example: any): ContentObject {

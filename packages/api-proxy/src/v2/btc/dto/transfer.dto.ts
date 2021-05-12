@@ -1,90 +1,109 @@
-import { BtcTransactionDTO } from "./btc-transaction.dto";
-import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
-import { BNConverter } from "@haechi-labs/henesis-wallet-core";
+import { BtcTransactionDTO, EXAMPLE_BITCOIN_BTC_TRANSACTION_DTO } from './btc-transaction.dto';
+import { Transfer } from '@haechi-labs/henesis-wallet-core/lib/btc/transfers';
+import { BNConverter } from '@haechi-labs/henesis-wallet-core';
+import { TransferStatus, TransferType } from '@haechi-labs/henesis-wallet-core/lib/__generate__/btc';
+import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
+
+export const EXAMPLE_BITCOIN_TRANSFER_DTO: TransferDTO = {
+  transaction: EXAMPLE_BITCOIN_BTC_TRANSACTION_DTO,
+  walletId: "2d855c98bd183d14f7d9a1805327afff",
+  amount: "0x1",
+  status: TransferStatus.PENDING,
+  id: "7074aaec177f02559e1b1c9e63816359",
+  outputIndex: 0,
+  receivedAt: "2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm",
+  sendTo: "2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm",
+  withdrawalApprovalId: "7074aaec177f02559e1b1c9e63816359",
+  type: TransferType.WITHDRAWAL,
+  createdAt: "1620042252520",
+  updatedAt: "1620042252520",
+  feeAmount: "0x2ee",
+  confirmation: "0x8a3b"
+}
 
 export class TransferDTO {
-  /**
-   * 해당 전송(Transfer)이 포함되는 온체인 트랜잭션의 정보
-   * @example BtcTransaction
-   */
+  @ApiModelProperty({
+    description: "해당 전송(Transfer)이 포함되는 온체인 트랜잭션의 정보",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.transaction
+  })
   transaction: BtcTransactionDTO;
 
-  /**
-   * 지갑 ID
-   * @example 2d855c98bd183d14f7d9a1805327afff
-   */
+  @ApiModelProperty({
+    description: "지갑 ID",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.walletId
+  })
   walletId: string;
 
-  /**
-   * 전송할 암호화폐의 양 (단위: satoshi) (형식: 16진법)
-   * @example 0x1
-   */
+  @ApiModelProperty({
+    description: "전송할 암호화폐의 양 (단위: satoshi) (형식: 16진법)",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.amount
+  })
   amount: string;
 
-  /**
-   * 전송(Transfer) 상태
-   * @example PENDING, PENDING_APPROVAL
-   */
-  status: string;
+  @ApiModelProperty({
+    description: "전송(Transfer) 상태",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.status
+  })
+  status: TransferStatus;
 
-  /**
-   * 전송(Transfer) ID
-   * @example 7074aaec177f02559e1b1c9e63816359
-   */
+  @ApiModelProperty({
+    description: "전송(Transfer) ID",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.id
+  })
   id: string;
 
-  /**
-   * 해당 전송(Transfer)을 통해 발생한 Output이 같은 트랜잭션에 포함된 여러 UTXO 중에 몇 번째 Output 인지?
-   * @example 0
-   */
+  @ApiModelProperty({
+    description: "해당 전송(Transfer)을 통해 발생한 Output이 같은 트랜잭션에 포함된 여러 UTXO 중에 몇 번째 Output 인지?",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.outputIndex
+  })
   outputIndex?: number;
 
-  /**
-   * 받는 주소
-   * @example 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
-   */
+  @ApiModelProperty({
+    description: "받는 주소",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.receivedAt
+  })
   receivedAt?: string;
 
-  /**
-   * 보내는 주소
-   * @example 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
-   */
+  @ApiModelProperty({
+    description: "보내는 주소",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.sendTo
+  })
   sendTo?: string;
 
-  /**
-   * 출금 한도를 초과할 경우 생성된 출금 요청의 ID
-   * @example 7074aaec177f02559e1b1c9e63816359
-   */
+  @ApiModelProperty({
+    description: "출금 한도를 초과할 경우 생성된 출금 요청의 ID",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.withdrawalApprovalId
+  })
   withdrawalApprovalId?: string;
 
-  /**
-   * 전송(Transfer) 타입
-   * @example WITHDRAWAL, DEPOSIT
-   */
-  type: string;
+  @ApiModelProperty({
+    description: "전송(Transfer) 타입",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.type
+  })
+  type: TransferType;
 
-  /**
-   * 전송(Transfer)이 생성된 시간 (형식: ms, UNIX time)
-   * @example 1620042252520
-   */
+  @ApiModelProperty({
+    description: "전송(Transfer)이 생성된 시간 (형식: ms, UNIX time)",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.createdAt
+  })
   createdAt: string;
 
-  /**
-   * 전송(Transfer) 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)
-   * @example 1620042252520
-   */
+  @ApiModelProperty({
+    description: "전송(Transfer) 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.updatedAt
+  })
   updatedAt: string;
 
-  /**
-   * 사용된 수수료의 양 (단위: satoshi) (형식: 16진법)
-   * @example 0x2ee
-   */
+  @ApiModelProperty({
+    description: "사용된 수수료의 양 (단위: satoshi) (형식: 16진법)",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.feeAmount
+  })
   feeAmount?: string;
 
-  /**
-   * 지갑 ID
-   * @example 0x0
-   */
+  @ApiModelProperty({
+    description: "트랜잭션 전파 이후 채굴 된 블록 갯수",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.confirmation
+  })
   confirmation: string;
 
   static fromTransfer(transfer: Transfer): TransferDTO {
