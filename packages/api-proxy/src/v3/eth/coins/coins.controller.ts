@@ -36,7 +36,9 @@ import {
 @ApiExtraModels(
   InvalidAccessIpException,
   InvalidAccessTokenException,
-  AccessTokenNotProvidedException
+  AccessTokenNotProvidedException,
+  NoCoinException,
+  CoinDTO
 )
 @AuthErrorResponses()
 @AuthHeaders()

@@ -18,7 +18,7 @@ import {
 import { EXAMPLE_BITCOIN_TRANSFER_DTO, TransferDTO } from '../dto/transfer.dto';
 import {
   ApiBody,
-  ApiCreatedResponse,
+  ApiCreatedResponse, ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
   ApiTags, getSchemaPath
@@ -44,6 +44,10 @@ import { EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO, PaginationDTO } from '.
 
 @ApiTags("wallets")
 @Controller("wallets")
+@ApiExtraModels(
+  WalletDTO,
+  BalanceDTO
+)
 @AuthErrorResponses()
 @AuthHeaders()
 export class WalletsController {

@@ -40,7 +40,9 @@ import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/e
 @ApiExtraModels(
   InvalidAccessIpException,
   InvalidAccessTokenException,
-  AccessTokenNotProvidedException
+  AccessTokenNotProvidedException,
+  InvalidStatusException,
+  ContractCallsDTO
 )
 @AuthErrorResponses()
 @AuthHeaders()

@@ -2,7 +2,7 @@ import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import { TransactionsService } from "./transactions.service";
 import express from "express";
 import { EXAMPLE_ETHEREUM_TRANSACTION_DTO, TransactionDTO } from '../dto/transaction.dto';
-import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiExtraModels, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   QUERY_TRANSACTIONS_ADDRESS_OPTIONAL,
   QUERY_TRANSACTIONS_END_OPTIONAL,
@@ -32,6 +32,7 @@ import { EXAMPLE_ETHEREUM_PAGINATION_TRANSACTION_DTO, PaginationDTO } from '../d
 
 @Controller("transactions")
 @ApiTags("transactions")
+@ApiExtraModels(TransactionIdNotFoundException)
 @AuthErrorResponses()
 @AuthHeaders()
 export class TransactionsController {

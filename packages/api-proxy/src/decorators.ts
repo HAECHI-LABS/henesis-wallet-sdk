@@ -83,7 +83,7 @@ export class PaginationResponse<Entity> {
 }
 
 // ref: https://github.com/nestjs/swagger/issues/86
-export function ApiPaginationResponse(type: Entity, example?: any) {
+export function ApiPaginationResponse(type: Entity, example: any) {
   class PaginationResponseForEntity<Entity> extends PaginationResponse<Entity> {
     @ApiModelProperty({ type, isArray: true })
     public results: Entity[];
@@ -93,9 +93,12 @@ export function ApiPaginationResponse(type: Entity, example?: any) {
     value: `GetManyResponseFor${type.name}`,
   });
 
-  return applyDecorators(ApiOkResponse({
-    content: ApiResponseContentGenerator(PaginationResponseForEntity, example)
-  }));
+  return applyDecorators(
+    ApiExtraModels(PaginationResponseForEntity),
+    ApiOkResponse({
+      content: ApiResponseContentGenerator(PaginationResponseForEntity, example)
+    })
+  );
 }
 
 export function ApiResponseContentGenerator(model: string | Function, example: any): ContentObject {
@@ -122,12 +125,14 @@ export function ApiResponseContentsGenerator(
           return { $ref: getSchemaPath(value.model) }
         })
       },
-      examples: Object.create(typeExample.map(value => {
-        const name = value.model.toString();
+      examples: typeExample.reduce((obj, item) => {
         return {
-          [name]: value.example
+          ...obj,
+          [(item['model'] as any).name]: {
+            value: item.example
+          }
         }
-      }))
+      }, {})
     }
   }
 }

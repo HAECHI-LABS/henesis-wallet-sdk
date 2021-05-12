@@ -8,6 +8,7 @@ import express from "express";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
 import { HttpExceptionHandler } from "./middlewares/http-exception-handler";
+import { OpenApiDescriptionGenerator, OpenApiDocumentFileName, OpenApiNameGenerator } from './utils/openapi';
 
 // options and constants
 const API_PREFIX = "/api";
@@ -26,8 +27,8 @@ async function bootstrap() {
   const app = await createApp();
   // swagger settings
   const config = new DocumentBuilder()
-    .setTitle(`API PROXY${process.env.API_VERSION + process.env.ENDPOINT}`)
-    .setDescription("The API PROXY description")
+    .setTitle(OpenApiNameGenerator())
+    .setDescription(OpenApiDescriptionGenerator())
     .setVersion("1.0")
     .build();
   config.servers = [{ url: `http://localhost:${PORT}` }];
@@ -36,9 +37,7 @@ async function bootstrap() {
 
   if (BUILD_SWAGGER) {
     fs.writeFileSync(
-      `./swagger/swagger-spec${
-        process.env.API_VERSION ? `-${process.env.API_VERSION}` : ""
-      }${process.env.ENDPOINT ? `-${process.env.ENDPOINT}` : ""}.yaml`,
+      `${OpenApiDocumentFileName()}.yaml`,
       yaml.dump(document)
     );
     return;

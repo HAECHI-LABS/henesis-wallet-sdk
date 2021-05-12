@@ -65,7 +65,11 @@ import { EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO } from '../../../v2/btc/
 @ApiExtraModels(
   WalletNotFoundException,
   NoWalletNameException,
-  DepositAddressNotFoundException
+  DepositAddressNotFoundException,
+  WalletDTO,
+  BalanceDTO,
+  TransactionDTO,
+  DepositAddressDTO
 )
 @AuthErrorResponses()
 @AuthHeaders()

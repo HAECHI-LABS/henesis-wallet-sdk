@@ -11,10 +11,7 @@ export const EXAMPLE_ETHEREUM_COIN_DTO: CoinDTO = {
   description: "이더리움",
   decimals: 18,
   blockchain: Blockchain.ETHEREUM,
-  attributes: [
-    CoinDTOAttributesEnum.STANDARD,
-    CoinDTOAttributesEnum.REBASE
-  ]
+  attributes: [CoinDTOAttributesEnum.STANDARD]
 }
 
 export class CoinDTO {
@@ -62,7 +59,8 @@ export class CoinDTO {
 
   @ApiModelProperty({
     description: "코인의 메타 데이터",
-    example: EXAMPLE_ETHEREUM_COIN_DTO.attributes
+    example: EXAMPLE_ETHEREUM_COIN_DTO.attributes,
+    isArray: true,
   })
   attributes: CoinDTOAttributesEnum[];
 
