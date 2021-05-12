@@ -460,11 +460,13 @@ paths:
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
           content:
             application/json:
-              schema:
-                anyOf:
-                  - $ref: '#/components/schemas/InvalidAccessTokenException'
-                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
-                  - $ref: '#/components/schemas/InvalidAccessIpException'
+              examples:
+                InvalidAccessToken:
+                  $ref: '#/components/schemas/InvalidAccessTokenException'
+                AccessTokenNotProvided:
+                  $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                InvalidAccessIp:
+                  $ref: '#/components/schemas/InvalidAccessIpException'
       tags: &ref_3
         - transfers
   /api/v2/btc/transfers/{transferId}:
@@ -527,11 +529,13 @@ paths:
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
           content:
             application/json:
-              schema:
-                anyOf:
-                  - $ref: '#/components/schemas/InvalidAccessTokenException'
-                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
-                  - $ref: '#/components/schemas/InvalidAccessIpException'
+              examples:
+                InvalidAccessToken:
+                  $ref: '#/components/schemas/InvalidAccessTokenException'
+                AccessTokenNotProvided:
+                  $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                InvalidAccessIp:
+                  $ref: '#/components/schemas/InvalidAccessIpException'
       tags: &ref_7
         - wallets
   /api/v2/btc/wallets/{walletId}:
@@ -683,8 +687,8 @@ paths:
   /api/v2/btc/wallets/{walletId}/transfer:
     post:
       operationId: WalletsController_transfer
-      summary: transfer
-      description: transfer
+      summary: 지갑에서 코인 전송하기
+      description: 특정 지갑에서 가상자산을 전송합니다.
       parameters:
         - *ref_4
         - *ref_5

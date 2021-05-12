@@ -161,8 +161,8 @@ export class WalletsController {
 
   @Post("/:walletId/transfer")
   @ApiOperation({
-    summary: "transfer",
-    description: "transfer",
+    summary: "지갑에서 코인 전송하기",
+    description: "특정 지갑에서 가상자산을 전송합니다.",
   })
   @PathParams(PARAM_WALLET_ID)
   public async transfer(

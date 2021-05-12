@@ -1,5 +1,6 @@
 import { applyDecorators } from "@nestjs/common";
 import {
+  ApiExtraModels,
   ApiHeaders,
   ApiOkResponse,
   ApiParam,
@@ -7,8 +8,8 @@ import {
   ApiQuery,
   ApiQueryOptions,
   ApiUnauthorizedResponse,
-  getSchemaPath,
-} from "@nestjs/swagger";
+  getSchemaPath
+} from '@nestjs/swagger';
 import { PaginationMetadata } from "./v3/eth/dto/pagination.dto";
 import {
   ApiModelProperty,
@@ -21,6 +22,7 @@ import {
   InvalidAccessIpException,
   InvalidAccessTokenException,
 } from "./extra-model.dto";
+import { getTypeReferenceAsString } from '@nestjs/swagger/dist/plugin/utils/plugin-utils';
 
 export function PathParams(...paramsOptions: ApiParamOptions[]) {
   return function (
@@ -56,13 +58,21 @@ export function AuthErrorResponses() {
   return applyDecorators(
     ApiUnauthorizedResponse({
       description: "아래와 같은 인증 에러가 발생할 수 있습니다.",
-      schema: {
-        anyOf: [
-          { $ref: getSchemaPath(InvalidAccessTokenException) },
-          { $ref: getSchemaPath(AccessTokenNotProvidedException) },
-          { $ref: getSchemaPath(InvalidAccessIpException) },
-        ],
-      },
+      content: {
+        "application/json": {
+          examples: {
+            InvalidAccessToken: {
+              $ref: getSchemaPath(InvalidAccessTokenException)
+            },
+            AccessTokenNotProvided: {
+              $ref: getSchemaPath(AccessTokenNotProvidedException)
+            },
+            InvalidAccessIp: {
+              $ref: getSchemaPath(InvalidAccessIpException)
+            }
+          }
+        }
+      }
     })
   );
 }
