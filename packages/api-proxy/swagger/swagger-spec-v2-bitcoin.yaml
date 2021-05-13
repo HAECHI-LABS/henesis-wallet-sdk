@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: API PROXYv2bitcoin
-  description: The API PROXY description
+  title: BITCOIN
+  description: Henesis API Proxy - v2 - bitcoin OpenAPI Documentation
   version: '1.0'
   contact: {}
 tags: []

@@ -11,7 +11,6 @@ import {
   ApiBadRequestResponse,
   ApiExtraModels, ApiOkResponse,
   ApiOperation,
-  ApiResponse,
   ApiTags
 } from '@nestjs/swagger';
 import { CoinDTO, EXAMPLE_ETHEREUM_COIN_DTO } from '../dto/coin.dto';
@@ -20,10 +19,9 @@ import {
   ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
-  PathParams,
-  Queries
+  PathParams
 } from '../../../decorators';
-import { COIN_REQUIRED, FLAG_REQUIRED } from "../dto/params";
+import { COIN_REQUIRED } from "../dto/params";
 import {
   AccessTokenNotProvidedException, EXAMPLE_NO_COIN_EXCEPTION_DTO,
   InvalidAccessIpException,
@@ -50,7 +48,6 @@ export class CoinsController {
     content: ApiResponseContentGenerator(CoinDTO, EXAMPLE_ETHEREUM_COIN_DTO),
     isArray: true
   })
-  @Queries(FLAG_REQUIRED)
   @ApiOperation({
     summary: "전체 코인 목록 조회하기",
     description:

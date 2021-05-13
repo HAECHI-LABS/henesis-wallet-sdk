@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: API PROXY
-  description: The API PROXY description
+  title: VERSION
+  description: Henesis API Proxy  - version OpenAPI Documentation
   version: '1.0'
   contact: {}
 tags: []

@@ -1,4 +1,5 @@
 import { ApiParamOptions, ApiQueryOptions } from "@nestjs/swagger";
+import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
 
 export const TICKER_OPTIONAL: ApiQueryOptions = {
   name: "ticker",
@@ -73,11 +74,6 @@ export const PAGE_OPTIONAL: ApiQueryOptions = {
   name: "page",
   required: false,
   description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
-};
-export const FLAG_REQUIRED: ApiQueryOptions = {
-  name: "flag",
-  required: true,
-  description: "FLAG OPTION",
 };
 export const NAME_OPTIONAL: ApiQueryOptions = {
   name: "name",

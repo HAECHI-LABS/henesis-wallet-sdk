@@ -6,17 +6,17 @@ export function OpenApiNameGenerator() {
 }
 
 export function OpenApiDescriptionGenerator() {
-  return "Henesis API Proxy" + API_VERSION
-    ? ` - ${API_VERSION}`
-    : "" + ENDPOINT
-    ? ` - ${ENDPOINT}`
-    : "" + ` OpenAPI Documentation`;
+  return `Henesis API Proxy ${API_VERSION
+    ? `- ${API_VERSION}`
+    : ""}${ENDPOINT
+    ? ` - ${ENDPOINT} `
+    : ""}OpenAPI Documentation`;
 }
 
 export function OpenApiDocumentFileName() {
-  return "./swagger/swagger-spec" + API_VERSION
+  return `./swagger/swagger-spec${API_VERSION
     ? `-${API_VERSION}`
-    : "" + ENDPOINT
+    : ""}${ENDPOINT
     ? `-${ENDPOINT}`
-    : "";
+    : ""}`;
 }

@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: API PROXYv3ethereum
-  description: The API PROXY description
+  title: ETHEREUM
+  description: Henesis API Proxy - v3 - ethereum OpenAPI Documentation
   version: '1.0'
   contact: {}
 tags: []
@@ -757,12 +757,6 @@ paths:
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
-        - name: flag
-          required: true
-          in: query
-          description: FLAG OPTION
-          schema:
-            type: boolean
       responses:
         '200':
           content:

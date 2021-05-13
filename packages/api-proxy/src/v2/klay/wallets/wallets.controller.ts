@@ -391,7 +391,7 @@ export class WalletsController {
     @Param("masterWalletId") masterWalletId: string,
     @Param("userWalletId") userWalletId: string,
     @Body() retryCreateUserWalletRequestDTO: RetryCreateUserWalletRequestDTO
-  ): Promise<MasterWalletDTO> {
+  ): Promise<UserWalletDTO> {
     return await this.walletsService.retryCreateUserWallet(
       request.sdk,
       masterWalletId,
