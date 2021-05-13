@@ -78,7 +78,7 @@ export class WalletsController {
   @ApiOkResponse({
     content: ApiResponseContentGenerator(
       MasterWalletDTO,
-      EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO
+      [EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO]
     ),
     isArray: true,
   })
@@ -118,7 +118,7 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/contract-call")
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
       EXAMPLE_ETH_KLAY_TRANSACTION_DTO
@@ -167,7 +167,7 @@ export class WalletsController {
   @ApiOkResponse({
     content: ApiResponseContentGenerator(
       BalanceDTO,
-      EXAMPLE_ETH_KLAY_BALANCE_DTO
+      [EXAMPLE_ETH_KLAY_BALANCE_DTO]
     ),
     isArray: true,
   })
@@ -192,7 +192,7 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/transfer")
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
       EXAMPLE_ETH_KLAY_TRANSACTION_DTO
@@ -217,10 +217,10 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/batch-transactions")
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
-      EXAMPLE_ETH_KLAY_TRANSACTION_DTO
+      [EXAMPLE_ETH_KLAY_TRANSACTION_DTO]
     ),
     isArray: true,
   })
@@ -245,7 +245,7 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/flush")
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
       EXAMPLE_ETH_KLAY_TRANSACTION_DTO
@@ -358,7 +358,7 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/user-wallets/:userWalletId/contract-call")
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
       EXAMPLE_ETH_KLAY_TRANSACTION_DTO
@@ -411,7 +411,7 @@ export class WalletsController {
   @ApiOkResponse({
     content: ApiResponseContentGenerator(
       BalanceDTO,
-      EXAMPLE_ETH_KLAY_BALANCE_DTO
+      [EXAMPLE_ETH_KLAY_BALANCE_DTO]
     ),
     isArray: true,
   })
@@ -438,7 +438,7 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/user-wallets/:userWalletId/transfer")
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
       EXAMPLE_ETH_KLAY_TRANSACTION_DTO
@@ -465,7 +465,7 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/recreate")
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       MasterWalletDTO,
       EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO
@@ -490,7 +490,7 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/user-wallets/:userWalletId/recreate")
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
       EXAMPLE_ETH_KLAY_TRANSACTION_DTO

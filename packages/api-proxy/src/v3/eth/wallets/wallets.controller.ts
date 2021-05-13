@@ -78,7 +78,7 @@ export class WalletsController {
 
   @Get("/")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(WalletDTO, EXAMPLE_ETHEREUM_WALLET_DTO),
+    content: ApiResponseContentGenerator(WalletDTO, [EXAMPLE_ETHEREUM_WALLET_DTO]),
     isArray: true
   })
   @Queries(NAME_OPTIONAL)
@@ -118,7 +118,7 @@ export class WalletsController {
 
   @Get("/:walletId/balance")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(BalanceDTO, EXAMPLE_ETHEREUM_BALANCE_DTO),
+    content: ApiResponseContentGenerator(BalanceDTO, [EXAMPLE_ETHEREUM_BALANCE_DTO]),
     isArray: true
   })
   @PathParams(WALLET_ID_REQUIRED)
@@ -147,7 +147,6 @@ export class WalletsController {
   }
 
   @Patch("/:walletId/name")
-  @ApiOkResponse()
   @PathParams(WALLET_ID_REQUIRED)
   @ApiNoContentResponse()
   @ApiBadRequestResponse({
@@ -409,7 +408,7 @@ export class WalletsController {
 
   @Get("/:walletId/deposit-addresses/:depositAddressId/balance")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(BalanceDTO, EXAMPLE_ETHEREUM_BALANCE_DTO),
+    content: ApiResponseContentGenerator(BalanceDTO, [EXAMPLE_ETHEREUM_BALANCE_DTO]),
     isArray: true
   })
   @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)

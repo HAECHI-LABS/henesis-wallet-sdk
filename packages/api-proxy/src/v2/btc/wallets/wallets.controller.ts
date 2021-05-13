@@ -60,7 +60,7 @@ export class WalletsController {
 
   @Get("/")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(WalletDTO, EXAMPLE_BITCOIN_WALLET_DTO),
+    content: ApiResponseContentGenerator(WalletDTO, [EXAMPLE_BITCOIN_WALLET_DTO]),
     isArray: true,
   })
   @ApiOperation({
@@ -115,7 +115,7 @@ export class WalletsController {
   @ApiOkResponse({
     content: ApiResponseContentGenerator(
       BalanceDTO,
-      EXAMPLE_BITCOIN_BALANCE_DTO
+      [EXAMPLE_BITCOIN_BALANCE_DTO]
     ),
     isArray: true,
   })

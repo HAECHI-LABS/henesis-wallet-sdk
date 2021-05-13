@@ -29,7 +29,7 @@ export class CoinsController {
 
   @Get("/")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(CoinDTO, EXAMPLE_ETH_KLAY_COIN_DTO),
+    content: ApiResponseContentGenerator(CoinDTO, [EXAMPLE_ETH_KLAY_COIN_DTO]),
     isArray: true,
   })
   @ApiOperation({

@@ -45,7 +45,7 @@ export class CoinsController {
 
   @Get()
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(CoinDTO, EXAMPLE_ETHEREUM_COIN_DTO),
+    content: ApiResponseContentGenerator(CoinDTO, [EXAMPLE_ETHEREUM_COIN_DTO]),
     isArray: true
   })
   @ApiOperation({
