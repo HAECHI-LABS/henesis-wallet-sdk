@@ -325,6 +325,16 @@ components:
           type: string
           description: 암호화폐 심볼 (ticker)
           example: BTC
+    ChangeWalletNameRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 변경할 지갑 이름
+          example: walletName
+          default: walletName
+      required:
+        - name
     CreateDepositAddressRequestDTO:
       type: object
       properties:
@@ -615,18 +625,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
-              example: &ref_13
-                id: cce4f485764767f256155390873668b3
-                name: bitcoin-wallet
-                address: 2Mx6o4HZfPyV3QrYNv26jCGMwAPpDeVzq1a
-                encryptionKey: >-
-                  b72355635b2f8db7d603a73gd37r2460e28d93ad42df6ba85fff4b18fe374ae3
-                createdAt: '1599116198762'
-                updatedAt: '1599116198962'
-                status: ACTIVE
-                orgId: 0u1a431da7361na9e75648180bbd4fbc
-                accountKey: *ref_7
-                whitelistActivated: false
+              example:
+                - &ref_13
+                  id: cce4f485764767f256155390873668b3
+                  name: bitcoin-wallet
+                  address: 2Mx6o4HZfPyV3QrYNv26jCGMwAPpDeVzq1a
+                  encryptionKey: >-
+                    b72355635b2f8db7d603a73gd37r2460e28d93ad42df6ba85fff4b18fe374ae3
+                  createdAt: '1599116198762'
+                  updatedAt: '1599116198962'
+                  status: ACTIVE
+                  orgId: 0u1a431da7361na9e75648180bbd4fbc
+                  accountKey: *ref_7
+                  whitelistActivated: false
           description: ''
         '401': &ref_14
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
@@ -670,6 +681,33 @@ paths:
           description: ''
         '401': *ref_14
       tags: *ref_15
+  /api/v2/btc/wallets/{walletId}/name:
+    patch:
+      operationId: WalletsController_changeWalletName
+      summary: 지갑 정보 변경하기
+      description: 특정 지갑의 이름을 변경합니다.
+      parameters:
+        - *ref_11
+        - *ref_12
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeWalletNameRequestDTO'
+      responses:
+        '200':
+          description: ''
+        '204':
+          description: ''
+        '401': *ref_14
+      tags: *ref_15
   /api/v2/btc/wallets/{walletId}/balance:
     get:
       operationId: WalletsController_getWalletBalance
@@ -691,11 +729,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
               example:
-                coinType: BTC
-                amount: '0xDBE16A831'
-                spendableAmount: '0xDBE16A831'
-                name: 비트코인
-                symbol: BTC
+                - coinType: BTC
+                  amount: '0xDBE16A831'
+                  spendableAmount: '0xDBE16A831'
+                  name: 비트코인
+                  symbol: BTC
           description: ''
         '401': *ref_14
       tags: *ref_15

@@ -763,15 +763,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CoinDTO'
-              example: &ref_3
-                id: 11
-                name: ethereum
-                ticker: ETH
-                address: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
-                description: 이더리움
-                decimals: 18
-                blockchain: ETHEREUM
-                attributes: *ref_0
+              example:
+                - &ref_3
+                  id: 11
+                  name: ethereum
+                  ticker: ETH
+                  address: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+                  description: 이더리움
+                  decimals: 18
+                  blockchain: ETHEREUM
+                  attributes: *ref_0
           description: ''
         '401': &ref_4
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
@@ -1321,16 +1322,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
-              example: &ref_18
-                id: ae40b1b3dd953e5592c21e58be30d807
-                name: ethereum-wallet
-                address: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
-                blockchain: ETHEREUM
-                createdAt: '1612411568760'
-                updatedAt: '1612411724023'
-                status: ACTIVE
-                whitelistActivated: false
-                version: v4
+              example:
+                - &ref_18
+                  id: ae40b1b3dd953e5592c21e58be30d807
+                  name: ethereum-wallet
+                  address: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
+                  blockchain: ETHEREUM
+                  createdAt: '1612411568760'
+                  updatedAt: '1612411724023'
+                  status: ACTIVE
+                  whitelistActivated: false
+                  version: v4
           description: ''
         '401': &ref_19
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
@@ -1409,7 +1411,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
-              example: *ref_21
+              example:
+                - *ref_21
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1845,7 +1848,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
-              example: *ref_21
+              example:
+                - *ref_21
           description: ''
         '401': *ref_19
       tags: *ref_20

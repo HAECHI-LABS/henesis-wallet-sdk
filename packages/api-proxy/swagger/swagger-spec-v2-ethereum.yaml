@@ -960,15 +960,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CoinDTO'
-              example: &ref_3
-                id: 576
-                name: Ampleforth
-                symbol: AMPL
-                address: '0x35b1dc534959fa547047a3dcdf1eb1eebd704561'
-                desc: AMPL
-                blockchain: ETHEREUM
-                decimals: 9
-                attributes: *ref_0
+              example:
+                - &ref_3
+                  id: 576
+                  name: Ampleforth
+                  symbol: AMPL
+                  address: '0x35b1dc534959fa547047a3dcdf1eb1eebd704561'
+                  desc: AMPL
+                  blockchain: ETHEREUM
+                  decimals: 9
+                  attributes: *ref_0
           description: ''
         '401': &ref_4
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
@@ -1222,6 +1223,12 @@ paths:
             updatedAt이 해당 시점보다 이전인 트랜잭션 조회 
             (형식: ms, UNIX time) 
             ex. 1593670000000 
+          schema:
+            type: string
+        - name: transferType
+          required: false
+          in: query
+          description: 입금, 출금 타입을 지정합니다. DEPOSIT, WITHDRAWAL 2 가지 타입만 입력할 수 있습니다.
           schema:
             type: string
         - name: size
@@ -1496,21 +1503,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MasterWalletDTO'
-              example: &ref_25
-                id: 407a31c97902faf2b5b2cd4b1fa1cfcd
-                name: bit
-                address: '0x2c27695429903b1e36299ce1eb89a3c1c34d115d'
-                createdAt: '1615793637580'
-                updatedAt: '1615793656270'
-                status: ACTIVE
-                blockchain: ETHEREUM
-                version: v3
-                transactionId: 183365bc7837eceb5c9292e5be1655b7
-                error: null
-                accountKey: *ref_22
-                encryptionKey: >-
-                  f0880e48251dd2f8574a8c8a4d65311030185d5e451e8a474b89c2b473b5d953
-                whitelistActivated: false
+              example:
+                - &ref_25
+                  id: 407a31c97902faf2b5b2cd4b1fa1cfcd
+                  name: bit
+                  address: '0x2c27695429903b1e36299ce1eb89a3c1c34d115d'
+                  createdAt: '1615793637580'
+                  updatedAt: '1615793656270'
+                  status: ACTIVE
+                  blockchain: ETHEREUM
+                  version: v3
+                  transactionId: 183365bc7837eceb5c9292e5be1655b7
+                  error: null
+                  accountKey: *ref_22
+                  encryptionKey: >-
+                    f0880e48251dd2f8574a8c8a4d65311030185d5e451e8a474b89c2b473b5d953
+                  whitelistActivated: false
           description: ''
         '401': &ref_26
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
@@ -1575,19 +1583,13 @@ paths:
             schema:
               $ref: '#/components/schemas/SendMasterWalletContractCallRequestDTO'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
               example: *ref_19
           description: ''
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionDTO'
         '401': *ref_26
       tags: *ref_27
   /api/v2/eth/wallets/{masterWalletId}/name:
@@ -1643,7 +1645,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
-              example: *ref_28
+              example:
+                - *ref_28
           description: ''
         '401': *ref_26
       tags: *ref_27
@@ -1668,19 +1671,13 @@ paths:
             schema:
               $ref: '#/components/schemas/SendMasterWalletCoinRequestDTO'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
               example: *ref_19
           description: ''
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionDTO'
         '401': *ref_26
       tags: *ref_27
   /api/v2/eth/wallets/{masterWalletId}/batch-transactions:
@@ -1706,21 +1703,14 @@ paths:
             schema:
               $ref: '#/components/schemas/SendMasterWalletBatchTransactionsRequestDTO'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_19
+              example:
+                - *ref_19
           description: ''
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransactionDTO'
         '401': *ref_26
       tags: *ref_27
   /api/v2/eth/wallets/{masterWalletId}/flush:
@@ -1744,19 +1734,13 @@ paths:
             schema:
               $ref: '#/components/schemas/FlushRequestDTO'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
               example: *ref_19
           description: ''
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionDTO'
         '401': *ref_26
       tags: *ref_27
   /api/v2/eth/wallets/{masterWalletId}/user-wallets/{userWalletId}:
@@ -1866,19 +1850,13 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateUserWalletRequestDTO'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserWalletDTO'
               example: *ref_25
           description: ''
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserWalletDTO'
         '401': *ref_26
       tags: *ref_27
   /api/v2/eth/wallets/{masterWalletId}/user-wallets/{userWalletId}/contract-call:
@@ -1908,19 +1886,13 @@ paths:
             schema:
               $ref: '#/components/schemas/SendUserWalletContractCallRequestDTO'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
               example: *ref_19
           description: ''
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionDTO'
         '401': *ref_26
       tags: *ref_27
   /api/v2/eth/wallets/{masterWalletId}/user-wallets/{userWalletId}/name:
@@ -1988,7 +1960,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
-              example: *ref_28
+              example:
+                - *ref_28
           description: ''
         '401': *ref_26
       tags: *ref_27
@@ -2019,19 +1992,13 @@ paths:
             schema:
               $ref: '#/components/schemas/SendUserWalletCoinRequestDTO'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
               example: *ref_19
           description: ''
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionDTO'
         '401': *ref_26
       tags: *ref_27
   /api/v2/eth/wallets/{masterWalletId}/recreate:
@@ -2055,19 +2022,13 @@ paths:
             schema:
               $ref: '#/components/schemas/RetryCreateMasterWalletRequestDTO'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/MasterWalletDTO'
               example: *ref_25
           description: ''
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MasterWalletDTO'
         '401': *ref_26
       tags: *ref_27
   /api/v2/eth/wallets/{masterWalletId}/user-wallets/{userWalletId}/recreate:
@@ -2102,18 +2063,12 @@ paths:
             schema:
               $ref: '#/components/schemas/RetryCreateUserWalletRequestDTO'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
               example: *ref_19
           description: ''
-        '201':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserWalletDTO'
         '401': *ref_26
       tags: *ref_27
