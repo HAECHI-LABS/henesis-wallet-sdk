@@ -1,54 +1,69 @@
-import { EventDTO } from "./event.dto";
+import { EventDTO, EXAMPLE_ETH_KLAY_EVENT_DTO } from "./event.dto";
 import { EthValueTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
+import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+
+export const EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO: ValueTransferEventDTO = Object.assign(
+  EXAMPLE_ETH_KLAY_EVENT_DTO,
+  {
+    amount: "0x2386f26fc10000",
+    decimals: 18,
+    coinSymbol: "ETH",
+    from: "0xd5fcc938ad42a56f1c60e7bd41f646ad844b2273",
+    to: "0xb659b6db08cdb7c24bd35b72222807c2567086f3",
+    transferType: "WITHDRAWAL",
+    walletName: "bit",
+    walletType: "MASTER_WALLET",
+  }
+);
 
 export class ValueTransferEventDTO extends EventDTO {
-  /**
-   * 암호화폐의 양
-   * @example 0x2386f26fc10000
-   */
+  @ApiModelProperty({
+    description: "암호화폐의 양",
+    example: EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO.amount,
+  })
   amount: string;
 
-  /**
-   * 암호화폐의 소수점 자릿수
-   * @example 18
-   */
+  @ApiModelProperty({
+    description: "암호화폐의 소수점 자릿수",
+    example: EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO.decimals,
+  })
   decimals: number;
 
-  /**
-   * 암호화폐의 기호 (symbol)
-   * @example ETH
-   */
+  @ApiModelProperty({
+    description: "암호화폐의 기호 (symbol)",
+    example: EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO.coinSymbol,
+  })
   coinSymbol: string;
 
-  /**
-   * 출금 주소
-   * @example 0xd5fcc938ad42a56f1c60e7bd41f646ad844b2273
-   */
-  "from": string;
+  @ApiModelProperty({
+    description: "출금 주소",
+    example: EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO.from,
+  })
+  from: string;
 
-  /**
-   * 입금 주소
-   * @example 0xb659b6db08cdb7c24bd35b72222807c2567086f3
-   */
+  @ApiModelProperty({
+    description: "입금 주소",
+    example: EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO.to,
+  })
   to: string;
 
-  /**
-   * 입출금 타입
-   * @example WITHDRAWAL
-   */
+  @ApiModelProperty({
+    description: "입출금 타입",
+    example: EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO.transferType,
+  })
   transferType: string;
 
-  /**
-   * 해당 내역의 지갑 이름
-   * @example bit
-   */
+  @ApiModelProperty({
+    description: "해당 내역의 지갑 이름",
+    example: EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO.walletName,
+  })
   walletName: string;
 
-  /**
-   * 해당 내역의 지갑 종류
-   * @example MASTER_WALLET
-   */
+  @ApiModelProperty({
+    description: "해당 내역의 지갑 종류",
+    example: EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO.walletType,
+  })
   walletType: string;
 
   static fromETHValueTransferEvent(

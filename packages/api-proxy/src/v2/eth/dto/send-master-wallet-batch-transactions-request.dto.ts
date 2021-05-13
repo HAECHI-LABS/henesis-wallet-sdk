@@ -1,4 +1,5 @@
 import BN from "bn.js";
+import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export class ContractCallRequest {
   contractAddress: string;
@@ -13,15 +14,17 @@ export class TransferRequest {
 }
 
 export class SendMasterWalletBatchTransactionsRequestDTO {
-  /**
-   * 마스터 지갑의 비밀번호
-   * @example passphrase
-   */
+  @ApiModelProperty({
+    description: "마스터 지갑의 비밀번호",
+    example: "passphrase",
+    default: "passphrase",
+  })
   passphrase: string;
 
-  /**
-   * 전송할 트랜잭션 요청들
-   * @example ContractCallRequest or TransferRequest
-   */
+  @ApiModelProperty({
+    description: "전송할 트랜잭션 요청들",
+    example: "ContractCallRequest or TransferRequest",
+    default: "ContractCallRequest or TransferRequest",
+  })
   requests: ContractCallRequest[] | TransferRequest[];
 }

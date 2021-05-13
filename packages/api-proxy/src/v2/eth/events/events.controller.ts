@@ -2,9 +2,13 @@ import { EventsService } from "./events.service";
 import { Controller, Get, Query, Request } from "@nestjs/common";
 import { ValueTransferEventDTO } from "../dto/value-transfer-event.dto";
 import { CallEventDTO } from "../dto/call-event.dto";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiTags, ApiExtraModels } from "@nestjs/swagger";
 import express from "express";
-import { PaginationDTO } from "../dto/pagination.dto";
+import {
+  EXAMPLE_ETH_KLAY_PAGINATION_CALL_EVENT_DTO,
+  EXAMPLE_ETH_KLAY_PAGINATION_VALUE_TRANSFER_EVENT_DTO,
+  PaginationDTO,
+} from "../dto/pagination.dto";
 import {
   ApiPaginationResponse,
   AuthErrorResponses,
@@ -30,6 +34,7 @@ import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
 @ApiTags("events")
 @AuthErrorResponses()
 @AuthHeaders()
+@ApiExtraModels(ValueTransferEventDTO, CallEventDTO)
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
@@ -50,7 +55,10 @@ export class EventsController {
     QUERY_EVENT_SIZE_OPTIONAL,
     QUERY_EVENT_PAGE_OPTIONAL
   )
-  @ApiPaginationResponse(ValueTransferEventDTO)
+  @ApiPaginationResponse(
+    ValueTransferEventDTO,
+    EXAMPLE_ETH_KLAY_PAGINATION_VALUE_TRANSFER_EVENT_DTO
+  )
   public async getValueTransferEvents(
     @Request() request: express.Request,
     @Query("symbol") symbol?: string,
@@ -95,7 +103,10 @@ export class EventsController {
     QUERY_EVENT_SIZE_OPTIONAL,
     QUERY_EVENT_PAGE_OPTIONAL
   )
-  @ApiPaginationResponse(CallEventDTO)
+  @ApiPaginationResponse(
+    CallEventDTO,
+    EXAMPLE_ETH_KLAY_PAGINATION_CALL_EVENT_DTO
+  )
   public async getCallEvents(
     @Request() request: express.Request,
     @Query("walletId") walletId?: string,

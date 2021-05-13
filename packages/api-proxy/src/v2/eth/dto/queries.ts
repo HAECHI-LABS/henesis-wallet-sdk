@@ -103,7 +103,7 @@ export const QUERY_WALLETS_SIZE_OPTIONAL: ApiQueryOptions = {
 export const QUERY_WALLETS_PAGE_OPTIONAL: ApiQueryOptions = {
   name: "page",
   required: false,
-  description: "PAGE",
+  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
 };
 
 export const QUERY_WALLETS_NAME_OPTIONAL: ApiQueryOptions = {
