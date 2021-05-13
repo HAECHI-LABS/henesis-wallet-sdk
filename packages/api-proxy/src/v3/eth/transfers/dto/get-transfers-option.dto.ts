@@ -1,5 +1,8 @@
 import { EthValueTransferEventPaginationOptions } from "@haechi-labs/henesis-wallet-core/lib/events";
-import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import {
+  EventStatus,
+  TransferType,
+} from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 export class GetTransfersOption {
   ticker: string;
@@ -8,6 +11,7 @@ export class GetTransfersOption {
   transactionId: string;
   transactionHash: string;
   status: EventStatus;
+  transferType: TransferType;
   updatedAtGte: string;
   updatedAtLt: string;
   size: number;
@@ -21,6 +25,7 @@ export class GetTransfersOption {
       updatedAtGte: option.updatedAtGte,
       updatedAtLt: option.updatedAtLt,
       status: option.status,
+      transferType: option.transferType,
       walletId: option.walletId,
       transactionId: option.transactionId,
       symbol: option.ticker,

@@ -1,7 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { SDK } from "@haechi-labs/henesis-wallet-core";
 import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
-import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import {
+  EventStatus,
+  TransferType,
+} from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 import { PaginationDTO } from "../../eth/dto/pagination.dto";
 import { ValueTransferEventDTO } from "../../eth/dto/value-transfer-event.dto";
 import { CallEventDTO } from "../../eth/dto/call-event.dto";
@@ -18,6 +21,7 @@ export class EventsService {
     transactionId?: string,
     transactionHash?: string,
     status?: EventStatus,
+    transferType?: TransferType,
     updatedAtGte?: Timestamp,
     updatedAtLt?: Timestamp,
     size?: number,
@@ -30,6 +34,7 @@ export class EventsService {
       transactionId?: string;
       transactionHash?: string;
       status?: EventStatus;
+      transferType?: TransferType;
       updatedAtGte?: Timestamp;
       updatedAtLt?: Timestamp;
       size?: number;
@@ -41,6 +46,7 @@ export class EventsService {
     if (transactionId) options.transactionId = transactionId;
     if (transactionHash) options.transactionHash = transactionHash;
     if (status) options.status = status;
+    if (transferType) options.transferType = transferType;
     if (updatedAtGte) options.updatedAtGte = updatedAtGte;
     if (updatedAtLt) options.updatedAtLt = updatedAtLt;
     if (size) options.size = size;
