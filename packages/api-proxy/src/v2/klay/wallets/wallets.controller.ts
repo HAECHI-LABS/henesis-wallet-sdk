@@ -226,7 +226,7 @@ export class WalletsController {
     summary: "전체 사용자 지갑 목록 조회하기",
     description: "특정 마스터 지갑에 속한 모든 사용자 지갑 목록을 조회합니다.",
   })
-  @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
+  @PathParams(PARAM_MASTER_WALLET_ID)
   @Queries(
     QUERY_WALLETS_PAGE_OPTIONAL,
     QUERY_WALLETS_SIZE_OPTIONAL,
