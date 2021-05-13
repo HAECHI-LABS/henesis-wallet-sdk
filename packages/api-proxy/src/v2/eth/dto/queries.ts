@@ -58,6 +58,13 @@ export const QUERY_EVENT_UPDATED_AT_LT_OPTIONAL: ApiQueryOptions = {
     "ex. 1593670000000 ",
 };
 
+export const QUERY_EVENT_TRANSFER_TYPE_OPTIONAL: ApiQueryOptions = {
+  name: "transferType",
+  required: false,
+  description:
+    "입금, 출금 타입을 지정합니다. DEPOSIT, WITHDRAWAL 2 가지 타입만 입력할 수 있습니다.",
+};
+
 export const QUERY_EVENT_SIZE_OPTIONAL: ApiQueryOptions = {
   name: "size",
   required: false,

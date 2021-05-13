@@ -15,6 +15,7 @@ import {
   QUERY_EVENT_SYMBOL_OPTIONAL,
   QUERY_EVENT_TRANSACTION_HASH_OPTIONAL,
   QUERY_EVENT_TRANSACTION_ID_OPTIONAL,
+  QUERY_EVENT_TRANSFER_TYPE_OPTIONAL,
   QUERY_EVENT_UPDATED_AT_GTE_OPTIONAL,
   QUERY_EVENT_UPDATED_AT_LT_OPTIONAL,
   QUERY_EVENT_WALLET_ID_OPTIONAL,
@@ -26,7 +27,10 @@ import {
   PaginationDTO,
 } from "../../eth/dto/pagination.dto";
 import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
-import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import {
+  EventStatus,
+  TransferType,
+} from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 import { ValueTransferEventDTO } from "../../eth/dto/value-transfer-event.dto";
 import { CallEventDTO } from "../../eth/dto/call-event.dto";
 
@@ -52,6 +56,7 @@ export class EventsController {
     QUERY_EVENT_STATUS_OPTIONAL,
     QUERY_EVENT_UPDATED_AT_GTE_OPTIONAL,
     QUERY_EVENT_UPDATED_AT_LT_OPTIONAL,
+    QUERY_EVENT_TRANSFER_TYPE_OPTIONAL,
     QUERY_EVENT_SIZE_OPTIONAL,
     QUERY_EVENT_PAGE_OPTIONAL
   )
@@ -69,6 +74,7 @@ export class EventsController {
     @Query("status") status?: EventStatus,
     @Query("updatedAtGte") updatedAtGte?: Timestamp,
     @Query("updatedAtLt") updatedAtLt?: Timestamp,
+    @Query("transferType") transferType?: TransferType,
     @Query("size") size?: number,
     @Query("page") page?: number
   ): Promise<PaginationDTO<ValueTransferEventDTO>> {
@@ -82,6 +88,7 @@ export class EventsController {
       status,
       updatedAtGte,
       updatedAtLt,
+      transferType,
       size,
       page
     );
