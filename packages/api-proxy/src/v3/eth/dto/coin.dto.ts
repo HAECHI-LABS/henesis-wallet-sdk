@@ -59,8 +59,7 @@ export class CoinDTO {
 
   @ApiModelProperty({
     description: "코인의 메타 데이터",
-    example: EXAMPLE_ETHEREUM_COIN_DTO.attributes,
-    isArray: true,
+    example: EXAMPLE_ETHEREUM_COIN_DTO.attributes
   })
   attributes: CoinDTOAttributesEnum[];
 
