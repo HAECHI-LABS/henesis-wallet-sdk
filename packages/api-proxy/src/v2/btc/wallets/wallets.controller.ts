@@ -9,30 +9,34 @@ import {
   Request,
 } from "@nestjs/common";
 import { WalletsService } from "./wallets.service";
-import { EXAMPLE_BITCOIN_WALLET_DTO, WalletDTO } from '../dto/wallet.dto';
-import { BalanceDTO, EXAMPLE_BITCOIN_BALANCE_DTO } from '../dto/balance.dto';
+import { EXAMPLE_BITCOIN_WALLET_DTO, WalletDTO } from "../dto/wallet.dto";
+import { BalanceDTO, EXAMPLE_BITCOIN_BALANCE_DTO } from "../dto/balance.dto";
 import {
   DepositAddressDTO,
-  EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO
-} from '../dto/deposit-address.dto';
-import { EXAMPLE_BITCOIN_TRANSFER_DTO, TransferDTO } from '../dto/transfer.dto';
+  EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO,
+} from "../dto/deposit-address.dto";
+import { EXAMPLE_BITCOIN_TRANSFER_DTO, TransferDTO } from "../dto/transfer.dto";
 import {
   ApiBody,
-  ApiCreatedResponse, ApiExtraModels,
+  ApiCreatedResponse,
+  ApiExtraModels,
+  ApiNoContentResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiTags, getSchemaPath
-} from '@nestjs/swagger';
+  ApiTags,
+  getSchemaPath,
+} from "@nestjs/swagger";
 import express from "express";
 import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
 import { TransferRequestDTO } from "../dto/transfer-request.dto";
 import {
-  ApiPaginationResponse, ApiResponseContentGenerator,
+  ApiPaginationResponse,
+  ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries
-} from '../../../decorators';
+  Queries,
+} from "../../../decorators";
 import { PARAM_DEPOSIT_ADDRESS_ID, PARAM_WALLET_ID } from "../dto/params";
 import {
   QUERY_DEPOSIT_ADDRESS_ADDRESS_OPTIONAL,
@@ -40,14 +44,15 @@ import {
   QUERY_DEPOSIT_ADDRESS_NAME_OPTIONAL,
   QUERY_WALLET_NAME_OPTIONAL,
 } from "../dto/queries";
-import { EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO, PaginationDTO } from '../dto/pagination.dto';
+import {
+  EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO,
+  PaginationDTO,
+} from "../dto/pagination.dto";
+import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
 
 @ApiTags("wallets")
 @Controller("wallets")
-@ApiExtraModels(
-  WalletDTO,
-  BalanceDTO
-)
+@ApiExtraModels(WalletDTO, BalanceDTO)
 @AuthErrorResponses()
 @AuthHeaders()
 export class WalletsController {
@@ -56,7 +61,7 @@ export class WalletsController {
   @Get("/")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(WalletDTO, EXAMPLE_BITCOIN_WALLET_DTO),
-    isArray: true
+    isArray: true,
   })
   @ApiOperation({
     summary: "전체 지갑 목록 조회하기",
@@ -72,7 +77,7 @@ export class WalletsController {
 
   @Get("/:walletId")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(WalletDTO, EXAMPLE_BITCOIN_WALLET_DTO)
+    content: ApiResponseContentGenerator(WalletDTO, EXAMPLE_BITCOIN_WALLET_DTO),
   })
   @ApiOperation({
     summary: "지갑 정보 조회하기",
@@ -86,9 +91,32 @@ export class WalletsController {
     return await this.walletsService.getWallet(request.sdk, walletId);
   }
 
+  @Patch("/:walletId/name")
+  @ApiOperation({
+    summary: "지갑 정보 변경하기",
+    description: "특정 지갑의 이름을 변경합니다.",
+  })
+  @PathParams(PARAM_WALLET_ID)
+  @ApiNoContentResponse()
+  public async changeWalletName(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Body()
+    changeWalletNameRequestDTO: ChangeWalletNameRequestDTO
+  ) {
+    await this.walletsService.changeWalletName(
+      request.sdk,
+      walletId,
+      changeWalletNameRequestDTO
+    );
+  }
+
   @Get("/:walletId/balance")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(BalanceDTO, EXAMPLE_BITCOIN_BALANCE_DTO),
+    content: ApiResponseContentGenerator(
+      BalanceDTO,
+      EXAMPLE_BITCOIN_BALANCE_DTO
+    ),
     isArray: true,
   })
   @ApiOperation({
@@ -105,7 +133,10 @@ export class WalletsController {
 
   @Post("/:walletId/deposit-addresses")
   @ApiCreatedResponse({
-    content: ApiResponseContentGenerator(DepositAddressDTO, EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO)
+    content: ApiResponseContentGenerator(
+      DepositAddressDTO,
+      EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO
+    ),
   })
   @ApiOperation({
     summary: "입금 주소 생성하기",
@@ -136,7 +167,10 @@ export class WalletsController {
     QUERY_DEPOSIT_ADDRESS_NAME_OPTIONAL
   )
   @PathParams(PARAM_WALLET_ID)
-  @ApiPaginationResponse(DepositAddressDTO, EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO)
+  @ApiPaginationResponse(
+    DepositAddressDTO,
+    EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO
+  )
   public async getDepositAddresses(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -155,7 +189,10 @@ export class WalletsController {
 
   @Get("/:walletId/deposit-addresses/:depositAddressId")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(DepositAddressDTO, EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO)
+    content: ApiResponseContentGenerator(
+      DepositAddressDTO,
+      EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO
+    ),
   })
   @ApiOperation({
     summary: "입금 주소 정보 조회하기",
@@ -176,7 +213,10 @@ export class WalletsController {
 
   @Post("/:walletId/transfer")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(TransferDTO, EXAMPLE_BITCOIN_TRANSFER_DTO)
+    content: ApiResponseContentGenerator(
+      TransferDTO,
+      EXAMPLE_BITCOIN_TRANSFER_DTO
+    ),
   })
   @ApiOperation({
     summary: "지갑에서 코인 전송하기",
