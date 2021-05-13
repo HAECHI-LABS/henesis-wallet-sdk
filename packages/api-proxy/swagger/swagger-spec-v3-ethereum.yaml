@@ -757,11 +757,6 @@ paths:
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
           schema:
             type: string
-        - name: flag
-          required: true
-          in: query
-          schema:
-            type: boolean
       responses:
         '200':
           content:
