@@ -171,14 +171,16 @@ export class WalletsService {
 
           if (this.isTransferRequest(request)) {
             request = request as TransferRequest;
-            return WalletsService.getCoinByTicker(sdk, request.ticker).then(
-              (coin) =>
-                masterWallet.buildTransferPayload(
-                  coin,
-                  request.to,
-                  BNConverter.hexStringToBN(request.amount),
-                  sendMasterWalletBatchTransactionsRequestDTO.passphrase
-                )
+            return WalletsService.getCoinByTicker(
+              sdk,
+              request.ticker
+            ).then((coin) =>
+              masterWallet.buildTransferPayload(
+                coin,
+                request.to,
+                BNConverter.hexStringToBN(request.amount),
+                sendMasterWalletBatchTransactionsRequestDTO.passphrase
+              )
             );
           }
 
