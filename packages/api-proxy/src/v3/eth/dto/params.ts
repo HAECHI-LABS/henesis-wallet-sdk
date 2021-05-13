@@ -98,49 +98,49 @@ export const TRANSFER_TYPE_OPTIONAL: ApiParamOptions = {
 export const QUERY_TRANSACTIONS_ADDRESS_OPTIONAL: ApiQueryOptions = {
   name: "address",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "트랜잭션 주소",
 };
 
 export const QUERY_TRANSACTIONS_TO_ADDRESS_OPTIONAL: ApiQueryOptions = {
   name: "toAddress",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "받는 주소",
 };
 
 export const QUERY_TRANSACTIONS_FROM_ADDRESS_OPTIONAL: ApiQueryOptions = {
   name: "fromAddress",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "보내는 주소",
 };
 
 export const QUERY_TRANSACTIONS_TRANSACTION_HASH_OPTIONAL: ApiQueryOptions = {
   name: "transactionHash",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "트랜잭션 해시",
 };
 
 export const QUERY_TRANSACTIONS_START_OPTIONAL: ApiQueryOptions = {
   name: "start",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "해당 시점 이후의 트랜잭션 조회",
 };
 
 export const QUERY_TRANSACTIONS_END_OPTIONAL: ApiQueryOptions = {
   name: "end",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "해당 시점 이전의 트랜잭션 조회",
 };
 
 export const QUERY_TRANSACTIONS_STATUS_OPTIONAL: ApiQueryOptions = {
   name: "status",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "트랜잭션 상태",
 };
 
 export const QUERY_TRANSACTIONS_STATUSES_OPTIONAL: ApiQueryOptions = {
   name: "statuses",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "트랜잭션 상태",
 };
 
 export const QUERY_TRANSACTIONS_TYPES_OPTIONAL: ApiQueryOptions = {
@@ -152,5 +152,5 @@ export const QUERY_TRANSACTIONS_TYPES_OPTIONAL: ApiQueryOptions = {
 export const QUERY_TRANSACTIONS_KEY_ID_OPTIONAL: ApiQueryOptions = {
   name: "keyId",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "키 ID",
 };
