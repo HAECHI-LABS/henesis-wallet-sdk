@@ -27,6 +27,7 @@ import {
   ApiTags,
   ApiOkResponse,
   ApiExtraModels,
+  ApiCreatedResponse,
 } from "@nestjs/swagger";
 import express from "express";
 import { SendMasterWalletContractCallRequestDTO } from "../dto/send-master-wallet-contract-call-request.dto";
@@ -332,7 +333,7 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/user-wallets")
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       UserWalletDTO,
       EXAMPLE_ETH_KLAY_USER_WALLET_DTO

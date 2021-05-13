@@ -1,8 +1,14 @@
 import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import express from "express";
 import { CoinsService } from "./coins.service";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import {
+  ApiExtraModels,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from "@nestjs/swagger";
+import {
+  ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
@@ -10,16 +16,22 @@ import {
 } from "../../../decorators";
 import { PARAM_COIN_TICKER } from "../../eth/dto/params";
 import { QUERY_COIN_FLAG_OPTIONAL } from "../../eth/dto/queries";
-import { CoinDTO } from "../../eth/dto/coin.dto";
+import { CoinDTO, EXAMPLE_ETH_KLAY_COIN_DTO } from "../../eth/dto/coin.dto";
+import { NoCoinException } from "../../eth/dto/exceptions.dto";
 
 @Controller("coins")
 @ApiTags("coins")
 @AuthErrorResponses()
 @AuthHeaders()
+@ApiExtraModels(NoCoinException, CoinDTO)
 export class CoinsController {
   constructor(private readonly coinsService: CoinsService) {}
 
   @Get("/")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(CoinDTO, EXAMPLE_ETH_KLAY_COIN_DTO),
+    isArray: true,
+  })
   @ApiOperation({
     summary: "전체 코인/토큰 목록 조회하기",
     description:
@@ -34,6 +46,10 @@ export class CoinsController {
   }
 
   @Get(":ticker")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(CoinDTO, EXAMPLE_ETH_KLAY_COIN_DTO),
+    isArray: false,
+  })
   @ApiOperation({
     summary: "코인/토큰 정보 조회하기",
     description:

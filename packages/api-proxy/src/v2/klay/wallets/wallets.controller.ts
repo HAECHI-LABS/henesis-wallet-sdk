@@ -8,9 +8,17 @@ import {
   Query,
   Request,
 } from "@nestjs/common";
-import { ApiNoContentResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+  ApiCreatedResponse,
+  ApiExtraModels,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from "@nestjs/swagger";
 import {
   ApiPaginationResponse,
+  ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
@@ -42,21 +50,44 @@ import { ChangeUserWalletNameRequestDTO } from "../../eth/dto/change-user-wallet
 import { SendUserWalletCoinRequestDTO } from "../../eth/dto/send-user-wallet-coin-request.dto";
 import { RetryCreateMasterWalletRequestDTO } from "../../eth/dto/retry-create-master-wallet-request.dto";
 import { RetryCreateUserWalletRequestDTO } from "../../eth/dto/retry-create-user-wallet-request.dto";
-import { PaginationDTO } from "../../eth/dto/pagination.dto";
-import { MasterWalletDTO } from "../../eth/dto/master-wallet.dto";
+import {
+  EXAMPLE_ETH_KLAY_PAGINATION_USER_WALLET_DTO,
+  PaginationDTO,
+} from "../../eth/dto/pagination.dto";
+import {
+  EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO,
+  MasterWalletDTO,
+} from "../../eth/dto/master-wallet.dto";
 import { WalletsService } from "../../eth/wallets/wallets.service";
-import { TransactionDTO } from "../../eth/dto/transaction.dto";
-import { BalanceDTO } from "../../eth/dto/balance.dto";
-import { UserWalletDTO } from "../../eth/dto/user-wallet.dto";
+import {
+  EXAMPLE_ETH_KLAY_TRANSACTION_DTO,
+  TransactionDTO,
+} from "../../eth/dto/transaction.dto";
+import {
+  BalanceDTO,
+  EXAMPLE_ETH_KLAY_BALANCE_DTO,
+} from "../../eth/dto/balance.dto";
+import {
+  EXAMPLE_ETH_KLAY_USER_WALLET_DTO,
+  UserWalletDTO,
+} from "../../eth/dto/user-wallet.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
 @AuthErrorResponses()
 @AuthHeaders()
+@ApiExtraModels(MasterWalletDTO, UserWalletDTO, TransactionDTO, BalanceDTO)
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
   @Get("/")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      MasterWalletDTO,
+      EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO
+    ),
+    isArray: true,
+  })
   @ApiOperation({
     summary: "전체 마스터 지갑 목록 조회하기",
     description: "모든 마스터 지갑 목록을 조회합니다.",
@@ -70,6 +101,13 @@ export class WalletsController {
   }
 
   @Get("/:masterWalletId")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      MasterWalletDTO,
+      EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO
+    ),
+    isArray: false,
+  })
   @ApiOperation({
     summary: "마스터 지갑 조회하기",
     description: "마스터 지갑 목록을 조회합니다.",
@@ -86,6 +124,13 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/contract-call")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETH_KLAY_TRANSACTION_DTO
+    ),
+    isArray: false,
+  })
   @ApiOperation({
     summary: "마스터 지갑에서 스마트 컨트랙트 호출하기",
     description:
@@ -125,6 +170,13 @@ export class WalletsController {
   }
 
   @Get("/:masterWalletId/balance")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      BalanceDTO,
+      EXAMPLE_ETH_KLAY_BALANCE_DTO
+    ),
+    isArray: true,
+  })
   @ApiOperation({
     summary: "마스터 지갑 잔고 조회하기",
     description: "특정 마스터 지갑의 잔액을 조회합니다.",
@@ -146,6 +198,13 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/transfer")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETH_KLAY_TRANSACTION_DTO
+    ),
+    isArray: false,
+  })
   @ApiOperation({
     summary: "마스터 지갑에서 코인/토큰 전송하기",
     description: "특정 마스터 지갑에서 가상자산을 송금합니다.",
@@ -164,6 +223,13 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/batch-transactions")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETH_KLAY_TRANSACTION_DTO
+    ),
+    isArray: true,
+  })
   @ApiOperation({
     summary: "마스터 지갑에서 여러 트랜잭션들을 모아서 호출하기",
     description:
@@ -185,6 +251,13 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/flush")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETH_KLAY_TRANSACTION_DTO
+    ),
+    isArray: false,
+  })
   @ApiOperation({
     summary: "사용자 지갑 잔액을 모두 끌어오기",
     description:
@@ -204,6 +277,13 @@ export class WalletsController {
   }
 
   @Get("/:masterWalletId/user-wallets/:userWalletId")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      UserWalletDTO,
+      EXAMPLE_ETH_KLAY_USER_WALLET_DTO
+    ),
+    isArray: false,
+  })
   @ApiOperation({
     summary: "사용자 지갑 정보 조회하기",
     description: "특정 사용자 지갑을 조회합니다.",
@@ -234,7 +314,10 @@ export class WalletsController {
     QUERY_WALLETS_NAME_OPTIONAL,
     QUERY_WALLETS_ADDRESS_OPTIONAL
   )
-  @ApiPaginationResponse(UserWalletDTO)
+  @ApiPaginationResponse(
+    UserWalletDTO,
+    EXAMPLE_ETH_KLAY_PAGINATION_USER_WALLET_DTO
+  )
   public async getUserWallets(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -256,6 +339,13 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/user-wallets")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      UserWalletDTO,
+      EXAMPLE_ETH_KLAY_USER_WALLET_DTO
+    ),
+    isArray: false,
+  })
   @ApiOperation({
     summary: "사용자 지갑 생성하기",
     description: "특정 마스터 지갑 하위에 새로운 사용자 지갑을 생성합니다.",
@@ -274,6 +364,13 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/user-wallets/:userWalletId/contract-call")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETH_KLAY_TRANSACTION_DTO
+    ),
+    isArray: false,
+  })
   @ApiOperation({
     summary: "사용자 지갑에서 스마트 컨트랙트 호출하기",
     description:
@@ -317,6 +414,13 @@ export class WalletsController {
   }
 
   @Get("/:masterWalletId/user-wallets/:userWalletId/balance")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      BalanceDTO,
+      EXAMPLE_ETH_KLAY_BALANCE_DTO
+    ),
+    isArray: true,
+  })
   @ApiOperation({
     summary: "사용자 지갑 잔고 조회하기",
     description: "특정 사용자 지갑의 잔액을 조회합니다.",
@@ -340,6 +444,13 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/user-wallets/:userWalletId/transfer")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETH_KLAY_TRANSACTION_DTO
+    ),
+    isArray: false,
+  })
   @ApiOperation({
     summary: "사용자 지갑에서 코인/토큰 전송하기",
     description: "특정 사용자 지갑에서 가상자산을 전송합니다.",
@@ -360,6 +471,13 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/recreate")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      MasterWalletDTO,
+      EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO
+    ),
+    isArray: false,
+  })
   @ApiOperation({
     summary: "마스터 지갑 재생성하기",
     description: "마스터 지갑을 재생성합니다.",
@@ -378,6 +496,13 @@ export class WalletsController {
   }
 
   @Post("/:masterWalletId/user-wallets/:userWalletId/recreate")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETH_KLAY_TRANSACTION_DTO
+    ),
+    isArray: false,
+  })
   @ApiOperation({
     summary: "사용자 지갑 생성 실패시 재시도하기",
     description:
