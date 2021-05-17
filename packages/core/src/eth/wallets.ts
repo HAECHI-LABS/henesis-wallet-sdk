@@ -51,7 +51,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       `${this.baseUrl}/${id}`
     );
     if (!isLessThanWalletV4(walletData.version)) {
-      throw new Error("wallet does not exist");
+      throw new Error("This wallet is not a compatible version.");
     }
     return new EthMasterWallet(
       this.client,
@@ -66,7 +66,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       `${this.baseUrl}/${id}`
     );
     if (isLessThanWalletV4(walletData.version)) {
-      throw new Error("wallet does not exist");
+      throw new Error("This wallet is not a compatible version.");
     }
     return new EthWallet(
       this.client,
