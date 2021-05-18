@@ -22,7 +22,7 @@ import {
   AuthHeaders,
   PaginationResponse,
   PathParams,
-  Queries
+  Queries, ReadMeExtension
 } from '../../../decorators';
 import { EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO, TransactionIdNotFoundException } from '../dto/exceptions.dto';
 import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
@@ -83,6 +83,7 @@ export class TransactionsController {
     summary: "트랜잭션 목록 조회하기",
     description: "트랜잭션 목록을 조회합니다.",
   })
+  @ReadMeExtension()
   public async getTransactions(
     @Request() request: express.Request,
     @Query("address") address?: string,

@@ -22,8 +22,8 @@ import {
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries,
-} from "../../../decorators";
+  Queries, ReadMeExtension
+} from '../../../decorators';
 import { QUERY_WALLET_NAME_OPTIONAL } from "../../btc/dto/queries";
 import express from "express";
 import { SendMasterWalletContractCallRequestDTO } from "../../eth/dto/send-master-wallet-contract-call-request.dto";
@@ -93,6 +93,7 @@ export class WalletsController {
     description: "모든 마스터 지갑 목록을 조회합니다.",
   })
   @Queries(QUERY_WALLET_NAME_OPTIONAL)
+  @ReadMeExtension()
   public async getMasterWallets(
     @Request() request: express.Request,
     @Query("name") name?: string
@@ -113,6 +114,7 @@ export class WalletsController {
     description: "마스터 지갑 목록을 조회합니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID)
+  @ReadMeExtension()
   public async getMasterWallet(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string
@@ -137,6 +139,7 @@ export class WalletsController {
       "특정 마스터 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID)
+  @ReadMeExtension()
   public async sendMasterWalletContractCall(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -157,6 +160,7 @@ export class WalletsController {
   })
   @PathParams(PARAM_MASTER_WALLET_ID)
   @ApiNoContentResponse()
+  @ReadMeExtension()
   public async changeMasterWalletName(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -183,6 +187,7 @@ export class WalletsController {
   })
   @PathParams(PARAM_MASTER_WALLET_ID)
   @Queries(QUERY_FLAG_OPTIONAL, QUERY_SYMBOL_OPTIONAL)
+  @ReadMeExtension()
   public async getMasterWalletBalance(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -210,6 +215,7 @@ export class WalletsController {
     description: "특정 마스터 지갑에서 가상자산을 송금합니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID)
+  @ReadMeExtension()
   public async sendMasterWalletCoin(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -237,6 +243,7 @@ export class WalletsController {
       "최대 10개까지 보낼 수 있습니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID)
+  @ReadMeExtension()
   public async sendMasterWalletBatchTransactions(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -264,6 +271,7 @@ export class WalletsController {
       "여러 사용자 지갑의 특정 코인/토큰 잔액을 모두 상위의 마스터 지갑으로 끌어옵니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID)
+  @ReadMeExtension()
   public async flush(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -289,6 +297,7 @@ export class WalletsController {
     description: "특정 사용자 지갑을 조회합니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
+  @ReadMeExtension()
   public async getUserWallet(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -318,6 +327,7 @@ export class WalletsController {
     UserWalletDTO,
     EXAMPLE_ETH_KLAY_PAGINATION_USER_WALLET_DTO
   )
+  @ReadMeExtension()
   public async getUserWallets(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -351,6 +361,7 @@ export class WalletsController {
     description: "특정 마스터 지갑 하위에 새로운 사용자 지갑을 생성합니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID)
+  @ReadMeExtension()
   public async createUserWallet(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -377,6 +388,7 @@ export class WalletsController {
       "사용자 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
+  @ReadMeExtension()
   public async sendUserWalletContractCall(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -399,6 +411,7 @@ export class WalletsController {
   })
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
   @ApiNoContentResponse()
+  @ReadMeExtension()
   public async changeUserWalletName(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -427,6 +440,7 @@ export class WalletsController {
   })
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
   @Queries(QUERY_FLAG_OPTIONAL, QUERY_SYMBOL_OPTIONAL)
+  @ReadMeExtension()
   public async getUserWalletBalance(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -456,6 +470,7 @@ export class WalletsController {
     description: "특정 사용자 지갑에서 가상자산을 전송합니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
+  @ReadMeExtension()
   public async sendUserWalletCoin(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -483,6 +498,7 @@ export class WalletsController {
     description: "마스터 지갑을 재생성합니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID)
+  @ReadMeExtension()
   public async retryCreateMasterWallet(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -511,6 +527,7 @@ export class WalletsController {
       "만약 사용자 지갑 생성 트랜잭션이 장시간 채굴 대기중(Pending)이어서 gasPrice를 높여 재시도하고 싶다면, '마스터 지갑에서 발생한 트랜잭션 교체하기' API를 사용하세요.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
+  @ReadMeExtension()
   public async retryCreateUserWallet(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,

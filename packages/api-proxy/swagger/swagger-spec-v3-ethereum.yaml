@@ -741,7 +741,9 @@ components:
 paths:
   /api/v3/ethereum/coins:
     get:
-      operationId: CoinsController_getCoins
+      operationId: ethereum-CoinsController_getCoins
+      x-readme:
+        explorer-enabled: false
       summary: 전체 코인 목록 조회하기
       description: Henesis Wallet에서 지원하는 모든 가상자산(토큰, 코인)을 조회합니다.
       parameters:
@@ -754,9 +756,16 @@ paths:
         - &ref_2
           name: Authorization
           in: header
-          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
           schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
             type: string
+        - name: flag
+          required: true
+          in: query
+          schema:
+            type: boolean
       responses:
         '200':
           content:
@@ -800,7 +809,9 @@ paths:
         - coins
   /api/v3/ethereum/coins/{coinId}:
     get:
-      operationId: CoinsController_getCoin
+      operationId: ethereum-CoinsController_getCoin
+      x-readme:
+        explorer-enabled: false
       summary: 코인 정보 조회하기
       description: Henesis Wallet에서 지원하는 특정 가상자산(토큰, 코인)을 조회합니다.
       parameters:
@@ -833,7 +844,9 @@ paths:
       tags: *ref_5
   /api/v3/ethereum/contract-calls:
     get:
-      operationId: ContractCallsController_getCallEvents
+      operationId: ethereum-ContractCallsController_getCallEvents
+      x-readme:
+        explorer-enabled: false
       summary: 스마트 컨트랙트 호출 내역 조회하기
       description: 내가 발생시킨 스마트 컨트랙트 호출 내역을 조회합니다.
       parameters:
@@ -844,8 +857,10 @@ paths:
             type: string
         - name: Authorization
           in: header
-          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
           schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
             type: string
         - name: walletId
           required: false
@@ -961,7 +976,9 @@ paths:
         - contract-calls
   /api/v3/ethereum/transfers:
     get:
-      operationId: TransfersController_getTransfers
+      operationId: ethereum-TransfersController_getTransfers
+      x-readme:
+        explorer-enabled: false
       summary: 전체 입출금 목록 조회하기
       description: 모든 지갑의 가상자산 입출금 내역을 조회합니다.
       parameters:
@@ -972,8 +989,10 @@ paths:
             type: string
         - name: Authorization
           in: header
-          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
           schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
             type: string
         - name: ticker
           required: false
@@ -1091,7 +1110,9 @@ paths:
         - transfers
   /api/v3/ethereum/fee-wallet/balance:
     get:
-      operationId: FeeWalletController_getBalance
+      operationId: ethereum-FeeWalletController_getBalance
+      x-readme:
+        explorer-enabled: false
       summary: 수수료 지갑 잔고 조회하기
       description: 수수료 지갑의 잔액을 조회합니다.
       parameters:
@@ -1102,8 +1123,10 @@ paths:
             type: string
         - name: Authorization
           in: header
-          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
           schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
             type: string
       responses:
         '200':
@@ -1139,7 +1162,7 @@ paths:
         - fee-wallet
   /api/v3/ethereum/transactions/{transactionId}:
     get:
-      operationId: TransactionsController_getTransaction
+      operationId: ethereum-TransactionsController_getTransaction
       summary: 개별 트랜잭션 조회하기
       description: 내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.
       parameters:
@@ -1152,8 +1175,10 @@ paths:
         - &ref_12
           name: Authorization
           in: header
-          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
           schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
             type: string
         - name: transactionId
           required: true
@@ -1209,7 +1234,9 @@ paths:
         - transactions
   /api/v3/ethereum/transactions:
     get:
-      operationId: TransactionsController_getTransactions
+      operationId: ethereum-TransactionsController_getTransactions
+      x-readme:
+        explorer-enabled: false
       summary: 트랜잭션 목록 조회하기
       description: 트랜잭션 목록을 조회합니다.
       parameters:
@@ -1294,7 +1321,9 @@ paths:
       tags: *ref_15
   /api/v3/ethereum/wallets:
     get:
-      operationId: WalletsController_getWallets
+      operationId: ethereum-WalletsController_getWallets
+      x-readme:
+        explorer-enabled: false
       summary: 전체 지갑 목록 조회하기
       description: 모든 지갑의 목록을 조회합니다.
       parameters:
@@ -1307,8 +1336,10 @@ paths:
         - &ref_17
           name: Authorization
           in: header
-          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
           schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
             type: string
         - name: name
           required: false
@@ -1354,7 +1385,9 @@ paths:
         - wallets
   /api/v3/ethereum/wallets/{walletId}:
     get:
-      operationId: WalletsController_getWallet
+      operationId: ethereum-WalletsController_getWallet
+      x-readme:
+        explorer-enabled: false
       summary: 지갑 정보 조회하기
       description: 특정 지갑의 정보를 조회합니다.
       parameters:
@@ -1387,7 +1420,9 @@ paths:
       tags: *ref_20
   /api/v3/ethereum/wallets/{walletId}/balance:
     get:
-      operationId: WalletsController_getBalanceOfWallet
+      operationId: ethereum-WalletsController_getBalanceOfWallet
+      x-readme:
+        explorer-enabled: false
       summary: 지갑 잔고 조회하기
       description: 특정 지갑의 잔고를 조회합니다.
       parameters:
@@ -1425,7 +1460,9 @@ paths:
       tags: *ref_20
   /api/v3/ethereum/wallets/{walletId}/name:
     patch:
-      operationId: WalletsController_changeWalletName
+      operationId: ethereum-WalletsController_changeWalletName
+      x-readme:
+        explorer-enabled: false
       summary: 지갑 이름 변경하기
       description: 특정 지갑의 이름을 변경합니다.
       parameters:
@@ -1467,7 +1504,9 @@ paths:
       tags: *ref_20
   /api/v3/ethereum/wallets/{walletId}/transfer:
     post:
-      operationId: WalletsController_sendCoin
+      operationId: ethereum-WalletsController_sendCoin
+      x-readme:
+        explorer-enabled: false
       summary: 지갑에서 코인 전송하기
       description: 특정 지갑에서 가상자산을 송금합니다.
       parameters:
@@ -1504,7 +1543,9 @@ paths:
       tags: *ref_20
   /api/v3/ethereum/wallets/{walletId}/contract-calls:
     post:
-      operationId: WalletsController_callContract
+      operationId: ethereum-WalletsController_callContract
+      x-readme:
+        explorer-enabled: false
       summary: 지갑에서 스마트 컨트랙트 호출하기
       description: 특정 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
       parameters:
@@ -1541,7 +1582,9 @@ paths:
       tags: *ref_20
   /api/v3/ethereum/wallets/{walletId}/transactions/{transactionId}/replace:
     post:
-      operationId: WalletsController_replaceTransaction
+      operationId: ethereum-WalletsController_replaceTransaction
+      x-readme:
+        explorer-enabled: false
       summary: 트랜잭션 교체
       description: 트랜잭션을 교체합니다
       parameters:
@@ -1586,7 +1629,9 @@ paths:
       tags: *ref_20
   /api/v3/ethereum/wallets/{walletId}/flush:
     post:
-      operationId: WalletsController_flush
+      operationId: ethereum-WalletsController_flush
+      x-readme:
+        explorer-enabled: false
       summary: 입금 주소 잔액을 모두 끌어오기
       description: 원화 입금 주소의 특정 코인/토큰 잔액을 모두 상위의 지갑으로 끌어옵니다.
       parameters:
@@ -1623,7 +1668,9 @@ paths:
       tags: *ref_20
   /api/v3/ethereum/wallets/{walletId}/transactions/{transactionId}/resend:
     post:
-      operationId: WalletsController_resendTransaction
+      operationId: ethereum-WalletsController_resendTransaction
+      x-readme:
+        explorer-enabled: false
       summary: 트랜잭션 다시 전송하기
       description: 네트워크 사정 등으로 채굴이 지연됐을때, 블록체인에 트랜잭션을 다시 전송합니다.
       parameters:
@@ -1662,7 +1709,9 @@ paths:
       tags: *ref_20
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses:
     get:
-      operationId: WalletsController_getDepositAddresses
+      operationId: ethereum-WalletsController_getDepositAddresses
+      x-readme:
+        explorer-enabled: false
       summary: 전체 입금 주소 목록 조회하기
       description: 특정 지갑에 속한 모든 입금 주소 조회합니다.
       parameters:
@@ -1727,7 +1776,9 @@ paths:
         '401': *ref_19
       tags: *ref_20
     post:
-      operationId: WalletsController_createDepositAddress
+      operationId: ethereum-WalletsController_createDepositAddress
+      x-readme:
+        explorer-enabled: false
       summary: 입금 주소 생성하기
       description: 특정 지갑 하위에 새로운 입금 주소 생성합니다
       parameters:
@@ -1771,7 +1822,9 @@ paths:
       tags: *ref_20
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}:
     get:
-      operationId: WalletsController_getDepositAddress
+      operationId: ethereum-WalletsController_getDepositAddress
+      x-readme:
+        explorer-enabled: false
       summary: 입금 주소 정보 조회하기
       description: 특정 입금 주소를 조회합니다.
       parameters:
@@ -1818,7 +1871,9 @@ paths:
       tags: *ref_20
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}/balance:
     get:
-      operationId: WalletsController_getBalanceOfDepositAddress
+      operationId: ethereum-WalletsController_getBalanceOfDepositAddress
+      x-readme:
+        explorer-enabled: false
       summary: 입금 주소 잔고 조회하기
       description: 특정 입금 주소의 잔액을 조회합니다.
       parameters:

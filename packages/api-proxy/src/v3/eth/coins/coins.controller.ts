@@ -19,7 +19,7 @@ import {
   ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
-  PathParams
+  PathParams, ReadMeExtension
 } from '../../../decorators';
 import { COIN_REQUIRED } from "../dto/params";
 import {
@@ -53,6 +53,7 @@ export class CoinsController {
     description:
       "Henesis Wallet에서 지원하는 모든 가상자산(토큰, 코인)을 조회합니다.",
   })
+  @ReadMeExtension()
   public async getCoins(
     @Request() request: express.Request,
     @Query("flag") flag?: boolean
@@ -74,6 +75,7 @@ export class CoinsController {
     description:
       "Henesis Wallet에서 지원하는 특정 가상자산(토큰, 코인)을 조회합니다.",
   })
+  @ReadMeExtension()
   public async getCoin(
     @Request() request: express.Request,
     @Param("coinId") coinId: string

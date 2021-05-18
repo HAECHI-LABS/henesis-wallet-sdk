@@ -16,8 +16,8 @@ import {
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries,
-} from "../../../decorators";
+  Queries, ReadMeExtension
+} from '../../../decorators';
 import { PARAM_TRANSACTION_ID } from "../dto/params";
 import {
   EXAMPLE_ETH_KLAY_PAGINATION_TRNASCATION_DTO,
@@ -75,6 +75,7 @@ export class TransactionsController {
     TransactionDTO,
     EXAMPLE_ETH_KLAY_PAGINATION_TRNASCATION_DTO
   )
+  @ReadMeExtension()
   public async getTransactions(
     @Request() request: express.Request,
     @Query("address") address?: string,
@@ -122,6 +123,7 @@ export class TransactionsController {
     description: "내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.",
   })
   @PathParams(PARAM_TRANSACTION_ID)
+  @ReadMeExtension()
   public async getTransaction(
     @Request() request: express.Request,
     @Param("transactionId") transactionId: string

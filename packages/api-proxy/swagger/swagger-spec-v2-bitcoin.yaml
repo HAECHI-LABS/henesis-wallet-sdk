@@ -449,7 +449,15 @@ components:
 paths:
   /api/v2/btc/transfers:
     get:
-      operationId: TransfersController_getTransfers
+      operationId: bitcoin-TransfersController_getTransfers
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 입출금 내역 조회하기
       description: 입출금 내역을 조회합니다.
       parameters:
@@ -462,8 +470,10 @@ paths:
         - &ref_3
           name: Authorization
           in: header
-          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
           schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
             type: string
         - name: type
           required: false
@@ -573,7 +583,15 @@ paths:
         - transfers
   /api/v2/btc/transfers/{transferId}:
     get:
-      operationId: TransfersController_getTransfer
+      operationId: bitcoin-TransfersController_getTransfer
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 특정 입출금 내역 조회하기
       description: 특정 입출금 내역을 조회합니다.
       parameters:
@@ -597,7 +615,15 @@ paths:
       tags: *ref_6
   /api/v2/btc/wallets:
     get:
-      operationId: WalletsController_getWallets
+      operationId: bitcoin-WalletsController_getWallets
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 전체 지갑 목록 조회하기
       description: 전체 지갑 목록을 조회합니다.
       parameters:
@@ -610,8 +636,10 @@ paths:
         - &ref_12
           name: Authorization
           in: header
-          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer \<TOKEN\>
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
           schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
             type: string
         - name: name
           required: false
@@ -659,7 +687,15 @@ paths:
         - wallets
   /api/v2/btc/wallets/{walletId}:
     get:
-      operationId: WalletsController_getWallet
+      operationId: bitcoin-WalletsController_getWallet
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 지갑 정보 조회하기
       description: 특정 지갑의 상세 정보를 조회합니다.
       parameters:
@@ -683,7 +719,15 @@ paths:
       tags: *ref_15
   /api/v2/btc/wallets/{walletId}/name:
     patch:
-      operationId: WalletsController_changeWalletName
+      operationId: bitcoin-WalletsController_changeWalletName
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 지갑 정보 변경하기
       description: 특정 지갑의 이름을 변경합니다.
       parameters:
@@ -710,7 +754,15 @@ paths:
       tags: *ref_15
   /api/v2/btc/wallets/{walletId}/balance:
     get:
-      operationId: WalletsController_getWalletBalance
+      operationId: bitcoin-WalletsController_getWalletBalance
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 지갑 잔고 조회하기
       description: 특정 지갑의 잔고를 변경합니다.
       parameters:
@@ -739,7 +791,15 @@ paths:
       tags: *ref_15
   /api/v2/btc/wallets/{walletId}/deposit-addresses:
     post:
-      operationId: WalletsController_createDepositAddress
+      operationId: bitcoin-WalletsController_createDepositAddress
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 입금 주소 생성하기
       description: 입금 주소를 생성합니다.
       parameters:
@@ -774,7 +834,15 @@ paths:
         '401': *ref_14
       tags: *ref_15
     get:
-      operationId: WalletsController_getDepositAddresses
+      operationId: bitcoin-WalletsController_getDepositAddresses
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 전체 입금 주소 목록 조회하기
       description: 특정 지갑에 속한 모든 입금 주소 목록을 조회합니다.
       parameters:
@@ -819,7 +887,15 @@ paths:
       tags: *ref_15
   /api/v2/btc/wallets/{walletId}/deposit-addresses/{depositAddressId}:
     get:
-      operationId: WalletsController_getDepositAddress
+      operationId: bitcoin-WalletsController_getDepositAddress
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 입금 주소 정보 조회하기
       description: 특정 입금 주소 정보를 조회합니다.
       parameters:
@@ -849,7 +925,15 @@ paths:
       tags: *ref_15
   /api/v2/btc/wallets/{walletId}/transfer:
     post:
-      operationId: WalletsController_transfer
+      operationId: bitcoin-WalletsController_transfer
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 지갑에서 코인 전송하기
       description: 특정 지갑에서 가상자산을 전송합니다.
       parameters:

@@ -1,8 +1,9 @@
 import { applyDecorators } from "@nestjs/common";
 import {
+  ApiExtension,
   ApiExtraModels,
   ApiHeaders,
-  ApiOkResponse,
+  ApiOkResponse, ApiOperation,
   ApiParam,
   ApiParamOptions,
   ApiQuery,
@@ -56,6 +57,19 @@ export function Queries(...queriesOptions: ApiQueryOptions[]) {
 
 export function AuthHeaders() {
   return applyDecorators(ApiHeaders([X_HENESIS_SECRET, AUTHORIZATION]));
+}
+
+export function ReadMeExtension() {
+  return applyDecorators(ApiExtension("x-readme", {
+    "explorer-enabled": false,
+    "samples-languages": [
+      "curl",
+      "node",
+      "java",
+      "python",
+      "go"
+    ]
+  }))
 }
 
 export function AuthErrorResponses() {

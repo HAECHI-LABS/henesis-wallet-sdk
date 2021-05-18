@@ -6,7 +6,7 @@ import {
   ApiPaginationResponse, ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
-  Queries
+  Queries, ReadMeExtension
 } from '../../../decorators';
 import { EXAMPLE_ETHEREUM_PAGINATION_CONTRACT_CALLS_DTO, PaginationDTO } from '../dto/pagination.dto';
 import {
@@ -70,6 +70,7 @@ export class ContractCallsController {
     summary: "스마트 컨트랙트 호출 내역 조회하기",
     description: "내가 발생시킨 스마트 컨트랙트 호출 내역을 조회합니다.",
   })
+  @ReadMeExtension()
   public async getCallEvents(
     @Request() request: express.Request,
     @Query("walletId") walletId?: string,

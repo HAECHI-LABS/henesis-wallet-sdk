@@ -9,7 +9,7 @@ import {
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries
+  Queries, ReadMeExtension
 } from '../../../decorators';
 import {
   QUERY_TRANSFERS_ADDRESS_OPTIONAL,
@@ -48,6 +48,7 @@ export class TransfersController {
     QUERY_TRANSFERS_SIZE_OPTIONAL,
     QUERY_TRANSFERS_PAGE_OPTIONAL
   )
+  @ReadMeExtension()
   public async getTransfers(
     @Request() request: express.Request,
     @Query("type") type?: string,
@@ -82,6 +83,7 @@ export class TransfersController {
     description: "특정 입출금 내역을 조회합니다.",
   })
   @PathParams(PARAM_TRANSFER_ID)
+  @ReadMeExtension()
   public async getTransfer(
     @Request() request: express.Request,
     @Param("transferId") transferId: string

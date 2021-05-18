@@ -20,3 +20,7 @@ export function OpenApiDocumentFileName() {
     ? `-${ENDPOINT}`
     : ""}`;
 }
+
+export function OpenApiOperationId(controllerKey: string, methodKey: string) {
+  return `${ENDPOINT ? `${ENDPOINT.toLowerCase()}-` : ""}${controllerKey}_${methodKey}`;
+}

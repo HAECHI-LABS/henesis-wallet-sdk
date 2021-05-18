@@ -21,7 +21,9 @@ components:
 paths:
   /api/version:
     get:
-      operationId: VersionController_getVersion
+      operationId: version-VersionController_getVersion
+      x-readme:
+        explorer-enabled: false
       summary: API Proxy 버전
       description: 현재 API Proxy의 버전을 반환합니다
       parameters: []

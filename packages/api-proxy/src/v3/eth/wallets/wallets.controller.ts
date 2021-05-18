@@ -25,7 +25,7 @@ import {
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries
+  Queries, ReadMeExtension
 } from '../../../decorators';
 import { EXAMPLE_ETHEREUM_WALLET_DTO, WalletDTO } from '../dto/wallet.dto';
 import { PaginationDTO } from "../dto/pagination.dto";
@@ -73,6 +73,7 @@ import { EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO } from '../../../v2/btc/
 )
 @AuthErrorResponses()
 @AuthHeaders()
+@ReadMeExtension()
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
@@ -86,6 +87,7 @@ export class WalletsController {
     summary: "전체 지갑 목록 조회하기",
     description: "모든 지갑의 목록을 조회합니다.",
   })
+  @ReadMeExtension()
   public async getWallets(
     @Request() request: express.Request,
     @Query("name") name?: string
@@ -109,6 +111,7 @@ export class WalletsController {
     summary: "지갑 정보 조회하기",
     description: "특정 지갑의 정보를 조회합니다.",
   })
+  @ReadMeExtension()
   public async getWallet(
     @Request() request: express.Request,
     @Param("walletId") walletId: string
@@ -134,6 +137,7 @@ export class WalletsController {
     summary: "지갑 잔고 조회하기",
     description: "특정 지갑의 잔고를 조회합니다.",
   })
+  @ReadMeExtension()
   public async getBalanceOfWallet(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -160,6 +164,7 @@ export class WalletsController {
     summary: "지갑 이름 변경하기",
     description: "특정 지갑의 이름을 변경합니다.",
   })
+  @ReadMeExtension()
   public async changeWalletName(
     @Request() request: express.Request ,
     @Param("walletId") walletId: string,
@@ -191,6 +196,7 @@ export class WalletsController {
     summary: "지갑에서 코인 전송하기",
     description: "특정 지갑에서 가상자산을 송금합니다.",
   })
+  @ReadMeExtension()
   public async sendCoin(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -217,6 +223,7 @@ export class WalletsController {
     description:
       "특정 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
   })
+  @ReadMeExtension()
   public async callContract(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -249,6 +256,7 @@ export class WalletsController {
     summary: "트랜잭션 교체",
     description: "트랜잭션을 교체합니다",
   })
+  @ReadMeExtension()
   public async replaceTransaction(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -277,6 +285,7 @@ export class WalletsController {
     description:
       "원화 입금 주소의 특정 코인/토큰 잔액을 모두 상위의 지갑으로 끌어옵니다.",
   })
+  @ReadMeExtension()
   public async flush(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -301,6 +310,7 @@ export class WalletsController {
     description:
       "네트워크 사정 등으로 채굴이 지연됐을때, 블록체인에 트랜잭션을 다시 전송합니다.",
   })
+  @ReadMeExtension()
   async resendTransaction(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -332,6 +342,7 @@ export class WalletsController {
     summary: "전체 입금 주소 목록 조회하기",
     description: "특정 지갑에 속한 모든 입금 주소 조회합니다.",
   })
+  @ReadMeExtension()
   public async getDepositAddresses(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -366,6 +377,7 @@ export class WalletsController {
     summary: "입금 주소 생성하기",
     description: "특정 지갑 하위에 새로운 입금 주소 생성합니다",
   })
+  @ReadMeExtension()
   public async createDepositAddress(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -394,6 +406,7 @@ export class WalletsController {
     summary: "입금 주소 정보 조회하기",
     description: "특정 입금 주소를 조회합니다.",
   })
+  @ReadMeExtension()
   public async getDepositAddress(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -417,6 +430,7 @@ export class WalletsController {
     summary: "입금 주소 잔고 조회하기",
     description: "특정 입금 주소의 잔액을 조회합니다.",
   })
+  @ReadMeExtension()
   public async getBalanceOfDepositAddress(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,

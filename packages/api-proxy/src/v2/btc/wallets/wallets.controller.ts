@@ -35,8 +35,8 @@ import {
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries,
-} from "../../../decorators";
+  Queries, ReadMeExtension
+} from '../../../decorators';
 import { PARAM_DEPOSIT_ADDRESS_ID, PARAM_WALLET_ID } from "../dto/params";
 import {
   QUERY_DEPOSIT_ADDRESS_ADDRESS_OPTIONAL,
@@ -68,6 +68,7 @@ export class WalletsController {
     description: "전체 지갑 목록을 조회합니다.",
   })
   @Queries(QUERY_WALLET_NAME_OPTIONAL)
+  @ReadMeExtension()
   public async getWallets(
     @Request() request: express.Request,
     @Query("name") walletName?: string
@@ -84,6 +85,7 @@ export class WalletsController {
     description: "특정 지갑의 상세 정보를 조회합니다.",
   })
   @PathParams(PARAM_WALLET_ID)
+  @ReadMeExtension()
   public async getWallet(
     @Request() request: express.Request,
     @Param("walletId") walletId: string
@@ -98,6 +100,7 @@ export class WalletsController {
   })
   @PathParams(PARAM_WALLET_ID)
   @ApiNoContentResponse()
+  @ReadMeExtension()
   public async changeWalletName(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -124,6 +127,7 @@ export class WalletsController {
     description: "특정 지갑의 잔고를 변경합니다.",
   })
   @PathParams(PARAM_WALLET_ID)
+  @ReadMeExtension()
   public async getWalletBalance(
     @Request() request: express.Request,
     @Param("walletId") walletId: string
@@ -143,6 +147,7 @@ export class WalletsController {
     description: "입금 주소를 생성합니다.",
   })
   @PathParams(PARAM_WALLET_ID)
+  @ReadMeExtension()
   async createDepositAddress(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -171,6 +176,7 @@ export class WalletsController {
     DepositAddressDTO,
     EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO
   )
+  @ReadMeExtension()
   public async getDepositAddresses(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -199,6 +205,7 @@ export class WalletsController {
     description: "특정 입금 주소 정보를 조회합니다.",
   })
   @PathParams(PARAM_WALLET_ID, PARAM_DEPOSIT_ADDRESS_ID)
+  @ReadMeExtension()
   public async getDepositAddress(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -223,6 +230,7 @@ export class WalletsController {
     description: "특정 지갑에서 가상자산을 전송합니다.",
   })
   @PathParams(PARAM_WALLET_ID)
+  @ReadMeExtension()
   public async transfer(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,

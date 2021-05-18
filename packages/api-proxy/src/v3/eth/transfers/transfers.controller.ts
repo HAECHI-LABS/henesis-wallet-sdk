@@ -6,7 +6,7 @@ import {
   ApiPaginationResponse, ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
-  Queries
+  Queries, ReadMeExtension
 } from '../../../decorators';
 import { EXAMPLE_ETHEREUM_PAGINATION_TRANSFER_DTO, PaginationDTO } from '../dto/pagination.dto';
 import { ApiBadRequestResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -54,6 +54,7 @@ export class TransfersController {
     summary: "전체 입출금 목록 조회하기",
     description: "모든 지갑의 가상자산 입출금 내역을 조회합니다.",
   })
+  @ReadMeExtension()
   public async getTransfers(
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,

@@ -5,8 +5,8 @@ import {
   ApiPaginationResponse,
   AuthErrorResponses,
   AuthHeaders,
-  Queries,
-} from "../../../decorators";
+  Queries, ReadMeExtension
+} from '../../../decorators';
 import {
   QUERY_EVENT_MASTER_WALLET_ID_OPTIONAL,
   QUERY_EVENT_PAGE_OPTIONAL,
@@ -64,6 +64,7 @@ export class EventsController {
     ValueTransferEventDTO,
     EXAMPLE_ETH_KLAY_PAGINATION_VALUE_TRANSFER_EVENT_DTO
   )
+  @ReadMeExtension()
   public async getValueTransferEvents(
     @Request() request: express.Request,
     @Query("symbol") symbol?: string,
@@ -114,6 +115,7 @@ export class EventsController {
     CallEventDTO,
     EXAMPLE_ETH_KLAY_PAGINATION_CALL_EVENT_DTO
   )
+  @ReadMeExtension()
   public async getCallEvents(
     @Request() request: express.Request,
     @Query("walletId") walletId?: string,

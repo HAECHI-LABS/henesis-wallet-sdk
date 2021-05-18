@@ -8,7 +8,7 @@ import {
   InvalidAccessIpException,
   InvalidAccessTokenException,
 } from "../dto/exceptions.dto";
-import { ApiResponseContentGenerator, AuthErrorResponses, AuthHeaders } from '../../../decorators';
+import { ApiResponseContentGenerator, AuthErrorResponses, AuthHeaders, ReadMeExtension } from '../../../decorators';
 
 @Controller("fee-wallet")
 @ApiTags("fee-wallet")
@@ -30,6 +30,7 @@ export class FeeWalletController {
     summary: "수수료 지갑 잔고 조회하기",
     description: "수수료 지갑의 잔액을 조회합니다.",
   })
+  @ReadMeExtension()
   public async getBalance(
     @Request() request: express.Request
   ): Promise<BalanceDTO> {
