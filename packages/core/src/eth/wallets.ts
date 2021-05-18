@@ -51,7 +51,9 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       `${this.baseUrl}/${id}`
     );
     if (!isLessThanWalletV4(walletData.version)) {
-      throw new Error("This wallet is not a compatible version.");
+      throw new Error(
+        "This wallet is not a compatible version. Please use the v3 APIs."
+      );
     }
     return new EthMasterWallet(
       this.client,
@@ -66,7 +68,9 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       `${this.baseUrl}/${id}`
     );
     if (isLessThanWalletV4(walletData.version)) {
-      throw new Error("This wallet is not a compatible version.");
+      throw new Error(
+        "This wallet is not a compatible version. Please use the v2 APIs."
+      );
     }
     return new EthWallet(
       this.client,
