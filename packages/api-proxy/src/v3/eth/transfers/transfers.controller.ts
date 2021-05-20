@@ -21,6 +21,7 @@ import {
   UPDATED_AT_GTE_OPTIONAL,
   UPDATED_AT_LE_OPTIONAL,
   WALLET_ID_OPTIONAL,
+  TRANSFER_TYPE_OPTIONAL,
 } from "../dto/params";
 import { EXAMPLE_INVALID_STATUS_EXCEPTION_DTO, InvalidStatusException } from '../dto/exceptions.dto';
 import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
@@ -40,6 +41,7 @@ export class TransfersController {
     TRANSACTION_ID_OPTIONAL,
     TRANSACTION_HASH_OPTIONAL,
     STATUS_OPTIONAL,
+    TRANSFER_TYPE_OPTIONAL,
     UPDATED_AT_GTE_OPTIONAL,
     UPDATED_AT_LE_OPTIONAL,
     SIZE_OPTIONAL,
@@ -63,6 +65,7 @@ export class TransfersController {
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
     @Query("status") status?: EventStatus,
+    @Query("transferType") transferType?: TransferType,
     @Query("updatedAtGte") updatedAtGte?: string,
     @Query("updatedAtLt") updatedAtLt?: string,
     @Query("size") size: number = 15,
@@ -75,6 +78,7 @@ export class TransfersController {
       transactionId,
       transactionHash,
       status,
+      transferType,
       updatedAtGte,
       updatedAtLt,
       size,

@@ -13,6 +13,7 @@ export default class VersionController {
     summary: "API Proxy 버전",
     description: "현재 API Proxy의 버전을 반환합니다",
   })
+  
   @ReadMeExtension()
   getVersion(): VersionDTO {
     return { version: PACKAGE.version };

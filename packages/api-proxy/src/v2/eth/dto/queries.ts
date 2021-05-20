@@ -1,4 +1,4 @@
-import { ApiQueryOptions } from "@nestjs/swagger";
+import { ApiParamOptions, ApiQueryOptions } from "@nestjs/swagger";
 
 export const QUERY_EVENT_SYMBOL_OPTIONAL: ApiQueryOptions = {
   name: "symbol",
@@ -77,6 +77,12 @@ export const QUERY_EVENT_PAGE_OPTIONAL: ApiQueryOptions = {
   description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
 };
 
+export const QUERY_EVENT_TRANSFER_TYPE_OPTIONAL: ApiParamOptions = {
+  name: "transferType",
+  required: false,
+  description: "트랜잭션의 종류(입금, 출금)",
+};
+
 export const QUERY_COIN_FLAG_OPTIONAL: ApiQueryOptions = {
   name: "flag",
   required: false,
@@ -86,7 +92,7 @@ export const QUERY_COIN_FLAG_OPTIONAL: ApiQueryOptions = {
 export const QUERY_COIN_TICKER_OPTIONAL: ApiQueryOptions = {
   name: "ticker",
   required: false,
-  description: "COIN TICKER",
+  description: "암호화폐의 기호 (symbol)",
 };
 
 export const QUERY_FLAG_OPTIONAL: ApiQueryOptions = {
@@ -98,13 +104,14 @@ export const QUERY_FLAG_OPTIONAL: ApiQueryOptions = {
 export const QUERY_SYMBOL_OPTIONAL: ApiQueryOptions = {
   name: "symbol",
   required: false,
-  description: "SYMBOL",
+  description:
+    "토큰별로 필터링하여 조회하고 싶은 경우, 토큰의 symbol을 입력합니다.",
 };
 
 export const QUERY_WALLETS_SIZE_OPTIONAL: ApiQueryOptions = {
   name: "size",
   required: false,
-  description: "SIZE",
+  description: "한 번의 요청으로 반환되는 응답의 개수 (기본값: 15) ",
 };
 
 export const QUERY_WALLETS_PAGE_OPTIONAL: ApiQueryOptions = {
@@ -116,79 +123,79 @@ export const QUERY_WALLETS_PAGE_OPTIONAL: ApiQueryOptions = {
 export const QUERY_WALLETS_NAME_OPTIONAL: ApiQueryOptions = {
   name: "name",
   required: false,
-  description: "NAME",
+  description: "지갑 이름",
 };
 
 export const QUERY_WALLETS_SORT_OPTIONAL: ApiQueryOptions = {
   name: "sort",
   required: false,
-  description: "SORT",
+  description: "결과 정렬 방식",
 };
 
 export const QUERY_WALLETS_ADDRESS_OPTIONAL: ApiQueryOptions = {
   name: "address",
   required: false,
-  description: "ADDRESS",
+  description: "지갑 주소",
 };
 
 export const QUERY_TRANSACTIONS_ADDRESS_OPTIONAL: ApiQueryOptions = {
   name: "address",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "트랜잭션 주소",
 };
 
 export const QUERY_TRANSACTIONS_TO_ADDRESS_OPTIONAL: ApiQueryOptions = {
   name: "toAddress",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "받는 주소",
 };
 
 export const QUERY_TRANSACTIONS_FROM_ADDRESS_OPTIONAL: ApiQueryOptions = {
   name: "fromAddress",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "보내는 주소",
 };
 
 export const QUERY_TRANSACTIONS_TRANSACTION_HASH_OPTIONAL: ApiQueryOptions = {
   name: "transactionHash",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "트랜잭션 해시",
 };
 
 export const QUERY_TRANSACTIONS_START_OPTIONAL: ApiQueryOptions = {
   name: "start",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "해당 시점 이후의 트랜잭션 조회",
 };
 
 export const QUERY_TRANSACTIONS_END_OPTIONAL: ApiQueryOptions = {
   name: "end",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "해당 시점 이전의 트랜잭션 조회)",
 };
 
 export const QUERY_TRANSACTIONS_STATUS_OPTIONAL: ApiQueryOptions = {
   name: "status",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "트랜잭션 상태",
 };
 
 export const QUERY_TRANSACTIONS_STATUSES_OPTIONAL: ApiQueryOptions = {
   name: "statuses",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "트랜잭션 상태",
 };
 
 export const QUERY_TRANSACTIONS_TYPES_OPTIONAL: ApiQueryOptions = {
-  name: "page",
+  name: "types",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "트랜잭션 종류",
 };
 
 export const QUERY_TRANSACTIONS_KEY_ID_OPTIONAL: ApiQueryOptions = {
   name: "keyId",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "키 ID",
 };
 
 export const QUERY_PAGE_OPTIONAL: ApiQueryOptions = {
@@ -206,5 +213,5 @@ export const QUERY_SIZE_OPTIONAL: ApiQueryOptions = {
 export const QUERY_SORT_OPTIONAL: ApiQueryOptions = {
   name: "sort",
   required: false,
-  description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
+  description: "결과 정렬 방식",
 };

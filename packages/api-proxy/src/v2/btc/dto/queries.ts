@@ -51,7 +51,7 @@ export const QUERY_DEPOSIT_ADDRESS_NAME_REQUIRED: ApiQueryOptions = {
 export const QUERY_TRANSFERS_TYPE_OPTIONAL: ApiQueryOptions = {
   name: "type",
   required: false,
-  description: "거래 타입 ",
+  description: "거래 타입",
 };
 
 export const QUERY_TRANSFERS_WALLET_ID_OPTIONAL: ApiQueryOptions = {

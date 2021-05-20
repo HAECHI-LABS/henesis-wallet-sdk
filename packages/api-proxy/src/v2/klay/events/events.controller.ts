@@ -19,6 +19,7 @@ import {
   QUERY_EVENT_UPDATED_AT_GTE_OPTIONAL,
   QUERY_EVENT_UPDATED_AT_LT_OPTIONAL,
   QUERY_EVENT_WALLET_ID_OPTIONAL,
+  QUERY_EVENT_TRANSFER_TYPE_OPTIONAL,
 } from "../../eth/dto/queries";
 import express from "express";
 import {
@@ -58,7 +59,8 @@ export class EventsController {
     QUERY_EVENT_UPDATED_AT_LT_OPTIONAL,
     QUERY_EVENT_TRANSFER_TYPE_OPTIONAL,
     QUERY_EVENT_SIZE_OPTIONAL,
-    QUERY_EVENT_PAGE_OPTIONAL
+    QUERY_EVENT_PAGE_OPTIONAL,
+    QUERY_EVENT_TRANSFER_TYPE_OPTIONAL
   )
   @ApiPaginationResponse(
     ValueTransferEventDTO,
@@ -73,6 +75,7 @@ export class EventsController {
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
     @Query("status") status?: EventStatus,
+    @Query("transferType") transferType?: TransferType,
     @Query("updatedAtGte") updatedAtGte?: Timestamp,
     @Query("updatedAtLt") updatedAtLt?: Timestamp,
     @Query("transferType") transferType?: TransferType,
@@ -87,6 +90,7 @@ export class EventsController {
       transactionId,
       transactionHash,
       status,
+      transferType,
       updatedAtGte,
       updatedAtLt,
       transferType,

@@ -21,6 +21,7 @@ export class EventsService {
     transactionId?: string,
     transactionHash?: string,
     status?: EventStatus,
+    transferType?: TransferType,
     updatedAtGte?: Timestamp,
     updatedAtLt?: Timestamp,
     transferType?: TransferType,
@@ -34,6 +35,7 @@ export class EventsService {
       transactionId?: string;
       transactionHash?: string;
       status?: EventStatus;
+      transferType?: TransferType;
       updatedAtGte?: Timestamp;
       updatedAtLt?: Timestamp;
       transferType?: TransferType;
@@ -46,6 +48,7 @@ export class EventsService {
     if (transactionId) options.transactionId = transactionId;
     if (transactionHash) options.transactionHash = transactionHash;
     if (status) options.status = status;
+    if (transferType) options.transferType = transferType;
     if (updatedAtGte) options.updatedAtGte = updatedAtGte;
     if (updatedAtLt) options.updatedAtLt = updatedAtLt;
     if (transferType) options.transferType = transferType;

@@ -21,5 +21,5 @@ export const PARAM_TRANSACTION_ID: ApiParamOptions = {
 export const PARAM_COIN_TICKER: ApiParamOptions = {
   name: "ticker",
   required: true,
-  description: "COIN TICKER",
+  description: "암호화폐의 기호 (symbol)",
 };
