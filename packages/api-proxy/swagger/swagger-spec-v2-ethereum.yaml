@@ -941,6 +941,12 @@ paths:
       operationId: ethereum-CoinsController_getCoins
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 전체 코인/토큰 목록 조회하기
       description: Henesis Wallet에서 지원하는 모든 가상자산(토큰, 코인)을 조회합니다.
       parameters:
@@ -1010,6 +1016,12 @@ paths:
       operationId: ethereum-CoinsController_getCoin
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 코인/토큰 정보 조회하기
       description: Henesis Wallet에서 지원하는 특정 가상자산(토큰, 코인)을 조회합니다.
       parameters:
@@ -1018,7 +1030,7 @@ paths:
         - name: ticker
           required: true
           in: path
-          description: COIN TICKER
+          description: 암호화폐의 기호 (symbol)
           schema:
             type: string
       responses:
@@ -1091,6 +1103,12 @@ paths:
 
             ex. PENDING_APPROVAL, REJECTED, REQUESTED, PENDING, MINED,
             CONFIRMED, FAILED 
+          schema:
+            type: string
+        - name: transferType
+          required: false
+          in: query
+          description: 입금, 출금 타입을 지정합니다. DEPOSIT, WITHDRAWAL 2 가지 타입만 입력할 수 있습니다.
           schema:
             type: string
         - name: updatedAtGte
@@ -1275,6 +1293,12 @@ paths:
       operationId: ethereum-HenesisKeysController_getHenesisKeyBalance
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 수수료 지갑 잔액 조회하기
       description: 수수료 지갑의 잔액을 조회합니다.
       parameters:
@@ -1329,6 +1353,12 @@ paths:
       operationId: ethereum-TransactionsController_getTransactions
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 모든 트랜잭션 정보 조회하기
       description: 내가 발생시킨 모든 트랜잭션의 정보를 조회합니다.
       parameters:
@@ -1349,56 +1379,57 @@ paths:
         - name: address
           required: false
           in: query
-          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          description: 트랜잭션 주소
           schema:
             type: string
         - name: toAddress
           required: false
           in: query
-          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          description: 받는 주소
           schema:
             type: string
         - name: fromAddress
           required: false
           in: query
-          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          description: 보내는 주소
           schema:
             type: string
         - name: transactionHash
           required: false
           in: query
-          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          description: 트랜잭션 해시
           schema:
             type: string
         - name: start
           required: false
           in: query
-          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          description: 해당 시점 이후의 트랜잭션 조회
           schema:
             type: string
         - name: end
           required: false
           in: query
-          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          description: 해당 시점 이전의 트랜잭션 조회)
           schema:
             type: string
         - name: status
           required: false
           in: query
-          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          description: 트랜잭션 상태
           schema:
             type: string
         - name: statuses
           required: false
           in: query
-          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          description: 트랜잭션 상태
           schema:
             type: array
             items:
               type: string
         - name: types
-          required: true
+          required: false
           in: query
+          description: 트랜잭션 종류
           schema:
             type: array
             items:
@@ -1406,7 +1437,7 @@ paths:
         - name: keyId
           required: false
           in: query
-          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          description: 키 ID
           schema:
             type: string
         - name: page
@@ -1424,7 +1455,7 @@ paths:
         - name: sort
           required: false
           in: query
-          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          description: 결과 정렬 방식
           schema:
             type: string
       responses:
@@ -1476,6 +1507,12 @@ paths:
       operationId: ethereum-TransactionsController_getTransaction
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 특정 트랜잭션 정보 조회하기
       description: 내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.
       parameters:
@@ -1502,6 +1539,12 @@ paths:
       operationId: ethereum-WalletsController_getMasterWallets
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 전체 마스터 지갑 목록 조회하기
       description: 모든 마스터 지갑 목록을 조회합니다.
       parameters:
@@ -1571,6 +1614,12 @@ paths:
       operationId: ethereum-WalletsController_getMasterWallet
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 마스터 지갑 조회하기
       description: 마스터 지갑 목록을 조회합니다.
       parameters:
@@ -1597,6 +1646,12 @@ paths:
       operationId: ethereum-WalletsController_sendMasterWalletContractCall
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 마스터 지갑에서 스마트 컨트랙트 호출하기
       description: 특정 마스터 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
       parameters:
@@ -1629,6 +1684,12 @@ paths:
       operationId: ethereum-WalletsController_changeMasterWalletName
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 마스터 지갑 이름 변경하기
       description: 특정 마스터 지갑의 이름을 변경합니다.
       parameters:
@@ -1658,6 +1719,12 @@ paths:
       operationId: ethereum-WalletsController_getMasterWalletBalance
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 마스터 지갑 잔고 조회하기
       description: 특정 마스터 지갑의 잔액을 조회합니다.
       parameters:
@@ -1678,7 +1745,7 @@ paths:
         - name: symbol
           required: false
           in: query
-          description: SYMBOL
+          description: 토큰별로 필터링하여 조회하고 싶은 경우, 토큰의 symbol을 입력합니다.
           schema:
             type: string
       responses:
@@ -1697,6 +1764,12 @@ paths:
       operationId: ethereum-WalletsController_sendMasterWalletCoin
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 마스터 지갑에서 코인/토큰 전송하기
       description: 특정 마스터 지갑에서 가상자산을 송금합니다.
       parameters:
@@ -1729,6 +1802,12 @@ paths:
       operationId: ethereum-WalletsController_sendMasterWalletBatchTransactions
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 마스터 지갑에서 여러 트랜잭션들을 모아서 호출하기
       description: |-
         특정 마스터 지갑에서 여러 트랜잭션을 모아 한꺼번에 발생니다.
@@ -1764,6 +1843,12 @@ paths:
       operationId: ethereum-WalletsController_flush
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 사용자 지갑 잔액을 모두 끌어오기
       description: 여러 사용자 지갑의 특정 코인/토큰 잔액을 모두 상위의 마스터 지갑으로 끌어옵니다.
       parameters:
@@ -1796,6 +1881,12 @@ paths:
       operationId: ethereum-WalletsController_getUserWallet
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 사용자 지갑 정보 조회하기
       description: 특정 사용자 지갑을 조회합니다.
       parameters:
@@ -1828,6 +1919,12 @@ paths:
       operationId: ethereum-WalletsController_getUserWallets
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 전체 사용자 지갑 목록 조회하기
       description: 특정 마스터 지갑에 속한 모든 사용자 지갑 목록을 조회합니다.
       parameters:
@@ -1848,25 +1945,25 @@ paths:
         - name: size
           required: false
           in: query
-          description: SIZE
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15) '
           schema:
             type: string
         - name: sort
           required: false
           in: query
-          description: SORT
+          description: 결과 정렬 방식
           schema:
             type: string
         - name: name
           required: false
           in: query
-          description: NAME
+          description: 지갑 이름
           schema:
             type: string
         - name: address
           required: false
           in: query
-          description: ADDRESS
+          description: 지갑 주소
           schema:
             type: string
       responses:
@@ -1886,6 +1983,12 @@ paths:
       operationId: ethereum-WalletsController_createUserWallet
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 사용자 지갑 생성하기
       description: 특정 마스터 지갑 하위에 새로운 사용자 지갑을 생성합니다.
       parameters:
@@ -1918,6 +2021,12 @@ paths:
       operationId: ethereum-WalletsController_sendUserWalletContractCall
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 사용자 지갑에서 스마트 컨트랙트 호출하기
       description: 사용자 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
       parameters:
@@ -1956,6 +2065,12 @@ paths:
       operationId: ethereum-WalletsController_changeUserWalletName
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 사용자 지갑 이름 변경하기
       description: 특정 사용자 지갑의 이름을 변경합니다.
       parameters:
@@ -1991,6 +2106,12 @@ paths:
       operationId: ethereum-WalletsController_getUserWalletBalance
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 사용자 지갑 잔고 조회하기
       description: 특정 사용자 지갑의 잔액을 조회합니다.
       parameters:
@@ -2017,7 +2138,7 @@ paths:
         - name: symbol
           required: false
           in: query
-          description: SYMBOL
+          description: 토큰별로 필터링하여 조회하고 싶은 경우, 토큰의 symbol을 입력합니다.
           schema:
             type: string
       responses:
@@ -2036,6 +2157,12 @@ paths:
       operationId: ethereum-WalletsController_sendUserWalletCoin
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 사용자 지갑에서 코인/토큰 전송하기
       description: 특정 사용자 지갑에서 가상자산을 전송합니다.
       parameters:
@@ -2074,6 +2201,12 @@ paths:
       operationId: ethereum-WalletsController_retryCreateMasterWallet
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 마스터 지갑 재생성하기
       description: 마스터 지갑을 재생성합니다.
       parameters:
@@ -2106,6 +2239,12 @@ paths:
       operationId: ethereum-WalletsController_retryCreateUserWallet
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: 사용자 지갑 생성 실패시 재시도하기
       description: >-
         특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.
