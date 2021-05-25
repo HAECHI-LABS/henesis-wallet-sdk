@@ -11,26 +11,27 @@ import {
 } from "@nestjs/common";
 import { WalletsService } from "./wallets.service";
 import {
-  ApiBadRequestResponse,
+  ApiBadRequestResponse, ApiCreatedResponse,
   ApiExtraModels,
-  ApiNoContentResponse,
+  ApiNoContentResponse, ApiOkResponse,
   ApiOperation,
   ApiResponse,
   ApiTags,
-  getSchemaPath,
-} from "@nestjs/swagger";
+  ApiUnauthorizedResponse,
+  getSchemaPath
+} from '@nestjs/swagger';
 import {
-  ApiPaginationResponse,
+  ApiPaginationResponse, ApiResponseContentGenerator, ApiResponseContentsGenerator,
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries,
-} from "../../../decorators";
-import { WalletDTO } from "../dto/wallet.dto";
+  Queries, ReadMeExtension
+} from '../../../decorators';
+import { EXAMPLE_ETHEREUM_WALLET_DTO, WalletDTO } from '../dto/wallet.dto';
 import { PaginationDTO } from "../dto/pagination.dto";
-import { BalanceDTO } from "../dto/balance.dto";
-import { TransactionDTO } from "../dto/transaction.dto";
-import { DepositAddressDTO } from "../dto/deposit-address.dto";
+import { BalanceDTO, EXAMPLE_ETHEREUM_BALANCE_DTO } from '../dto/balance.dto';
+import { EXAMPLE_ETHEREUM_TRANSACTION_DTO, TransactionDTO } from '../dto/transaction.dto';
+import { DepositAddressDTO, EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO } from '../dto/deposit-address.dto';
 import { ChangeWalletNameRequestDTO } from "./dto/change-wallet-name-request.dto";
 import { SendCoinRequestDTO } from "./dto/send-coin-request.dto";
 import { CreateTransactionRequestDTO } from "./dto/create-transaction-reqeust.dto";
@@ -48,31 +49,45 @@ import {
 } from "../dto/params";
 import express from "express";
 import {
-  DepositAddressNotFoundException,
+  DepositAddressNotFoundException, EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO,
+  EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
+  EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO,
+  EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
   NoWalletNameException,
   TransactionIdNotFoundException,
-  WalletNotFoundException,
-} from "../dto/exceptions.dto";
+  WalletNotFoundException
+} from '../dto/exceptions.dto';
 import { ReplaceTransactionRequestDTO } from "../transactions/dto/replace-transaction-request.dto";
+import { EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO } from '../../../v2/btc/dto/pagination.dto';
 
 @Controller("wallets")
 @ApiTags("wallets")
 @ApiExtraModels(
   WalletNotFoundException,
   NoWalletNameException,
-  DepositAddressNotFoundException
+  DepositAddressNotFoundException,
+  WalletDTO,
+  BalanceDTO,
+  TransactionDTO,
+  DepositAddressDTO
 )
 @AuthErrorResponses()
 @AuthHeaders()
+@ReadMeExtension()
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
   @Get("/")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(WalletDTO, [EXAMPLE_ETHEREUM_WALLET_DTO]),
+    isArray: true
+  })
   @Queries(NAME_OPTIONAL)
   @ApiOperation({
     summary: "전체 지갑 목록 조회하기",
     description: "모든 지갑의 목록을 조회합니다.",
   })
+  @ReadMeExtension()
   public async getWallets(
     @Request() request: express.Request,
     @Query("name") name?: string
@@ -81,15 +96,22 @@ export class WalletsController {
   }
 
   @Get("/:walletId")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(WalletDTO, EXAMPLE_ETHEREUM_WALLET_DTO)
+  })
   @PathParams(WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    type: WalletNotFoundException,
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    )
   })
   @ApiOperation({
     summary: "지갑 정보 조회하기",
     description: "특정 지갑의 정보를 조회합니다.",
   })
+  @ReadMeExtension()
   public async getWallet(
     @Request() request: express.Request,
     @Param("walletId") walletId: string
@@ -98,16 +120,24 @@ export class WalletsController {
   }
 
   @Get("/:walletId/balance")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(BalanceDTO, [EXAMPLE_ETHEREUM_BALANCE_DTO]),
+    isArray: true
+  })
   @PathParams(WALLET_ID_REQUIRED)
   @Queries(TICKER_OPTIONAL)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    type: WalletNotFoundException,
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    )
   })
   @ApiOperation({
     summary: "지갑 잔고 조회하기",
     description: "특정 지갑의 잔고를 조회합니다.",
   })
+  @ReadMeExtension()
   public async getBalanceOfWallet(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -123,22 +153,20 @@ export class WalletsController {
   @Patch("/:walletId/name")
   @PathParams(WALLET_ID_REQUIRED)
   @ApiNoContentResponse()
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
+  @ApiBadRequestResponse({
     description: "다음과 같은 bad request 에러가 발생할 수 있습니다.",
-    schema: {
-      oneOf: [
-        { $ref: getSchemaPath(WalletNotFoundException) },
-        { $ref: getSchemaPath(NoWalletNameException) },
-      ],
-    },
+    content: ApiResponseContentsGenerator([
+      { model: WalletNotFoundException, example: EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO },
+      { model: NoWalletNameException, example: EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO }
+    ])
   })
   @ApiOperation({
     summary: "지갑 이름 변경하기",
     description: "특정 지갑의 이름을 변경합니다.",
   })
+  @ReadMeExtension()
   public async changeWalletName(
-    @Request() request: express.Request,
+    @Request() request: express.Request ,
     @Param("walletId") walletId: string,
     @Body() changeWalletName: ChangeWalletNameRequestDTO
   ) {
@@ -150,15 +178,25 @@ export class WalletsController {
   }
 
   @Post("/:walletId/transfer")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETHEREUM_TRANSACTION_DTO
+    )
+  })
   @PathParams(WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    type: WalletNotFoundException,
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    )
   })
   @ApiOperation({
     summary: "지갑에서 코인 전송하기",
     description: "특정 지갑에서 가상자산을 송금합니다.",
   })
+  @ReadMeExtension()
   public async sendCoin(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -172,16 +210,20 @@ export class WalletsController {
   }
 
   @Post("/:walletId/contract-calls")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(TransactionDTO, EXAMPLE_ETHEREUM_TRANSACTION_DTO)
+  })
   @PathParams(WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    type: WalletNotFoundException,
+    content: ApiResponseContentGenerator(WalletNotFoundException, EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO)
   })
   @ApiOperation({
     summary: "지갑에서 스마트 컨트랙트 호출하기",
     description:
       "특정 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
   })
+  @ReadMeExtension()
   public async callContract(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -195,19 +237,26 @@ export class WalletsController {
   }
 
   @Post("/:walletId/transactions/:transactionId/replace")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(TransactionDTO, EXAMPLE_ETHEREUM_TRANSACTION_DTO)
+  })
   @PathParams(WALLET_ID_REQUIRED, TRANSACTION_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    type: WalletNotFoundException,
+    content: ApiResponseContentGenerator(WalletNotFoundException, EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO)
   })
   @ApiBadRequestResponse({
     description: "transaction id가 없을 때 발생합니다",
-    type: TransactionIdNotFoundException,
+    content: ApiResponseContentGenerator(
+      TransactionIdNotFoundException,
+      EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO
+    )
   })
   @ApiOperation({
     summary: "트랜잭션 교체",
     description: "트랜잭션을 교체합니다",
   })
+  @ReadMeExtension()
   public async replaceTransaction(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -223,16 +272,20 @@ export class WalletsController {
   }
 
   @Post("/:walletId/flush")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(TransactionDTO, EXAMPLE_ETHEREUM_TRANSACTION_DTO)
+  })
   @PathParams(WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    type: WalletNotFoundException,
+    content: ApiResponseContentGenerator(WalletNotFoundException, EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO)
   })
   @ApiOperation({
     summary: "입금 주소 잔액을 모두 끌어오기",
     description:
       "원화 입금 주소의 특정 코인/토큰 잔액을 모두 상위의 지갑으로 끌어옵니다.",
   })
+  @ReadMeExtension()
   public async flush(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -244,16 +297,20 @@ export class WalletsController {
   }
 
   @Post("/:walletId/transactions/:transactionId/resend")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(TransactionDTO, EXAMPLE_ETHEREUM_TRANSACTION_DTO)
+  })
   @PathParams(WALLET_ID_REQUIRED, TRANSACTION_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    type: WalletNotFoundException,
+    content: ApiResponseContentGenerator(WalletNotFoundException, EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO)
   })
   @ApiOperation({
     summary: "트랜잭션 다시 전송하기",
     description:
       "네트워크 사정 등으로 채굴이 지연됐을때, 블록체인에 트랜잭션을 다시 전송합니다.",
   })
+  @ReadMeExtension()
   async resendTransaction(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -276,15 +333,16 @@ export class WalletsController {
     SIZE_OPTIONAL,
     PAGE_OPTIONAL
   )
-  @ApiPaginationResponse(DepositAddressDTO)
+  @ApiPaginationResponse(DepositAddressDTO, EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    type: WalletNotFoundException,
+    content: ApiResponseContentGenerator(WalletNotFoundException, EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO)
   })
   @ApiOperation({
     summary: "전체 입금 주소 목록 조회하기",
     description: "특정 지갑에 속한 모든 입금 주소 조회합니다.",
   })
+  @ReadMeExtension()
   public async getDepositAddresses(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -307,15 +365,19 @@ export class WalletsController {
   }
 
   @Post("/:walletId/deposit-addresses")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(DepositAddressDTO, EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO)
+  })
   @PathParams(WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    type: WalletNotFoundException,
+    content: ApiResponseContentGenerator(WalletNotFoundException, EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO)
   })
   @ApiOperation({
     summary: "입금 주소 생성하기",
     description: "특정 지갑 하위에 새로운 입금 주소 생성합니다",
   })
+  @ReadMeExtension()
   public async createDepositAddress(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -329,21 +391,22 @@ export class WalletsController {
   }
 
   @Get("/:walletId/deposit-addresses/:depositAddressId")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(DepositAddressDTO, EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO)
+  })
   @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
+  @ApiBadRequestResponse({
     description: "다음과 같은 bad request 에러가 발생할 수 있습니다.",
-    schema: {
-      oneOf: [
-        { $ref: getSchemaPath(WalletNotFoundException) },
-        { $ref: getSchemaPath(DepositAddressNotFoundException) },
-      ],
-    },
+    content: ApiResponseContentsGenerator([
+      { model: WalletNotFoundException, example: EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO },
+      { model: DepositAddressNotFoundException, example: EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO }
+    ])
   })
   @ApiOperation({
     summary: "입금 주소 정보 조회하기",
     description: "특정 입금 주소를 조회합니다.",
   })
+  @ReadMeExtension()
   public async getDepositAddress(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,
@@ -357,12 +420,17 @@ export class WalletsController {
   }
 
   @Get("/:walletId/deposit-addresses/:depositAddressId/balance")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(BalanceDTO, [EXAMPLE_ETHEREUM_BALANCE_DTO]),
+    isArray: true
+  })
   @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
   @Queries(TICKER_OPTIONAL)
   @ApiOperation({
     summary: "입금 주소 잔고 조회하기",
     description: "특정 입금 주소의 잔액을 조회합니다.",
   })
+  @ReadMeExtension()
   public async getBalanceOfDepositAddress(
     @Request() request: express.Request,
     @Param("walletId") walletId: string,

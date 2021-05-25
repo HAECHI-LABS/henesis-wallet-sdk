@@ -1,27 +1,34 @@
-import { EventDTO } from "./event.dto";
+import { EventDTO, EXAMPLE_ETH_KLAY_EVENT_DTO } from "./event.dto";
 import { EthCallEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
+import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+
+export const EXAMPLE_ETH_KLAY_CALL_EVENT_DTO: CallEventDTO = Object.assign(
+  EXAMPLE_ETH_KLAY_EVENT_DTO,
+  {
+    fromAddress: "0x4c49f0ead605aca868364769c9a4ef24930810b5",
+    toAddress: "0xe3d9325576bf491c2f35e92b020b7b990557f545",
+    data: "0x6eea436c",
+  }
+);
 
 export class CallEventDTO extends EventDTO {
-  /**
-   * 호출한 스마트 컨트랙트 주소
-   * @example 0x4c49f0ead605aca868364769c9a4ef24930810b5
-   */
-
+  @ApiModelProperty({
+    description: "호출한 스마트 컨트랙트 주소",
+    example: EXAMPLE_ETH_KLAY_CALL_EVENT_DTO.fromAddress,
+  })
   fromAddress: string;
 
-  /**
-   * 호출한 스마트 컨트랙트 주소
-   * @example 0xe3d9325576bf491c2f35e92b020b7b990557f545
-   */
-
+  @ApiModelProperty({
+    description: "호출한 스마트 컨트랙트 주소",
+    example: EXAMPLE_ETH_KLAY_CALL_EVENT_DTO.toAddress,
+  })
   toAddress: string;
 
-  /**
-   * data
-   * @example 0x6eea436c
-   */
-
+  @ApiModelProperty({
+    description: "data",
+    example: EXAMPLE_ETH_KLAY_CALL_EVENT_DTO.data,
+  })
   data: string;
 
   static fromETHCallEvent(event: EthCallEvent): CallEventDTO {
