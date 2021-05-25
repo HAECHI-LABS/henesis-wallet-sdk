@@ -19,7 +19,6 @@ import {
   QUERY_EVENT_UPDATED_AT_GTE_OPTIONAL,
   QUERY_EVENT_UPDATED_AT_LT_OPTIONAL,
   QUERY_EVENT_WALLET_ID_OPTIONAL,
-  QUERY_EVENT_TRANSFER_TYPE_OPTIONAL,
 } from "../../eth/dto/queries";
 import express from "express";
 import {
@@ -78,7 +77,6 @@ export class EventsController {
     @Query("transferType") transferType?: TransferType,
     @Query("updatedAtGte") updatedAtGte?: Timestamp,
     @Query("updatedAtLt") updatedAtLt?: Timestamp,
-    @Query("transferType") transferType?: TransferType,
     @Query("size") size?: number,
     @Query("page") page?: number
   ): Promise<PaginationDTO<ValueTransferEventDTO>> {
@@ -93,7 +91,6 @@ export class EventsController {
       transferType,
       updatedAtGte,
       updatedAtLt,
-      transferType,
       size,
       page
     );
