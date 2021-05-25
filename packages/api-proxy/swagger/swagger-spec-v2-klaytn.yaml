@@ -964,12 +964,6 @@ paths:
             example: Bearer <TOKEN>
             default: 'Bearer '
             type: string
-        - name: flag
-          required: false
-          in: query
-          description: COIN FLAG
-          schema:
-            type: string
       responses:
         '200':
           content:
@@ -1746,12 +1740,6 @@ paths:
           description: 마스터 지갑 ID
           schema:
             type: string
-        - name: flag
-          required: false
-          in: query
-          description: FLAG
-          schema:
-            type: string
         - name: symbol
           required: false
           in: query
@@ -2137,12 +2125,6 @@ paths:
           required: true
           in: path
           description: 유저 지갑 ID
-          schema:
-            type: string
-        - name: flag
-          required: false
-          in: query
-          description: FLAG
           schema:
             type: string
         - name: symbol
