@@ -77,12 +77,6 @@ export const QUERY_EVENT_PAGE_OPTIONAL: ApiQueryOptions = {
   description: "몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)",
 };
 
-export const QUERY_EVENT_TRANSFER_TYPE_OPTIONAL: ApiParamOptions = {
-  name: "transferType",
-  required: false,
-  description: "트랜잭션의 종류(입금, 출금)",
-};
-
 export const QUERY_COIN_FLAG_OPTIONAL: ApiQueryOptions = {
   name: "flag",
   required: false,
