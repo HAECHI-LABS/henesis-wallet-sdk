@@ -1,0 +1,38 @@
+openapi: 3.0.0
+info:
+  title: VERSION
+  description: Henesis API Proxy  - version OpenAPI Documentation
+  version: '1.0'
+  contact: {}
+tags: []
+servers:
+  - url: http://localhost:3000
+components:
+  schemas:
+    VersionDTO:
+      type: object
+      properties:
+        version:
+          type: string
+          description: 현재 Henesis API Proxy의 버전
+          example: 2.10.10
+      required:
+        - version
+paths:
+  /api/version:
+    get:
+      operationId: version-VersionController_getVersion
+      x-readme:
+        explorer-enabled: false
+      summary: API Proxy 버전
+      description: 현재 API Proxy의 버전을 반환합니다
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionDTO'
+      tags:
+        - version

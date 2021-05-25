@@ -25,13 +25,13 @@ export const QUERY_WALLET_NAME_REQUIRED: ApiQueryOptions = {
 };
 
 export const QUERY_DEPOSIT_ADDRESS_ID_OPTIONAL: ApiQueryOptions = {
-  name: "name",
+  name: "id",
   required: false,
   description: "입금 주소 ID",
 };
 
 export const QUERY_DEPOSIT_ADDRESS_ADDRESS_OPTIONAL: ApiQueryOptions = {
-  name: "name",
+  name: "address",
   required: false,
   description: "입금 주소",
 };

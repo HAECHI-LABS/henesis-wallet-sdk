@@ -1,12 +1,12 @@
 import { Controller, Get, Query, Request } from "@nestjs/common";
 import { EventsService } from "./events.service";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiExtraModels, ApiOperation, ApiTags } from "@nestjs/swagger";
 import {
   ApiPaginationResponse,
   AuthErrorResponses,
   AuthHeaders,
-  Queries,
-} from "../../../decorators";
+  Queries, ReadMeExtension
+} from '../../../decorators';
 import {
   QUERY_EVENT_MASTER_WALLET_ID_OPTIONAL,
   QUERY_EVENT_PAGE_OPTIONAL,
@@ -15,13 +15,18 @@ import {
   QUERY_EVENT_SYMBOL_OPTIONAL,
   QUERY_EVENT_TRANSACTION_HASH_OPTIONAL,
   QUERY_EVENT_TRANSACTION_ID_OPTIONAL,
+  QUERY_EVENT_TRANSFER_TYPE_OPTIONAL,
   QUERY_EVENT_UPDATED_AT_GTE_OPTIONAL,
   QUERY_EVENT_UPDATED_AT_LT_OPTIONAL,
   QUERY_EVENT_WALLET_ID_OPTIONAL,
   QUERY_EVENT_TRANSFER_TYPE_OPTIONAL,
 } from "../../eth/dto/queries";
 import express from "express";
-import { PaginationDTO } from "../../eth/dto/pagination.dto";
+import {
+  EXAMPLE_ETH_KLAY_PAGINATION_CALL_EVENT_DTO,
+  EXAMPLE_ETH_KLAY_PAGINATION_VALUE_TRANSFER_EVENT_DTO,
+  PaginationDTO,
+} from "../../eth/dto/pagination.dto";
 import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
 import {
   EventStatus,
@@ -34,6 +39,7 @@ import { CallEventDTO } from "../../eth/dto/call-event.dto";
 @ApiTags("events")
 @AuthErrorResponses()
 @AuthHeaders()
+@ApiExtraModels(ValueTransferEventDTO, CallEventDTO)
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
@@ -51,11 +57,16 @@ export class EventsController {
     QUERY_EVENT_STATUS_OPTIONAL,
     QUERY_EVENT_UPDATED_AT_GTE_OPTIONAL,
     QUERY_EVENT_UPDATED_AT_LT_OPTIONAL,
+    QUERY_EVENT_TRANSFER_TYPE_OPTIONAL,
     QUERY_EVENT_SIZE_OPTIONAL,
     QUERY_EVENT_PAGE_OPTIONAL,
     QUERY_EVENT_TRANSFER_TYPE_OPTIONAL
   )
-  @ApiPaginationResponse(ValueTransferEventDTO)
+  @ApiPaginationResponse(
+    ValueTransferEventDTO,
+    EXAMPLE_ETH_KLAY_PAGINATION_VALUE_TRANSFER_EVENT_DTO
+  )
+  @ReadMeExtension()
   public async getValueTransferEvents(
     @Request() request: express.Request,
     @Query("symbol") symbol?: string,
@@ -67,6 +78,7 @@ export class EventsController {
     @Query("transferType") transferType?: TransferType,
     @Query("updatedAtGte") updatedAtGte?: Timestamp,
     @Query("updatedAtLt") updatedAtLt?: Timestamp,
+    @Query("transferType") transferType?: TransferType,
     @Query("size") size?: number,
     @Query("page") page?: number
   ): Promise<PaginationDTO<ValueTransferEventDTO>> {
@@ -81,6 +93,7 @@ export class EventsController {
       transferType,
       updatedAtGte,
       updatedAtLt,
+      transferType,
       size,
       page
     );
@@ -102,7 +115,11 @@ export class EventsController {
     QUERY_EVENT_SIZE_OPTIONAL,
     QUERY_EVENT_PAGE_OPTIONAL
   )
-  @ApiPaginationResponse(CallEventDTO)
+  @ApiPaginationResponse(
+    CallEventDTO,
+    EXAMPLE_ETH_KLAY_PAGINATION_CALL_EVENT_DTO
+  )
+  @ReadMeExtension()
   public async getCallEvents(
     @Request() request: express.Request,
     @Query("walletId") walletId?: string,

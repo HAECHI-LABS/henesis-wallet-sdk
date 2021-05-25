@@ -2,24 +2,21 @@ import { BtcRawTransactionOutput } from "@haechi-labs/henesis-wallet-core/lib/bt
 
 export class BtcRawTransactionOutputDTO {
   /**
-   * 수수료 금액
-   * @example: name
+   * 받을 주소
+   * @example: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
    */
-
   to: string;
 
   /**
-   * 수수료 금액
-   * @example: name
+   * 전송할 암호화폐의 양 (단위: satoshi) (형식: 16진법)
+   * @example: 0x12
    */
-
   amount: string;
 
   /**
-   * 수수료 금액
-   * @example: name
+   * 전송 후 잔액을 자신의 지갑으로 다시 보내는 Output인가?
+   * @example: false
    */
-
   isChange: boolean;
 
   static fromBTCRawTransactionOutput(
