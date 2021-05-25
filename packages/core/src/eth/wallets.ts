@@ -268,11 +268,10 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       name,
       encryptionKey: this.createDummyEncryptionKey(),
     };
-    const masterWalletResponse =
-      await this.client.post<InactiveMasterWalletDTO>(
-        `${this.baseUrl}?type=inactive`,
-        params
-      );
+    const masterWalletResponse = await this.client.post<InactiveMasterWalletDTO>(
+      `${this.baseUrl}?type=inactive`,
+      params
+    );
     const {
       id,
       name: walletName,
@@ -362,11 +361,10 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       name,
       encryptionKey: this.createDummyEncryptionKey(),
     };
-    const masterWalletResponse =
-      await this.client.post<InactiveMasterWalletDTO>(
-        `${this.baseUrl}?type=inactive`,
-        params
-      );
+    const masterWalletResponse = await this.client.post<InactiveMasterWalletDTO>(
+      `${this.baseUrl}?type=inactive`,
+      params
+    );
     const {
       id,
       name: walletName,
