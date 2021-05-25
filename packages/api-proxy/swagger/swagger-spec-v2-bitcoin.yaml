@@ -478,7 +478,7 @@ paths:
         - name: type
           required: false
           in: query
-          description: '거래 타입 '
+          description: 거래 타입
           schema:
             type: string
         - name: walletId

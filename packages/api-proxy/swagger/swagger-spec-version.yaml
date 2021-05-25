@@ -24,6 +24,12 @@ paths:
       operationId: version-VersionController_getVersion
       x-readme:
         explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
       summary: API Proxy 버전
       description: 현재 API Proxy의 버전을 반환합니다
       parameters: []
