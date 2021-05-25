@@ -77,6 +77,7 @@ export class EventsController {
     @Query("transferType") transferType?: TransferType,
     @Query("updatedAtGte") updatedAtGte?: Timestamp,
     @Query("updatedAtLt") updatedAtLt?: Timestamp,
+    @Query("transferType") transferType?: TransferType,
     @Query("size") size?: number,
     @Query("page") page?: number
   ): Promise<PaginationDTO<ValueTransferEventDTO>> {
@@ -91,6 +92,7 @@ export class EventsController {
       transferType,
       updatedAtGte,
       updatedAtLt,
+      transferType,
       size,
       page
     );
