@@ -9,11 +9,11 @@ export const PARAM_WALLET_ID: ApiParamOptions = {
 export const PARAM_TRANSFER_ID: ApiParamOptions = {
   name: "transferId",
   required: true,
-  description: "TRANSFER ID",
+  description: "전송(Transfer) ID",
 };
 
 export const PARAM_DEPOSIT_ADDRESS_ID: ApiParamOptions = {
   name: "depositAddressId",
   required: true,
-  description: "depositAddress ID",
+  description: "입금 주소 ID",
 };

@@ -3,13 +3,13 @@ import { TransfersService } from "./transfers.service";
 import { TransferDTO } from "../dto/transfer.dto";
 import express from "express";
 import {
-  ApiPaginationResponse,
+  ApiPaginationResponse, ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
-  Queries,
-} from "../../../decorators";
-import { PaginationDTO } from "../dto/pagination.dto";
-import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+  Queries, ReadMeExtension
+} from '../../../decorators';
+import { EXAMPLE_ETHEREUM_PAGINATION_TRANSFER_DTO, PaginationDTO } from '../dto/pagination.dto';
+import { ApiBadRequestResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   DEPOSIT_ADDRESS_ID_OPTIONAL,
   PAGE_OPTIONAL,
@@ -23,11 +23,8 @@ import {
   WALLET_ID_OPTIONAL,
   TRANSFER_TYPE_OPTIONAL,
 } from "../dto/params";
-import { InvalidStatusException } from "../dto/exceptions.dto";
-import {
-  EventStatus,
-  TransferType,
-} from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import { EXAMPLE_INVALID_STATUS_EXCEPTION_DTO, InvalidStatusException } from '../dto/exceptions.dto';
+import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 @Controller("transfers")
 @ApiTags("transfers")
@@ -50,17 +47,16 @@ export class TransfersController {
     SIZE_OPTIONAL,
     PAGE_OPTIONAL
   )
-  @ApiPaginationResponse(TransferDTO)
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description:
-      "올바르지 않은 트랜잭션 상태(status)나 종류(type)로 요청하면 발생합니다.",
-    type: InvalidStatusException,
+  @ApiPaginationResponse(TransferDTO, EXAMPLE_ETHEREUM_PAGINATION_TRANSFER_DTO)
+  @ApiBadRequestResponse({
+    description: "올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.",
+    content: ApiResponseContentGenerator(InvalidStatusException, EXAMPLE_INVALID_STATUS_EXCEPTION_DTO)
   })
   @ApiOperation({
     summary: "전체 입출금 목록 조회하기",
     description: "모든 지갑의 가상자산 입출금 내역을 조회합니다.",
   })
+  @ReadMeExtension()
   public async getTransfers(
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,

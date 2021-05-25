@@ -1,4 +1,4 @@
-import { KeyDTO } from "./key.dto";
+import { EXAMPLE_BITCOIN_KEY_DTO, KeyDTO } from './key.dto';
 import {
   BtcActivatingMasterWallet,
   BtcMasterWallet,
@@ -7,66 +7,80 @@ import {
   InactiveMasterWallet,
   WalletStatus,
 } from "@haechi-labs/henesis-wallet-core/lib/wallet";
+import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
+
+export const EXAMPLE_BITCOIN_WALLET_DTO: WalletDTO = {
+  id: "cce4f485764767f256155390873668b3",
+  name: "bitcoin-wallet",
+  address: "2Mx6o4HZfPyV3QrYNv26jCGMwAPpDeVzq1a",
+  encryptionKey: "b72355635b2f8db7d603a73gd37r2460e28d93ad42df6ba85fff4b18fe374ae3",
+  createdAt: "1599116198762",
+  updatedAt: "1599116198962",
+  status: WalletStatus.ACTIVE,
+  orgId: "0u1a431da7361na9e75648180bbd4fbc",
+  accountKey: EXAMPLE_BITCOIN_KEY_DTO,
+  whitelistActivated: false
+}
 
 export class WalletDTO {
-  /**
-   * 지갑 ID
-   * @example cce4f485764767f256155390873668b3
-   */
+  @ApiModelProperty({
+    description: "지갑 ID",
+    example: EXAMPLE_BITCOIN_WALLET_DTO.id
+  })
   id: string;
 
-  /**
-   * 지갑 이름
-   * @example bit
-   */
+  @ApiModelProperty({
+    description: "지갑 이름",
+    example: EXAMPLE_BITCOIN_WALLET_DTO.name
+  })
   name: string;
 
-  /**
-   * 지갑 주소
-   * @example 2Mx6o4HZfPyV1QrYNv26jCGMwAPpDnVzq1z
-   */
+  @ApiModelProperty({
+    description: "지갑 주소",
+    example: EXAMPLE_BITCOIN_WALLET_DTO.address
+  })
   address?: string;
 
-  /**
-   * 지갑 비밀번호를 복구하기 위해, 암호화하는 데에 쓰인 키
-   * @example b72355635b2f5db7d603a73ad37d2460e28d93ad12df6da85fff4b18fe374ae3
-   */
+  @ApiModelProperty({
+    description: "지갑 비밀번호를 복구하기 위해, 암호화하는 데에 쓰인 키",
+    example: EXAMPLE_BITCOIN_WALLET_DTO.encryptionKey
+  })
   encryptionKey?: string;
 
-  /**
-   * 지갑 생성 시간
-   * @example 1599116098462
-   */
+  @ApiModelProperty({
+    description: "지갑 생성 시간",
+    example: EXAMPLE_BITCOIN_WALLET_DTO.createdAt
+  })
   createdAt: string;
 
-  /**
-   * 지갑 변경 시간
-   * @example 1599116105566
-   */
+  @ApiModelProperty({
+    description: "지갑 변경 시간",
+    example: EXAMPLE_BITCOIN_WALLET_DTO.updatedAt
+  })
   updatedAt: string;
 
-  /**
-   * 지갑 상태
-   * @example INACTIVE, CREATING, ACTIVE
-   */
+  @ApiModelProperty({
+    description: "지갑 상태",
+    example: EXAMPLE_BITCOIN_WALLET_DTO.status
+  })
   status: WalletStatus;
 
-  /**
-   * 지갑이 속한 팀(Org)의 ID
-   * @example 575a431dc73615a9e65648180bbd4fbb
-   */
+  @ApiModelProperty({
+    description: "지갑이 속한 팀(Org)의 ID",
+    example: EXAMPLE_BITCOIN_WALLET_DTO.orgId
+  })
   orgId?: string;
 
-  /**
-   * 지갑을 서명할 때 쓰이는 Account Key 정보
-   * @example Key
-   */
+  @ApiModelProperty({
+    description: "지갑을 서명할 때 쓰이는 Account Key 정보",
+    example: EXAMPLE_BITCOIN_WALLET_DTO.accountKey
+  })
   accountKey?: KeyDTO;
 
-  /**
-   * 출금 주소 화이트리스팅의 활성화 유무
-   * @example false
-   */
+  @ApiModelProperty({
+    description: "출금 주소 화이트리스팅의 활성화 유무",
+    example: EXAMPLE_BITCOIN_WALLET_DTO.whitelistActivated
+  })
   whitelistActivated: boolean;
 
   static fromBTCMasterWallet(wallet: BtcMasterWallet): WalletDTO {

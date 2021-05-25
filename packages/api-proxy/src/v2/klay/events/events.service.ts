@@ -24,6 +24,7 @@ export class EventsService {
     transferType?: TransferType,
     updatedAtGte?: Timestamp,
     updatedAtLt?: Timestamp,
+    transferType?: TransferType,
     size?: number,
     page?: number
   ): Promise<PaginationDTO<ValueTransferEventDTO>> {
@@ -37,6 +38,7 @@ export class EventsService {
       transferType?: TransferType;
       updatedAtGte?: Timestamp;
       updatedAtLt?: Timestamp;
+      transferType?: TransferType;
       size?: number;
       page?: number;
     } = {};
@@ -49,6 +51,7 @@ export class EventsService {
     if (transferType) options.transferType = transferType;
     if (updatedAtGte) options.updatedAtGte = updatedAtGte;
     if (updatedAtLt) options.updatedAtLt = updatedAtLt;
+    if (transferType) options.transferType = transferType;
     if (size) options.size = size;
     if (page) options.page = page;
 

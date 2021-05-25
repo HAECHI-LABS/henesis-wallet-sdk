@@ -70,6 +70,7 @@ export class EventsService {
     status?: EventStatus,
     updatedAtGte?: Timestamp,
     updatedAtLt?: Timestamp,
+    transferType?: TransferType,
     size?: number,
     page?: number
   ): Promise<PaginationDTO<CallEventDTO>> {
@@ -81,6 +82,7 @@ export class EventsService {
       status?: EventStatus;
       updatedAtGte?: Timestamp;
       updatedAtLt?: Timestamp;
+      transferType?: TransferType;
       size?: number;
       page?: number;
     } = {};
@@ -91,6 +93,7 @@ export class EventsService {
     if (status) options.status = status;
     if (updatedAtGte) options.updatedAtGte = updatedAtGte;
     if (updatedAtLt) options.updatedAtLt = updatedAtLt;
+    if (transferType) options.transferType = transferType;
     if (size) options.size = size;
     if (page) options.page = page;
 

@@ -1,52 +1,66 @@
 import { Coin } from "@haechi-labs/henesis-wallet-core";
 import { CoinDTOAttributesEnum } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 import { Blockchain } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
+
+export const EXAMPLE_ETHEREUM_COIN_DTO: CoinDTO = {
+  id: 11,
+  name: "ethereum",
+  ticker: "ETH",
+  address: "0xdd00383e5a51166bba3e96d84c14a36d72e6c128",
+  description: "이더리움",
+  decimals: 18,
+  blockchain: Blockchain.ETHEREUM,
+  attributes: [CoinDTOAttributesEnum.STANDARD]
+}
 
 export class CoinDTO {
-  /**
-   * Henesis에서 부여한 Coin의 ID
-   * @example 11
-   */
+  @ApiModelProperty({
+    description: "Henesis에서 부여한 Coin의 ID",
+    example: EXAMPLE_ETHEREUM_COIN_DTO.id
+  })
   id: number;
 
-  /**
-   * 코인 이름
-   * @example ethereum
-   */
+  @ApiModelProperty({
+    description: "코인 이름",
+    example: EXAMPLE_ETHEREUM_COIN_DTO.name
+  })
   name: string;
 
-  /**
-   * 코인의 기호
-   * @example ETH
-   */
+  @ApiModelProperty({
+    description: "코인의 기호",
+    example: EXAMPLE_ETHEREUM_COIN_DTO.ticker
+  })
   ticker: string;
 
-  /**
-   * 코인 컨트랙트 주소
-   * @example 0xdd00383e5a51166bba3e96d84c14a36d72e6c128
-   */
+  @ApiModelProperty({
+    description: "코인 컨트랙트 주소",
+    example: EXAMPLE_ETHEREUM_COIN_DTO.address
+  })
   address: string;
 
-  /**
-   * 코인 설명
-   * @example 이더리움
-   */
+  @ApiModelProperty({
+    description: "코인 설명",
+    example: EXAMPLE_ETHEREUM_COIN_DTO.description
+  })
   description: string;
 
-  /**
-   * 코인의 소수점 자릿수
-   * @example 18
-   */
+  @ApiModelProperty({
+    description: "코인의 소수점 자릿수",
+    example: EXAMPLE_ETHEREUM_COIN_DTO.decimals
+  })
   decimals: number;
 
-  /**
-   * 코인이 발행된 메인넷
-   */
+  @ApiModelProperty({
+    description: "코인이 발행된 메인넷",
+    example: EXAMPLE_ETHEREUM_COIN_DTO.blockchain
+  })
   blockchain: Blockchain;
 
-  /**
-   * 코인의 메타 데이터
-   */
+  @ApiModelProperty({
+    description: "코인의 메타 데이터",
+    example: EXAMPLE_ETHEREUM_COIN_DTO.attributes
+  })
   attributes: CoinDTOAttributesEnum[];
 
   static fromCoin(coin: Coin): CoinDTO {
