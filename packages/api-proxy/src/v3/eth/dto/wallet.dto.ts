@@ -1,52 +1,73 @@
 import { WalletStatus } from "@haechi-labs/henesis-wallet-core/lib/wallet";
 import { EthWallet } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
+import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
+
+export const EXAMPLE_ETHEREUM_WALLET_DTO: WalletDTO = {
+  id: "ae40b1b3dd953e5592c21e58be30d807",
+  name: "ethereum-wallet",
+  address: "0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454",
+  blockchain: BlockchainType.ETHEREUM,
+  createdAt: "1612411568760",
+  updatedAt: "1612411724023",
+  status: WalletStatus.ACTIVE,
+  whitelistActivated: false,
+  version: "v4"
+}
 
 export class WalletDTO {
-  /**
-   * 지갑 ID
-   * @example a75611f2e624c08ecfb7df4218b318bc
-   */
+  @ApiModelProperty({
+    description: "지갑 ID",
+    example: EXAMPLE_ETHEREUM_WALLET_DTO.id
+  })
   id: string;
-  /**
-   * 지갑 이름
-   * @example test-wallet
-   */
+
+  @ApiModelProperty({
+    description: "지갑 이름",
+    example: EXAMPLE_ETHEREUM_WALLET_DTO.name
+  })
   name: string;
-  /**
-   * 지갑 주소
-   * @example 0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454
-   */
+
+  @ApiModelProperty({
+    description: "지갑 주소",
+    example: EXAMPLE_ETHEREUM_WALLET_DTO.address
+  })
   address: string;
-  /**
-   * 메인넷 종류
-   * @example ethereum
-   */
+
+  @ApiModelProperty({
+    description: "메인넷 종류",
+    example: EXAMPLE_ETHEREUM_WALLET_DTO.blockchain
+  })
   blockchain: BlockchainType;
-  /**
-   * 지갑 생성 시간 (형식: ms, UNIX time)
-   * @example 1612411568760
-   */
+
+  @ApiModelProperty({
+    description: "지갑 생성 시간 (형식: ms, UNIX time)",
+    example: EXAMPLE_ETHEREUM_WALLET_DTO.createdAt
+  })
   createdAt: string;
-  /**
-   * 지갑 정보 수정 시간 (단위: ms, UNIX time)
-   * @example 1612411724023
-   */
+
+  @ApiModelProperty({
+    description: "지갑 정보 수정 시간 (단위: ms, UNIX time)",
+    example: EXAMPLE_ETHEREUM_WALLET_DTO.updatedAt
+  })
   updatedAt: string;
-  /**
-   * 지갑 상태
-   * @example ACTIVE
-   */
+
+  @ApiModelProperty({
+    description: "지갑 상태",
+    example: EXAMPLE_ETHEREUM_WALLET_DTO.status
+  })
   status: WalletStatus;
-  /**
-   * 출금 주소 화이트리스팅의 활성화 유무
-   * @example false
-   */
+
+  @ApiModelProperty({
+    description: "출금 주소 화이트리스팅의 활성화 유무",
+    example: EXAMPLE_ETHEREUM_WALLET_DTO.whitelistActivated
+  })
   whitelistActivated: boolean;
-  /**
-   * 컨트랙트 버전
-   * @example v4
-   */
+
+  @ApiModelProperty({
+    description: "컨트랙트 버전",
+    example: EXAMPLE_ETHEREUM_WALLET_DTO.version
+  })
   version: string;
 
   static fromEthWallet(wallet: EthWallet): WalletDTO {

@@ -11,13 +11,11 @@ export class SendSignedTransactionRequestDTO {
    * 지갑 ID
    * @example ETH
    */
-
   inputs: Input[];
 
   /**
    * 지갑 ID
    * @example ETH
    */
-
   outputs: BtcRawTransactionOutputDTO[];
 }

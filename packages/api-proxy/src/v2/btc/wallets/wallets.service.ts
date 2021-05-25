@@ -8,6 +8,7 @@ import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-re
 import { PaginationDTO } from "../dto/pagination.dto";
 import { TransferRequestDTO } from "../dto/transfer-request.dto";
 import { TransferDTO } from "../dto/transfer.dto";
+import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
 
 @Injectable()
 export class WalletsService {
@@ -26,6 +27,16 @@ export class WalletsService {
     return WalletDTO.fromBTCMasterWallet(
       await this.getWalletById(sdk, walletId)
     );
+  }
+
+  public async changeWalletName(
+    sdk: SDK,
+    walletId: string,
+    changeWalletNameRequestDTO: ChangeWalletNameRequestDTO
+  ): Promise<void> {
+    const wallet = await this.getWalletById(sdk, walletId);
+
+    return wallet.changeName(changeWalletNameRequestDTO.name);
   }
 
   public async getWalletBalance(

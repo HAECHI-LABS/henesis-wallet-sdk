@@ -1,16 +1,28 @@
 import { Controller, Get, Param, Query, Request } from "@nestjs/common";
-import { TransactionDTO } from "../dto/transaction.dto";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+  EXAMPLE_ETH_KLAY_TRANSACTION_DTO,
+  TransactionDTO,
+} from "../dto/transaction.dto";
+import {
+  ApiOperation,
+  ApiTags,
+  ApiOkResponse,
+  ApiExtraModels,
+} from "@nestjs/swagger";
 import express from "express";
 import {
   ApiPaginationResponse,
+  ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries,
-} from "../../../decorators";
+  Queries, ReadMeExtension
+} from '../../../decorators';
 import { PARAM_TRANSACTION_ID } from "../dto/params";
-import { PaginationDTO } from "../dto/pagination.dto";
+import {
+  EXAMPLE_ETH_KLAY_PAGINATION_TRNASCATION_DTO,
+  PaginationDTO,
+} from "../dto/pagination.dto";
 import { TransactionsService } from "./transactions.service";
 import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { TransactionStatus } from "@haechi-labs/henesis-wallet-core";
@@ -35,6 +47,7 @@ import {
 @ApiTags("transactions")
 @AuthErrorResponses()
 @AuthHeaders()
+@ApiExtraModels(TransactionDTO)
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
@@ -58,7 +71,11 @@ export class TransactionsController {
     QUERY_SIZE_OPTIONAL,
     QUERY_SORT_OPTIONAL
   )
-  @ApiPaginationResponse(TransactionDTO)
+  @ApiPaginationResponse(
+    TransactionDTO,
+    EXAMPLE_ETH_KLAY_PAGINATION_TRNASCATION_DTO
+  )
+  @ReadMeExtension()
   public async getTransactions(
     @Request() request: express.Request,
     @Query("address") address?: string,
@@ -94,11 +111,19 @@ export class TransactionsController {
   }
 
   @Get("/:transactionId")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETH_KLAY_TRANSACTION_DTO
+    ),
+    isArray: false,
+  })
   @ApiOperation({
     summary: "특정 트랜잭션 정보 조회하기",
     description: "내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.",
   })
   @PathParams(PARAM_TRANSACTION_ID)
+  @ReadMeExtension()
   public async getTransaction(
     @Request() request: express.Request,
     @Param("transactionId") transactionId: string
