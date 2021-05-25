@@ -9,7 +9,7 @@ import {
   Queries, ReadMeExtension
 } from '../../../decorators';
 import { EXAMPLE_ETHEREUM_PAGINATION_TRANSFER_DTO, PaginationDTO } from '../dto/pagination.dto';
-import { ApiBadRequestResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   DEPOSIT_ADDRESS_ID_OPTIONAL,
   PAGE_OPTIONAL,
@@ -24,7 +24,7 @@ import {
   TRANSFER_TYPE_OPTIONAL,
 } from "../dto/params";
 import { EXAMPLE_INVALID_STATUS_EXCEPTION_DTO, InvalidStatusException } from '../dto/exceptions.dto';
-import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import { EventStatus, TransferType } from '@haechi-labs/henesis-wallet-core/lib/__generate__/eth';
 
 @Controller("transfers")
 @ApiTags("transfers")
