@@ -19,6 +19,7 @@ export const transformBlockchainType = (
     ETHEREUM: BlockchainType.ETHEREUM,
     KLAYTN: BlockchainType.KLAYTN,
     BITCOIN: BlockchainType.BITCOIN,
+    FILECOIN: BlockchainType.FILECOIN,
   };
   return byBlockchain[blockchain];
 };
@@ -27,4 +28,5 @@ export enum BlockchainType {
   ETHEREUM = "ETHEREUM",
   KLAYTN = "KLAYTN",
   BITCOIN = "BITCOIN",
+  FILECOIN = "FILECOIN",
 }
