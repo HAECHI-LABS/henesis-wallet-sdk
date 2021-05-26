@@ -13,7 +13,7 @@
     "start": "nest start",
     "start:local": "cross-env NODE_ENV=local nest start --watch",
     "start:dev": "cross-env NODE_ENV=development nest start --debug",
-    "start:test": "cross-env URL=https://staging.test.wallet.henesis.io/api/v2 NODE_ENV=test nest start --watch",
+    "start:test": "cross-env NODE_ENV=test nest start --watch",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
     "test": "jest --passWithNoTests",
     "type-check": "tsc --noEmit",
@@ -26,7 +26,7 @@
     "build:windows": "npm run preBuild:windows && mkdir lib && tsc",
     "eslint": "./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src",
     "eslint:fix": "./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src --fix",
-    "prettier": "prettier ./src/**/*.{js,ts,tsx} --write",
+    "prettier": "prettier './src/**/*.{js,ts,tsx}' --write",
     "preBuild:windows": "if exist lib rmdir /q /s lib",
     "preBootstrap": "rm -rf ./node_modules",
     "preBootstrap:windows": "if exist node_modules rmdir /q /s node_modules"
