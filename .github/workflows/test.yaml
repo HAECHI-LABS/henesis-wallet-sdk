@@ -2,7 +2,9 @@ name: Node.js CI with npm
 
 on:
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
+      - develop
 
 jobs:
   build-and-test:
