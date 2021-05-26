@@ -1,11 +1,12 @@
-import { TransferDTO } from "../__generate__/fil";
+import { TransferDTO, TransferInternalDTO } from "../__generate__/fil";
 import BN from "bn.js";
 
-import { FilTransaction } from "./abstractWallet";
+import { FilSimplifiedWalletInternal, FilTransaction } from "./abstractWallet";
 import { Client } from "../httpClient";
 import { convertTransferDTO } from "./utils";
+import { Pagination } from "../types";
 
-export interface Transfer
+export interface FilTransfer
   extends Omit<
     TransferDTO,
     | "amount"
@@ -21,6 +22,24 @@ export interface Transfer
   proposalTransaction: FilTransaction | null;
 }
 
+export interface FilTransferInternal
+  extends Omit<
+    TransferInternalDTO,
+    | "amount"
+    | "transaction"
+    | "confirmation"
+    | "fromAddress"
+    | "toAddress"
+    | "proposalTransaction"
+  > {
+  amount: BN;
+  transaction: FilTransaction | null;
+  confirmation: BN;
+  fromAddress: FilSimplifiedWalletInternal;
+  toAddress: FilSimplifiedWalletInternal;
+  proposalTransaction: FilTransaction | null;
+}
+
 export class FilTransfers {
   private readonly client: Client;
 
@@ -28,13 +47,23 @@ export class FilTransfers {
     this.client = client;
   }
 
-  async getTransfer(id: string): Promise<Transfer> {
+  async getTransfer(id: string): Promise<FilTransfer> {
     const response = await this.client.get<TransferDTO>(`/transfers/${id}`);
     return convertTransferDTO(response);
   }
 
   // TODO: implement me
-  async getTransfers(): Promise<Transfer> {
+  async getTransfers(): Promise<Pagination<FilTransfer>> {
+    return null;
+  }
+
+  // TODO: implement me
+  async getInternalTransfer(): Promise<FilTransferInternal> {
+    return null;
+  }
+
+  // TODO: implement me
+  async getInternalTransfers(): Promise<Pagination<FilTransferInternal>> {
     return null;
   }
 }

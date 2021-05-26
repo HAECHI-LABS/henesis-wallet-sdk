@@ -1,16 +1,19 @@
 import { FilMasterWalletData, FilWallet } from "./abstractWallet";
 import { Client } from "../httpClient";
-import { Balance, Key, Keychains } from "../types";
+import { Balance, Key, Keychains, Pagination } from "../types";
 import { FilDepositAddress } from "./depositAddress";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import {
   BalanceDTO,
+  FlushDTO,
+  FlushInternalDTO,
   MasterWalletDTO,
   PatchWalletNameRequest,
 } from "../__generate__/fil";
 import BN from "bn.js";
 import { BlockchainType } from "../blockchain";
 import { transformWalletStatus } from "../wallet";
+import { FilTransfer, FilTransferInternal } from "./transfers";
 
 export const transformMasterWalletData = (
   data: MasterWalletDTO
@@ -21,6 +24,12 @@ export const transformMasterWalletData = (
     status: transformWalletStatus(data.status),
   };
 };
+
+export type FilFlush = FlushDTO;
+
+export interface FilFlushInternal extends Omit<FlushInternalDTO, "transfers"> {
+  transfers: FilTransferInternal[];
+}
 
 export class FilMasterWallet extends FilWallet {
   constructor(client: Client, data: FilMasterWalletData, keychains: Keychains) {
@@ -91,5 +100,56 @@ export class FilMasterWallet extends FilWallet {
       this.keychains,
       undefined
     );
+  }
+
+  // TODO: implement me
+  async getDepositAddresses(): Promise<Pagination<FilDepositAddress[]>> {
+    return null;
+  }
+
+  // TODO: implement me
+  async getDepositAddress(
+    depositAddressId: string
+  ): Promise<FilDepositAddress> {
+    return null;
+  }
+
+  // TODO: implement me
+  async transfer(
+    to: string,
+    amount: BN,
+    passphrase: string,
+    otpCode?: string
+  ): Promise<FilTransfer> {
+    return null;
+  }
+
+  // TODO: implememt me
+  async flush(
+    targets: Array<{ depositAddressId: string; amount: BN }>,
+    passphrase: string
+  ): Promise<FilFlush> {
+    // TODO: build raw tx from each account key, then send those to wallet api
+    return null;
+  }
+
+  // TODO: implement me
+  async getFlushes(): Promise<Pagination<FilFlush>> {
+    return null;
+  }
+
+  // TODO: implement me
+  async getFlush(): Promise<FilFlush> {
+    return null;
+  }
+
+  // TODO: implement me
+  async getInternalFlushes(): Promise<Pagination<FilFlushInternal>> {
+    return null;
+  }
+
+  // TODO: implement me
+  async getInternalFlush(): Promise<FilFlushInternal> {
+    return null;
   }
 }

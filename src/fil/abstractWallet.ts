@@ -2,8 +2,12 @@ import { Wallet, WalletData } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import { Key, Keychains } from "../types";
 import { Client } from "../httpClient";
+import {
+  SimplifiedWalletInternalDTO,
+  TransactionDTO,
+} from "../__generate__/fil";
 
-export interface FilTransaction {}
+export type FilTransaction = TransactionDTO;
 
 export interface FilWalletData extends WalletData {
   blockchain: BlockchainType;
@@ -14,6 +18,8 @@ export interface FilMasterWalletData extends FilWalletData {
   transactionId?: string | null;
   error?: string | null;
 }
+
+export type FilSimplifiedWalletInternal = SimplifiedWalletInternalDTO;
 
 export abstract class FilWallet extends Wallet<FilTransaction> {
   protected data: FilMasterWalletData;
