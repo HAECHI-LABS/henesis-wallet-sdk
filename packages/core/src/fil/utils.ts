@@ -1,5 +1,5 @@
 import { TransactionDTO, TransferDTO } from "../__generate__/fil";
-import { Transfer } from "./transfers";
+import { FilTransfer } from "./transfers";
 import { FilTransaction } from "./abstractWallet";
 
 // TODO: implement me
@@ -10,6 +10,6 @@ export const convertTransactionDTO = (
 };
 
 // TODO: implement me
-export const convertTransferDTO = (t: TransferDTO): Transfer => {
+export const convertTransferDTO = (t: TransferDTO): FilTransfer => {
   return null;
 };

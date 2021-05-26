@@ -234,6 +234,69 @@ export interface ErrorResponse {
 /**
  * 
  * @export
+ * @interface FeeHistoryDTO
+ */
+export interface FeeHistoryDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof FeeHistoryDTO
+     */
+    id: string;
+    /**
+     * 
+     * @type {TransactionDTO}
+     * @memberof FeeHistoryDTO
+     */
+    transaction: TransactionDTO;
+    /**
+     * 
+     * @type {string}
+     * @memberof FeeHistoryDTO
+     */
+    type: string;
+}
+/**
+ * 
+ * @export
+ * @interface FeeWalletBalanceDTO
+ */
+export interface FeeWalletBalanceDTO {
+    /**
+     * 
+     * @type {BalanceDTO}
+     * @memberof FeeWalletBalanceDTO
+     */
+    defaultWallet: BalanceDTO;
+    /**
+     * 
+     * @type {Array<ProposalWalletBalanceDTO>}
+     * @memberof FeeWalletBalanceDTO
+     */
+    proposalWallets: Array<ProposalWalletBalanceDTO>;
+}
+/**
+ * 
+ * @export
+ * @interface FeeWalletDTO
+ */
+export interface FeeWalletDTO {
+    /**
+     * 
+     * @type {HenesisKeyDTO}
+     * @memberof FeeWalletDTO
+     */
+    defaultWallet: HenesisKeyDTO;
+    /**
+     * 
+     * @type {Array<KeyDTO>}
+     * @memberof FeeWalletDTO
+     */
+    proposalWallets: Array<KeyDTO>;
+}
+/**
+ * 
+ * @export
  * @interface FlushDTO
  */
 export interface FlushDTO {
@@ -259,6 +322,37 @@ export interface FlushDTO {
      * 
      * @type {string}
      * @memberof FlushDTO
+     */
+    updatedAt: string;
+}
+/**
+ * 
+ * @export
+ * @interface FlushInternalDTO
+ */
+export interface FlushInternalDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof FlushInternalDTO
+     */
+    id: string;
+    /**
+     * 
+     * @type {Array<TransferInternalDTO>}
+     * @memberof FlushInternalDTO
+     */
+    transfers: Array<TransferInternalDTO>;
+    /**
+     * 
+     * @type {string}
+     * @memberof FlushInternalDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FlushInternalDTO
      */
     updatedAt: string;
 }
@@ -370,6 +464,12 @@ export interface MasterWalletDTO {
     address: string;
     /**
      * 
+     * @type {WalletStatus}
+     * @memberof MasterWalletDTO
+     */
+    status: WalletStatus;
+    /**
+     * 
      * @type {string}
      * @memberof MasterWalletDTO
      */
@@ -398,12 +498,6 @@ export interface MasterWalletDTO {
      * @memberof MasterWalletDTO
      */
     encryptionKey: string;
-    /**
-     * 
-     * @type {WalletStatus}
-     * @memberof MasterWalletDTO
-     */
-    status: WalletStatus;
     /**
      * 
      * @type {string}
@@ -464,6 +558,25 @@ export interface PaginationDepositAddressDTO {
 /**
  * 
  * @export
+ * @interface PaginationFeeHistoryDTO
+ */
+export interface PaginationFeeHistoryDTO {
+    /**
+     * 
+     * @type {PaginationMeta}
+     * @memberof PaginationFeeHistoryDTO
+     */
+    pagination: PaginationMeta;
+    /**
+     * 
+     * @type {Array<FeeHistoryDTO>}
+     * @memberof PaginationFeeHistoryDTO
+     */
+    results: Array<FeeHistoryDTO>;
+}
+/**
+ * 
+ * @export
  * @interface PaginationFlushDTO
  */
 export interface PaginationFlushDTO {
@@ -479,6 +592,25 @@ export interface PaginationFlushDTO {
      * @memberof PaginationFlushDTO
      */
     results: Array<FlushDTO>;
+}
+/**
+ * 
+ * @export
+ * @interface PaginationFlushInternalDTO
+ */
+export interface PaginationFlushInternalDTO {
+    /**
+     * 
+     * @type {PaginationMeta}
+     * @memberof PaginationFlushInternalDTO
+     */
+    pagination: PaginationMeta;
+    /**
+     * 
+     * @type {Array<FlushInternalDTO>}
+     * @memberof PaginationFlushInternalDTO
+     */
+    results: Array<FlushInternalDTO>;
 }
 /**
  * 
@@ -527,6 +659,25 @@ export interface PaginationTransferDTO {
 /**
  * 
  * @export
+ * @interface PaginationTransferInternalDTO
+ */
+export interface PaginationTransferInternalDTO {
+    /**
+     * 
+     * @type {PaginationMeta}
+     * @memberof PaginationTransferInternalDTO
+     */
+    pagination: PaginationMeta;
+    /**
+     * 
+     * @type {Array<TransferInternalDTO>}
+     * @memberof PaginationTransferInternalDTO
+     */
+    results: Array<TransferInternalDTO>;
+}
+/**
+ * 
+ * @export
  * @interface PatchAccountKeyRequest
  */
 export interface PatchAccountKeyRequest {
@@ -561,6 +712,56 @@ export interface PatchWalletNameRequest {
      * @memberof PatchWalletNameRequest
      */
     name: string;
+}
+/**
+ * 
+ * @export
+ * @interface ProposalWalletBalanceDTO
+ */
+export interface ProposalWalletBalanceDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof ProposalWalletBalanceDTO
+     */
+    id: string;
+    /**
+     * 
+     * @type {BalanceDTO}
+     * @memberof ProposalWalletBalanceDTO
+     */
+    balance: BalanceDTO;
+}
+/**
+ * 
+ * @export
+ * @interface SimplifiedWalletInternalDTO
+ */
+export interface SimplifiedWalletInternalDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    address: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    walletId?: string;
 }
 /**
  * 
@@ -742,6 +943,85 @@ export interface TransferDTO {
 /**
  * 
  * @export
+ * @interface TransferInternalDTO
+ */
+export interface TransferInternalDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    amount: string;
+    /**
+     * 
+     * @type {TransactionDTO}
+     * @memberof TransferInternalDTO
+     */
+    transaction?: TransactionDTO;
+    /**
+     * 
+     * @type {TransferType}
+     * @memberof TransferInternalDTO
+     */
+    type: TransferType;
+    /**
+     * 
+     * @type {TransferStatus}
+     * @memberof TransferInternalDTO
+     */
+    status: TransferStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    confirmation: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    walletId: string;
+    /**
+     * 
+     * @type {SimplifiedWalletInternalDTO}
+     * @memberof TransferInternalDTO
+     */
+    fromAddress: SimplifiedWalletInternalDTO;
+    /**
+     * 
+     * @type {SimplifiedWalletInternalDTO}
+     * @memberof TransferInternalDTO
+     */
+    toAddress: SimplifiedWalletInternalDTO;
+    /**
+     * 
+     * @type {TransactionDTO}
+     * @memberof TransferInternalDTO
+     */
+    proposalTransaction?: TransactionDTO;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    updatedAt: string;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 export enum TransferStatus {
@@ -773,6 +1053,547 @@ export enum WalletStatus {
     ACTIVE = 'ACTIVE',
     CREATING = 'CREATING',
     FAILED = 'FAILED'
+}
+
+
+/**
+ * FeeWalletControllerApi - axios parameter creator
+ * @export
+ */
+export const FeeWalletControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFeeHistories: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getFeeHistories.');
+            }
+            const localVarPath = `/api/v2/fil/fee-wallets/histories`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFeeWallet: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v2/fil/fee-wallets/me`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFeeWalletBalance: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v2/fil/fee-wallets/balance`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * FeeWalletControllerApi - functional programming interface
+ * @export
+ */
+export const FeeWalletControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFeeHistories(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFeeHistoryDTO>> {
+            const localVarAxiosArgs = await FeeWalletControllerApiAxiosParamCreator(configuration).getFeeHistories(pageable, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFeeWallet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FeeWalletDTO>> {
+            const localVarAxiosArgs = await FeeWalletControllerApiAxiosParamCreator(configuration).getFeeWallet(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFeeWalletBalance(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FeeWalletBalanceDTO>> {
+            const localVarAxiosArgs = await FeeWalletControllerApiAxiosParamCreator(configuration).getFeeWalletBalance(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * FeeWalletControllerApi - factory interface
+ * @export
+ */
+export const FeeWalletControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFeeHistories(pageable: Pageable, options?: any): AxiosPromise<PaginationFeeHistoryDTO> {
+            return FeeWalletControllerApiFp(configuration).getFeeHistories(pageable, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFeeWallet(options?: any): AxiosPromise<FeeWalletDTO> {
+            return FeeWalletControllerApiFp(configuration).getFeeWallet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFeeWalletBalance(options?: any): AxiosPromise<FeeWalletBalanceDTO> {
+            return FeeWalletControllerApiFp(configuration).getFeeWalletBalance(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * FeeWalletControllerApi - object-oriented interface
+ * @export
+ * @class FeeWalletControllerApi
+ * @extends {BaseAPI}
+ */
+export class FeeWalletControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {Pageable} pageable 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FeeWalletControllerApi
+     */
+    public getFeeHistories(pageable: Pageable, options?: any) {
+        return FeeWalletControllerApiFp(this.configuration).getFeeHistories(pageable, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FeeWalletControllerApi
+     */
+    public getFeeWallet(options?: any) {
+        return FeeWalletControllerApiFp(this.configuration).getFeeWallet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof FeeWalletControllerApi
+     */
+    public getFeeWalletBalance(options?: any) {
+        return FeeWalletControllerApiFp(this.configuration).getFeeWalletBalance(options).then((request) => request(this.axios, this.basePath));
+    }
+
+}
+
+
+/**
+ * InternalControllerApi - axios parameter creator
+ * @export
+ */
+export const InternalControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} flushId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFlush1: async (flushId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'flushId' is not null or undefined
+            if (flushId === null || flushId === undefined) {
+                throw new RequiredError('flushId','Required parameter flushId was null or undefined when calling getFlush1.');
+            }
+            const localVarPath = `/api/v2/fil/internal/flushes/{flushId}`
+                .replace(`{${"flushId"}}`, encodeURIComponent(String(flushId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFlushes1: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getFlushes1.');
+            }
+            const localVarPath = `/api/v2/fil/internal/flushes`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} transferId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransfer1: async (transferId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'transferId' is not null or undefined
+            if (transferId === null || transferId === undefined) {
+                throw new RequiredError('transferId','Required parameter transferId was null or undefined when calling getTransfer1.');
+            }
+            const localVarPath = `/api/v2/fil/internal/transfers/{transferId}`
+                .replace(`{${"transferId"}}`, encodeURIComponent(String(transferId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransfers1: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransfers1.');
+            }
+            const localVarPath = `/api/v2/fil/internal/transfers`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * InternalControllerApi - functional programming interface
+ * @export
+ */
+export const InternalControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} flushId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFlush1(flushId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlushInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getFlush1(flushId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFlushes1(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getFlushes1(pageable, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} transferId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTransfer1(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getTransfer1(transferId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTransfers1(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getTransfers1(pageable, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * InternalControllerApi - factory interface
+ * @export
+ */
+export const InternalControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {string} flushId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFlush1(flushId: string, options?: any): AxiosPromise<FlushInternalDTO> {
+            return InternalControllerApiFp(configuration).getFlush1(flushId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFlushes1(pageable: Pageable, options?: any): AxiosPromise<PaginationFlushInternalDTO> {
+            return InternalControllerApiFp(configuration).getFlushes1(pageable, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} transferId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransfer1(transferId: string, options?: any): AxiosPromise<TransferInternalDTO> {
+            return InternalControllerApiFp(configuration).getTransfer1(transferId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTransfers1(pageable: Pageable, options?: any): AxiosPromise<PaginationTransferInternalDTO> {
+            return InternalControllerApiFp(configuration).getTransfers1(pageable, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * InternalControllerApi - object-oriented interface
+ * @export
+ * @class InternalControllerApi
+ * @extends {BaseAPI}
+ */
+export class InternalControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} flushId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InternalControllerApi
+     */
+    public getFlush1(flushId: string, options?: any) {
+        return InternalControllerApiFp(this.configuration).getFlush1(flushId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Pageable} pageable 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InternalControllerApi
+     */
+    public getFlushes1(pageable: Pageable, options?: any) {
+        return InternalControllerApiFp(this.configuration).getFlushes1(pageable, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} transferId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InternalControllerApi
+     */
+    public getTransfer1(transferId: string, options?: any) {
+        return InternalControllerApiFp(this.configuration).getTransfer1(transferId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Pageable} pageable 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InternalControllerApi
+     */
+    public getTransfers1(pageable: Pageable, options?: any) {
+        return InternalControllerApiFp(this.configuration).getTransfers1(pageable, options).then((request) => request(this.axios, this.basePath));
+    }
+
 }
 
 
