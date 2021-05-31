@@ -12,8 +12,9 @@ import {
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries, ReadMeExtension
-} from '../../../decorators';
+  Queries,
+  ReadMeExtension,
+} from "../../../decorators";
 import { PARAM_COIN_TICKER } from "../../eth/dto/params";
 import { QUERY_COIN_FLAG_OPTIONAL } from "../../eth/dto/queries";
 import { CoinDTO, EXAMPLE_ETH_KLAY_COIN_DTO } from "../../eth/dto/coin.dto";

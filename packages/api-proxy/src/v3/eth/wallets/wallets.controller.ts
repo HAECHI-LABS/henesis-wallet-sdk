@@ -11,27 +11,38 @@ import {
 } from "@nestjs/common";
 import { WalletsService } from "./wallets.service";
 import {
-  ApiBadRequestResponse, ApiCreatedResponse,
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
   ApiExtraModels,
-  ApiNoContentResponse, ApiOkResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiResponse,
   ApiTags,
   ApiUnauthorizedResponse,
-  getSchemaPath
-} from '@nestjs/swagger';
+  getSchemaPath,
+} from "@nestjs/swagger";
 import {
-  ApiPaginationResponse, ApiResponseContentGenerator, ApiResponseContentsGenerator,
+  ApiPaginationResponse,
+  ApiResponseContentGenerator,
+  ApiResponseContentsGenerator,
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries, ReadMeExtension
-} from '../../../decorators';
-import { EXAMPLE_ETHEREUM_WALLET_DTO, WalletDTO } from '../dto/wallet.dto';
+  Queries,
+  ReadMeExtension,
+} from "../../../decorators";
+import { EXAMPLE_ETHEREUM_WALLET_DTO, WalletDTO } from "../dto/wallet.dto";
 import { PaginationDTO } from "../dto/pagination.dto";
-import { BalanceDTO, EXAMPLE_ETHEREUM_BALANCE_DTO } from '../dto/balance.dto';
-import { EXAMPLE_ETHEREUM_TRANSACTION_DTO, TransactionDTO } from '../dto/transaction.dto';
-import { DepositAddressDTO, EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO } from '../dto/deposit-address.dto';
+import { BalanceDTO, EXAMPLE_ETHEREUM_BALANCE_DTO } from "../dto/balance.dto";
+import {
+  EXAMPLE_ETHEREUM_TRANSACTION_DTO,
+  TransactionDTO,
+} from "../dto/transaction.dto";
+import {
+  DepositAddressDTO,
+  EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO,
+} from "../dto/deposit-address.dto";
 import { ChangeWalletNameRequestDTO } from "./dto/change-wallet-name-request.dto";
 import { SendCoinRequestDTO } from "./dto/send-coin-request.dto";
 import { CreateTransactionRequestDTO } from "./dto/create-transaction-reqeust.dto";
@@ -49,16 +60,17 @@ import {
 } from "../dto/params";
 import express from "express";
 import {
-  DepositAddressNotFoundException, EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO,
+  DepositAddressNotFoundException,
+  EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO,
   EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
   EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO,
   EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
   NoWalletNameException,
   TransactionIdNotFoundException,
-  WalletNotFoundException
-} from '../dto/exceptions.dto';
+  WalletNotFoundException,
+} from "../dto/exceptions.dto";
 import { ReplaceTransactionRequestDTO } from "../transactions/dto/replace-transaction-request.dto";
-import { EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO } from '../../../v2/btc/dto/pagination.dto';
+import { EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO } from "../../../v2/btc/dto/pagination.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -79,8 +91,10 @@ export class WalletsController {
 
   @Get("/")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(WalletDTO, [EXAMPLE_ETHEREUM_WALLET_DTO]),
-    isArray: true
+    content: ApiResponseContentGenerator(WalletDTO, [
+      EXAMPLE_ETHEREUM_WALLET_DTO,
+    ]),
+    isArray: true,
   })
   @Queries(NAME_OPTIONAL)
   @ApiOperation({
@@ -97,7 +111,10 @@ export class WalletsController {
 
   @Get("/:walletId")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(WalletDTO, EXAMPLE_ETHEREUM_WALLET_DTO)
+    content: ApiResponseContentGenerator(
+      WalletDTO,
+      EXAMPLE_ETHEREUM_WALLET_DTO
+    ),
   })
   @PathParams(WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
@@ -105,7 +122,7 @@ export class WalletsController {
     content: ApiResponseContentGenerator(
       WalletNotFoundException,
       EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
-    )
+    ),
   })
   @ApiOperation({
     summary: "지갑 정보 조회하기",
@@ -121,8 +138,10 @@ export class WalletsController {
 
   @Get("/:walletId/balance")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(BalanceDTO, [EXAMPLE_ETHEREUM_BALANCE_DTO]),
-    isArray: true
+    content: ApiResponseContentGenerator(BalanceDTO, [
+      EXAMPLE_ETHEREUM_BALANCE_DTO,
+    ]),
+    isArray: true,
   })
   @PathParams(WALLET_ID_REQUIRED)
   @Queries(TICKER_OPTIONAL)
@@ -131,7 +150,7 @@ export class WalletsController {
     content: ApiResponseContentGenerator(
       WalletNotFoundException,
       EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
-    )
+    ),
   })
   @ApiOperation({
     summary: "지갑 잔고 조회하기",
@@ -156,9 +175,15 @@ export class WalletsController {
   @ApiBadRequestResponse({
     description: "다음과 같은 bad request 에러가 발생할 수 있습니다.",
     content: ApiResponseContentsGenerator([
-      { model: WalletNotFoundException, example: EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO },
-      { model: NoWalletNameException, example: EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO }
-    ])
+      {
+        model: WalletNotFoundException,
+        example: EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
+      },
+      {
+        model: NoWalletNameException,
+        example: EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
+      },
+    ]),
   })
   @ApiOperation({
     summary: "지갑 이름 변경하기",
@@ -166,7 +191,7 @@ export class WalletsController {
   })
   @ReadMeExtension()
   public async changeWalletName(
-    @Request() request: express.Request ,
+    @Request() request: express.Request,
     @Param("walletId") walletId: string,
     @Body() changeWalletName: ChangeWalletNameRequestDTO
   ) {
@@ -182,7 +207,7 @@ export class WalletsController {
     content: ApiResponseContentGenerator(
       TransactionDTO,
       EXAMPLE_ETHEREUM_TRANSACTION_DTO
-    )
+    ),
   })
   @PathParams(WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
@@ -190,7 +215,7 @@ export class WalletsController {
     content: ApiResponseContentGenerator(
       WalletNotFoundException,
       EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
-    )
+    ),
   })
   @ApiOperation({
     summary: "지갑에서 코인 전송하기",
@@ -211,12 +236,18 @@ export class WalletsController {
 
   @Post("/:walletId/contract-calls")
   @ApiCreatedResponse({
-    content: ApiResponseContentGenerator(TransactionDTO, EXAMPLE_ETHEREUM_TRANSACTION_DTO)
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETHEREUM_TRANSACTION_DTO
+    ),
   })
   @PathParams(WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    content: ApiResponseContentGenerator(WalletNotFoundException, EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO)
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    ),
   })
   @ApiOperation({
     summary: "지갑에서 스마트 컨트랙트 호출하기",
@@ -238,19 +269,25 @@ export class WalletsController {
 
   @Post("/:walletId/transactions/:transactionId/replace")
   @ApiCreatedResponse({
-    content: ApiResponseContentGenerator(TransactionDTO, EXAMPLE_ETHEREUM_TRANSACTION_DTO)
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETHEREUM_TRANSACTION_DTO
+    ),
   })
   @PathParams(WALLET_ID_REQUIRED, TRANSACTION_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    content: ApiResponseContentGenerator(WalletNotFoundException, EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO)
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    ),
   })
   @ApiBadRequestResponse({
     description: "transaction id가 없을 때 발생합니다",
     content: ApiResponseContentGenerator(
       TransactionIdNotFoundException,
       EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO
-    )
+    ),
   })
   @ApiOperation({
     summary: "트랜잭션 교체",
@@ -273,12 +310,18 @@ export class WalletsController {
 
   @Post("/:walletId/flush")
   @ApiCreatedResponse({
-    content: ApiResponseContentGenerator(TransactionDTO, EXAMPLE_ETHEREUM_TRANSACTION_DTO)
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETHEREUM_TRANSACTION_DTO
+    ),
   })
   @PathParams(WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    content: ApiResponseContentGenerator(WalletNotFoundException, EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO)
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    ),
   })
   @ApiOperation({
     summary: "입금 주소 잔액을 모두 끌어오기",
@@ -298,12 +341,18 @@ export class WalletsController {
 
   @Post("/:walletId/transactions/:transactionId/resend")
   @ApiCreatedResponse({
-    content: ApiResponseContentGenerator(TransactionDTO, EXAMPLE_ETHEREUM_TRANSACTION_DTO)
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETHEREUM_TRANSACTION_DTO
+    ),
   })
   @PathParams(WALLET_ID_REQUIRED, TRANSACTION_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    content: ApiResponseContentGenerator(WalletNotFoundException, EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO)
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    ),
   })
   @ApiOperation({
     summary: "트랜잭션 다시 전송하기",
@@ -333,10 +382,16 @@ export class WalletsController {
     SIZE_OPTIONAL,
     PAGE_OPTIONAL
   )
-  @ApiPaginationResponse(DepositAddressDTO, EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO)
+  @ApiPaginationResponse(
+    DepositAddressDTO,
+    EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO
+  )
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    content: ApiResponseContentGenerator(WalletNotFoundException, EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO)
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    ),
   })
   @ApiOperation({
     summary: "전체 입금 주소 목록 조회하기",
@@ -366,12 +421,18 @@ export class WalletsController {
 
   @Post("/:walletId/deposit-addresses")
   @ApiCreatedResponse({
-    content: ApiResponseContentGenerator(DepositAddressDTO, EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO)
+    content: ApiResponseContentGenerator(
+      DepositAddressDTO,
+      EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO
+    ),
   })
   @PathParams(WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    content: ApiResponseContentGenerator(WalletNotFoundException, EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO)
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    ),
   })
   @ApiOperation({
     summary: "입금 주소 생성하기",
@@ -392,15 +453,24 @@ export class WalletsController {
 
   @Get("/:walletId/deposit-addresses/:depositAddressId")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(DepositAddressDTO, EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO)
+    content: ApiResponseContentGenerator(
+      DepositAddressDTO,
+      EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO
+    ),
   })
   @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "다음과 같은 bad request 에러가 발생할 수 있습니다.",
     content: ApiResponseContentsGenerator([
-      { model: WalletNotFoundException, example: EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO },
-      { model: DepositAddressNotFoundException, example: EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO }
-    ])
+      {
+        model: WalletNotFoundException,
+        example: EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
+      },
+      {
+        model: DepositAddressNotFoundException,
+        example: EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO,
+      },
+    ]),
   })
   @ApiOperation({
     summary: "입금 주소 정보 조회하기",
@@ -421,8 +491,10 @@ export class WalletsController {
 
   @Get("/:walletId/deposit-addresses/:depositAddressId/balance")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(BalanceDTO, [EXAMPLE_ETHEREUM_BALANCE_DTO]),
-    isArray: true
+    content: ApiResponseContentGenerator(BalanceDTO, [
+      EXAMPLE_ETHEREUM_BALANCE_DTO,
+    ]),
+    isArray: true,
   })
   @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
   @Queries(TICKER_OPTIONAL)

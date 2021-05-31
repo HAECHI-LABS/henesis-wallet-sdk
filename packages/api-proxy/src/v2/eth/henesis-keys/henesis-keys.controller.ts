@@ -12,8 +12,9 @@ import express from "express";
 import {
   ApiResponseContentGenerator,
   AuthErrorResponses,
-  AuthHeaders, ReadMeExtension
-} from '../../../decorators';
+  AuthHeaders,
+  ReadMeExtension,
+} from "../../../decorators";
 
 @Controller("henesis-keys")
 @ApiTags("henesis-keys")

@@ -6,21 +6,19 @@ export function OpenApiNameGenerator() {
 }
 
 export function OpenApiDescriptionGenerator() {
-  return `Henesis API Proxy ${API_VERSION
-    ? `- ${API_VERSION}`
-    : ""}${ENDPOINT
-    ? ` - ${ENDPOINT} `
-    : ""}OpenAPI Documentation`;
+  return `Henesis API Proxy ${API_VERSION ? `- ${API_VERSION}` : ""}${
+    ENDPOINT ? ` - ${ENDPOINT} ` : ""
+  }OpenAPI Documentation`;
 }
 
 export function OpenApiDocumentFileName() {
-  return `./swagger/swagger-spec${API_VERSION
-    ? `-${API_VERSION}`
-    : ""}${ENDPOINT
-    ? `-${ENDPOINT}`
-    : ""}`;
+  return `./swagger/swagger-spec${API_VERSION ? `-${API_VERSION}` : ""}${
+    ENDPOINT ? `-${ENDPOINT}` : ""
+  }`;
 }
 
 export function OpenApiOperationId(controllerKey: string, methodKey: string) {
-  return `${ENDPOINT ? `${ENDPOINT.toLowerCase()}-` : ""}${controllerKey}_${methodKey}`;
+  return `${
+    ENDPOINT ? `${ENDPOINT.toLowerCase()}-` : ""
+  }${controllerKey}_${methodKey}`;
 }

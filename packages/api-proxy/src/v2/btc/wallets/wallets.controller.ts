@@ -35,8 +35,9 @@ import {
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries, ReadMeExtension
-} from '../../../decorators';
+  Queries,
+  ReadMeExtension,
+} from "../../../decorators";
 import { PARAM_DEPOSIT_ADDRESS_ID, PARAM_WALLET_ID } from "../dto/params";
 import {
   QUERY_DEPOSIT_ADDRESS_ADDRESS_OPTIONAL,
@@ -60,7 +61,9 @@ export class WalletsController {
 
   @Get("/")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(WalletDTO, [EXAMPLE_BITCOIN_WALLET_DTO]),
+    content: ApiResponseContentGenerator(WalletDTO, [
+      EXAMPLE_BITCOIN_WALLET_DTO,
+    ]),
     isArray: true,
   })
   @ApiOperation({
@@ -116,10 +119,9 @@ export class WalletsController {
 
   @Get("/:walletId/balance")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(
-      BalanceDTO,
-      [EXAMPLE_BITCOIN_BALANCE_DTO]
-    ),
+    content: ApiResponseContentGenerator(BalanceDTO, [
+      EXAMPLE_BITCOIN_BALANCE_DTO,
+    ]),
     isArray: true,
   })
   @ApiOperation({

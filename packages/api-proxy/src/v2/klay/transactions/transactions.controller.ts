@@ -16,8 +16,9 @@ import {
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries, ReadMeExtension
-} from '../../../decorators';
+  Queries,
+  ReadMeExtension,
+} from "../../../decorators";
 import { PARAM_TRANSACTION_ID } from "../../eth/dto/params";
 import { TransactionsService } from "../../eth/transactions/transactions.service";
 import {

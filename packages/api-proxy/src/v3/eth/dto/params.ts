@@ -1,5 +1,5 @@
 import { ApiParamOptions, ApiQueryOptions } from "@nestjs/swagger";
-import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
+import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const TICKER_OPTIONAL: ApiQueryOptions = {
   name: "ticker",

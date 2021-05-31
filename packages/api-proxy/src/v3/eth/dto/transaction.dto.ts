@@ -2,7 +2,7 @@ import { Transaction } from "@haechi-labs/henesis-wallet-core";
 import { EthTransaction } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
 import { TransactionStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
-import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
+import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_ETHEREUM_TRANSACTION_DTO: TransactionDTO = {
   id: "b549bfaaa74d1c4244ecc655738b1984",
@@ -12,55 +12,57 @@ export const EXAMPLE_ETHEREUM_TRANSACTION_DTO: TransactionDTO = {
   status: TransactionStatus.CONFIRMED,
   fee: "10000000",
   createdAt: "1614582928222",
-  updatedAt: "1612411724023"
-}
+  updatedAt: "1612411724023",
+};
 
 export class TransactionDTO {
   @ApiModelProperty({
-    description: "트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다, 블록체인에서 부여하는 트랜잭션 해시와 다른 개념입니다)",
-    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.id
+    description:
+      "트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다, 블록체인에서 부여하는 트랜잭션 해시와 다른 개념입니다)",
+    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.id,
   })
   id: string;
 
   @ApiModelProperty({
     description: "메인넷 종류",
-    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.blockchain
+    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.blockchain,
   })
   blockchain: BlockchainType;
 
   @ApiModelProperty({
-    description: "트랜잭션 해시 (트랜잭션 상태가 REQUESTED일 때는 존재하지 않습니다)",
-    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.hash
+    description:
+      "트랜잭션 해시 (트랜잭션 상태가 REQUESTED일 때는 존재하지 않습니다)",
+    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.hash,
   })
   hash: string;
 
   @ApiModelProperty({
     description: "트랜잭션 전송 시 발생한 에러",
-    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.error
+    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.error,
   })
   error: string;
 
   @ApiModelProperty({
     description: "트랜잭션 상태",
-    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.status
+    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.status,
   })
   status: TransactionStatus;
 
   @ApiModelProperty({
     description: "트랜잭션 수수료",
-    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.fee
+    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.fee,
   })
   fee: string;
 
   @ApiModelProperty({
     description: "트랜잭션 생성 시간 (형식: ms, UNIX time)",
-    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.createdAt
+    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.createdAt,
   })
   createdAt: string;
 
   @ApiModelProperty({
     description: "트랜잭션 상태가 변한 시간 (형식: ms, UNIX time)",
-    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.updatedAt
+    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.updatedAt,
   })
   updatedAt: string;
 

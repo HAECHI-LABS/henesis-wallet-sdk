@@ -10,8 +10,9 @@ import express from "express";
 import {
   ApiResponseContentGenerator,
   AuthErrorResponses,
-  AuthHeaders, ReadMeExtension
-} from '../../../decorators';
+  AuthHeaders,
+  ReadMeExtension,
+} from "../../../decorators";
 import { KeyDTO } from "../../eth/dto/key.dto";
 import {
   BalanceDTO,
