@@ -1,6 +1,6 @@
-import { EthDepositAddress } from '@haechi-labs/henesis-wallet-core/lib/eth/depositAddress';
-import { BlockchainType } from '@haechi-labs/henesis-wallet-core/lib/blockchain';
-import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
+import { EthDepositAddress } from "@haechi-labs/henesis-wallet-core/lib/eth/depositAddress";
+import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
+import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO: DepositAddressDTO = {
   id: "a1f9e4c33ea9f51974490fd1c30efb3e",
@@ -9,49 +9,49 @@ export const EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO: DepositAddressDTO = {
   blockchain: BlockchainType.ETHEREUM,
   createdAt: "1614582860091",
   updatedAt: "1614582928222",
-  version: "v4"
-}
+  version: "v4",
+};
 
 export class DepositAddressDTO {
   @ApiModelProperty({
     description: "입금 주소 ID",
-    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.id
+    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.id,
   })
   id: string;
 
   @ApiModelProperty({
     description: "입금 주소",
-    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.address
+    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.address,
   })
   address: string;
 
   @ApiModelProperty({
     description: "입금 주소 이름",
-    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.name
+    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.name,
   })
   name: string;
 
   @ApiModelProperty({
     description: "메인넷 종류",
-    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.blockchain
+    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.blockchain,
   })
   blockchain: BlockchainType;
 
   @ApiModelProperty({
     description: "지갑 생성 시간 (단위: ms, UNIX time)",
-    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.createdAt
+    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.createdAt,
   })
   createdAt: string;
 
   @ApiModelProperty({
     description: "지갑 정보 수정 시간 (단위: ms, UNIX time)",
-    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.updatedAt
+    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.updatedAt,
   })
   updatedAt: string;
 
   @ApiModelProperty({
     description: "입금 주소 버전",
-    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.version
+    example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.version,
   })
   version: string;
 

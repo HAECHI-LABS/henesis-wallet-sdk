@@ -9,25 +9,28 @@ import {
 import { CoinsService } from "./coins.service";
 import {
   ApiBadRequestResponse,
-  ApiExtraModels, ApiOkResponse,
+  ApiExtraModels,
+  ApiOkResponse,
   ApiOperation,
-  ApiTags
-} from '@nestjs/swagger';
-import { CoinDTO, EXAMPLE_ETHEREUM_COIN_DTO } from '../dto/coin.dto';
+  ApiTags,
+} from "@nestjs/swagger";
+import { CoinDTO, EXAMPLE_ETHEREUM_COIN_DTO } from "../dto/coin.dto";
 import express from "express";
 import {
   ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
-  PathParams, ReadMeExtension
-} from '../../../decorators';
+  PathParams,
+  ReadMeExtension,
+} from "../../../decorators";
 import { COIN_REQUIRED } from "../dto/params";
 import {
-  AccessTokenNotProvidedException, EXAMPLE_NO_COIN_EXCEPTION_DTO,
+  AccessTokenNotProvidedException,
+  EXAMPLE_NO_COIN_EXCEPTION_DTO,
   InvalidAccessIpException,
   InvalidAccessTokenException,
-  NoCoinException
-} from '../dto/exceptions.dto';
+  NoCoinException,
+} from "../dto/exceptions.dto";
 
 @Controller("coins")
 @ApiTags("coins")
@@ -46,7 +49,7 @@ export class CoinsController {
   @Get()
   @ApiOkResponse({
     content: ApiResponseContentGenerator(CoinDTO, [EXAMPLE_ETHEREUM_COIN_DTO]),
-    isArray: true
+    isArray: true,
   })
   @ApiOperation({
     summary: "전체 코인 목록 조회하기",
@@ -68,7 +71,10 @@ export class CoinsController {
   @PathParams(COIN_REQUIRED)
   @ApiBadRequestResponse({
     description: "코인 정보가 없을 때 response 입니다",
-    content: ApiResponseContentGenerator(NoCoinException, EXAMPLE_NO_COIN_EXCEPTION_DTO)
+    content: ApiResponseContentGenerator(
+      NoCoinException,
+      EXAMPLE_NO_COIN_EXCEPTION_DTO
+    ),
   })
   @ApiOperation({
     summary: "코인 정보 조회하기",

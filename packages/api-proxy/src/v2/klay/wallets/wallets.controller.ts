@@ -22,8 +22,9 @@ import {
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries, ReadMeExtension
-} from '../../../decorators';
+  Queries,
+  ReadMeExtension,
+} from "../../../decorators";
 import { QUERY_WALLET_NAME_OPTIONAL } from "../../btc/dto/queries";
 import express from "express";
 import { SendMasterWalletContractCallRequestDTO } from "../../eth/dto/send-master-wallet-contract-call-request.dto";
@@ -82,10 +83,9 @@ export class WalletsController {
 
   @Get("/")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(
-      MasterWalletDTO,
-      [EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO]
-    ),
+    content: ApiResponseContentGenerator(MasterWalletDTO, [
+      EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO,
+    ]),
     isArray: true,
   })
   @ApiOperation({
@@ -175,10 +175,9 @@ export class WalletsController {
 
   @Get("/:masterWalletId/balance")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(
-      BalanceDTO,
-      [EXAMPLE_ETH_KLAY_BALANCE_DTO]
-    ),
+    content: ApiResponseContentGenerator(BalanceDTO, [
+      EXAMPLE_ETH_KLAY_BALANCE_DTO,
+    ]),
     isArray: true,
   })
   @ApiOperation({
@@ -230,10 +229,9 @@ export class WalletsController {
 
   @Post("/:masterWalletId/batch-transactions")
   @ApiCreatedResponse({
-    content: ApiResponseContentGenerator(
-      TransactionDTO,
-      [EXAMPLE_ETH_KLAY_TRANSACTION_DTO]
-    ),
+    content: ApiResponseContentGenerator(TransactionDTO, [
+      EXAMPLE_ETH_KLAY_TRANSACTION_DTO,
+    ]),
     isArray: true,
   })
   @ApiOperation({
@@ -428,10 +426,9 @@ export class WalletsController {
 
   @Get("/:masterWalletId/user-wallets/:userWalletId/balance")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(
-      BalanceDTO,
-      [EXAMPLE_ETH_KLAY_BALANCE_DTO]
-    ),
+    content: ApiResponseContentGenerator(BalanceDTO, [
+      EXAMPLE_ETH_KLAY_BALANCE_DTO,
+    ]),
     isArray: true,
   })
   @ApiOperation({

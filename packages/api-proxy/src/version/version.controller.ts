@@ -1,7 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
 import { VersionDTO } from "./dto/version.dto";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { ReadMeExtension } from '../decorators';
+import { ReadMeExtension } from "../decorators";
 
 const PACKAGE = require("../../package.json");
 

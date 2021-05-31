@@ -16,8 +16,9 @@ import {
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries, ReadMeExtension
-} from '../../../decorators';
+  Queries,
+  ReadMeExtension,
+} from "../../../decorators";
 import { PARAM_TRANSACTION_ID } from "../dto/params";
 import {
   EXAMPLE_ETH_KLAY_PAGINATION_TRNASCATION_DTO,

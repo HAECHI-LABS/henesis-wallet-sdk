@@ -13,8 +13,9 @@ import {
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries, ReadMeExtension
-} from '../../../decorators';
+  Queries,
+  ReadMeExtension,
+} from "../../../decorators";
 import { QUERY_COIN_FLAG_OPTIONAL } from "../dto/queries";
 import { PARAM_COIN_TICKER } from "../dto/params";
 import { NoCoinException } from "../dto/exceptions.dto";

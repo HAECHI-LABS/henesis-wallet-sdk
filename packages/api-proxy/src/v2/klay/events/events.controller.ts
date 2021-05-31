@@ -5,8 +5,9 @@ import {
   ApiPaginationResponse,
   AuthErrorResponses,
   AuthHeaders,
-  Queries, ReadMeExtension
-} from '../../../decorators';
+  Queries,
+  ReadMeExtension,
+} from "../../../decorators";
 import {
   QUERY_EVENT_MASTER_WALLET_ID_OPTIONAL,
   QUERY_EVENT_PAGE_OPTIONAL,
