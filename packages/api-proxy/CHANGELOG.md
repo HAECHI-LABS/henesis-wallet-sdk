@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.0.2...v3.1.0) (2021-05-31)
+
+
+### Bug Fixes
+
+* fix package json start test script ([ac123d9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ac123d98d74386636900de48642b1c1cbe7c7ffd))
+* fix to turn off lint for api-proxy ([40352ca](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/40352ca8572904dfe6e679f177eacfa0cff7a409))
+* queries/params ([#434](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/434)) ([1b157c5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1b157c5143d7677fe1a34c81f6cc2c5a5795e39a))
+
+
+### Features
+
+* fix rebase conflict ([60aa840](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/60aa840acc53396bda8f4804ce1de7d8d8372158))
+* improving open api generate, open api multiple example response ([6e05fad](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6e05fad51ef11443576cd87fb53251b1526f2628))
+* open api generate ([5309e9c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5309e9c46ceb5434be079c30ccfac3b12e35f255))
+* open api generate ([dd4f1df](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/dd4f1df6b074f653e05da7d09e57d26309b3a909))
+
+
+
+
+
 ## [3.0.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14...v3.0.1) (2021-05-11)
 
 

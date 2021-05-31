@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.0.2...v3.1.0) (2021-05-31)
+
+
+### Bug Fixes
+
+* add version instruction ([ae9ee2c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ae9ee2cc32c10e472d34281fec6537cd0be67a8d))
+* change wallet error message ([f9558bb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f9558bb0e6fc9737a34b07ceb9e7b5507173933f))
+* fix blockchain type ([81c282a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/81c282a73cf8a1acffd652de18a9099a32624e2c))
+* queries/params ([#434](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/434)) ([1b157c5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1b157c5143d7677fe1a34c81f6cc2c5a5795e39a))
+
+
+### Features
+
+* improving open api generate, open api multiple example response ([6e05fad](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6e05fad51ef11443576cd87fb53251b1526f2628))
+
+
+
+
+
 ## [3.0.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14...v3.0.1) (2021-05-11)
 
 
