@@ -23,7 +23,7 @@ export class FilModule {
 
   constructor(options: ModuleOptions) {
     this.client = options.client;
-    this.keychains = new FilKeychains(options.blockchain);
+    this.keychains = new FilKeychains();
     this.henesisKeys = new FilHenesisKeys(this.client);
     this.wallets = new FilWallets(
       this.client,
