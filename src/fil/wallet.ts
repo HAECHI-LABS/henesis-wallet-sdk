@@ -135,21 +135,21 @@ export class FilMasterWallet extends FilWallet {
 
   // TODO: implement me
   async getFlushes(): Promise<Pagination<FilFlush>> {
-    return null;
+    throw new Error("this feature is not supported yet");
   }
 
   // TODO: implement me
   async getFlush(): Promise<FilFlush> {
-    return null;
+    throw new Error("this feature is not supported yet");
   }
 
   // TODO: implement me
   async getInternalFlushes(): Promise<Pagination<FilFlushInternal>> {
-    return null;
+    throw new Error("this feature is not supported yet");
   }
 
   // TODO: implement me
   async getInternalFlush(): Promise<FilFlushInternal> {
-    return null;
+    throw new Error("this feature is not supported yet");
   }
 }
