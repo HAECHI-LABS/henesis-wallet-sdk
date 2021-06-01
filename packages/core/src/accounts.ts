@@ -126,7 +126,7 @@ export class Accounts {
   }
 
   async updateLanguage(newLanguage: HenesisLocale) {
-    await this.client.patch(`${this.baseUrl}/accounts/language`, {
+    await this.client.patch(`${this.baseUrl}/language`, {
       newLanguage,
     });
   }
