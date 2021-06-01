@@ -9,14 +9,9 @@ import { Pagination } from "../types";
 export interface FilTransfer
   extends Omit<
     TransferDTO,
-    | "amount"
-    | "feeAmount"
-    | "confirmation"
-    | "transaction"
-    | "proposalTransaction"
+    "amount" | "confirmation" | "transaction" | "proposalTransaction"
   > {
   amount: BN;
-  feeAmount: BN | null;
   confirmation: BN;
   transaction: FilTransaction | null;
   proposalTransaction: FilTransaction | null;

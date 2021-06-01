@@ -1,6 +1,5 @@
 import { FilMasterWallet } from "./wallet";
 import { Wallets } from "../wallets";
-import { FilHenesisKeys } from "./henesisKeys";
 import { BlockchainType } from "../blockchain";
 import { Client } from "../httpClient";
 import { Keychains } from "../types";
@@ -11,18 +10,15 @@ import { RecoveryKit } from "../recoverykit";
 import { checkNullAndUndefinedParameter } from "../utils/common";
 
 export class FilWallets extends Wallets<FilMasterWallet> {
-  private readonly henesisKey: FilHenesisKeys;
   private readonly blockchain: BlockchainType;
 
   constructor(
     client: Client,
     keychains: Keychains,
     env: Env,
-    henesisKey: FilHenesisKeys,
     blockchain: BlockchainType
   ) {
     super(env, client, keychains);
-    this.henesisKey = henesisKey;
     this.blockchain = blockchain;
   }
 
