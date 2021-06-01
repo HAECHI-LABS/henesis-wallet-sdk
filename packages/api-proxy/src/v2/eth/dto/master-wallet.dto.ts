@@ -5,15 +5,13 @@ import {
   ApiModelPropertyOptional,
 } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
-export const EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO: MasterWalletDTO = Object.assign(
-  EXAMPLE_ETH_KLAY_WALLET_DTO,
-  {
+export const EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO: MasterWalletDTO =
+  Object.assign(EXAMPLE_ETH_KLAY_WALLET_DTO, {
     accountKey: EXAMPLE_ETH_KLAY_KEY_DTO,
     encryptionKey:
       "f0880e48251dd2f8574a8c8a4d65311030185d5e451e8a474b89c2b473b5d953",
     whitelistActivated: false,
-  }
-);
+  });
 
 export class MasterWalletDTO extends WalletDTO {
   @ApiModelProperty({

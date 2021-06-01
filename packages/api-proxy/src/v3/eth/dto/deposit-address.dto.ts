@@ -56,7 +56,7 @@ export class DepositAddressDTO {
   version: string;
 
   static fromEthDepositAddress(address: EthDepositAddress): DepositAddressDTO {
-    return ({
+    return {
       id: address.getId(),
       address: address.getAddress(),
       name: address.getData().name,
@@ -64,6 +64,6 @@ export class DepositAddressDTO {
       createdAt: address.getData().createdAt,
       updatedAt: address.getData().updatedAt,
       version: address.getVersion(),
-    } as unknown) as DepositAddressDTO;
+    } as unknown as DepositAddressDTO;
   }
 }

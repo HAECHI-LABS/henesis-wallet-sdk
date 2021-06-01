@@ -11,15 +11,17 @@ export const EXAMPLE_BITCOIN_PAGINATION_METADATA_DTO: PaginationMetadata = {
   totalCount: 5,
 };
 
-export const EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO: PaginationDTO<DepositAddressDTO> = {
-  pagination: EXAMPLE_BITCOIN_PAGINATION_METADATA_DTO,
-  results: [EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO],
-};
+export const EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO: PaginationDTO<DepositAddressDTO> =
+  {
+    pagination: EXAMPLE_BITCOIN_PAGINATION_METADATA_DTO,
+    results: [EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO],
+  };
 
-export const EXAMPLE_BITCOIN_PAGINATION_TRANSFER_DTO: PaginationDTO<TransferDTO> = {
-  pagination: EXAMPLE_BITCOIN_PAGINATION_METADATA_DTO,
-  results: [EXAMPLE_BITCOIN_TRANSFER_DTO],
-};
+export const EXAMPLE_BITCOIN_PAGINATION_TRANSFER_DTO: PaginationDTO<TransferDTO> =
+  {
+    pagination: EXAMPLE_BITCOIN_PAGINATION_METADATA_DTO,
+    results: [EXAMPLE_BITCOIN_TRANSFER_DTO],
+  };
 
 export class PaginationMetadata {
   @ApiModelProperty({

@@ -13,9 +13,10 @@ export class TransfersService {
     sdk: SDK,
     option: GetTransfersOption
   ): Promise<PaginationDTO<TransferDTO>> {
-    const result: Pagination<EthValueTransferEvent> = await sdk.eth.events.getValueTransferEvents(
-      object(GetTransfersOption.toSDKOption(option))
-    );
+    const result: Pagination<EthValueTransferEvent> =
+      await sdk.eth.events.getValueTransferEvents(
+        object(GetTransfersOption.toSDKOption(option))
+      );
     return {
       pagination: result.pagination as any,
       results: result.results.map(TransferDTO.fromValueTransferEvent),
