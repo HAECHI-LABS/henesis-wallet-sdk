@@ -10,6 +10,7 @@ import {
   LoginIpDTO,
   SignUpRequest,
   SignUpResponse,
+  HenesisLocale,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
 
@@ -122,5 +123,11 @@ export class Accounts {
 
   getAccessToken(): Promise<Token> {
     return this.client.get<AccessTokenDTO>(`${this.baseUrl}/token`);
+  }
+
+  async updateLanguage(newLanguage: HenesisLocale) {
+    await this.client.patch(`${this.baseUrl}/accounts/language`, {
+      newLanguage,
+    });
   }
 }
