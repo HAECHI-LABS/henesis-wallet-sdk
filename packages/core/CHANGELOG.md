@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.1.0...v3.1.1) (2021-06-01)
+
+
+### Bug Fixes
+
+* fixed updateLanguage params ([c8807a1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c8807a13c0af13e8a0e66d0358370a1fa374baa5))
+* update change lng url path ([d48a29c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d48a29c2b9b6762a5ee85e1f87d01c45e3cb3838))
+
+
+### Features
+
+* add update lng api ([e60c0a9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e60c0a90fc2b7321b8428b244d9a51d452833372))
+
+
+
+
+
 # [3.1.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.0.2...v3.1.0) (2021-05-31)
 
 
