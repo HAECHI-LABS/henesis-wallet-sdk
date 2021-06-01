@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.1.2...v3.1.3) (2021-06-01)
+
+
+### Bug Fixes
+
+* rename language param ([c73551f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c73551f3d1ba1a920985783ce8fa6907a39d58d1))
+
+
+
+
+
 ## [3.1.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.1.1...v3.1.2) (2021-06-01)
 
 **Note:** Version bump only for package henesis-wallet-sdk
