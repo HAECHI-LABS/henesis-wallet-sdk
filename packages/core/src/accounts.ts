@@ -125,9 +125,9 @@ export class Accounts {
     return this.client.get<AccessTokenDTO>(`${this.baseUrl}/token`);
   }
 
-  async updateLanguage(newLanguage: HenesisLocaleLanguageEnum) {
+  async updateLanguage(language: HenesisLocaleLanguageEnum) {
     await this.client.patch(`${this.baseUrl}/language`, {
-      newLanguage,
+      newLanguage: language,
     });
   }
 }
