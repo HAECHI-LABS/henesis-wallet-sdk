@@ -1,15 +1,15 @@
-import { FilMasterWallet } from "./wallet";
+import { FilWallet } from "./wallet";
 import { Wallets } from "../wallets";
 import { BlockchainType } from "../blockchain";
 import { Client } from "../httpClient";
 import { Keychains } from "../types";
 import { Env } from "../sdk";
-import { transformMasterWalletData } from "./wallet";
-import { MasterWalletDTO } from "../__generate__/fil";
+import { transformWalletData } from "./wallet";
+import { WalletDTO } from "../__generate__/fil";
 import { RecoveryKit } from "../recoverykit";
 import { checkNullAndUndefinedParameter } from "../utils/common";
 
-export class FilWallets extends Wallets<FilMasterWallet> {
+export class FilWallets extends Wallets<FilWallet> {
   private readonly blockchain: BlockchainType;
 
   constructor(
@@ -22,32 +22,9 @@ export class FilWallets extends Wallets<FilMasterWallet> {
     this.blockchain = blockchain;
   }
 
-  async getMasterWallet(id: string): Promise<FilMasterWallet> {
-    const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
-      `${this.baseUrl}/${id}`
-    );
-    return new FilMasterWallet(
-      this.client,
-      transformMasterWalletData(walletData),
-      this.keychains
-    );
-  }
-
-  // TODO: implement me
-  createMasterWalletWithKit(
-    recoveryKit: RecoveryKit
-  ): Promise<FilMasterWallet> {
-    return Promise.resolve(undefined);
-  }
-
   // TODO: implement me
   createRecoveryKit(name: string, passphrase: string): Promise<RecoveryKit> {
     return Promise.resolve(undefined);
-  }
-
-  // TODO: implement me
-  getMasterWallets(): Promise<FilMasterWallet[]> {
-    return Promise.resolve([]);
   }
 
   // TODO: implement me
@@ -55,14 +32,35 @@ export class FilWallets extends Wallets<FilMasterWallet> {
     return false;
   }
 
-  async retryCreateMasterWallet(walletId: string) {
+  async getWallet(id: string): Promise<FilWallet> {
+    const walletData = await this.client.get<NoUndefinedField<WalletDTO>>(
+      `${this.baseUrl}/${id}`
+    );
+    return new FilWallet(
+      this.client,
+      transformWalletData(walletData),
+      this.keychains
+    );
+  }
+
+  // TODO: implement me
+  getWallets(): Promise<FilWallet[]> {
+    return Promise.resolve([]);
+  }
+
+  // TODO: implement me
+  createWalletWithKit(recoveryKit: RecoveryKit): Promise<FilWallet> {
+    return Promise.resolve(undefined);
+  }
+
+  async retryCreateWallet(walletId: string) {
     checkNullAndUndefinedParameter({ walletId });
-    const response = await this.client.post<MasterWalletDTO>(
+    const response = await this.client.post<WalletDTO>(
       `${this.baseUrl}/${walletId}/recreate`
     );
-    return new FilMasterWallet(
+    return new FilWallet(
       this.client,
-      transformMasterWalletData(response),
+      transformWalletData(response),
       this.keychains
     );
   }

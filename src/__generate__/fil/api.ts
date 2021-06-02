@@ -73,37 +73,6 @@ export interface CreateHenesisKeyRequest {
 /**
  * 
  * @export
- * @interface CreateMasterWalletRequest
- */
-export interface CreateMasterWalletRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateMasterWalletRequest
-     */
-    name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateMasterWalletRequest
-     */
-    encryptionKey: string;
-    /**
-     * 
-     * @type {KeyDTO}
-     * @memberof CreateMasterWalletRequest
-     */
-    accountKey: KeyDTO;
-    /**
-     * 
-     * @type {KeyDTO}
-     * @memberof CreateMasterWalletRequest
-     */
-    backupKey: KeyDTO;
-}
-/**
- * 
- * @export
  * @interface CreateTransactionRequest
  */
 export interface CreateTransactionRequest {
@@ -121,16 +90,53 @@ export interface CreateTransactionRequest {
     toAddress: string;
     /**
      * 
+     * @type {RawSignedTransactionDTO}
+     * @memberof CreateTransactionRequest
+     */
+    proposalTransaction: RawSignedTransactionDTO;
+    /**
+     * 
      * @type {string}
      * @memberof CreateTransactionRequest
      */
-    proposalTransactionHex: string;
+    gasPremium?: string;
     /**
      * 
      * @type {string}
      * @memberof CreateTransactionRequest
      */
     otpCode?: string;
+}
+/**
+ * 
+ * @export
+ * @interface CreateWalletRequest
+ */
+export interface CreateWalletRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateWalletRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateWalletRequest
+     */
+    encryptionKey: string;
+    /**
+     * 
+     * @type {KeyDTO}
+     * @memberof CreateWalletRequest
+     */
+    accountKey: KeyDTO;
+    /**
+     * 
+     * @type {KeyDTO}
+     * @memberof CreateWalletRequest
+     */
+    backupKey: KeyDTO;
 }
 /**
  * 
@@ -397,6 +403,31 @@ export interface FlushTarget {
 /**
  * 
  * @export
+ * @interface GetGasPremiumRequest
+ */
+export interface GetGasPremiumRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof GetGasPremiumRequest
+     */
+    nBlocksInclude: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetGasPremiumRequest
+     */
+    senderAddress: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GetGasPremiumRequest
+     */
+    gasLimit: string;
+}
+/**
+ * 
+ * @export
  * @interface HenesisKeyDTO
  */
 export interface HenesisKeyDTO {
@@ -437,79 +468,6 @@ export interface KeyDTO {
      * @memberof KeyDTO
      */
     keyFile: string;
-}
-/**
- * 
- * @export
- * @interface MasterWalletDTO
- */
-export interface MasterWalletDTO {
-    /**
-     * 
-     * @type {string}
-     * @memberof MasterWalletDTO
-     */
-    id: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MasterWalletDTO
-     */
-    name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MasterWalletDTO
-     */
-    address: string;
-    /**
-     * 
-     * @type {WalletStatus}
-     * @memberof MasterWalletDTO
-     */
-    status: WalletStatus;
-    /**
-     * 
-     * @type {string}
-     * @memberof MasterWalletDTO
-     */
-    balance: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MasterWalletDTO
-     */
-    version: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MasterWalletDTO
-     */
-    orgId: string;
-    /**
-     * 
-     * @type {KeyDTO}
-     * @memberof MasterWalletDTO
-     */
-    accountKey: KeyDTO;
-    /**
-     * 
-     * @type {string}
-     * @memberof MasterWalletDTO
-     */
-    encryptionKey: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MasterWalletDTO
-     */
-    createdAt: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MasterWalletDTO
-     */
-    updatedAt: string;
 }
 /**
  * 
@@ -735,6 +693,85 @@ export interface ProposalWalletBalanceDTO {
 /**
  * 
  * @export
+ * @interface RawSignedTransactionDTO
+ */
+export interface RawSignedTransactionDTO {
+    /**
+     * 
+     * @type {number}
+     * @memberof RawSignedTransactionDTO
+     */
+    version: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RawSignedTransactionDTO
+     */
+    to: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RawSignedTransactionDTO
+     */
+    from: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RawSignedTransactionDTO
+     */
+    nonce: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RawSignedTransactionDTO
+     */
+    value: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RawSignedTransactionDTO
+     */
+    method: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RawSignedTransactionDTO
+     */
+    params: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RawSignedTransactionDTO
+     */
+    signature: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RawSignedTransactionDTO
+     */
+    gasLimit: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RawSignedTransactionDTO
+     */
+    gasFeeCap: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RawSignedTransactionDTO
+     */
+    gasPremium: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RawSignedTransactionDTO
+     */
+    signatureType: number;
+}
+/**
+ * 
+ * @export
  * @interface SimplifiedWalletInternalDTO
  */
 export interface SimplifiedWalletInternalDTO {
@@ -774,13 +811,13 @@ export interface Sort {
      * @type {boolean}
      * @memberof Sort
      */
-    unsorted?: boolean;
+    sorted?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof Sort
      */
-    sorted?: boolean;
+    unsorted?: boolean;
     /**
      * 
      * @type {boolean}
@@ -1043,6 +1080,79 @@ export enum TransferType {
     DEPOSIT = 'DEPOSIT'
 }
 
+/**
+ * 
+ * @export
+ * @interface WalletDTO
+ */
+export interface WalletDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    id: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    address: string;
+    /**
+     * 
+     * @type {WalletStatus}
+     * @memberof WalletDTO
+     */
+    status: WalletStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    balance: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    version: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    orgId: string;
+    /**
+     * 
+     * @type {KeyDTO}
+     * @memberof WalletDTO
+     */
+    accountKey: KeyDTO;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    encryptionKey: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WalletDTO
+     */
+    updatedAt: string;
+}
 /**
  * 
  * @export
@@ -1329,10 +1439,10 @@ export const InternalControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlushes1: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getFlushes: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getFlushes1.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getFlushes.');
             }
             const localVarPath = `/api/v2/fil/internal/flushes`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1367,10 +1477,10 @@ export const InternalControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfer1: async (transferId: string, options: any = {}): Promise<RequestArgs> => {
+        getTransfer: async (transferId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'transferId' is not null or undefined
             if (transferId === null || transferId === undefined) {
-                throw new RequiredError('transferId','Required parameter transferId was null or undefined when calling getTransfer1.');
+                throw new RequiredError('transferId','Required parameter transferId was null or undefined when calling getTransfer.');
             }
             const localVarPath = `/api/v2/fil/internal/transfers/{transferId}`
                 .replace(`{${"transferId"}}`, encodeURIComponent(String(transferId)));
@@ -1462,8 +1572,8 @@ export const InternalControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFlushes1(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushInternalDTO>> {
-            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getFlushes1(pageable, options);
+        async getFlushes(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getFlushes(pageable, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1475,8 +1585,8 @@ export const InternalControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransfer1(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferInternalDTO>> {
-            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getTransfer1(transferId, options);
+        async getTransfer(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getTransfer(transferId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1519,8 +1629,8 @@ export const InternalControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlushes1(pageable: Pageable, options?: any): AxiosPromise<PaginationFlushInternalDTO> {
-            return InternalControllerApiFp(configuration).getFlushes1(pageable, options).then((request) => request(axios, basePath));
+        getFlushes(pageable: Pageable, options?: any): AxiosPromise<PaginationFlushInternalDTO> {
+            return InternalControllerApiFp(configuration).getFlushes(pageable, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1528,8 +1638,8 @@ export const InternalControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfer1(transferId: string, options?: any): AxiosPromise<TransferInternalDTO> {
-            return InternalControllerApiFp(configuration).getTransfer1(transferId, options).then((request) => request(axios, basePath));
+        getTransfer(transferId: string, options?: any): AxiosPromise<TransferInternalDTO> {
+            return InternalControllerApiFp(configuration).getTransfer(transferId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1568,8 +1678,8 @@ export class InternalControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof InternalControllerApi
      */
-    public getFlushes1(pageable: Pageable, options?: any) {
-        return InternalControllerApiFp(this.configuration).getFlushes1(pageable, options).then((request) => request(this.axios, this.basePath));
+    public getFlushes(pageable: Pageable, options?: any) {
+        return InternalControllerApiFp(this.configuration).getFlushes(pageable, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1579,8 +1689,8 @@ export class InternalControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof InternalControllerApi
      */
-    public getTransfer1(transferId: string, options?: any) {
-        return InternalControllerApiFp(this.configuration).getTransfer1(transferId, options).then((request) => request(this.axios, this.basePath));
+    public getTransfer(transferId: string, options?: any) {
+        return InternalControllerApiFp(this.configuration).getTransfer(transferId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1592,6 +1702,114 @@ export class InternalControllerApi extends BaseAPI {
      */
     public getTransfers1(pageable: Pageable, options?: any) {
         return InternalControllerApiFp(this.configuration).getTransfers1(pageable, options).then((request) => request(this.axios, this.basePath));
+    }
+
+}
+
+
+/**
+ * NetworkControllerApi - axios parameter creator
+ * @export
+ */
+export const NetworkControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {GetGasPremiumRequest} getGasPremiumRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGasPremium: async (getGasPremiumRequest: GetGasPremiumRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'getGasPremiumRequest' is not null or undefined
+            if (getGasPremiumRequest === null || getGasPremiumRequest === undefined) {
+                throw new RequiredError('getGasPremiumRequest','Required parameter getGasPremiumRequest was null or undefined when calling getGasPremium.');
+            }
+            const localVarPath = `/api/v2/fil/network/gas-premium`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (getGasPremiumRequest !== undefined) {
+                localVarQueryParameter['getGasPremiumRequest'] = getGasPremiumRequest;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * NetworkControllerApi - functional programming interface
+ * @export
+ */
+export const NetworkControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {GetGasPremiumRequest} getGasPremiumRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGasPremium(getGasPremiumRequest: GetGasPremiumRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>> {
+            const localVarAxiosArgs = await NetworkControllerApiAxiosParamCreator(configuration).getGasPremium(getGasPremiumRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * NetworkControllerApi - factory interface
+ * @export
+ */
+export const NetworkControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {GetGasPremiumRequest} getGasPremiumRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGasPremium(getGasPremiumRequest: GetGasPremiumRequest, options?: any): AxiosPromise<KeyDTO> {
+            return NetworkControllerApiFp(configuration).getGasPremium(getGasPremiumRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * NetworkControllerApi - object-oriented interface
+ * @export
+ * @class NetworkControllerApi
+ * @extends {BaseAPI}
+ */
+export class NetworkControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {GetGasPremiumRequest} getGasPremiumRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NetworkControllerApi
+     */
+    public getGasPremium(getGasPremiumRequest: GetGasPremiumRequest, options?: any) {
+        return NetworkControllerApiFp(this.configuration).getGasPremium(getGasPremiumRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -1717,10 +1935,10 @@ export const TransferControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfer: async (transferId: string, options: any = {}): Promise<RequestArgs> => {
+        getTransfer1: async (transferId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'transferId' is not null or undefined
             if (transferId === null || transferId === undefined) {
-                throw new RequiredError('transferId','Required parameter transferId was null or undefined when calling getTransfer.');
+                throw new RequiredError('transferId','Required parameter transferId was null or undefined when calling getTransfer1.');
             }
             const localVarPath = `/api/v2/fil/transfers/{transferId}`
                 .replace(`{${"transferId"}}`, encodeURIComponent(String(transferId)));
@@ -1799,8 +2017,8 @@ export const TransferControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransfer(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>> {
-            const localVarAxiosArgs = await TransferControllerApiAxiosParamCreator(configuration).getTransfer(transferId, options);
+        async getTransfer1(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>> {
+            const localVarAxiosArgs = await TransferControllerApiAxiosParamCreator(configuration).getTransfer1(transferId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1834,8 +2052,8 @@ export const TransferControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfer(transferId: string, options?: any): AxiosPromise<TransferDTO> {
-            return TransferControllerApiFp(configuration).getTransfer(transferId, options).then((request) => request(axios, basePath));
+        getTransfer1(transferId: string, options?: any): AxiosPromise<TransferDTO> {
+            return TransferControllerApiFp(configuration).getTransfer1(transferId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1863,8 +2081,8 @@ export class TransferControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TransferControllerApi
      */
-    public getTransfer(transferId: string, options?: any) {
-        return TransferControllerApiFp(this.configuration).getTransfer(transferId, options).then((request) => request(this.axios, this.basePath));
+    public getTransfer1(transferId: string, options?: any) {
+        return TransferControllerApiFp(this.configuration).getTransfer1(transferId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1933,14 +2151,14 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @param {CreateMasterWalletRequest} createMasterWalletRequest 
+         * @param {CreateWalletRequest} createWalletRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createMasterWallet: async (createMasterWalletRequest: CreateMasterWalletRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createMasterWalletRequest' is not null or undefined
-            if (createMasterWalletRequest === null || createMasterWalletRequest === undefined) {
-                throw new RequiredError('createMasterWalletRequest','Required parameter createMasterWalletRequest was null or undefined when calling createMasterWallet.');
+        createWallet: async (createWalletRequest: CreateWalletRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createWalletRequest' is not null or undefined
+            if (createWalletRequest === null || createWalletRequest === undefined) {
+                throw new RequiredError('createWalletRequest','Required parameter createWalletRequest was null or undefined when calling createWallet.');
             }
             const localVarPath = `/api/v2/fil/wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1961,8 +2179,8 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof createMasterWalletRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createMasterWalletRequest !== undefined ? createMasterWalletRequest : {}) : (createMasterWalletRequest || "");
+            const needsSerialization = (typeof createWalletRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createWalletRequest !== undefined ? createWalletRequest : {}) : (createWalletRequest || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2181,14 +2399,14 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlushes: async (walletId: string, pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getFlushes1: async (walletId: string, pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getFlushes.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getFlushes1.');
             }
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getFlushes.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getFlushes1.');
             }
             const localVarPath = `/api/v2/fil/wallets/{walletId}/flushes`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -2224,10 +2442,10 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallet: async (walletId: string, options: any = {}): Promise<RequestArgs> => {
+        getWallet: async (walletId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWallet.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getWallet.');
             }
             const localVarPath = `/api/v2/fil/wallets/{walletId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -2259,10 +2477,10 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletInitialKey: async (walletId: string, options: any = {}): Promise<RequestArgs> => {
+        getWalletInitialKey: async (walletId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getMasterWalletInitialKey.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getWalletInitialKey.');
             }
             const localVarPath = `/api/v2/fil/wallets/{walletId}/initial-key`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -2294,10 +2512,10 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets: async (sort: Sort, options: any = {}): Promise<RequestArgs> => {
+        getWallets: async (sort: Sort, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'sort' is not null or undefined
             if (sort === null || sort === undefined) {
-                throw new RequiredError('sort','Required parameter sort was null or undefined when calling getMasterWallets.');
+                throw new RequiredError('sort','Required parameter sort was null or undefined when calling getWallets.');
             }
             const localVarPath = `/api/v2/fil/wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2383,14 +2601,14 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchMasterWalletAccountKey: async (walletId: string, patchAccountKeyRequest: PatchAccountKeyRequest, options: any = {}): Promise<RequestArgs> => {
+        patchWalletAccountKey: async (walletId: string, patchAccountKeyRequest: PatchAccountKeyRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchMasterWalletAccountKey.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchWalletAccountKey.');
             }
             // verify required parameter 'patchAccountKeyRequest' is not null or undefined
             if (patchAccountKeyRequest === null || patchAccountKeyRequest === undefined) {
-                throw new RequiredError('patchAccountKeyRequest','Required parameter patchAccountKeyRequest was null or undefined when calling patchMasterWalletAccountKey.');
+                throw new RequiredError('patchAccountKeyRequest','Required parameter patchAccountKeyRequest was null or undefined when calling patchWalletAccountKey.');
             }
             const localVarPath = `/api/v2/fil/wallets/{walletId}/account-key`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -2427,14 +2645,14 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchMasterWalletName: async (walletId: string, patchWalletNameRequest: PatchWalletNameRequest, options: any = {}): Promise<RequestArgs> => {
+        patchWalletName: async (walletId: string, patchWalletNameRequest: PatchWalletNameRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchMasterWalletName.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling patchWalletName.');
             }
             // verify required parameter 'patchWalletNameRequest' is not null or undefined
             if (patchWalletNameRequest === null || patchWalletNameRequest === undefined) {
-                throw new RequiredError('patchWalletNameRequest','Required parameter patchWalletNameRequest was null or undefined when calling patchMasterWalletName.');
+                throw new RequiredError('patchWalletNameRequest','Required parameter patchWalletNameRequest was null or undefined when calling patchWalletName.');
             }
             const localVarPath = `/api/v2/fil/wallets/{walletId}/name`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -2470,10 +2688,10 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recreateMasterWallet: async (walletId: string, options: any = {}): Promise<RequestArgs> => {
+        recreateWallet: async (walletId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling recreateMasterWallet.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling recreateWallet.');
             }
             const localVarPath = `/api/v2/fil/wallets/{walletId}/recreate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -2568,12 +2786,12 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {CreateMasterWalletRequest} createMasterWalletRequest 
+         * @param {CreateWalletRequest} createWalletRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createMasterWallet(createMasterWalletRequest: CreateMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).createMasterWallet(createMasterWalletRequest, options);
+        async createWallet(createWalletRequest: CreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletDTO>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).createWallet(createWalletRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2655,8 +2873,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFlushes(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushDTO>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getFlushes(walletId, pageable, options);
+        async getFlushes1(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushDTO>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getFlushes1(walletId, pageable, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2668,8 +2886,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMasterWallet(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getMasterWallet(walletId, options);
+        async getWallet(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletDTO>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getWallet(walletId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2681,8 +2899,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMasterWalletInitialKey(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getMasterWalletInitialKey(walletId, options);
+        async getWalletInitialKey(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getWalletInitialKey(walletId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2694,8 +2912,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMasterWallets(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getMasterWallets(sort, options);
+        async getWallets(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<WalletDTO>>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getWallets(sort, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2723,8 +2941,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchMasterWalletAccountKey(walletId: string, patchAccountKeyRequest: PatchAccountKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).patchMasterWalletAccountKey(walletId, patchAccountKeyRequest, options);
+        async patchWalletAccountKey(walletId: string, patchAccountKeyRequest: PatchAccountKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).patchWalletAccountKey(walletId, patchAccountKeyRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2737,8 +2955,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchMasterWalletName(walletId: string, patchWalletNameRequest: PatchWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).patchMasterWalletName(walletId, patchWalletNameRequest, options);
+        async patchWalletName(walletId: string, patchWalletNameRequest: PatchWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletDTO>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).patchWalletName(walletId, patchWalletNameRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2750,8 +2968,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async recreateMasterWallet(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).recreateMasterWallet(walletId, options);
+        async recreateWallet(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletDTO>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).recreateWallet(walletId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2792,12 +3010,12 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @param {CreateMasterWalletRequest} createMasterWalletRequest 
+         * @param {CreateWalletRequest} createWalletRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createMasterWallet(createMasterWalletRequest: CreateMasterWalletRequest, options?: any): AxiosPromise<MasterWalletDTO> {
-            return WalletControllerApiFp(configuration).createMasterWallet(createMasterWalletRequest, options).then((request) => request(axios, basePath));
+        createWallet(createWalletRequest: CreateWalletRequest, options?: any): AxiosPromise<WalletDTO> {
+            return WalletControllerApiFp(configuration).createWallet(createWalletRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2855,8 +3073,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlushes(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationFlushDTO> {
-            return WalletControllerApiFp(configuration).getFlushes(walletId, pageable, options).then((request) => request(axios, basePath));
+        getFlushes1(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationFlushDTO> {
+            return WalletControllerApiFp(configuration).getFlushes1(walletId, pageable, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2864,8 +3082,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallet(walletId: string, options?: any): AxiosPromise<MasterWalletDTO> {
-            return WalletControllerApiFp(configuration).getMasterWallet(walletId, options).then((request) => request(axios, basePath));
+        getWallet(walletId: string, options?: any): AxiosPromise<WalletDTO> {
+            return WalletControllerApiFp(configuration).getWallet(walletId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2873,8 +3091,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWalletInitialKey(walletId: string, options?: any): AxiosPromise<KeyDTO> {
-            return WalletControllerApiFp(configuration).getMasterWalletInitialKey(walletId, options).then((request) => request(axios, basePath));
+        getWalletInitialKey(walletId: string, options?: any): AxiosPromise<KeyDTO> {
+            return WalletControllerApiFp(configuration).getWalletInitialKey(walletId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2882,8 +3100,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMasterWallets(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>> {
-            return WalletControllerApiFp(configuration).getMasterWallets(sort, options).then((request) => request(axios, basePath));
+        getWallets(sort: Sort, options?: any): AxiosPromise<Array<WalletDTO>> {
+            return WalletControllerApiFp(configuration).getWallets(sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2903,8 +3121,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchMasterWalletAccountKey(walletId: string, patchAccountKeyRequest: PatchAccountKeyRequest, options?: any): AxiosPromise<KeyDTO> {
-            return WalletControllerApiFp(configuration).patchMasterWalletAccountKey(walletId, patchAccountKeyRequest, options).then((request) => request(axios, basePath));
+        patchWalletAccountKey(walletId: string, patchAccountKeyRequest: PatchAccountKeyRequest, options?: any): AxiosPromise<KeyDTO> {
+            return WalletControllerApiFp(configuration).patchWalletAccountKey(walletId, patchAccountKeyRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2913,8 +3131,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchMasterWalletName(walletId: string, patchWalletNameRequest: PatchWalletNameRequest, options?: any): AxiosPromise<MasterWalletDTO> {
-            return WalletControllerApiFp(configuration).patchMasterWalletName(walletId, patchWalletNameRequest, options).then((request) => request(axios, basePath));
+        patchWalletName(walletId: string, patchWalletNameRequest: PatchWalletNameRequest, options?: any): AxiosPromise<WalletDTO> {
+            return WalletControllerApiFp(configuration).patchWalletName(walletId, patchWalletNameRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2922,8 +3140,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recreateMasterWallet(walletId: string, options?: any): AxiosPromise<MasterWalletDTO> {
-            return WalletControllerApiFp(configuration).recreateMasterWallet(walletId, options).then((request) => request(axios, basePath));
+        recreateWallet(walletId: string, options?: any): AxiosPromise<WalletDTO> {
+            return WalletControllerApiFp(configuration).recreateWallet(walletId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2959,13 +3177,13 @@ export class WalletControllerApi extends BaseAPI {
 
     /**
      * 
-     * @param {CreateMasterWalletRequest} createMasterWalletRequest 
+     * @param {CreateWalletRequest} createWalletRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public createMasterWallet(createMasterWalletRequest: CreateMasterWalletRequest, options?: any) {
-        return WalletControllerApiFp(this.configuration).createMasterWallet(createMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    public createWallet(createWalletRequest: CreateWalletRequest, options?: any) {
+        return WalletControllerApiFp(this.configuration).createWallet(createWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3035,8 +3253,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getFlushes(walletId: string, pageable: Pageable, options?: any) {
-        return WalletControllerApiFp(this.configuration).getFlushes(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
+    public getFlushes1(walletId: string, pageable: Pageable, options?: any) {
+        return WalletControllerApiFp(this.configuration).getFlushes1(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3046,8 +3264,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getMasterWallet(walletId: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).getMasterWallet(walletId, options).then((request) => request(this.axios, this.basePath));
+    public getWallet(walletId: string, options?: any) {
+        return WalletControllerApiFp(this.configuration).getWallet(walletId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3057,8 +3275,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getMasterWalletInitialKey(walletId: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).getMasterWalletInitialKey(walletId, options).then((request) => request(this.axios, this.basePath));
+    public getWalletInitialKey(walletId: string, options?: any) {
+        return WalletControllerApiFp(this.configuration).getWalletInitialKey(walletId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3068,8 +3286,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getMasterWallets(sort: Sort, options?: any) {
-        return WalletControllerApiFp(this.configuration).getMasterWallets(sort, options).then((request) => request(this.axios, this.basePath));
+    public getWallets(sort: Sort, options?: any) {
+        return WalletControllerApiFp(this.configuration).getWallets(sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3093,8 +3311,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public patchMasterWalletAccountKey(walletId: string, patchAccountKeyRequest: PatchAccountKeyRequest, options?: any) {
-        return WalletControllerApiFp(this.configuration).patchMasterWalletAccountKey(walletId, patchAccountKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    public patchWalletAccountKey(walletId: string, patchAccountKeyRequest: PatchAccountKeyRequest, options?: any) {
+        return WalletControllerApiFp(this.configuration).patchWalletAccountKey(walletId, patchAccountKeyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3105,8 +3323,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public patchMasterWalletName(walletId: string, patchWalletNameRequest: PatchWalletNameRequest, options?: any) {
-        return WalletControllerApiFp(this.configuration).patchMasterWalletName(walletId, patchWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
+    public patchWalletName(walletId: string, patchWalletNameRequest: PatchWalletNameRequest, options?: any) {
+        return WalletControllerApiFp(this.configuration).patchWalletName(walletId, patchWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3116,8 +3334,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public recreateMasterWallet(walletId: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).recreateMasterWallet(walletId, options).then((request) => request(this.axios, this.basePath));
+    public recreateWallet(walletId: string, options?: any) {
+        return WalletControllerApiFp(this.configuration).recreateWallet(walletId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

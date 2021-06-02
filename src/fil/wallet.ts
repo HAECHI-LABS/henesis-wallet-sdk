@@ -1,4 +1,4 @@
-import { FilMasterWalletData, FilWallet } from "./abstractWallet";
+import { FilWalletData, FilAbstractWallet } from "./abstractWallet";
 import { Client } from "../httpClient";
 import { Balance, Key, Keychains, Pagination } from "../types";
 import { FilDepositAddress } from "./depositAddress";
@@ -7,7 +7,7 @@ import {
   BalanceDTO,
   FlushDTO,
   FlushInternalDTO,
-  MasterWalletDTO,
+  WalletDTO,
   PatchWalletNameRequest,
 } from "../__generate__/fil";
 import BN from "bn.js";
@@ -15,9 +15,7 @@ import { BlockchainType } from "../blockchain";
 import { transformWalletStatus } from "../wallet";
 import { FilTransfer, FilTransferInternal } from "./transfers";
 
-export const transformMasterWalletData = (
-  data: MasterWalletDTO
-): FilMasterWalletData => {
+export const transformWalletData = (data: WalletDTO): FilWalletData => {
   return {
     ...data,
     blockchain: BlockchainType.FILECOIN,
@@ -31,8 +29,8 @@ export interface FilFlushInternal extends Omit<FlushInternalDTO, "transfers"> {
   transfers: FilTransferInternal[];
 }
 
-export class FilMasterWallet extends FilWallet {
-  constructor(client: Client, data: FilMasterWalletData, keychains: Keychains) {
+export class FilWallet extends FilAbstractWallet {
+  constructor(client: Client, data: FilWalletData, keychains: Keychains) {
     super(client, data, keychains, `/wallets/${data.id}`);
   }
 
@@ -41,11 +39,11 @@ export class FilMasterWallet extends FilWallet {
     const request: PatchWalletNameRequest = {
       name,
     };
-    const masterWalletData = await this.client.patch<MasterWalletDTO>(
+    const walletData = await this.client.patch<WalletDTO>(
       `${this.baseUrl}/name`,
       request
     );
-    this.data.name = masterWalletData.name;
+    this.data.name = walletData.name;
   }
 
   getAccountKey(): Key {
