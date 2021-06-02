@@ -1,7 +1,7 @@
 import {
-  FilMasterWalletData,
-  FilWallet,
   FilWalletData,
+  FilAbstractWallet,
+  FilAbstractWalletData,
 } from "./abstractWallet";
 import { Client } from "../httpClient";
 import { Balance, Key, Keychains } from "../types";
@@ -13,14 +13,14 @@ import {
 import { BNConverter } from "../utils/common";
 
 export interface FilDepositAddressData
-  extends Omit<FilWalletData, "encryptionKey"> {}
+  extends Omit<FilAbstractWalletData, "encryptionKey"> {}
 
-export class FilDepositAddress extends FilWallet {
+export class FilDepositAddress extends FilAbstractWallet {
   private readonly depositAddressData: FilDepositAddressData;
 
   constructor(
     client: Client,
-    data: FilMasterWalletData,
+    data: FilWalletData,
     keychains: Keychains,
     depositAddressData: FilDepositAddressData
   ) {

@@ -1,4 +1,3 @@
-import { MasterWalletSearchOptions } from "./eth";
 import { RecoveryKit } from "./recoverykit";
 import { Client } from "./httpClient";
 import { Key, Keychains, KeyWithPriv } from "./types";
@@ -24,14 +23,10 @@ export abstract class Wallets<T> {
 
   abstract verifyAddress(address: string): boolean;
 
-  abstract getMasterWallets(options?: MasterWalletSearchOptions): Promise<T[]>;
-
   abstract createRecoveryKit(
     name: string,
     passphrase: string
   ): Promise<RecoveryKit>;
-
-  abstract createMasterWalletWithKit(recoveryKit: RecoveryKit): Promise<T>;
 
   protected createEncryptionKey(p: string): Buffer {
     const randomHex = Web3.utils.randomHex(32);
