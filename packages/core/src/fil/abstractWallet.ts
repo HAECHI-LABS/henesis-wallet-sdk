@@ -9,11 +9,11 @@ import {
 
 export type FilTransaction = TransactionDTO;
 
-export interface FilWalletData extends WalletData {
+export interface FilAbstractWalletData extends WalletData {
   blockchain: BlockchainType;
 }
 
-export interface FilMasterWalletData extends FilWalletData {
+export interface FilWalletData extends FilAbstractWalletData {
   accountKey: Key;
   transactionId?: string | null;
   error?: string | null;
@@ -21,12 +21,12 @@ export interface FilMasterWalletData extends FilWalletData {
 
 export type FilSimplifiedWalletInternal = SimplifiedWalletInternalDTO;
 
-export abstract class FilWallet extends Wallet<FilTransaction> {
-  protected data: FilMasterWalletData;
+export abstract class FilAbstractWallet extends Wallet<FilTransaction> {
+  protected data: FilWalletData;
 
   protected constructor(
     client: Client,
-    data: FilMasterWalletData,
+    data: FilWalletData,
     keychains: Keychains,
     baseUrl: string
   ) {

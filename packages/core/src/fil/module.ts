@@ -4,6 +4,8 @@ import { BlockchainType } from "../blockchain";
 import { Keychains } from "../types";
 import { FilWallets } from "./wallets";
 import { FilKeychains } from "./keychains";
+import { FilFeeWallets } from "./feeWallets";
+import { FilTransfers } from "./transfers";
 
 export interface ModuleOptions {
   client: Client;
@@ -12,11 +14,15 @@ export interface ModuleOptions {
 }
 
 export class FilModule {
-  public readonly wallets: FilWallets;
+  private readonly client: Client;
 
   public readonly keychains: Keychains;
 
-  private readonly client: Client;
+  public readonly wallets: FilWallets;
+
+  public readonly feeWallets: FilFeeWallets;
+
+  public readonly transfers: FilTransfers;
 
   constructor(options: ModuleOptions) {
     this.client = options.client;
@@ -27,5 +33,7 @@ export class FilModule {
       options.env,
       options.blockchain
     );
+    this.feeWallets = new FilFeeWallets(this.client);
+    this.transfers = new FilTransfers(this.client);
   }
 }
