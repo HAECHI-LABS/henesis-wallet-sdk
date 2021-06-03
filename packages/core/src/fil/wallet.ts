@@ -1,4 +1,8 @@
-import { FilWalletData, FilAbstractWallet } from "./abstractWallet";
+import {
+  FilWalletData,
+  FilAbstractWallet,
+  FilAccountKey,
+} from "./abstractWallet";
 import { Client } from "../httpClient";
 import { Balance, Key, Keychains, Pagination } from "../types";
 import { FilDepositAddress } from "./depositAddress";
@@ -46,7 +50,7 @@ export class FilWallet extends FilAbstractWallet {
     this.data.name = walletData.name;
   }
 
-  getAccountKey(): Key {
+  getAccountKey(): FilAccountKey {
     return this.data.accountKey;
   }
 
@@ -81,7 +85,7 @@ export class FilWallet extends FilAbstractWallet {
     return this.data.id;
   }
 
-  updateAccountKey(key: Key) {
+  updateAccountKey(key: FilAccountKey) {
     this.data.accountKey = key;
   }
 
@@ -89,15 +93,9 @@ export class FilWallet extends FilAbstractWallet {
   async createDepositAddress(
     name: string,
     passphrase?: string,
-    salt?: BN,
     otpCode?: string
   ): Promise<FilDepositAddress> {
-    return new FilDepositAddress(
-      this.client,
-      this.data,
-      this.keychains,
-      undefined
-    );
+    return null;
   }
 
   // TODO: implement me
@@ -123,10 +121,7 @@ export class FilWallet extends FilAbstractWallet {
   }
 
   // TODO: implememt me
-  async flush(
-    targets: Array<{ depositAddressId: string; amount: BN }>,
-    passphrase: string
-  ): Promise<FilFlush> {
+  async flush(targets: Array<string>, passphrase: string): Promise<FilFlush> {
     // TODO: build raw tx from each account key, then send those to wallet api
     return null;
   }
