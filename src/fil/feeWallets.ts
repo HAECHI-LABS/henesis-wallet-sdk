@@ -3,21 +3,20 @@ import {
   FeeHistoryDTO,
   FeeWalletBalanceDTO,
   FeeWalletDTO,
-  ProposalWalletBalanceDTO,
+  HenesisKeyDTO,
+  ProposalFeeWalletBalanceDTO,
 } from "../__generate__/fil";
-import { Key, Pagination } from "../types";
+import { Pagination } from "../types";
 import { Client } from "../httpClient";
-import { FilTransaction } from "./abstractWallet";
+import { FilAccountKey, FilTransaction } from "./abstractWallet";
 import BN from "bn.js";
 
-export interface FilHenesisKey extends Key {
-  keyId: string;
-}
+export type FilHenesisKey = HenesisKeyDTO;
 
 export interface FilFeeWallet
-  extends Omit<FeeWalletDTO, "defaultWallet" | "proposalWallets"> {
-  defaultWallet: FilHenesisKey;
-  proposalWallets: Key[];
+  extends Omit<FeeWalletDTO, "defaultFeeWallet" | "proposalFeeWallets"> {
+  defaultFeeWallet: FilHenesisKey;
+  proposalFeeWallets: FilAccountKey[];
 }
 
 export interface FilBalance
@@ -26,15 +25,15 @@ export interface FilBalance
   spendableBalance: BN;
 }
 
-export interface ProposalWalletBalance
-  extends Omit<ProposalWalletBalanceDTO, "balance"> {
+export interface ProposalFeeWalletBalance
+  extends Omit<ProposalFeeWalletBalanceDTO, "balance"> {
   balance: FilBalance;
 }
 
 export interface FilFeeWalletBalance
-  extends Omit<FeeWalletBalanceDTO, "defaultWallet" | "proposalWallets"> {
-  defaultWallet: FilBalance;
-  proposalWallets: ProposalWalletBalance[];
+  extends Omit<FeeWalletBalanceDTO, "defaultFeeWallet" | "proposalFeeWallets"> {
+  defaultFeeWallet: FilBalance;
+  proposalFeeWallets: ProposalFeeWalletBalance[];
 }
 
 export interface FilFeeHistory extends Omit<FeeHistoryDTO, "transaction"> {

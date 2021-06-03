@@ -13,7 +13,9 @@ import {
 import { BNConverter } from "../utils/common";
 
 export interface FilDepositAddressData
-  extends Omit<FilAbstractWalletData, "encryptionKey"> {}
+  extends Omit<FilAbstractWalletData, "encryptionKey"> {
+  childNumber: number;
+}
 
 export class FilDepositAddress extends FilAbstractWallet {
   private readonly depositAddressData: FilDepositAddressData;
