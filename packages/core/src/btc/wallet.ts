@@ -304,7 +304,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
           String(response.spendableBalance)
         ),
         coinType: "BTC",
-        name: "비트코인",
+        name: "Bitcoin",
         decimals: 8,
       },
     ];
