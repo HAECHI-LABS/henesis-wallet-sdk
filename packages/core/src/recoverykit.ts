@@ -13,7 +13,7 @@ export class RecoveryKit {
 
   private readonly henesisKey: Key;
 
-  private readonly accountKey: KeyWithPriv;
+  protected readonly accountKey: KeyWithPriv;
 
   private readonly backupKey: KeyWithPriv;
 
