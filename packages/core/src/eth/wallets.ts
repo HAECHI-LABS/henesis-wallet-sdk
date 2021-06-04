@@ -11,7 +11,7 @@ import {
   EthMasterWallet,
   transformMasterWalletData,
 } from "./wallet";
-import { Wallets } from "../wallets";
+import { Wallets, WalletSearchOptions } from "../wallets";
 import { toChecksum } from "./keychains";
 import { keccak256s } from "./eth-core-lib/hash";
 import { makeQueryString } from "../utils/url";
@@ -24,11 +24,6 @@ import {
 } from "../__generate__/eth";
 import { InactiveWallet, InactiveMasterWallet } from "../wallet";
 import { isLessThanWalletV4 } from "../utils/wallet";
-
-export interface MasterWalletSearchOptions {
-  name?: string;
-  sort?: string;
-}
 
 export class EthWallets extends Wallets<EthMasterWallet> {
   private readonly henesisKey: HenesisKeys;
@@ -80,7 +75,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     );
   }
 
-  async getWallets(options?: MasterWalletSearchOptions): Promise<EthWallet[]> {
+  async getWallets(options?: WalletSearchOptions): Promise<EthWallet[]> {
     const queryString = makeQueryString(options);
     const walletDatas = await this.client.get<
       NoUndefinedField<MasterWalletDTO>[]
@@ -99,7 +94,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
   }
 
   async getAllWallets(
-    options?: MasterWalletSearchOptions
+    options?: WalletSearchOptions
   ): Promise<Array<EthWallet | EthMasterWallet>> {
     const queryString = makeQueryString(options);
     const walletDatas = await this.client.get<
@@ -126,7 +121,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
   }
 
   async getMasterWallets(
-    options?: MasterWalletSearchOptions
+    options?: WalletSearchOptions
   ): Promise<EthMasterWallet[]> {
     const queryString = makeQueryString(options);
     const walletDatas = await this.client.get<
