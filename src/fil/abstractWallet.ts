@@ -28,6 +28,8 @@ export type FilSimplifiedWalletInternal = SimplifiedWalletInternalDTO;
 export abstract class FilAbstractWallet extends Wallet<FilTransaction> {
   protected data: FilWalletData;
 
+  protected readonly blockchain: BlockchainType;
+
   protected constructor(
     client: Client,
     data: FilWalletData,
@@ -36,6 +38,7 @@ export abstract class FilAbstractWallet extends Wallet<FilTransaction> {
   ) {
     super(client, keychains, baseUrl);
     this.data = data;
+    this.blockchain = BlockchainType.FILECOIN;
   }
 
   getChain(): BlockchainType {
