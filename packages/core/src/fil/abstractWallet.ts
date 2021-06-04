@@ -15,6 +15,7 @@ export type FilAccountKey = AccountKeyDTO;
 export interface FilAbstractWalletData extends WalletData {
   blockchain: BlockchainType;
   orgId: string;
+  whitelistActivated?: boolean;
 }
 
 export interface FilWalletData extends FilAbstractWalletData {
