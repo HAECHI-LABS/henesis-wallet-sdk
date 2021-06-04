@@ -1,10 +1,14 @@
-import { TransferDTO, TransferInternalDTO } from "../__generate__/fil";
+import {
+  TransferDTO,
+  TransferInternalDTO,
+  TransferStatus,
+} from "../__generate__/fil";
 import BN from "bn.js";
 
 import { FilSimplifiedWalletInternal, FilTransaction } from "./abstractWallet";
 import { Client } from "../httpClient";
 import { convertTransferDTO } from "./utils";
-import { Pagination } from "../types";
+import { Pagination, PaginationOptions, Timestamp } from "../types";
 
 export interface FilTransfer
   extends Omit<
@@ -35,6 +39,19 @@ export interface FilTransferInternal
   proposalTransaction: FilTransaction | null;
 }
 
+export interface FilTransferPaginationOptions extends PaginationOptions {
+  address?: string;
+  toAddress?: string;
+  fromAddress?: string;
+  transactionHash?: string;
+  updatedAtGte?: Timestamp;
+  updatedAtLt?: Timestamp;
+  status?: TransferStatus;
+  walletId?: string;
+  orgId?: string;
+  transactionId?: string;
+}
+
 export class FilTransfers {
   private readonly client: Client;
 
@@ -48,7 +65,9 @@ export class FilTransfers {
   }
 
   // TODO: implement me
-  async getTransfers(): Promise<Pagination<FilTransfer>> {
+  async getTransfers(
+    options?: FilTransferPaginationOptions
+  ): Promise<Pagination<FilTransfer>> {
     return null;
   }
 
@@ -58,7 +77,9 @@ export class FilTransfers {
   }
 
   // TODO: implement me
-  async getInternalTransfers(): Promise<Pagination<FilTransferInternal>> {
+  async getInternalTransfers(
+    options?: FilTransferPaginationOptions
+  ): Promise<Pagination<FilTransferInternal>> {
     return null;
   }
 }
