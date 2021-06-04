@@ -6,6 +6,11 @@ import Web3 from "web3";
 import pbkdf2 from "pbkdf2";
 import _ from "lodash";
 
+export interface WalletSearchOptions {
+  name?: string;
+  sort?: string;
+}
+
 export abstract class Wallets<T> {
   protected readonly env: Env;
 

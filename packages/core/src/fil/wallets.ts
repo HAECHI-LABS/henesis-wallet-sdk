@@ -1,5 +1,5 @@
 import { FilWallet } from "./wallet";
-import { Wallets } from "../wallets";
+import { Wallets, WalletSearchOptions } from "../wallets";
 import { BlockchainType } from "../blockchain";
 import { Client } from "../httpClient";
 import { Keychains } from "../types";
@@ -44,7 +44,7 @@ export class FilWallets extends Wallets<FilWallet> {
   }
 
   // TODO: implement me
-  getWallets(): Promise<FilWallet[]> {
+  getWallets(options?: WalletSearchOptions): Promise<FilWallet[]> {
     return Promise.resolve([]);
   }
 
