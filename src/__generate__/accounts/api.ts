@@ -151,7 +151,8 @@ export interface AllowedIpDTO {
 export enum Blockchain {
     ETHEREUM = 'ETHEREUM',
     KLAYTN = 'KLAYTN',
-    BITCOIN = 'BITCOIN'
+    BITCOIN = 'BITCOIN',
+    FILECOIN = 'FILECOIN'
 }
 
 /**

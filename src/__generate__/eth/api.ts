@@ -557,7 +557,7 @@ export interface CreateAllowedAddressRequest {
      * @type {string}
      * @memberof CreateAllowedAddressRequest
      */
-    label?: string;
+    label: string;
     /**
      * 
      * @type {number}
