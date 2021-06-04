@@ -6,6 +6,5 @@ export * from "./coins";
 export * from "./events";
 export * from "./transactions";
 export * from "./wallets";
-export * from "./wallets";
 export * from "./module";
 export * from "./utils";
