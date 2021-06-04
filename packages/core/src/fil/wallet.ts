@@ -58,10 +58,6 @@ export class FilWallet extends FilAbstractWallet {
     return this.data.address;
   }
 
-  getData(): FilWalletData {
-    return this.data;
-  }
-
   async getBalance(): Promise<Balance[]> {
     const response = await this.client.get<BalanceDTO>(
       `${this.baseUrl}/balance`
