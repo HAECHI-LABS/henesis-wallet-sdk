@@ -2,6 +2,7 @@ import { Accounts } from "./accounts";
 import { Organizations } from "./organizations";
 import { HttpClient, Client, enhancedBlockchainClient } from "./httpClient";
 import { EthModule, KlayModule } from "./eth";
+import { FilModule } from "./fil";
 import { baseUrls } from "./utils/url";
 import { BtcModule } from "./btc";
 import { BlockchainType } from "./blockchain";
@@ -38,6 +39,8 @@ export class SDK {
 
   public readonly klay: KlayModule;
 
+  public readonly fil: FilModule;
+
   public readonly btc: BtcModule;
 
   private readonly client: Client;
@@ -73,6 +76,11 @@ export class SDK {
       env: env,
       client: enhancedBlockchainClient(this.client, BlockchainType.ETHEREUM),
       blockchain: BlockchainType.ETHEREUM,
+    });
+    this.fil = new FilModule({
+      env: env,
+      client: enhancedBlockchainClient(this.client, BlockchainType.FILECOIN),
+      blockchain: BlockchainType.FILECOIN,
     });
     this.btc = new BtcModule({
       env: env,
