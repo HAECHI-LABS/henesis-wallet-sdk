@@ -16,6 +16,7 @@ export interface FilAbstractWalletData extends WalletData {
   blockchain: BlockchainType;
   orgId: string;
   whitelistActivated?: boolean;
+  error?: string | null;
 }
 
 export interface FilWalletData extends FilAbstractWalletData {
