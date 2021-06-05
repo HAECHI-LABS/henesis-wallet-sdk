@@ -149,7 +149,7 @@ export class FilWallet extends FilAbstractWallet {
   }
 
   // TODO: implement me
-  async retryCreateDepositAddress(walletId: string, gasPrice?: BN) {
+  async retryCreateDepositAddress(walletId: string, gasPrice?: BN): Promise<FilDepositAddress> {
     throw new Error("unimplemented method");
   }
 
