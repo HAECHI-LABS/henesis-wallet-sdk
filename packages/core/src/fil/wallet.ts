@@ -147,10 +147,12 @@ export class FilWallet extends FilAbstractWallet {
     throw new Error("this feature is not supported yet");
   }
 
+  // TODO: implement me
   async approve(params: ApproveWithdrawal) {
     throw new Error("this feature is not supported yet");
   }
 
+  // TODO: implement me
   async reject(params: { id: string; otpCode: string }): Promise<void> {
     throw new Error("this feature is not supported yet");
   }

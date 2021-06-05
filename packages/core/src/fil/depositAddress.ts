@@ -1,3 +1,5 @@
+import BN from "bn.js";
+
 import {
   FilWalletData,
   FilAbstractWallet,
@@ -82,6 +84,10 @@ export class FilDepositAddress extends FilAbstractWallet {
   }
 
   updateAccountKey(key: Key) {
+    throw new Error("unimplemented method");
+  }
+
+  async retryCreateDepositAddress(walletId: string, gasPrice?: BN) {
     throw new Error("unimplemented method");
   }
 }
