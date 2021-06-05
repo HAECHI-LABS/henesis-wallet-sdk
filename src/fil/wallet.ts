@@ -19,6 +19,7 @@ import { BlockchainType } from "../blockchain";
 import { transformWalletStatus } from "../wallet";
 import { FilTransfer, FilTransferInternal } from "./transfers";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
+import { EthTransaction } from "../eth/abstractWallet";
 
 export const transformWalletData = (data: WalletDTO): FilWalletData => {
   return {
@@ -148,7 +149,12 @@ export class FilWallet extends FilAbstractWallet {
   }
 
   // TODO: implement me
-  async approve(params: ApproveWithdrawal) {
+  async retryCreateDepositAddress(walletId: string, gasPrice?: BN) {
+    throw new Error("unimplemented method");
+  }
+
+  // TODO: implement me
+  async approve(params: ApproveWithdrawal): Promise<EthTransaction> {
     throw new Error("this feature is not supported yet");
   }
 
