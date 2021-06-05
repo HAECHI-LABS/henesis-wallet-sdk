@@ -45,8 +45,4 @@ export abstract class FilAbstractWallet extends Wallet<FilTransaction> {
   getChain(): BlockchainType {
     return this.data.blockchain;
   }
-
-  getData(): FilWalletData {
-    return this.data;
-  }
 }
