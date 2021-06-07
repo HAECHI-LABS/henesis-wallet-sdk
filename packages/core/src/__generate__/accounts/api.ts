@@ -184,6 +184,17 @@ export enum Blockchain {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+export enum Cause {
+    SECURITYISSUE = 'SECURITY_ISSUE',
+    SOURCECODEFORBIDDEN = 'SOURCE_CODE_FORBIDDEN',
+    OTHER = 'OTHER'
+}
+
+/**
+ * 
+ * @export
  * @interface ChangeAccountNameRequest
  */
 export interface ChangeAccountNameRequest {
@@ -351,22 +362,22 @@ export interface CoinListingRequestDTO {
     id: string;
     /**
      * 
-     * @type {string}
+     * @type {CoinRequestStatus}
      * @memberof CoinListingRequestDTO
      */
-    status: CoinListingRequestDTOStatusEnum;
+    status: CoinRequestStatus;
     /**
      * 
-     * @type {string}
+     * @type {Cause}
      * @memberof CoinListingRequestDTO
      */
-    cause: CoinListingRequestDTOCauseEnum;
+    cause: Cause;
     /**
      * 
-     * @type {string}
+     * @type {Blockchain}
      * @memberof CoinListingRequestDTO
      */
-    blockchain: CoinListingRequestDTOBlockchainEnum;
+    blockchain: Blockchain;
     /**
      * 
      * @type {string}
@@ -386,36 +397,16 @@ export interface CoinListingRequestDTO {
      */
     address: string;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum CoinListingRequestDTOStatusEnum {
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum CoinRequestStatus {
     INSPECTING = 'INSPECTING',
     REJECTED = 'REJECTED',
     CANCELED = 'CANCELED',
     APPROVED = 'APPROVED'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum CoinListingRequestDTOCauseEnum {
-    SECURITYISSUE = 'SECURITY_ISSUE',
-    SOURCECODEFORBIDDEN = 'SOURCE_CODE_FORBIDDEN',
-    OTHER = 'OTHER'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum CoinListingRequestDTOBlockchainEnum {
-    ETHEREUM = 'ETHEREUM',
-    KLAYTN = 'KLAYTN',
-    BITCOIN = 'BITCOIN',
-    FILECOIN = 'FILECOIN',
-    BINANCESMARTCHAIN = 'BINANCE_SMART_CHAIN'
 }
 
 /**
@@ -1267,10 +1258,10 @@ export interface RefreshAccessTokenRequest {
 export interface RejectCoinListingRequestRequest {
     /**
      * 
-     * @type {string}
+     * @type {Cause}
      * @memberof RejectCoinListingRequestRequest
      */
-    cause?: RejectCoinListingRequestRequestCauseEnum;
+    cause: Cause;
     /**
      * 
      * @type {string}
@@ -1278,17 +1269,6 @@ export interface RejectCoinListingRequestRequest {
      */
     message?: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum RejectCoinListingRequestRequestCauseEnum {
-    SECURITYISSUE = 'SECURITY_ISSUE',
-    SOURCECODEFORBIDDEN = 'SOURCE_CODE_FORBIDDEN',
-    OTHER = 'OTHER'
-}
-
 /**
  * 
  * @export

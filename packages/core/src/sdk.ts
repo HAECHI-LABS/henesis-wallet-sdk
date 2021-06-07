@@ -9,6 +9,7 @@ import { BlockchainType } from "./blockchain";
 import { WithdrawalApprovals } from "./withdrawalApprovals";
 import { Billings } from "./billings";
 import { Notices } from "./notices";
+import { CoinListings } from "./coinListings";
 
 export const enum Env {
   Local,
@@ -32,6 +33,8 @@ export class SDK {
   public readonly billings: Billings;
 
   public readonly organizations: Organizations;
+
+  public readonly coinListings: CoinListings;
 
   public readonly withdrawalApproval: WithdrawalApprovals;
 
@@ -67,6 +70,7 @@ export class SDK {
     this.notices = new Notices(this.client);
     this.billings = new Billings(this.client);
     this.organizations = new Organizations(this.client);
+    this.coinListings = new CoinListings(this.client);
     this.klay = new KlayModule({
       env: env,
       client: enhancedBlockchainClient(this.client, BlockchainType.KLAYTN),
