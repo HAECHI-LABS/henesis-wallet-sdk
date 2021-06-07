@@ -4,8 +4,12 @@ import {
   FilAccountKey,
 } from "./abstractWallet";
 import { Client } from "../httpClient";
-import { Balance, Key, Keychains, Pagination } from "../types";
-import { FilDepositAddress } from "./depositAddress";
+import { Balance, Pagination } from "../types";
+import {
+  DepositAddressPaginationOptions,
+  FilDepositAddress,
+  transformDepositAddressData,
+} from "./depositAddress";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import {
   BalanceDTO,
@@ -13,11 +17,15 @@ import {
   FlushInternalDTO,
   WalletDTO,
   PatchWalletNameRequest,
+  PaginationDepositAddressDTO,
+  DepositAddressDTO,
 } from "../__generate__/fil";
 import BN from "bn.js";
 import { BlockchainType } from "../blockchain";
 import { transformWalletStatus } from "../wallet";
 import { FilTransfer, FilTransferInternal } from "./transfers";
+import { makeQueryString } from "../utils/url";
+import { FilKeychains } from "./keychains";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { EthTransaction } from "../eth/abstractWallet";
 
@@ -36,7 +44,7 @@ export interface FilFlushInternal extends Omit<FlushInternalDTO, "transfers"> {
 }
 
 export class FilWallet extends FilAbstractWallet {
-  constructor(client: Client, data: FilWalletData, keychains: Keychains) {
+  constructor(client: Client, data: FilWalletData, keychains: FilKeychains) {
     super(client, data, keychains, `/wallets/${data.id}`);
   }
 
@@ -95,25 +103,70 @@ export class FilWallet extends FilAbstractWallet {
     this.data.accountKey = key;
   }
 
-  // TODO: implement me
   async createDepositAddress(
     name: string,
     passphrase?: string,
     otpCode?: string
   ): Promise<FilDepositAddress> {
-    return null;
+    const wallet = await this.client.get<WalletDTO>(this.baseUrl);
+    const depositAddressKey = this.keychains.derive(
+      this.getAccountKey(),
+      passphrase,
+      wallet.nextChildNumber
+    );
+    const depositAddressData = await this.client.post(
+      `${this.baseUrl}/deposit-addresses`,
+      {
+        name: name,
+        childNumber: wallet.nextChildNumber,
+        pub: depositAddressKey.pub,
+        otpCode: otpCode,
+      }
+    );
+    return new FilDepositAddress(
+      this.client,
+      this.data,
+      this.keychains,
+      depositAddressData
+    );
   }
 
-  // TODO: implement me
-  async getDepositAddresses(): Promise<Pagination<FilDepositAddress[]>> {
-    return null;
+  async getDepositAddresses(
+    options?: DepositAddressPaginationOptions
+  ): Promise<Pagination<FilDepositAddress>> {
+    const queryString = makeQueryString(options);
+    const depositAddressDataList = await this.client.get<
+      NoUndefinedField<PaginationDepositAddressDTO>
+    >(
+      `${this.baseUrl}/deposit-addresses${queryString ? `?${queryString}` : ""}`
+    );
+
+    return {
+      pagination: depositAddressDataList.pagination,
+      results: depositAddressDataList.results.map(
+        (data) =>
+          new FilDepositAddress(
+            this.client,
+            this.data,
+            this.keychains,
+            transformDepositAddressData(data)
+          )
+      ),
+    };
   }
 
-  // TODO: implement me
   async getDepositAddress(
     depositAddressId: string
   ): Promise<FilDepositAddress> {
-    return null;
+    const depositAddressData = await this.client.get<
+      NoUndefinedField<DepositAddressDTO>
+    >(`${this.baseUrl}/deposit-addresses/${depositAddressId}`);
+    return new FilDepositAddress(
+      this.client,
+      this.data,
+      this.keychains,
+      transformDepositAddressData(depositAddressData)
+    );
   }
 
   // TODO: implement me

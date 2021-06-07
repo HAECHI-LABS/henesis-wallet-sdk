@@ -44,7 +44,7 @@ export class FilRecoveryKit extends RecoveryKit {
 export class FilWallets extends Wallets<FilWallet> {
   private readonly blockchain: BlockchainType;
   private readonly feeWallets: FilFeeWallets;
-  keychains: FilKeychains;
+  protected readonly keychains: FilKeychains;
 
   constructor(
     client: Client,
