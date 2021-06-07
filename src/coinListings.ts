@@ -25,29 +25,6 @@ export class CoinListings {
     this.client = client;
   }
 
-  async approveCoinListingRequest(request: {
-    organizationId: string;
-    requestId: string;
-  }) {
-    const { organizationId, requestId } = request;
-    await this.client.post<void>(
-      `${this.operationBaseUrl}/${organizationId}/coin-listing-requests/${requestId}/approve`
-    );
-  }
-
-  async rejectCoinListingRequest(
-    request: RejectCoinListingRequestRequest & {
-      organizationId: string;
-      requestId: string;
-    }
-  ) {
-    const { organizationId, requestId, ...rest } = request;
-    await this.client.post<void>(
-      `${this.operationBaseUrl}/${organizationId}/coin-listing-requests/${requestId}/reject`,
-      rest
-    );
-  }
-
   async cancelCoinListingRequest(requestId: string) {
     await this.client.post<void>(
       `${this.baseUrl}/coin-listing-requests/${requestId}/cancel`
