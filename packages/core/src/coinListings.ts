@@ -7,11 +7,12 @@ import {
 } from "./__generate__/accounts";
 import { BlockchainType, transformBlockchainType } from "./blockchain";
 
-interface CoinListingRequest extends Omit<CoinListingRequestDTO, "blockchain"> {
+export interface CoinListingRequest
+  extends Omit<CoinListingRequestDTO, "blockchain"> {
   blockchain: BlockchainType;
 }
 
-interface CoinContract extends Omit<CoinContractDTO, "blockchain"> {
+export interface CoinContract extends Omit<CoinContractDTO, "blockchain"> {
   blockchain: BlockchainType;
 }
 
@@ -19,7 +20,6 @@ export class CoinListings {
   private readonly client: Client;
 
   private readonly baseUrl = "/organizations";
-  private readonly operationBaseUrl = "/operation/organizations";
 
   constructor(client: Client) {
     this.client = client;
