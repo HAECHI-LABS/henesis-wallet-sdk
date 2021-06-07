@@ -13,7 +13,7 @@ export const transformBlockchainType = (
     | Blockchain
 ) => {
   const byBlockchain: Record<
-    EthBlockchain | AccountsBlockchain | UserWalletDTOBlockchainEnum,
+    EthBlockchain | UserWalletDTOBlockchainEnum,
     BlockchainType
   > = {
     ETHEREUM: BlockchainType.ETHEREUM,
