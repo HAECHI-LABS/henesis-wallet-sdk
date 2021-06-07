@@ -87,6 +87,32 @@ export class FilKeychains implements Keychains {
     };
   }
 
+  derive(
+    key: FilAccountKey,
+    password: string,
+    childNumber: number
+  ): KeyWithPriv {
+    const seed = this.decrypt(key, password);
+    const hdKey = bip32.fromSeed(Buffer.from(seed, "hex"));
+    const childKey = hdKey.derive(childNumber);
+    const childKeyPair = secp256k1.keyFromPrivate(childKey.privateKey);
+
+    const privateKey = `0x${childKeyPair.getPrivate("hex")}`;
+    const publicKey = `0x${childKeyPair.getPublic(false, "hex").slice(2)}`;
+    const address = this.getAddress(childKeyPair.getPublic(false, "hex"));
+    const keyFile = this.encryptValueToKeyFile(
+      childKeyPair.getPrivate("hex"),
+      password
+    );
+
+    return {
+      address,
+      pub: publicKey,
+      priv: privateKey,
+      keyFile,
+    };
+  }
+
   decrypt(key: Key, password: string): string {
     try {
       return sjcl.decrypt(password, key.keyFile);

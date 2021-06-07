@@ -1,12 +1,12 @@
 import { Wallet, WalletData } from "../wallet";
 import { BlockchainType } from "../blockchain";
-import { Key, Keychains } from "../types";
 import { Client } from "../httpClient";
 import {
   AccountKeyDTO,
   SimplifiedWalletInternalDTO,
   TransactionDTO,
 } from "../__generate__/fil";
+import { FilKeychains } from "./keychains";
 
 export type FilTransaction = TransactionDTO;
 
@@ -29,13 +29,14 @@ export type FilSimplifiedWalletInternal = SimplifiedWalletInternalDTO;
 
 export abstract class FilAbstractWallet extends Wallet<FilTransaction> {
   protected data: FilWalletData;
+  protected keychains: FilKeychains;
 
   protected readonly blockchain: BlockchainType;
 
   protected constructor(
     client: Client,
     data: FilWalletData,
-    keychains: Keychains,
+    keychains: FilKeychains,
     baseUrl: string
   ) {
     super(client, keychains, baseUrl);

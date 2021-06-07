@@ -1,22 +1,43 @@
 import BN from "bn.js";
 
 import {
-  FilWalletData,
   FilAbstractWallet,
   FilAbstractWalletData,
+  FilWalletData,
 } from "./abstractWallet";
 import { Client } from "../httpClient";
-import { Balance, Key, Keychains } from "../types";
+import { Balance, Key, PaginationOptions } from "../types";
 import {
   BalanceDTO,
   DepositAddressDTO,
   PatchWalletNameRequest,
 } from "../__generate__/fil";
 import { BNConverter } from "../utils/common";
+import { transformWalletStatus, WalletStatus } from "../wallet";
+import { BlockchainType } from "../blockchain";
+import { FilKeychains } from "./keychains";
 
 export interface FilDepositAddressData
   extends Omit<FilAbstractWalletData, "encryptionKey"> {
   childNumber: number;
+}
+
+export const transformDepositAddressData = (
+  data: DepositAddressDTO
+): FilDepositAddressData => {
+  return {
+    ...data,
+    blockchain: BlockchainType.FILECOIN,
+    status: transformWalletStatus(WalletStatus.ACTIVE),
+  };
+};
+
+export interface DepositAddressPaginationOptions extends PaginationOptions {
+  name?: string;
+  id?: string;
+  ids?: string[];
+  address?: string;
+  status?: WalletStatus;
 }
 
 export class FilDepositAddress extends FilAbstractWallet {
@@ -25,7 +46,7 @@ export class FilDepositAddress extends FilAbstractWallet {
   constructor(
     client: Client,
     data: FilWalletData,
-    keychains: Keychains,
+    keychains: FilKeychains,
     depositAddressData: FilDepositAddressData
   ) {
     super(
