@@ -20,6 +20,7 @@ export const transformBlockchainType = (
     KLAYTN: BlockchainType.KLAYTN,
     BITCOIN: BlockchainType.BITCOIN,
     FILECOIN: BlockchainType.FILECOIN,
+    BINANCE_SMART_CHAIN: BlockchainType.BINANCE_SMART_CHAIN,
   };
   return byBlockchain[blockchain];
 };
@@ -29,4 +30,5 @@ export enum BlockchainType {
   KLAYTN = "KLAYTN",
   BITCOIN = "BITCOIN",
   FILECOIN = "FILECOIN",
+  BINANCE_SMART_CHAIN = "BINANCE_SMART_CHAIN",
 }

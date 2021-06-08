@@ -951,12 +951,6 @@ export interface TransactionDTO {
      * @type {string}
      * @memberof TransactionDTO
      */
-    hex: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TransactionDTO
-     */
     nonce: string;
     /**
      * 
@@ -1033,22 +1027,16 @@ export interface TransferDTO {
     transaction?: TransactionDTO;
     /**
      * 
-     * @type {TransferType}
-     * @memberof TransferDTO
-     */
-    type: TransferType;
-    /**
-     * 
      * @type {TransferStatus}
      * @memberof TransferDTO
      */
     status: TransferStatus;
     /**
      * 
-     * @type {string}
+     * @type {TransferType}
      * @memberof TransferDTO
      */
-    confirmation: string;
+    type: TransferType;
     /**
      * 
      * @type {string}
@@ -1063,12 +1051,6 @@ export interface TransferDTO {
     toAddress: string;
     /**
      * 
-     * @type {TransactionDTO}
-     * @memberof TransferDTO
-     */
-    proposalTransaction?: TransactionDTO;
-    /**
-     * 
      * @type {string}
      * @memberof TransferDTO
      */
@@ -1079,6 +1061,12 @@ export interface TransferDTO {
      * @memberof TransferDTO
      */
     walletId: string;
+    /**
+     * 
+     * @type {TransactionDTO}
+     * @memberof TransferDTO
+     */
+    proposalTransaction?: TransactionDTO;
     /**
      * 
      * @type {string}
@@ -1118,28 +1106,22 @@ export interface TransferInternalDTO {
     transaction?: TransactionDTO;
     /**
      * 
-     * @type {TransferType}
-     * @memberof TransferInternalDTO
-     */
-    type: TransferType;
-    /**
-     * 
      * @type {TransferStatus}
      * @memberof TransferInternalDTO
      */
     status: TransferStatus;
     /**
      * 
-     * @type {string}
+     * @type {TransferType}
      * @memberof TransferInternalDTO
      */
-    confirmation: string;
+    type: TransferType;
     /**
      * 
      * @type {string}
      * @memberof TransferInternalDTO
      */
-    walletId: string;
+    confirmation: string;
     /**
      * 
      * @type {SimplifiedWalletInternalDTO}
@@ -1152,6 +1134,18 @@ export interface TransferInternalDTO {
      * @memberof TransferInternalDTO
      */
     toAddress: SimplifiedWalletInternalDTO;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    orgId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    walletId: string;
     /**
      * 
      * @type {TransactionDTO}
@@ -1170,6 +1164,91 @@ export interface TransferInternalDTO {
      * @memberof TransferInternalDTO
      */
     updatedAt: string;
+}
+/**
+ * 
+ * @export
+ * @interface TransferSearchCondition
+ */
+export interface TransferSearchCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    address?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    status?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    start?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    end?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    fromAddress?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    toAddress?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    orgId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    walletId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    transactionId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    transactionHash?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    transferType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    updatedAtGte?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    updatedAtLt?: string;
 }
 /**
  * 
@@ -1531,10 +1610,10 @@ export const InternalControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlush: async (flushId: string, options: any = {}): Promise<RequestArgs> => {
+        getFlush1: async (flushId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'flushId' is not null or undefined
             if (flushId === null || flushId === undefined) {
-                throw new RequiredError('flushId','Required parameter flushId was null or undefined when calling getFlush.');
+                throw new RequiredError('flushId','Required parameter flushId was null or undefined when calling getFlush1.');
             }
             const localVarPath = `/api/v2/fil/internal/flushes/{flushId}`
                 .replace(`{${"flushId"}}`, encodeURIComponent(String(flushId)));
@@ -1636,13 +1715,18 @@ export const InternalControllerApiAxiosParamCreator = function (configuration?: 
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {TransferSearchCondition} transferSearchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfers1: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getTransfers: async (pageable: Pageable, transferSearchCondition: TransferSearchCondition, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransfers1.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransfers.');
+            }
+            // verify required parameter 'transferSearchCondition' is not null or undefined
+            if (transferSearchCondition === null || transferSearchCondition === undefined) {
+                throw new RequiredError('transferSearchCondition','Required parameter transferSearchCondition was null or undefined when calling getTransfers.');
             }
             const localVarPath = `/api/v2/fil/internal/transfers`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1656,6 +1740,10 @@ export const InternalControllerApiAxiosParamCreator = function (configuration?: 
 
             if (pageable !== undefined) {
                 localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (transferSearchCondition !== undefined) {
+                localVarQueryParameter['transferSearchCondition'] = transferSearchCondition;
             }
 
 
@@ -1686,8 +1774,8 @@ export const InternalControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFlush(flushId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlushInternalDTO>> {
-            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getFlush(flushId, options);
+        async getFlush1(flushId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlushInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getFlush1(flushId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1722,11 +1810,12 @@ export const InternalControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {TransferSearchCondition} transferSearchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransfers1(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferInternalDTO>> {
-            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getTransfers1(pageable, options);
+        async getTransfers(pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getTransfers(pageable, transferSearchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1747,8 +1836,8 @@ export const InternalControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlush(flushId: string, options?: any): AxiosPromise<FlushInternalDTO> {
-            return InternalControllerApiFp(configuration).getFlush(flushId, options).then((request) => request(axios, basePath));
+        getFlush1(flushId: string, options?: any): AxiosPromise<FlushInternalDTO> {
+            return InternalControllerApiFp(configuration).getFlush1(flushId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1771,11 +1860,12 @@ export const InternalControllerApiFactory = function (configuration?: Configurat
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {TransferSearchCondition} transferSearchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfers1(pageable: Pageable, options?: any): AxiosPromise<PaginationTransferInternalDTO> {
-            return InternalControllerApiFp(configuration).getTransfers1(pageable, options).then((request) => request(axios, basePath));
+        getTransfers(pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any): AxiosPromise<PaginationTransferInternalDTO> {
+            return InternalControllerApiFp(configuration).getTransfers(pageable, transferSearchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1794,8 +1884,8 @@ export class InternalControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof InternalControllerApi
      */
-    public getFlush(flushId: string, options?: any) {
-        return InternalControllerApiFp(this.configuration).getFlush(flushId, options).then((request) => request(this.axios, this.basePath));
+    public getFlush1(flushId: string, options?: any) {
+        return InternalControllerApiFp(this.configuration).getFlush1(flushId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1823,12 +1913,13 @@ export class InternalControllerApi extends BaseAPI {
     /**
      * 
      * @param {Pageable} pageable 
+     * @param {TransferSearchCondition} transferSearchCondition 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof InternalControllerApi
      */
-    public getTransfers1(pageable: Pageable, options?: any) {
-        return InternalControllerApiFp(this.configuration).getTransfers1(pageable, options).then((request) => request(this.axios, this.basePath));
+    public getTransfers(pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any) {
+        return InternalControllerApiFp(this.configuration).getTransfers(pageable, transferSearchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -2094,13 +2185,18 @@ export const TransferControllerApiAxiosParamCreator = function (configuration?: 
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {TransferSearchCondition} transferSearchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfers: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getTransfers1: async (pageable: Pageable, transferSearchCondition: TransferSearchCondition, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransfers.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getTransfers1.');
+            }
+            // verify required parameter 'transferSearchCondition' is not null or undefined
+            if (transferSearchCondition === null || transferSearchCondition === undefined) {
+                throw new RequiredError('transferSearchCondition','Required parameter transferSearchCondition was null or undefined when calling getTransfers1.');
             }
             const localVarPath = `/api/v2/fil/transfers`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2114,6 +2210,10 @@ export const TransferControllerApiAxiosParamCreator = function (configuration?: 
 
             if (pageable !== undefined) {
                 localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (transferSearchCondition !== undefined) {
+                localVarQueryParameter['transferSearchCondition'] = transferSearchCondition;
             }
 
 
@@ -2154,11 +2254,12 @@ export const TransferControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {TransferSearchCondition} transferSearchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTransfers(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferDTO>> {
-            const localVarAxiosArgs = await TransferControllerApiAxiosParamCreator(configuration).getTransfers(pageable, options);
+        async getTransfers1(pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferDTO>> {
+            const localVarAxiosArgs = await TransferControllerApiAxiosParamCreator(configuration).getTransfers1(pageable, transferSearchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2185,11 +2286,12 @@ export const TransferControllerApiFactory = function (configuration?: Configurat
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {TransferSearchCondition} transferSearchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfers(pageable: Pageable, options?: any): AxiosPromise<PaginationTransferDTO> {
-            return TransferControllerApiFp(configuration).getTransfers(pageable, options).then((request) => request(axios, basePath));
+        getTransfers1(pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any): AxiosPromise<PaginationTransferDTO> {
+            return TransferControllerApiFp(configuration).getTransfers1(pageable, transferSearchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2215,12 +2317,13 @@ export class TransferControllerApi extends BaseAPI {
     /**
      * 
      * @param {Pageable} pageable 
+     * @param {TransferSearchCondition} transferSearchCondition 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TransferControllerApi
      */
-    public getTransfers(pageable: Pageable, options?: any) {
-        return TransferControllerApiFp(this.configuration).getTransfers(pageable, options).then((request) => request(this.axios, this.basePath));
+    public getTransfers1(pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any) {
+        return TransferControllerApiFp(this.configuration).getTransfers1(pageable, transferSearchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -2485,14 +2588,14 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlush1: async (walletId: string, flushId: string, options: any = {}): Promise<RequestArgs> => {
+        getFlush: async (walletId: string, flushId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getFlush1.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getFlush.');
             }
             // verify required parameter 'flushId' is not null or undefined
             if (flushId === null || flushId === undefined) {
-                throw new RequiredError('flushId','Required parameter flushId was null or undefined when calling getFlush1.');
+                throw new RequiredError('flushId','Required parameter flushId was null or undefined when calling getFlush.');
             }
             const localVarPath = `/api/v2/fil/wallets/{walletId}/flushes/{flushId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -2986,8 +3089,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFlush1(walletId: string, flushId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlushDTO>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getFlush1(walletId, flushId, options);
+        async getFlush(walletId: string, flushId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlushDTO>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getFlush(walletId, flushId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3190,8 +3293,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlush1(walletId: string, flushId: string, options?: any): AxiosPromise<FlushDTO> {
-            return WalletControllerApiFp(configuration).getFlush1(walletId, flushId, options).then((request) => request(axios, basePath));
+        getFlush(walletId: string, flushId: string, options?: any): AxiosPromise<FlushDTO> {
+            return WalletControllerApiFp(configuration).getFlush(walletId, flushId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3368,8 +3471,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getFlush1(walletId: string, flushId: string, options?: any) {
-        return WalletControllerApiFp(this.configuration).getFlush1(walletId, flushId, options).then((request) => request(this.axios, this.basePath));
+    public getFlush(walletId: string, flushId: string, options?: any) {
+        return WalletControllerApiFp(this.configuration).getFlush(walletId, flushId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
