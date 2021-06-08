@@ -8,7 +8,7 @@ import { Balance, Pagination } from "../types";
 import {
   DepositAddressPaginationOptions,
   FilDepositAddress,
-  transformDepositAddressData,
+  convertDepositAddressData,
 } from "./depositAddress";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import {
@@ -22,18 +22,18 @@ import {
 } from "../__generate__/fil";
 import BN from "bn.js";
 import { BlockchainType } from "../blockchain";
-import { transformWalletStatus } from "../wallet";
+import { convertWalletStatus } from "../wallet";
 import { FilTransfer, FilTransferInternal } from "./transfers";
 import { makeQueryString } from "../utils/url";
 import { FilKeychains } from "./keychains";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { EthTransaction } from "../eth/abstractWallet";
 
-export const transformWalletData = (data: WalletDTO): FilWalletData => {
+export const convertWalletData = (data: WalletDTO): FilWalletData => {
   return {
     ...data,
     blockchain: BlockchainType.FILECOIN,
-    status: transformWalletStatus(data.status),
+    status: convertWalletStatus(data.status),
   };
 };
 
@@ -149,7 +149,7 @@ export class FilWallet extends FilAbstractWallet {
             this.client,
             this.data,
             this.keychains,
-            transformDepositAddressData(data)
+            convertDepositAddressData(data)
           )
       ),
     };
@@ -165,7 +165,7 @@ export class FilWallet extends FilAbstractWallet {
       this.client,
       this.data,
       this.keychains,
-      transformDepositAddressData(depositAddressData)
+      convertDepositAddressData(depositAddressData)
     );
   }
 

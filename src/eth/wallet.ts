@@ -4,7 +4,7 @@ import { AbiItem } from "web3-utils";
 import BN from "bn.js";
 import {
   ActivatingMasterWallet,
-  transformWalletStatus,
+  convertWalletStatus,
   WalletStatus,
 } from "../wallet";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
@@ -91,7 +91,7 @@ export const transformMasterWalletData = (
   return {
     ...data,
     blockchain: transformBlockchainType(data.blockchain),
-    status: transformWalletStatus(data.status),
+    status: convertWalletStatus(data.status),
   };
 };
 
