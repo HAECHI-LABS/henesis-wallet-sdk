@@ -5,7 +5,7 @@ import { Wallets, WalletSearchOptions } from "../wallets";
 import { BlockchainType } from "../blockchain";
 import { Client } from "../httpClient";
 import { Env } from "../sdk";
-import { transformWalletData } from "./wallet";
+import { convertWalletData } from "./wallet";
 import { WalletDTO } from "../__generate__/fil";
 import { RecoveryKit } from "../recoverykit";
 import { checkNullAndUndefinedParameter } from "../utils/common";
@@ -102,7 +102,7 @@ export class FilWallets extends Wallets<FilWallet> {
     );
     return new FilWallet(
       this.client,
-      transformWalletData(walletData),
+      convertWalletData(walletData),
       this.keychains
     );
   }
@@ -114,7 +114,7 @@ export class FilWallets extends Wallets<FilWallet> {
     return walletDataList.map((walletData) => {
       return new FilWallet(
         this.client,
-        transformWalletData(walletData),
+        convertWalletData(walletData),
         this.keychains
       );
     });
@@ -132,7 +132,7 @@ export class FilWallets extends Wallets<FilWallet> {
     );
     return new FilWallet(
       this.client,
-      transformWalletData(walletData),
+      convertWalletData(walletData),
       this.keychains
     );
   }
@@ -144,7 +144,7 @@ export class FilWallets extends Wallets<FilWallet> {
     );
     return new FilWallet(
       this.client,
-      transformWalletData(response),
+      convertWalletData(response),
       this.keychains
     );
   }

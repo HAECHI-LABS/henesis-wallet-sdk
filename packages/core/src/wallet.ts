@@ -143,7 +143,7 @@ export interface ActivatingMasterWallet {
   updatedAt: string;
 }
 
-export const transformWalletStatus = (
+export const convertWalletStatus = (
   status: BtcWalletStatus | EthWalletStatus
 ) => {
   const byWalletStatus: Record<

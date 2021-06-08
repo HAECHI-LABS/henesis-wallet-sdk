@@ -17,7 +17,7 @@ import {
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import {
   ActivatingMasterWallet,
-  transformWalletStatus,
+  convertWalletStatus,
   Wallet,
   WalletData,
 } from "../wallet";
@@ -127,7 +127,7 @@ export const transformWalletData = (
 ): BtcMasterWalletData => {
   return {
     ...data,
-    status: transformWalletStatus(data.status),
+    status: convertWalletStatus(data.status),
   };
 };
 
