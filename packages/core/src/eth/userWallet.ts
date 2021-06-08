@@ -14,7 +14,7 @@ import {
   EthLikeWallet,
   EthMasterWalletData,
 } from "./abstractWallet";
-import { transformWalletStatus } from "../wallet";
+import { convertWalletStatus } from "../wallet";
 
 export const transformUserWalletData = (
   data: UserWalletDTO
@@ -22,7 +22,7 @@ export const transformUserWalletData = (
   return {
     ...data,
     blockchain: transformBlockchainType(data.blockchain),
-    status: transformWalletStatus(data.status),
+    status: convertWalletStatus(data.status),
   };
 };
 

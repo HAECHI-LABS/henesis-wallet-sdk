@@ -13,7 +13,7 @@ import {
   PatchWalletNameRequest,
 } from "../__generate__/fil";
 import { BNConverter } from "../utils/common";
-import { transformWalletStatus, WalletStatus } from "../wallet";
+import { convertWalletStatus, WalletStatus } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import { FilKeychains } from "./keychains";
 
@@ -22,13 +22,13 @@ export interface FilDepositAddressData
   childNumber: number;
 }
 
-export const transformDepositAddressData = (
+export const convertDepositAddressData = (
   data: DepositAddressDTO
 ): FilDepositAddressData => {
   return {
     ...data,
     blockchain: BlockchainType.FILECOIN,
-    status: transformWalletStatus(WalletStatus.ACTIVE),
+    status: convertWalletStatus(WalletStatus.ACTIVE),
   };
 };
 
