@@ -21,6 +21,7 @@ export const makePrefixPathByBlockchainType = (blockchain?: BlockchainType) => {
     [BlockchainType.KLAYTN]: "/klay",
     [BlockchainType.BITCOIN]: "/btc",
     [BlockchainType.FILECOIN]: "/fil",
+    [BlockchainType.BINANCE_SMART_CHAIN]: "/bsc",
   };
   return blockchainByType[blockchain];
 };
