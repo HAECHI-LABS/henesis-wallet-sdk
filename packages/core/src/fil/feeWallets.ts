@@ -4,7 +4,6 @@ import {
   FeeWalletBalanceDTO,
   FeeWalletDTO,
   HenesisKeyDTO,
-  ProposalFeeWalletBalanceDTO,
 } from "../__generate__/fil";
 import { Pagination } from "../types";
 import { Client } from "../httpClient";
@@ -25,15 +24,14 @@ export interface FilBalance
   spendableBalance: BN;
 }
 
-export interface ProposalFeeWalletBalance
-  extends Omit<ProposalFeeWalletBalanceDTO, "balance"> {
-  balance: FilBalance;
+export interface FilBalanceWithId extends FilBalance {
+  id: string;
 }
 
 export interface FilFeeWalletBalance
   extends Omit<FeeWalletBalanceDTO, "defaultFeeWallet" | "proposalFeeWallets"> {
   defaultFeeWallet: FilBalance;
-  proposalFeeWallets: ProposalFeeWalletBalance[];
+  proposalFeeWallets: FilBalanceWithId[];
 }
 
 export interface FilFeeHistory extends Omit<FeeHistoryDTO, "transaction"> {
