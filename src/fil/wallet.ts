@@ -19,6 +19,9 @@ import {
   PatchWalletNameRequest,
   PaginationDepositAddressDTO,
   DepositAddressDTO,
+  TransferDTO,
+  RawTransactionDTO,
+  BuildTransactionRequest,
 } from "../__generate__/fil";
 import BN from "bn.js";
 import { BlockchainType } from "../blockchain";
@@ -28,6 +31,19 @@ import { makeQueryString } from "../utils/url";
 import { FilKeychains } from "./keychains";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { EthTransaction } from "../eth/abstractWallet";
+import cbor from "ipld-dag-cbor";
+import { serializeBigNum } from "./fil-core-lib/data";
+import { addressAsBytes } from "./fil-core-lib/utils";
+import { MethodMultisig } from "./fil-core-lib/types";
+import { transactionSerialize } from "./fil-core-lib/signer";
+import {
+  calculateCidFromBytes,
+  convertMessageToObject,
+  convertRawTransactionToMessage,
+  convertSignedTransactionToRawSignedTransactionDTO,
+  convertTransferDTO,
+} from "./utils";
+import { ProtocolIndicator } from "./fil-core-lib/constants";
 
 export const convertWalletData = (data: WalletDTO): FilWalletData => {
   return {
@@ -41,6 +57,30 @@ export type FilFlush = FlushDTO;
 
 export interface FilFlushInternal extends Omit<FlushInternalDTO, "transfers"> {
   transfers: FilTransferInternal[];
+}
+
+export type RawTransaction = RawTransactionDTO;
+
+export interface Message {
+  from: string;
+  to: string;
+  value: BN;
+  method: number;
+  params: string;
+  gasLimit: number;
+  gasFeeCap: BN;
+  gasPremium: BN;
+  version: number;
+  nonce: number;
+}
+
+export interface Signature {
+  data: string;
+  type: number;
+}
+
+export interface SignedTransaction extends Message, Signature {
+  cid: string;
 }
 
 export class FilWallet extends FilAbstractWallet {
@@ -80,7 +120,7 @@ export class FilWallet extends FilAbstractWallet {
       {
         coinId: null,
         symbol: "FIL",
-        amount: BNConverter.hexStringToBN(String(response.balance)),
+        amount: BNConverter.hexStringToBN(String(response.confirmedBalance)),
         spendableAmount: BNConverter.hexStringToBN(
           String(response.spendableBalance)
         ),
@@ -169,14 +209,34 @@ export class FilWallet extends FilAbstractWallet {
     );
   }
 
-  // TODO: implement me
   async transfer(
     to: string,
     amount: BN,
     passphrase: string,
     otpCode?: string
   ): Promise<FilTransfer> {
-    return null;
+    const rawTransaction = await this.client.post<
+      NoUndefinedField<RawTransactionDTO>
+    >(
+      `${this.baseUrl}/transactions/build`,
+      this.createBuildTransactionRequest(to, amount)
+    );
+    const signedTransaction = await this.signTransferPayload(
+      rawTransaction,
+      passphrase
+    );
+    const transferData = await this.client.post<NoUndefinedField<TransferDTO>>(
+      `${this.baseUrl}/transactions`,
+      {
+        toAddress: to,
+        amount: BNConverter.bnToHexString(amount),
+        proposalTransaction:
+          convertSignedTransactionToRawSignedTransactionDTO(signedTransaction),
+        gasPremium: BNConverter.bnToHexString(signedTransaction.gasPremium),
+        otpCode: otpCode,
+      }
+    );
+    return convertTransferDTO(transferData);
   }
 
   // TODO: implememt me
@@ -221,5 +281,84 @@ export class FilWallet extends FilAbstractWallet {
   // TODO: implement me
   async reject(params: { id: string; otpCode: string }): Promise<void> {
     throw new Error("this feature is not supported yet");
+  }
+
+  /*
+   * reference
+   * - https://github.com/filecoin-shipyard/filecoin.js/blob/master/src/utils/msig.ts
+   * - https://github.com/filecoin-shipyard/filecoin.js/blob/master/src/providers/wallet/LightWalletProvider.ts
+   */
+  private createBuildTransactionRequest(
+    to: string,
+    amount: BN
+  ): BuildTransactionRequest {
+    const msgParams = [
+      addressAsBytes(to),
+      serializeBigNum(amount.toString(10)),
+      0,
+      Buffer.from([]),
+    ];
+    const serializedMsgParams = cbor.util.serialize(msgParams);
+
+    return {
+      version: 0,
+      to: this.getAddress(),
+      from: this.getAccountKey().address,
+      value: BNConverter.bnToHexString(new BN(0)),
+      gasLimit: BNConverter.bnToHexString(new BN(0)),
+      gasPremium: BNConverter.bnToHexString(new BN(0)),
+      method: MethodMultisig.Propose,
+      params: Buffer.from(serializedMsgParams).toString("base64"),
+    };
+  }
+
+  private async signTransferPayload(
+    rawTransaction: RawTransaction,
+    passphrase: string
+  ): Promise<SignedTransaction> {
+    const proposeMessage = convertRawTransactionToMessage(rawTransaction);
+    const messageSignature = this.createProposeMessageSignature(
+      proposeMessage,
+      passphrase
+    );
+    const cid = await this.calculateCidFromMessage(proposeMessage);
+    return {
+      cid,
+      ...proposeMessage,
+      ...messageSignature,
+    };
+  }
+
+  /*
+   * reference
+   * - https://github.com/filecoin-shipyard/filecoin.js/blob/master/src/providers/wallet/LightWalletProvider.ts
+   * - https://github.com/filecoin-shipyard/filecoin.js/blob/master/src/signers/LightWalletSigner.ts
+   * - https://github.com/Zondax/filecoin-signing-tools/blob/master/signer-npm/js/src/index.js
+   */
+  private createProposeMessageSignature(
+    message: Message,
+    passphrase: string
+  ): Signature {
+    const msgObject = convertMessageToObject(message);
+    const serializedMsg = transactionSerialize(msgObject);
+    const signature = this.keychains.sign(
+      this.getAccountKey(),
+      passphrase,
+      serializedMsg
+    );
+    return {
+      data: signature,
+      type: ProtocolIndicator.SECP256K1,
+    };
+  }
+
+  /*
+   * reference
+   * - https://github.com/multiformats/js-cid
+   */
+  private async calculateCidFromMessage(message: Message): Promise<string> {
+    const messageObject = convertMessageToObject(message);
+    const serializedMessage = transactionSerialize(messageObject);
+    return calculateCidFromBytes(Buffer.from(serializedMessage, "hex"));
   }
 }

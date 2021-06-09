@@ -161,6 +161,10 @@ export class FilKeychains implements Keychains {
     return sjcl.encrypt(password, value, encryptOptions);
   }
 
+  /*
+   * reference
+   * - https://github.com/Zondax/filecoin-signing-tools/blob/master/signer-npm/js/src/extendedkey.js
+   */
   private getAddress(publicKey: string): string {
     const buffer = Buffer.from(publicKey);
     const payload = getPayloadSecp256K1(buffer);

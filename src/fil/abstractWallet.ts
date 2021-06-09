@@ -3,14 +3,22 @@ import { BlockchainType } from "../blockchain";
 import { Client } from "../httpClient";
 import {
   AccountKeyDTO,
-  SimplifiedWalletInternalDTO,
+  SimplifiedWalletDTO,
   TransactionDTO,
 } from "../__generate__/fil";
 import { FilKeychains } from "./keychains";
+import BN from "bn.js";
 
-export type FilTransaction = TransactionDTO;
+export interface FilTransaction
+  extends Omit<TransactionDTO, "nonce" | "amount" | "feeAmount"> {
+  nonce: BN;
+  amount: BN;
+  feeAmount?: BN;
+}
 
 export type FilAccountKey = AccountKeyDTO;
+
+export type FilSimplifiedWallet = SimplifiedWalletDTO;
 
 export interface FilAbstractWalletData extends WalletData {
   blockchain: BlockchainType;
@@ -24,8 +32,6 @@ export interface FilWalletData extends FilAbstractWalletData {
   transactionId?: string | null;
   error?: string | null;
 }
-
-export type FilSimplifiedWalletInternal = SimplifiedWalletInternalDTO;
 
 export abstract class FilAbstractWallet extends Wallet<FilTransaction> {
   protected data: FilWalletData;
