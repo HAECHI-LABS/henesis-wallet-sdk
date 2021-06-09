@@ -1,5 +1,3 @@
-import BN from "bn.js";
-
 import {
   FilAbstractWallet,
   FilAbstractWalletData,
@@ -89,7 +87,7 @@ export class FilDepositAddress extends FilAbstractWallet {
       {
         coinId: null,
         symbol: "FIL",
-        amount: BNConverter.hexStringToBN(String(response.balance)),
+        amount: BNConverter.hexStringToBN(String(response.confirmedBalance)),
         spendableAmount: BNConverter.hexStringToBN(
           String(response.spendableBalance)
         ),

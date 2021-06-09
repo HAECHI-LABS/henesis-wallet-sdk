@@ -7,7 +7,7 @@ import {
 } from "../__generate__/fil";
 import BN from "bn.js";
 
-import { FilSimplifiedWalletInternal, FilTransaction } from "./abstractWallet";
+import { FilSimplifiedWallet, FilTransaction } from "./abstractWallet";
 import { Client } from "../httpClient";
 import {
   convertTransactionDTO,
@@ -18,12 +18,8 @@ import { Pagination, PaginationOptions, Timestamp } from "../types";
 import { makeQueryString } from "../utils/url";
 
 export interface FilTransfer
-  extends Omit<
-    TransferDTO,
-    "amount" | "confirmation" | "transaction" | "proposalTransaction"
-  > {
+  extends Omit<TransferDTO, "amount" | "transaction" | "proposalTransaction"> {
   amount: BN;
-  confirmation: BN;
   transaction: FilTransaction | null;
   proposalTransaction: FilTransaction | null;
 }
@@ -41,8 +37,8 @@ export interface FilTransferInternal
   amount: BN;
   transaction: FilTransaction | null;
   confirmation: BN;
-  fromAddress: FilSimplifiedWalletInternal;
-  toAddress: FilSimplifiedWalletInternal;
+  fromAddress: FilSimplifiedWallet;
+  toAddress: FilSimplifiedWallet;
   proposalTransaction: FilTransaction | null;
 }
 
