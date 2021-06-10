@@ -383,6 +383,12 @@ export interface CoinListingRequestDTO {
      * @type {string}
      * @memberof CoinListingRequestDTO
      */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CoinListingRequestDTO
+     */
     symbol: string;
     /**
      * 
@@ -396,6 +402,18 @@ export interface CoinListingRequestDTO {
      * @memberof CoinListingRequestDTO
      */
     address: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CoinListingRequestDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CoinListingRequestDTO
+     */
+    updatedAt: string;
 }
 /**
  * 
@@ -446,18 +464,6 @@ export interface CreateCoinListingRequestRequest {
      * @memberof CreateCoinListingRequestRequest
      */
     blockchain: Blockchain;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateCoinListingRequestRequest
-     */
-    symbol: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof CreateCoinListingRequestRequest
-     */
-    decimals: number;
     /**
      * 
      * @type {string}
