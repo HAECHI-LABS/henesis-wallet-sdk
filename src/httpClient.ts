@@ -244,8 +244,8 @@ class AxiosMethodProxy {
           return target[name];
         }
 
-        function ProxyMethod() {
-          return method.apply(axiosInstance, arguments);
+        function ProxyMethod(...args) {
+          return method.apply(axiosInstance, args);
         }
 
         ProxyMethod.method = method;

@@ -109,6 +109,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
         `${this.baseUrl}?type=inactive`,
         params
       );
+    // eslint-disable-next-line new-cap
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
       aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))

@@ -151,6 +151,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const encryptionKeyBuffer = this.createEncryptionKey(passphrase);
     const henesisKey = await this.henesisKey.getHenesisKey();
 
+    // eslint-disable-next-line new-cap
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
       aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))

@@ -69,6 +69,7 @@ export class FilWallets extends Wallets<FilWallet> {
     const feeWallet = await this.feeWallets.getFeeWallet();
     const henesisKey = feeWallet.defaultFeeWallet;
 
+    // eslint-disable-next-line new-cap
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
       aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))

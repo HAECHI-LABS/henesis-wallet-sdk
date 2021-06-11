@@ -14,6 +14,7 @@ import { FilAccountKey } from "./abstractWallet";
 
 const base32Encode = require("base32-encode");
 const elliptic = require("elliptic");
+// eslint-disable-next-line new-cap
 const secp256k1 = new elliptic.ec("secp256k1");
 const bip32 = require("bip32");
 const bip39 = require("bip39");
