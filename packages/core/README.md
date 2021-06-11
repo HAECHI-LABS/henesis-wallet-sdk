@@ -17,3 +17,10 @@ const core = require('core');
 - npm run build
 - npm run publish:prerelease
 
+
+## How to format/lint
+
+```bash
+npm run eslint
+npm run prettier
+```
