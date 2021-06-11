@@ -8,6 +8,7 @@ import { Client } from "../../httpClient";
 
 const walletControllerApi = (client: Client) => {
   const apiClient: AxiosInstance = _.get(client, ["apiClient"]);
+  // eslint-disable-next-line new-cap
   return WalletControllerApiFactory(undefined, "", apiClient);
 };
 

@@ -182,6 +182,7 @@ export abstract class Wallet<T> {
   abstract updateAccountKey(key: Key);
   protected recoverPassphrase(encryptedPassphrase: string): string {
     try {
+      // eslint-disable-next-line new-cap
       const aesCtr = new aesjs.ModeOfOperation.ctr(
         aesjs.utils.hex.toBytes(this.getEncryptionKey())
       );
