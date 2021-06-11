@@ -10,8 +10,8 @@ import {
 } from "./transaction.dto";
 
 export const EXAMPLE_ETHEREUM_PAGINATION_METADATA: PaginationMetadata = {
-  nextUrl: "http://localhost:3000/api/v2/eth/value-transfer-events?page=2",
-  previousUrl: "http://localhost:3000/api/v2/eth/value-transfer-events?page=1",
+  nextUrl: "http://localhost:3000/api/v3/ethereum/transfers?page=2",
+  previousUrl: "http://localhost:3000/api/v3/ethereum/transfers?page=1",
   totalCount: 5,
 };
 
