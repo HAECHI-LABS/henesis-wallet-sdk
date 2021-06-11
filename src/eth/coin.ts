@@ -188,3 +188,31 @@ export class Klay extends Coin {
     return this.walletContract.methods.flushKlay(targetAddresses).encodeABI();
   }
 }
+
+export class BscBnb extends Coin {
+  constructor(coinData: CoinData) {
+    super(coinData);
+  }
+
+  getName(): string {
+    return "bnb";
+  }
+
+  async buildTransferMultiSigPayload(
+    wallet: EthLikeWallet,
+    to: string,
+    amount: BN
+  ): Promise<MultiSigPayload> {
+    return {
+      ...(await this.buildTransferMultiSigPayloadTemplate(wallet)),
+      hexData: this.walletContract.methods.transferBnb(to, amount).encodeABI(),
+      toAddress: wallet.getAddress(),
+    };
+  }
+
+  buildFlushData(wallet: EthLikeWallet, targetAddresses: string[]): string {
+    // This function is used by v3 eth/klay.
+    // Henesis wallet supports BSC from the version v4.
+    throw new Error("BSC is not using this method");
+  }
+}
