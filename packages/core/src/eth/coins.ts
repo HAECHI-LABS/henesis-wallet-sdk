@@ -7,6 +7,7 @@ import {
   NonStandardReturnTypeErc20,
   CoinData,
   AttributesEnum,
+  BscBnb,
 } from "./coin";
 
 export class Coins {
@@ -33,6 +34,11 @@ export class Coins {
 
     if (coinData.symbol.toString() == "KLAY") {
       return new Klay(coinData);
+    }
+
+    // FIXME: BNB can be used by binance chain
+    if (coinData.symbol.toString() == "BNB") {
+      return new BscBnb(coinData);
     }
 
     if (coinData.attributes.includes(AttributesEnum.NONSTANDARDRETURNTYPE)) {

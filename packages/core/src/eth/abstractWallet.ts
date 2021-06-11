@@ -341,7 +341,11 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
 
   protected getGasLimitByTicker(coin: Coin): BN {
     const ticker = coin.getCoinData().symbol;
-    if (ticker.toUpperCase() === "ETH" || ticker.toUpperCase() === "KLAY") {
+    if (
+      ticker.toUpperCase() === "ETH" ||
+      ticker.toUpperCase() === "KLAY" ||
+      ticker.toUpperCase() === "BNB"
+    ) {
       return this.DEFAULT_COIN_TRANSFER_GAS_LIMIT;
     }
     return this.DEFAULT_TOKEN_TRANSFER_GAS_LIMIT;

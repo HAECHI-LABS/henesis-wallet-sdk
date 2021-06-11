@@ -169,6 +169,8 @@ export class EthKeychains implements Keychains {
         return "Ethereum";
       case BlockchainType.KLAYTN:
         return "Klaytn";
+      case BlockchainType.BINANCE_SMART_CHAIN:
+        return "BinanceSmartChain";
       default:
         throw new Error(`cannot resolve blockchain for sign`);
     }
