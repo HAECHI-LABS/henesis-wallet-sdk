@@ -3,8 +3,9 @@ import { EthValueTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/even
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
-export const EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO: ValueTransferEventDTO =
-  Object.assign(EXAMPLE_ETH_KLAY_EVENT_DTO, {
+export const EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO: ValueTransferEventDTO = Object.assign(
+  EXAMPLE_ETH_KLAY_EVENT_DTO,
+  {
     amount: "0x2386f26fc10000",
     decimals: 18,
     coinSymbol: "ETH",
@@ -13,7 +14,8 @@ export const EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO: ValueTransferEventDTO =
     transferType: "WITHDRAWAL",
     walletName: "bit",
     walletType: "MASTER_WALLET",
-  });
+  }
+);
 
 export class ValueTransferEventDTO extends EventDTO {
   @ApiModelProperty({
