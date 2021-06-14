@@ -1,9 +1,9 @@
-import {HttpClient} from "../../lib/httpClient";
+import {HttpClient} from "../../src/httpClient";
 import {Env} from "../../src";
-import {FilWallets} from "../../lib/fil/wallets";
-import {FilKeychains} from "../../lib/fil/keychains";
-import {BlockchainType} from "../../lib/blockchain";
-import {FilFeeWallets} from "../../lib/fil/feeWallets";
+import {FilWallets} from "../../src/fil/wallets";
+import {FilKeychains} from "../../src/fil/keychains";
+import {BlockchainType} from "../../src/blockchain";
+import {FilFeeWallets} from "../../src/fil/feeWallets";
 
 describe('FilWallets', () => {
   describe('#verifyAddress()', () => {

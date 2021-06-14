@@ -1,7 +1,7 @@
 import {FilKeychains} from "../../src/fil/keychains";
-import {KeyWithPriv} from "../../lib/types";
-import {FilAccountKey} from "../../lib/fil/abstractWallet";
-import {FilKeyWithPriv} from "../../lib/fil/keychains";
+import { FilAccountKey } from "../../src/fil/abstractWallet";
+import { KeyWithPriv } from "../../src/types";
+import { FilKeyWithPriv } from "../../src/fil";
 
 describe('FilKeychains',() => {
   const keychains = new FilKeychains();
