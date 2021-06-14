@@ -2,15 +2,16 @@ import { BtcTransactionOutput } from "@haechi-labs/henesis-wallet-core/lib/btc/w
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
-export const EXAMPLE_BITCOIN_BTC_TRANSACTION_OUTPUT_DTO: BtcTransactionOutputDTO = {
-  address: "2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm",
-  amount: "0x1",
-  transactionId:
-    "beb70cf0b90afb6683ece78e0dfb4a140cf498310b833eea8092b5edd271e9c3",
-  outputIndex: 0,
-  scriptPubKey: "0xa91400271eec282b0368c3a2948145f7ae034fcd1d0787",
-  isChange: false,
-};
+export const EXAMPLE_BITCOIN_BTC_TRANSACTION_OUTPUT_DTO: BtcTransactionOutputDTO =
+  {
+    address: "2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm",
+    amount: "0x1",
+    transactionId:
+      "beb70cf0b90afb6683ece78e0dfb4a140cf498310b833eea8092b5edd271e9c3",
+    outputIndex: 0,
+    scriptPubKey: "0xa91400271eec282b0368c3a2948145f7ae034fcd1d0787",
+    isChange: false,
+  };
 
 export class BtcTransactionOutputDTO {
   @ApiModelProperty({

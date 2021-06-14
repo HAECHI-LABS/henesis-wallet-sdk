@@ -416,10 +416,11 @@ export abstract class Wallet<T> {
       address,
       coinId,
     };
-    const response: ValidateAllowedAddressResponse = await this.client.post<ValidateAllowedAddressResponse>(
-      `${this.baseUrl}/allowed-addresses/validate`,
-      request
-    );
+    const response: ValidateAllowedAddressResponse =
+      await this.client.post<ValidateAllowedAddressResponse>(
+        `${this.baseUrl}/allowed-addresses/validate`,
+        request
+      );
 
     return response.isValid;
   }

@@ -17,10 +17,11 @@ const EXAMPLE_ETH_KLAY_MULTI_SIG_PAYLOAD_DTO: MultiSigPayloadDTO = {
   hexData: "0x4ef3ba60c8710f45371835cddafabf33daa83e1d",
 };
 
-const EXAMPLE_ETH_KLAY_SIGNED_MULTI_SIG_PAYLOAD_DTO: SignedMultiSigPayloadDTO = {
-  signature: "sig",
-  multiSigPayload: EXAMPLE_ETH_KLAY_MULTI_SIG_PAYLOAD_DTO,
-};
+const EXAMPLE_ETH_KLAY_SIGNED_MULTI_SIG_PAYLOAD_DTO: SignedMultiSigPayloadDTO =
+  {
+    signature: "sig",
+    multiSigPayload: EXAMPLE_ETH_KLAY_MULTI_SIG_PAYLOAD_DTO,
+  };
 
 const EXAMPLE_ETH_KLAY_RAW_TRANSACTION_DTO: RawTransactionDTO = {
   nonce: "1",
