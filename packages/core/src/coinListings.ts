@@ -6,6 +6,7 @@ import {
   CoinContractDTO,
 } from "./__generate__/accounts";
 import { BlockchainType, transformBlockchainType } from "./blockchain";
+import { makeQueryString } from "./utils/url";
 
 export interface CoinListingRequest
   extends Omit<CoinListingRequestDTO, "blockchain"> {
@@ -50,8 +51,9 @@ export class CoinListings {
     blockchain: BlockchainType;
     address: string;
   }): Promise<CoinContract> {
+    const queryString = makeQueryString(request);
     const response = await this.client.get<CoinContractDTO>(
-      `${this.baseUrl}/coin-contract`
+      `${this.baseUrl}/coin-contract${queryString ? `?${queryString}` : ""}`
     );
     return {
       ...response,
