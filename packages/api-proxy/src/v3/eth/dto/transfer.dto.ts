@@ -25,6 +25,11 @@ export const EXAMPLE_ETHEREUM_TRANSFER_DTO: TransferDTO = {
   name: "ETH 실비 정산",
 };
 
+export const EXAMPLE_BINANCE_SMART_CHAIN_TRANSFER_DTO: TransferDTO = {
+  ...EXAMPLE_ETHEREUM_TRANSFER_DTO,
+  name: "BSC 실비 정산",
+};
+
 export class TransferDTO {
   @ApiModelProperty({
     description: "코인/토큰 입출금 내역의 ID",

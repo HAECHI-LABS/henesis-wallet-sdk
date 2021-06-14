@@ -1,0 +1,185 @@
+import { Injectable } from "@nestjs/common";
+import { SDK } from "@haechi-labs/henesis-wallet-core";
+import BN from "bn.js";
+import {
+  EthWallet,
+  UserWalletPaginationOptions,
+} from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
+import { EthTransaction } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
+import { WalletDTO } from "../../eth/dto/wallet.dto";
+import { BalanceDTO } from "../../eth/dto/balance.dto";
+import { ChangeWalletNameRequestDTO } from "../../eth/wallets/dto/change-wallet-name-request.dto";
+import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto";
+import { TransactionDTO } from "../../eth/dto/transaction.dto";
+import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
+import { ReplaceTransactionRequestDTO } from "../../eth/transactions/dto/replace-transaction-request.dto";
+import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
+import { PaginationDTO } from "../../eth/dto/pagination.dto";
+import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
+import { CreateDepositAddressRequestDTO } from "../../eth/wallets/dto/create-deposit-address-request.dto";
+
+@Injectable()
+export class WalletsService {
+  public async getWallets(sdk: SDK, name?: string): Promise<WalletDTO[]> {
+    const options = {};
+    if (name != null) {
+      options["name"] = name;
+    }
+    return (await sdk.bsc.wallets.getWallets(options)).map(
+      WalletDTO.fromEthWallet
+    );
+  }
+
+  public async getWallet(sdk: SDK, walletId: string): Promise<WalletDTO> {
+    return WalletDTO.fromEthWallet(await sdk.bsc.wallets.getWallet(walletId));
+  }
+
+  public async getBalanceOfWallet(
+    sdk: SDK,
+    walletId: string,
+    ticker?: string
+  ): Promise<BalanceDTO[]> {
+    const wallet: EthWallet = await sdk.bsc.wallets.getWallet(walletId);
+    return (await wallet.getBalance())
+      .map(BalanceDTO.fromBalance)
+      .filter((balance) => {
+        if (ticker === undefined) return true;
+        return balance.ticker.toUpperCase() == ticker.toUpperCase();
+      });
+  }
+
+  public async changeWalletName(
+    sdk: SDK,
+    walletId: string,
+    request: ChangeWalletNameRequestDTO
+  ) {
+    const wallet: EthWallet = await sdk.bsc.wallets.getWallet(walletId);
+    await wallet.changeName(request.name);
+  }
+
+  public async sendCoin(
+    sdk: SDK,
+    walletId: string,
+    request: SendCoinRequestDTO
+  ): Promise<TransactionDTO> {
+    const wallet: EthWallet = await sdk.bsc.wallets.getWallet(walletId);
+    return TransactionDTO.fromEthTransaction(
+      await wallet.transfer(
+        request.ticker,
+        request.to,
+        new BN(request.amount),
+        request.passphrase,
+        null,
+        request.gasPrice ? new BN(request.gasPrice) : null
+      )
+    );
+  }
+
+  public async callContract(
+    sdk: SDK,
+    walletId: string,
+    request: CreateTransactionRequestDTO
+  ): Promise<TransactionDTO> {
+    const wallet: EthWallet = await sdk.bsc.wallets.getWallet(walletId);
+    return TransactionDTO.fromEthTransaction(
+      await wallet.contractCall(
+        request.to,
+        new BN(request.value),
+        request.data,
+        request.passphrase,
+        null,
+        request.gasPrice ? new BN(request.gasPrice) : null
+      )
+    );
+  }
+
+  public async replaceTransaction(
+    sdk: SDK,
+    walletId: string,
+    transactionId: string,
+    request: ReplaceTransactionRequestDTO
+  ): Promise<TransactionDTO> {
+    const wallet: EthWallet = await sdk.bsc.wallets.getWallet(walletId);
+    return TransactionDTO.fromEthTransaction(
+      await wallet.replaceTransaction(
+        transactionId,
+        request.gasPrice ? new BN(request.gasPrice) : null
+      )
+    );
+  }
+
+  public async flush(
+    sdk: SDK,
+    walletId: string,
+    request: CreateFlushRequestDTO
+  ) {
+    const wallet: EthWallet = await sdk.bsc.wallets.getWallet(walletId);
+    return wallet.flush(
+      request.targets as any[],
+      request.gasPrice ? new BN(request.gasPrice) : null,
+      request.gasLimit ? new BN(request.gasLimit) : null
+    );
+  }
+
+  public async getDepositAddresses(
+    sdk: SDK,
+    walletId: string,
+    option: GetDepositAddressOption
+  ): Promise<PaginationDTO<DepositAddressDTO>> {
+    const wallet = await sdk.bsc.wallets.getWallet(walletId);
+    const result = await wallet.getDepositAddresses(
+      option as UserWalletPaginationOptions
+    );
+    return {
+      pagination: result.pagination,
+      results: result.results.map(DepositAddressDTO.fromEthDepositAddress),
+    };
+  }
+
+  public async getDepositAddress(
+    sdk: SDK,
+    walletId: string,
+    depositAddressId: string
+  ): Promise<DepositAddressDTO> {
+    const wallet = await sdk.bsc.wallets.getWallet(walletId);
+    return DepositAddressDTO.fromEthDepositAddress(
+      await wallet.getDepositAddress(depositAddressId)
+    );
+  }
+
+  public async getBalanceOfDepositAddress(
+    sdk: SDK,
+    walletId: string,
+    depositAddressId: string,
+    ticker: string
+  ): Promise<BalanceDTO[]> {
+    const wallet = await sdk.bsc.wallets.getWallet(walletId);
+    const depositAddress = await wallet.getDepositAddress(depositAddressId);
+    return (await depositAddress.getBalance(false))
+      .map(BalanceDTO.fromBalance)
+      .filter((balance) => {
+        if (ticker === undefined) return true;
+        return balance.ticker.toUpperCase() == ticker.toUpperCase();
+      });
+  }
+
+  public async createDepositAddress(
+    sdk: SDK,
+    walletId: string,
+    request: CreateDepositAddressRequestDTO
+  ): Promise<DepositAddressDTO> {
+    const wallet = await sdk.bsc.wallets.getWallet(walletId);
+    return DepositAddressDTO.fromEthDepositAddress(
+      await wallet.createDepositAddress(request.name)
+    );
+  }
+
+  async resendTransaction(
+    sdk: SDK,
+    walletId: string,
+    transactionId: string
+  ): Promise<EthTransaction> {
+    const wallet = await sdk.bsc.wallets.getWallet(walletId);
+    return await wallet.resendTransaction(transactionId);
+  }
+}
