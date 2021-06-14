@@ -91,9 +91,10 @@ export class Organizations {
     options?: AllowedIpsPaginationOptions
   ): Promise<Pagination<AllowedIp>> {
     const queryString: string = makeQueryString(options);
-    const result: PaginationAllowedIpDTO = await this.client.get<PaginationAllowedIpDTO>(
-      `${this.baseUrl}/allowed-ips${queryString ? `?${queryString}` : ""}`
-    );
+    const result: PaginationAllowedIpDTO =
+      await this.client.get<PaginationAllowedIpDTO>(
+        `${this.baseUrl}/allowed-ips${queryString ? `?${queryString}` : ""}`
+      );
     return {
       pagination: result.pagination,
       results: result.results.map(this.convertAllowedIpDTO),

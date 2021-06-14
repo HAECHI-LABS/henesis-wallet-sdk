@@ -5,30 +5,34 @@ export const EXAMPLE_NO_COIN_EXCEPTION_DTO: NoCoinException = {
   code: 4000,
 };
 
-export const EXAMPLE_INVALID_ACCESS_TOKEN_EXCEPTION_DTO: InvalidAccessTokenException = {
-  message: "expired or invalid access token and signature",
-  code: 4001,
-};
+export const EXAMPLE_INVALID_ACCESS_TOKEN_EXCEPTION_DTO: InvalidAccessTokenException =
+  {
+    message: "expired or invalid access token and signature",
+    code: 4001,
+  };
 
 export const EXAMPLE_INVALID_STATUS_EXCEPTION_DTO: InvalidStatusException = {
   message: "'status' is invalid: not supported event status",
   code: 4001,
 };
 
-export const EXAMPLE_INVALID_ACCESS_IP_EXCEPTION_DTO: InvalidAccessIpException = {
-  message: "ip '106.101.128.133' is not allowed",
-  code: 4008,
-};
+export const EXAMPLE_INVALID_ACCESS_IP_EXCEPTION_DTO: InvalidAccessIpException =
+  {
+    message: "ip '106.101.128.133' is not allowed",
+    code: 4008,
+  };
 
-export const EXAMPLE_ACCESS_TOKEN_NOT_PROVIDED_EXCEPTION_DTO: AccessTokenNotProvidedException = {
-  message: "access token not provided",
-  code: 4001,
-};
+export const EXAMPLE_ACCESS_TOKEN_NOT_PROVIDED_EXCEPTION_DTO: AccessTokenNotProvidedException =
+  {
+    message: "access token not provided",
+    code: 4001,
+  };
 
-export const EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO: TransactionIdNotFoundException = {
-  message: "transaction id '1' does not exists",
-  code: 4000,
-};
+export const EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO: TransactionIdNotFoundException =
+  {
+    message: "transaction id '1' does not exists",
+    code: 4000,
+  };
 
 export const EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO: WalletNotFoundException = {
   message: "wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist",
@@ -40,10 +44,12 @@ export const EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO: NoWalletNameException = {
   code: 4000,
 };
 
-export const EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO: DepositAddressNotFoundException = {
-  message: "deposit address 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist",
-  code: 4000,
-};
+export const EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO: DepositAddressNotFoundException =
+  {
+    message:
+      "deposit address 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist",
+    code: 4000,
+  };
 
 export class NoCoinException {
   @ApiModelProperty({
