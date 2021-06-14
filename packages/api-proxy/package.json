@@ -22,6 +22,7 @@
     "build:spec:v2-eth": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v2 ENDPOINT=ethereum nest start",
     "build:spec:v2-klay": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v2 ENDPOINT=klaytn nest start",
     "build:spec:v3-eth": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v3 ENDPOINT=ethereum nest start",
+    "build:spec:v3-bsc": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v3 ENDPOINT=binance-smart-chain nest start",
     "build:spec:version": "cross-env BUILD_SWAGGER_SPEC=true ENDPOINT=version nest start",
     "build:windows": "npm run preBuild:windows && mkdir lib && tsc",
     "eslint": "./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src",
