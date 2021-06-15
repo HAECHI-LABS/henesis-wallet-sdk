@@ -2,13 +2,20 @@ import {
   TransferDTO,
   TransferInternalDTO,
   TransferStatus,
+  PaginationTransferInternalDTO,
+  PaginationTransferDTO,
 } from "../__generate__/fil";
 import BN from "bn.js";
 
 import { FilSimplifiedWalletInternal, FilTransaction } from "./abstractWallet";
 import { Client } from "../httpClient";
-import { convertTransferDTO } from "./utils";
+import {
+  convertTransactionDTO,
+  convertTransferDTO,
+  convertTransferInternalDTO,
+} from "./utils";
 import { Pagination, PaginationOptions, Timestamp } from "../types";
+import { makeQueryString } from "../utils/url";
 
 export interface FilTransfer
   extends Omit<
@@ -64,22 +71,42 @@ export class FilTransfers {
     return convertTransferDTO(response);
   }
 
-  // TODO: implement me
   async getTransfers(
     options?: FilTransferPaginationOptions
   ): Promise<Pagination<FilTransfer>> {
-    return null;
+    const queryString = makeQueryString(options);
+    const data = await this.client.get<PaginationTransferDTO>(
+      `/transfers${queryString ? `?${queryString}` : ""}`
+    );
+
+    return {
+      pagination: data.pagination,
+      results: data.results.map((t) => {
+        return convertTransferDTO(t);
+      }),
+    };
   }
 
-  // TODO: implement me
-  async getInternalTransfer(): Promise<FilTransferInternal> {
-    return null;
+  async getInternalTransfer(id: string): Promise<FilTransferInternal> {
+    const response = await this.client.get<TransferInternalDTO>(
+      `/internal/transfers/${id}`
+    );
+    return convertTransferInternalDTO(response);
   }
 
-  // TODO: implement me
   async getInternalTransfers(
     options?: FilTransferPaginationOptions
   ): Promise<Pagination<FilTransferInternal>> {
-    return null;
+    const queryString = makeQueryString(options);
+    const data = await this.client.get<PaginationTransferInternalDTO>(
+      `/internal/transfers${queryString ? `?${queryString}` : ""}`
+    );
+
+    return {
+      pagination: data.pagination,
+      results: data.results.map((t) => {
+        return convertTransferInternalDTO(t);
+      }),
+    };
   }
 }
