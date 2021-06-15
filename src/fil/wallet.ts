@@ -41,7 +41,7 @@ import {
   convertMessageToObject,
   convertRawTransactionToMessage,
   convertSignedTransactionToRawSignedTransactionDTO,
-  convertTransferDTO,
+  convertDtoToTransfer,
 } from "./utils";
 import { ProtocolIndicator } from "./fil-core-lib/constants";
 
@@ -236,7 +236,7 @@ export class FilWallet extends FilAbstractWallet {
         otpCode: otpCode,
       }
     );
-    return convertTransferDTO(transferData);
+    return convertDtoToTransfer(transferData);
   }
 
   // TODO: implememt me

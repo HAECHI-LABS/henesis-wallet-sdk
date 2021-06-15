@@ -1,7 +1,8 @@
 import {
   RawSignedTransactionDTO,
   TransactionDTO,
-  TransferDTO, TransferInternalDTO
+  TransferDTO,
+  TransferInternalDTO,
 } from "../__generate__/fil";
 import { FilTransfer, FilTransferInternal } from "./transfers";
 import { FilTransaction } from "./abstractWallet";
@@ -12,27 +13,32 @@ import { BNConverter } from "../utils/common";
 const Cid = require("cids");
 const multihashing = require("multihashing-async");
 
-export const convertTransactionDTO = (
-  transaction: TransactionDTO
+export const convertDtoToTransaction = (
+  transactionDTO: TransactionDTO
 ): FilTransaction => {
-  return {
-    ...transaction,
-    nonce: BNConverter.hexStringToBN(transaction.nonce),
-    amount: BNConverter.hexStringToBN(transaction.amount),
-    feeAmount:
-      transaction.feeAmount != undefined
-        ? BNConverter.hexStringToBN(transaction.feeAmount)
-        : undefined,
-  };
+  return transactionDTO
+    ? {
+        ...transactionDTO,
+        nonce: BNConverter.hexStringToBnOrElseNull(transactionDTO.nonce),
+        amount: BNConverter.hexStringToBnOrElseNull(transactionDTO.amount),
+        feeAmount: BNConverter.hexStringToBnOrElseNull(
+          transactionDTO.feeAmount
+        ),
+      }
+    : null;
 };
 
-export const convertTransferDTO = (t: TransferDTO): FilTransfer => {
-  return {
-    ...t,
-    amount: BNConverter.hexStringToBN(t.amount),
-    transaction: convertTransactionDTO(t.transaction),
-    proposalTransaction: convertTransactionDTO(t.proposalTransaction),
-  };
+export const convertDtoToTransfer = (transferDTO: TransferDTO): FilTransfer => {
+  return transferDTO
+    ? {
+        ...transferDTO,
+        amount: BNConverter.hexStringToBnOrElseNull(transferDTO.amount),
+        transaction: convertDtoToTransaction(transferDTO.transaction),
+        proposalTransaction: convertDtoToTransaction(
+          transferDTO.proposalTransaction
+        ),
+      }
+    : null;
 };
 
 export const convertTransferInternalDTO = (
@@ -42,28 +48,34 @@ export const convertTransferInternalDTO = (
     ...transfer,
     amount: BNConverter.hexStringToBN(transfer.amount),
     transaction: transfer.transaction
-      ? convertTransactionDTO(transfer.transaction)
+      ? convertDtoToTransaction(transfer.transaction)
       : null,
     confirmation: BNConverter.hexStringToBN(transfer.confirmation),
     proposalTransaction: transfer.proposalTransaction
-      ? convertTransactionDTO(transfer.proposalTransaction)
+      ? convertDtoToTransaction(transfer.proposalTransaction)
       : null,
   };
 };
 
 export const convertSignedTransactionToRawSignedTransactionDTO = (
-  t: SignedTransaction
+  transaction: SignedTransaction
 ): RawSignedTransactionDTO => {
-  return {
-    ...t,
-    nonce: BNConverter.bnToHexString(new BN(t.nonce)),
-    value: BNConverter.bnToHexString(t.value),
-    gasLimit: BNConverter.bnToHexString(new BN(t.gasLimit)),
-    gasFeeCap: BNConverter.bnToHexString(t.gasFeeCap),
-    gasPremium: BNConverter.bnToHexString(t.gasPremium),
-    signature: t.data,
-    signatureType: t.type,
-  };
+  return transaction
+    ? {
+        ...transaction,
+        nonce: transaction.nonce
+          ? BNConverter.bnToHexString(new BN(transaction.nonce))
+          : null,
+        value: BNConverter.bnToHexStringOrElseNull(transaction.value),
+        gasLimit: transaction.gasLimit
+          ? BNConverter.bnToHexString(new BN(transaction.gasLimit))
+          : null,
+        gasFeeCap: BNConverter.bnToHexStringOrElseNull(transaction.gasFeeCap),
+        gasPremium: BNConverter.bnToHexStringOrElseNull(transaction.gasPremium),
+        signature: transaction.data,
+        signatureType: transaction.type,
+      }
+    : null;
 };
 
 export const convertMessageToObject = (
@@ -79,30 +91,42 @@ export const convertMessageToObject = (
   method: number;
   params: string;
 } => {
-  return {
-    to: message.to,
-    from: message.from,
-    nonce: message.nonce,
-    value: message.value.toString(),
-    gaslimit: message.gasLimit,
-    gasfeecap: message.gasFeeCap.toString(),
-    gaspremium: message.gasPremium.toString(),
-    method: message.method,
-    params: message.params,
-  };
+  return message
+    ? {
+        to: message.to,
+        from: message.from,
+        nonce: message.nonce,
+        value: message.value ? message.value.toString() : null,
+        gaslimit: message.gasLimit,
+        gasfeecap: message.gasFeeCap ? message.gasFeeCap.toString() : null,
+        gaspremium: message.gasPremium ? message.gasPremium.toString() : null,
+        method: message.method,
+        params: message.params,
+      }
+    : null;
 };
 
 export const convertRawTransactionToMessage = (
   rawTransaction: RawTransaction
 ): Message => {
-  return {
-    ...rawTransaction,
-    value: BNConverter.hexStringToBN(rawTransaction.value),
-    gasLimit: BNConverter.hexStringToBN(rawTransaction.gasLimit).toNumber(),
-    gasFeeCap: BNConverter.hexStringToBN(rawTransaction.gasFeeCap),
-    gasPremium: BNConverter.hexStringToBN(rawTransaction.gasPremium),
-    nonce: BNConverter.hexStringToBN(rawTransaction.nonce).toNumber(),
-  };
+  return rawTransaction
+    ? {
+        ...rawTransaction,
+        value: BNConverter.hexStringToBnOrElseNull(rawTransaction.value),
+        gasLimit: rawTransaction.gasLimit
+          ? BNConverter.hexStringToBN(rawTransaction.gasLimit).toNumber()
+          : null,
+        gasFeeCap: BNConverter.hexStringToBnOrElseNull(
+          rawTransaction.gasFeeCap
+        ),
+        gasPremium: BNConverter.hexStringToBnOrElseNull(
+          rawTransaction.gasPremium
+        ),
+        nonce: rawTransaction.nonce
+          ? BNConverter.hexStringToBN(rawTransaction.nonce).toNumber()
+          : null,
+      }
+    : null;
 };
 
 export const calculateCidFromBytes = async (bytes: Buffer): Promise<string> => {
