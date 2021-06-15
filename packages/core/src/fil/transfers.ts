@@ -9,11 +9,7 @@ import BN from "bn.js";
 
 import { FilSimplifiedWallet, FilTransaction } from "./abstractWallet";
 import { Client } from "../httpClient";
-import {
-  convertTransactionDTO,
-  convertTransferDTO,
-  convertTransferInternalDTO,
-} from "./utils";
+import { convertDtoToTransfer, convertTransferInternalDTO } from "./utils";
 import { Pagination, PaginationOptions, Timestamp } from "../types";
 import { makeQueryString } from "../utils/url";
 
@@ -64,7 +60,7 @@ export class FilTransfers {
 
   async getTransfer(id: string): Promise<FilTransfer> {
     const response = await this.client.get<TransferDTO>(`/transfers/${id}`);
-    return convertTransferDTO(response);
+    return convertDtoToTransfer(response);
   }
 
   async getTransfers(
@@ -78,7 +74,7 @@ export class FilTransfers {
     return {
       pagination: data.pagination,
       results: data.results.map((t) => {
-        return convertTransferDTO(t);
+        return convertDtoToTransfer(t);
       }),
     };
   }
