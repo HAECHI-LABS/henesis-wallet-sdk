@@ -9,6 +9,7 @@ import { Pagination } from "../types";
 import { Client } from "../httpClient";
 import { FilAccountKey, FilTransaction } from "./abstractWallet";
 import BN from "bn.js";
+import { BNConverter } from "../utils/common";
 
 export type FilHenesisKey = HenesisKeyDTO;
 
@@ -19,8 +20,8 @@ export interface FilFeeWallet
 }
 
 export interface FilBalance
-  extends Omit<BalanceDTO, "balance" | "spendableBalance"> {
-  balance: BN;
+  extends Omit<BalanceDTO, "confirmedBalance" | "spendableBalance"> {
+  confirmedBalance: BN;
   spendableBalance: BN;
 }
 
@@ -38,6 +39,13 @@ export interface FilFeeHistory extends Omit<FeeHistoryDTO, "transaction"> {
   transaction: FilTransaction;
 }
 
+const convertFilBalanceDTO = (balanceDTO: BalanceDTO): FilBalance => {
+  return {
+    confirmedBalance: BNConverter.hexStringToBN(balanceDTO.confirmedBalance),
+    spendableBalance: BNConverter.hexStringToBN(balanceDTO.spendableBalance),
+  };
+};
+
 export class FilFeeWallets {
   private readonly client: Client;
 
@@ -45,14 +53,24 @@ export class FilFeeWallets {
     this.client = client;
   }
 
-  // TODO: implement me
   async getFeeWallet(): Promise<FilFeeWallet> {
-    return null;
+    const response = await this.client.get<FeeWalletDTO>(`/fee-wallets/me`);
+    return response;
   }
 
-  // TODO: implement me
   async getFeeWalletBalance(): Promise<FilFeeWalletBalance> {
-    return null;
+    const response = await this.client.get<FeeWalletBalanceDTO>(
+      `/fee-wallets/balance`
+    );
+    return {
+      defaultFeeWallet: convertFilBalanceDTO(response.defaultFeeWallet),
+      proposalFeeWallets: response.proposalFeeWallets.map((item) => {
+        return {
+          id: item.id,
+          ...convertFilBalanceDTO(item),
+        };
+      }),
+    };
   }
 
   // TODO: implement me
