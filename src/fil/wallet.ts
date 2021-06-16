@@ -4,7 +4,7 @@ import {
   FilAccountKey,
 } from "./abstractWallet";
 import { Client } from "../httpClient";
-import { Balance, Pagination } from "../types";
+import { Balance, Key, Pagination } from "../types";
 import {
   DepositAddressPaginationOptions,
   FilDepositAddress,
@@ -22,6 +22,9 @@ import {
   TransferDTO,
   RawTransactionDTO,
   BuildTransactionRequest,
+  RawFlushDTO,
+  RawFlushTransactionDTO,
+  FlushTarget,
 } from "../__generate__/fil";
 import BN from "bn.js";
 import { BlockchainType } from "../blockchain";
@@ -42,6 +45,8 @@ import {
   convertRawTransactionToMessage,
   convertSignedTransactionToRawSignedTransactionDTO,
   convertDtoToTransfer,
+  convertFilFlushTargetToDto,
+  convertDtoToFlush,
 } from "./utils";
 import { ProtocolIndicator } from "./fil-core-lib/constants";
 
@@ -53,7 +58,9 @@ export const convertWalletData = (data: WalletDTO): FilWalletData => {
   };
 };
 
-export type FilFlush = FlushDTO;
+export interface FilFlush extends Omit<FlushDTO, "transfers"> {
+  transfers: FilTransfer[];
+}
 
 export interface FilFlushInternal extends Omit<FlushInternalDTO, "transfers"> {
   transfers: FilTransferInternal[];
@@ -81,6 +88,13 @@ export interface Signature {
 
 export interface SignedTransaction extends Message, Signature {
   cid: string;
+}
+
+export type RawFlushTransaction = RawFlushTransactionDTO;
+
+export interface FilFlushTarget {
+  depositAddressId: string;
+  flushTransaction: SignedTransaction;
 }
 
 export class FilWallet extends FilAbstractWallet {
@@ -221,8 +235,9 @@ export class FilWallet extends FilAbstractWallet {
       `${this.baseUrl}/transactions/build`,
       this.createBuildTransactionRequest(to, amount)
     );
-    const signedTransaction = await this.signTransferPayload(
+    const signedTransaction = await this.signRawTransaction(
       rawTransaction,
+      this.getAccountKey(),
       passphrase
     );
     const transferData = await this.client.post<NoUndefinedField<TransferDTO>>(
@@ -239,10 +254,32 @@ export class FilWallet extends FilAbstractWallet {
     return convertDtoToTransfer(transferData);
   }
 
-  // TODO: implememt me
   async flush(targets: Array<string>, passphrase: string): Promise<FilFlush> {
-    // TODO: build raw tx from each account key, then send those to wallet api
-    return null;
+    const rawFlushData = await this.client.post<NoUndefinedField<RawFlushDTO>>(
+      `${this.baseUrl}/flushes/build`,
+      {
+        depositAddressIds: targets,
+        // TODO: use gas premium if user enter specific gas premium value
+        gasPremium: BNConverter.bnToHexString(new BN(0)),
+      }
+    );
+    const flushTargets = rawFlushData.targets.map(
+      async (
+        rawFlushTransaction: RawFlushTransaction
+      ): Promise<FilFlushTarget> => {
+        return await this.createFlushTarget(rawFlushTransaction, passphrase);
+      }
+    );
+    const flushData = await this.client.post<NoUndefinedField<FlushDTO>>(
+      `${this.baseUrl}/flushes`,
+      {
+        targets: flushTargets.map(
+          async (target: Promise<FilFlushTarget>): Promise<FlushTarget> =>
+            convertFilFlushTargetToDto(await target)
+        ),
+      }
+    );
+    return convertDtoToFlush(flushData);
   }
 
   // TODO: implement me
@@ -263,14 +300,6 @@ export class FilWallet extends FilAbstractWallet {
   // TODO: implement me
   async getInternalFlush(): Promise<FilFlushInternal> {
     throw new Error("this feature is not supported yet");
-  }
-
-  // TODO: implement me
-  async retryCreateDepositAddress(
-    walletId: string,
-    gasPrice?: BN
-  ): Promise<FilDepositAddress> {
-    throw new Error("unimplemented method");
   }
 
   // TODO: implement me
@@ -312,19 +341,21 @@ export class FilWallet extends FilAbstractWallet {
     };
   }
 
-  private async signTransferPayload(
+  private async signRawTransaction(
     rawTransaction: RawTransaction,
+    key: Key,
     passphrase: string
   ): Promise<SignedTransaction> {
-    const proposeMessage = convertRawTransactionToMessage(rawTransaction);
-    const messageSignature = this.createProposeMessageSignature(
-      proposeMessage,
+    const message = convertRawTransactionToMessage(rawTransaction);
+    const messageSignature = this.createMessageSignature(
+      message,
+      key,
       passphrase
     );
-    const cid = await this.calculateCidFromMessage(proposeMessage);
+    const cid = await this.calculateCidFromMessage(message);
     return {
       cid,
-      ...proposeMessage,
+      ...message,
       ...messageSignature,
     };
   }
@@ -335,17 +366,14 @@ export class FilWallet extends FilAbstractWallet {
    * - https://github.com/filecoin-shipyard/filecoin.js/blob/master/src/signers/LightWalletSigner.ts
    * - https://github.com/Zondax/filecoin-signing-tools/blob/master/signer-npm/js/src/index.js
    */
-  private createProposeMessageSignature(
+  private createMessageSignature(
     message: Message,
+    key: Key,
     passphrase: string
   ): Signature {
     const msgObject = convertMessageToObject(message);
     const serializedMsg = transactionSerialize(msgObject);
-    const signature = this.keychains.sign(
-      this.getAccountKey(),
-      passphrase,
-      serializedMsg
-    );
+    const signature = this.keychains.sign(key, passphrase, serializedMsg);
     return {
       data: signature,
       type: ProtocolIndicator.SECP256K1,
@@ -360,5 +388,26 @@ export class FilWallet extends FilAbstractWallet {
     const messageObject = convertMessageToObject(message);
     const serializedMessage = transactionSerialize(messageObject);
     return calculateCidFromBytes(Buffer.from(serializedMessage, "hex"));
+  }
+
+  private async createFlushTarget(
+    rawFlushTransaction: RawFlushTransaction,
+    passphrase: string
+  ): Promise<FilFlushTarget> {
+    const rawTransaction = rawFlushTransaction.rawTransaction;
+    const depositAddressKey = this.keychains.derive(
+      this.getAccountKey(),
+      passphrase,
+      rawFlushTransaction.childNumber
+    );
+    const signedTransaction = await this.signRawTransaction(
+      rawTransaction,
+      depositAddressKey,
+      passphrase
+    );
+    return {
+      depositAddressId: rawFlushTransaction.depositAddressId,
+      flushTransaction: signedTransaction,
+    };
   }
 }
