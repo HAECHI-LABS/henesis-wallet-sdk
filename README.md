@@ -7,3 +7,9 @@
 ```shell
 npm run bootstrap
 ```
+
+## Reset Packages
+```shell
+npm run install:reset
+npm run bootstrap
+```
