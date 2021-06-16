@@ -1,4 +1,6 @@
 import {
+  FlushDTO,
+  FlushTarget,
   RawSignedTransactionDTO,
   TransactionDTO,
   TransferDTO,
@@ -7,7 +9,13 @@ import {
 import { FilTransfer, FilTransferInternal } from "./transfers";
 import { FilTransaction } from "./abstractWallet";
 import BN from "bn.js";
-import { Message, RawTransaction, SignedTransaction } from "./wallet";
+import {
+  FilFlush,
+  FilFlushTarget,
+  Message,
+  RawTransaction,
+  SignedTransaction,
+} from "./wallet";
 import { BNConverter } from "../utils/common";
 
 const Cid = require("cids");
@@ -125,6 +133,29 @@ export const convertRawTransactionToMessage = (
         nonce: rawTransaction.nonce
           ? BNConverter.hexStringToBN(rawTransaction.nonce).toNumber()
           : null,
+      }
+    : null;
+};
+
+export const convertFilFlushTargetToDto = (
+  flushTarget: FilFlushTarget
+): FlushTarget => {
+  return {
+    depositAddressId: flushTarget.depositAddressId,
+    flushTransaction: convertSignedTransactionToRawSignedTransactionDTO(
+      flushTarget.flushTransaction
+    ),
+  };
+};
+
+export const convertDtoToFlush = (flushDTO: FlushDTO): FilFlush => {
+  return flushDTO
+    ? {
+        ...flushDTO,
+        transfers: flushDTO.transfers.map(
+          (transferDTO: TransferDTO): FilTransfer =>
+            convertDtoToTransfer(transferDTO)
+        ),
       }
     : null;
 };
