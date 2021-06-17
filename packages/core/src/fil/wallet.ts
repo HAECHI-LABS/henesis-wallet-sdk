@@ -2,6 +2,7 @@ import {
   FilWalletData,
   FilAbstractWallet,
   FilAccountKey,
+  FilGasLimit,
 } from "./abstractWallet";
 import { Client } from "../httpClient";
 import { Balance, Key, Pagination } from "../types";
@@ -227,13 +228,14 @@ export class FilWallet extends FilAbstractWallet {
     to: string,
     amount: BN,
     passphrase: string,
-    otpCode?: string
+    otpCode?: string,
+    gasPremium?: BN
   ): Promise<FilTransfer> {
     const rawTransaction = await this.client.post<
       NoUndefinedField<RawTransactionDTO>
     >(
       `${this.baseUrl}/transactions/build`,
-      this.createBuildTransactionRequest(to, amount)
+      this.createBuildTransactionRequest(to, amount, gasPremium)
     );
     const signedTransaction = await this.signRawTransaction(
       rawTransaction,
@@ -247,20 +249,23 @@ export class FilWallet extends FilAbstractWallet {
         amount: BNConverter.bnToHexString(amount),
         proposalTransaction:
           convertSignedTransactionToRawSignedTransactionDTO(signedTransaction),
-        gasPremium: BNConverter.bnToHexString(signedTransaction.gasPremium),
+        gasPremium: BNConverter.bnToHexStringOrElseNull(gasPremium),
         otpCode: otpCode,
       }
     );
     return convertDtoToTransfer(transferData);
   }
 
-  async flush(targets: Array<string>, passphrase: string): Promise<FilFlush> {
+  async flush(
+    targets: Array<string>,
+    passphrase: string,
+    gasPremium?: BN
+  ): Promise<FilFlush> {
     const rawFlushData = await this.client.post<NoUndefinedField<RawFlushDTO>>(
       `${this.baseUrl}/flushes/build`,
       {
         depositAddressIds: targets,
-        // TODO: use gas premium if user enter specific gas premium value
-        gasPremium: BNConverter.bnToHexString(new BN(0)),
+        gasPremium: BNConverter.bnToHexStringOrElseNull(gasPremium),
       }
     );
     const flushTargets = rawFlushData.targets.map(
@@ -319,7 +324,8 @@ export class FilWallet extends FilAbstractWallet {
    */
   private createBuildTransactionRequest(
     to: string,
-    amount: BN
+    amount: BN,
+    gasPremium?: BN
   ): BuildTransactionRequest {
     const msgParams = [
       addressAsBytes(to),
@@ -334,8 +340,8 @@ export class FilWallet extends FilAbstractWallet {
       to: this.getAddress(),
       from: this.getAccountKey().address,
       value: BNConverter.bnToHexString(new BN(0)),
-      gasLimit: BNConverter.bnToHexString(new BN(0)),
-      gasPremium: BNConverter.bnToHexString(new BN(0)),
+      gasLimit: BNConverter.bnToHexString(FilGasLimit.PROPOSE),
+      gasPremium: BNConverter.bnToHexStringOrElseNull(gasPremium),
       method: MethodMultisig.Propose,
       params: Buffer.from(serializedMsgParams).toString("base64"),
     };
