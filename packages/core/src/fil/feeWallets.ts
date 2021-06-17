@@ -4,19 +4,22 @@ import {
   FeeWalletBalanceDTO,
   FeeWalletDTO,
   HenesisKeyDTO,
+  ProposalFeeWalletDTO,
 } from "../__generate__/fil";
 import { Pagination } from "../types";
 import { Client } from "../httpClient";
-import { FilAccountKey, FilTransaction } from "./abstractWallet";
+import { FilTransaction } from "./abstractWallet";
 import BN from "bn.js";
 import { BNConverter } from "../utils/common";
 
 export type FilHenesisKey = HenesisKeyDTO;
 
+export type FilProposalFeeWallet = ProposalFeeWalletDTO;
+
 export interface FilFeeWallet
   extends Omit<FeeWalletDTO, "defaultFeeWallet" | "proposalFeeWallets"> {
   defaultFeeWallet: FilHenesisKey;
-  proposalFeeWallets: FilAccountKey[];
+  proposalFeeWallets: FilProposalFeeWallet[];
 }
 
 export interface FilBalance
