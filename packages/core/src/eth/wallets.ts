@@ -180,8 +180,10 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       NoUndefinedField<MasterWalletDTO>
     >(this.baseUrl, {
       name: recoveryKit.getName(),
-      accountKey: recoveryKit.getAccountKey(),
-      backupKey: this.removeKeyFile(recoveryKit.getBackupKey()),
+      accountKey: this.removePrivateKey(recoveryKit.getAccountKey()),
+      backupKey: this.removeKeyFile(
+        this.removePrivateKey(recoveryKit.getBackupKey())
+      ),
       encryptionKey: recoveryKit.getEncryptionKey(),
     });
 
