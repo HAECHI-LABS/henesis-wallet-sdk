@@ -11,6 +11,7 @@ import { MultiSigPayload } from "./transactions";
 import { EthLikeWallet } from "./abstractWallet";
 
 export import AttributesEnum = CoinDTOAttributesEnum;
+
 export type CoinData = CoinDTO;
 
 export abstract class Coin {
