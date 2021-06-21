@@ -25,7 +25,7 @@ export class FilModule {
 
   constructor(options: ModuleOptions) {
     this.client = options.client;
-    this.keychains = new FilKeychains();
+    this.keychains = new FilKeychains(options.env);
     this.feeWallets = new FilFeeWallets(this.client);
     this.wallets = new FilWallets(
       this.client,

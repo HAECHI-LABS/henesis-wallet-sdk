@@ -2,9 +2,10 @@ import {FilKeychains} from "../../src/fil/keychains";
 import { FilAccountKey } from "../../src/fil/abstractWallet";
 import { KeyWithPriv } from "../../src/types";
 import { FilKeyWithPriv } from "../../src/fil";
+import {Env} from "../../src";
 
 describe('FilKeychains',() => {
-  const keychains = new FilKeychains();
+  const keychains = new FilKeychains(Env.Local);
   const key: FilAccountKey = {
     address: 'f13nbkcq22t5u43re4ssn7pro7inrh4ti4lohg4fq',
     keyFile: '{"iv":"NVPLg29qiIJbYeyVMo0KqQ==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"fR/c/25HGJc=","ct":"4AQAXU11SGKXvTu+SzNn+OlmB4vSzgkZXGSKjINZCeW9TH1pFefq9v8uWGa8sPiVTN8x5+qnIaE67LoDavxJ8RWfaPvU7oJKphD7iQKGoULi4fKDcaX+Tey8KjoXWUc3988wZXga3QH6NFz5ciSTQj9WM7kf2FIR6/n6H9NQPV2XIZXTM1eI3A=="}',

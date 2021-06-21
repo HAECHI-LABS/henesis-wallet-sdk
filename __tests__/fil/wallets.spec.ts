@@ -16,7 +16,7 @@ describe('FilWallets', () => {
       }) as any;
       const wallets = new FilWallets(
         client,
-        new FilKeychains(),
+        new FilKeychains(Env.Local),
         Env.Local,
         BlockchainType.FILECOIN,
         new FilFeeWallets(client)
