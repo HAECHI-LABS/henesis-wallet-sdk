@@ -39,6 +39,10 @@ export class FilRecoveryKit extends RecoveryKit {
     );
     this.accountKey = accountKey;
   }
+
+  getAccountKey(): FilKeyWithPriv {
+    return this.accountKey;
+  }
 }
 
 export class FilWallets extends Wallets<FilWallet> {
@@ -122,13 +126,24 @@ export class FilWallets extends Wallets<FilWallet> {
   }
 
   async createWalletWithKit(recoveryKit: FilRecoveryKit): Promise<FilWallet> {
+    const accountKey = recoveryKit.getAccountKey();
+    const backupKey = recoveryKit.getBackupKey();
+
     const walletData = await this.client.post<NoUndefinedField<WalletDTO>>(
       this.baseUrl,
       {
         name: recoveryKit.getName(),
         encryptionKey: recoveryKit.getEncryptionKey(),
-        accountKey: recoveryKit.getAccountKey(),
-        backupKey: recoveryKit.getBackupKey(),
+        accountKey: {
+          address: accountKey.address,
+          pub: accountKey.pub,
+          keyFile: accountKey.keyFile,
+          chainCode: accountKey.chainCode,
+        },
+        backupKey: {
+          pub: backupKey.pub,
+          keyFile: backupKey.keyFile,
+        },
       }
     );
     return new FilWallet(
