@@ -11,7 +11,6 @@ import { PasswordInvalidError } from "../error";
 import crypto from "crypto";
 import { bytesToWord } from "../eth";
 import { FilAccountKey } from "./abstractWallet";
-import { Client } from "../httpClient";
 
 const base32Encode = require("base32-encode");
 const elliptic = require("elliptic");

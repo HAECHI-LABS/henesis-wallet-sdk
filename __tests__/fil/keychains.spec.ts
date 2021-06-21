@@ -7,13 +7,13 @@ import {Env} from "../../src";
 describe('FilKeychains',() => {
   const keychains = new FilKeychains(Env.Local);
   const key: FilAccountKey = {
-    address: 'f13nbkcq22t5u43re4ssn7pro7inrh4ti4lohg4fq',
-    keyFile: '{"iv":"NVPLg29qiIJbYeyVMo0KqQ==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"fR/c/25HGJc=","ct":"4AQAXU11SGKXvTu+SzNn+OlmB4vSzgkZXGSKjINZCeW9TH1pFefq9v8uWGa8sPiVTN8x5+qnIaE67LoDavxJ8RWfaPvU7oJKphD7iQKGoULi4fKDcaX+Tey8KjoXWUc3988wZXga3QH6NFz5ciSTQj9WM7kf2FIR6/n6H9NQPV2XIZXTM1eI3A=="}',
-    pub: '0xdeafd14f4b7ecfbd4d3e43746bbc797500480105bd9081552bc180bf797e9f73e6a186126a37cc7806d3d01988e31ca253b2ae9d7ae560511bba20291a5ab560',
-    chainCode: '0x4e98ab6920f18b738691e88f542bd6019157b63e1d9c1917533f59c75490d8a4'
+    address: 't1xsx3ezz7uwcynfzi6kvbp3uh5oqcx7mjqfl4y3q',
+    pub: '0xee2ca60262e8f368a4abeaee7f341d7a3ce1e429f3f7226ee900142ebded2af132d93e8c49a74b6dc9de7af81fb6d4d7955983839188606c97dbf4527a75d540',
+    keyFile: '{"iv":"8ESPnFzPDoq6LCq52JgQ8w==","v":1,"iter":10000,"ks":256,"ts":64,"mode":"ccm","adata":"","cipher":"aes","salt":"S9hxpXS+B/M=","ct":"KpUh/ADv/R3fng1eLFPXSgQZBnUSprM4bacsulo2eG0i1Ej9y5OWMrOvK5tOJzoXGidBMPlitn/U4rEz5xbU7kZJG/zKhuZD0XySBouHgKB+1ezuzx+BxuRSnTLYo4DNF4HbRE62vAI/jHBivT4a+U/brx1MRBrv7Z+jgJ2Pw68xuXL/TCtdVg=="}',
+    chainCode: '0x17f182d40b8e77c9fcf723cf4d8308802613b98257bf6a83d2bf40539b79f842'
   }
-  const priv = '0xdb0cc7de9a612cca7c28008c98dae7a62c8604c58268c1de515db746b2971c78';
-  const seed = 'ea7eda62182e5d23c0cdc78dc1354026dd80774a7438f4c1faf1b6b2a42176f324c046fd4dd37fd7686fb9acd2d97a01bfcd8b17b8345fe898d1fa9fa4613363';
+  const priv = '0x126695c405d111628e5a760ab636536fba27a0d3f0b9a55ab861a3345c5e1905';
+  const seed = 'cf9cdb627e66d6a2fb5a86639d7d967506d5501e3392e7d8697cdf37ef685221b2f13b8154013977c2febfdd02a3e7e566e033734b309d80e0d6750fb12a1d8a';
 
   describe('#create()', () => {
     it('should create key correctly', () => {
