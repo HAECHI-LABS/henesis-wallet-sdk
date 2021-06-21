@@ -11,6 +11,7 @@ import { PasswordInvalidError } from "../error";
 import crypto from "crypto";
 import { bytesToWord } from "../eth";
 import { FilAccountKey } from "./abstractWallet";
+import { Client } from "../httpClient";
 
 const base32Encode = require("base32-encode");
 const elliptic = require("elliptic");
@@ -24,6 +25,12 @@ export interface FilKeyWithPriv extends KeyWithPriv {
 }
 
 export class FilKeychains implements Keychains {
+  protected readonly env: Env;
+
+  public constructor(env: Env) {
+    this.env = env;
+  }
+
   changePassword(
     key: FilAccountKey,
     password: string,
@@ -166,13 +173,13 @@ export class FilKeychains implements Keychains {
    * - https://github.com/Zondax/filecoin-signing-tools/blob/master/signer-npm/js/src/extendedkey.js
    */
   private getAddress(publicKey: string): string {
-    const buffer = Buffer.from(publicKey);
+    const buffer = Buffer.from(publicKey, "hex");
     const payload = getPayloadSecp256K1(buffer);
     const checksum = getChecksum(
       Buffer.concat([Buffer.from("01", "hex"), payload])
     );
 
-    const prefix = Env.Prod ? "f1" : "t1";
+    const prefix = this.env == Env.Prod ? "f1" : "t1";
     return (
       prefix +
       base32Encode(
