@@ -174,6 +174,7 @@ export class FilWallet extends FilAbstractWallet {
       {
         name: name,
         childNumber: wallet.nextChildNumber,
+        address: depositAddressKey.address,
         pub: depositAddressKey.pub,
         otpCode: otpCode,
       }
