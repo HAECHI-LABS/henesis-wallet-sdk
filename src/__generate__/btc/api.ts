@@ -879,19 +879,13 @@ export interface PatchAccountKeyRequest {
      * @type {string}
      * @memberof PatchAccountKeyRequest
      */
-    pub: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PatchAccountKeyRequest
-     */
     keyFile: string;
     /**
      * 
      * @type {string}
      * @memberof PatchAccountKeyRequest
      */
-    otpCode: string;
+    otpCode?: string;
 }
 /**
  * 
