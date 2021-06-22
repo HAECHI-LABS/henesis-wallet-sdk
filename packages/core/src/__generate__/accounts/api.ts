@@ -154,6 +154,18 @@ export interface ApproveCoinListingRequestRequest {
      * @type {string}
      * @memberof ApproveCoinListingRequestRequest
      */
+    description?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ApproveCoinListingRequestRequest
+     */
+    attributes?: Array<ApproveCoinListingRequestRequestAttributesEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApproveCoinListingRequestRequest
+     */
     chargeKrw?: string;
     /**
      * 
@@ -168,6 +180,18 @@ export interface ApproveCoinListingRequestRequest {
      */
     coinListingDate?: string;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ApproveCoinListingRequestRequestAttributesEnum {
+    STANDARD = 'ERC20_STANDARD',
+    NONSTANDARDRETURNTYPE = 'ERC20_NON_STANDARD_RETURN_TYPE',
+    REBASE = 'ERC20_REBASE',
+    PAUSABLE = 'ERC20_PAUSABLE'
+}
+
 /**
  * 
  * @export
@@ -372,6 +396,12 @@ export interface CoinListingRequestDTO {
      * @memberof CoinListingRequestDTO
      */
     cause: Cause;
+    /**
+     * 
+     * @type {string}
+     * @memberof CoinListingRequestDTO
+     */
+    message?: string;
     /**
      * 
      * @type {Blockchain}
