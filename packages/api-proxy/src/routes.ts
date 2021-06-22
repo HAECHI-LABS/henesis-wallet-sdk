@@ -5,12 +5,16 @@ import { EthModule } from "./v3/eth/eth.module";
 import { EthModule as EthV2Module } from "./v2/eth/eth.module";
 import { KlayModule as KlayV2Module } from "./v2/klay/klay.module";
 import { BtcModule as BtcV2Module } from "./v2/btc/btc.module";
+import { FilModule } from "./v3/fil/fil.module";
 
 export const routes: Routes = [
   {
     path: "/v3",
     module: ApiV3Module,
-    childrens: [{ path: "/ethereum", module: EthModule }],
+    childrens: [
+      { path: "/ethereum", module: EthModule },
+      { path: "/filecoin", module: FilModule },
+    ],
   },
   {
     path: "/v2",
