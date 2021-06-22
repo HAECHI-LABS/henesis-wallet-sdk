@@ -543,7 +543,6 @@ export class EthMasterWallet extends EthLikeWallet {
     const {
       id,
       name: walletName,
-      blockchain,
       address,
       status,
       createdAt,
