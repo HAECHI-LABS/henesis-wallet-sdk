@@ -51,6 +51,7 @@ import {
   convertDtoToTransfer,
   convertFilFlushTargetToDto,
   convertDtoToFlush,
+  convertBalanceDtoToFilBalance,
 } from "./utils";
 import { ProtocolIndicator } from "./fil-core-lib/constants";
 
@@ -134,19 +135,7 @@ export class FilWallet extends FilAbstractWallet {
     const response = await this.client.get<BalanceDTO>(
       `${this.baseUrl}/balance`
     );
-    return [
-      {
-        coinId: null,
-        symbol: "FIL",
-        amount: BNConverter.hexStringToBN(String(response.confirmedBalance)),
-        spendableAmount: BNConverter.hexStringToBN(
-          String(response.spendableBalance)
-        ),
-        coinType: "FIL",
-        name: "Filecoin",
-        decimals: 18,
-      },
-    ];
+    return [convertBalanceDtoToFilBalance(response)];
   }
 
   getEncryptionKey(): string {

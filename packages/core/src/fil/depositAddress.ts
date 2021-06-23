@@ -10,10 +10,10 @@ import {
   DepositAddressDTO,
   PatchWalletNameRequest,
 } from "../__generate__/fil";
-import { BNConverter } from "../utils/common";
 import { convertWalletStatus, WalletStatus } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import { FilKeychains } from "./keychains";
+import { convertBalanceDtoToFilBalance } from "./utils";
 
 export interface FilDepositAddressData
   extends Omit<FilAbstractWalletData, "encryptionKey"> {
@@ -83,19 +83,7 @@ export class FilDepositAddress extends FilAbstractWallet {
     const response = await this.client.get<BalanceDTO>(
       `${this.baseUrl}/balance`
     );
-    return [
-      {
-        coinId: null,
-        symbol: "FIL",
-        amount: BNConverter.hexStringToBN(String(response.confirmedBalance)),
-        spendableAmount: BNConverter.hexStringToBN(
-          String(response.spendableBalance)
-        ),
-        coinType: "FIL",
-        name: "Filecoin",
-        decimals: 18,
-      },
-    ];
+    return [convertBalanceDtoToFilBalance(response)];
   }
 
   getEncryptionKey(): string {
