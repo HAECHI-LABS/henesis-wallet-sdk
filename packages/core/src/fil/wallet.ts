@@ -37,14 +37,13 @@ import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { EthTransaction } from "../eth/abstractWallet";
 import cbor from "ipld-dag-cbor";
 import { serializeBigNum } from "./fil-core-lib/data";
-import { addressAsBytes } from "./fil-core-lib/utils";
+import { addressAsBytes, getCID, encode } from "./fil-core-lib/utils";
 import { MethodMultisig } from "./fil-core-lib/types";
 import {
   transactionSerialize,
   transactionSerializeRaw,
 } from "./fil-core-lib/signer";
 import {
-  calculateCidFromBytes,
   convertMessageToObject,
   convertRawTransactionToMessage,
   convertSignedTransactionToRawSignedTransactionDTO,
@@ -354,7 +353,7 @@ export class FilWallet extends FilAbstractWallet {
       passphrase,
       isSeedEncrypted
     );
-    const cid = await this.calculateCidFromMessage(message);
+    const cid = this.calculateCidFromMessage(message);
     return {
       cid,
       ...message,
@@ -392,10 +391,11 @@ export class FilWallet extends FilAbstractWallet {
    * reference
    * - https://github.com/multiformats/js-cid
    */
-  private async calculateCidFromMessage(message: Message): Promise<string> {
+  private calculateCidFromMessage(message: Message): string {
     const messageObject = convertMessageToObject(message);
-    const serializedMessage = transactionSerialize(messageObject);
-    return calculateCidFromBytes(Buffer.from(serializedMessage, "hex"));
+    return new TextDecoder()
+      .decode(encode(getCID(transactionSerializeRaw(messageObject))))
+      .toLocaleLowerCase();
   }
 
   private async createFlushTarget(
