@@ -173,11 +173,6 @@ export const convertDtoToFlush = (flushDTO: FlushDTO): FilFlush => {
     : null;
 };
 
-export const calculateCidFromBytes = async (bytes: Buffer): Promise<string> => {
-  const hash = await multihashing(bytes, "sha2-256");
-  return new Cid(1, "dag-pb", Buffer.from(hash)).toString();
-};
-
 export const convertBalanceDtoToFilBalance = (
   balanceDTO: BalanceDTO
 ): Balance => {
