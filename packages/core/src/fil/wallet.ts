@@ -39,7 +39,10 @@ import cbor from "ipld-dag-cbor";
 import { serializeBigNum } from "./fil-core-lib/data";
 import { addressAsBytes } from "./fil-core-lib/utils";
 import { MethodMultisig } from "./fil-core-lib/types";
-import { transactionSerialize } from "./fil-core-lib/signer";
+import {
+  transactionSerialize,
+  transactionSerializeRaw,
+} from "./fil-core-lib/signer";
 import {
   calculateCidFromBytes,
   convertMessageToObject,
@@ -241,7 +244,8 @@ export class FilWallet extends FilAbstractWallet {
     const signedTransaction = await this.signRawTransaction(
       rawTransaction,
       this.getAccountKey(),
-      passphrase
+      passphrase,
+      true
     );
     const transferData = await this.client.post<NoUndefinedField<TransferDTO>>(
       `${this.baseUrl}/transactions`,
@@ -351,13 +355,15 @@ export class FilWallet extends FilAbstractWallet {
   private async signRawTransaction(
     rawTransaction: RawTransaction,
     key: Key,
-    passphrase: string
+    passphrase: string,
+    isSeedEncrypted?: boolean
   ): Promise<SignedTransaction> {
     const message = convertRawTransactionToMessage(rawTransaction);
     const messageSignature = this.createMessageSignature(
       message,
       key,
-      passphrase
+      passphrase,
+      isSeedEncrypted
     );
     const cid = await this.calculateCidFromMessage(message);
     return {
@@ -376,11 +382,17 @@ export class FilWallet extends FilAbstractWallet {
   private createMessageSignature(
     message: Message,
     key: Key,
-    passphrase: string
+    passphrase: string,
+    isSeedEncrypted?: boolean
   ): Signature {
     const msgObject = convertMessageToObject(message);
     const serializedMsg = transactionSerialize(msgObject);
-    const signature = this.keychains.sign(key, passphrase, serializedMsg);
+    const signature = this.keychains.sign(
+      key,
+      passphrase,
+      serializedMsg,
+      isSeedEncrypted
+    );
     return {
       data: signature,
       type: ProtocolIndicator.SECP256K1,

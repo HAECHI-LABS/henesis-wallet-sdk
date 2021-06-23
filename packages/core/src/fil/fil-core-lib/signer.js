@@ -1,5 +1,5 @@
-const addressAsBytes = require("./utils");
-const serializeBigNum = require("./data");
+const { addressAsBytes } = require("./utils");
+const { serializeBigNum } = require("./data");
 const cbor = require("ipld-dag-cbor").util;
 
 const lowercaseKeys = require("lowercase-keys");
