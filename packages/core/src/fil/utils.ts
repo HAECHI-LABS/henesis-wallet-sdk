@@ -1,10 +1,11 @@
 import {
   FlushDTO,
   FlushTarget,
-  RawSignedTransactionDTO,
+  BalanceDTO,
   TransactionDTO,
   TransferDTO,
   TransferInternalDTO,
+  RawSignedTransactionDTO,
 } from "../__generate__/fil";
 import { FilTransfer, FilTransferInternal } from "./transfers";
 import { FilTransaction } from "./abstractWallet";
@@ -17,6 +18,7 @@ import {
   SignedTransaction,
 } from "./wallet";
 import { BNConverter } from "../utils/common";
+import { Balance } from "../types";
 
 const Cid = require("cids");
 const multihashing = require("multihashing-async");
@@ -163,4 +165,18 @@ export const convertDtoToFlush = (flushDTO: FlushDTO): FilFlush => {
 export const calculateCidFromBytes = async (bytes: Buffer): Promise<string> => {
   const hash = await multihashing(new Uint8Array(bytes), "sha2-256");
   return new Cid(1, "dag-pb", hash).toString();
+};
+
+export const convertBalanceDtoToFilBalance = (
+  balanceDTO: BalanceDTO
+): Balance => {
+  return {
+    coinId: null,
+    symbol: "FIL",
+    amount: BNConverter.hexStringToBN(balanceDTO.confirmedBalance),
+    spendableAmount: BNConverter.hexStringToBN(balanceDTO.spendableBalance),
+    coinType: "FIL",
+    name: "Filecoin",
+    decimals: 18,
+  };
 };

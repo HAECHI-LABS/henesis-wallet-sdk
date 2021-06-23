@@ -7,15 +7,19 @@ export class BalanceDTO {
   ticker: string;
   decimals: number;
 
+  static fromBalance(balance: Balance): BalanceDTO {
+    return {
+      amount: balance.amount.toString(10),
+      spendableAmount: balance.spendableAmount.toString(10),
+      name: balance.name,
+      ticker: balance.symbol,
+      decimals: balance.decimals,
+    };
+  }
+
   static fromBalances(balances: Balance[]): BalanceDTO[] {
     return balances.map((balance: Balance): BalanceDTO => {
-      return {
-        amount: balance.amount.toString(10),
-        spendableAmount: balance.spendableAmount.toString(10),
-        name: balance.name,
-        ticker: balance.symbol,
-        decimals: balance.decimals,
-      };
+      return this.fromBalance(balance);
     });
   }
 }
