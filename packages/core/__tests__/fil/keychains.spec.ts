@@ -55,13 +55,4 @@ describe('FilKeychains',() => {
         .toThrow(new Error('passphrase is different'));
     });
   });
-
-  // TODO: implement me
-  describe.skip('#sign()', () => {
-    it('should sign correctly', () => {
-      const hexPayload = '';
-      const signedPayload = keychains.sign(key, 'password', hexPayload);
-      expect(signedPayload).toEqual('');
-    })
-  })
 })
