@@ -4,6 +4,7 @@ import {
   TransferStatus,
   PaginationTransferInternalDTO,
   PaginationTransferDTO,
+  TransferType,
 } from "../__generate__/fil";
 import BN from "bn.js";
 
@@ -42,13 +43,13 @@ export interface FilTransferPaginationOptions extends PaginationOptions {
   address?: string;
   toAddress?: string;
   fromAddress?: string;
-  transactionHash?: string;
   updatedAtGte?: Timestamp;
   updatedAtLt?: Timestamp;
   status?: TransferStatus;
   walletId?: string;
   orgId?: string;
   transactionId?: string;
+  transferType?: TransferType;
 }
 
 export class FilTransfers {
