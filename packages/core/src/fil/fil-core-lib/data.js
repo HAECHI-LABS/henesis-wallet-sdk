@@ -1,3 +1,5 @@
+const BN = require("bn.js");
+
 function serializeBigNum(gasprice) {
   if (gasprice == "0") {
     return Buffer.from("");
