@@ -72,14 +72,21 @@ export const convertSignedTransactionToRawSignedTransactionDTO = (
 ): RawSignedTransactionDTO => {
   return transaction
     ? {
-        ...transaction,
-        nonce: transaction.nonce
-          ? BNConverter.bnToHexString(new BN(transaction.nonce))
-          : null,
+        version: transaction.version,
+        to: transaction.to,
+        from: transaction.from,
+        nonce:
+          transaction.nonce != null
+            ? BNConverter.bnToHexString(new BN(transaction.nonce))
+            : null,
         value: BNConverter.bnToHexStringOrElseNull(transaction.value),
-        gasLimit: transaction.gasLimit
-          ? BNConverter.bnToHexString(new BN(transaction.gasLimit))
-          : null,
+        method: transaction.method,
+        params: transaction.params,
+        cid: transaction.cid,
+        gasLimit:
+          transaction.gasLimit != null
+            ? BNConverter.bnToHexString(new BN(transaction.gasLimit))
+            : null,
         gasFeeCap: BNConverter.bnToHexStringOrElseNull(transaction.gasFeeCap),
         gasPremium: BNConverter.bnToHexStringOrElseNull(transaction.gasPremium),
         signature: transaction.data,
@@ -106,10 +113,12 @@ export const convertMessageToObject = (
         to: message.to,
         from: message.from,
         nonce: message.nonce,
-        value: message.value ? message.value.toString() : null,
+        value: message.value != null ? message.value.toString() : null,
         gaslimit: message.gasLimit,
-        gasfeecap: message.gasFeeCap ? message.gasFeeCap.toString() : null,
-        gaspremium: message.gasPremium ? message.gasPremium.toString() : null,
+        gasfeecap:
+          message.gasFeeCap != null ? message.gasFeeCap.toString() : null,
+        gaspremium:
+          message.gasPremium != null ? message.gasPremium.toString() : null,
         method: message.method,
         params: message.params,
       }
@@ -123,18 +132,20 @@ export const convertRawTransactionToMessage = (
     ? {
         ...rawTransaction,
         value: BNConverter.hexStringToBnOrElseNull(rawTransaction.value),
-        gasLimit: rawTransaction.gasLimit
-          ? BNConverter.hexStringToBN(rawTransaction.gasLimit).toNumber()
-          : null,
+        gasLimit:
+          rawTransaction.gasLimit != null
+            ? BNConverter.hexStringToBN(rawTransaction.gasLimit).toNumber()
+            : null,
         gasFeeCap: BNConverter.hexStringToBnOrElseNull(
           rawTransaction.gasFeeCap
         ),
         gasPremium: BNConverter.hexStringToBnOrElseNull(
           rawTransaction.gasPremium
         ),
-        nonce: rawTransaction.nonce
-          ? BNConverter.hexStringToBN(rawTransaction.nonce).toNumber()
-          : null,
+        nonce:
+          rawTransaction.nonce != null
+            ? BNConverter.hexStringToBN(rawTransaction.nonce).toNumber()
+            : null,
       }
     : null;
 };
@@ -163,8 +174,8 @@ export const convertDtoToFlush = (flushDTO: FlushDTO): FilFlush => {
 };
 
 export const calculateCidFromBytes = async (bytes: Buffer): Promise<string> => {
-  const hash = await multihashing(new Uint8Array(bytes), "sha2-256");
-  return new Cid(1, "dag-pb", hash).toString();
+  const hash = await multihashing(bytes, "sha2-256");
+  return new Cid(1, "dag-pb", Buffer.from(hash)).toString();
 };
 
 export const convertBalanceDtoToFilBalance = (

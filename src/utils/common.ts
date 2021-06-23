@@ -76,14 +76,14 @@ export class BNConverter {
   }
 
   static bnToHexStringOrElseNull(bn: BN): string | null {
-    if (!bn) {
+    if (bn == null) {
       return null;
     }
     return this.bnToHexString(bn);
   }
 
   static hexStringToBnOrElseNull(hexString: string): BN | null {
-    if (!hexString) {
+    if (hexString == null) {
       return null;
     }
     return this.hexStringToBN(hexString);
