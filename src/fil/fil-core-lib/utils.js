@@ -1,3 +1,7 @@
+/*
+ * references
+ * - https://github.com/Zondax/filecoin-signing-tools/blob/master/signer-npm/js/src/utils.js
+ */
 const blake = require("blakejs");
 const base32Decode = require("base32-decode");
 const base32Encode = require("base32-encode");
@@ -14,6 +18,13 @@ const {
 const { ProtocolIndicator } = require("./constants");
 
 const CID_PREFIX = Buffer.from([0x01, 0x71, 0xa0, 0xe4, 0x02, 0x20]);
+
+function getCID(message) {
+  const blakeCtx = blake.blake2bInit(32);
+  blake.blake2bUpdate(blakeCtx, message);
+  const hash = Buffer.from(blake.blake2bFinal(blakeCtx));
+  return Buffer.concat([CID_PREFIX, hash]);
+}
 
 function getDigest(message) {
   // digest = blake2-256( prefix + blake2b-256(tx) )

@@ -15,7 +15,8 @@ import { FilAccountKey } from "./abstractWallet";
 const base32Encode = require("base32-encode");
 const elliptic = require("elliptic");
 // eslint-disable-next-line new-cap
-const secp256k1 = new elliptic.ec("secp256k1");
+const ec = new elliptic.ec("secp256k1");
+const secp256k1 = require("secp256k1");
 const bip32 = require("bip32");
 const bip39 = require("bip39");
 
@@ -37,7 +38,7 @@ export class FilKeychains implements Keychains {
   ): FilKeyWithPriv {
     const seed = this.decrypt(key, password);
     const priv = bip32.fromSeed(Buffer.from(seed, "hex")).privateKey;
-    const ecKey = secp256k1.keyFromPrivate(priv);
+    const ecKey = ec.keyFromPrivate(priv);
     const privateKey = `0x${ecKey.getPrivate("hex")}`;
     const publicKey = `0x${ecKey.getPublic(false, "hex").slice(2)}`;
     const address = this.getAddress(ecKey.getPublic(false, "hex"));
@@ -58,7 +59,7 @@ export class FilKeychains implements Keychains {
   create(password: string): KeyWithPriv {
     const seed = this.generateRandomSeed();
     const privBuffer = bip32.fromSeed(seed).privateKey;
-    const keyPair = secp256k1.keyFromPrivate(privBuffer);
+    const keyPair = ec.keyFromPrivate(privBuffer);
     const privateKey = `0x${keyPair.getPrivate("hex")}`;
     const publicKey = `0x${keyPair.getPublic(false, "hex").slice(2)}`;
     const address = this.getAddress(keyPair.getPublic(false, "hex"));
@@ -79,7 +80,7 @@ export class FilKeychains implements Keychains {
     const seed = this.generateRandomSeed();
     const privBuffer = bip32.fromSeed(seed).privateKey;
     const chainCode = `0x${bip32.fromSeed(seed).chainCode.toString("hex")}`;
-    const keyPair = secp256k1.keyFromPrivate(privBuffer);
+    const keyPair = ec.keyFromPrivate(privBuffer);
     const privateKey = `0x${keyPair.getPrivate("hex")}`;
     const publicKey = `0x${keyPair.getPublic(false, "hex").slice(2)}`;
     const address = this.getAddress(keyPair.getPublic(false, "hex"));
@@ -102,7 +103,7 @@ export class FilKeychains implements Keychains {
     const seed = this.decrypt(key, password);
     const hdKey = bip32.fromSeed(Buffer.from(seed, "hex"));
     const childKey = hdKey.derive(childNumber);
-    const childKeyPair = secp256k1.keyFromPrivate(childKey.privateKey);
+    const childKeyPair = ec.keyFromPrivate(childKey.privateKey);
 
     const privateKey = `0x${childKeyPair.getPrivate("hex")}`;
     const publicKey = `0x${childKeyPair.getPublic(false, "hex").slice(2)}`;
@@ -120,8 +121,12 @@ export class FilKeychains implements Keychains {
     };
   }
 
-  decrypt(key: Key, password: string): string {
+  decrypt(key: Key, password: string, isSeedEncrypted?: boolean): string {
     try {
+      if (isSeedEncrypted == true) {
+        const seed = sjcl.decrypt(password, key.keyFile);
+        return FilKeychains.privateKeyFromSeed(seed);
+      }
       return sjcl.decrypt(password, key.keyFile);
     } catch (error) {
       if (error.message.includes("ccm: tag doesn't match")) {
@@ -135,8 +140,15 @@ export class FilKeychains implements Keychains {
     }
   }
 
-  sign(key: Key, password: string, hexPayload: string): string {
-    const privateKey = tryToPrivateKeyBuffer(this.decrypt(key, password));
+  sign(
+    key: Key,
+    password: string,
+    hexPayload: string,
+    isSeedDecrypted?: boolean
+  ): string {
+    const privateKey = tryToPrivateKeyBuffer(
+      this.decrypt(key, password, isSeedDecrypted).slice(2)
+    );
 
     const messageDigest = getDigest(Buffer.from(hexPayload, "hex"));
     const signature = secp256k1.ecdsaSign(messageDigest, privateKey);
@@ -145,6 +157,12 @@ export class FilKeychains implements Keychains {
       Buffer.from(signature.signature),
       Buffer.from([signature.recid]),
     ]).toString("base64");
+  }
+
+  private static privateKeyFromSeed(seed: string): string {
+    const privBuffer = bip32.fromSeed(Buffer.from(seed, "hex")).privateKey;
+    const keyPair = ec.keyFromPrivate(privBuffer);
+    return `0x${keyPair.getPrivate("hex")}`;
   }
 
   private encryptValueToKeyFile(value: string, password: string) {
