@@ -1,16 +1,14 @@
 import {
-  BalanceDTO,
   FeeHistoryDTO,
   FeeWalletBalanceDTO,
   FeeWalletDTO,
   HenesisKeyDTO,
   ProposalFeeWalletDTO,
 } from "../__generate__/fil";
-import { Pagination } from "../types";
+import { Balance, Pagination } from "../types";
 import { Client } from "../httpClient";
 import { FilTransaction } from "./abstractWallet";
-import BN from "bn.js";
-import { BNConverter } from "../utils/common";
+import { convertBalanceDtoToFilBalance } from "./utils";
 
 export type FilHenesisKey = HenesisKeyDTO;
 
@@ -22,32 +20,19 @@ export interface FilFeeWallet
   proposalFeeWallets: FilProposalFeeWallet[];
 }
 
-export interface FilBalance
-  extends Omit<BalanceDTO, "confirmedBalance" | "spendableBalance"> {
-  confirmedBalance: BN;
-  spendableBalance: BN;
-}
-
-export interface FilBalanceWithId extends FilBalance {
+export interface FilBalanceWithId extends Balance {
   id: string;
 }
 
 export interface FilFeeWalletBalance
   extends Omit<FeeWalletBalanceDTO, "defaultFeeWallet" | "proposalFeeWallets"> {
-  defaultFeeWallet: FilBalance;
+  defaultFeeWallet: Balance;
   proposalFeeWallets: FilBalanceWithId[];
 }
 
 export interface FilFeeHistory extends Omit<FeeHistoryDTO, "transaction"> {
   transaction: FilTransaction;
 }
-
-const convertFilBalanceDTO = (balanceDTO: BalanceDTO): FilBalance => {
-  return {
-    confirmedBalance: BNConverter.hexStringToBN(balanceDTO.confirmedBalance),
-    spendableBalance: BNConverter.hexStringToBN(balanceDTO.spendableBalance),
-  };
-};
 
 export class FilFeeWallets {
   private readonly client: Client;
@@ -57,8 +42,7 @@ export class FilFeeWallets {
   }
 
   async getFeeWallet(): Promise<FilFeeWallet> {
-    const response = await this.client.get<FeeWalletDTO>(`/fee-wallets/me`);
-    return response;
+    return await this.client.get<FeeWalletDTO>(`/fee-wallets/me`);
   }
 
   async getFeeWalletBalance(): Promise<FilFeeWalletBalance> {
@@ -66,11 +50,13 @@ export class FilFeeWallets {
       `/fee-wallets/balance`
     );
     return {
-      defaultFeeWallet: convertFilBalanceDTO(response.defaultFeeWallet),
+      defaultFeeWallet: convertBalanceDtoToFilBalance(
+        response.defaultFeeWallet
+      ),
       proposalFeeWallets: response.proposalFeeWallets.map((item) => {
         return {
           id: item.id,
-          ...convertFilBalanceDTO(item),
+          ...convertBalanceDtoToFilBalance(item),
         };
       }),
     };
