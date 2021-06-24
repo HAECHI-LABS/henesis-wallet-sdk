@@ -320,6 +320,12 @@ export interface CallEventDTO {
      * @type {string}
      * @memberof CallEventDTO
      */
+    metadata?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CallEventDTO
+     */
     walletId: string;
     /**
      * 
@@ -597,6 +603,12 @@ export interface CreateBatchTransactionRequest {
      * @type {string}
      * @memberof CreateBatchTransactionRequest
      */
+    metadata?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBatchTransactionRequest
+     */
     walletId: string;
     /**
      * 
@@ -798,6 +810,12 @@ export interface CreateMultiSigTransactionRequest {
      * @type {string}
      * @memberof CreateMultiSigTransactionRequest
      */
+    metadata?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateMultiSigTransactionRequest
+     */
     walletId: string;
     /**
      * 
@@ -836,6 +854,12 @@ export interface CreateMultiSigTransactionRequest {
  * @interface CreateMultiSigTransactionRequestV1
  */
 export interface CreateMultiSigTransactionRequestV1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateMultiSigTransactionRequestV1
+     */
+    metadata?: string;
     /**
      * 
      * @type {string}
@@ -1312,6 +1336,12 @@ export interface FlushRequest {
      * @memberof FlushRequest
      */
     targets: Array<FlushTarget>;
+    /**
+     * 
+     * @type {string}
+     * @memberof FlushRequest
+     */
+    metadata?: string;
     /**
      * 
      * @type {string}
@@ -2255,6 +2285,12 @@ export interface ReplaceTransactionRequest {
      * @type {string}
      * @memberof ReplaceTransactionRequest
      */
+    metadata?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReplaceTransactionRequest
+     */
     walletId: string;
     /**
      * 
@@ -2969,6 +3005,12 @@ export interface ValueTransferEventDTO {
      * @memberof ValueTransferEventDTO
      */
     confirmation: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ValueTransferEventDTO
+     */
+    metadata?: string;
     /**
      * 
      * @type {string}

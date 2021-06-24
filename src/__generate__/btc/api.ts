@@ -158,6 +158,12 @@ export interface ApproveWithdrawalApprovalRequest {
      * @type {string}
      * @memberof ApproveWithdrawalApprovalRequest
      */
+    metadata?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApproveWithdrawalApprovalRequest
+     */
     otpCode: string;
 }
 /**
@@ -410,6 +416,12 @@ export interface CreateTransactionRequest {
      * @memberof CreateTransactionRequest
      */
     outputs: Array<CreateTransactionOutputDTO>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateTransactionRequest
+     */
+    metadata?: string;
     /**
      * 
      * @type {string}
@@ -1243,6 +1255,12 @@ export interface TransferDTO {
      * @memberof TransferDTO
      */
     confirmation: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferDTO
+     */
+    metadata?: string;
     /**
      * 
      * @type {string}
