@@ -177,10 +177,7 @@ export const convertDtoToFlush = (flushDTO: FlushDTO): FilFlush => {
   return flushDTO
     ? {
         ...flushDTO,
-        transfers: flushDTO.transfers.map(
-          (transferDTO: TransferDTO): FilTransfer =>
-            convertDtoToTransfer(transferDTO)
-        ),
+        transfers: flushDTO.transfers.map(convertDtoToTransfer),
       }
     : null;
 };

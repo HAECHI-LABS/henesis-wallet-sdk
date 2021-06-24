@@ -19,6 +19,7 @@ import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import { PaginationDTO } from "../dto/pagination.dto";
 import { FilDepositAddress } from "@haechi-labs/henesis-wallet-core/lib/fil/depositAddress";
 import { WalletBalanceDTO } from "../dto/wallet-balance.dto";
+import { PaginationOptionsDTO } from "../dto/pagination-options.dto";
 
 @Injectable()
 export class WalletsService {
@@ -126,5 +127,27 @@ export class WalletsService {
       depositAddressId
     );
     return BalanceDTO.fromBalances(await depositAddress.getBalance());
+  }
+
+  public async getFlushes(
+    sdk: SDK,
+    walletId: string,
+    options: PaginationOptionsDTO
+  ): Promise<PaginationDTO<FlushDTO>> {
+    const wallet: FilWallet = await sdk.fil.wallets.getWallet(walletId);
+    const data = await wallet.getFlushes(options);
+    return {
+      pagination: data.pagination,
+      results: data.results.map(FlushDTO.fromFlush),
+    };
+  }
+
+  public async getFlush(
+    sdk: SDK,
+    walletId: string,
+    flushId: string
+  ): Promise<FlushDTO> {
+    const wallet: FilWallet = await sdk.fil.wallets.getWallet(walletId);
+    return FlushDTO.fromFlush(await wallet.getFlush(flushId));
   }
 }

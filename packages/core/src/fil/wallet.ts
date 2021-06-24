@@ -5,7 +5,7 @@ import {
   FilWalletData,
 } from "./abstractWallet";
 import { Client } from "../httpClient";
-import { Balance, Key, Pagination } from "../types";
+import { Balance, Key, Pagination, PaginationOptions } from "../types";
 import {
   convertDepositAddressData,
   DepositAddressPaginationOptions,
@@ -19,6 +19,7 @@ import {
   FlushDTO,
   FlushInternalDTO,
   PaginationDepositAddressDTO,
+  PaginationFlushDTO,
   PatchWalletNameRequest,
   RawFlushDTO,
   RawFlushTransactionDTO,
@@ -280,14 +281,22 @@ export class FilWallet extends FilAbstractWallet {
     return convertDtoToFlush(flushData);
   }
 
-  // TODO: implement me
-  async getFlushes(): Promise<Pagination<FilFlush>> {
-    throw new Error("this feature is not supported yet");
+  async getFlushes(options?: PaginationOptions): Promise<Pagination<FilFlush>> {
+    const queryString = makeQueryString(options);
+    const flushDataList = await this.client.get<
+      NoUndefinedField<PaginationFlushDTO>
+    >(`${this.baseUrl}/flushes${queryString ? `?${queryString}` : ""}`);
+    return {
+      pagination: flushDataList.pagination,
+      results: flushDataList.results.map(convertDtoToFlush),
+    };
   }
 
-  // TODO: implement me
-  async getFlush(): Promise<FilFlush> {
-    throw new Error("this feature is not supported yet");
+  async getFlush(flushId: string): Promise<FilFlush> {
+    const flushData = await this.client.get<NoUndefinedField<FlushDTO>>(
+      `${this.baseUrl}/flushes/${flushId}`
+    );
+    return convertDtoToFlush(flushData);
   }
 
   // TODO: implement me

@@ -47,6 +47,11 @@ export const EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO: DepositAddressNotF
     code: 4000,
   };
 
+export const EXAMPLE_FLUSH_NOT_FOUND_EXCEPTION_DTO: FlushNotFoundException = {
+  message: "flush 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist",
+  code: 4000,
+};
+
 export class InvalidAccessTokenException {
   @ApiModelProperty({
     description: "API 에러 메시지",
@@ -155,6 +160,20 @@ export class DepositAddressNotFoundException {
   @ApiModelProperty({
     description: "헤네시스 API 에러 코드",
     example: EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO.code,
+  })
+  code: number;
+}
+
+export class FlushNotFoundException {
+  @ApiModelProperty({
+    description: "API 에러 메시지",
+    example: EXAMPLE_FLUSH_NOT_FOUND_EXCEPTION_DTO.message,
+  })
+  message: string;
+
+  @ApiModelProperty({
+    description: "헤네시스 API 에러 코드",
+    example: EXAMPLE_FLUSH_NOT_FOUND_EXCEPTION_DTO.code,
   })
   code: number;
 }

@@ -31,3 +31,9 @@ export const DEPOSIT_ADDRESS_ID_REQUIRED: ApiParamOptions = {
   required: true,
   description: "입금 주소 ID",
 };
+
+export const FLUSH_ID_REQUIRED: ApiParamOptions = {
+  name: "flushId",
+  required: true,
+  description: "집금 내역 ID",
+};
