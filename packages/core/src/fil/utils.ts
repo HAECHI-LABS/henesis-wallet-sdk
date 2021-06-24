@@ -67,29 +67,37 @@ export const convertTransferInternalDTO = (
 export const convertSignedTransactionToRawSignedTransactionDTO = (
   transaction: SignedTransaction
 ): RawSignedTransactionDTO => {
-  return transaction
-    ? {
-        version: transaction.version,
-        to: transaction.to,
-        from: transaction.from,
+  if (transaction) {
+    const message = transaction.message;
+    const signature = transaction.signature;
+    return {
+      cid: transaction.cid,
+      message: {
+        cid: message.cid,
+        version: message.version,
+        to: message.to,
+        from: message.from,
         nonce:
-          transaction.nonce != null
-            ? BNConverter.bnToHexString(new BN(transaction.nonce))
+          message.nonce != null
+            ? BNConverter.bnToHexString(new BN(message.nonce))
             : null,
-        value: BNConverter.bnToHexStringOrElseNull(transaction.value),
-        method: transaction.method,
-        params: transaction.params,
-        cid: transaction.cid,
+        value: BNConverter.bnToHexStringOrElseNull(message.value),
+        method: message.method,
+        params: message.params,
         gasLimit:
-          transaction.gasLimit != null
-            ? BNConverter.bnToHexString(new BN(transaction.gasLimit))
+          message.gasLimit != null
+            ? BNConverter.bnToHexString(new BN(message.gasLimit))
             : null,
-        gasFeeCap: BNConverter.bnToHexStringOrElseNull(transaction.gasFeeCap),
-        gasPremium: BNConverter.bnToHexStringOrElseNull(transaction.gasPremium),
-        signature: transaction.data,
-        signatureType: transaction.type,
-      }
-    : null;
+        gasFeeCap: BNConverter.bnToHexStringOrElseNull(message.gasFeeCap),
+        gasPremium: BNConverter.bnToHexStringOrElseNull(message.gasPremium),
+      },
+      signature: {
+        data: signature.data,
+        type: signature.type,
+      },
+    };
+  }
+  return null;
 };
 
 export const convertMessageToObject = (

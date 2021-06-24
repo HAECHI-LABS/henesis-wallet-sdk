@@ -3118,17 +3118,12 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
     return {
         /**
          * 
-         * @param {string} organizationId 
          * @param {string} requestId 
          * @param {ApproveCoinListingRequestRequest} approveCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        approveCoinListingRequest: async (organizationId: string, requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling approveCoinListingRequest.');
-            }
+        approveCoinListingRequest: async (requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'requestId' is not null or undefined
             if (requestId === null || requestId === undefined) {
                 throw new RequiredError('requestId','Required parameter requestId was null or undefined when calling approveCoinListingRequest.');
@@ -3137,8 +3132,7 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
             if (approveCoinListingRequestRequest === null || approveCoinListingRequestRequest === undefined) {
                 throw new RequiredError('approveCoinListingRequestRequest','Required parameter approveCoinListingRequestRequest was null or undefined when calling approveCoinListingRequest.');
             }
-            const localVarPath = `/api/v2/operation/organizations/{organizationId}/coin-listing-requests/{requestId}/approve`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+            const localVarPath = `/api/v2/operation/coin-listing-requests/{requestId}/approve`
                 .replace(`{${"requestId"}}`, encodeURIComponent(String(requestId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -3276,6 +3270,41 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
+         * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinListingRequest: async (requestId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'requestId' is not null or undefined
+            if (requestId === null || requestId === undefined) {
+                throw new RequiredError('requestId','Required parameter requestId was null or undefined when calling getCoinListingRequest.');
+            }
+            const localVarPath = `/api/v2/operation/coin-listing-requests/{requestId}`
+                .replace(`{${"requestId"}}`, encodeURIComponent(String(requestId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3340,17 +3369,12 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
-         * @param {string} organizationId 
          * @param {string} requestId 
          * @param {RejectCoinListingRequestRequest} rejectCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rejectCoinListingRequest: async (organizationId: string, requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling rejectCoinListingRequest.');
-            }
+        rejectCoinListingRequest: async (requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'requestId' is not null or undefined
             if (requestId === null || requestId === undefined) {
                 throw new RequiredError('requestId','Required parameter requestId was null or undefined when calling rejectCoinListingRequest.');
@@ -3359,8 +3383,7 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
             if (rejectCoinListingRequestRequest === null || rejectCoinListingRequestRequest === undefined) {
                 throw new RequiredError('rejectCoinListingRequestRequest','Required parameter rejectCoinListingRequestRequest was null or undefined when calling rejectCoinListingRequest.');
             }
-            const localVarPath = `/api/v2/operation/organizations/{organizationId}/coin-listing-requests/{requestId}/reject`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+            const localVarPath = `/api/v2/operation/coin-listing-requests/{requestId}/reject`
                 .replace(`{${"requestId"}}`, encodeURIComponent(String(requestId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -3399,14 +3422,13 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
     return {
         /**
          * 
-         * @param {string} organizationId 
          * @param {string} requestId 
          * @param {ApproveCoinListingRequestRequest} approveCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async approveCoinListingRequest(organizationId: string, requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).approveCoinListingRequest(organizationId, requestId, approveCoinListingRequestRequest, options);
+        async approveCoinListingRequest(requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3453,6 +3475,19 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCoinListingRequest(requestId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinListingRequestDTO>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getCoinListingRequest(requestId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3478,14 +3513,13 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
-         * @param {string} organizationId 
          * @param {string} requestId 
          * @param {RejectCoinListingRequestRequest} rejectCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async rejectCoinListingRequest(organizationId: string, requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).rejectCoinListingRequest(organizationId, requestId, rejectCoinListingRequestRequest, options);
+        async rejectCoinListingRequest(requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).rejectCoinListingRequest(requestId, rejectCoinListingRequestRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3502,14 +3536,13 @@ export const OperationControllerApiFactory = function (configuration?: Configura
     return {
         /**
          * 
-         * @param {string} organizationId 
          * @param {string} requestId 
          * @param {ApproveCoinListingRequestRequest} approveCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        approveCoinListingRequest(organizationId: string, requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): AxiosPromise<void> {
-            return OperationControllerApiFp(configuration).approveCoinListingRequest(organizationId, requestId, approveCoinListingRequestRequest, options).then((request) => request(axios, basePath));
+        approveCoinListingRequest(requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3540,6 +3573,15 @@ export const OperationControllerApiFactory = function (configuration?: Configura
         },
         /**
          * 
+         * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinListingRequest(requestId: string, options?: any): AxiosPromise<CoinListingRequestDTO> {
+            return OperationControllerApiFp(configuration).getCoinListingRequest(requestId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3557,14 +3599,13 @@ export const OperationControllerApiFactory = function (configuration?: Configura
         },
         /**
          * 
-         * @param {string} organizationId 
          * @param {string} requestId 
          * @param {RejectCoinListingRequestRequest} rejectCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rejectCoinListingRequest(organizationId: string, requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any): AxiosPromise<void> {
-            return OperationControllerApiFp(configuration).rejectCoinListingRequest(organizationId, requestId, rejectCoinListingRequestRequest, options).then((request) => request(axios, basePath));
+        rejectCoinListingRequest(requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).rejectCoinListingRequest(requestId, rejectCoinListingRequestRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3578,15 +3619,14 @@ export const OperationControllerApiFactory = function (configuration?: Configura
 export class OperationControllerApi extends BaseAPI {
     /**
      * 
-     * @param {string} organizationId 
      * @param {string} requestId 
      * @param {ApproveCoinListingRequestRequest} approveCoinListingRequestRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OperationControllerApi
      */
-    public approveCoinListingRequest(organizationId: string, requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any) {
-        return OperationControllerApiFp(this.configuration).approveCoinListingRequest(organizationId, requestId, approveCoinListingRequestRequest, options).then((request) => request(this.axios, this.basePath));
+    public approveCoinListingRequest(requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any) {
+        return OperationControllerApiFp(this.configuration).approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3624,6 +3664,17 @@ export class OperationControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {string} requestId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public getCoinListingRequest(requestId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).getCoinListingRequest(requestId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} organizationId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3645,15 +3696,14 @@ export class OperationControllerApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} organizationId 
      * @param {string} requestId 
      * @param {RejectCoinListingRequestRequest} rejectCoinListingRequestRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OperationControllerApi
      */
-    public rejectCoinListingRequest(organizationId: string, requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any) {
-        return OperationControllerApiFp(this.configuration).rejectCoinListingRequest(organizationId, requestId, rejectCoinListingRequestRequest, options).then((request) => request(this.axios, this.basePath));
+    public rejectCoinListingRequest(requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any) {
+        return OperationControllerApiFp(this.configuration).rejectCoinListingRequest(requestId, rejectCoinListingRequestRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

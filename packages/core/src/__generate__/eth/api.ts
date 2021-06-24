@@ -10671,6 +10671,41 @@ export const EthOperationControllerApiAxiosParamCreator = function (configuratio
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} address 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinByAddress1: async (address: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'address' is not null or undefined
+            if (address === null || address === undefined) {
+                throw new RequiredError('address','Required parameter address was null or undefined when calling getCoinByAddress1.');
+            }
+            const localVarPath = `/api/v2/eth/operation/coins/address/{address}`
+                .replace(`{${"address"}}`, encodeURIComponent(String(address)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -10707,6 +10742,19 @@ export const EthOperationControllerApiFp = function(configuration?: Configuratio
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {string} address 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCoinByAddress1(address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await EthOperationControllerApiAxiosParamCreator(configuration).getCoinByAddress1(address, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -10734,6 +10782,15 @@ export const EthOperationControllerApiFactory = function (configuration?: Config
          */
         createHenesisKey1(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): AxiosPromise<HenesisKeyDTO> {
             return EthOperationControllerApiFp(configuration).createHenesisKey1(createHenesisKeyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} address 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinByAddress1(address: string, options?: any): AxiosPromise<CoinDTO> {
+            return EthOperationControllerApiFp(configuration).getCoinByAddress1(address, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -10766,6 +10823,17 @@ export class EthOperationControllerApi extends BaseAPI {
      */
     public createHenesisKey1(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any) {
         return EthOperationControllerApiFp(this.configuration).createHenesisKey1(createHenesisKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} address 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthOperationControllerApi
+     */
+    public getCoinByAddress1(address: string, options?: any) {
+        return EthOperationControllerApiFp(this.configuration).getCoinByAddress1(address, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -16159,6 +16227,41 @@ export const KlayOperationControllerApiAxiosParamCreator = function (configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} address 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinByAddress: async (address: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'address' is not null or undefined
+            if (address === null || address === undefined) {
+                throw new RequiredError('address','Required parameter address was null or undefined when calling getCoinByAddress.');
+            }
+            const localVarPath = `/api/v2/klay/operation/coins/address/{address}`
+                .replace(`{${"address"}}`, encodeURIComponent(String(address)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -16195,6 +16298,19 @@ export const KlayOperationControllerApiFp = function(configuration?: Configurati
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {string} address 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCoinByAddress(address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await KlayOperationControllerApiAxiosParamCreator(configuration).getCoinByAddress(address, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -16222,6 +16338,15 @@ export const KlayOperationControllerApiFactory = function (configuration?: Confi
          */
         createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): AxiosPromise<HenesisKeyDTO> {
             return KlayOperationControllerApiFp(configuration).createHenesisKey(createHenesisKeyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} address 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinByAddress(address: string, options?: any): AxiosPromise<CoinDTO> {
+            return KlayOperationControllerApiFp(configuration).getCoinByAddress(address, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -16254,6 +16379,17 @@ export class KlayOperationControllerApi extends BaseAPI {
      */
     public createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any) {
         return KlayOperationControllerApiFp(this.configuration).createHenesisKey(createHenesisKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} address 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayOperationControllerApi
+     */
+    public getCoinByAddress(address: string, options?: any) {
+        return KlayOperationControllerApiFp(this.configuration).getCoinByAddress(address, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
