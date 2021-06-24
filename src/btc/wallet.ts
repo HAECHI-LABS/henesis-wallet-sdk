@@ -150,13 +150,15 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     to: string,
     amount: BN,
     passphrase: string,
-    feeRate?: BN
+    feeRate?: BN,
+    metadata?: string
   ): Promise<BtcSignedRawTransaction> {
     checkNullAndUndefinedParameter({ to, passphrase });
     const rawTransaction: BtcRawTransaction = await this.createRawTransaction(
       to,
       amount,
-      feeRate
+      feeRate,
+      metadata
     );
     const tx = new BitcoinTransaction();
     rawTransaction.inputs.forEach((input) => {
@@ -224,10 +226,11 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     amount: BN,
     passphrase: string,
     otpCode?: string,
-    feeRate?: BN
+    feeRate?: BN,
+    metadata?: string
   ): Promise<Transfer> {
     return this.sendSignedTransaction({
-      ...(await this.build(to, amount, passphrase, feeRate)),
+      ...(await this.build(to, amount, passphrase, feeRate, metadata)),
       otpCode: otpCode,
     });
   }
@@ -246,7 +249,8 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   async createRawTransaction(
     to: string,
     amount: BN,
-    feeRate?: BN
+    feeRate?: BN,
+    metadata?: string
   ): Promise<BtcRawTransaction> {
     const response = await this.client.post<RawTransactionDTO>(
       `${this.baseUrl}/raw-transactions`,
@@ -254,6 +258,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
         to,
         amount: BNConverter.bnToHexString(amount),
         feeRate: feeRate ? BNConverter.bnToHexString(feeRate) : undefined,
+        metadata: metadata,
       }
     );
     return {

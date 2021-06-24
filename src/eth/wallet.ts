@@ -134,7 +134,9 @@ export class EthWallet extends EthLikeWallet {
     data: string,
     passphrase: string,
     otpCode?: string,
-    gasPrice?: BN
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
   ): Promise<EthTransaction> {
     return super.contractCall(
       contractAddress,
@@ -142,7 +144,9 @@ export class EthWallet extends EthLikeWallet {
       data,
       passphrase,
       otpCode,
-      gasPrice
+      gasPrice,
+      gasLimit,
+      metadata
     );
   }
 
@@ -152,9 +156,20 @@ export class EthWallet extends EthLikeWallet {
     amount: BN,
     passphrase: string,
     otpCode?: string,
-    gasPrice?: BN
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
   ): Promise<EthTransaction> {
-    return super.transfer(coin, to, amount, passphrase, otpCode, gasPrice);
+    return super.transfer(
+      coin,
+      to,
+      amount,
+      passphrase,
+      otpCode,
+      gasPrice,
+      gasLimit,
+      metadata
+    );
   }
 
   sendTransaction(
@@ -391,12 +406,14 @@ export class EthWallet extends EthLikeWallet {
   async flush(
     flushTargets: Array<{ coinId: number; depositAddressId: string }>,
     gasPrice?: BN,
-    gasLimit?: BN
+    gasLimit?: BN,
+    metadata?: string
   ): Promise<EthTransaction> {
     const request: FlushRequest = {
       targets: flushTargets,
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
       gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
+      metadata,
     };
     const response = await this.client.post<TransactionDTO>(
       `${this.baseUrl}/flush`,
@@ -713,7 +730,8 @@ export class EthMasterWallet extends EthLikeWallet {
     passphrase: string,
     otpCode?: string,
     gasPrice?: BN,
-    gasLimit?: BN
+    gasLimit?: BN,
+    metadata?: string
   ): Promise<EthTransaction> {
     if (userWalletIds.length > 50 || userWalletIds.length == 0) {
       throw new Error(`only 1 ~ 50 accounts can be flushed at a time`);
@@ -747,7 +765,8 @@ export class EthMasterWallet extends EthLikeWallet {
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit || this.DEFAULT_CONTRACT_CALL_GAS_LIMIT
+      gasLimit || this.DEFAULT_CONTRACT_CALL_GAS_LIMIT,
+      metadata
     );
   }
 
