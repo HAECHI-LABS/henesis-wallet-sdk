@@ -20,9 +20,6 @@ import {
 import { BNConverter } from "../utils/common";
 import { Balance } from "../types";
 
-const Cid = require("cids");
-const multihashing = require("multihashing-async");
-
 export const convertDtoToTransaction = (
   transactionDTO: TransactionDTO
 ): FilTransaction => {
@@ -120,7 +117,7 @@ export const convertMessageToObject = (
         gaspremium:
           message.gasPremium != null ? message.gasPremium.toString() : null,
         method: message.method,
-        params: message.params,
+        params: message.params != null ? message.params : "",
       }
     : null;
 };
