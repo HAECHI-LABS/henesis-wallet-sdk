@@ -23,16 +23,22 @@ import { Balance } from "../types";
 export const convertDtoToTransaction = (
   transactionDTO: TransactionDTO
 ): FilTransaction => {
-  return transactionDTO
-    ? {
-        ...transactionDTO,
-        nonce: BNConverter.hexStringToBnOrElseNull(transactionDTO.nonce),
-        amount: BNConverter.hexStringToBnOrElseNull(transactionDTO.amount),
-        feeAmount: BNConverter.hexStringToBnOrElseNull(
-          transactionDTO.feeAmount
-        ),
-      }
-    : null;
+  if (transactionDTO) {
+    return {
+      ...transactionDTO,
+      nonce: BNConverter.hexStringToBnOrElseNull(transactionDTO.nonce),
+      amount: BNConverter.hexStringToBnOrElseNull(transactionDTO.amount),
+      gasLimit: BNConverter.hexStringToBnOrElseNull(transactionDTO.gasLimit),
+      gasFeeCap: BNConverter.hexStringToBnOrElseNull(transactionDTO.gasFeeCap),
+      gasPremium: BNConverter.hexStringToBnOrElseNull(
+        transactionDTO.gasPremium
+      ),
+      gasUsed: BNConverter.hexStringToBnOrElseNull(transactionDTO.gasUsed),
+      feeAmount: BNConverter.hexStringToBnOrElseNull(transactionDTO.feeAmount),
+    };
+  }
+
+  return null;
 };
 
 export const convertDtoToTransfer = (transferDTO: TransferDTO): FilTransfer => {

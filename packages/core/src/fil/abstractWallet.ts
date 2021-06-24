@@ -14,9 +14,22 @@ export const FilGasLimit = {
 };
 
 export interface FilTransaction
-  extends Omit<TransactionDTO, "nonce" | "amount" | "feeAmount"> {
+  extends Omit<
+    TransactionDTO,
+    | "nonce"
+    | "amount"
+    | "gasLimit"
+    | "gasFeeCap"
+    | "gasPremium"
+    | "gasUsed"
+    | "feeAmount"
+  > {
   nonce: BN;
   amount: BN;
+  gasLimit?: BN;
+  gasFeeCap?: BN;
+  gasPremium?: BN;
+  gasUsed?: BN;
   feeAmount?: BN;
 }
 

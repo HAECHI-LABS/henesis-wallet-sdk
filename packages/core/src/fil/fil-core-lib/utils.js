@@ -105,6 +105,9 @@ function tryToPrivateKeyBuffer(privateKey) {
     if (privateKey.slice(-1) === "=") {
       privateKey = Buffer.from(privateKey, "base64");
     } else {
+      if (privateKey.slice(0, 2) === "0x") {
+        privateKey = privateKey.slice(2);
+      }
       privateKey = Buffer.from(privateKey, "hex");
     }
   }
