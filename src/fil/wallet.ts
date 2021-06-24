@@ -25,7 +25,6 @@ import {
   BuildTransactionRequest,
   RawFlushDTO,
   RawFlushTransactionDTO,
-  FlushTarget,
 } from "../__generate__/fil";
 import BN from "bn.js";
 import { BlockchainType } from "../blockchain";
@@ -229,7 +228,7 @@ export class FilWallet extends FilAbstractWallet {
       `${this.baseUrl}/transactions/build`,
       this.createBuildTransactionRequest(to, amount, gasPremium)
     );
-    const signedTransaction = await this.signRawTransaction(
+    const signedTransaction = this.signRawTransaction(
       rawTransaction,
       this.getAccountKey(),
       passphrase,
@@ -262,19 +261,14 @@ export class FilWallet extends FilAbstractWallet {
       }
     );
     const flushTargets = rawFlushData.targets.map(
-      async (
-        rawFlushTransaction: RawFlushTransaction
-      ): Promise<FilFlushTarget> => {
-        return await this.createFlushTarget(rawFlushTransaction, passphrase);
+      (rawFlushTransaction: RawFlushTransaction): FilFlushTarget => {
+        return this.createFlushTarget(rawFlushTransaction, passphrase);
       }
     );
     const flushData = await this.client.post<NoUndefinedField<FlushDTO>>(
       `${this.baseUrl}/flushes`,
       {
-        targets: flushTargets.map(
-          async (target: Promise<FilFlushTarget>): Promise<FlushTarget> =>
-            convertFilFlushTargetToDto(await target)
-        ),
+        targets: flushTargets.map(convertFilFlushTargetToDto),
       }
     );
     return convertDtoToFlush(flushData);
@@ -340,18 +334,18 @@ export class FilWallet extends FilAbstractWallet {
     };
   }
 
-  private async signRawTransaction(
+  private signRawTransaction(
     rawTransaction: RawTransaction,
     key: Key,
     passphrase: string,
-    isSeedEncrypted?: boolean
-  ): Promise<SignedTransaction> {
+    fromSeed?: boolean
+  ): SignedTransaction {
     const message = convertRawTransactionToMessage(rawTransaction);
     const messageSignature = this.createMessageSignature(
       message,
       key,
       passphrase,
-      isSeedEncrypted
+      fromSeed
     );
     const cid = this.calculateCidFromMessage(message);
     return {
@@ -371,7 +365,7 @@ export class FilWallet extends FilAbstractWallet {
     message: Message,
     key: Key,
     passphrase: string,
-    isSeedEncrypted?: boolean
+    fromSeed?: boolean
   ): Signature {
     const msgObject = convertMessageToObject(message);
     const serializedMsg = transactionSerialize(msgObject);
@@ -379,7 +373,7 @@ export class FilWallet extends FilAbstractWallet {
       key,
       passphrase,
       serializedMsg,
-      isSeedEncrypted
+      fromSeed
     );
     return {
       data: signature,
@@ -398,20 +392,21 @@ export class FilWallet extends FilAbstractWallet {
       .toLocaleLowerCase();
   }
 
-  private async createFlushTarget(
+  private createFlushTarget(
     rawFlushTransaction: RawFlushTransaction,
     passphrase: string
-  ): Promise<FilFlushTarget> {
+  ): FilFlushTarget {
     const rawTransaction = rawFlushTransaction.rawTransaction;
     const depositAddressKey = this.keychains.derive(
       this.getAccountKey(),
       passphrase,
       rawFlushTransaction.childNumber
     );
-    const signedTransaction = await this.signRawTransaction(
+    const signedTransaction = this.signRawTransaction(
       rawTransaction,
       depositAddressKey,
-      passphrase
+      passphrase,
+      false
     );
     return {
       depositAddressId: rawFlushTransaction.depositAddressId,

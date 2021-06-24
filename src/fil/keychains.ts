@@ -121,13 +121,13 @@ export class FilKeychains implements Keychains {
     };
   }
 
-  decrypt(key: Key, password: string, isSeedEncrypted?: boolean): string {
+  decrypt(key: Key, password: string, fromSeed?: boolean): string {
     try {
-      if (isSeedEncrypted == true) {
-        const seed = sjcl.decrypt(password, key.keyFile);
-        return FilKeychains.privateKeyFromSeed(seed);
+      const decryptedKeyFile = sjcl.decrypt(password, key.keyFile);
+      if (fromSeed != null && fromSeed == true) {
+        return this.privateKeyFromSeed(decryptedKeyFile);
       }
-      return sjcl.decrypt(password, key.keyFile);
+      return decryptedKeyFile;
     } catch (error) {
       if (error.message.includes("ccm: tag doesn't match")) {
         error.message = `password error - ${error.message}`;
@@ -144,12 +144,11 @@ export class FilKeychains implements Keychains {
     key: Key,
     password: string,
     hexPayload: string,
-    isSeedDecrypted?: boolean
+    fromSeed?: boolean
   ): string {
     const privateKey = tryToPrivateKeyBuffer(
-      this.decrypt(key, password, isSeedDecrypted).slice(2)
+      this.decrypt(key, password, fromSeed)
     );
-
     const messageDigest = getDigest(Buffer.from(hexPayload, "hex"));
     const signature = secp256k1.ecdsaSign(messageDigest, privateKey);
 
@@ -159,7 +158,7 @@ export class FilKeychains implements Keychains {
     ]).toString("base64");
   }
 
-  private static privateKeyFromSeed(seed: string): string {
+  private privateKeyFromSeed(seed: string): string {
     const privBuffer = bip32.fromSeed(Buffer.from(seed, "hex")).privateKey;
     const keyPair = ec.keyFromPrivate(privBuffer);
     return `0x${keyPair.getPrivate("hex")}`;
