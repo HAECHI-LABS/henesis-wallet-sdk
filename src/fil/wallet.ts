@@ -1,30 +1,30 @@
 import {
-  FilWalletData,
   FilAbstractWallet,
   FilAccountKey,
   FilGasLimit,
+  FilWalletData,
 } from "./abstractWallet";
 import { Client } from "../httpClient";
 import { Balance, Key, Pagination } from "../types";
 import {
+  convertDepositAddressData,
   DepositAddressPaginationOptions,
   FilDepositAddress,
-  convertDepositAddressData,
 } from "./depositAddress";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import {
   BalanceDTO,
+  BuildTransactionRequest,
+  DepositAddressDTO,
   FlushDTO,
   FlushInternalDTO,
-  WalletDTO,
-  PatchWalletNameRequest,
   PaginationDepositAddressDTO,
-  DepositAddressDTO,
-  TransferDTO,
-  RawTransactionDTO,
-  BuildTransactionRequest,
+  PatchWalletNameRequest,
   RawFlushDTO,
   RawFlushTransactionDTO,
+  RawTransactionDTO,
+  TransferDTO,
+  WalletDTO,
 } from "../__generate__/fil";
 import BN from "bn.js";
 import { BlockchainType } from "../blockchain";
@@ -36,20 +36,21 @@ import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { EthTransaction } from "../eth/abstractWallet";
 import cbor from "ipld-dag-cbor";
 import { serializeBigNum } from "./fil-core-lib/data";
-import { addressAsBytes, getCID, encode } from "./fil-core-lib/utils";
+import { addressAsBytes, encode, getCID } from "./fil-core-lib/utils";
 import { MethodMultisig } from "./fil-core-lib/types";
 import {
+  signedTransactionSerializeRaw,
   transactionSerialize,
   transactionSerializeRaw,
 } from "./fil-core-lib/signer";
 import {
+  convertBalanceDtoToFilBalance,
+  convertDtoToFlush,
+  convertDtoToTransfer,
+  convertFilFlushTargetToDto,
   convertMessageToObject,
   convertRawTransactionToMessage,
   convertSignedTransactionToRawSignedTransactionDTO,
-  convertDtoToTransfer,
-  convertFilFlushTargetToDto,
-  convertDtoToFlush,
-  convertBalanceDtoToFilBalance,
 } from "./utils";
 import { ProtocolIndicator } from "./fil-core-lib/constants";
 
@@ -72,6 +73,7 @@ export interface FilFlushInternal extends Omit<FlushInternalDTO, "transfers"> {
 export type RawTransaction = RawTransactionDTO;
 
 export interface Message {
+  cid?: string;
   from: string;
   to: string;
   value: BN;
@@ -89,8 +91,10 @@ export interface Signature {
   type: number;
 }
 
-export interface SignedTransaction extends Message, Signature {
+export interface SignedTransaction {
   cid: string;
+  message: Message;
+  signature: Signature;
 }
 
 export type RawFlushTransaction = RawFlushTransactionDTO;
@@ -341,17 +345,18 @@ export class FilWallet extends FilAbstractWallet {
     fromSeed?: boolean
   ): SignedTransaction {
     const message = convertRawTransactionToMessage(rawTransaction);
-    const messageSignature = this.createMessageSignature(
+    const signature = this.createMessageSignature(
       message,
       key,
       passphrase,
       fromSeed
     );
-    const cid = this.calculateCidFromMessage(message);
+    message.cid = this.calculateCidFromMessage(message);
+    const cid = this.calculateCidFromMessageAndSignature(message, signature);
     return {
       cid,
-      ...message,
-      ...messageSignature,
+      message,
+      signature,
     };
   }
 
@@ -389,6 +394,18 @@ export class FilWallet extends FilAbstractWallet {
     const messageObject = convertMessageToObject(message);
     return new TextDecoder()
       .decode(encode(getCID(transactionSerializeRaw(messageObject))))
+      .toLocaleLowerCase();
+  }
+
+  private calculateCidFromMessageAndSignature(
+    message: Message,
+    signature: Signature
+  ): string {
+    const messageObject = convertMessageToObject(message);
+    return new TextDecoder()
+      .decode(
+        encode(getCID(signedTransactionSerializeRaw(messageObject, signature)))
+      )
       .toLocaleLowerCase();
   }
 
