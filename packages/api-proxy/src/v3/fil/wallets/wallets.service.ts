@@ -18,6 +18,7 @@ import { GetDepositAddressesOptionsDTO } from "./dto/get-deposit-addresses-optio
 import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import { PaginationDTO } from "../dto/pagination.dto";
 import { FilDepositAddress } from "@haechi-labs/henesis-wallet-core/lib/fil/depositAddress";
+import { WalletBalanceDTO } from "../dto/wallet-balance.dto";
 
 @Injectable()
 export class WalletsService {
@@ -36,9 +37,9 @@ export class WalletsService {
   public async getWalletBalances(
     sdk: SDK,
     walletId: string
-  ): Promise<BalanceDTO[]> {
+  ): Promise<WalletBalanceDTO[]> {
     const wallet: FilWallet = await sdk.fil.wallets.getWallet(walletId);
-    return BalanceDTO.fromBalances(await wallet.getBalance());
+    return WalletBalanceDTO.fromBalances(await wallet.getBalance());
   }
 
   public async changeWalletName(

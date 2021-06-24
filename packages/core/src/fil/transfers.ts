@@ -49,6 +49,7 @@ export interface FilTransferPaginationOptions extends PaginationOptions {
   walletId?: string;
   orgId?: string;
   transactionId?: string;
+  transactionHash?: string;
   transferType?: TransferType;
 }
 

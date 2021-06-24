@@ -6,6 +6,7 @@ import {
   TransferDTO,
   TransferInternalDTO,
   RawSignedTransactionDTO,
+  WalletBalanceDTO,
 } from "../__generate__/fil";
 import { FilTransfer, FilTransferInternal } from "./transfers";
 import { FilTransaction } from "./abstractWallet";
@@ -192,6 +193,21 @@ export const convertBalanceDtoToFilBalance = (
     symbol: "FIL",
     amount: BNConverter.hexStringToBN(balanceDTO.confirmedBalance),
     spendableAmount: BNConverter.hexStringToBN(balanceDTO.spendableBalance),
+    coinType: "FIL",
+    name: "Filecoin",
+    decimals: 18,
+  };
+};
+
+export const convertWalletBalanceDtoToFilBalance = (
+  balanceDTO: WalletBalanceDTO
+): Balance => {
+  return {
+    coinId: null,
+    symbol: "FIL",
+    amount: BNConverter.hexStringToBN(balanceDTO.confirmedBalance),
+    spendableAmount: BNConverter.hexStringToBN(balanceDTO.spendableBalance),
+    aggregatedAmount: BNConverter.hexStringToBN(balanceDTO.aggregatedBalance),
     coinType: "FIL",
     name: "Filecoin",
     decimals: 18,

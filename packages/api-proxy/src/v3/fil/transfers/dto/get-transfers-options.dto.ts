@@ -8,6 +8,7 @@ export class GetTransfersOption {
   toAddress?: string;
   fromAddress?: string;
   transactionId?: string;
+  transactionHash?: string;
   updatedAtGte?: string;
   updatedAtLt?: string;
   status?: TransferStatus;

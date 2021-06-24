@@ -24,6 +24,7 @@ import {
   RawFlushTransactionDTO,
   RawTransactionDTO,
   TransferDTO,
+  WalletBalanceDTO,
   WalletDTO,
 } from "../__generate__/fil";
 import BN from "bn.js";
@@ -51,6 +52,7 @@ import {
   convertMessageToObject,
   convertRawTransactionToMessage,
   convertSignedTransactionToRawSignedTransactionDTO,
+  convertWalletBalanceDtoToFilBalance,
 } from "./utils";
 import { ProtocolIndicator } from "./fil-core-lib/constants";
 
@@ -134,10 +136,10 @@ export class FilWallet extends FilAbstractWallet {
   }
 
   async getBalance(): Promise<Balance[]> {
-    const response = await this.client.get<BalanceDTO>(
+    const response = await this.client.get<WalletBalanceDTO>(
       `${this.baseUrl}/balance`
     );
-    return [convertBalanceDtoToFilBalance(response)];
+    return [convertWalletBalanceDtoToFilBalance(response)];
   }
 
   getEncryptionKey(): string {
