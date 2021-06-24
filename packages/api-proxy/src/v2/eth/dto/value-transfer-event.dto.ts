@@ -88,6 +88,7 @@ export class ValueTransferEventDTO extends EventDTO {
       transferType: event.transferType,
       walletName: event.walletName,
       walletType: event.walletType,
+      metadata: event.metadata,
     };
   }
 }

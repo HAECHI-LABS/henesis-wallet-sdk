@@ -8,7 +8,10 @@ import {
   TransferStatus,
   TransferType,
 } from "@haechi-labs/henesis-wallet-core/lib/__generate__/btc";
-import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import {
+  ApiModelProperty,
+  ApiModelPropertyOptional,
+} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_BITCOIN_TRANSFER_DTO: TransferDTO = {
   transaction: EXAMPLE_BITCOIN_BTC_TRANSACTION_DTO,
@@ -25,6 +28,7 @@ export const EXAMPLE_BITCOIN_TRANSFER_DTO: TransferDTO = {
   updatedAt: "1620042252520",
   feeAmount: "0x2ee",
   confirmation: "0x8a3b",
+  metadata: "metadata",
 };
 
 export class TransferDTO {
@@ -114,6 +118,12 @@ export class TransferDTO {
   })
   confirmation: string;
 
+  @ApiModelPropertyOptional({
+    description: "기타 정보 기록용 메타 데이터 (255자 제한)",
+    example: EXAMPLE_BITCOIN_TRANSFER_DTO.metadata,
+  })
+  metadata?: string;
+
   static fromTransfer(transfer: Transfer): TransferDTO {
     return {
       id: transfer.id,
@@ -138,6 +148,7 @@ export class TransferDTO {
       confirmation: transfer.confirmation
         ? BNConverter.bnToHexString(transfer.confirmation)
         : null,
+      metadata: transfer.metadata,
     } as TransferDTO;
   }
 }

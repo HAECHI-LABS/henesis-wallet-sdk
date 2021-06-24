@@ -3,7 +3,10 @@ import {
   EventStatus,
   TransferType,
 } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
-import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import {
+  ApiModelProperty,
+  ApiModelPropertyOptional,
+} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_ETHEREUM_TRANSFER_DTO: TransferDTO = {
   id: 375031,
@@ -23,6 +26,7 @@ export const EXAMPLE_ETHEREUM_TRANSFER_DTO: TransferDTO = {
   createdAt: "1612411568760",
   updatedAt: "1612411724023",
   name: "ETH 실비 정산",
+  metadata: "metadata",
 };
 
 export class TransferDTO {
@@ -123,6 +127,12 @@ export class TransferDTO {
   })
   name: string;
 
+  @ApiModelPropertyOptional({
+    description: "기타 정보 기록용 메타 데이터 (255자 제한)",
+    example: EXAMPLE_ETHEREUM_TRANSFER_DTO.metadata,
+  })
+  metadata?: string;
+
   static fromValueTransferEvent(event: ValueTransferEvent): TransferDTO {
     return {
       id: event.id,
@@ -142,6 +152,7 @@ export class TransferDTO {
       createdAt: event.createdAt,
       updatedAt: event.updatedAt,
       name: event.walletName,
+      metadata: event.metadata,
     } as TransferDTO;
   }
 }

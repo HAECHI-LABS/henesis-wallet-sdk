@@ -13,6 +13,7 @@ export interface Event {
   orgId?: string;
   masterWalletId?: string;
   confirmation: BN;
+  metadata?: string;
 }
 
 export type EthCallEvent = CallEvent;
