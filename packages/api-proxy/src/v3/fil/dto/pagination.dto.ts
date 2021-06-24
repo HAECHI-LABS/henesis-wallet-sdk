@@ -4,6 +4,7 @@ import {
   EXAMPLE_FILECOIN_DEPOSIT_ADDRESS_DTO,
 } from "./deposit-address.dto";
 import { EXAMPLE_FILECOIN_TRANSFER_DTO, TransferDTO } from "./transfer.dto";
+import { EXAMPLE_FILECOIN_FLUSH_DTO, FlushDTO } from "./flush.dto";
 
 export const EXAMPLE_FILECOIN_PAGINATION_METADATA: PaginationMetadata = {
   nextUrl: "http://localhost:3000/api/v3/filecoin/transfers?page=2",
@@ -22,6 +23,11 @@ export const EXAMPLE_FILECOIN_PAGINATION_DEPOSIT_ADDRESS_DTO: PaginationDTO<Depo
     pagination: EXAMPLE_FILECOIN_PAGINATION_METADATA,
     results: [EXAMPLE_FILECOIN_DEPOSIT_ADDRESS_DTO],
   };
+
+export const EXAMPLE_FILECOIN_PAGINATION_FLUSH_DTO: PaginationDTO<FlushDTO> = {
+  pagination: EXAMPLE_FILECOIN_PAGINATION_METADATA,
+  results: [EXAMPLE_FILECOIN_FLUSH_DTO],
+};
 
 export class PaginationMetadata {
   @ApiModelProperty({

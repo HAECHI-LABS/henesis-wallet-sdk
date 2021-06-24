@@ -38,9 +38,10 @@ import {
 } from "../dto/transfer.dto";
 import { TransferRequestDTO } from "./dto/transfer-request.dto";
 import { FlushRequestDTO } from "./dto/flush-request.dto";
-import { FlushDTO } from "../dto/flush.dto";
+import { EXAMPLE_FILECOIN_FLUSH_DTO, FlushDTO } from "../dto/flush.dto";
 import {
   EXAMPLE_FILECOIN_PAGINATION_DEPOSIT_ADDRESS_DTO,
+  EXAMPLE_FILECOIN_PAGINATION_FLUSH_DTO,
   PaginationDTO,
 } from "../dto/pagination.dto";
 import {
@@ -55,8 +56,10 @@ import {
 import {
   DepositAddressNotFoundException,
   EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO,
+  EXAMPLE_FLUSH_NOT_FOUND_EXCEPTION_DTO,
   EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
   EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
+  FlushNotFoundException,
   NoWalletNameException,
   WalletNotFoundException,
 } from "../dto/exceptions.dto";
@@ -64,6 +67,7 @@ import {
   DEPOSIT_ADDRESS_ID_REQUIRED,
   DEPOSIT_ADDRESS_NAME_OPTIONAL,
   DEPOSIT_ADDRESS_OPTIONAL,
+  FLUSH_ID_REQUIRED,
   WALLET_ID_REQUIRED,
   WALLET_NAME_OPTIONAL,
 } from "./dto/params.dto";
@@ -386,5 +390,60 @@ export class WalletsController {
       walletId,
       depositAddressId
     );
+  }
+
+  @Get("/:walletId/flushes")
+  @PathParams(WALLET_ID_REQUIRED)
+  @Queries(SIZE_OPTIONAL, PAGE_OPTIONAL)
+  @ApiPaginationResponse(FlushDTO, EXAMPLE_FILECOIN_PAGINATION_FLUSH_DTO)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    ),
+  })
+  @ApiOperation({
+    summary: "전체 집금 목록 조회하기",
+    description: "특정 지갑에서 발생한 전체 집금 목록을 조회합니다.",
+  })
+  public async getFlushes(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Query("size") size: number = 15,
+    @Query("page") page: number = 0
+  ): Promise<PaginationDTO<FlushDTO>> {
+    return await this.walletsService.getFlushes(request.sdk, walletId, {
+      size,
+      page,
+    });
+  }
+
+  @Get("/:walletId/flushes/:flushId")
+  @PathParams(WALLET_ID_REQUIRED, FLUSH_ID_REQUIRED)
+  @ApiPaginationResponse(FlushDTO, EXAMPLE_FILECOIN_FLUSH_DTO)
+  @ApiBadRequestResponse({
+    description: "다음과 같은 bad request 에러가 발생할 수 있습니다.",
+    content: ApiResponseContentsGenerator([
+      {
+        model: WalletNotFoundException,
+        example: EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
+      },
+      {
+        model: FlushNotFoundException,
+        example: EXAMPLE_FLUSH_NOT_FOUND_EXCEPTION_DTO,
+      },
+    ]),
+  })
+  @ApiOperation({
+    summary: "특정 집금 조회하기",
+    description: "특정 지갑에서 발생한 특정 집금 내역을 조회합니다.",
+  })
+  public async getFlush(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Param("flushId") flushId: string
+  ): Promise<FlushDTO> {
+    return await this.walletsService.getFlush(request.sdk, walletId, flushId);
   }
 }
