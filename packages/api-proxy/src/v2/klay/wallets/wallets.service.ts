@@ -6,7 +6,6 @@ import {
   SignedMultiSigPayload,
 } from "@haechi-labs/henesis-wallet-core";
 import { MasterWalletDTO } from "../../eth/dto/master-wallet.dto";
-import { Key } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { SendMasterWalletContractCallRequestDTO } from "../../eth/dto/send-master-wallet-contract-call-request.dto";
 import { TransactionDTO } from "../../eth/dto/transaction.dto";
 import { ChangeMasterWalletNameRequestDTO } from "../../eth/dto/change-master-wallet-name-request.dto";
@@ -140,7 +139,8 @@ export class WalletsService {
         : undefined,
       sendMasterWalletCoinRequestDTO.gasLimit
         ? BNConverter.hexStringToBN(sendMasterWalletCoinRequestDTO.gasLimit)
-        : undefined
+        : undefined,
+      sendMasterWalletCoinRequestDTO.metadata
     );
   }
 
@@ -211,7 +211,8 @@ export class WalletsService {
         : undefined,
       flushRequestDTO.gasLimit
         ? BNConverter.hexStringToBN(flushRequestDTO.gasLimit)
-        : undefined
+        : undefined,
+      flushRequestDTO.metadata
     );
   }
 
@@ -308,7 +309,8 @@ export class WalletsService {
         ? BNConverter.hexStringToBN(
             sendUserWalletContractCallRequestDTO.gasLimit
           )
-        : undefined
+        : undefined,
+      sendUserWalletContractCallRequestDTO.metadata
     );
   }
 
@@ -373,7 +375,8 @@ export class WalletsService {
         : undefined,
       sendUserWalletCoinRequestDTO.gasLimit
         ? BNConverter.hexStringToBN(sendUserWalletCoinRequestDTO.gasLimit)
-        : undefined
+        : undefined,
+      sendUserWalletCoinRequestDTO.metadata
     );
   }
 
