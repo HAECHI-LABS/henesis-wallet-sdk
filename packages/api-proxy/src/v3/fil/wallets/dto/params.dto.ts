@@ -37,3 +37,14 @@ export const FLUSH_ID_REQUIRED: ApiParamOptions = {
   required: true,
   description: "집금 내역 ID",
 };
+
+export const TRANSACTION_ID_OPTIONAL: ApiQueryOptions = {
+  name: "transactionId",
+  required: false,
+  description: "트랜잭션 ID",
+};
+export const TRANSACTION_HASH_OPTIONAL: ApiQueryOptions = {
+  name: "transactionHash",
+  required: false,
+  description: "트랜잭션 해시",
+};
