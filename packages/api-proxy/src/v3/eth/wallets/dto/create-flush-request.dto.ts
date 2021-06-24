@@ -1,4 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiModelPropertyOptional } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 class Target {
   /**
@@ -27,4 +28,11 @@ export class CreateFlushRequestDTO {
    */
   @ApiPropertyOptional()
   gasLimit: number;
+
+  @ApiModelPropertyOptional({
+    description: "기타 정보 기록용 메타 데이터 (255자 제한)",
+    example: "metadata",
+    default: "metadata",
+  })
+  metadata?: string;
 }
