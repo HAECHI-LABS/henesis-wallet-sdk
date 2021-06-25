@@ -220,7 +220,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit || this.getGasLimitByTicker(c)
+      gasLimit || this.getGasLimitByTicker(c),
+      metadata
     );
   }
 
