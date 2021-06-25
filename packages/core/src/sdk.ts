@@ -2,12 +2,14 @@ import { Accounts } from "./accounts";
 import { Organizations } from "./organizations";
 import { HttpClient, Client, enhancedBlockchainClient } from "./httpClient";
 import { EthModule, KlayModule } from "./eth";
+import { FilModule } from "./fil";
 import { baseUrls } from "./utils/url";
 import { BtcModule } from "./btc";
 import { BlockchainType } from "./blockchain";
 import { WithdrawalApprovals } from "./withdrawalApprovals";
 import { Billings } from "./billings";
 import { Notices } from "./notices";
+import { CoinListings } from "./coinListings";
 
 export const enum Env {
   Local,
@@ -32,11 +34,15 @@ export class SDK {
 
   public readonly organizations: Organizations;
 
+  public readonly coinListings: CoinListings;
+
   public readonly withdrawalApproval: WithdrawalApprovals;
 
   public readonly eth: EthModule;
 
   public readonly klay: KlayModule;
+
+  public readonly fil: FilModule;
 
   public readonly btc: BtcModule;
 
@@ -64,6 +70,7 @@ export class SDK {
     this.notices = new Notices(this.client);
     this.billings = new Billings(this.client);
     this.organizations = new Organizations(this.client);
+    this.coinListings = new CoinListings(this.client);
     this.klay = new KlayModule({
       env: env,
       client: enhancedBlockchainClient(this.client, BlockchainType.KLAYTN),
@@ -73,6 +80,11 @@ export class SDK {
       env: env,
       client: enhancedBlockchainClient(this.client, BlockchainType.ETHEREUM),
       blockchain: BlockchainType.ETHEREUM,
+    });
+    this.fil = new FilModule({
+      env: env,
+      client: enhancedBlockchainClient(this.client, BlockchainType.FILECOIN),
+      blockchain: BlockchainType.FILECOIN,
     });
     this.btc = new BtcModule({
       env: env,

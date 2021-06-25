@@ -25,6 +25,7 @@ export interface Key {
   address?: string;
   pub: string;
   keyFile?: string;
+  chainCode?: string;
 }
 
 export interface KeyWithPriv extends Key {

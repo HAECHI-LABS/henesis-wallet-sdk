@@ -48,6 +48,7 @@ import {
   WhitelistType as EthWhitelistType,
   WithdrawalPolicyType as EthWithdrawalPolicyType,
 } from "./__generate__/eth/api";
+import { AccountKeyDTO as FilAccountKeyDTO } from "./__generate__/fil";
 export type InactivateAllowedAddressesRequest =
   | EthInactivateAllowedAddressesRequest
   | BtcInactivateAllowedAddressesRequest;
@@ -143,7 +144,7 @@ export interface ActivatingMasterWallet {
   updatedAt: string;
 }
 
-export const transformWalletStatus = (
+export const convertWalletStatus = (
   status: BtcWalletStatus | EthWalletStatus
 ) => {
   const byWalletStatus: Record<
@@ -182,6 +183,7 @@ export abstract class Wallet<T> {
   abstract updateAccountKey(key: Key);
   protected recoverPassphrase(encryptedPassphrase: string): string {
     try {
+      // eslint-disable-next-line new-cap
       const aesCtr = new aesjs.ModeOfOperation.ctr(
         aesjs.utils.hex.toBytes(this.getEncryptionKey())
       );
@@ -205,26 +207,25 @@ export abstract class Wallet<T> {
     return await this.changePassphraseWithKeyFile(
       passphrase,
       newPassphrase,
-      undefined,
+      this.getAccountKey(),
       otpCode
     );
   }
   private async changePassphraseWithKeyFile(
     passphrase: string,
     newPassphrase: string,
-    initialKey?: Key,
+    targetKey: Key,
     otpCode?: string
   ): Promise<void> {
     const newKey: KeyWithPriv = this.keychains.changePassword(
-      initialKey ? initialKey : this.getAccountKey(),
+      targetKey,
       passphrase,
       newPassphrase
     );
     const key: Key = await this.client.patch<
-      BtcKeyDTO | RequireProperty<EthKeyDTO, "pub">
+      BtcKeyDTO | RequireProperty<EthKeyDTO, "pub"> | FilAccountKeyDTO
     >(`${this.baseUrl}/account-key`, {
       keyFile: newKey.keyFile,
-      pub: newKey.pub,
       otpCode,
     });
     this.updateAccountKey(key);

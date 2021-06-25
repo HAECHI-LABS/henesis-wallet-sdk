@@ -13,7 +13,7 @@ export class RecoveryKit {
 
   private readonly henesisKey: Key;
 
-  private readonly accountKey: KeyWithPriv;
+  protected readonly accountKey: KeyWithPriv;
 
   private readonly backupKey: KeyWithPriv;
 
@@ -75,6 +75,7 @@ export class RecoveryKit {
         { width: 305 }
       );
     // draw logo
+    // eslint-disable-next-line new-cap
     SVGtoPDF(docs, logo, 468, 36, {
       width: 91,
       preserveAspectRatio: "xMinYMin",
@@ -140,6 +141,7 @@ export class RecoveryKit {
       .text("Data : ", x, docs.y + 12)
       .fillColor("#465365")
       .text(data, x, docs.y + 5, { width: 390, align: "justify" });
+    // eslint-disable-next-line new-cap
     SVGtoPDF(docs, qr, 453, y, {
       width: 105,
       height: 105,

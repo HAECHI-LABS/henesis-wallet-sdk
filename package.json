@@ -1,12 +1,11 @@
 {
   "name": "henesis-wallet-sdk",
   "scripts": {
-    "install:reset": "rm -rf ./**./node_modules && npm install",
+    "install:reset": "./scripts/install-reset.sh",
     "install:reset-windows": "if exist node_modules rmdir /s /q node_modules",
     "lerna:bootstrap": "lerna run preBootstrap && lerna bootstrap --hoist --no-ci",
-    "bootstrap": "npm run install:reset && npm run lerna:bootstrap && npm run build",
+    "bootstrap": "npm run lerna:bootstrap && npm run build",
     "bootstrap:windows": "npm run install:reset-windows && lerna run preBootstrap:windows && lerna bootstrap --hoist --no-ci && lerna run build:windows",
-    "travis:bootstrap": "npm run lerna:bootstrap && npm run build",
     "publish:minor": "npm run bootstrap && lerna version minor && lerna publish from-git",
     "publish:patch": "npm run bootstrap && lerna version patch && lerna publish from-git",
     "publish:prerelease": "npm run bootstrap && lerna version prerelease && lerna publish from-git",
@@ -19,7 +18,7 @@
   },
   "devDependencies": {
     "husky": "^4.2.5",
-    "lerna": "^3.16.4"
+    "lerna": "^4.0.0"
   },
   "author": "Haechi labs Team",
   "license": "LGPL3",

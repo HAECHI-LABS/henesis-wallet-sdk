@@ -106,7 +106,8 @@ export class WalletsService {
       null,
       transferRequestDTO.feeRate
         ? BNConverter.hexStringToBN(transferRequestDTO.feeRate)
-        : undefined
+        : undefined,
+      transferRequestDTO.metadata
     );
 
     return TransferDTO.fromTransfer(transfer);

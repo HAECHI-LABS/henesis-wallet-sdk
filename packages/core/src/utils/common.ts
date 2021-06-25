@@ -74,6 +74,20 @@ export class BNConverter {
 
     return new BN(this.remove0x(hexString), 16);
   }
+
+  static bnToHexStringOrElseNull(bn: BN): string | null {
+    if (bn == null) {
+      return null;
+    }
+    return this.bnToHexString(bn);
+  }
+
+  static hexStringToBnOrElseNull(hexString: string): BN | null {
+    if (hexString == null) {
+      return null;
+    }
+    return this.hexStringToBN(hexString);
+  }
 }
 
 export function checkNullAndUndefinedParameter(requiredParams: object): void {

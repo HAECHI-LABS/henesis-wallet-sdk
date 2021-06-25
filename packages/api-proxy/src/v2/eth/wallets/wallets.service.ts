@@ -81,7 +81,8 @@ export class WalletsService {
         ? BNConverter.hexStringToBN(
             sendMasterWalletContractCallRequestDTO.gasLimit
           )
-        : undefined
+        : undefined,
+      sendMasterWalletContractCallRequestDTO.metadata
     );
   }
 
@@ -139,7 +140,8 @@ export class WalletsService {
         : undefined,
       sendMasterWalletCoinRequestDTO.gasLimit
         ? BNConverter.hexStringToBN(sendMasterWalletCoinRequestDTO.gasLimit)
-        : undefined
+        : undefined,
+      sendMasterWalletCoinRequestDTO.metadata
     );
   }
 
@@ -210,7 +212,8 @@ export class WalletsService {
         : undefined,
       flushRequestDTO.gasLimit
         ? BNConverter.hexStringToBN(flushRequestDTO.gasLimit)
-        : undefined
+        : undefined,
+      flushRequestDTO.metadata
     );
   }
 
@@ -307,7 +310,8 @@ export class WalletsService {
         ? BNConverter.hexStringToBN(
             sendUserWalletContractCallRequestDTO.gasLimit
           )
-        : undefined
+        : undefined,
+      sendUserWalletContractCallRequestDTO.metadata
     );
   }
 
@@ -372,7 +376,8 @@ export class WalletsService {
         : undefined,
       sendUserWalletCoinRequestDTO.gasLimit
         ? BNConverter.hexStringToBN(sendUserWalletCoinRequestDTO.gasLimit)
-        : undefined
+        : undefined,
+      sendUserWalletCoinRequestDTO.metadata
     );
   }
 

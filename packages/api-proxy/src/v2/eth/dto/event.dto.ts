@@ -15,6 +15,7 @@ export const EXAMPLE_ETH_KLAY_EVENT_DTO: EventDTO = {
   orgId: "575a431dc73615a9e65648180bbd4fbb",
   masterWalletId: "98fa482e258bbd5cbac1393acef9e0e6",
   confirmation: "0x3ed",
+  metadata: "metadata",
 };
 
 export class EventDTO {
@@ -78,4 +79,10 @@ export class EventDTO {
     example: EXAMPLE_ETH_KLAY_EVENT_DTO.confirmation,
   })
   confirmation: string;
+
+  @ApiModelPropertyOptional({
+    description: "기타 정보 기록용 메타 데이터 (255자 제한)",
+    example: EXAMPLE_ETH_KLAY_EVENT_DTO.metadata,
+  })
+  metadata?: string;
 }

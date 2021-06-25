@@ -162,7 +162,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     passphrase: string,
     otpCode?: string,
     gasPrice?: BN,
-    gasLimit?: BN
+    gasLimit?: BN,
+    metadata?: string
   ): Promise<EthTransaction> {
     return this.sendTransaction(
       await this.buildContractCallPayload(
@@ -174,7 +175,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit || this.DEFAULT_CONTRACT_CALL_GAS_LIMIT
+      gasLimit || this.DEFAULT_CONTRACT_CALL_GAS_LIMIT,
+      metadata
     );
   }
 
@@ -209,7 +211,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     passphrase: string,
     otpCode?: string,
     gasPrice?: BN,
-    gasLimit?: BN
+    gasLimit?: BN,
+    metadata?: string
   ): Promise<EthTransaction> {
     const c = typeof coin === "string" ? await this.coins.getCoin(coin) : coin;
     return this.sendTransaction(
@@ -217,7 +220,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit || this.getGasLimitByTicker(c)
+      gasLimit || this.getGasLimitByTicker(c),
+      metadata
     );
   }
 
@@ -283,7 +287,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     walletId: string,
     otpCode?: string,
     gasPrice?: BN,
-    gasLimit?: BN
+    gasLimit?: BN,
+    metadata?: string
   ): Promise<EthTransaction> {
     const request: CreateMultiSigTransactionRequest = {
       walletId,
@@ -293,6 +298,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
       gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
       otpCode,
+      metadata,
     };
     const response = await this.client.post<TransactionDTO>(
       `/wallets/transactions`,

@@ -15,7 +15,7 @@ import {
   EthMasterWalletData,
   EthTransaction,
 } from "./abstractWallet";
-import { transformWalletStatus } from "../wallet";
+import { convertWalletStatus } from "../wallet";
 import BN from "bn.js";
 import { Coin } from "./coin";
 
@@ -25,7 +25,7 @@ export const transformDepositAddressData = (
   return {
     ...data,
     blockchain: transformBlockchainType(data.blockchain),
-    status: transformWalletStatus(data.status),
+    status: convertWalletStatus(data.status),
   };
 };
 

@@ -1,9 +1,8 @@
 import { Client } from "../httpClient";
 import { BtcMasterWallet, transformWalletData } from "./wallet";
-import { Wallets } from "../wallets";
+import { Wallets, WalletSearchOptions } from "../wallets";
 import aesjs from "aes-js";
 import { Keychains } from "../types";
-import { MasterWalletSearchOptions } from "../eth";
 import { makeQueryString } from "../utils/url";
 import { Env } from "../sdk";
 import { BlockchainType } from "../blockchain";
@@ -77,7 +76,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
   }
 
   async getMasterWallets(
-    options?: MasterWalletSearchOptions
+    options?: WalletSearchOptions
   ): Promise<BtcMasterWallet[]> {
     const queryString: string = makeQueryString(options);
     const walletDatas = await this.client.get<MasterWalletDTO[]>(
@@ -110,6 +109,7 @@ export class BtcWallets extends Wallets<BtcMasterWallet> {
         `${this.baseUrl}?type=inactive`,
         params
       );
+    // eslint-disable-next-line new-cap
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
       aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))

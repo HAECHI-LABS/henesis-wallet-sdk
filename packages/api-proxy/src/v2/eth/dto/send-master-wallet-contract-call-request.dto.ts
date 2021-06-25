@@ -49,4 +49,11 @@ export class SendMasterWalletContractCallRequestDTO {
     default: "0x1",
   })
   gasLimit?: string;
+
+  @ApiModelPropertyOptional({
+    description: "기타 정보 기록용 메타 데이터 (255자 제한)",
+    example: "metadata",
+    default: "metadata",
+  })
+  metadata?: string;
 }
