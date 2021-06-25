@@ -3,6 +3,89 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.1.4...v3.2.0) (2021-06-25)
+
+
+### Bug Fixes
+
+* add BN import to fil-core-lib ([774a6ce](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/774a6ce8fab2aeb9cd357a7bff78899aa312c79a))
+* add codegen:fil to codegen script ([c9c325e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c9c325e8a61c6d01f9e2fe6439a3d4f3fc52004b))
+* add confirmation to wallet in filecoin ([47d4c4e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/47d4c4e45758ec39cc8415fb6e98e23b2a26beb3))
+* add error field ([beb2e5f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/beb2e5f7e9b5a1fb452f8a2ef000612d96496e3c))
+* add export coinlisting ([2950702](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/295070268691164fdae1dd7d4b0b771c434ec413))
+* add fil module ([4d43da8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4d43da8e5309b6e7a40dc5c24d57f80a382afe95))
+* add fildepositaddress data ([1c34054](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1c34054d4b44b0454886c334af0d510c9eac78a4))
+* add FilWalletData transaction ([0470616](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/047061638e2714ff16fb780fc4999b693f5097d7))
+* add gasPremium to transfer and flush ([25db26a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/25db26ae24ad0bbca49cd98f879510c83a3cce83))
+* add guard method to check null value in filecoin utils ([e067de1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e067de1fb3100d6b5bfe6bf092e9c7f6adefbd6b))
+* add id to proposal fee wallet in filecoin ([93587d4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/93587d43d4a7267e3b1a65ccf4e3b99db97d5c93))
+* add metadata to request ([#489](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/489)) ([c6cea90](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c6cea90adea7fbe37f7843c318245db7dd5b0150))
+* add params getCoinContract ([ae01ec4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ae01ec47db0a9233ea2a061fa45ef69d3bd11761))
+* add policy approve, reject ([4a48263](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4a48263d8c2b352cf14653cf890653bd136241fa))
+* apply eslint prettier ([244b180](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/244b180c921b49ef5ea86cc58d2821fa079ea20a))
+* delete hard coded gasLimit ([2a9dc1f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2a9dc1fe824e236c21b7cd8b4c706911147bbea2))
+* fix api proxy not running bug ([6cf1bc3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6cf1bc38633708b677c74fcaf2e2204e6f344253))
+* fix bootstrap and install:reset script bug ([7de414c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7de414c725ba77dcba7a3522cd8615828bd5e824))
+* fix calculating cid bug in filecoin ([469c6a2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/469c6a20c6366dde23038844c308a20545d65468))
+* fix CI sciprt to use node version 14 ([b81c21d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b81c21d07b6b18d181cafae12a1e741febfc77be))
+* fix codegen and fil RawSignedTransactionDTO interface ([9fdabea](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9fdabeadda2e16e9ad272989221ae5358550d758))
+* fix creating deposit address bug in filecoin ([4f95ad4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4f95ad447c5675d7bc8ba575cb8b2b7477bc648b))
+* fix eslint errors ([5de27f8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5de27f807c7d700bd90505eb39dfe077a4096a4f))
+* fix failed test cases for filecoin wallet ([35154d0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/35154d027a60bc5e2de583a33a27f0f43da5d9d7))
+* fix file coin address derivation bug ([95b2e63](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/95b2e635b3297b6081990f2227c9e0d00987fe73))
+* fix filecoin interfaces and terms ([523e36d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/523e36d785d4c2b5cc4ecf6f60917dddb27cecfe))
+* fix filecoin SDK interfaces ([69d59e0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/69d59e00c507e1c8334984ed01d9594845be4908))
+* fix flush and refactor keychains in filecoin ([170f590](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/170f590c7f75255fa6a267c8df00e36a41183ce8))
+* fix master wallet to wallet ([a68a5fe](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a68a5fe8c5a29ec6c148a73d7e71b3a9e8cf6d29))
+* fix prettier to use specific version ([fa1ab3b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/fa1ab3be5b9a1a5b5ad859a6f74c1f0e89fd081d))
+* fix RawSignedTransactionDTO interface and add additional formatting ([d692409](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d692409725e014178f3458bf8c178546be34234c))
+* fix sdk bug in filecoin ([ffe4d02](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ffe4d02a1a174edb5ea5e0f2dba1fb992972cdba))
+* fix signing bugs in filecoin ([af86be9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/af86be970246f231361f9e162e2947a4f48e06f7))
+* fix test cases for creating key in filecoin ([4074d5f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4074d5fe74045f05368b9de3e6b74fbffb8facf5))
+* fix wallet balance bug in filecoin ([b76f132](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b76f132497bb44314d99bee58d73cbe707ca99a1))
+* fixed approve, retry depositAddress ([5c582f9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5c582f9dcbc2baac2b509f1c45f295d1dbe5a52c))
+* fixed bitcoin name ([ec92b42](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ec92b424cdfc8b3f01e4877b0daec9bcd0d4d7d3))
+* fixed retryCreateDepositAddress return type ([263d3b4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/263d3b4379192dc630858b55b2d2386f138cc3cf))
+* fixed whitelistActivated ([aa0ad84](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/aa0ad84a54d11ce1b35a10ac5fc15a507271965b))
+* getAddress with uncompressed public key prefix ([42f724a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/42f724a7dbf98e9d393a8eefe9d06ee11359e98a))
+* move to abstractWallet getData ([2056b28](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2056b28a93c45fc23db68ec2bf44e536e6d824d3))
+* refactor method transformXXX() to convertXXX() ([dd993c8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/dd993c8a5c51e6f1e731ba8dc1d6e634fc8de54d))
+* remove private key when creating wallet in filecoin ([5dfd2f8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5dfd2f83c8a4cdffe08115f2ccecab5421d472cb))
+* remove transactionId ([a4d83b2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a4d83b2630874968411e52ae05c404d7312ac47e))
+* remove unused func ([4a9b90f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4a9b90f3120854e48977b4b77420d46faa332331))
+* update filecoin codegen ([58bd028](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/58bd02825b096e29c072ce3fd01ce49215daf999))
+* update interface of update account key file at fil ([4562cbb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4562cbb61689d336f0b19451e70e44adeb43d1a0))
+* use v3 API's URL in the pagination example ([9cbd30f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9cbd30fccb3b66bf6114424d2fa2eb1c16f5b005))
+
+
+### Features
+
+* add coinListings ([b3e2f2f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b3e2f2f219ed78eaeb68f9368236fb696ec0c626))
+* add fee-wallets apis ([bc4062c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/bc4062c65b63f77d9842af706528272b38ccd838))
+* add getData, blockchain ([1a5ef43](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1a5ef43ccff034fdff96d964ebb3bbb4097ba3ed))
+* add metadata ([#483](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/483)) ([7731e46](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7731e46a4279c37de821104df6907ed58703587c))
+* add metadata ([#486](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/486)) ([41fb8a4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/41fb8a4a6a16e68d96bd5413cd097e4b60066a5d))
+* add raw signed transaction cid calculator ([0672bd4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0672bd4ee1cd9db4da269eec54f00d92b8c61d29))
+* add retry create wallet ([6070938](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/607093878af31d4edc18288caf0d532fb4887075))
+* add transfers api ([007078d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/007078da3891112f84a72b922a860b99436d3376))
+* add wallet search options and transfer search options ([95e11f7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/95e11f78c3f0bb6a134b8d1297baed93d5f4d3eb))
+* bootstrap filecoin sdk ([f26f803](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f26f8036a31e5ca75789ef700bc15db002e17dba))
+* define filecoin interface ([83e03ce](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/83e03cedb86e91bb8ceaf4ed505e6b66f65249fd))
+* implement deposit address of filecoin ([88dc31c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/88dc31c431d7e15695bb0ddb57259d7770b71ded))
+* implement fee wallet controller of filecoin api proxy ([134e901](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/134e901146753bb3965fca6adf102e29a7293e2f))
+* implement filecoin keychains ([350c8a7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/350c8a7f05a08fcc28167a65dddcbbd3e38b4625))
+* implement filecoin wallet flush ([17fc002](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/17fc002fcbf1f345c87a027ec6eab5ccafa42b66))
+* implement filecoin wallet transfer ([b781681](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b78168131a9b180944c844b12f89009ee048e2ed))
+* implement filecoin wallets and fix keychains ([42360cc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/42360cc43dd3e5b58d5c194b3c72aea390edbb54))
+* implement getting flush to sdk and api proxy ([15c0364](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/15c03649fd1fa3d7345839769bd18601ee8650c7))
+* implement test case to flush in filecoin ([52b5c57](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/52b5c57f94f5a8ac8581aebd2d33d438e6069bee))
+* implement transfers controller of filecoin api proxy ([f0d13a0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f0d13a0d2a33e00dc884270e5333f0826d51e3bc))
+* implement wallets controller of filecoin api proxy ([4551518](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4551518ef1a35a8435939a968d918245f0f01f80))
+
+
+
+
+
 ## [3.1.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.1.3...v3.1.4) (2021-06-21)
 
 

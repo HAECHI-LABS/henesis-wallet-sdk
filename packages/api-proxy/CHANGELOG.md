@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.1.4...v3.2.0) (2021-06-25)
+
+
+### Bug Fixes
+
+* apply eslint prettier ([244b180](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/244b180c921b49ef5ea86cc58d2821fa079ea20a))
+* fix api proxy not running bug ([6cf1bc3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6cf1bc38633708b677c74fcaf2e2204e6f344253))
+* fix bootstrap and install:reset script bug ([7de414c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7de414c725ba77dcba7a3522cd8615828bd5e824))
+* fix prettier to use specific version ([fa1ab3b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/fa1ab3be5b9a1a5b5ad859a6f74c1f0e89fd081d))
+* fix wallet balance bug in filecoin ([b76f132](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b76f132497bb44314d99bee58d73cbe707ca99a1))
+* use v3 API's URL in the pagination example ([9cbd30f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9cbd30fccb3b66bf6114424d2fa2eb1c16f5b005))
+
+
+### Features
+
+* add metadata ([#483](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/483)) ([7731e46](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7731e46a4279c37de821104df6907ed58703587c))
+* add metadata ([#486](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/486)) ([41fb8a4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/41fb8a4a6a16e68d96bd5413cd097e4b60066a5d))
+* implement fee wallet controller of filecoin api proxy ([134e901](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/134e901146753bb3965fca6adf102e29a7293e2f))
+* implement getting flush to sdk and api proxy ([15c0364](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/15c03649fd1fa3d7345839769bd18601ee8650c7))
+* implement transfers controller of filecoin api proxy ([f0d13a0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f0d13a0d2a33e00dc884270e5333f0826d51e3bc))
+* implement wallets controller of filecoin api proxy ([4551518](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4551518ef1a35a8435939a968d918245f0f01f80))
+
+
+
+
+
 ## [3.1.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.1.3...v3.1.4) (2021-06-21)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
