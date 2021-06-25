@@ -46,7 +46,6 @@ export interface FilAbstractWalletData extends WalletData {
 
 export interface FilWalletData extends FilAbstractWalletData {
   accountKey: FilAccountKey;
-  transactionId?: string | null;
   error?: string | null;
   confirmation?: string | null;
   transaction?: TransactionDTO;
