@@ -9,10 +9,6 @@ import {
 import { FilKeychains } from "./keychains";
 import BN from "bn.js";
 
-export const FilGasLimit = {
-  PROPOSE: new BN(4800000),
-};
-
 export interface FilTransaction
   extends Omit<
     TransactionDTO,
