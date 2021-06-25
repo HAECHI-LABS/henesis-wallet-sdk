@@ -108,8 +108,11 @@ export interface FilFlushTarget {
 }
 
 export class FilWallet extends FilAbstractWallet {
+  confirmation?: BN;
+
   constructor(client: Client, data: FilWalletData, keychains: FilKeychains) {
     super(client, data, keychains, `/wallets/${data.id}`);
+    this.confirmation = BNConverter.hexStringToBnOrElseNull(data.confirmation);
   }
 
   async changeName(name: string): Promise<void> {
@@ -317,6 +320,10 @@ export class FilWallet extends FilAbstractWallet {
   // TODO: implement me
   async reject(params: { id: string; otpCode: string }): Promise<void> {
     throw new Error("this feature is not supported yet");
+  }
+
+  getConfirmation(): BN {
+    return this.confirmation;
   }
 
   /*
