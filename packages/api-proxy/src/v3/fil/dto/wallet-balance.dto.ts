@@ -21,7 +21,7 @@ export class WalletBalanceDTO extends BalanceDTO {
 
   static fromBalance(balance: Balance): WalletBalanceDTO {
     return {
-      ...this.fromBalance(balance),
+      ...super.fromBalance(balance),
       aggregatedAmount: balance.aggregatedAmount.toString(10),
     };
   }
