@@ -49,6 +49,7 @@ export interface FilWalletData extends FilAbstractWalletData {
   transactionId?: string | null;
   error?: string | null;
   confirmation?: string | null;
+  transaction?: TransactionDTO;
 }
 
 export abstract class FilAbstractWallet extends Wallet<FilTransaction> {
