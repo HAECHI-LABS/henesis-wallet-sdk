@@ -1,7 +1,6 @@
 import {
   FilAbstractWallet,
   FilAccountKey,
-  FilGasLimit,
   FilWalletData,
 } from "./abstractWallet";
 import { Client } from "../httpClient";
@@ -349,7 +348,7 @@ export class FilWallet extends FilAbstractWallet {
       to: this.getAddress(),
       from: this.getAccountKey().address,
       value: BNConverter.bnToHexString(new BN(0)),
-      gasLimit: BNConverter.bnToHexString(FilGasLimit.PROPOSE),
+      gasLimit: BNConverter.bnToHexString(new BN(0)),
       gasPremium: BNConverter.bnToHexStringOrElseNull(gasPremium),
       method: MethodMultisig.Propose,
       params: Buffer.from(serializedMsgParams).toString("base64"),
