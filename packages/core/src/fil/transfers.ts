@@ -46,6 +46,7 @@ export interface FilTransferPaginationOptions extends PaginationOptions {
   updatedAtGte?: Timestamp;
   updatedAtLt?: Timestamp;
   status?: TransferStatus;
+  masterWalletId?: string;
   walletId?: string;
   orgId?: string;
   transactionId?: string;

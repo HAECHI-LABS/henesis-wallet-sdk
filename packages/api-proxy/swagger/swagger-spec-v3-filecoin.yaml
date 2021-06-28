@@ -247,6 +247,10 @@ components:
           type: string
           description: 입출금 마스터 지갑 ID
           example: ae40b1b3dd953e5592c21e58be30d807
+        walletId:
+          type: string
+          description: 입출금이 발생한 마스터 지갑 혹은 입금 주소 ID
+          example: 3dd953e5592c21e58be30d807ae40b1b
         type:
           enum:
             - WITHDRAWAL
@@ -276,6 +280,7 @@ components:
         - amount
         - status
         - masterWalletId
+        - walletId
         - type
         - transaction
         - createdAt
@@ -441,6 +446,7 @@ components:
               amount: '1000000000'
               status: CONFIRMED
               masterWalletId: ae40b1b3dd953e5592c21e58be30d807
+              walletId: 3dd953e5592c21e58be30d807ae40b1b
               type: WITHDRAWAL
               transaction: *ref_0
               createdAt: '1612411568760'
@@ -700,6 +706,12 @@ paths:
             example: Bearer <TOKEN>
             default: 'Bearer '
             type: string
+        - name: walletId
+          required: false
+          in: query
+          description: 마스터 지갑 혹은 입금 주소 ID
+          schema:
+            type: string
         - name: masterWalletId
           required: false
           in: query
@@ -818,7 +830,7 @@ paths:
         - name: name
           required: false
           in: query
-          description: 지갑 이름
+          description: 마스터 지갑 이름
           schema:
             type: string
       responses:

@@ -72,7 +72,7 @@ import {
   DEPOSIT_ADDRESS_OPTIONAL,
   FLUSH_ID_REQUIRED,
   MASTER_WALLET_ID_REQUIRED,
-  WALLET_NAME_OPTIONAL,
+  MASTER_WALLET_NAME_OPTIONAL,
 } from "./dto/params.dto";
 import { PAGE_OPTIONAL, SIZE_OPTIONAL } from "../dto/params";
 import {
@@ -108,7 +108,7 @@ export class WalletsController {
     ]),
     isArray: true,
   })
-  @Queries(WALLET_NAME_OPTIONAL)
+  @Queries(MASTER_WALLET_NAME_OPTIONAL)
   @ApiOperation({
     summary: "전체 마스터 지갑 목록 조회하기",
     description: "모든 마스터 지갑의 목록을 조회합니다.",

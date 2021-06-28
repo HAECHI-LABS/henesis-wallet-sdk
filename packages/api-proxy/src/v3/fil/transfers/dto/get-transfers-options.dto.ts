@@ -13,6 +13,7 @@ export class GetTransfersOption {
   updatedAtLt?: string;
   status?: TransferStatus;
   masterWalletId?: string;
+  walletId?: string;
   transferType?: TransferType;
   size: number;
   page: number;
