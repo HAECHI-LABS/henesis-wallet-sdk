@@ -649,6 +649,111 @@ components:
       required:
         - name
         - passphrase
+    DefaultFeeWalletDTO:
+      type: object
+      properties:
+        address:
+          type: string
+          description: 기본 수수료 지갑의 주소
+          example: t1c4mfn5uk3kjhztosotp6eu5yh5ks5z6gja46ipy
+      required:
+        - address
+    ProposalFeeWalletDTO:
+      type: object
+      properties:
+        walletId:
+          type: string
+          description: 해당 요청 수수료 지갑을 사용하는 지갑의 ID
+          example: t1c4mfn5uk3kjhztosotp6eu5yh5ks5z6gja46ipy
+        address:
+          type: string
+          description: 요청 수수료 지갑의 주소
+          example: t1c4mfn5uk3kjhztosotp6eu5yh5ks5z6gja46ipy
+      required:
+        - walletId
+        - address
+    FeeWalletDTO:
+      type: object
+      properties:
+        defaultFeeWallet:
+          description: 기본 수수료 지갑
+          example: &ref_25
+            address: t1c4mfn5uk3kjhztosotp6eu5yh5ks5z6gja46ipy
+          allOf:
+            - $ref: '#/components/schemas/DefaultFeeWalletDTO'
+        proposalFeeWallets:
+          description: 요청 수수료 지갑 목록
+          example: &ref_26
+            - walletId: c3a43bbf3d33e94fdc1adfc2d17a63b3
+              address: t1c4mfn5uk3kjhztosotp6eu5yh5ks5z6gja46ipy
+          type: array
+          items:
+            $ref: '#/components/schemas/ProposalFeeWalletDTO'
+      required:
+        - defaultFeeWallet
+        - proposalFeeWallets
+    BalanceWithIdDTO:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: '확정된 잔액 (단위: attoFIL)'
+          example: '1000000000000'
+        spendableAmount:
+          type: string
+          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액) (단위: attoFIL)'
+          example: '1000000000000'
+        name:
+          type: string
+          description: 코인 이름
+          example: Filecoin
+        ticker:
+          type: string
+          description: 코인의 기호
+          example: FIL
+        decimals:
+          type: number
+          description: 코인의 소수점 자릿수
+          example: 18
+        walletId:
+          type: string
+          description: 지갑 ID
+          example: 49e129bd5e1e67eddc5e317ed2e42b4c
+      required:
+        - amount
+        - spendableAmount
+        - name
+        - ticker
+        - decimals
+        - walletId
+    FeeWalletBalanceDTO:
+      type: object
+      properties:
+        defaultFeeWallet:
+          description: 기본 수수료 지갑의 잔액
+          example: &ref_29
+            amount: '1000000000000'
+            spendableAmount: '1000000000000'
+            name: Filecoin
+            ticker: FIL
+            decimals: 18
+          allOf:
+            - $ref: '#/components/schemas/BalanceDTO'
+        proposalFeeWallets:
+          description: 요청 수수료 지갑들의 잔액
+          example: &ref_30
+            - walletId: 49e129bd5e1e67eddc5e317ed2e42b4c
+              amount: '1000000000000'
+              spendableAmount: '1000000000000'
+              name: Filecoin
+              ticker: FIL
+              decimals: 18
+          type: array
+          items:
+            $ref: '#/components/schemas/BalanceWithIdDTO'
+      required:
+        - defaultFeeWallet
+        - proposalFeeWallets
     FlushDTO:
       type: object
       properties:
@@ -662,8 +767,8 @@ components:
           example: 49e129bd5e1e67eddc5e317ed2e42b4c
         transfers:
           description: 집금을 통해 발생한 입출금의 ID 목록
-          example: &ref_39
-            - &ref_29
+          example: &ref_42
+            - &ref_33
               id: 5b0d5c94f8fa6c2a891eb4f833767f03
               from: t1tian42omo3lnk6lh7mw6k3d4muelbfvvlmhufni
               to: t2faaemofs4z3qnnpeawbrawyot43iuekkg52tjai
@@ -691,6 +796,56 @@ components:
         - transfers
         - createdAt
         - updatedAt
+    WalletBalanceDTO:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: '확정된 잔액 (단위: attoFIL)'
+          example: '1000000000000'
+        spendableAmount:
+          type: string
+          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액) (단위: attoFIL)'
+          example: '1000000000000'
+        name:
+          type: string
+          description: 코인 이름
+          example: Filecoin
+        ticker:
+          type: string
+          description: 코인의 기호
+          example: FIL
+        decimals:
+          type: number
+          description: 코인의 소수점 자릿수
+          example: 18
+        aggregatedAmount:
+          type: string
+          description: >-
+            지갑의 잔액과 하위 입금 주소들의 잔액을 모두 합한 잔액 (= 지갑 잔액 + 입금 주소 1 잔액 + 입금 주소 2 잔액 +
+            ...) (단위: attoFIL)
+          example: '3248100000000'
+      required:
+        - amount
+        - spendableAmount
+        - name
+        - ticker
+        - decimals
+        - aggregatedAmount
+    FlushNotFoundException:
+      type: object
+      properties:
+        message:
+          type: string
+          description: API 에러 메시지
+          example: flush 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
+        code:
+          type: number
+          description: 헤네시스 API 에러 코드
+          example: 4000
+      required:
+        - message
+        - code
     TransferRequestDTO:
       type: object
       properties:
@@ -762,11 +917,6 @@ paths:
             example: Bearer <TOKEN>
             default: 'Bearer '
             type: string
-        - name: flag
-          required: true
-          in: query
-          schema:
-            type: boolean
       responses:
         '200':
           content:
@@ -2029,13 +2179,13 @@ paths:
       summary: 수수료 지갑 조회하기
       description: 수수료 지갑을 조회합니다.
       parameters:
-        - &ref_25
+        - &ref_27
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_26
+        - &ref_28
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -2050,13 +2200,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/FeeWalletDTO'
               example:
-                defaultFeeWallet:
-                  address: t1c4mfn5uk3kjhztosotp6eu5yh5ks5z6gja46ipy
-                proposalFeeWallets:
-                  - walletId: c3a43bbf3d33e94fdc1adfc2d17a63b3
-                    address: t1c4mfn5uk3kjhztosotp6eu5yh5ks5z6gja46ipy
+                defaultFeeWallet: *ref_25
+                proposalFeeWallets: *ref_26
           description: ''
-        '401': &ref_27
+        '401': &ref_31
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
           content:
             application/json:
@@ -2072,7 +2219,7 @@ paths:
                   value: *ref_8
                 InvalidAccessIpException:
                   value: *ref_9
-      tags: &ref_28
+      tags: &ref_32
         - fee-wallet
   /api/v3/filecoin/fee-wallet/balance:
     get:
@@ -2080,8 +2227,8 @@ paths:
       summary: 수수료 지갑 잔고 조회하기
       description: 수수료 지갑의 잔액을 조회합니다.
       parameters:
-        - *ref_25
-        - *ref_26
+        - *ref_27
+        - *ref_28
       responses:
         '200':
           content:
@@ -2089,22 +2236,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/FeeWalletBalanceDTO'
               example:
-                defaultFeeWallet: &ref_38
-                  amount: '1000000000000'
-                  spendableAmount: '1000000000000'
-                  name: Filecoin
-                  ticker: FIL
-                  decimals: 18
-                proposalFeeWallets:
-                  - walletId: 49e129bd5e1e67eddc5e317ed2e42b4c
-                    amount: '1000000000000'
-                    spendableAmount: '1000000000000'
-                    name: Filecoin
-                    ticker: FIL
-                    decimals: 18
+                defaultFeeWallet: *ref_29
+                proposalFeeWallets: *ref_30
           description: ''
-        '401': *ref_27
-      tags: *ref_28
+        '401': *ref_31
+      tags: *ref_32
   /api/v3/filecoin/transfers:
     get:
       operationId: filecoin-TransfersController_getTransfers
@@ -2184,12 +2320,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForTransferDTO'
               example:
-                pagination: &ref_36
+                pagination: &ref_40
                   nextUrl: http://localhost:3000/api/v3/filecoin/transfers?page=2
                   previousUrl: http://localhost:3000/api/v3/filecion/transfers?page=1
                   totalCount: 5
                 results:
-                  - *ref_29
+                  - *ref_33
           description: ''
         '400':
           description: 올바르지 않은 입출금 상태(status)로 요청하면 발생합니다.
@@ -2224,13 +2360,13 @@ paths:
       summary: 전체 지갑 목록 조회하기
       description: 모든 지갑의 목록을 조회합니다.
       parameters:
-        - &ref_30
+        - &ref_34
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_31
+        - &ref_35
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -2251,7 +2387,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
               example:
-                - &ref_32
+                - &ref_36
                   id: a1f9e4c33ea9f51974490fd1c30efb3e
                   name: filecoin-wallet-1
                   address: t2faaemofs4z3qnnpeawbrawyot43iuekkg52tjai
@@ -2259,7 +2395,7 @@ paths:
                   updatedAt: '1614582928222'
                   status: ACTIVE
           description: ''
-        '401': &ref_33
+        '401': &ref_37
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
           content:
             application/json:
@@ -2275,7 +2411,7 @@ paths:
                   value: *ref_8
                 InvalidAccessIpException:
                   value: *ref_9
-      tags: &ref_34
+      tags: &ref_38
         - wallets
   /api/v3/filecoin/wallets/{walletId}:
     get:
@@ -2283,8 +2419,8 @@ paths:
       summary: 지갑 정보 조회하기
       description: 특정 지갑의 정보를 조회합니다.
       parameters:
-        - *ref_30
-        - *ref_31
+        - *ref_34
+        - *ref_35
         - name: walletId
           required: true
           in: path
@@ -2297,7 +2433,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
-              example: *ref_32
+              example: *ref_36
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2305,19 +2441,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: &ref_35
+              example: &ref_39
                 message: wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
                 code: 4000
-        '401': *ref_33
-      tags: *ref_34
+        '401': *ref_37
+      tags: *ref_38
   /api/v3/filecoin/wallets/{walletId}/balance:
     get:
       operationId: filecoin-WalletsController_getWalletBalances
       summary: 지갑 잔고 조회하기
       description: 특정 지갑의 잔고를 조회합니다.
       parameters:
-        - *ref_30
-        - *ref_31
+        - *ref_34
+        - *ref_35
         - name: walletId
           required: true
           in: path
@@ -2344,17 +2480,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_35
-        '401': *ref_33
-      tags: *ref_34
+              example: *ref_39
+        '401': *ref_37
+      tags: *ref_38
   /api/v3/filecoin/wallets/{walletId}/name:
     patch:
       operationId: filecoin-WalletsController_changeWalletName
       summary: 지갑 이름 변경하기
       description: 특정 지갑의 이름을 변경합니다.
       parameters:
-        - *ref_30
-        - *ref_31
+        - *ref_34
+        - *ref_35
         - name: walletId
           required: true
           in: path
@@ -2382,21 +2518,21 @@ paths:
                   - $ref: '#/components/schemas/NoWalletNameException'
               examples:
                 WalletNotFoundException:
-                  value: *ref_35
+                  value: *ref_39
                 NoWalletNameException:
                   value:
                     message: wallet name should not be empty
                     code: 4000
-        '401': *ref_33
-      tags: *ref_34
+        '401': *ref_37
+      tags: *ref_38
   /api/v3/filecoin/wallets/{walletId}/transfer:
     post:
       operationId: filecoin-WalletsController_transfer
       summary: 지갑에서 코인 전송하기
       description: 특정 지갑에서 가상자산을 송금합니다.
       parameters:
-        - *ref_30
-        - *ref_31
+        - *ref_34
+        - *ref_35
         - name: walletId
           required: true
           in: path
@@ -2415,7 +2551,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransferDTO'
-              example: *ref_29
+              example: *ref_33
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2423,17 +2559,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_35
-        '401': *ref_33
-      tags: *ref_34
+              example: *ref_39
+        '401': *ref_37
+      tags: *ref_38
   /api/v3/filecoin/wallets/{walletId}/flush:
     post:
       operationId: filecoin-WalletsController_flush
       summary: 입금 주소 잔액을 모두 끌어오기
       description: 입금 주소의 코인 잔액을 모두 상위의 지갑으로 끌어옵니다.
       parameters:
-        - *ref_30
-        - *ref_31
+        - *ref_34
+        - *ref_35
         - name: walletId
           required: true
           in: path
@@ -2460,17 +2596,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_35
-        '401': *ref_33
-      tags: *ref_34
+              example: *ref_39
+        '401': *ref_37
+      tags: *ref_38
   /api/v3/filecoin/wallets/{walletId}/deposit-addresses:
     get:
       operationId: filecoin-WalletsController_getDepositAddresses
       summary: 전체 입금 주소 목록 조회하기
       description: 특정 지갑에 속한 모든 입금 주소 조회합니다.
       parameters:
-        - *ref_30
-        - *ref_31
+        - *ref_34
+        - *ref_35
         - name: walletId
           required: true
           in: path
@@ -2508,9 +2644,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForDepositAddressDTO'
               example:
-                pagination: *ref_36
+                pagination: *ref_40
                 results:
-                  - &ref_37
+                  - &ref_41
                     id: a1f9e4c33ea9f51974490fd1c30efb3e
                     name: deposit-address-1
                     address: t1tian42omo3lnk6lh7mw6k3d4muelbfvvlmhufni
@@ -2523,16 +2659,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_35
-        '401': *ref_33
-      tags: *ref_34
+              example: *ref_39
+        '401': *ref_37
+      tags: *ref_38
     post:
       operationId: filecoin-WalletsController_createDepositAddress
       summary: 입금 주소 생성하기
       description: 특정 지갑 하위에 새로운 입금 주소 생성합니다
       parameters:
-        - *ref_30
-        - *ref_31
+        - *ref_34
+        - *ref_35
         - name: walletId
           required: true
           in: path
@@ -2551,7 +2687,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-              example: *ref_37
+              example: *ref_41
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2559,17 +2695,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_35
-        '401': *ref_33
-      tags: *ref_34
+              example: *ref_39
+        '401': *ref_37
+      tags: *ref_38
   /api/v3/filecoin/wallets/{walletId}/deposit-addresses/{depositAddressId}:
     get:
       operationId: filecoin-WalletsController_getDepositAddress
       summary: 입금 주소 정보 조회하기
       description: 특정 입금 주소를 조회합니다.
       parameters:
-        - *ref_30
-        - *ref_31
+        - *ref_34
+        - *ref_35
         - name: walletId
           required: true
           in: path
@@ -2588,7 +2724,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-              example: *ref_37
+              example: *ref_41
           description: ''
         '400':
           description: 다음과 같은 bad request 에러가 발생할 수 있습니다.
@@ -2600,23 +2736,23 @@ paths:
                   - $ref: '#/components/schemas/DepositAddressNotFoundException'
               examples:
                 WalletNotFoundException:
-                  value: *ref_35
+                  value: *ref_39
                 DepositAddressNotFoundException:
                   value:
                     message: >-
                       deposit address 'c27732256a1f8d45df5aec31ba7ef85cd' does
                       not exist
                     code: 4000
-        '401': *ref_33
-      tags: *ref_34
+        '401': *ref_37
+      tags: *ref_38
   /api/v3/filecoin/wallets/{walletId}/deposit-addresses/{depositAddressId}/balance:
     get:
       operationId: filecoin-WalletsController_getDepositAddressBalance
       summary: 입금 주소 잔고 조회하기
       description: 특정 입금 주소의 잔액을 조회합니다.
       parameters:
-        - *ref_30
-        - *ref_31
+        - *ref_34
+        - *ref_35
         - name: walletId
           required: true
           in: path
@@ -2636,18 +2772,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
               example:
-                - *ref_38
+                - *ref_29
           description: ''
-        '401': *ref_33
-      tags: *ref_34
+        '401': *ref_37
+      tags: *ref_38
   /api/v3/filecoin/wallets/{walletId}/flushes:
     get:
       operationId: filecoin-WalletsController_getFlushes
       summary: 전체 집금 목록 조회하기
       description: 특정 지갑에서 발생한 전체 집금 목록을 조회합니다.
       parameters:
-        - *ref_30
-        - *ref_31
+        - *ref_34
+        - *ref_35
         - name: walletId
           required: true
           in: path
@@ -2673,12 +2809,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForFlushDTO'
               example:
-                pagination: *ref_36
+                pagination: *ref_40
                 results:
-                  - &ref_40
+                  - &ref_43
                     id: 76f42bbea97c5e5fb6420ee29060ffc3
                     walletId: 49e129bd5e1e67eddc5e317ed2e42b4c
-                    transfers: *ref_39
+                    transfers: *ref_42
                     createdAt: '1612411568760'
                     updatedAt: '1612411724023'
           description: ''
@@ -2688,17 +2824,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_35
-        '401': *ref_33
-      tags: *ref_34
+              example: *ref_39
+        '401': *ref_37
+      tags: *ref_38
   /api/v3/filecoin/wallets/{walletId}/flushes/{flushId}:
     get:
       operationId: filecoin-WalletsController_getFlush
       summary: 특정 집금 조회하기
       description: 특정 지갑에서 발생한 특정 집금 내역을 조회합니다.
       parameters:
-        - *ref_30
-        - *ref_31
+        - *ref_34
+        - *ref_35
         - name: walletId
           required: true
           in: path
@@ -2717,7 +2853,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForFlushDTO'
-              example: *ref_40
+              example: *ref_43
           description: ''
         '400':
           description: 다음과 같은 bad request 에러가 발생할 수 있습니다.
@@ -2729,10 +2865,10 @@ paths:
                   - $ref: '#/components/schemas/FlushNotFoundException'
               examples:
                 WalletNotFoundException:
-                  value: *ref_35
+                  value: *ref_39
                 FlushNotFoundException:
                   value:
                     message: flush 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
                     code: 4000
-        '401': *ref_33
-      tags: *ref_34
+        '401': *ref_37
+      tags: *ref_38

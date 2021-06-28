@@ -88,7 +88,9 @@ import {
   BalanceDTO,
   TransferDTO,
   FlushDTO,
-  TransactionDTO
+  TransactionDTO,
+  WalletBalanceDTO,
+  FlushNotFoundException
 )
 @AuthErrorResponses()
 @AuthHeaders()

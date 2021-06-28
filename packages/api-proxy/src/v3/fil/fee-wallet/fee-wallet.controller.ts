@@ -32,7 +32,9 @@ import {
 @ApiExtraModels(
   InvalidAccessIpException,
   InvalidAccessTokenException,
-  AccessTokenNotProvidedException
+  AccessTokenNotProvidedException,
+  FeeWalletDTO,
+  FeeWalletBalanceDTO
 )
 @AuthErrorResponses()
 @AuthHeaders()
