@@ -1,5 +1,5 @@
 import { Controller, Get, Query, Request } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiBadRequestResponse, ApiExtraModels, ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   ApiPaginationResponse,
   ApiResponseContentGenerator,
@@ -42,6 +42,9 @@ import {
 @Controller("transfers")
 @ApiTags("transfers")
 @AuthErrorResponses()
+@ApiExtraModels(
+  InvalidStatusException
+)
 @AuthHeaders()
 @ReadMeExtension()
 export class TransfersController {

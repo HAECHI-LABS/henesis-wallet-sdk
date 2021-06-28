@@ -19,14 +19,32 @@ export class ApiV3Module {
     const imports = [];
     const providers = [];
     if (buildSwagger) {
-      imports.push(
-        EthModule,
-        FilModule,
-        CacheModule.register({
-          ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
-          max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
-        })
-      );
+      if (process.env.ENDPOINT == "ethereum") {
+        imports.push(
+          EthModule,
+          CacheModule.register({
+            ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
+            max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
+          })
+        );
+      } else if (process.env.ENDPOINT == "filecoin") {
+        imports.push(
+          FilModule,
+          CacheModule.register({
+            ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
+            max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
+          })
+        );
+      } else {
+        imports.push(
+          EthModule,
+          FilModule,
+          CacheModule.register({
+            ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
+            max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
+          })
+        );
+      }
 
       providers.push({
         provide: APP_INTERCEPTOR,
