@@ -18,6 +18,7 @@
     "test": "jest --passWithNoTests",
     "type-check": "tsc --noEmit",
     "build": "rm -rf ./lib && nest build",
+    "build:spec": "npm run build:spec:version && npm run build:spec:v2-btc && npm run build:spec:v2-eth && npm run build:spec:v2-klay && npm run build:spec:v3-eth && npm run build:spec:v3-fil",
     "build:spec:v2-btc": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v2 ENDPOINT=bitcoin nest start",
     "build:spec:v2-eth": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v2 ENDPOINT=ethereum nest start",
     "build:spec:v2-klay": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v2 ENDPOINT=klaytn nest start",
