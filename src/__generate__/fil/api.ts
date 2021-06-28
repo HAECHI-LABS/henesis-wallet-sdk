@@ -1543,6 +1543,12 @@ export interface TransferDTO {
     masterWalletId: string;
     /**
      * 
+     * @type {string}
+     * @memberof TransferDTO
+     */
+    walletId: string;
+    /**
+     * 
      * @type {TransactionDTO}
      * @memberof TransferDTO
      */
@@ -1628,6 +1634,12 @@ export interface TransferInternalDTO {
     masterWalletId: string;
     /**
      * 
+     * @type {string}
+     * @memberof TransferInternalDTO
+     */
+    walletId: string;
+    /**
+     * 
      * @type {TransactionDTO}
      * @memberof TransferInternalDTO
      */
@@ -1687,6 +1699,12 @@ export interface TransferSearchCondition {
      * @memberof TransferSearchCondition
      */
     masterWalletId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    walletId?: string;
     /**
      * 
      * @type {string}
@@ -2108,10 +2126,10 @@ export const InternalControllerApiAxiosParamCreator = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlushes1: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getFlushes: async (pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getFlushes1.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getFlushes.');
             }
             const localVarPath = `/api/v2/fil/internal/flushes`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2250,8 +2268,8 @@ export const InternalControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFlushes1(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushInternalDTO>> {
-            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getFlushes1(pageable, options);
+        async getFlushes(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushInternalDTO>> {
+            const localVarAxiosArgs = await InternalControllerApiAxiosParamCreator(configuration).getFlushes(pageable, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2308,8 +2326,8 @@ export const InternalControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlushes1(pageable: Pageable, options?: any): AxiosPromise<PaginationFlushInternalDTO> {
-            return InternalControllerApiFp(configuration).getFlushes1(pageable, options).then((request) => request(axios, basePath));
+        getFlushes(pageable: Pageable, options?: any): AxiosPromise<PaginationFlushInternalDTO> {
+            return InternalControllerApiFp(configuration).getFlushes(pageable, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2358,8 +2376,8 @@ export class InternalControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof InternalControllerApi
      */
-    public getFlushes1(pageable: Pageable, options?: any) {
-        return InternalControllerApiFp(this.configuration).getFlushes1(pageable, options).then((request) => request(this.axios, this.basePath));
+    public getFlushes(pageable: Pageable, options?: any) {
+        return InternalControllerApiFp(this.configuration).getFlushes(pageable, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3321,14 +3339,14 @@ export const WalletControllerApiAxiosParamCreator = function (configuration?: Co
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlushes: async (masterWalletId: string, pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
+        getFlushes1: async (masterWalletId: string, pageable: Pageable, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'masterWalletId' is not null or undefined
             if (masterWalletId === null || masterWalletId === undefined) {
-                throw new RequiredError('masterWalletId','Required parameter masterWalletId was null or undefined when calling getFlushes.');
+                throw new RequiredError('masterWalletId','Required parameter masterWalletId was null or undefined when calling getFlushes1.');
             }
             // verify required parameter 'pageable' is not null or undefined
             if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getFlushes.');
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getFlushes1.');
             }
             const localVarPath = `/api/v2/fil/wallets/{masterWalletId}/flushes`
                 .replace(`{${"masterWalletId"}}`, encodeURIComponent(String(masterWalletId)));
@@ -3828,8 +3846,8 @@ export const WalletControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFlushes(masterWalletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushDTO>> {
-            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getFlushes(masterWalletId, pageable, options);
+        async getFlushes1(masterWalletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushDTO>> {
+            const localVarAxiosArgs = await WalletControllerApiAxiosParamCreator(configuration).getFlushes1(masterWalletId, pageable, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -4066,8 +4084,8 @@ export const WalletControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFlushes(masterWalletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationFlushDTO> {
-            return WalletControllerApiFp(configuration).getFlushes(masterWalletId, pageable, options).then((request) => request(axios, basePath));
+        getFlushes1(masterWalletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationFlushDTO> {
+            return WalletControllerApiFp(configuration).getFlushes1(masterWalletId, pageable, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4298,8 +4316,8 @@ export class WalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof WalletControllerApi
      */
-    public getFlushes(masterWalletId: string, pageable: Pageable, options?: any) {
-        return WalletControllerApiFp(this.configuration).getFlushes(masterWalletId, pageable, options).then((request) => request(this.axios, this.basePath));
+    public getFlushes1(masterWalletId: string, pageable: Pageable, options?: any) {
+        return WalletControllerApiFp(this.configuration).getFlushes1(masterWalletId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
