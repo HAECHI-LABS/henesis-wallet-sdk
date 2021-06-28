@@ -12,7 +12,6 @@ import {
 } from "./depositAddress";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import {
-  BalanceDTO,
   BuildTransactionRequest,
   DepositAddressDTO,
   FlushDTO,
@@ -24,8 +23,8 @@ import {
   RawFlushTransactionDTO,
   RawTransactionDTO,
   TransferDTO,
-  WalletBalanceDTO,
-  WalletDTO,
+  MasterWalletBalanceDTO,
+  MasterWalletDTO,
 } from "../__generate__/fil";
 import BN from "bn.js";
 import { BlockchainType } from "../blockchain";
@@ -45,18 +44,17 @@ import {
   transactionSerializeRaw,
 } from "./fil-core-lib/signer";
 import {
-  convertBalanceDtoToFilBalance,
   convertDtoToFlush,
   convertDtoToTransfer,
   convertFilFlushTargetToDto,
   convertMessageToObject,
   convertRawTransactionToMessage,
   convertSignedTransactionToRawSignedTransactionDTO,
-  convertWalletBalanceDtoToFilBalance,
+  convertMasterWalletBalanceDtoToFilBalance,
 } from "./utils";
 import { ProtocolIndicator } from "./fil-core-lib/constants";
 
-export const convertWalletData = (data: WalletDTO): FilWalletData => {
+export const convertWalletData = (data: MasterWalletDTO): FilWalletData => {
   return {
     ...data,
     blockchain: BlockchainType.FILECOIN,
@@ -106,7 +104,7 @@ export interface FilFlushTarget {
   flushTransaction: SignedTransaction;
 }
 
-export class FilWallet extends FilAbstractWallet {
+export class FilMasterWallet extends FilAbstractWallet {
   confirmation?: BN;
 
   constructor(client: Client, data: FilWalletData, keychains: FilKeychains) {
@@ -119,7 +117,7 @@ export class FilWallet extends FilAbstractWallet {
     const request: PatchWalletNameRequest = {
       name,
     };
-    const walletData = await this.client.patch<WalletDTO>(
+    const walletData = await this.client.patch<MasterWalletDTO>(
       `${this.baseUrl}/name`,
       request
     );
@@ -139,10 +137,10 @@ export class FilWallet extends FilAbstractWallet {
   }
 
   async getBalance(): Promise<Balance[]> {
-    const response = await this.client.get<WalletBalanceDTO>(
+    const response = await this.client.get<MasterWalletBalanceDTO>(
       `${this.baseUrl}/balance`
     );
-    return [convertWalletBalanceDtoToFilBalance(response)];
+    return [convertMasterWalletBalanceDtoToFilBalance(response)];
   }
 
   getEncryptionKey(): string {
@@ -162,7 +160,7 @@ export class FilWallet extends FilAbstractWallet {
     passphrase?: string,
     otpCode?: string
   ): Promise<FilDepositAddress> {
-    const wallet = await this.client.get<WalletDTO>(this.baseUrl);
+    const wallet = await this.client.get<MasterWalletDTO>(this.baseUrl);
     const depositAddressKey = this.keychains.derive(
       this.getAccountKey(),
       passphrase,
