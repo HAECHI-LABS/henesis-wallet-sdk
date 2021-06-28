@@ -5,15 +5,15 @@ export const WALLET_NAME_OPTIONAL: ApiQueryOptions = {
   required: false,
   description: "지갑 이름",
 };
-export const WALLET_ID_OPTIONAL: ApiQueryOptions = {
-  name: "walletId",
+export const MASTER_WALLET_ID_OPTIONAL: ApiQueryOptions = {
+  name: "masterWalletId",
   required: false,
-  description: "지갑 ID",
+  description: "마스터 지갑 ID",
 };
-export const WALLET_ID_REQUIRED: ApiParamOptions = {
-  name: "walletId",
+export const MASTER_WALLET_ID_REQUIRED: ApiParamOptions = {
+  name: "masterWalletId",
   required: true,
-  description: "지갑 ID",
+  description: "마스터 지갑 ID",
 };
 
 export const DEPOSIT_ADDRESS_NAME_OPTIONAL: ApiQueryOptions = {

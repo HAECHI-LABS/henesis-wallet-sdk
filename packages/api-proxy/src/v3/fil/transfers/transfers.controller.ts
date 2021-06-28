@@ -1,5 +1,10 @@
 import { Controller, Get, Query, Request } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiExtraModels, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiExtraModels,
+  ApiOperation,
+  ApiTags,
+} from "@nestjs/swagger";
 import {
   ApiPaginationResponse,
   ApiResponseContentGenerator,
@@ -26,7 +31,7 @@ import {
 import {
   TRANSACTION_HASH_OPTIONAL,
   TRANSACTION_ID_OPTIONAL,
-  WALLET_ID_OPTIONAL,
+  MASTER_WALLET_ID_OPTIONAL,
 } from "../wallets/dto/params.dto";
 import {
   TRANSFER_STATUS_OPTIONAL,
@@ -42,9 +47,7 @@ import {
 @Controller("transfers")
 @ApiTags("transfers")
 @AuthErrorResponses()
-@ApiExtraModels(
-  InvalidStatusException
-)
+@ApiExtraModels(InvalidStatusException)
 @AuthHeaders()
 @ReadMeExtension()
 export class TransfersController {
@@ -52,7 +55,7 @@ export class TransfersController {
 
   @Get("/")
   @Queries(
-    WALLET_ID_OPTIONAL,
+    MASTER_WALLET_ID_OPTIONAL,
     TRANSACTION_ID_OPTIONAL,
     TRANSACTION_HASH_OPTIONAL,
     TRANSFER_STATUS_OPTIONAL,
@@ -76,7 +79,7 @@ export class TransfersController {
   })
   public async getTransfers(
     @Request() request: express.Request,
-    @Query("walletId") walletId?: string,
+    @Query("masterWalletId") masterWalletId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
     @Query("status") status?: TransferStatus,
@@ -87,7 +90,7 @@ export class TransfersController {
     @Query("page") page: number = 0
   ): Promise<PaginationDTO<TransferDTO>> {
     return await this.transfersService.getTransfers(request.sdk, {
-      walletId,
+      masterWalletId,
       transactionId,
       transactionHash,
       status,

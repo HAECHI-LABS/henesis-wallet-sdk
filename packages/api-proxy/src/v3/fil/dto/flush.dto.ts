@@ -4,7 +4,7 @@ import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-prop
 
 export const EXAMPLE_FILECOIN_FLUSH_DTO: FlushDTO = {
   id: "76f42bbea97c5e5fb6420ee29060ffc3",
-  walletId: "49e129bd5e1e67eddc5e317ed2e42b4c",
+  masterWalletId: "49e129bd5e1e67eddc5e317ed2e42b4c",
   transfers: [EXAMPLE_FILECOIN_TRANSFER_DTO],
   createdAt: "1612411568760",
   updatedAt: "1612411724023",
@@ -18,10 +18,10 @@ export class FlushDTO {
   id: string;
 
   @ApiModelProperty({
-    description: "집금한 지갑 ID",
-    example: EXAMPLE_FILECOIN_FLUSH_DTO.walletId,
+    description: "집금한 마스터 지갑 ID",
+    example: EXAMPLE_FILECOIN_FLUSH_DTO.masterWalletId,
   })
-  walletId: string;
+  masterWalletId: string;
 
   @ApiModelProperty({
     description: "집금을 통해 발생한 입출금의 ID 목록",
@@ -44,7 +44,7 @@ export class FlushDTO {
   static fromFlush(flush: FilFlush) {
     return {
       id: flush.id,
-      walletId: flush.walletId,
+      masterWalletId: flush.masterWalletId,
       transfers: flush.transfers.map(TransferDTO.fromTransfer),
       createdAt: flush.createdAt,
       updatedAt: flush.updatedAt,

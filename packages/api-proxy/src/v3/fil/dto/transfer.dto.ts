@@ -15,7 +15,7 @@ export const EXAMPLE_FILECOIN_TRANSFER_DTO: TransferDTO = {
   to: "t2faaemofs4z3qnnpeawbrawyot43iuekkg52tjai",
   amount: "1000000000",
   status: TransferStatus.CONFIRMED,
-  walletId: "ae40b1b3dd953e5592c21e58be30d807",
+  masterWalletId: "ae40b1b3dd953e5592c21e58be30d807",
   type: TransferType.WITHDRAWAL,
   transaction: EXAMPLE_FILECOIN_TRANSACTION_DTO,
   createdAt: "1612411568760",
@@ -54,10 +54,10 @@ export class TransferDTO {
   status: TransferStatus;
 
   @ApiModelProperty({
-    description: "입출금 지갑 ID",
-    example: EXAMPLE_FILECOIN_TRANSFER_DTO.walletId,
+    description: "입출금 마스터 지갑 ID",
+    example: EXAMPLE_FILECOIN_TRANSFER_DTO.masterWalletId,
   })
-  walletId: string;
+  masterWalletId: string;
 
   @ApiModelProperty({
     description: "입출금 타입",
@@ -90,7 +90,7 @@ export class TransferDTO {
       to: transfer.toAddress,
       amount: transfer.amount.toString(10),
       status: transfer.status,
-      walletId: transfer.walletId,
+      masterWalletId: transfer.masterWalletId,
       type: transfer.type,
       transaction: {
         id: transfer.transaction.id,

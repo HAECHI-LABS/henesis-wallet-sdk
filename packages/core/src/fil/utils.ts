@@ -6,7 +6,7 @@ import {
   TransferDTO,
   TransferInternalDTO,
   RawSignedTransactionDTO,
-  WalletBalanceDTO,
+  MasterWalletBalanceDTO,
 } from "../__generate__/fil";
 import { FilTransfer, FilTransferInternal } from "./transfers";
 import { FilTransaction } from "./abstractWallet";
@@ -196,8 +196,8 @@ export const convertBalanceDtoToFilBalance = (
   };
 };
 
-export const convertWalletBalanceDtoToFilBalance = (
-  balanceDTO: WalletBalanceDTO
+export const convertMasterWalletBalanceDtoToFilBalance = (
+  balanceDTO: MasterWalletBalanceDTO
 ): Balance => {
   return {
     coinId: null,
