@@ -97,6 +97,8 @@ components:
             - ETHEREUM
             - KLAYTN
             - BITCOIN
+            - FILECOIN
+            - BINANCE_SMART_CHAIN
           type: string
           description: 코인이 발행된 메인넷
           example: ETHEREUM
@@ -104,7 +106,7 @@ components:
           items:
             type: array
           description: 코인의 메타 데이터
-          example: &ref_0
+          example: &ref_1
             - ERC20_STANDARD
           type: array
       required:
@@ -195,9 +197,15 @@ components:
             - ETHEREUM
             - KLAYTN
             - BITCOIN
+            - FILECOIN
+            - BINANCE_SMART_CHAIN
           type: string
           description: 메인넷 종류
           example: ETHEREUM
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
       required:
         - id
         - data
@@ -217,11 +225,11 @@ components:
         nextUrl:
           type: string
           description: 다음 pagination url
-          example: http://localhost:3000/api/v2/eth/value-transfer-events?page=2
+          example: http://localhost:3000/api/v3/ethereum/transfers?page=2
         previousUrl:
           type: string
           description: 이전 pagination url
-          example: http://localhost:3000/api/v2/eth/value-transfer-events?page=1
+          example: http://localhost:3000/api/v3/ethereum/transfers?page=1
         totalCount:
           type: number
           description: 총 갯수
@@ -245,101 +253,69 @@ components:
       type: object
       properties:
         id:
-          type: number
-          description: 코인/토큰 입출금 내역의 ID
-          example: 375031
+          type: string
+          description: 입출금 내역의 ID
+          example: 5b0d5c94f8fa6c2a891eb4f833767f03
         from:
           type: string
           description: 출금 주소
-          example: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
+          example: t1tian42omo3lnk6lh7mw6k3d4muelbfvvlmhufni
         to:
           type: string
           description: 입금 주소
-          example: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+          example: t2faaemofs4z3qnnpeawbrawyot43iuekkg52tjai
         amount:
           type: string
-          description: 암호화폐의 양
+          description: '암호화폐(FIL)의 양 (단위: attoFIL)'
           example: '1000000000'
         status:
           enum:
-            - PENDING_APPROVAL
-            - REJECTED
             - REQUESTED
             - PENDING
             - FAILED
-            - REVERTED
-            - REPLACED
             - MINED
+            - REVERTED
             - CONFIRMED
           type: string
-          description: 트랜잭션 상태
+          description: 출금 상태
           example: CONFIRMED
-        orgId:
-          type: string
-          description: 지갑이 속한 팀(Organization)의 ID
-          example: 31cafc79bd437e1b8e7b8209e399d3f3
-        decimals:
-          type: number
-          description: 암호화폐의 소수점 자릿수
-          example: 18
         walletId:
           type: string
           description: 입출금 지갑 ID
           example: ae40b1b3dd953e5592c21e58be30d807
-        depositAddressId:
-          type: string
-          description: 입금 주소 ID
-          example: ae40b1b3dd953e5592c21e58be30d807
-        ticker:
-          type: string
-          description: 암호화폐의 기호
-          example: USDT
-        transferType:
+        type:
           enum:
             - WITHDRAWAL
             - DEPOSIT
           type: string
           description: 입출금 타입
           example: WITHDRAWAL
-        transactionId:
-          type: string
-          description: >-
-            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
-            개념입니다.)
-          example: 8c87c578d7568edc156f831cf03c3ff0
-        transactionHash:
-          type: string
-          description: 트랜잭션 해시
-          example: '0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f'
+        transaction:
+          description: 입출금 트랜잭션
+          example: &ref_0
+            id: c3a43bbf3d33e94fdc1adfc2d17a63b3
+            hash: bafy2bzaced4hk2ufk3xwcmxuiuikudoh6dcxgjfoforubsbn7tu5rfyc3446e
+          allOf:
+            - $ref: '#/components/schemas/TransactionDTO'
         createdAt:
           type: string
-          description: '트랜잭션 생성 시간 (형식: ms, UNIX time)'
+          description: '입출금 생성 시간 (형식: ms, UNIX time)'
           example: '1612411568760'
         updatedAt:
           type: string
-          description: '트랜잭션 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)'
+          description: '입출금 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)'
           example: '1612411724023'
-        name:
-          type: string
-          description: 해당 내역의 지갑 또는 입금 주소의 이름
-          example: ETH 실비 정산
       required:
         - id
         - from
         - to
         - amount
         - status
-        - orgId
-        - decimals
         - walletId
-        - depositAddressId
-        - ticker
-        - transferType
-        - transactionId
-        - transactionHash
+        - type
+        - transaction
         - createdAt
         - updatedAt
-        - name
     GetManyResponseForTransferDTO:
       type: object
       properties:
@@ -370,62 +346,15 @@ components:
       properties:
         id:
           type: string
-          description: >-
-            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다, 블록체인에서 부여하는 트랜잭션 해시와
-            다른 개념입니다)
-          example: b549bfaaa74d1c4244ecc655738b1984
-        blockchain:
-          enum:
-            - ETHEREUM
-            - KLAYTN
-            - BITCOIN
-          type: string
-          description: 메인넷 종류
-          example: ETHEREUM
+          description: Henesis에서 부여한 트랜잭션의 ID
+          example: c3a43bbf3d33e94fdc1adfc2d17a63b3
         hash:
           type: string
-          description: 트랜잭션 해시 (트랜잭션 상태가 REQUESTED일 때는 존재하지 않습니다)
-          example: '0x8a1ef722a2884d53a86874c8ba19bcf267bb0b8a81da00c14ddc6457cf1eaf96'
-        error:
-          type: string
-          description: 트랜잭션 전송 시 발생한 에러
-          example: 'null'
-        status:
-          enum:
-            - PENDING_APPROVAL
-            - REJECTED
-            - REQUESTED
-            - PENDING
-            - FAILED
-            - MINED
-            - REVERTED
-            - INTERNAL_REVERTED
-            - CONFIRMED
-            - REPLACED
-          type: string
-          description: 트랜잭션 상태
-          example: CONFIRMED
-        fee:
-          type: string
-          description: 트랜잭션 수수료
-          example: '10000000'
-        createdAt:
-          type: string
-          description: '트랜잭션 생성 시간 (형식: ms, UNIX time)'
-          example: '1614582928222'
-        updatedAt:
-          type: string
-          description: '트랜잭션 상태가 변한 시간 (형식: ms, UNIX time)'
-          example: '1612411724023'
+          description: 트랜잭션 해시
+          example: bafy2bzaced4hk2ufk3xwcmxuiuikudoh6dcxgjfoforubsbn7tu5rfyc3446e
       required:
         - id
-        - blockchain
         - hash
-        - error
-        - status
-        - fee
-        - createdAt
-        - updatedAt
     GetManyResponseForTransactionDTO:
       type: object
       properties:
@@ -485,31 +414,23 @@ components:
         id:
           type: string
           description: 지갑 ID
-          example: ae40b1b3dd953e5592c21e58be30d807
+          example: a1f9e4c33ea9f51974490fd1c30efb3e
         name:
           type: string
           description: 지갑 이름
-          example: ethereum-wallet
+          example: filecoin-wallet-1
         address:
           type: string
           description: 지갑 주소
-          example: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
-        blockchain:
-          enum:
-            - ETHEREUM
-            - KLAYTN
-            - BITCOIN
-          type: string
-          description: 메인넷 종류
-          example: ETHEREUM
+          example: t2faaemofs4z3qnnpeawbrawyot43iuekkg52tjai
         createdAt:
           type: string
           description: '지갑 생성 시간 (형식: ms, UNIX time)'
-          example: '1612411568760'
+          example: '1614582860091'
         updatedAt:
           type: string
           description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
-          example: '1612411724023'
+          example: '1614582928222'
         status:
           enum:
             - ACTIVE
@@ -519,53 +440,37 @@ components:
           type: string
           description: 지갑 상태
           example: ACTIVE
-        whitelistActivated:
-          type: boolean
-          description: 출금 주소 화이트리스팅의 활성화 유무
-          example: false
-        version:
-          type: string
-          description: 컨트랙트 버전
-          example: v4
       required:
         - id
         - name
         - address
-        - blockchain
         - createdAt
         - updatedAt
         - status
-        - whitelistActivated
-        - version
     BalanceDTO:
       type: object
       properties:
-        coinId:
-          type: string
-          description: Henesis에서 부여한 Coin의 ID
-          example: '11'
         amount:
           type: string
-          description: '확정된 잔액 (단위: wei, peb)'
+          description: '확정된 잔액 (단위: attoFIL)'
           example: '1000000000000'
         spendableAmount:
           type: string
-          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei, peb)'
+          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액) (단위: attoFIL)'
           example: '1000000000000'
         name:
           type: string
           description: 코인 이름
-          example: ethereum
+          example: Filecoin
         ticker:
           type: string
           description: 코인의 기호
-          example: ETH
+          example: FIL
         decimals:
           type: number
           description: 코인의 소수점 자릿수
           example: 18
       required:
-        - coinId
         - amount
         - spendableAmount
         - name
@@ -578,42 +483,28 @@ components:
           type: string
           description: 입금 주소 ID
           example: a1f9e4c33ea9f51974490fd1c30efb3e
-        address:
-          type: string
-          description: 입금 주소
-          example: '0x70d4e4abbe12c9c5098df3b31d9ad89c99a01967'
         name:
           type: string
           description: 입금 주소 이름
           example: deposit-address-1
-        blockchain:
-          enum:
-            - ETHEREUM
-            - KLAYTN
-            - BITCOIN
+        address:
           type: string
-          description: 메인넷 종류
-          example: ETHEREUM
+          description: 입금 주소
+          example: t1tian42omo3lnk6lh7mw6k3d4muelbfvvlmhufni
         createdAt:
           type: string
-          description: '지갑 생성 시간 (단위: ms, UNIX time)'
+          description: '입금 주소 생성 시간 (단위: ms, UNIX time)'
           example: '1614582860091'
         updatedAt:
           type: string
-          description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
+          description: '입금 주소 정보 수정 시간 (단위: ms, UNIX time)'
           example: '1614582928222'
-        version:
-          type: string
-          description: 입금 주소 버전
-          example: v4
       required:
         - id
-        - address
         - name
-        - blockchain
+        - address
         - createdAt
         - updatedAt
-        - version
     ChangeWalletNameRequestDTO:
       type: object
       properties:
@@ -630,6 +521,11 @@ components:
           description: >-
             트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
             값으로 설정합니다.
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+          default: metadata
         ticker:
           type: string
           description: 암호화폐의 기호 (ticker)
@@ -663,6 +559,11 @@ components:
           description: >-
             트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
             값으로 설정합니다.
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+          default: metadata
         to:
           type: string
           description: 트랜잭션을 보낼 스마트 컨트랙트 주소
@@ -712,6 +613,11 @@ components:
         gasLimit:
           type: number
           description: '트랜잭션에 사용할 gas limit (단위: wei) null일 경우, Henesis가 자동으로 설정합니다.'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+          default: metadata
         targets:
           type: array
           items:
@@ -736,8 +642,97 @@ components:
           type: string
           description: 입금 주소 이름
           example: test-deposit-address
+        passphrase:
+          type: string
+          description: 지갑 비밀번호
+          example: passphrase
       required:
         - name
+        - passphrase
+    FlushDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Henesis에서 부여한 집금 ID
+          example: 76f42bbea97c5e5fb6420ee29060ffc3
+        walletId:
+          type: string
+          description: 집금한 지갑 ID
+          example: 49e129bd5e1e67eddc5e317ed2e42b4c
+        transfers:
+          description: 집금을 통해 발생한 입출금의 ID 목록
+          example: &ref_39
+            - &ref_29
+              id: 5b0d5c94f8fa6c2a891eb4f833767f03
+              from: t1tian42omo3lnk6lh7mw6k3d4muelbfvvlmhufni
+              to: t2faaemofs4z3qnnpeawbrawyot43iuekkg52tjai
+              amount: '1000000000'
+              status: CONFIRMED
+              walletId: ae40b1b3dd953e5592c21e58be30d807
+              type: WITHDRAWAL
+              transaction: *ref_0
+              createdAt: '1612411568760'
+              updatedAt: '1612411724023'
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferDTO'
+        createdAt:
+          type: string
+          description: '집금 발생 시간 (형식: ms, UNIX time)'
+          example: '1612411568760'
+        updatedAt:
+          type: string
+          description: '집금 정보가 마지막으로 변경된 시간 (형식: ms, UNIX time)'
+          example: '1612411724023'
+      required:
+        - id
+        - walletId
+        - transfers
+        - createdAt
+        - updatedAt
+    TransferRequestDTO:
+      type: object
+      properties:
+        to:
+          type: string
+        amount:
+          type: string
+        passphrase:
+          type: string
+        gasPremium:
+          type: string
+      required:
+        - to
+        - amount
+        - passphrase
+        - gasPremium
+    FlushRequestDTO:
+      type: object
+      properties:
+        targets:
+          type: array
+          items:
+            type: string
+        passphrase:
+          type: string
+        gasPremium:
+          type: string
+      required:
+        - targets
+        - passphrase
+        - gasPremium
+    GetManyResponseForFlushDTO:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlushDTO'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - results
 paths:
   /api/v3/ethereum/coins:
     get:
@@ -753,13 +748,13 @@ paths:
       summary: 전체 코인 목록 조회하기
       description: Henesis Wallet에서 지원하는 모든 가상자산(토큰, 코인)을 조회합니다.
       parameters:
-        - &ref_1
+        - &ref_2
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_2
+        - &ref_3
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -774,7 +769,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CoinDTO'
               example:
-                - &ref_3
+                - &ref_4
                   id: 11
                   name: ethereum
                   ticker: ETH
@@ -782,9 +777,9 @@ paths:
                   description: 이더리움
                   decimals: 18
                   blockchain: ETHEREUM
-                  attributes: *ref_0
+                  attributes: *ref_1
           description: ''
-        '401': &ref_4
+        '401': &ref_5
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
           content:
             application/json:
@@ -795,18 +790,18 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: &ref_6
+                  value: &ref_7
                     message: expired or invalid access token and signature
                     code: 4001
                 AccessTokenNotProvidedException:
-                  value: &ref_7
+                  value: &ref_8
                     message: access token not provided
                     code: 4001
                 InvalidAccessIpException:
-                  value: &ref_8
+                  value: &ref_9
                     message: ip '106.101.128.133' is not allowed
                     code: 4008
-      tags: &ref_5
+      tags: &ref_6
         - coins
   /api/v3/ethereum/coins/{coinId}:
     get:
@@ -822,8 +817,8 @@ paths:
       summary: 코인 정보 조회하기
       description: Henesis Wallet에서 지원하는 특정 가상자산(토큰, 코인)을 조회합니다.
       parameters:
-        - *ref_1
         - *ref_2
+        - *ref_3
         - name: coinId
           required: true
           in: path
@@ -836,7 +831,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CoinDTO'
-              example: *ref_3
+              example: *ref_4
           description: ''
         '400':
           description: 코인 정보가 없을 때 response 입니다
@@ -847,8 +842,8 @@ paths:
               example:
                 message: there is no '2' coin at 'ETHEREUM'
                 code: 4000
-        '401': *ref_4
-      tags: *ref_5
+        '401': *ref_5
+      tags: *ref_6
   /api/v3/ethereum/contract-calls:
     get:
       operationId: ethereum-ContractCallsController_getCallEvents
@@ -938,11 +933,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForContractCallsDTO'
               example:
-                pagination: &ref_9
-                  nextUrl: >-
-                    http://localhost:3000/api/v2/eth/value-transfer-events?page=2
-                  previousUrl: >-
-                    http://localhost:3000/api/v2/eth/value-transfer-events?page=1
+                pagination: &ref_10
+                  nextUrl: http://localhost:3000/api/v3/ethereum/transfers?page=2
+                  previousUrl: http://localhost:3000/api/v3/ethereum/transfers?page=1
                   totalCount: 5
                 results:
                   - id: '375031'
@@ -959,6 +952,7 @@ paths:
                     createdAt: '1612411568760'
                     updatedAt: '1612411724023'
                     blockchain: ETHEREUM
+                    metadata: metadata
           description: ''
         '400':
           description: 올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.
@@ -966,7 +960,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvalidStatusException'
-              example: &ref_10
+              example: &ref_11
                 message: '''status'' is invalid: not supported event status'
                 code: 4001
         '401':
@@ -980,11 +974,11 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
-                AccessTokenNotProvidedException:
                   value: *ref_7
-                InvalidAccessIpException:
+                AccessTokenNotProvidedException:
                   value: *ref_8
+                InvalidAccessIpException:
+                  value: *ref_9
       tags:
         - contract-calls
   /api/v3/ethereum/transfers:
@@ -1088,7 +1082,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForTransferDTO'
               example:
-                pagination: *ref_9
+                pagination: *ref_10
                 results:
                   - id: 375031
                     from: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
@@ -1107,6 +1101,7 @@ paths:
                     createdAt: '1612411568760'
                     updatedAt: '1612411724023'
                     name: ETH 실비 정산
+                    metadata: metadata
           description: ''
         '400':
           description: 올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.
@@ -1114,7 +1109,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvalidStatusException'
-              example: *ref_10
+              example: *ref_11
         '401':
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
           content:
@@ -1126,11 +1121,11 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
-                AccessTokenNotProvidedException:
                   value: *ref_7
-                InvalidAccessIpException:
+                AccessTokenNotProvidedException:
                   value: *ref_8
+                InvalidAccessIpException:
+                  value: *ref_9
       tags:
         - transfers
   /api/v3/ethereum/fee-wallet/balance:
@@ -1165,7 +1160,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
-              example: &ref_21
+              example: &ref_22
                 coinId: '11'
                 amount: '1000000000000'
                 spendableAmount: '1000000000000'
@@ -1184,11 +1179,11 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
-                AccessTokenNotProvidedException:
                   value: *ref_7
-                InvalidAccessIpException:
+                AccessTokenNotProvidedException:
                   value: *ref_8
+                InvalidAccessIpException:
+                  value: *ref_9
       tags:
         - fee-wallet
   /api/v3/ethereum/transactions/{transactionId}:
@@ -1197,13 +1192,13 @@ paths:
       summary: 개별 트랜잭션 조회하기
       description: 내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.
       parameters:
-        - &ref_11
+        - &ref_12
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_12
+        - &ref_13
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -1225,7 +1220,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: &ref_13
+              example: &ref_14
                 id: b549bfaaa74d1c4244ecc655738b1984
                 blockchain: ETHEREUM
                 hash: >-
@@ -1245,7 +1240,7 @@ paths:
               example:
                 message: transaction id '1' does not exists
                 code: 4000
-        '401': &ref_14
+        '401': &ref_15
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
           content:
             application/json:
@@ -1256,12 +1251,12 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
-                AccessTokenNotProvidedException:
                   value: *ref_7
-                InvalidAccessIpException:
+                AccessTokenNotProvidedException:
                   value: *ref_8
-      tags: &ref_15
+                InvalidAccessIpException:
+                  value: *ref_9
+      tags: &ref_16
         - transactions
   /api/v3/ethereum/transactions:
     get:
@@ -1277,8 +1272,8 @@ paths:
       summary: 트랜잭션 목록 조회하기
       description: 트랜잭션 목록을 조회합니다.
       parameters:
-        - *ref_11
         - *ref_12
+        - *ref_13
         - name: address
           required: false
           in: query
@@ -1350,12 +1345,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForTransactionDTO'
               example:
-                pagination: *ref_9
+                pagination: *ref_10
                 results:
-                  - *ref_13
+                  - *ref_14
           description: ''
-        '401': *ref_14
-      tags: *ref_15
+        '401': *ref_15
+      tags: *ref_16
   /api/v3/ethereum/wallets:
     get:
       operationId: ethereum-WalletsController_getWallets
@@ -1370,13 +1365,13 @@ paths:
       summary: 전체 지갑 목록 조회하기
       description: 모든 지갑의 목록을 조회합니다.
       parameters:
-        - &ref_16
+        - &ref_17
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_17
+        - &ref_18
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -1397,7 +1392,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
               example:
-                - &ref_18
+                - &ref_19
                   id: ae40b1b3dd953e5592c21e58be30d807
                   name: ethereum-wallet
                   address: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
@@ -1408,7 +1403,7 @@ paths:
                   whitelistActivated: false
                   version: v4
           description: ''
-        '401': &ref_19
+        '401': &ref_20
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.
           content:
             application/json:
@@ -1419,12 +1414,12 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
-                AccessTokenNotProvidedException:
                   value: *ref_7
-                InvalidAccessIpException:
+                AccessTokenNotProvidedException:
                   value: *ref_8
-      tags: &ref_20
+                InvalidAccessIpException:
+                  value: *ref_9
+      tags: &ref_21
         - wallets
   /api/v3/ethereum/wallets/{walletId}:
     get:
@@ -1440,8 +1435,8 @@ paths:
       summary: 지갑 정보 조회하기
       description: 특정 지갑의 정보를 조회합니다.
       parameters:
-        - *ref_16
         - *ref_17
+        - *ref_18
         - name: walletId
           required: true
           in: path
@@ -1454,7 +1449,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
-              example: *ref_18
+              example: *ref_19
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1462,11 +1457,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: &ref_22
+              example: &ref_23
                 message: wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
                 code: 4000
-        '401': *ref_19
-      tags: *ref_20
+        '401': *ref_20
+      tags: *ref_21
   /api/v3/ethereum/wallets/{walletId}/balance:
     get:
       operationId: ethereum-WalletsController_getBalanceOfWallet
@@ -1481,8 +1476,8 @@ paths:
       summary: 지갑 잔고 조회하기
       description: 특정 지갑의 잔고를 조회합니다.
       parameters:
-        - *ref_16
         - *ref_17
+        - *ref_18
         - name: walletId
           required: true
           in: path
@@ -1502,7 +1497,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
               example:
-                - *ref_21
+                - *ref_22
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1510,9 +1505,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
+              example: *ref_23
+        '401': *ref_20
+      tags: *ref_21
   /api/v3/ethereum/wallets/{walletId}/name:
     patch:
       operationId: ethereum-WalletsController_changeWalletName
@@ -1527,8 +1522,8 @@ paths:
       summary: 지갑 이름 변경하기
       description: 특정 지갑의 이름을 변경합니다.
       parameters:
-        - *ref_16
         - *ref_17
+        - *ref_18
         - name: walletId
           required: true
           in: path
@@ -1556,13 +1551,13 @@ paths:
                   - $ref: '#/components/schemas/NoWalletNameException'
               examples:
                 WalletNotFoundException:
-                  value: *ref_22
+                  value: *ref_23
                 NoWalletNameException:
                   value:
                     message: wallet name should not be empty
                     code: 4000
-        '401': *ref_19
-      tags: *ref_20
+        '401': *ref_20
+      tags: *ref_21
   /api/v3/ethereum/wallets/{walletId}/transfer:
     post:
       operationId: ethereum-WalletsController_sendCoin
@@ -1577,8 +1572,8 @@ paths:
       summary: 지갑에서 코인 전송하기
       description: 특정 지갑에서 가상자산을 송금합니다.
       parameters:
-        - *ref_16
         - *ref_17
+        - *ref_18
         - name: walletId
           required: true
           in: path
@@ -1597,7 +1592,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_13
+              example: *ref_14
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1605,9 +1600,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
+              example: *ref_23
+        '401': *ref_20
+      tags: *ref_21
   /api/v3/ethereum/wallets/{walletId}/contract-calls:
     post:
       operationId: ethereum-WalletsController_callContract
@@ -1622,8 +1617,8 @@ paths:
       summary: 지갑에서 스마트 컨트랙트 호출하기
       description: 특정 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
       parameters:
-        - *ref_16
         - *ref_17
+        - *ref_18
         - name: walletId
           required: true
           in: path
@@ -1642,7 +1637,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_13
+              example: *ref_14
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1650,9 +1645,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
+              example: *ref_23
+        '401': *ref_20
+      tags: *ref_21
   /api/v3/ethereum/wallets/{walletId}/transactions/{transactionId}/replace:
     post:
       operationId: ethereum-WalletsController_replaceTransaction
@@ -1667,8 +1662,8 @@ paths:
       summary: 트랜잭션 교체
       description: 트랜잭션을 교체합니다
       parameters:
-        - *ref_16
         - *ref_17
+        - *ref_18
         - name: walletId
           required: true
           in: path
@@ -1695,7 +1690,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_13
+              example: *ref_14
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1703,9 +1698,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
+              example: *ref_23
+        '401': *ref_20
+      tags: *ref_21
   /api/v3/ethereum/wallets/{walletId}/flush:
     post:
       operationId: ethereum-WalletsController_flush
@@ -1720,8 +1715,8 @@ paths:
       summary: 입금 주소 잔액을 모두 끌어오기
       description: 원화 입금 주소의 특정 코인/토큰 잔액을 모두 상위의 지갑으로 끌어옵니다.
       parameters:
-        - *ref_16
         - *ref_17
+        - *ref_18
         - name: walletId
           required: true
           in: path
@@ -1740,7 +1735,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_13
+              example: *ref_14
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1748,9 +1743,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
+              example: *ref_23
+        '401': *ref_20
+      tags: *ref_21
   /api/v3/ethereum/wallets/{walletId}/transactions/{transactionId}/resend:
     post:
       operationId: ethereum-WalletsController_resendTransaction
@@ -1765,8 +1760,8 @@ paths:
       summary: 트랜잭션 다시 전송하기
       description: 네트워크 사정 등으로 채굴이 지연됐을때, 블록체인에 트랜잭션을 다시 전송합니다.
       parameters:
-        - *ref_16
         - *ref_17
+        - *ref_18
         - name: walletId
           required: true
           in: path
@@ -1787,7 +1782,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_13
+              example: *ref_14
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1795,9 +1790,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
+              example: *ref_23
+        '401': *ref_20
+      tags: *ref_21
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses:
     get:
       operationId: ethereum-WalletsController_getDepositAddresses
@@ -1812,8 +1807,8 @@ paths:
       summary: 전체 입금 주소 목록 조회하기
       description: 특정 지갑에 속한 모든 입금 주소 조회합니다.
       parameters:
-        - *ref_16
         - *ref_17
+        - *ref_18
         - name: walletId
           required: true
           in: path
@@ -1869,9 +1864,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
+              example: *ref_23
+        '401': *ref_20
+      tags: *ref_21
     post:
       operationId: ethereum-WalletsController_createDepositAddress
       x-readme:
@@ -1885,8 +1880,8 @@ paths:
       summary: 입금 주소 생성하기
       description: 특정 지갑 하위에 새로운 입금 주소 생성합니다
       parameters:
-        - *ref_16
         - *ref_17
+        - *ref_18
         - name: walletId
           required: true
           in: path
@@ -1905,7 +1900,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-              example: &ref_23
+              example: &ref_24
                 id: a1f9e4c33ea9f51974490fd1c30efb3e
                 address: '0x70d4e4abbe12c9c5098df3b31d9ad89c99a01967'
                 name: deposit-address-1
@@ -1920,9 +1915,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
+              example: *ref_23
+        '401': *ref_20
+      tags: *ref_21
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}:
     get:
       operationId: ethereum-WalletsController_getDepositAddress
@@ -1937,8 +1932,8 @@ paths:
       summary: 입금 주소 정보 조회하기
       description: 특정 입금 주소를 조회합니다.
       parameters:
-        - *ref_16
         - *ref_17
+        - *ref_18
         - name: walletId
           required: true
           in: path
@@ -1957,7 +1952,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-              example: *ref_23
+              example: *ref_24
           description: ''
         '400':
           description: 다음과 같은 bad request 에러가 발생할 수 있습니다.
@@ -1969,15 +1964,15 @@ paths:
                   - $ref: '#/components/schemas/DepositAddressNotFoundException'
               examples:
                 WalletNotFoundException:
-                  value: *ref_22
+                  value: *ref_23
                 DepositAddressNotFoundException:
                   value:
                     message: >-
                       deposit address 'c27732256a1f8d45df5aec31ba7ef85cd' does
                       not exist
                     code: 4000
-        '401': *ref_19
-      tags: *ref_20
+        '401': *ref_20
+      tags: *ref_21
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}/balance:
     get:
       operationId: ethereum-WalletsController_getBalanceOfDepositAddress
@@ -1992,8 +1987,8 @@ paths:
       summary: 입금 주소 잔고 조회하기
       description: 특정 입금 주소의 잔액을 조회합니다.
       parameters:
-        - *ref_16
         - *ref_17
+        - *ref_18
         - name: walletId
           required: true
           in: path
@@ -2019,7 +2014,720 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
               example:
-                - *ref_21
+                - *ref_22
           description: ''
-        '401': *ref_19
-      tags: *ref_20
+        '401': *ref_20
+      tags: *ref_21
+  /api/v3/filecoin/fee-wallet:
+    get:
+      operationId: ethereum-FeeWalletController_getFeeWallets
+      summary: 수수료 지갑 조회하기
+      description: 수수료 지갑을 조회합니다.
+      parameters:
+        - &ref_25
+          name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - &ref_26
+          name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
+          schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeeWalletDTO'
+              example:
+                defaultFeeWallet:
+                  address: t1c4mfn5uk3kjhztosotp6eu5yh5ks5z6gja46ipy
+                proposalFeeWallets:
+                  - walletId: c3a43bbf3d33e94fdc1adfc2d17a63b3
+                    address: t1c4mfn5uk3kjhztosotp6eu5yh5ks5z6gja46ipy
+          description: ''
+        '401': &ref_27
+          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
+              examples:
+                InvalidAccessTokenException:
+                  value: *ref_7
+                AccessTokenNotProvidedException:
+                  value: *ref_8
+                InvalidAccessIpException:
+                  value: *ref_9
+      tags: &ref_28
+        - fee-wallet
+  /api/v3/filecoin/fee-wallet/balance:
+    get:
+      operationId: ethereum-FeeWalletController_getBalance
+      summary: 수수료 지갑 잔고 조회하기
+      description: 수수료 지갑의 잔액을 조회합니다.
+      parameters:
+        - *ref_25
+        - *ref_26
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeeWalletBalanceDTO'
+              example:
+                defaultFeeWallet: &ref_38
+                  amount: '1000000000000'
+                  spendableAmount: '1000000000000'
+                  name: Filecoin
+                  ticker: FIL
+                  decimals: 18
+                proposalFeeWallets:
+                  - walletId: 49e129bd5e1e67eddc5e317ed2e42b4c
+                    amount: '1000000000000'
+                    spendableAmount: '1000000000000'
+                    name: Filecoin
+                    ticker: FIL
+                    decimals: 18
+          description: ''
+        '401': *ref_27
+      tags: *ref_28
+  /api/v3/filecoin/transfers:
+    get:
+      operationId: ethereum-TransfersController_getTransfers
+      summary: 전체 입출금 목록 조회하기
+      description: 모든 지갑의 가상자산 입출금 내역을 조회합니다.
+      parameters:
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
+          schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
+            type: string
+        - name: walletId
+          required: false
+          in: query
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: transactionId
+          required: false
+          in: query
+          description: 트랜잭션 ID
+          schema:
+            type: string
+        - name: transactionHash
+          required: false
+          in: query
+          description: 트랜잭션 해시
+          schema:
+            type: string
+        - name: status
+          required: false
+          in: query
+          description: 입출금 상태
+          schema:
+            type: string
+        - name: transferType
+          required: false
+          in: query
+          description: 입출금 종류 (입금, 출금)
+          schema:
+            type: string
+        - name: updatedAtGte
+          required: false
+          in: query
+          description: 'updatedAt이 해당 시점과 같거나 그보다 이후인 데이터 조회 (형식: ms, UNIX time) '
+          schema:
+            type: string
+        - name: updatedAtLt
+          required: false
+          in: query
+          description: 'updatedAt이 해당 시점보다 이전인 데이터 조회 (형식: ms, UNIX time) '
+          schema:
+            type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForTransferDTO'
+              example:
+                pagination: &ref_36
+                  nextUrl: http://localhost:3000/api/v3/filecoin/transfers?page=2
+                  previousUrl: http://localhost:3000/api/v3/filecion/transfers?page=1
+                  totalCount: 5
+                results:
+                  - *ref_29
+          description: ''
+        '400':
+          description: 올바르지 않은 입출금 상태(status)로 요청하면 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidStatusException'
+              example:
+                message: '''status'' is invalid: not supported event status'
+                code: 4001
+        '401':
+          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
+              examples:
+                InvalidAccessTokenException:
+                  value: *ref_7
+                AccessTokenNotProvidedException:
+                  value: *ref_8
+                InvalidAccessIpException:
+                  value: *ref_9
+      tags:
+        - transfers
+  /api/v3/filecoin/wallets:
+    get:
+      operationId: ethereum-WalletsController_getWallets
+      summary: 전체 지갑 목록 조회하기
+      description: 모든 지갑의 목록을 조회합니다.
+      parameters:
+        - &ref_30
+          name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - &ref_31
+          name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
+          schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
+            type: string
+        - name: name
+          required: false
+          in: query
+          description: 지갑 이름
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletDTO'
+              example:
+                - &ref_32
+                  id: a1f9e4c33ea9f51974490fd1c30efb3e
+                  name: filecoin-wallet-1
+                  address: t2faaemofs4z3qnnpeawbrawyot43iuekkg52tjai
+                  createdAt: '1614582860091'
+                  updatedAt: '1614582928222'
+                  status: ACTIVE
+          description: ''
+        '401': &ref_33
+          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
+              examples:
+                InvalidAccessTokenException:
+                  value: *ref_7
+                AccessTokenNotProvidedException:
+                  value: *ref_8
+                InvalidAccessIpException:
+                  value: *ref_9
+      tags: &ref_34
+        - wallets
+  /api/v3/filecoin/wallets/{walletId}:
+    get:
+      operationId: ethereum-WalletsController_getWallet
+      summary: 지갑 정보 조회하기
+      description: 특정 지갑의 정보를 조회합니다.
+      parameters:
+        - *ref_30
+        - *ref_31
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletDTO'
+              example: *ref_32
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: &ref_35
+                message: wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
+                code: 4000
+        '401': *ref_33
+      tags: *ref_34
+  /api/v3/filecoin/wallets/{walletId}/balance:
+    get:
+      operationId: ethereum-WalletsController_getWalletBalances
+      summary: 지갑 잔고 조회하기
+      description: 특정 지갑의 잔고를 조회합니다.
+      parameters:
+        - *ref_30
+        - *ref_31
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletBalanceDTO'
+              example:
+                - amount: '1000000000000'
+                  spendableAmount: '1000000000000'
+                  aggregatedAmount: '3248100000000'
+                  name: Filecoin
+                  ticker: FIL
+                  decimals: 18
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_35
+        '401': *ref_33
+      tags: *ref_34
+  /api/v3/filecoin/wallets/{walletId}/name:
+    patch:
+      operationId: ethereum-WalletsController_changeWalletName
+      summary: 지갑 이름 변경하기
+      description: 특정 지갑의 이름을 변경합니다.
+      parameters:
+        - *ref_30
+        - *ref_31
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeWalletNameRequestDTO'
+      responses:
+        '200':
+          description: ''
+        '204':
+          description: ''
+        '400':
+          description: 다음과 같은 bad request 에러가 발생할 수 있습니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/WalletNotFoundException'
+                  - $ref: '#/components/schemas/NoWalletNameException'
+              examples:
+                WalletNotFoundException:
+                  value: *ref_35
+                NoWalletNameException:
+                  value:
+                    message: wallet name should not be empty
+                    code: 4000
+        '401': *ref_33
+      tags: *ref_34
+  /api/v3/filecoin/wallets/{walletId}/transfer:
+    post:
+      operationId: ethereum-WalletsController_transfer
+      summary: 지갑에서 코인 전송하기
+      description: 특정 지갑에서 가상자산을 송금합니다.
+      parameters:
+        - *ref_30
+        - *ref_31
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferDTO'
+              example: *ref_29
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_35
+        '401': *ref_33
+      tags: *ref_34
+  /api/v3/filecoin/wallets/{walletId}/flush:
+    post:
+      operationId: ethereum-WalletsController_flush
+      summary: 입금 주소 잔액을 모두 끌어오기
+      description: 입금 주소의 코인 잔액을 모두 상위의 지갑으로 끌어옵니다.
+      parameters:
+        - *ref_30
+        - *ref_31
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlushRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_0
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_35
+        '401': *ref_33
+      tags: *ref_34
+  /api/v3/filecoin/wallets/{walletId}/deposit-addresses:
+    get:
+      operationId: ethereum-WalletsController_getDepositAddresses
+      summary: 전체 입금 주소 목록 조회하기
+      description: 특정 지갑에 속한 모든 입금 주소 조회합니다.
+      parameters:
+        - *ref_30
+        - *ref_31
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: name
+          required: false
+          in: query
+          description: 입금 주소 이름
+          schema:
+            type: string
+        - name: address
+          required: false
+          in: query
+          description: 입금 주소
+          schema:
+            type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForDepositAddressDTO'
+              example:
+                pagination: *ref_36
+                results:
+                  - &ref_37
+                    id: a1f9e4c33ea9f51974490fd1c30efb3e
+                    name: deposit-address-1
+                    address: t1tian42omo3lnk6lh7mw6k3d4muelbfvvlmhufni
+                    createdAt: '1614582860091'
+                    updatedAt: '1614582928222'
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_35
+        '401': *ref_33
+      tags: *ref_34
+    post:
+      operationId: ethereum-WalletsController_createDepositAddress
+      summary: 입금 주소 생성하기
+      description: 특정 지갑 하위에 새로운 입금 주소 생성합니다
+      parameters:
+        - *ref_30
+        - *ref_31
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDepositAddressRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositAddressDTO'
+              example: *ref_37
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_35
+        '401': *ref_33
+      tags: *ref_34
+  /api/v3/filecoin/wallets/{walletId}/deposit-addresses/{depositAddressId}:
+    get:
+      operationId: ethereum-WalletsController_getDepositAddress
+      summary: 입금 주소 정보 조회하기
+      description: 특정 입금 주소를 조회합니다.
+      parameters:
+        - *ref_30
+        - *ref_31
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: depositAddressId
+          required: true
+          in: path
+          description: 입금 주소 ID
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositAddressDTO'
+              example: *ref_37
+          description: ''
+        '400':
+          description: 다음과 같은 bad request 에러가 발생할 수 있습니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/WalletNotFoundException'
+                  - $ref: '#/components/schemas/DepositAddressNotFoundException'
+              examples:
+                WalletNotFoundException:
+                  value: *ref_35
+                DepositAddressNotFoundException:
+                  value:
+                    message: >-
+                      deposit address 'c27732256a1f8d45df5aec31ba7ef85cd' does
+                      not exist
+                    code: 4000
+        '401': *ref_33
+      tags: *ref_34
+  /api/v3/filecoin/wallets/{walletId}/deposit-addresses/{depositAddressId}/balance:
+    get:
+      operationId: ethereum-WalletsController_getDepositAddressBalance
+      summary: 입금 주소 잔고 조회하기
+      description: 특정 입금 주소의 잔액을 조회합니다.
+      parameters:
+        - *ref_30
+        - *ref_31
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: depositAddressId
+          required: true
+          in: path
+          description: 입금 주소 ID
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceDTO'
+              example:
+                - *ref_38
+          description: ''
+        '401': *ref_33
+      tags: *ref_34
+  /api/v3/filecoin/wallets/{walletId}/flushes:
+    get:
+      operationId: ethereum-WalletsController_getFlushes
+      summary: 전체 집금 목록 조회하기
+      description: 특정 지갑에서 발생한 전체 집금 목록을 조회합니다.
+      parameters:
+        - *ref_30
+        - *ref_31
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForFlushDTO'
+              example:
+                pagination: *ref_36
+                results:
+                  - &ref_40
+                    id: 76f42bbea97c5e5fb6420ee29060ffc3
+                    walletId: 49e129bd5e1e67eddc5e317ed2e42b4c
+                    transfers: *ref_39
+                    createdAt: '1612411568760'
+                    updatedAt: '1612411724023'
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_35
+        '401': *ref_33
+      tags: *ref_34
+  /api/v3/filecoin/wallets/{walletId}/flushes/{flushId}:
+    get:
+      operationId: ethereum-WalletsController_getFlush
+      summary: 특정 집금 조회하기
+      description: 특정 지갑에서 발생한 특정 집금 내역을 조회합니다.
+      parameters:
+        - *ref_30
+        - *ref_31
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: flushId
+          required: true
+          in: path
+          description: 집금 내역 ID
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForFlushDTO'
+              example: *ref_40
+          description: ''
+        '400':
+          description: 다음과 같은 bad request 에러가 발생할 수 있습니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/WalletNotFoundException'
+                  - $ref: '#/components/schemas/FlushNotFoundException'
+              examples:
+                WalletNotFoundException:
+                  value: *ref_35
+                FlushNotFoundException:
+                  value:
+                    message: flush 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
+                    code: 4000
+        '401': *ref_33
+      tags: *ref_34
