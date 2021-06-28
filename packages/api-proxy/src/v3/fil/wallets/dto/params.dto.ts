@@ -1,9 +1,14 @@
 import { ApiParamOptions, ApiQueryOptions } from "@nestjs/swagger";
 
-export const WALLET_NAME_OPTIONAL: ApiQueryOptions = {
+export const MASTER_WALLET_NAME_OPTIONAL: ApiQueryOptions = {
   name: "name",
   required: false,
-  description: "지갑 이름",
+  description: "마스터 지갑 이름",
+};
+export const WALLET_ID_OPTIONAL: ApiQueryOptions = {
+  name: "walletId",
+  required: false,
+  description: "마스터 지갑 혹은 입금 주소 ID",
 };
 export const MASTER_WALLET_ID_OPTIONAL: ApiQueryOptions = {
   name: "masterWalletId",
