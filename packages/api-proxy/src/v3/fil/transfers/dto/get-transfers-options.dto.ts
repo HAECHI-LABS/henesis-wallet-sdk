@@ -12,7 +12,7 @@ export class GetTransfersOption {
   updatedAtGte?: string;
   updatedAtLt?: string;
   status?: TransferStatus;
-  walletId?: string;
+  masterWalletId?: string;
   transferType?: TransferType;
   size: number;
   page: number;

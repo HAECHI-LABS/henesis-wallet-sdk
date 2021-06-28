@@ -30,15 +30,17 @@ export const EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO: TransactionIdNotFou
     code: 4000,
   };
 
-export const EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO: WalletNotFoundException = {
-  message: "wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist",
-  code: 4000,
-};
+export const EXAMPLE_MASTER_WALLET_NOT_FOUND_EXCEPTION_DTO: MasterWalletNotFoundException =
+  {
+    message: "wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist",
+    code: 4000,
+  };
 
-export const EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO: NoWalletNameException = {
-  message: "wallet name should not be empty",
-  code: 4000,
-};
+export const EXAMPLE_NO_MASTER_WALLET_NAME_EXCEPTION_DTO: NoMasterWalletNameException =
+  {
+    message: "wallet name should not be empty",
+    code: 4000,
+  };
 
 export const EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO: DepositAddressNotFoundException =
   {
@@ -122,30 +124,30 @@ export class TransactionIdNotFoundException {
   code: number;
 }
 
-export class WalletNotFoundException {
+export class MasterWalletNotFoundException {
   @ApiModelProperty({
     description: "API 에러 메시지",
-    example: EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO.message,
+    example: EXAMPLE_MASTER_WALLET_NOT_FOUND_EXCEPTION_DTO.message,
   })
   message: string;
 
   @ApiModelProperty({
     description: "헤네시스 API 에러 코드",
-    example: EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO.code,
+    example: EXAMPLE_MASTER_WALLET_NOT_FOUND_EXCEPTION_DTO.code,
   })
   code: number;
 }
 
-export class NoWalletNameException {
+export class NoMasterWalletNameException {
   @ApiModelProperty({
     description: "API 에러 메시지",
-    example: EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO.message,
+    example: EXAMPLE_NO_MASTER_WALLET_NAME_EXCEPTION_DTO.message,
   })
   message: string;
 
   @ApiModelProperty({
     description: "헤네시스 API 에러 코드",
-    example: EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO.code,
+    example: EXAMPLE_NO_MASTER_WALLET_NAME_EXCEPTION_DTO.code,
   })
   code: number;
 }

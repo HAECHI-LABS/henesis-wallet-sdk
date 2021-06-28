@@ -43,7 +43,7 @@ describe('FilWallets', () => {
       );
 
       const recoveryKit = await wallets.createRecoveryKit('test-wallet', 'password');
-      const wallet = await wallets.createWalletWithKit(recoveryKit);
+      const wallet = await wallets.createMasterWalletWithKit(recoveryKit);
       console.log(wallet);
     })
   })

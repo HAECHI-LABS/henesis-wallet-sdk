@@ -19,7 +19,7 @@ describe('FilWallet', () => {
         BlockchainType.FILECOIN,
         new FilFeeWallets(client)
       );
-      const wallet = await wallets.getWallet('22223cb66afe86babd2a37a31afbcccc');
+      const wallet = await wallets.getMasterWallet('22223cb66afe86babd2a37a31afbcccc');
       const flush = await wallet.flush(['44423cb66afe86babd2a37a31afbcddd'], 'password');
       console.log(flush);
     })
@@ -40,7 +40,7 @@ describe('FilWallet', () => {
         BlockchainType.FILECOIN,
         new FilFeeWallets(client)
       );
-      const wallet = await wallets.getWallet('d6c86b80ce2e7029a8efb99c4a13773c');
+      const wallet = await wallets.getMasterWallet('d6c86b80ce2e7029a8efb99c4a13773c');
       const depositAddressData = await wallet.createDepositAddress(`deposit-address-test-${Math.random()}`, 'password');
       console.log(depositAddressData);
 

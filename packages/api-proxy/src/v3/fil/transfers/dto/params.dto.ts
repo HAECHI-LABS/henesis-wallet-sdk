@@ -1,9 +1,9 @@
 import { ApiQueryOptions } from "@nestjs/swagger";
 
-export const TRANSFER_WALLET_ID_OPTIONAL: ApiQueryOptions = {
+export const TRANSFER_MASTER_WALLET_ID_OPTIONAL: ApiQueryOptions = {
   name: "walletId",
   required: false,
-  description: "지갑 ID",
+  description: "마스터 지갑 ID",
 };
 export const TRANSFER_TRANSACTION_ID_OPTIONAL: ApiQueryOptions = {
   name: "transactionId",
