@@ -115,6 +115,10 @@ components:
           type: string
           description: 블록 컨펌 수 (16진법)
           example: '0x3ed'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
         amount:
           type: string
           description: 암호화폐의 양
@@ -207,6 +211,10 @@ components:
           type: string
           description: 블록 컨펌 수 (16진법)
           example: '0x3ed'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
         fromAddress:
           type: string
           description: 호출한 스마트 컨트랙트 주소
@@ -235,11 +243,11 @@ components:
         nextUrl:
           type: string
           description: 다음 pagination url
-          example: http://localhost:3000/api/v2/eth/value-transfer-events?page=2
+          example: http://localhost:3000/api/v3/ethereum/transfers?page=2
         previousUrl:
           type: string
           description: 이전 pagination url
-          example: http://localhost:3000/api/v2/eth/value-transfer-events?page=1
+          example: http://localhost:3000/api/v3/ethereum/transfers?page=1
         totalCount:
           type: number
           description: 총 갯수
@@ -327,6 +335,8 @@ components:
             - ETHEREUM
             - KLAYTN
             - BITCOIN
+            - FILECOIN
+            - BINANCE_SMART_CHAIN
           type: string
           description: 블록체인 플랫폼
           example: ETHEREUM
@@ -483,6 +493,8 @@ components:
             - ETHEREUM
             - KLAYTN
             - BITCOIN
+            - FILECOIN
+            - BINANCE_SMART_CHAIN
           type: string
           description: 블록체인 타입
           example: ETHEREUM
@@ -567,6 +579,8 @@ components:
             - ETHEREUM
             - KLAYTN
             - BITCOIN
+            - FILECOIN
+            - BINANCE_SMART_CHAIN
           type: string
           description: 블록체인 타입
           example: ETHEREUM
@@ -629,6 +643,11 @@ components:
             null일 경우, Henesis가 자동으로 설정합니다.
           example: '0x1'
           default: '0x1'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+          default: metadata
       required:
         - contractAddress
         - value
@@ -683,6 +702,11 @@ components:
             null일 경우, Henesis가 자동으로 설정합니다.
           example: '0x1'
           default: '0x1'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+          default: metadata
       required:
         - ticker
         - to
@@ -738,6 +762,11 @@ components:
             null일 경우, Henesis가 자동으로 설정합니다.
           example: '0x1'
           default: '0x1'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+          default: metadata
       required:
         - ticker
         - userWalletIds
@@ -818,6 +847,11 @@ components:
             null일 경우, Henesis가 자동으로 설정합니다.
           example: '0x1'
           default: '0x1'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+          default: metadata
       required:
         - contractAddress
         - value
@@ -872,6 +906,11 @@ components:
             null일 경우, Henesis가 자동으로 설정합니다.
           example: '0x1'
           default: '0x1'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+          default: metadata
       required:
         - ticker
         - to
@@ -963,6 +1002,12 @@ paths:
           schema:
             example: Bearer <TOKEN>
             default: 'Bearer '
+            type: string
+        - name: flag
+          required: false
+          in: query
+          description: COIN FLAG
+          schema:
             type: string
       responses:
         '200':
@@ -1159,6 +1204,7 @@ paths:
                     orgId: 575a431dc73615a9e65648180bbd4fbb
                     masterWalletId: 98fa482e258bbd5cbac1393acef9e0e6
                     confirmation: '0x3ed'
+                    metadata: metadata
                     amount: '0x2386f26fc10000'
                     decimals: 18
                     coinSymbol: ETH
@@ -1730,6 +1776,12 @@ paths:
           description: 마스터 지갑 ID
           schema:
             type: string
+        - name: flag
+          required: false
+          in: query
+          description: FLAG
+          schema:
+            type: string
         - name: symbol
           required: false
           in: query
@@ -2115,6 +2167,12 @@ paths:
           required: true
           in: path
           description: 유저 지갑 ID
+          schema:
+            type: string
+        - name: flag
+          required: false
+          in: query
+          description: FLAG
           schema:
             type: string
         - name: symbol

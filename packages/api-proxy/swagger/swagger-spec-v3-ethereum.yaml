@@ -800,6 +800,11 @@ paths:
             example: Bearer <TOKEN>
             default: 'Bearer '
             type: string
+        - name: flag
+          required: true
+          in: query
+          schema:
+            type: boolean
       responses:
         '200':
           content:

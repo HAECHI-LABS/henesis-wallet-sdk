@@ -183,6 +183,10 @@ components:
           type: string
           description: 트랜잭션 전파 이후 채굴 된 블록 갯수
           example: '0x8a3b'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
       required:
         - transaction
         - walletId
@@ -199,11 +203,11 @@ components:
         nextUrl:
           type: string
           description: 다음 pagination url
-          example: http://localhost:3000/api/v2/eth/value-transfer-events?page=2
+          example: http://localhost:3000/api/v3/ethereum/transfers?page=2
         previousUrl:
           type: string
           description: 이전 pagination url
-          example: http://localhost:3000/api/v2/eth/value-transfer-events?page=1
+          example: http://localhost:3000/api/v3/ethereum/transfers?page=1
         totalCount:
           type: number
           description: 총 갯수
@@ -398,7 +402,12 @@ components:
           description: 비밀번호
         feeRate:
           type: string
-          description: "트랜잭션 byte당 지불할 fee 가격 (단위: satoshi)\r\n   (16진법, 맨 앞에 반드시 '0x' 붙여야 함) (v2.10.9 이상 지원)"
+          description: |-
+            트랜잭션 byte당 지불할 fee 가격 (단위: satoshi)
+               (16진법, 맨 앞에 반드시 '0x' 붙여야 함) (v2.10.9 이상 지원)
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
       required:
         - to
         - amount
@@ -556,6 +565,7 @@ paths:
                     updatedAt: '1620042252520'
                     feeAmount: '0x2ee'
                     confirmation: '0x8a3b'
+                    metadata: metadata
           description: ''
         '401': &ref_5
           description: 아래와 같은 인증 에러가 발생할 수 있습니다.

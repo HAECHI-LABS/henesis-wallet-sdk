@@ -243,9 +243,9 @@ components:
           type: string
           description: 출금 상태
           example: CONFIRMED
-        walletId:
+        masterWalletId:
           type: string
-          description: 입출금 지갑 ID
+          description: 입출금 마스터 지갑 ID
           example: ae40b1b3dd953e5592c21e58be30d807
         type:
           enum:
@@ -275,7 +275,7 @@ components:
         - to
         - amount
         - status
-        - walletId
+        - masterWalletId
         - type
         - transaction
         - createdAt
@@ -310,7 +310,7 @@ components:
           $ref: '#/components/schemas/PaginationMetadata'
       required:
         - results
-    WalletNotFoundException:
+    MasterWalletNotFoundException:
       type: object
       properties:
         message:
@@ -324,7 +324,7 @@ components:
       required:
         - message
         - code
-    NoWalletNameException:
+    NoMasterWalletNameException:
       type: object
       properties:
         message:
@@ -352,28 +352,28 @@ components:
       required:
         - message
         - code
-    WalletDTO:
+    MasterWalletDto:
       type: object
       properties:
         id:
           type: string
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           example: a1f9e4c33ea9f51974490fd1c30efb3e
         name:
           type: string
-          description: 지갑 이름
+          description: 마스터 지갑 이름
           example: filecoin-wallet-1
         address:
           type: string
-          description: 지갑 주소
+          description: 마스터 지갑 주소
           example: t2faaemofs4z3qnnpeawbrawyot43iuekkg52tjai
         createdAt:
           type: string
-          description: '지갑 생성 시간 (형식: ms, UNIX time)'
+          description: '마스터 지갑 생성 시간 (형식: ms, UNIX time)'
           example: '1614582860091'
         updatedAt:
           type: string
-          description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
+          description: '마스터 지갑 정보 수정 시간 (단위: ms, UNIX time)'
           example: '1614582928222'
         status:
           enum:
@@ -382,7 +382,7 @@ components:
             - FAILED
             - INACTIVE
           type: string
-          description: 지갑 상태
+          description: 마스터 지갑 상태
           example: ACTIVE
       required:
         - id
@@ -427,9 +427,9 @@ components:
           type: string
           description: Henesis에서 부여한 집금 ID
           example: 76f42bbea97c5e5fb6420ee29060ffc3
-        walletId:
+        masterWalletId:
           type: string
-          description: 집금한 지갑 ID
+          description: 집금한 마스터 지갑 ID
           example: 49e129bd5e1e67eddc5e317ed2e42b4c
         transfers:
           description: 집금을 통해 발생한 입출금의 ID 목록
@@ -440,7 +440,7 @@ components:
               to: t2faaemofs4z3qnnpeawbrawyot43iuekkg52tjai
               amount: '1000000000'
               status: CONFIRMED
-              walletId: ae40b1b3dd953e5592c21e58be30d807
+              masterWalletId: ae40b1b3dd953e5592c21e58be30d807
               type: WITHDRAWAL
               transaction: *ref_0
               createdAt: '1612411568760'
@@ -458,11 +458,11 @@ components:
           example: '1612411724023'
       required:
         - id
-        - walletId
+        - masterWalletId
         - transfers
         - createdAt
         - updatedAt
-    WalletBalanceDTO:
+    MasterWalletBalanceDto:
       type: object
       properties:
         amount:
@@ -488,8 +488,8 @@ components:
         aggregatedAmount:
           type: string
           description: >-
-            지갑의 잔액과 하위 입금 주소들의 잔액을 모두 합한 잔액 (= 지갑 잔액 + 입금 주소 1 잔액 + 입금 주소 2 잔액 +
-            ...) (단위: attoFIL)
+            마스터 지갑의 잔액과 하위 입금 주소들의 잔액을 모두 합한 잔액 (= 마스터 지갑 잔액 + 입금 주소 1 잔액 + 입금
+            주소 2 잔액 + ...) (단위: attoFIL)
           example: '3248100000000'
       required:
         - amount
@@ -525,12 +525,22 @@ components:
       properties:
         to:
           type: string
+          description: 암호화폐를 받을 지갑 주소
+          example: t1rxcckgd5rye7thpngyvykpfokfh7dwk3oggnx3a
         amount:
           type: string
+          description: '암호화폐의 양 (단위: attoFIL)'
+          example: '1304000000000000000'
         passphrase:
           type: string
+          description: 지갑의 비밀번호
+          example: passphrase
         gasPremium:
           type: string
+          description: >-
+            트랜잭션에 사용할 gas premium (단위: attoFIL) null일 경우, Henesis가 자동으로 0블럭 안에
+            채굴될 수 있는 값으로 설정합니다.
+          example: '199659'
       required:
         - to
         - amount
@@ -540,13 +550,23 @@ components:
       type: object
       properties:
         targets:
+          description: 집금할 입금 주소의 ID (집금 요청당 최대 20개의 입금 주소를 집금할 수 있습니다.)
+          example:
+            - 493ef9d5a4e86b9e7af657a56c8e3844
+            - a52dea92424426e3ed2b6a32af76c7af
           type: array
           items:
             type: string
         passphrase:
           type: string
+          description: 지갑의 비밀번호
+          example: passphrase
         gasPremium:
           type: string
+          description: >-
+            트랜잭션에 사용할 gas premium (단위: attoFIL) null일 경우, Henesis가 자동으로 0블럭 안에
+            채굴될 수 있는 값으로 설정합니다.
+          example: '199659'
       required:
         - targets
         - passphrase
@@ -680,10 +700,10 @@ paths:
             example: Bearer <TOKEN>
             default: 'Bearer '
             type: string
-        - name: walletId
+        - name: masterWalletId
           required: false
           in: query
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: transactionId
@@ -777,9 +797,9 @@ paths:
         - transfers
   /api/v3/filecoin/wallets:
     get:
-      operationId: filecoin-WalletsController_getWallets
-      summary: 전체 지갑 목록 조회하기
-      description: 모든 지갑의 목록을 조회합니다.
+      operationId: filecoin-WalletsController_getMasterWallets
+      summary: 전체 마스터 지갑 목록 조회하기
+      description: 모든 마스터 지갑의 목록을 조회합니다.
       parameters:
         - &ref_13
           name: X-Henesis-Secret
@@ -806,7 +826,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletDTO'
+                $ref: '#/components/schemas/MasterWalletDto'
               example:
                 - &ref_15
                   id: a1f9e4c33ea9f51974490fd1c30efb3e
@@ -834,18 +854,18 @@ paths:
                   value: *ref_12
       tags: &ref_17
         - wallets
-  /api/v3/filecoin/wallets/{walletId}:
+  /api/v3/filecoin/wallets/{masterWalletId}:
     get:
-      operationId: filecoin-WalletsController_getWallet
-      summary: 지갑 정보 조회하기
-      description: 특정 지갑의 정보를 조회합니다.
+      operationId: filecoin-WalletsController_getMasterWallet
+      summary: 마스터 지갑 정보 조회하기
+      description: 특정 마스터 지갑의 정보를 조회합니다.
       parameters:
         - *ref_13
         - *ref_14
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
       responses:
@@ -853,32 +873,32 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletDTO'
+                $ref: '#/components/schemas/MasterWalletDto'
               example: *ref_15
           description: ''
         '400':
-          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          description: 해당하는 id의 마스터 지갑이 없을 때 발생합니다.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletNotFoundException'
+                $ref: '#/components/schemas/MasterWalletNotFoundException'
               example: &ref_18
                 message: wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
                 code: 4000
         '401': *ref_16
       tags: *ref_17
-  /api/v3/filecoin/wallets/{walletId}/balance:
+  /api/v3/filecoin/wallets/{masterWalletId}/balance:
     get:
-      operationId: filecoin-WalletsController_getWalletBalances
-      summary: 지갑 잔고 조회하기
-      description: 특정 지갑의 잔고를 조회합니다.
+      operationId: filecoin-WalletsController_getMasterWalletBalances
+      summary: 마스터 지갑 잔고 조회하기
+      description: 특정 마스터 지갑의 잔고를 조회합니다.
       parameters:
         - *ref_13
         - *ref_14
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
       responses:
@@ -886,7 +906,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletBalanceDTO'
+                $ref: '#/components/schemas/MasterWalletBalanceDto'
               example:
                 - amount: '1000000000000'
                   spendableAmount: '1000000000000'
@@ -896,26 +916,26 @@ paths:
                   decimals: 18
           description: ''
         '400':
-          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          description: 해당하는 id의 마스터 지갑이 없을 때 발생합니다.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletNotFoundException'
+                $ref: '#/components/schemas/MasterWalletNotFoundException'
               example: *ref_18
         '401': *ref_16
       tags: *ref_17
-  /api/v3/filecoin/wallets/{walletId}/name:
+  /api/v3/filecoin/wallets/{masterWalletId}/name:
     patch:
-      operationId: filecoin-WalletsController_changeWalletName
-      summary: 지갑 이름 변경하기
-      description: 특정 지갑의 이름을 변경합니다.
+      operationId: filecoin-WalletsController_changeMasterWalletName
+      summary: 마스터 지갑 이름 변경하기
+      description: 특정 마스터 지갑의 이름을 변경합니다.
       parameters:
         - *ref_13
         - *ref_14
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
       requestBody:
@@ -935,29 +955,29 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/WalletNotFoundException'
-                  - $ref: '#/components/schemas/NoWalletNameException'
+                  - $ref: '#/components/schemas/MasterWalletNotFoundException'
+                  - $ref: '#/components/schemas/NoMasterWalletNameException'
               examples:
-                WalletNotFoundException:
+                MasterWalletNotFoundException:
                   value: *ref_18
-                NoWalletNameException:
+                NoMasterWalletNameException:
                   value:
                     message: wallet name should not be empty
                     code: 4000
         '401': *ref_16
       tags: *ref_17
-  /api/v3/filecoin/wallets/{walletId}/transfer:
+  /api/v3/filecoin/wallets/{masterWalletId}/transfer:
     post:
       operationId: filecoin-WalletsController_transfer
-      summary: 지갑에서 코인 전송하기
-      description: 특정 지갑에서 가상자산을 송금합니다.
+      summary: 마스터 지갑에서 코인 전송하기
+      description: 특정 마스터 지갑에서 가상자산을 송금합니다.
       parameters:
         - *ref_13
         - *ref_14
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
       requestBody:
@@ -975,15 +995,15 @@ paths:
               example: *ref_9
           description: ''
         '400':
-          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          description: 해당하는 id의 마스터 지갑이 없을 때 발생합니다.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletNotFoundException'
+                $ref: '#/components/schemas/MasterWalletNotFoundException'
               example: *ref_18
         '401': *ref_16
       tags: *ref_17
-  /api/v3/filecoin/wallets/{walletId}/flush:
+  /api/v3/filecoin/wallets/{masterWalletId}/flush:
     post:
       operationId: filecoin-WalletsController_flush
       summary: 입금 주소 잔액을 모두 끌어오기
@@ -991,10 +1011,10 @@ paths:
       parameters:
         - *ref_13
         - *ref_14
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
       requestBody:
@@ -1012,26 +1032,26 @@ paths:
               example: *ref_0
           description: ''
         '400':
-          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          description: 해당하는 id의 마스터 지갑이 없을 때 발생합니다.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletNotFoundException'
+                $ref: '#/components/schemas/MasterWalletNotFoundException'
               example: *ref_18
         '401': *ref_16
       tags: *ref_17
-  /api/v3/filecoin/wallets/{walletId}/deposit-addresses:
+  /api/v3/filecoin/wallets/{masterWalletId}/deposit-addresses:
     get:
       operationId: filecoin-WalletsController_getDepositAddresses
       summary: 전체 입금 주소 목록 조회하기
-      description: 특정 지갑에 속한 모든 입금 주소 조회합니다.
+      description: 특정 마스터 지갑에 속한 모든 입금 주소 조회합니다.
       parameters:
         - *ref_13
         - *ref_14
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: name
@@ -1075,25 +1095,25 @@ paths:
                     updatedAt: '1614582928222'
           description: ''
         '400':
-          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          description: 해당하는 id의 마스터 지갑이 없을 때 발생합니다.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletNotFoundException'
+                $ref: '#/components/schemas/MasterWalletNotFoundException'
               example: *ref_18
         '401': *ref_16
       tags: *ref_17
     post:
       operationId: filecoin-WalletsController_createDepositAddress
       summary: 입금 주소 생성하기
-      description: 특정 지갑 하위에 새로운 입금 주소 생성합니다
+      description: 특정 마스터 지갑 하위에 새로운 입금 주소 생성합니다
       parameters:
         - *ref_13
         - *ref_14
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
       requestBody:
@@ -1111,15 +1131,15 @@ paths:
               example: *ref_20
           description: ''
         '400':
-          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          description: 해당하는 id의 마스터 지갑이 없을 때 발생합니다.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletNotFoundException'
+                $ref: '#/components/schemas/MasterWalletNotFoundException'
               example: *ref_18
         '401': *ref_16
       tags: *ref_17
-  /api/v3/filecoin/wallets/{walletId}/deposit-addresses/{depositAddressId}:
+  /api/v3/filecoin/wallets/{masterWalletId}/deposit-addresses/{depositAddressId}:
     get:
       operationId: filecoin-WalletsController_getDepositAddress
       summary: 입금 주소 정보 조회하기
@@ -1127,10 +1147,10 @@ paths:
       parameters:
         - *ref_13
         - *ref_14
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: depositAddressId
@@ -1153,10 +1173,10 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/WalletNotFoundException'
+                  - $ref: '#/components/schemas/MasterWalletNotFoundException'
                   - $ref: '#/components/schemas/DepositAddressNotFoundException'
               examples:
-                WalletNotFoundException:
+                MasterWalletNotFoundException:
                   value: *ref_18
                 DepositAddressNotFoundException:
                   value:
@@ -1166,7 +1186,7 @@ paths:
                     code: 4000
         '401': *ref_16
       tags: *ref_17
-  /api/v3/filecoin/wallets/{walletId}/deposit-addresses/{depositAddressId}/balance:
+  /api/v3/filecoin/wallets/{masterWalletId}/deposit-addresses/{depositAddressId}/balance:
     get:
       operationId: filecoin-WalletsController_getDepositAddressBalance
       summary: 입금 주소 잔고 조회하기
@@ -1174,10 +1194,10 @@ paths:
       parameters:
         - *ref_13
         - *ref_14
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: depositAddressId
@@ -1197,18 +1217,18 @@ paths:
           description: ''
         '401': *ref_16
       tags: *ref_17
-  /api/v3/filecoin/wallets/{walletId}/flushes:
+  /api/v3/filecoin/wallets/{masterWalletId}/flushes:
     get:
       operationId: filecoin-WalletsController_getFlushes
       summary: 전체 집금 목록 조회하기
-      description: 특정 지갑에서 발생한 전체 집금 목록을 조회합니다.
+      description: 특정 마스터 지갑에서 발생한 전체 집금 목록을 조회합니다.
       parameters:
         - *ref_13
         - *ref_14
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: size
@@ -1234,32 +1254,32 @@ paths:
                 results:
                   - &ref_22
                     id: 76f42bbea97c5e5fb6420ee29060ffc3
-                    walletId: 49e129bd5e1e67eddc5e317ed2e42b4c
+                    masterWalletId: 49e129bd5e1e67eddc5e317ed2e42b4c
                     transfers: *ref_21
                     createdAt: '1612411568760'
                     updatedAt: '1612411724023'
           description: ''
         '400':
-          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          description: 해당하는 id의 마스터 지갑이 없을 때 발생합니다.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletNotFoundException'
+                $ref: '#/components/schemas/MasterWalletNotFoundException'
               example: *ref_18
         '401': *ref_16
       tags: *ref_17
-  /api/v3/filecoin/wallets/{walletId}/flushes/{flushId}:
+  /api/v3/filecoin/wallets/{masterWalletId}/flushes/{flushId}:
     get:
       operationId: filecoin-WalletsController_getFlush
       summary: 특정 집금 조회하기
-      description: 특정 지갑에서 발생한 특정 집금 내역을 조회합니다.
+      description: 특정 마스터 지갑에서 발생한 특정 집금 내역을 조회합니다.
       parameters:
         - *ref_13
         - *ref_14
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: flushId
@@ -1282,10 +1302,10 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/WalletNotFoundException'
+                  - $ref: '#/components/schemas/MasterWalletNotFoundException'
                   - $ref: '#/components/schemas/FlushNotFoundException'
               examples:
-                WalletNotFoundException:
+                MasterWalletNotFoundException:
                   value: *ref_18
                 FlushNotFoundException:
                   value:
