@@ -1,0 +1,25 @@
+import { FlushDTO, FlushTarget, BalanceDTO, TransactionDTO, TransferDTO, TransferInternalDTO, RawSignedTransactionDTO, MasterWalletBalanceDTO } from "../__generate__/fil";
+import { FilTransfer, FilTransferInternal } from "./transfers";
+import { FilTransaction } from "./abstractWallet";
+import { FilFlush, FilFlushTarget, Message, RawTransaction, SignedTransaction } from "./wallet";
+import { Balance } from "../types";
+export declare const convertDtoToTransaction: (transactionDTO: TransactionDTO) => FilTransaction;
+export declare const convertDtoToTransfer: (transferDTO: TransferDTO) => FilTransfer;
+export declare const convertTransferInternalDTO: (transfer: TransferInternalDTO) => FilTransferInternal;
+export declare const convertSignedTransactionToRawSignedTransactionDTO: (transaction: SignedTransaction) => RawSignedTransactionDTO;
+export declare const convertMessageToObject: (message: Message) => {
+    to: string;
+    from: string;
+    nonce: number;
+    value: string;
+    gaslimit: number;
+    gasfeecap: string;
+    gaspremium: string;
+    method: number;
+    params: string;
+};
+export declare const convertRawTransactionToMessage: (rawTransaction: RawTransaction) => Message;
+export declare const convertFilFlushTargetToDto: (flushTarget: FilFlushTarget) => FlushTarget;
+export declare const convertDtoToFlush: (flushDTO: FlushDTO) => FilFlush;
+export declare const convertBalanceDtoToFilBalance: (balanceDTO: BalanceDTO) => Balance;
+export declare const convertMasterWalletBalanceDtoToFilBalance: (balanceDTO: MasterWalletBalanceDTO) => Balance;
