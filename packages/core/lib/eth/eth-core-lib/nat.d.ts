@@ -1,0 +1,11 @@
+export function toString(a: any): string;
+export function fromString(str: any): string;
+export function toNumber(a: any): number;
+export function fromNumber(a: any): string;
+export function toEther(wei: any): number;
+export function fromEther(eth: any): string;
+export function toUint256(a: any): any;
+export function add(a: any, b: any): string;
+export function mul(a: any, b: any): string;
+export function div(a: any, b: any): string;
+export function sub(a: any, b: any): string;

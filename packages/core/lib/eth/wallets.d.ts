@@ -1,0 +1,30 @@
+import * as BN from "bn.js";
+import { Env } from "../sdk";
+import { Client } from "../httpClient";
+import { Keychains } from "../types";
+import { BlockchainType } from "../blockchain";
+import { RecoveryKit } from "../recoverykit";
+import { EthWallet, EthMasterWallet } from "./wallet";
+import { Wallets, WalletSearchOptions } from "../wallets";
+import { HenesisKeys } from "./henesisKeys";
+import { InactiveWallet, InactiveMasterWallet } from "../wallet";
+export declare class EthWallets extends Wallets<EthMasterWallet> {
+    private readonly henesisKey;
+    private readonly blockchain;
+    constructor(client: Client, keychains: Keychains, env: Env, henesisKey: HenesisKeys, blockchain: BlockchainType);
+    getMasterWallet(id: string): Promise<EthMasterWallet>;
+    getWallet(id: string): Promise<EthWallet>;
+    getWallets(options?: WalletSearchOptions): Promise<EthWallet[]>;
+    getAllWallets(options?: WalletSearchOptions): Promise<Array<EthWallet | EthMasterWallet>>;
+    getMasterWallets(options?: WalletSearchOptions): Promise<EthMasterWallet[]>;
+    createRecoveryKit(name: string, passphrase: string): Promise<RecoveryKit>;
+    createMasterWalletWithKit(recoveryKit: RecoveryKit): Promise<EthMasterWallet>;
+    createMasterWallet(name: string, passphrase: string, gasPrice?: BN): Promise<EthMasterWallet>;
+    retryCreateMasterWallet(walletId: string, gasPrice?: BN): Promise<EthMasterWallet>;
+    verifyAddress(address: string): boolean;
+    createInactiveMasterWallet(name: string): Promise<InactiveMasterWallet>;
+    createWalletWithKit(recoveryKit: RecoveryKit): Promise<EthWallet>;
+    createWallet(name: string, passphrase: string, gasPrice?: BN): Promise<EthWallet>;
+    retryCreateWallet(walletId: string, gasPrice?: BN): Promise<EthWallet>;
+    createInactiveWallet(name: string): Promise<InactiveWallet>;
+}
