@@ -6,5 +6,5 @@ export class ReplaceTransactionRequestDTO {
    * @example: 8000000000
    */
   @ApiPropertyOptional()
-  gasPrice: number;
+  gasPrice: string;
 }
