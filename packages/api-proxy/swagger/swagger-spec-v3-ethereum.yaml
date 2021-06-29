@@ -557,16 +557,16 @@ components:
       type: object
       properties:
         coinId:
-          type: string
+          type: number
           description: Henesis에서 부여한 Coin의 ID
-          example: '11'
+          example: 11
         amount:
           type: string
           description: '확정된 잔액 (단위: wei, peb)'
           example: '1000000000000'
         spendableAmount:
           type: string
-          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei, peb)'
+          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei)'
           example: '1000000000000'
         name:
           type: string
@@ -719,13 +719,13 @@ components:
       type: object
       properties:
         coinId:
-          type: string
+          type: number
           description: Henesis에서 부여한 Coin의 ID
-          example: '11'
+          example: 11
         depositAddressId:
           type: string
           description: 입금 주소 ID
-          example: '11'
+          example: c2bd6506cb56a6baaff32653ac77ef49
       required:
         - coinId
         - depositAddressId
@@ -735,7 +735,7 @@ components:
         targets:
           description: 집금할 대상의 목록
           example:
-            - coinId: '11'
+            - coinId: 11
               depositAddressId: c2bd6506cb56a6baaff32653ac77ef49
           type: array
           items:
@@ -743,12 +743,12 @@ components:
         gasPrice:
           type: string
           description: >-
-            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
-            값으로 설정합니다.
+            트랜잭션에 사용할 gas price 입니다. (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될
+            수 있는 값으로 설정합니다.
           example: '8000000000'
         gasLimit:
           type: string
-          description: 트랜잭션에 사용할 gas limit null일 경우, Henesis가 자동으로 설정합니다.
+          description: '트랜잭션에 사용할 gas limit 입니다. (단위: wei) null일 경우, Henesis가 자동으로 설정합니다.'
           example: '10000000000'
         metadata:
           type: string
@@ -1209,7 +1209,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
               example: &ref_21
-                coinId: '11'
+                coinId: 11
                 amount: '1000000000000'
                 spendableAmount: '1000000000000'
                 name: ethereum
