@@ -13,6 +13,7 @@ import { FilFeeWallets } from "./feeWallets";
 import { FilKeychains, FilKeyWithPriv } from "./keychains";
 import { Key, KeyWithPriv } from "../types";
 import { addressAsBytes } from "./fil-core-lib/utils";
+import { makeQueryString } from "../utils/url";
 
 export class FilRecoveryKit extends RecoveryKit {
   accountKey: FilKeyWithPriv;
@@ -115,9 +116,10 @@ export class FilWallets extends Wallets<FilMasterWallet> {
   async getMasterWallets(
     options?: WalletSearchOptions
   ): Promise<FilMasterWallet[]> {
+    const queryString = makeQueryString(options);
     const masterWalletDataList = await this.client.get<
       NoUndefinedField<MasterWalletDTO>[]
-    >(`${this.baseUrl}`);
+    >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
     return masterWalletDataList.map((walletData) => {
       return new FilMasterWallet(
         this.client,
