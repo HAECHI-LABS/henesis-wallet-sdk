@@ -643,23 +643,13 @@ components:
     SendCoinRequestDTO:
       type: object
       properties:
-        gasPrice:
-          type: number
-          description: >-
-            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
-            값으로 설정합니다.
-        metadata:
-          type: string
-          description: 기타 정보 기록용 메타 데이터 (255자 제한)
-          example: metadata
-          default: metadata
         ticker:
           type: string
           description: 암호화폐의 기호 (ticker)
           example: ETH
         to:
           type: string
-          description: 암호화폐의 받을 지갑 주소
+          description: 암호화폐를 받을 지갑 주소
           example: '0xab28d146e860e0b132695c941f706d783a158345'
         amount:
           type: string
@@ -669,6 +659,16 @@ components:
           type: string
           description: 지갑의 비밀번호
           example: passphrase
+        gasPrice:
+          type: string
+          description: >-
+            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
+            값으로 설정합니다.
+          example: '8000000000'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
       required:
         - ticker
         - to
@@ -677,24 +677,14 @@ components:
     CreateTransactionRequestDTO:
       type: object
       properties:
-        value:
-          type: number
-          description: 트랜잭션에 담을 암호화폐의 양
-          example: 0
-        gasPrice:
-          type: number
-          description: >-
-            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
-            값으로 설정합니다.
-        metadata:
-          type: string
-          description: 기타 정보 기록용 메타 데이터 (255자 제한)
-          example: metadata
-          default: metadata
         to:
           type: string
           description: 트랜잭션을 보낼 스마트 컨트랙트 주소
           example: '0xc10f954e2be747e1d9d47948b2c15e5b71c5d9c8'
+        value:
+          type: string
+          description: 트랜잭션에 담을 암호화폐의 양
+          example: '0'
         data:
           type: string
           description: 트랜잭션에 담을 데이터
@@ -703,6 +693,16 @@ components:
           type: string
           description: 지갑의 비밀번호
           example: passphrase
+        gasPrice:
+          type: string
+          description: >-
+            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
+            값으로 설정합니다.
+          example: '10000000000'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
       required:
         - to
         - data
@@ -711,7 +711,7 @@ components:
       type: object
       properties:
         gasPrice:
-          type: number
+          type: string
           description: >-
             트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
             값으로 설정합니다.
@@ -725,30 +725,35 @@ components:
         depositAddressId:
           type: string
           description: 입금 주소 ID
-          example: c2bd6506cb56a6baaff32653ac77ef49
+          example: '11'
       required:
         - coinId
         - depositAddressId
     CreateFlushRequestDTO:
       type: object
       properties:
+        targets:
+          description: 집금할 대상의 목록
+          example:
+            - coinId: '11'
+              depositAddressId: c2bd6506cb56a6baaff32653ac77ef49
+          type: array
+          items:
+            $ref: '#/components/schemas/Target'
         gasPrice:
-          type: number
+          type: string
           description: >-
             트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
             값으로 설정합니다.
+          example: '8000000000'
         gasLimit:
-          type: number
-          description: '트랜잭션에 사용할 gas limit (단위: wei) null일 경우, Henesis가 자동으로 설정합니다.'
+          type: string
+          description: 트랜잭션에 사용할 gas limit null일 경우, Henesis가 자동으로 설정합니다.
+          example: '10000000000'
         metadata:
           type: string
           description: 기타 정보 기록용 메타 데이터 (255자 제한)
           example: metadata
-          default: metadata
-        targets:
-          type: array
-          items:
-            $ref: '#/components/schemas/Target'
       required:
         - targets
     GetManyResponseForDepositAddressDTO:
