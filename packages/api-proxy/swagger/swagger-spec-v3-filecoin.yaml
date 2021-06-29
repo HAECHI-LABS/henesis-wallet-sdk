@@ -437,7 +437,7 @@ components:
           description: 집금한 마스터 지갑 ID
           example: 49e129bd5e1e67eddc5e317ed2e42b4c
         transfers:
-          description: 집금을 통해 발생한 입출금의 ID 목록
+          description: 집금을 통해 발생한 입출금 목록
           example: &ref_21
             - &ref_9
               id: 5b0d5c94f8fa6c2a891eb4f833767f03
