@@ -12,7 +12,7 @@ export const EXAMPLE_FILECOIN_FLUSH_REQUEST_DTO: FlushRequestDTO = {
 export class FlushRequestDTO {
   @ApiModelProperty({
     description:
-      "집금할 입금 주소의 ID (집금 요청당 최대 20개의 입금 주소를 집금할 수 있습니다.)",
+      "집금할 입금 주소의 ID (집금 요청당 최대 50개의 입금 주소를 집금할 수 있습니다.)",
     example: EXAMPLE_FILECOIN_FLUSH_REQUEST_DTO.targets,
   })
   targets: string[];
