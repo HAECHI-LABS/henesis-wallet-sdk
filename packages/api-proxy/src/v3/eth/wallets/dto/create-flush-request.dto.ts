@@ -42,14 +42,14 @@ export class CreateFlushRequestDTO {
       "트랜잭션에 사용할 gas price 입니다. (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.",
     example: EXAMPLE_ETHEREUM_CREATE_FLUSH_REQUEST_DTO.gasPrice,
   })
-  gasPrice: string;
+  gasPrice?: string;
 
   @ApiModelPropertyOptional({
     description:
       "트랜잭션에 사용할 gas limit 입니다. null일 경우, Henesis가 자동으로 설정합니다.",
     example: EXAMPLE_ETHEREUM_CREATE_FLUSH_REQUEST_DTO.gasLimit,
   })
-  gasLimit: string;
+  gasLimit?: string;
 
   @ApiModelPropertyOptional({
     description: "기타 정보 기록용 메타 데이터 (255자 제한)",

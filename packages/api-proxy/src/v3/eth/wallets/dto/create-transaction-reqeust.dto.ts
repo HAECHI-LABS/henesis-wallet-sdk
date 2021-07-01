@@ -24,7 +24,7 @@ export class CreateTransactionRequestDTO {
     description: "트랜잭션에 담을 암호화폐의 양",
     example: EXAMPLE_ETHEREUM_CREATE_TRANSACTION_REQUEST_DTO.value,
   })
-  value: string;
+  value?: string;
 
   @ApiModelProperty({
     description: "트랜잭션에 담을 데이터",
@@ -43,7 +43,7 @@ export class CreateTransactionRequestDTO {
       "트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.",
     example: EXAMPLE_ETHEREUM_CREATE_TRANSACTION_REQUEST_DTO.gasPrice,
   })
-  gasPrice: string;
+  gasPrice?: string;
 
   @ApiModelPropertyOptional({
     description: "기타 정보 기록용 메타 데이터 (255자 제한)",
