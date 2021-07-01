@@ -77,7 +77,8 @@ export class WalletsService {
       new BN(request.amount),
       request.passphrase,
       null,
-      request.gasPremium ? new BN(request.gasPremium) : null
+      request.gasPremium != null ? new BN(request.gasPremium) : null,
+      request.metadata
     );
     return TransferDTO.fromTransfer(transfer);
   }
@@ -93,7 +94,8 @@ export class WalletsService {
     const flush: FilFlush = await masterWallet.flush(
       request.targets,
       request.passphrase,
-      request.gasPremium ? new BN(request.gasPremium) : null
+      request.gasPremium != null ? new BN(request.gasPremium) : null,
+      request.metadata
     );
     return FlushDTO.fromFlush(flush);
   }

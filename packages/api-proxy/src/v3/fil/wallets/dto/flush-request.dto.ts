@@ -1,4 +1,7 @@
-import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import {
+  ApiModelProperty,
+  ApiModelPropertyOptional,
+} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_FILECOIN_FLUSH_REQUEST_DTO: FlushRequestDTO = {
   targets: [
@@ -7,6 +10,7 @@ export const EXAMPLE_FILECOIN_FLUSH_REQUEST_DTO: FlushRequestDTO = {
   ],
   passphrase: "passphrase",
   gasPremium: "199659",
+  metadata: "metadata",
 };
 
 export class FlushRequestDTO {
@@ -28,5 +32,11 @@ export class FlushRequestDTO {
       "트랜잭션에 사용할 gas premium (단위: attoFIL) null일 경우, Henesis가 자동으로 0블럭 안에 채굴될 수 있는 값으로 설정합니다.",
     example: EXAMPLE_FILECOIN_FLUSH_REQUEST_DTO.gasPremium,
   })
-  gasPremium: string;
+  gasPremium?: string;
+
+  @ApiModelPropertyOptional({
+    description: "기타 정보 기록용 메타 데이터 (255자 제한)",
+    example: "metadata",
+  })
+  metadata?: string;
 }

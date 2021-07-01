@@ -227,7 +227,8 @@ export class FilMasterWallet extends FilAbstractWallet {
     amount: BN,
     passphrase: string,
     otpCode?: string,
-    gasPremium?: BN
+    gasPremium?: BN,
+    metadata?: string
   ): Promise<FilTransfer> {
     const rawTransaction = await this.client.post<
       NoUndefinedField<RawTransactionDTO>
@@ -250,6 +251,7 @@ export class FilMasterWallet extends FilAbstractWallet {
           convertSignedTransactionToRawSignedTransactionDTO(signedTransaction),
         gasPremium: BNConverter.bnToHexStringOrElseNull(gasPremium),
         otpCode: otpCode,
+        metadata: metadata,
       }
     );
     return convertDtoToTransfer(transferData);
@@ -258,7 +260,8 @@ export class FilMasterWallet extends FilAbstractWallet {
   async flush(
     targets: Array<string>,
     passphrase: string,
-    gasPremium?: BN
+    gasPremium?: BN,
+    metadata?: string
   ): Promise<FilFlush> {
     const rawFlushData = await this.client.post<NoUndefinedField<RawFlushDTO>>(
       `${this.baseUrl}/flushes/build`,
@@ -276,6 +279,7 @@ export class FilMasterWallet extends FilAbstractWallet {
       `${this.baseUrl}/flushes`,
       {
         targets: flushTargets.map(convertFilFlushTargetToDto),
+        metadata: metadata,
       }
     );
     return convertDtoToFlush(flushData);
