@@ -234,7 +234,7 @@ export class WalletsController {
     );
   }
 
-  @Post("/:walletId/contract-calls")
+  @Post("/:walletId/contract-call")
   @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
