@@ -568,7 +568,7 @@ paths:
                     metadata: metadata
           description: ''
         '401': &ref_5
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -678,7 +678,7 @@ paths:
                   whitelistActivated: false
           description: ''
         '401': &ref_14
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:

@@ -748,7 +748,7 @@ components:
           example: '8000000000'
         gasLimit:
           type: string
-          description: '트랜잭션에 사용할 gas limit 입니다. (단위: wei) null일 경우, Henesis가 자동으로 설정합니다.'
+          description: 트랜잭션에 사용할 gas limit 입니다. null일 경우, Henesis가 자동으로 설정합니다.
           example: '10000000000'
         metadata:
           type: string
@@ -828,7 +828,7 @@ paths:
                   attributes: *ref_0
           description: ''
         '401': &ref_4
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -1012,7 +1012,7 @@ paths:
                 message: '''status'' is invalid: not supported event status'
                 code: 4001
         '401':
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -1159,7 +1159,7 @@ paths:
                 $ref: '#/components/schemas/InvalidStatusException'
               example: *ref_10
         '401':
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -1217,7 +1217,7 @@ paths:
                 decimals: 18
           description: ''
         '401':
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -1289,7 +1289,7 @@ paths:
                 message: transaction id '1' does not exists
                 code: 4000
         '401': &ref_14
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -1452,7 +1452,7 @@ paths:
                   version: v4
           description: ''
         '401': &ref_19
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -1651,7 +1651,7 @@ paths:
               example: *ref_22
         '401': *ref_19
       tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/contract-calls:
+  /api/v3/ethereum/wallets/{walletId}/contract-call:
     post:
       operationId: ethereum-WalletsController_callContract
       x-readme:
