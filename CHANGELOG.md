@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.1...v3.2.2) (2021-07-01)
+
+
+### Bug Fixes
+
+* add ? to optional dto, change example dto name ([ef77c1b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ef77c1bb1e146bb99d95d27249f2c53bad45331e))
+* add description of filecoin request body ([d9bcf78](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d9bcf78a51b7b511b3960045aae60089754eab74))
+* add getMasterWallets options ([397eaef](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/397eaeff0df0a41beeb4a35f90c56c29951d69a9))
+* add wallet_id to tranasfer and transfer query param ([9a2dbcb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9a2dbcbb901d09a9e1ea5d0bd4354a87e65f8da3))
+* auth error description message ([#503](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/503)) ([3e85e5f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3e85e5f5c4e068e7c3e88b6e03d3e021f06a0517))
+* change wallet => master wallet at fil api ([9460675](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/94606753b00afb58a8fb4829b2de78aeb331ddd9))
+* fix balance and request dto in v3 ethereum api proxy ([8b59cdd](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8b59cdd45be1582b367fcd96178a932aa8b4d2c3))
+* fix eth-v3 endpoint typo, contract-calls => contract-call ([9992fb4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9992fb44005d73581a1f13970882af91d07972c5))
+* fix filecoin flush max length in api proxy ([00da53e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/00da53e28ac7e902d9af9a3f22f439f24ebc7659))
+* fix filecoin open api generate ([32bb464](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/32bb4646dd1210ae596cf090701e4b85be10f969))
+* fix filecoin open api generate module ([34ff597](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/34ff597187e8f8998f6261aa625c1fbdfff6573b))
+* fix swagger and codegen script ([18f706a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/18f706a01e59a021824acea04dac6fec7779637d))
+* fix to set 0 value when value is null at contract call ([b6e6daf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b6e6daf514477b753e5d4583032a3678ee282e21))
+* fix v3 eth input type bug and fix some docs annotation ([b483db1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b483db1be31be71fcb9f79536576beb312bdd9dc))
+
+
+
+
+
 ## [3.2.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.0...v3.2.1) (2021-06-25)
 
 **Note:** Version bump only for package henesis-wallet-sdk
