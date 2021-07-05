@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version_name:
-        descriptoin: 'Version name to publish to docker hub'
+        description: 'Version name to publish to docker hub'
         required: true
 
 jobs:
