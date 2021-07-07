@@ -29,9 +29,9 @@ import {
   InvalidStatusException,
 } from "../dto/exceptions.dto";
 import {
+  MASTER_WALLET_ID_OPTIONAL,
   TRANSACTION_HASH_OPTIONAL,
   TRANSACTION_ID_OPTIONAL,
-  MASTER_WALLET_ID_OPTIONAL,
   WALLET_ID_OPTIONAL,
 } from "../wallets/dto/params.dto";
 import {
@@ -92,17 +92,25 @@ export class TransfersController {
     @Query("size") size: number = 15,
     @Query("page") page: number = 0
   ): Promise<PaginationDTO<TransferDTO>> {
-    return await this.transfersService.getTransfers(request.sdk, {
-      walletId,
-      masterWalletId,
-      transactionId,
-      transactionHash,
-      status,
-      transferType,
-      updatedAtGte,
-      updatedAtLt,
-      size,
-      page,
-    });
+    return await this.transfersService.getTransfers(
+      request.sdk,
+      {
+        walletId,
+        masterWalletId,
+        transactionId,
+        transactionHash,
+        status,
+        transferType,
+        updatedAtGte,
+        updatedAtLt,
+        size,
+        page,
+      },
+      `${request.protocol}://${
+        request.hostname == "localhost"
+          ? `${request.hostname}:3000`
+          : request.hostname
+      }${request.path}`
+    );
   }
 }

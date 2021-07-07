@@ -1,7 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
 import { WalletDTO } from "../dto/wallet.dto";
-import { BtcMasterWallet } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
+import {
+  BtcMasterWallet,
+  DepositAddressPaginationOptions,
+} from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { BalanceDTO } from "../dto/balance.dto";
 import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
@@ -9,6 +12,8 @@ import { PaginationDTO } from "../dto/pagination.dto";
 import { TransferRequestDTO } from "../dto/transfer-request.dto";
 import { TransferDTO } from "../dto/transfer.dto";
 import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
+import { getPaginationMeta } from "../../../utils/pagination";
+import { object } from "../../../utils/object";
 
 @Injectable()
 export class WalletsService {
@@ -64,19 +69,19 @@ export class WalletsService {
   public async getDepositAddresses(
     sdk: SDK,
     walletId: string,
-    id?: string,
-    address?: string,
-    name?: string
+    options: DepositAddressPaginationOptions,
+    path: string
   ): Promise<PaginationDTO<DepositAddressDTO>> {
     const wallet = await this.getWalletById(sdk, walletId);
-    const options: { id?: string; address?: string; name?: string } = {};
-    if (id) options.id = id;
-    if (address) options.address = address;
-    if (name) options.name = name;
-
-    const result = await wallet.getDepositAddresses(options);
+    const result = await wallet.getDepositAddresses(object(options));
     return {
-      pagination: result.pagination as any,
+      pagination: getPaginationMeta(
+        path,
+        options.page,
+        options.size,
+        result.pagination.totalCount,
+        options
+      ),
       results: result.results.map(DepositAddressDTO.fromDepositAddress),
     };
   }

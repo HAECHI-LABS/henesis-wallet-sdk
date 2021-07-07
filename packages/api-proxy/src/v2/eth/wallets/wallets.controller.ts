@@ -22,12 +22,12 @@ import {
   UserWalletDTO,
 } from "../dto/user-wallet.dto";
 import {
+  ApiCreatedResponse,
+  ApiExtraModels,
   ApiNoContentResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
-  ApiOkResponse,
-  ApiExtraModels,
-  ApiCreatedResponse,
 } from "@nestjs/swagger";
 import express from "express";
 import { SendMasterWalletContractCallRequestDTO } from "../dto/send-master-wallet-contract-call-request.dto";
@@ -323,8 +323,8 @@ export class WalletsController {
   public async getUserWallets(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
-    @Query("page") page?: string,
-    @Query("size") size?: string,
+    @Query("page") page?: number,
+    @Query("size") size?: number,
     @Query("sort") sort?: string,
     @Query("name") name?: string,
     @Query("address") address?: string
@@ -332,11 +332,18 @@ export class WalletsController {
     return await this.walletsService.getUserWallets(
       request.sdk,
       masterWalletId,
-      page,
-      size,
-      sort,
-      name,
-      address
+      {
+        page,
+        size,
+        sort,
+        name,
+        address,
+      },
+      `${request.protocol}://${
+        request.hostname == "localhost"
+          ? `${request.hostname}:3000`
+          : request.hostname
+      }${request.path}`
     );
   }
 

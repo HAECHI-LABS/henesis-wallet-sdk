@@ -2,7 +2,7 @@ import { EventsService } from "./events.service";
 import { Controller, Get, Query, Request } from "@nestjs/common";
 import { ValueTransferEventDTO } from "../dto/value-transfer-event.dto";
 import { CallEventDTO } from "../dto/call-event.dto";
-import { ApiOperation, ApiTags, ApiExtraModels } from "@nestjs/swagger";
+import { ApiExtraModels, ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import {
   EXAMPLE_ETH_KLAY_PAGINATION_CALL_EVENT_DTO,
@@ -80,17 +80,24 @@ export class EventsController {
   ): Promise<PaginationDTO<ValueTransferEventDTO>> {
     return await this.eventsService.getValueTransferEvents(
       request.sdk,
-      symbol,
-      walletId,
-      masterWalletId,
-      transactionId,
-      transactionHash,
-      status,
-      transferType,
-      updatedAtGte,
-      updatedAtLt,
-      size,
-      page
+      {
+        symbol,
+        walletId,
+        masterWalletId,
+        transactionId,
+        transactionHash,
+        status,
+        transferType,
+        updatedAtGte,
+        updatedAtLt,
+        size,
+        page,
+      },
+      `${request.protocol}://${
+        request.hostname == "localhost"
+          ? `${request.hostname}:3000`
+          : request.hostname
+      }${request.path}`
     );
   }
 
@@ -107,7 +114,6 @@ export class EventsController {
     QUERY_EVENT_STATUS_OPTIONAL,
     QUERY_EVENT_UPDATED_AT_GTE_OPTIONAL,
     QUERY_EVENT_UPDATED_AT_LT_OPTIONAL,
-    QUERY_EVENT_TRANSFER_TYPE_OPTIONAL,
     QUERY_EVENT_SIZE_OPTIONAL,
     QUERY_EVENT_PAGE_OPTIONAL
   )
@@ -124,22 +130,27 @@ export class EventsController {
     @Query("status") status?: EventStatus,
     @Query("updatedAtGte") updatedAtGte?: Timestamp,
     @Query("updatedAtLt") updatedAtLt?: Timestamp,
-    @Query("transferType") transferType?: TransferType,
     @Query("size") size?: number,
     @Query("page") page?: number
   ): Promise<PaginationDTO<CallEventDTO>> {
     return await this.eventsService.getCallEvents(
       request.sdk,
-      walletId,
-      masterWalletId,
-      transactionId,
-      transactionHash,
-      status,
-      updatedAtGte,
-      updatedAtLt,
-      transferType,
-      size,
-      page
+      {
+        walletId,
+        masterWalletId,
+        transactionId,
+        transactionHash,
+        status,
+        updatedAtGte,
+        updatedAtLt,
+        size,
+        page,
+      },
+      `${request.protocol}://${
+        request.hostname == "localhost"
+          ? `${request.hostname}:3000`
+          : request.hostname
+      }${request.path}`
     );
   }
 }
