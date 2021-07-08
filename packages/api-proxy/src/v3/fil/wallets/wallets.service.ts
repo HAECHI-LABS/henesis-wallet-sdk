@@ -20,6 +20,7 @@ import { PaginationDTO } from "../dto/pagination.dto";
 import { FilDepositAddress } from "@haechi-labs/henesis-wallet-core/lib/fil/depositAddress";
 import { MasterWalletBalanceDto } from "../dto/master-wallet-balance.dto";
 import { PaginationOptionsDTO } from "../dto/pagination-options.dto";
+import { getPaginationMeta } from "../../../utils/pagination";
 
 @Injectable()
 export class WalletsService {
@@ -101,14 +102,21 @@ export class WalletsService {
   public async getDepositAddresses(
     sdk: SDK,
     masterWalletId: string,
-    options: GetDepositAddressesOptionsDTO
+    options: GetDepositAddressesOptionsDTO,
+    path: string
   ): Promise<PaginationDTO<DepositAddressDTO>> {
     const masterWallet: FilMasterWallet = await sdk.fil.wallets.getMasterWallet(
       masterWalletId
     );
     const data = await masterWallet.getDepositAddresses(options);
     return {
-      pagination: data.pagination,
+      pagination: getPaginationMeta(
+        path,
+        options.page,
+        options.size,
+        data.pagination.totalCount,
+        options
+      ),
       results: data.results.map(DepositAddressDTO.fromDepositAddress),
     };
   }
