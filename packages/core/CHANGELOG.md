@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.2...v3.2.3) (2021-07-08)
+
+
+### Bug Fixes
+
+* add getPaginationMeta that returns urls for each endpoints ([#508](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/508)) ([1916000](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/191600085a3c729b2314bf52c384c929e46e392b))
+
+
+
+
+
 ## [3.2.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.1...v3.2.2) (2021-07-01)
 
 

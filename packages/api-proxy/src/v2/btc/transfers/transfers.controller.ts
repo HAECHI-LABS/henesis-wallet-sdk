@@ -1,12 +1,7 @@
 import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import { TransfersService } from "./transfers.service";
 import { EXAMPLE_BITCOIN_TRANSFER_DTO, TransferDTO } from "../dto/transfer.dto";
-import {
-  ApiHeaders,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from "@nestjs/swagger";
+import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import {
   EXAMPLE_BITCOIN_PAGINATION_TRANSFER_DTO,
@@ -71,17 +66,25 @@ export class TransfersController {
     @Query("size") size?: string,
     @Query("page") page?: string
   ): Promise<PaginationDTO<TransferDTO>> {
-    return await this.transfersService.getTransfers(request.sdk, {
-      type,
-      walletId,
-      status,
-      address,
-      transactionHash,
-      updatedAtGte,
-      updatedAtLt,
-      size,
-      page,
-    });
+    return await this.transfersService.getTransfers(
+      request.sdk,
+      {
+        type,
+        walletId,
+        status,
+        address,
+        transactionHash,
+        updatedAtGte,
+        updatedAtLt,
+        size,
+        page,
+      },
+      `${request.protocol}://${
+        request.hostname == "localhost"
+          ? `${request.hostname}:3000`
+          : request.hostname
+      }${request.path}`
+    );
   }
 
   @Get("/:transferId")

@@ -311,7 +311,12 @@ export class WalletsController {
         address,
         size,
         page,
-      }
+      },
+      `${request.protocol}://${
+        request.hostname == "localhost"
+          ? `${request.hostname}:3000`
+          : request.hostname
+      }${request.path}`
     );
   }
 

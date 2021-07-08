@@ -25,13 +25,18 @@ import { ChangeUserWalletNameRequestDTO } from "../../eth/dto/change-user-wallet
 import { SendUserWalletCoinRequestDTO } from "../../eth/dto/send-user-wallet-coin-request.dto";
 import { RetryCreateMasterWalletRequestDTO } from "../../eth/dto/retry-create-master-wallet-request.dto";
 import { RetryCreateUserWalletRequestDTO } from "../../eth/dto/retry-create-user-wallet-request.dto";
-import { EthMasterWallet } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
+import {
+  EthMasterWallet,
+  UserWalletPaginationOptions,
+} from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 import BN from "bn.js";
 import {
   EthUserWallet,
   EthUserWalletData,
 } from "@haechi-labs/henesis-wallet-core/lib/eth/userWallet";
 import { EthMasterWalletData } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
+import { getPaginationMeta } from "../../../utils/pagination";
+import { object } from "../../../utils/object";
 
 @Injectable()
 export class WalletsService {
@@ -233,27 +238,24 @@ export class WalletsService {
   public async getUserWallets(
     sdk: SDK,
     masterWalletId: string,
-    page?: string,
-    size?: string,
-    sort?: string,
-    name?: string,
-    address?: string
+    options: UserWalletPaginationOptions,
+    path: string
   ): Promise<PaginationDTO<UserWalletDTO>> {
     const masterWallet = await WalletsService.getMasterWalletById(
       sdk,
       masterWalletId
     );
 
-    const userWallets = await masterWallet.getUserWallets({
-      page: +page,
-      size: +size,
-      sort: sort as string,
-      name: name as string,
-      address: address as string,
-    });
+    const userWallets = await masterWallet.getUserWallets(object(options));
 
     return {
-      pagination: userWallets.pagination,
+      pagination: getPaginationMeta(
+        path,
+        options.page,
+        options.size,
+        userWallets.pagination.totalCount,
+        options
+      ),
       results: userWallets.results.map((c) => c.getData()),
     };
   }
