@@ -17,14 +17,12 @@ import {
 } from "../dto/deposit-address.dto";
 import { EXAMPLE_BITCOIN_TRANSFER_DTO, TransferDTO } from "../dto/transfer.dto";
 import {
-  ApiBody,
   ApiCreatedResponse,
   ApiExtraModels,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
-  getSchemaPath,
 } from "@nestjs/swagger";
 import express from "express";
 import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
@@ -50,6 +48,7 @@ import {
   PaginationDTO,
 } from "../dto/pagination.dto";
 import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
+import { PAGE_OPTIONAL, SIZE_OPTIONAL } from "../../../v3/eth/dto/params";
 
 @ApiTags("wallets")
 @Controller("wallets")
@@ -171,7 +170,9 @@ export class WalletsController {
   @Queries(
     QUERY_DEPOSIT_ADDRESS_ID_OPTIONAL,
     QUERY_DEPOSIT_ADDRESS_ADDRESS_OPTIONAL,
-    QUERY_DEPOSIT_ADDRESS_NAME_OPTIONAL
+    QUERY_DEPOSIT_ADDRESS_NAME_OPTIONAL,
+    SIZE_OPTIONAL,
+    PAGE_OPTIONAL
   )
   @PathParams(PARAM_WALLET_ID)
   @ApiPaginationResponse(
@@ -184,14 +185,25 @@ export class WalletsController {
     @Param("walletId") walletId: string,
     @Query("id") id?: string,
     @Query("address") address?: string,
-    @Query("name") name?: string
+    @Query("name") name?: string,
+    @Query("size") size: number = 15,
+    @Query("page") page: number = 0
   ): Promise<PaginationDTO<DepositAddressDTO>> {
     return await this.walletsService.getDepositAddresses(
       request.sdk,
       walletId,
-      id,
-      address,
-      name
+      {
+        id,
+        address,
+        name,
+        size,
+        page,
+      },
+      `${request.protocol}://${
+        request.hostname == "localhost"
+          ? `${request.hostname}:3000`
+          : request.hostname
+      }${request.path}`
     );
   }
 

@@ -17,6 +17,7 @@ import {
 } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 import { ReplaceTransactionRequestDTO } from "../transactions/dto/replace-transaction-request.dto";
 import { EthTransaction } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
+import { getPaginationMeta } from "../../../utils/pagination";
 
 @Injectable()
 export class WalletsService {
@@ -128,14 +129,21 @@ export class WalletsService {
   public async getDepositAddresses(
     sdk: SDK,
     walletId: string,
-    option: GetDepositAddressOption
+    options: GetDepositAddressOption,
+    path: string
   ): Promise<PaginationDTO<DepositAddressDTO>> {
     const wallet = await sdk.eth.wallets.getWallet(walletId);
     const result = await wallet.getDepositAddresses(
-      option as UserWalletPaginationOptions
+      options as UserWalletPaginationOptions
     );
     return {
-      pagination: result.pagination,
+      pagination: getPaginationMeta(
+        path,
+        options.page,
+        options.size,
+        result.pagination.totalCount,
+        options
+      ),
       results: result.results.map(DepositAddressDTO.fromEthDepositAddress),
     };
   }
