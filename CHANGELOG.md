@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.4...v3.2.5) (2021-07-12)
+
+
+### Bug Fixes
+
+* change createdDepositAddress() not to use passphrase ([080980a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/080980ab61283b31b885aaec192794a477989a0a))
+* fix api proxy to not use passphrase when creating deposit address in filecoin ([1eb2f3d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1eb2f3dd8473c582d108acd977262736fce31a91))
+
+
+
+
+
 ## [3.2.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.3...v3.2.4) (2021-07-12)
 
 
