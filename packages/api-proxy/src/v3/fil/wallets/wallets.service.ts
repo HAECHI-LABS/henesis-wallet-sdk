@@ -130,7 +130,7 @@ export class WalletsService {
       masterWalletId
     );
     return DepositAddressDTO.fromDepositAddress(
-      await masterWallet.createDepositAddress(request.name, request.passphrase)
+      await masterWallet.createDepositAddress(request.name)
     );
   }
 
