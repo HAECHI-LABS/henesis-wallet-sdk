@@ -31,7 +31,7 @@ export const makeQueryString = (options?: object) => {
     return "";
   }
   return Object.keys(options)
-    .filter((key) => options[key] !== undefined)
+    .filter((key) => options[key] !== undefined && options[key] !== null)
     .map((key) => `${toSnakeCase(key)}=${options[key]}`)
     .join("&");
 };
