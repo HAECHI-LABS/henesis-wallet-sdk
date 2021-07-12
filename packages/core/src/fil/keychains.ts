@@ -11,6 +11,7 @@ import { PasswordInvalidError } from "../error";
 import crypto from "crypto";
 import { bytesToWord } from "../eth";
 import { FilAccountKey } from "./abstractWallet";
+import { HexConverter } from "../utils/common";
 
 const base32Encode = require("base32-encode");
 const elliptic = require("elliptic");
@@ -118,6 +119,29 @@ export class FilKeychains implements Keychains {
       pub: publicKey,
       priv: privateKey,
       keyFile,
+    };
+  }
+
+  deriveFromPublicKey(key: FilAccountKey, childNumber: number): Key {
+    const compressedPublicKey = secp256k1.publicKeyConvert(
+      Buffer.from(`04${HexConverter.remove0x(key.pub)}`, "hex"),
+      true
+    );
+    const hdKey = bip32.fromPublicKey(
+      Buffer.from(compressedPublicKey),
+      Buffer.from(HexConverter.remove0x(key.chainCode), "hex")
+    );
+    const childKey = hdKey.derive(childNumber);
+    const childKeyPair = ec.keyFromPublic(childKey.publicKey);
+
+    const publicKey = HexConverter.add0x(
+      childKeyPair.getPublic(false, "hex").slice(2)
+    );
+    const address = this.getAddress(childKeyPair.getPublic(false, "hex"));
+
+    return {
+      address: address,
+      pub: publicKey,
     };
   }
 
