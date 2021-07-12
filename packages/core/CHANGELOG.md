@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.4...v3.2.5) (2021-07-12)
+
+
+### Bug Fixes
+
+* change createdDepositAddress() not to use passphrase ([080980a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/080980ab61283b31b885aaec192794a477989a0a))
+
+
+
+
+
 ## [3.2.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.3...v3.2.4) (2021-07-12)
 
 
