@@ -157,13 +157,11 @@ export class FilMasterWallet extends FilAbstractWallet {
 
   async createDepositAddress(
     name: string,
-    passphrase?: string,
     otpCode?: string
   ): Promise<FilDepositAddress> {
     const wallet = await this.client.get<MasterWalletDTO>(this.baseUrl);
-    const depositAddressKey = this.keychains.derive(
+    const depositAddressKey = this.keychains.deriveFromPublicKey(
       this.getAccountKey(),
-      passphrase,
       wallet.nextChildNumber
     );
     const depositAddressData = await this.client.post(
