@@ -1991,13 +1991,13 @@ paths:
           in: query
           description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
           schema:
-            type: string
+            type: number
         - name: size
           required: false
           in: query
           description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15) '
           schema:
-            type: string
+            type: number
         - name: sort
           required: false
           in: query
