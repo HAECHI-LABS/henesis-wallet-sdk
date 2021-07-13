@@ -595,13 +595,8 @@ components:
           type: string
           description: 입금 주소 이름
           example: test-deposit-address
-        passphrase:
-          type: string
-          description: 지갑 비밀번호
-          example: passphrase
       required:
         - name
-        - passphrase
     GetManyResponseForFlushDTO:
       type: object
       properties:
