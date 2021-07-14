@@ -108,6 +108,7 @@ function tryToPrivateKeyBuffer(privateKey) {
       if (privateKey.slice(0, 2) === "0x") {
         privateKey = privateKey.slice(2);
       }
+      privateKey = privateKey.padStart(64, "0");
       privateKey = Buffer.from(privateKey, "hex");
     }
   }
