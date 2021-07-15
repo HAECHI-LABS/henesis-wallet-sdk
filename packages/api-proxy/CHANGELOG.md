@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.6-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6-alpha.1...v3.2.6-alpha.2) (2021-07-15)
+
+
+### Bug Fixes
+
+* add metadata to trasnfer dto in filecoin ([2890070](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/28900703c5bd73ac2d08c8eb1b6a42a246aaac08))
+
+
+
+
+
 ## [3.2.6-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6-alpha.0...v3.2.6-alpha.1) (2021-07-15)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
