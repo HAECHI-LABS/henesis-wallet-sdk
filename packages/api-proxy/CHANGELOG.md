@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.6-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.5...v3.2.6-alpha.0) (2021-07-15)
+
+
+### Bug Fixes
+
+* add metadata to transfer and api ([5bb1dfc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5bb1dfcab375617df10eaa83d1bf49d4bc91ac15))
+
+
+
+
+
 ## [3.2.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.4...v3.2.5) (2021-07-12)
 
 
