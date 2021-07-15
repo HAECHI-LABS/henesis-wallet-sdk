@@ -30,7 +30,6 @@ import {
   ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
-  PaginationResponse,
   PathParams,
   Queries,
   ReadMeExtension,

@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.4...v3.2.5) (2021-07-12)
+
+
+### Bug Fixes
+
+* change createdDepositAddress() not to use passphrase ([080980a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/080980ab61283b31b885aaec192794a477989a0a))
+
+
+
+
+
+## [3.2.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.3...v3.2.4) (2021-07-12)
+
+
+### Bug Fixes
+
+* remove null query ([#510](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/510)) ([a347941](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a34794193a0c87d591fe7a6dbcaac407258d8c75))
+
+
+
+
+
+## [3.2.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.2...v3.2.3) (2021-07-08)
+
+
+### Bug Fixes
+
+* add getPaginationMeta that returns urls for each endpoints ([#508](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/508)) ([1916000](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/191600085a3c729b2314bf52c384c929e46e392b))
+
+
+
+
+
+## [3.2.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.1...v3.2.2) (2021-07-01)
+
+
+### Bug Fixes
+
+* add getMasterWallets options ([397eaef](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/397eaeff0df0a41beeb4a35f90c56c29951d69a9))
+* add wallet_id to tranasfer and transfer query param ([9a2dbcb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9a2dbcbb901d09a9e1ea5d0bd4354a87e65f8da3))
+* change wallet => master wallet at fil api ([9460675](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/94606753b00afb58a8fb4829b2de78aeb331ddd9))
+
+
+
+
+
 # [3.2.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.1.4...v3.2.0) (2021-06-25)
 
 

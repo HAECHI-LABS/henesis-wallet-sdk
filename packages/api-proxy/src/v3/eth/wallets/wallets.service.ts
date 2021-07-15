@@ -17,6 +17,7 @@ import {
 } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 import { ReplaceTransactionRequestDTO } from "../transactions/dto/replace-transaction-request.dto";
 import { EthTransaction } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
+import { getPaginationMeta } from "../../../utils/pagination";
 
 @Injectable()
 export class WalletsService {
@@ -70,7 +71,7 @@ export class WalletsService {
         new BN(request.amount),
         request.passphrase,
         null,
-        request.gasPrice ? new BN(request.gasPrice) : null,
+        request.gasPrice == null ? null : new BN(request.gasPrice),
         null,
         request.metadata
       )
@@ -86,11 +87,11 @@ export class WalletsService {
     return TransactionDTO.fromEthTransaction(
       await wallet.contractCall(
         request.to,
-        new BN(request.value),
+        request.value == null ? new BN("0") : new BN(request.value),
         request.data,
         request.passphrase,
         null,
-        request.gasPrice ? new BN(request.gasPrice) : null,
+        request.gasPrice == null ? null : new BN(request.gasPrice),
         null,
         request.metadata
       )
@@ -107,7 +108,7 @@ export class WalletsService {
     return TransactionDTO.fromEthTransaction(
       await wallet.replaceTransaction(
         transactionId,
-        request.gasPrice ? new BN(request.gasPrice) : null
+        request.gasPrice == null ? null : new BN(request.gasPrice)
       )
     );
   }
@@ -120,22 +121,29 @@ export class WalletsService {
     const wallet: EthWallet = await sdk.eth.wallets.getWallet(walletId);
     return wallet.flush(
       request.targets as any[],
-      request.gasPrice ? new BN(request.gasPrice) : null,
-      request.gasLimit ? new BN(request.gasLimit) : null
+      request.gasPrice == null ? null : new BN(request.gasPrice),
+      request.gasLimit == null ? null : new BN(request.gasLimit)
     );
   }
 
   public async getDepositAddresses(
     sdk: SDK,
     walletId: string,
-    option: GetDepositAddressOption
+    options: GetDepositAddressOption,
+    path: string
   ): Promise<PaginationDTO<DepositAddressDTO>> {
     const wallet = await sdk.eth.wallets.getWallet(walletId);
     const result = await wallet.getDepositAddresses(
-      option as UserWalletPaginationOptions
+      options as UserWalletPaginationOptions
     );
     return {
-      pagination: result.pagination,
+      pagination: getPaginationMeta(
+        path,
+        options.page,
+        options.size,
+        result.pagination.totalCount,
+        options
+      ),
       results: result.results.map(DepositAddressDTO.fromEthDepositAddress),
     };
   }

@@ -437,7 +437,7 @@ components:
           description: 집금한 마스터 지갑 ID
           example: 49e129bd5e1e67eddc5e317ed2e42b4c
         transfers:
-          description: 집금을 통해 발생한 입출금의 ID 목록
+          description: 집금을 통해 발생한 입출금 목록
           example: &ref_21
             - &ref_9
               id: 5b0d5c94f8fa6c2a891eb4f833767f03
@@ -556,7 +556,7 @@ components:
       type: object
       properties:
         targets:
-          description: 집금할 입금 주소의 ID (집금 요청당 최대 20개의 입금 주소를 집금할 수 있습니다.)
+          description: 집금할 입금 주소의 ID (집금 요청당 최대 50개의 입금 주소를 집금할 수 있습니다.)
           example:
             - 493ef9d5a4e86b9e7af657a56c8e3844
             - a52dea92424426e3ed2b6a32af76c7af
@@ -595,13 +595,8 @@ components:
           type: string
           description: 입금 주소 이름
           example: test-deposit-address
-        passphrase:
-          type: string
-          description: 지갑 비밀번호
-          example: passphrase
       required:
         - name
-        - passphrase
     GetManyResponseForFlushDTO:
       type: object
       properties:
@@ -645,7 +640,7 @@ paths:
                 proposalFeeWallets: *ref_2
           description: ''
         '401': &ref_7
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -790,7 +785,7 @@ paths:
                 message: '''status'' is invalid: not supported event status'
                 code: 4001
         '401':
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -849,7 +844,7 @@ paths:
                   status: ACTIVE
           description: ''
         '401': &ref_16
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:

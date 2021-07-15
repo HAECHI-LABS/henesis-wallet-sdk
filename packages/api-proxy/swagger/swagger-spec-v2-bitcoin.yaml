@@ -568,7 +568,7 @@ paths:
                     metadata: metadata
           description: ''
         '401': &ref_5
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -678,7 +678,7 @@ paths:
                   whitelistActivated: false
           description: ''
         '401': &ref_14
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -882,6 +882,18 @@ paths:
           description: 입금 주소 이름
           schema:
             type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
       responses:
         '200':
           content:

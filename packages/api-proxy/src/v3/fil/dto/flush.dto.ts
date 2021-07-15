@@ -24,7 +24,7 @@ export class FlushDTO {
   masterWalletId: string;
 
   @ApiModelProperty({
-    description: "집금을 통해 발생한 입출금의 ID 목록",
+    description: "집금을 통해 발생한 입출금 목록",
     example: EXAMPLE_FILECOIN_FLUSH_DTO.transfers,
   })
   transfers: TransferDTO[];

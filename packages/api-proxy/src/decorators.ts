@@ -72,7 +72,7 @@ export function ReadMeExtension() {
 export function AuthErrorResponses() {
   return applyDecorators(
     ApiUnauthorizedResponse({
-      description: "아래와 같은 인증 에러가 발생할 수 있습니다.",
+      description: "인증이 실패했을 때 발생하는 에러입니다.",
       content: ApiResponseContentsGenerator([
         {
           model: InvalidAccessTokenException,

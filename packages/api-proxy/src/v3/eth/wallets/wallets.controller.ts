@@ -234,7 +234,7 @@ export class WalletsController {
     );
   }
 
-  @Post("/:walletId/contract-calls")
+  @Post("/:walletId/contract-call")
   @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
@@ -415,7 +415,12 @@ export class WalletsController {
         address,
         size,
         page,
-      }
+      },
+      `${request.protocol}://${
+        request.hostname == "localhost"
+          ? `${request.hostname}:3000`
+          : request.hostname
+      }${request.path}`
     );
   }
 
