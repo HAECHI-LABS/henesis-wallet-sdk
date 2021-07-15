@@ -333,7 +333,7 @@ export class FilMasterWallet extends FilAbstractWallet {
   private createBuildTransactionRequest(
     to: string,
     amount: BN,
-    otpCode: string,
+    otpCode?: string,
     gasPremium?: BN
   ): BuildTransactionRequest {
     const msgParams = [
