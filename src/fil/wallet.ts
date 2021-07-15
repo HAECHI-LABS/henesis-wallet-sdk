@@ -353,7 +353,7 @@ export class FilMasterWallet extends FilAbstractWallet {
       gasPremium: BNConverter.bnToHexStringOrElseNull(gasPremium),
       method: MethodMultisig.Propose,
       params: Buffer.from(serializedMsgParams).toString("base64"),
-      otpCode: otpCode
+      otpCode: otpCode,
     };
   }
 
