@@ -33,7 +33,7 @@ export class FilKeychains implements Keychains {
   }
 
   changePassword(
-    key: FilAccountKey,
+    key: Key,
     password: string,
     newPassword: string
   ): FilKeyWithPriv {
@@ -43,10 +43,7 @@ export class FilKeychains implements Keychains {
     const privateKey = `0x${ecKey.getPrivate("hex")}`;
     const publicKey = `0x${ecKey.getPublic(false, "hex").slice(2)}`;
     const address = this.getAddress(ecKey.getPublic(false, "hex"));
-    const newKeyFile = this.encryptValueToKeyFile(
-      priv.toString("hex"),
-      newPassword
-    );
+    const newKeyFile = this.encryptValueToKeyFile(seed, newPassword);
 
     return {
       address,
