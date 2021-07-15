@@ -54,11 +54,11 @@ export declare class FilMasterWallet extends FilAbstractWallet {
     getEncryptionKey(): string;
     getId(): string;
     updateAccountKey(key: FilAccountKey): void;
-    createDepositAddress(name: string, passphrase?: string, otpCode?: string): Promise<FilDepositAddress>;
+    createDepositAddress(name: string, otpCode?: string): Promise<FilDepositAddress>;
     getDepositAddresses(options?: DepositAddressPaginationOptions): Promise<Pagination<FilDepositAddress>>;
     getDepositAddress(depositAddressId: string): Promise<FilDepositAddress>;
-    transfer(to: string, amount: BN, passphrase: string, otpCode?: string, gasPremium?: BN): Promise<FilTransfer>;
-    flush(targets: Array<string>, passphrase: string, gasPremium?: BN): Promise<FilFlush>;
+    transfer(to: string, amount: BN, passphrase: string, otpCode?: string, gasPremium?: BN, metadata?: string): Promise<FilTransfer>;
+    flush(targets: Array<string>, passphrase: string, gasPremium?: BN, metadata?: string): Promise<FilFlush>;
     getFlushes(options?: PaginationOptions): Promise<Pagination<FilFlush>>;
     getFlush(flushId: string): Promise<FilFlush>;
     getInternalFlushes(): Promise<Pagination<FilFlushInternal>>;

@@ -9,6 +9,7 @@ const sjcl_1 = __importDefault(require("../eth/eth-core-lib/sjcl"));
 const error_1 = require("../error");
 const crypto_1 = __importDefault(require("crypto"));
 const eth_1 = require("../eth");
+const common_1 = require("../utils/common");
 const base32Encode = require("base32-encode");
 const elliptic = require("elliptic");
 const ec = new elliptic.ec("secp256k1");
@@ -26,7 +27,7 @@ class FilKeychains {
         const privateKey = `0x${ecKey.getPrivate("hex")}`;
         const publicKey = `0x${ecKey.getPublic(false, "hex").slice(2)}`;
         const address = this.getAddress(ecKey.getPublic(false, "hex"));
-        const newKeyFile = this.encryptValueToKeyFile(priv.toString("hex"), newPassword);
+        const newKeyFile = this.encryptValueToKeyFile(seed, newPassword);
         return {
             address,
             pub: publicKey,
@@ -81,6 +82,18 @@ class FilKeychains {
             pub: publicKey,
             priv: privateKey,
             keyFile,
+        };
+    }
+    deriveFromPublicKey(key, childNumber) {
+        const compressedPublicKey = secp256k1.publicKeyConvert(Buffer.from(`04${common_1.HexConverter.remove0x(key.pub)}`, "hex"), true);
+        const hdKey = bip32.fromPublicKey(Buffer.from(compressedPublicKey), Buffer.from(common_1.HexConverter.remove0x(key.chainCode), "hex"));
+        const childKey = hdKey.derive(childNumber);
+        const childKeyPair = ec.keyFromPublic(childKey.publicKey);
+        const publicKey = common_1.HexConverter.add0x(childKeyPair.getPublic(false, "hex").slice(2));
+        const address = this.getAddress(childKeyPair.getPublic(false, "hex"));
+        return {
+            address: address,
+            pub: publicKey,
         };
     }
     decrypt(key, password, fromSeed) {

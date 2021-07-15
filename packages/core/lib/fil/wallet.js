@@ -56,9 +56,9 @@ class FilMasterWallet extends abstractWallet_1.FilAbstractWallet {
     updateAccountKey(key) {
         this.data.accountKey = key;
     }
-    async createDepositAddress(name, passphrase, otpCode) {
+    async createDepositAddress(name, otpCode) {
         const wallet = await this.client.get(this.baseUrl);
-        const depositAddressKey = this.keychains.derive(this.getAccountKey(), passphrase, wallet.nextChildNumber);
+        const depositAddressKey = this.keychains.deriveFromPublicKey(this.getAccountKey(), wallet.nextChildNumber);
         const depositAddressData = await this.client.post(`${this.baseUrl}/deposit-addresses`, {
             name: name,
             childNumber: wallet.nextChildNumber,
@@ -80,7 +80,7 @@ class FilMasterWallet extends abstractWallet_1.FilAbstractWallet {
         const depositAddressData = await this.client.get(`${this.baseUrl}/deposit-addresses/${depositAddressId}`);
         return new depositAddress_1.FilDepositAddress(this.client, this.data, this.keychains, depositAddress_1.convertDepositAddressData(depositAddressData));
     }
-    async transfer(to, amount, passphrase, otpCode, gasPremium) {
+    async transfer(to, amount, passphrase, otpCode, gasPremium, metadata) {
         const rawTransaction = await this.client.post(`${this.baseUrl}/transactions/build`, this.createBuildTransactionRequest(to, amount, gasPremium));
         const signedTransaction = this.signRawTransaction(rawTransaction, this.getAccountKey(), passphrase, true);
         const transferData = await this.client.post(`${this.baseUrl}/transactions`, {
@@ -89,10 +89,11 @@ class FilMasterWallet extends abstractWallet_1.FilAbstractWallet {
             proposalTransaction: utils_2.convertSignedTransactionToRawSignedTransactionDTO(signedTransaction),
             gasPremium: common_1.BNConverter.bnToHexStringOrElseNull(gasPremium),
             otpCode: otpCode,
+            metadata: metadata,
         });
         return utils_2.convertDtoToTransfer(transferData);
     }
-    async flush(targets, passphrase, gasPremium) {
+    async flush(targets, passphrase, gasPremium, metadata) {
         const rawFlushData = await this.client.post(`${this.baseUrl}/flushes/build`, {
             depositAddressIds: targets,
             gasPremium: common_1.BNConverter.bnToHexStringOrElseNull(gasPremium),
@@ -102,6 +103,7 @@ class FilMasterWallet extends abstractWallet_1.FilAbstractWallet {
         });
         const flushData = await this.client.post(`${this.baseUrl}/flushes`, {
             targets: flushTargets.map(utils_2.convertFilFlushTargetToDto),
+            metadata: metadata,
         });
         return utils_2.convertDtoToFlush(flushData);
     }

@@ -7,10 +7,11 @@ export interface FilKeyWithPriv extends KeyWithPriv {
 export declare class FilKeychains implements Keychains {
     protected readonly env: Env;
     constructor(env: Env);
-    changePassword(key: FilAccountKey, password: string, newPassword: string): FilKeyWithPriv;
+    changePassword(key: Key, password: string, newPassword: string): FilKeyWithPriv;
     create(password: string): KeyWithPriv;
     createWithChainCode(password: string): FilKeyWithPriv;
     derive(key: FilAccountKey, password: string, childNumber: number): KeyWithPriv;
+    deriveFromPublicKey(key: FilAccountKey, childNumber: number): Key;
     decrypt(key: Key, password: string, fromSeed?: boolean): string;
     sign(key: Key, password: string, hexPayload: string, fromSeed?: boolean): string;
     private privateKeyFromSeed;
