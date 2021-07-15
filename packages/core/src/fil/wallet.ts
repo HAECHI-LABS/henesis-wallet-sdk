@@ -232,7 +232,7 @@ export class FilMasterWallet extends FilAbstractWallet {
       NoUndefinedField<RawTransactionDTO>
     >(
       `${this.baseUrl}/transactions/build`,
-      this.createBuildTransactionRequest(to, amount, gasPremium)
+      this.createBuildTransactionRequest(to, amount, otpCode, gasPremium)
     );
     const signedTransaction = this.signRawTransaction(
       rawTransaction,
@@ -333,6 +333,7 @@ export class FilMasterWallet extends FilAbstractWallet {
   private createBuildTransactionRequest(
     to: string,
     amount: BN,
+    otpCode: string,
     gasPremium?: BN
   ): BuildTransactionRequest {
     const msgParams = [
@@ -352,6 +353,7 @@ export class FilMasterWallet extends FilAbstractWallet {
       gasPremium: BNConverter.bnToHexStringOrElseNull(gasPremium),
       method: MethodMultisig.Propose,
       params: Buffer.from(serializedMsgParams).toString("base64"),
+      otpCode: otpCode
     };
   }
 
