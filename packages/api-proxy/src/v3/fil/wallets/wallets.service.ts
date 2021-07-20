@@ -21,6 +21,7 @@ import { FilDepositAddress } from "@haechi-labs/henesis-wallet-core/lib/fil/depo
 import { MasterWalletBalanceDto } from "../dto/master-wallet-balance.dto";
 import { PaginationOptionsDTO } from "../dto/pagination-options.dto";
 import { getPaginationMeta } from "../../../utils/pagination";
+import { DepositAddressTransferRequestDTO } from "./dto/deposit-address-transfer-request.dto";
 
 @Injectable()
 export class WalletsService {
@@ -186,5 +187,25 @@ export class WalletsService {
       masterWalletId
     );
     return FlushDTO.fromFlush(await masterWallet.getFlush(flushId));
+  }
+
+  public async transferFromDepositAddress(
+    sdk: SDK,
+    masterWalletId: string,
+    depositAddressId: string,
+    request: DepositAddressTransferRequestDTO
+  ): Promise<TransferDTO> {
+    const masterWallet: FilMasterWallet = await sdk.fil.wallets.getMasterWallet(
+      masterWalletId
+    );
+    const depositAddress: FilDepositAddress =
+      await masterWallet.getDepositAddress(depositAddressId);
+    const transfer: FilTransfer = await depositAddress.transfer(
+      request.to,
+      new BN(request.amount),
+      request.passphrase,
+      request.metadata
+    );
+    return TransferDTO.fromTransfer(transfer);
   }
 }
