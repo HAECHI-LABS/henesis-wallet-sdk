@@ -16,7 +16,11 @@ import {
 import { convertWalletStatus, WalletStatus } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import { FilKeychains } from "./keychains";
-import { convertBalanceDtoToFilBalance, convertDtoToTransfer } from "./utils";
+import {
+  convertBalanceDtoToFilBalance,
+  convertDtoToTransfer,
+  convertSignedTransactionToRawSignedTransactionDTO,
+} from "./utils";
 import BN from "bn.js";
 import { BNConverter } from "../utils/common";
 import { MethodMultisig, MethodTransfer } from "./fil-core-lib/types";
@@ -131,7 +135,8 @@ export class FilDepositAddress extends FilAbstractWallet {
     const transferData = await this.client.post<NoUndefinedField<TransferDTO>>(
       `${this.baseUrl}/transactions`,
       {
-        transaction: signedTransaction,
+        transaction:
+          convertSignedTransactionToRawSignedTransactionDTO(signedTransaction),
         metadata: metadata,
       }
     );
