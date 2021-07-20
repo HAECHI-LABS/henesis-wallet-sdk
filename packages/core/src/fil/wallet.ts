@@ -36,23 +36,15 @@ import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { EthTransaction } from "../eth/abstractWallet";
 import cbor from "ipld-dag-cbor";
 import { serializeBigNum } from "./fil-core-lib/data";
-import { addressAsBytes, encode, getCID } from "./fil-core-lib/utils";
+import { addressAsBytes } from "./fil-core-lib/utils";
 import { MethodMultisig } from "./fil-core-lib/types";
-import {
-  signedTransactionSerializeRaw,
-  transactionSerialize,
-  transactionSerializeRaw,
-} from "./fil-core-lib/signer";
 import {
   convertDtoToFlush,
   convertDtoToTransfer,
   convertFilFlushTargetToDto,
-  convertMessageToObject,
-  convertRawTransactionToMessage,
   convertSignedTransactionToRawSignedTransactionDTO,
   convertMasterWalletBalanceDtoToFilBalance,
 } from "./utils";
-import { ProtocolIndicator } from "./fil-core-lib/constants";
 
 export const convertWalletData = (data: MasterWalletDTO): FilWalletData => {
   return {
@@ -355,77 +347,6 @@ export class FilMasterWallet extends FilAbstractWallet {
       params: Buffer.from(serializedMsgParams).toString("base64"),
       otpCode: otpCode,
     };
-  }
-
-  private signRawTransaction(
-    rawTransaction: RawTransaction,
-    key: Key,
-    passphrase: string,
-    fromSeed?: boolean
-  ): SignedTransaction {
-    const message = convertRawTransactionToMessage(rawTransaction);
-    const signature = this.createMessageSignature(
-      message,
-      key,
-      passphrase,
-      fromSeed
-    );
-    message.cid = this.calculateCidFromMessage(message);
-    const cid = this.calculateCidFromMessageAndSignature(message, signature);
-    return {
-      cid,
-      message,
-      signature,
-    };
-  }
-
-  /*
-   * reference
-   * - https://github.com/filecoin-shipyard/filecoin.js/blob/master/src/providers/wallet/LightWalletProvider.ts
-   * - https://github.com/filecoin-shipyard/filecoin.js/blob/master/src/signers/LightWalletSigner.ts
-   * - https://github.com/Zondax/filecoin-signing-tools/blob/master/signer-npm/js/src/index.js
-   */
-  private createMessageSignature(
-    message: Message,
-    key: Key,
-    passphrase: string,
-    fromSeed?: boolean
-  ): Signature {
-    const msgObject = convertMessageToObject(message);
-    const serializedMsg = transactionSerialize(msgObject);
-    const signature = this.keychains.sign(
-      key,
-      passphrase,
-      serializedMsg,
-      fromSeed
-    );
-    return {
-      data: signature,
-      type: ProtocolIndicator.SECP256K1,
-    };
-  }
-
-  /*
-   * reference
-   * - https://github.com/multiformats/js-cid
-   */
-  private calculateCidFromMessage(message: Message): string {
-    const messageObject = convertMessageToObject(message);
-    return new TextDecoder()
-      .decode(encode(getCID(transactionSerializeRaw(messageObject))))
-      .toLocaleLowerCase();
-  }
-
-  private calculateCidFromMessageAndSignature(
-    message: Message,
-    signature: Signature
-  ): string {
-    const messageObject = convertMessageToObject(message);
-    return new TextDecoder()
-      .decode(
-        encode(getCID(signedTransactionSerializeRaw(messageObject, signature)))
-      )
-      .toLocaleLowerCase();
   }
 
   private createFlushTarget(
