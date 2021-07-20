@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.7...v3.2.8) (2021-07-20)
+
+
+### Bug Fixes
+
+* remove default function ([#519](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/519)) ([78a4d7b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/78a4d7bde7ab49ebeb4ad3120af34516790e34e5))
+
+
+
+
+
 ## [3.2.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6...v3.2.7) (2021-07-20)
 
 
