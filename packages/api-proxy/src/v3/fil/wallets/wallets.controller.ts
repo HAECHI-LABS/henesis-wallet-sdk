@@ -79,6 +79,7 @@ import {
   EXAMPLE_FILECOIN_MASTER_WALLET_BALANCE_DTO,
   MasterWalletBalanceDto,
 } from "../dto/master-wallet-balance.dto";
+import { DepositAddressTransferRequestDTO } from "./dto/deposit-address-transfer-request.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -409,6 +410,39 @@ export class WalletsController {
       request.sdk,
       masterWalletId,
       depositAddressId
+    );
+  }
+
+  @Post("/:masterWalletId/deposit-addresses/:depositAddressId/transfer")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransferDTO,
+      EXAMPLE_FILECOIN_TRANSFER_DTO
+    ),
+  })
+  @PathParams(MASTER_WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 입금 주소가 없을 때 발생합니다.",
+    content: ApiResponseContentGenerator(
+      DepositAddressNotFoundException,
+      EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO
+    ),
+  })
+  @ApiOperation({
+    summary: "입금 주소에서 코인 전송하기",
+    description: "특정 입금 주소에서 가상자산을 송금합니다.",
+  })
+  public async transferFromDepositAddress(
+    @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
+    @Param("depositAddressId") depositAddressId: string,
+    @Body() transferRequest: DepositAddressTransferRequestDTO
+  ): Promise<TransferDTO> {
+    return await this.walletsService.transferFromDepositAddress(
+      request.sdk,
+      masterWalletId,
+      depositAddressId,
+      transferRequest
     );
   }
 
