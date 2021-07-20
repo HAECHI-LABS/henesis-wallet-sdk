@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6...v3.2.7) (2021-07-20)
+
+
+### Bug Fixes
+
+* add convert method to filecoin transfer from deposit address ([e327ab9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e327ab9453795121d8cd5d8c80b76d32918b3ca8))
+
+
+### Features
+
+* implement transfer api from deposit address in filecoin ([ec1575a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ec1575a5af55cf28583bd13ade35d9659d8be7fa))
+* implement transfer from deposit address in filecoin ([173d222](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/173d222244427cf2599a0875d3a170568c9358c2))
+
+
+
+
+
 ## [3.2.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6-alpha.2...v3.2.6) (2021-07-15)
 
 **Note:** Version bump only for package henesis-wallet-sdk
