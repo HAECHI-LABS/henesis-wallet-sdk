@@ -113,13 +113,14 @@ export class FilDepositAddress extends FilAbstractWallet {
     to: string,
     amount: BN,
     passphrase: string,
+    otpCode?: string,
     metadata?: string
   ): Promise<FilTransfer> {
     const rawTransaction = await this.client.post<
       NoUndefinedField<RawTransactionDTO>
     >(
       `${this.baseUrl}/transactions/build`,
-      this.createBuildTransactionRequest(to, amount)
+      this.createBuildTransactionRequest(to, amount, otpCode)
     );
     const key = this.keychains.derive(
       this.data.accountKey,
@@ -137,6 +138,7 @@ export class FilDepositAddress extends FilAbstractWallet {
       {
         transaction:
           convertSignedTransactionToRawSignedTransactionDTO(signedTransaction),
+        otpCode: otpCode,
         metadata: metadata,
       }
     );
@@ -145,7 +147,8 @@ export class FilDepositAddress extends FilAbstractWallet {
 
   private createBuildTransactionRequest(
     to: string,
-    amount: BN
+    amount: BN,
+    otpCode?: string
   ): BuildTransactionRequest {
     return {
       version: 0,
@@ -156,6 +159,7 @@ export class FilDepositAddress extends FilAbstractWallet {
       gasPremium: null,
       method: MethodTransfer,
       params: null,
+      otpCode: otpCode,
     };
   }
 }
