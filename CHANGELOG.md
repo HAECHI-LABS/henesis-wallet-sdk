@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.8...v3.2.9) (2021-07-22)
+
+
+### Bug Fixes
+
+* add otp code to transfer of deposit address in filecoin ([a9778e1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a9778e13d42dd49699b9f3b9b42279ac581e28b3))
+
+
+
+
+
 ## [3.2.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.7...v3.2.8) (2021-07-20)
 
 
