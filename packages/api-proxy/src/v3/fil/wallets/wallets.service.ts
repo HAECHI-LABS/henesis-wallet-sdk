@@ -204,6 +204,7 @@ export class WalletsService {
       request.to,
       new BN(request.amount),
       request.passphrase,
+      null,
       request.metadata
     );
     return TransferDTO.fromTransfer(transfer);
