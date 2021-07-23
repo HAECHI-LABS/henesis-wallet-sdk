@@ -28,6 +28,7 @@ import {
   QUERY_TRANSFERS_WALLET_ID_OPTIONAL,
 } from "../dto/queries";
 import { PARAM_TRANSFER_ID } from "../dto/params";
+import { getBaseUrlWithPath } from "../../../utils/pagination";
 
 @Controller("transfers")
 @ApiTags("transfers")
@@ -79,11 +80,7 @@ export class TransfersController {
         size,
         page,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      getBaseUrlWithPath(request)
     );
   }
 

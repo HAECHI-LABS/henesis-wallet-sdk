@@ -2,7 +2,7 @@ import { EventsService } from "./events.service";
 import { Controller, Get, Query, Request } from "@nestjs/common";
 import { ValueTransferEventDTO } from "../dto/value-transfer-event.dto";
 import { CallEventDTO } from "../dto/call-event.dto";
-import { ApiOperation, ApiTags, ApiExtraModels } from "@nestjs/swagger";
+import { ApiExtraModels, ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import {
   EXAMPLE_ETH_KLAY_PAGINATION_CALL_EVENT_DTO,
@@ -33,6 +33,7 @@ import {
   TransferType,
 } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
+import { getBaseUrlWithPath } from "../../../utils/pagination";
 
 @Controller("events")
 @ApiTags("events")
@@ -93,11 +94,7 @@ export class EventsController {
         size,
         page,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      getBaseUrlWithPath(request)
     );
   }
 
@@ -146,11 +143,7 @@ export class EventsController {
         size,
         page,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      getBaseUrlWithPath(request)
     );
   }
 }

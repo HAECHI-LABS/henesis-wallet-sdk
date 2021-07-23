@@ -49,6 +49,7 @@ import {
 } from "../dto/pagination.dto";
 import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
 import { PAGE_OPTIONAL, SIZE_OPTIONAL } from "../../../v3/eth/dto/params";
+import { getBaseUrlWithPath } from "../../../utils/pagination";
 
 @ApiTags("wallets")
 @Controller("wallets")
@@ -199,11 +200,7 @@ export class WalletsController {
         size,
         page,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      getBaseUrlWithPath(request)
     );
   }
 

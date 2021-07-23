@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Query, Request } from "@nestjs/common";
+import { Controller, Get, Query, Request } from "@nestjs/common";
 import { TransfersService } from "./transfers.service";
 import { TransferDTO } from "../dto/transfer.dto";
 import express from "express";
@@ -14,12 +14,7 @@ import {
   EXAMPLE_ETHEREUM_PAGINATION_TRANSFER_DTO,
   PaginationDTO,
 } from "../dto/pagination.dto";
-import {
-  ApiBadRequestResponse,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from "@nestjs/swagger";
+import { ApiBadRequestResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import {
   DEPOSIT_ADDRESS_ID_OPTIONAL,
   PAGE_OPTIONAL,
@@ -28,10 +23,10 @@ import {
   TICKER_OPTIONAL,
   TRANSACTION_HASH_OPTIONAL,
   TRANSACTION_ID_OPTIONAL,
+  TRANSFER_TYPE_OPTIONAL,
   UPDATED_AT_GTE_OPTIONAL,
   UPDATED_AT_LE_OPTIONAL,
   WALLET_ID_OPTIONAL,
-  TRANSFER_TYPE_OPTIONAL,
 } from "../dto/params";
 import {
   EventStatus,
@@ -41,6 +36,7 @@ import {
   EXAMPLE_INVALID_STATUS_EXCEPTION_DTO,
   InvalidStatusException,
 } from "../dto/exceptions.dto";
+import { getBaseUrlWithPath } from "../../../utils/pagination";
 
 @Controller("transfers")
 @ApiTags("transfers")
@@ -105,11 +101,7 @@ export class TransfersController {
         size,
         page,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      getBaseUrlWithPath(request)
     );
   }
 }
