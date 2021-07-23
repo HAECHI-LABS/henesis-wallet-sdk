@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.9...v3.2.10) (2021-07-23)
+
+
+### Bug Fixes
+
+* chnage SimplifiedWalletDTO to SimplifiedWalletInternalDTO ([8b9becf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8b9becfa50567587e81ce01abc23ad77effa171a))
+
+
+
+
+
 ## [3.2.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.8...v3.2.9) (2021-07-22)
 
 
