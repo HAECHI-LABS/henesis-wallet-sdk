@@ -22,12 +22,12 @@ import {
   UserWalletDTO,
 } from "../dto/user-wallet.dto";
 import {
+  ApiCreatedResponse,
+  ApiExtraModels,
   ApiNoContentResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
-  ApiOkResponse,
-  ApiExtraModels,
-  ApiCreatedResponse,
 } from "@nestjs/swagger";
 import express from "express";
 import { SendMasterWalletContractCallRequestDTO } from "../dto/send-master-wallet-contract-call-request.dto";
@@ -66,6 +66,7 @@ import { SendUserWalletCoinRequestDTO } from "../dto/send-user-wallet-coin-reque
 import { RetryCreateMasterWalletRequestDTO } from "../dto/retry-create-master-wallet-request.dto";
 import { RetryCreateUserWalletRequestDTO } from "../dto/retry-create-user-wallet-request.dto";
 import { WalletsService } from "./wallets.service";
+import { getBaseUrlWithPath } from "../../../utils/pagination";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -339,11 +340,7 @@ export class WalletsController {
         name,
         address,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      getBaseUrlWithPath(request)
     );
   }
 
