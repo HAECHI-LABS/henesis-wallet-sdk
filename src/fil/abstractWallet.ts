@@ -3,7 +3,7 @@ import { BlockchainType } from "../blockchain";
 import { Client } from "../httpClient";
 import {
   AccountKeyDTO,
-  SimplifiedWalletDTO,
+  SimplifiedWalletInternalDTO,
   TransactionDTO,
 } from "../__generate__/fil";
 import { FilKeychains } from "./keychains";
@@ -50,7 +50,7 @@ export interface FilTransaction
 
 export type FilAccountKey = AccountKeyDTO;
 
-export type FilSimplifiedWallet = SimplifiedWalletDTO;
+export type FilSimplifiedWallet = SimplifiedWalletInternalDTO;
 
 export interface FilAbstractWalletData extends WalletData {
   blockchain: BlockchainType;

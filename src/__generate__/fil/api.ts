@@ -1399,6 +1399,37 @@ export interface SimplifiedWalletDTO {
 /**
  * 
  * @export
+ * @interface SimplifiedWalletInternalDTO
+ */
+export interface SimplifiedWalletInternalDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    address: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SimplifiedWalletInternalDTO
+     */
+    masterWalletId?: string;
+}
+/**
+ * 
+ * @export
  * @interface Sort
  */
 export interface Sort {
@@ -1677,16 +1708,16 @@ export interface TransferInternalDTO {
     metadata?: string;
     /**
      * 
-     * @type {SimplifiedWalletDTO}
+     * @type {SimplifiedWalletInternalDTO}
      * @memberof TransferInternalDTO
      */
-    fromAddress: SimplifiedWalletDTO;
+    fromAddress: SimplifiedWalletInternalDTO;
     /**
      * 
-     * @type {SimplifiedWalletDTO}
+     * @type {SimplifiedWalletInternalDTO}
      * @memberof TransferInternalDTO
      */
-    toAddress: SimplifiedWalletDTO;
+    toAddress: SimplifiedWalletInternalDTO;
     /**
      * 
      * @type {string}
