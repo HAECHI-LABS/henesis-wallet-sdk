@@ -72,6 +72,7 @@ import {
   EXAMPLE_ETH_KLAY_USER_WALLET_DTO,
   UserWalletDTO,
 } from "../../eth/dto/user-wallet.dto";
+import { getBaseUrlWithPath } from "../../../utils/pagination";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -345,11 +346,7 @@ export class WalletsController {
         name,
         address,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      getBaseUrlWithPath(request)
     );
   }
 

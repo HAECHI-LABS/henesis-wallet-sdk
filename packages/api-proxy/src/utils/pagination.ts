@@ -1,4 +1,5 @@
 import { PaginationMeta } from "@haechi-labs/henesis-wallet-core/lib/paginationMeta";
+import express from "express";
 
 const makePaginationQueryString = (options?: object) => {
   if (!options) {
@@ -50,4 +51,8 @@ export function getPaginationMeta(
     previousUrl: previous,
     totalCount: totalCount,
   };
+}
+
+export function getBaseUrlWithPath(request: express.Request) {
+  return `${request.protocol}://${request.headers.host}${request.path}`;
 }

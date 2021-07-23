@@ -60,11 +60,11 @@ import {
   DepositAddressNotFoundException,
   EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO,
   EXAMPLE_FLUSH_NOT_FOUND_EXCEPTION_DTO,
-  EXAMPLE_NO_MASTER_WALLET_NAME_EXCEPTION_DTO,
   EXAMPLE_MASTER_WALLET_NOT_FOUND_EXCEPTION_DTO,
+  EXAMPLE_NO_MASTER_WALLET_NAME_EXCEPTION_DTO,
   FlushNotFoundException,
-  NoMasterWalletNameException,
   MasterWalletNotFoundException,
+  NoMasterWalletNameException,
 } from "../dto/exceptions.dto";
 import {
   DEPOSIT_ADDRESS_ID_REQUIRED,
@@ -80,6 +80,7 @@ import {
   MasterWalletBalanceDto,
 } from "../dto/master-wallet-balance.dto";
 import { DepositAddressTransferRequestDTO } from "./dto/deposit-address-transfer-request.dto";
+import { getBaseUrlWithPath } from "../../../utils/pagination";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -313,11 +314,7 @@ export class WalletsController {
         size,
         page,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      getBaseUrlWithPath(request)
     );
   }
 

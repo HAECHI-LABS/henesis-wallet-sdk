@@ -34,6 +34,7 @@ import {
 } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 import { ValueTransferEventDTO } from "../../eth/dto/value-transfer-event.dto";
 import { CallEventDTO } from "../../eth/dto/call-event.dto";
+import { getBaseUrlWithPath } from "../../../utils/pagination";
 
 @Controller("events")
 @ApiTags("events")
@@ -96,11 +97,7 @@ export class EventsController {
         size,
         page,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      getBaseUrlWithPath(request)
     );
   }
 
@@ -150,11 +147,7 @@ export class EventsController {
         size,
         page,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      getBaseUrlWithPath(request)
     );
   }
 }
