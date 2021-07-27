@@ -1,4 +1,4 @@
-name: Node.js CI with npm
+name: dev-deploy CI with npm
 on:
   push:
     branches:

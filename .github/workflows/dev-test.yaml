@@ -1,4 +1,4 @@
-name: Node.js CI with npm
+name: dev-test CI with npm
 on:
   pull_request:
     branches:
