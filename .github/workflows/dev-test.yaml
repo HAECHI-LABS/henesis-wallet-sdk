@@ -1,15 +1,10 @@
 name: Node.js CI with npm
-
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
-      - master
-
+      - develop
 jobs:
-  build-and-test:
+  dev-test:
     name: Github Action Build And Test
     runs-on: ubuntu-latest
     strategy:
@@ -27,13 +22,13 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - name: install
+      - name: Install
         run: |
           sudo apt install -y build-essential
           npm install
           npm run codegen
           npm run bootstrap
-      - name: script
+      - name: Test
         run: |
           bash ./scripts/core.sh
           bash ./scripts/api-proxy.sh

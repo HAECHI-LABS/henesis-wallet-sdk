@@ -1,0 +1,3 @@
+[submodule "tools/cd"]
+	path = tools/cd
+	url = https://github.com/HAECHI-LABS/cd.git
