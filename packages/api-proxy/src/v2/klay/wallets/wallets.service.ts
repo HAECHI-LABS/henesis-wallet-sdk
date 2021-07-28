@@ -35,8 +35,9 @@ import {
   EthUserWalletData,
 } from "@haechi-labs/henesis-wallet-core/lib/eth/userWallet";
 import { EthMasterWalletData } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
-import { getPaginationMeta } from "../../../utils/pagination";
 import { object } from "../../../utils/object";
+import { changeUrlHost } from "../../../utils/pagination";
+import express from "express";
 
 @Injectable()
 export class WalletsService {
@@ -239,23 +240,24 @@ export class WalletsService {
     sdk: SDK,
     masterWalletId: string,
     options: UserWalletPaginationOptions,
-    path: string
+    request: express.Request
   ): Promise<PaginationDTO<UserWalletDTO>> {
     const masterWallet = await WalletsService.getMasterWalletById(
       sdk,
       masterWalletId
     );
-
     const userWallets = await masterWallet.getUserWallets(object(options));
 
+    userWallets.pagination.nextUrl = changeUrlHost(
+      userWallets.pagination.nextUrl,
+      request
+    );
+    userWallets.pagination.previousUrl = changeUrlHost(
+      userWallets.pagination.previousUrl,
+      request
+    );
     return {
-      pagination: getPaginationMeta(
-        path,
-        options.page,
-        options.size,
-        userWallets.pagination.totalCount,
-        options
-      ),
+      pagination: userWallets.pagination,
       results: userWallets.results.map((c) => c.getData()),
     };
   }

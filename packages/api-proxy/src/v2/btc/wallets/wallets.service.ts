@@ -13,7 +13,8 @@ import { TransferRequestDTO } from "../dto/transfer-request.dto";
 import { TransferDTO } from "../dto/transfer.dto";
 import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
 import { object } from "../../../utils/object";
-import { getPaginationMeta } from "../../../utils/pagination";
+import { changeUrlHost } from "../../../utils/pagination";
+import express from "express";
 
 @Injectable()
 export class WalletsService {
@@ -70,18 +71,21 @@ export class WalletsService {
     sdk: SDK,
     walletId: string,
     options: DepositAddressPaginationOptions,
-    path: string
+    request: express.Request
   ): Promise<PaginationDTO<DepositAddressDTO>> {
     const wallet = await this.getWalletById(sdk, walletId);
     const result = await wallet.getDepositAddresses(object(options));
+
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
     return {
-      pagination: getPaginationMeta(
-        path,
-        options.page,
-        options.size,
-        result.pagination.totalCount,
-        options
-      ),
+      pagination: result.pagination,
       results: result.results.map(DepositAddressDTO.fromDepositAddress),
     };
   }

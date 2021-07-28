@@ -8,7 +8,8 @@ import {
   EthValueTransferEventPaginationOptions,
 } from "@haechi-labs/henesis-wallet-core/lib/events";
 import { object } from "../../../utils/object";
-import { getPaginationMeta } from "../../../utils/pagination";
+import { changeUrlHost } from "../../../utils/pagination";
+import express from "express";
 
 @Injectable()
 export class EventsService {
@@ -17,19 +18,22 @@ export class EventsService {
   public async getValueTransferEvents(
     sdk: SDK,
     options: EthValueTransferEventPaginationOptions,
-    path: string
+    request: express.Request
   ): Promise<PaginationDTO<ValueTransferEventDTO>> {
     const events = await sdk.klay.events.getValueTransferEvents(
       object(options)
     );
+
+    events.pagination.nextUrl = changeUrlHost(
+      events.pagination.nextUrl,
+      request
+    );
+    events.pagination.previousUrl = changeUrlHost(
+      events.pagination.previousUrl,
+      request
+    );
     return {
-      pagination: getPaginationMeta(
-        path,
-        options.page,
-        options.size,
-        events.pagination.totalCount,
-        options
-      ),
+      pagination: events.pagination,
       results: events.results.map(
         ValueTransferEventDTO.fromETHValueTransferEvent
       ),
@@ -39,17 +43,20 @@ export class EventsService {
   public async getCallEvents(
     sdk: SDK,
     options: EthEventPaginationOptions,
-    path: string
+    request: express.Request
   ): Promise<PaginationDTO<CallEventDTO>> {
     const events = await sdk.klay.events.getCallEvents(object(options));
+
+    events.pagination.nextUrl = changeUrlHost(
+      events.pagination.nextUrl,
+      request
+    );
+    events.pagination.previousUrl = changeUrlHost(
+      events.pagination.previousUrl,
+      request
+    );
     return {
-      pagination: getPaginationMeta(
-        path,
-        options.page,
-        options.size,
-        events.pagination.totalCount,
-        options
-      ),
+      pagination: events.pagination,
       results: events.results.map(CallEventDTO.fromETHCallEvent),
     };
   }

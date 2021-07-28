@@ -80,7 +80,6 @@ import {
   MasterWalletBalanceDto,
 } from "../dto/master-wallet-balance.dto";
 import { DepositAddressTransferRequestDTO } from "./dto/deposit-address-transfer-request.dto";
-import { getBaseUrlWithPath } from "../../../utils/pagination";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -314,7 +313,7 @@ export class WalletsController {
         size,
         page,
       },
-      getBaseUrlWithPath(request)
+      request
     );
   }
 
@@ -464,10 +463,15 @@ export class WalletsController {
     @Query("size") size: number = 15,
     @Query("page") page: number = 0
   ): Promise<PaginationDTO<FlushDTO>> {
-    return await this.walletsService.getFlushes(request.sdk, masterWalletId, {
-      size,
-      page,
-    });
+    return await this.walletsService.getFlushes(
+      request.sdk,
+      masterWalletId,
+      {
+        size,
+        page,
+      },
+      request
+    );
   }
 
   @Get("/:masterWalletId/flushes/:flushId")
