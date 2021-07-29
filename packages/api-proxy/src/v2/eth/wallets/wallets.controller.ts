@@ -66,7 +66,6 @@ import { SendUserWalletCoinRequestDTO } from "../dto/send-user-wallet-coin-reque
 import { RetryCreateMasterWalletRequestDTO } from "../dto/retry-create-master-wallet-request.dto";
 import { RetryCreateUserWalletRequestDTO } from "../dto/retry-create-user-wallet-request.dto";
 import { WalletsService } from "./wallets.service";
-import { getBaseUrlWithPath } from "../../../utils/pagination";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -340,7 +339,7 @@ export class WalletsController {
         name,
         address,
       },
-      getBaseUrlWithPath(request)
+      request
     );
   }
 

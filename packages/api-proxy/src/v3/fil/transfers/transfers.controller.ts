@@ -44,7 +44,6 @@ import {
   UPDATED_AT_GTE_OPTIONAL,
   UPDATED_AT_LE_OPTIONAL,
 } from "../dto/params";
-import { getBaseUrlWithPath } from "../../../utils/pagination";
 
 @Controller("transfers")
 @ApiTags("transfers")
@@ -107,7 +106,7 @@ export class TransfersController {
         size,
         page,
       },
-      getBaseUrlWithPath(request)
+      request
     );
   }
 }
