@@ -72,7 +72,7 @@ export class WalletsService {
         request.passphrase,
         null,
         request.gasPrice == null ? null : new BN(request.gasPrice),
-        null,
+        request.gasLimit == null ? null : new BN(request.gasLimit),
         request.metadata
       )
     );
@@ -92,7 +92,7 @@ export class WalletsService {
         request.passphrase,
         null,
         request.gasPrice == null ? null : new BN(request.gasPrice),
-        null,
+        request.gasLimit == null ? null : new BN(request.gasLimit),
         request.metadata
       )
     );
