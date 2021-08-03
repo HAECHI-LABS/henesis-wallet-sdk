@@ -95,6 +95,7 @@ export class TransactionsController {
   ): Promise<PaginationDTO<TransactionDTO>> {
     return await this.transactionsService.getTransactions(
       request.sdk,
+      request,
       address,
       toAddress,
       fromAddress,

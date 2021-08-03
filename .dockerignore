@@ -18,7 +18,6 @@ debugtool
 **/*.golden.ts
 *.js
 dist/
-
 __mocks__/
 scripts/deploy.sh
 scripts/publish.sh

@@ -4,7 +4,8 @@ import { PaginationDTO } from "../dto/pagination.dto";
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { TransferDTO } from "../dto/transfer.dto";
-import { getPaginationMeta } from "../../../utils/pagination";
+import express from "express";
+import { changeUrlHost } from "../../../utils/pagination";
 
 @Injectable()
 export class TransfersService {
@@ -13,20 +14,22 @@ export class TransfersService {
   public async getTransfers(
     sdk: SDK,
     query: any,
-    path: string
+    request: express.Request
   ): Promise<PaginationDTO<TransferDTO>> {
     const result: Pagination<Transfer> = await sdk.btc.transfers.getTransfers(
       query
     );
 
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
     return {
-      pagination: getPaginationMeta(
-        path,
-        query.page,
-        query.size,
-        result.pagination.totalCount,
-        query
-      ),
+      pagination: result.pagination,
       results: result.results.map(TransferDTO.fromTransfer),
     };
   }

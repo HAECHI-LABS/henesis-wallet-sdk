@@ -4,6 +4,8 @@ import { PaginationDTO } from "../dto/pagination.dto";
 import { TransactionDTO } from "../dto/transaction.dto";
 import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { TransactionType } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import { changeUrlHost } from "../../../utils/pagination";
+import express from "express";
 
 @Injectable()
 export class TransactionsService {
@@ -11,6 +13,7 @@ export class TransactionsService {
 
   public async getTransactions(
     sdk: SDK,
+    request: express.Request,
     address?: string,
     toAddress?: string,
     fromAddress?: string,
@@ -55,6 +58,15 @@ export class TransactionsService {
     if (sort) options.sort = sort;
 
     const transactions = await sdk.eth.transactions.getTransactions(options);
+
+    transactions.pagination.nextUrl = changeUrlHost(
+      transactions.pagination.nextUrl,
+      request
+    );
+    transactions.pagination.previousUrl = changeUrlHost(
+      transactions.pagination.previousUrl,
+      request
+    );
     return {
       pagination: transactions.pagination as any,
       results: transactions.results.map(TransactionDTO.fromTransaction),

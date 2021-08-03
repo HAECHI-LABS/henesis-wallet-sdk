@@ -33,7 +33,6 @@ import {
   TransferType,
 } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 import { Timestamp } from "@haechi-labs/henesis-wallet-core/lib/types";
-import { getBaseUrlWithPath } from "../../../utils/pagination";
 
 @Controller("events")
 @ApiTags("events")
@@ -94,7 +93,7 @@ export class EventsController {
         size,
         page,
       },
-      getBaseUrlWithPath(request)
+      request
     );
   }
 
@@ -143,7 +142,7 @@ export class EventsController {
         size,
         page,
       },
-      getBaseUrlWithPath(request)
+      request
     );
   }
 }
