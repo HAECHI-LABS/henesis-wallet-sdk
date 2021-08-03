@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.12](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.11...v3.2.12) (2021-08-03)
+
+
+### Bug Fixes
+
+* add checkout step in dev-deploy action ([72a4c8e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/72a4c8eb8744cbfd759d49bfbe7908edb858848c))
+* add gas limit option at eth v3 ([d0079a9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d0079a94219d65f7763952835d7624233798e63a))
+* change pagination urls' host ([#527](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/527)) ([e1fe34b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e1fe34b45804f1fdbc9b4b9fe772b70c3fa535d2))
+* fix proper pagination url ([#523](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/523)) ([36b88e5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/36b88e5924d0bae566deacb2c7d6475d1c653ac1))
+
+
+### Features
+
+* add api-proxy cicd pipeline ([8981db8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8981db8cc88ec2087e80a4c28335581b4a985c23))
+
+
+
+
+
 ## [3.2.11](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.10...v3.2.11) (2021-07-23)
 
 
