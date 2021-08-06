@@ -20,6 +20,7 @@ export const makePrefixPathByBlockchainType = (blockchain?: BlockchainType) => {
     [BlockchainType.ETHEREUM]: "/eth",
     [BlockchainType.KLAYTN]: "/klay",
     [BlockchainType.BITCOIN]: "/btc",
+    [BlockchainType.LITECOIN]: "/ltc",
     [BlockchainType.FILECOIN]: "/fil",
     [BlockchainType.BINANCE_SMART_CHAIN]: "/bsc",
   };

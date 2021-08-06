@@ -1,6 +1,6 @@
 import { Accounts } from "./accounts";
 import { Organizations } from "./organizations";
-import { HttpClient, Client, enhancedBlockchainClient } from "./httpClient";
+import { Client, enhancedBlockchainClient, HttpClient } from "./httpClient";
 import { EthModule, KlayModule } from "./eth";
 import { FilModule } from "./fil";
 import { baseUrls } from "./utils/url";
@@ -10,6 +10,7 @@ import { WithdrawalApprovals } from "./withdrawalApprovals";
 import { Billings } from "./billings";
 import { Notices } from "./notices";
 import { CoinListings } from "./coinListings";
+import { LtcModule } from "./ltc";
 
 export const enum Env {
   Local,
@@ -45,6 +46,8 @@ export class SDK {
   public readonly fil: FilModule;
 
   public readonly btc: BtcModule;
+
+  public readonly ltc: LtcModule;
 
   private readonly client: Client;
 
@@ -89,6 +92,10 @@ export class SDK {
     this.btc = new BtcModule({
       env: env,
       client: enhancedBlockchainClient(this.client, BlockchainType.BITCOIN),
+    });
+    this.ltc = new LtcModule({
+      env: env,
+      client: enhancedBlockchainClient(this.client, BlockchainType.LITECOIN),
     });
   }
 }
