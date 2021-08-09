@@ -21,3 +21,4 @@ export declare enum NewAddressType {
     SECP256K1 = "secp256k1",
     SECP256K1_LEDGER = "secp256k1-ledger"
 }
+export declare const MethodTransfer = 0;

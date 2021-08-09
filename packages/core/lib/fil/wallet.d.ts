@@ -70,9 +70,5 @@ export declare class FilMasterWallet extends FilAbstractWallet {
     }): Promise<void>;
     getConfirmation(): BN;
     private createBuildTransactionRequest;
-    private signRawTransaction;
-    private createMessageSignature;
-    private calculateCidFromMessage;
-    private calculateCidFromMessageAndSignature;
     private createFlushTarget;
 }

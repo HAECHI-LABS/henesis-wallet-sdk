@@ -21,21 +21,6 @@ class EthWallet extends abstractWallet_1.EthLikeWallet {
         super(client, data, keychains, blockchain, `/wallets/${data.id}`);
         this.walletContract = new new web3_1.default().eth.Contract(Wallet_json_1.default);
     }
-    resendTransaction(transactionId, gasPrice) {
-        return super.resendTransaction(transactionId, gasPrice);
-    }
-    contractCall(contractAddress, value, data, passphrase, otpCode, gasPrice, gasLimit, metadata) {
-        return super.contractCall(contractAddress, value, data, passphrase, otpCode, gasPrice, gasLimit, metadata);
-    }
-    transfer(coin, to, amount, passphrase, otpCode, gasPrice, gasLimit, metadata) {
-        return super.transfer(coin, to, amount, passphrase, otpCode, gasPrice, gasLimit, metadata);
-    }
-    sendTransaction(signedMultiSigPayload, walletId, otpCode, gasPrice) {
-        return super.sendTransaction(signedMultiSigPayload, walletId, otpCode, gasPrice);
-    }
-    sendBatchTransaction(blockchain, signedMultiSigPayloads, walletId, otpCode, gasPrice) {
-        return super.sendBatchTransaction(blockchain, signedMultiSigPayloads, walletId, otpCode, gasPrice);
-    }
     getEncryptionKey() {
         return this.data.encryptionKey;
     }

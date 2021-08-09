@@ -4,6 +4,8 @@ import { Balance, Key, PaginationOptions } from "../types";
 import { DepositAddressDTO } from "../__generate__/fil";
 import { WalletStatus } from "../wallet";
 import { FilKeychains } from "./keychains";
+import BN from "bn.js";
+import { FilTransfer } from "./transfers";
 export interface FilDepositAddressData extends Omit<FilAbstractWalletData, "encryptionKey"> {
     childNumber: number;
 }
@@ -26,4 +28,6 @@ export declare class FilDepositAddress extends FilAbstractWallet {
     getEncryptionKey(): string;
     getId(): string;
     updateAccountKey(key: Key): void;
+    transfer(to: string, amount: BN, passphrase: string, otpCode?: string, metadata?: string): Promise<FilTransfer>;
+    private createBuildTransactionRequest;
 }

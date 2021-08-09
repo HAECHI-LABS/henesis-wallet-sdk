@@ -6,6 +6,7 @@ exports.transformBlockchainType = (blockchain) => {
         ETHEREUM: BlockchainType.ETHEREUM,
         KLAYTN: BlockchainType.KLAYTN,
         BITCOIN: BlockchainType.BITCOIN,
+        LITECOIN: BlockchainType.LITECOIN,
         FILECOIN: BlockchainType.FILECOIN,
         BINANCE_SMART_CHAIN: BlockchainType.BINANCE_SMART_CHAIN,
     };
@@ -16,6 +17,7 @@ var BlockchainType;
     BlockchainType["ETHEREUM"] = "ETHEREUM";
     BlockchainType["KLAYTN"] = "KLAYTN";
     BlockchainType["BITCOIN"] = "BITCOIN";
+    BlockchainType["LITECOIN"] = "LITECOIN";
     BlockchainType["FILECOIN"] = "FILECOIN";
     BlockchainType["BINANCE_SMART_CHAIN"] = "BINANCE_SMART_CHAIN";
 })(BlockchainType = exports.BlockchainType || (exports.BlockchainType = {}));

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewAddressType = exports.SigType = exports.MethodMultisig = exports.MethodInit = void 0;
+exports.MethodTransfer = exports.NewAddressType = exports.SigType = exports.MethodMultisig = exports.MethodInit = void 0;
 exports.MethodInit = {
     Constructor: 1,
     Exec: 2,
@@ -26,4 +26,5 @@ var NewAddressType;
     NewAddressType["SECP256K1"] = "secp256k1";
     NewAddressType["SECP256K1_LEDGER"] = "secp256k1-ledger";
 })(NewAddressType = exports.NewAddressType || (exports.NewAddressType = {}));
+exports.MethodTransfer = 0;
 //# sourceMappingURL=types.js.map

@@ -13,6 +13,7 @@ const withdrawalApprovals_1 = require("./withdrawalApprovals");
 const billings_1 = require("./billings");
 const notices_1 = require("./notices");
 const coinListings_1 = require("./coinListings");
+const ltc_1 = require("./ltc");
 class SDK {
     constructor(params) {
         let env = 3;
@@ -53,6 +54,10 @@ class SDK {
         this.btc = new btc_1.BtcModule({
             env: env,
             client: httpClient_1.enhancedBlockchainClient(this.client, blockchain_1.BlockchainType.BITCOIN),
+        });
+        this.ltc = new ltc_1.LtcModule({
+            env: env,
+            client: httpClient_1.enhancedBlockchainClient(this.client, blockchain_1.BlockchainType.LITECOIN),
         });
     }
 }

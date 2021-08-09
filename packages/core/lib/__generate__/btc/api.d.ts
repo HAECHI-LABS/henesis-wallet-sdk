@@ -409,36 +409,36 @@ export declare class AdminControllerApi extends BaseAPI {
     getTransfers2(pageable: Pageable, condition: TransferSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationSimplifiedTransferDTO>>;
 }
 export declare const InternalControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getTransfer1: (transferId: string, options?: any) => Promise<RequestArgs>;
-    getTransfers1: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
-};
-export declare const InternalControllerApiFp: (configuration?: Configuration) => {
-    getTransfer1(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferInternalDTO>>;
-    getTransfers1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferInternalDTO>>;
-};
-export declare const InternalControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getTransfer1(transferId: string, options?: any): AxiosPromise<TransferInternalDTO>;
-    getTransfers1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransferInternalDTO>;
-};
-export declare class InternalControllerApi extends BaseAPI {
-    getTransfer1(transferId: string, options?: any): Promise<import("axios").AxiosResponse<TransferInternalDTO>>;
-    getTransfers1(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransferInternalDTO>>;
-}
-export declare const TransferControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     getTransfer: (transferId: string, options?: any) => Promise<RequestArgs>;
     getTransfers: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
 };
+export declare const InternalControllerApiFp: (configuration?: Configuration) => {
+    getTransfer(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferInternalDTO>>;
+    getTransfers(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferInternalDTO>>;
+};
+export declare const InternalControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getTransfer(transferId: string, options?: any): AxiosPromise<TransferInternalDTO>;
+    getTransfers(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransferInternalDTO>;
+};
+export declare class InternalControllerApi extends BaseAPI {
+    getTransfer(transferId: string, options?: any): Promise<import("axios").AxiosResponse<TransferInternalDTO>>;
+    getTransfers(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransferInternalDTO>>;
+}
+export declare const TransferControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getTransfer1: (transferId: string, options?: any) => Promise<RequestArgs>;
+    getTransfers1: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
+};
 export declare const TransferControllerApiFp: (configuration?: Configuration) => {
-    getTransfer(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>>;
-    getTransfers(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferDTO>>;
+    getTransfer1(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>>;
+    getTransfers1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferDTO>>;
 };
 export declare const TransferControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getTransfer(transferId: string, options?: any): AxiosPromise<TransferDTO>;
-    getTransfers(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransferDTO>;
+    getTransfer1(transferId: string, options?: any): AxiosPromise<TransferDTO>;
+    getTransfers1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransferDTO>;
 };
 export declare class TransferControllerApi extends BaseAPI {
-    getTransfer(transferId: string, options?: any): Promise<import("axios").AxiosResponse<TransferDTO>>;
-    getTransfers(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransferDTO>>;
+    getTransfer1(transferId: string, options?: any): Promise<import("axios").AxiosResponse<TransferDTO>>;
+    getTransfers1(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransferDTO>>;
 }
 export declare const WalletControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     activateAllowedAddresses: (walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any) => Promise<RequestArgs>;

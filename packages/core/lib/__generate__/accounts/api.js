@@ -197,7 +197,7 @@ exports.AccountControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAccount1: async (options = {}) => {
+        getAccount: async (options = {}) => {
             const localVarPath = `/api/v2/accounts/me`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -454,8 +454,8 @@ exports.AccountControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAccount1(options) {
-            const localVarAxiosArgs = await exports.AccountControllerApiAxiosParamCreator(configuration).getAccount1(options);
+        async getAccount(options) {
+            const localVarAxiosArgs = await exports.AccountControllerApiAxiosParamCreator(configuration).getAccount(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -533,8 +533,8 @@ exports.AccountControllerApiFactory = function (configuration, basePath, axios) 
         getAccessToken(options) {
             return exports.AccountControllerApiFp(configuration).getAccessToken(options).then((request) => request(axios, basePath));
         },
-        getAccount1(options) {
-            return exports.AccountControllerApiFp(configuration).getAccount1(options).then((request) => request(axios, basePath));
+        getAccount(options) {
+            return exports.AccountControllerApiFp(configuration).getAccount(options).then((request) => request(axios, basePath));
         },
         login(inlineObject, options) {
             return exports.AccountControllerApiFp(configuration).login(inlineObject, options).then((request) => request(axios, basePath));
@@ -575,8 +575,8 @@ class AccountControllerApi extends base_1.BaseAPI {
     getAccessToken(options) {
         return exports.AccountControllerApiFp(this.configuration).getAccessToken(options).then((request) => request(this.axios, this.basePath));
     }
-    getAccount1(options) {
-        return exports.AccountControllerApiFp(this.configuration).getAccount1(options).then((request) => request(this.axios, this.basePath));
+    getAccount(options) {
+        return exports.AccountControllerApiFp(this.configuration).getAccount(options).then((request) => request(this.axios, this.basePath));
     }
     login(inlineObject, options) {
         return exports.AccountControllerApiFp(this.configuration).login(inlineObject, options).then((request) => request(this.axios, this.basePath));
@@ -905,9 +905,9 @@ exports.OperationControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAccount: async (accountId, options = {}) => {
+        getAccount1: async (accountId, options = {}) => {
             if (accountId === null || accountId === undefined) {
-                throw new base_1.RequiredError('accountId', 'Required parameter accountId was null or undefined when calling getAccount.');
+                throw new base_1.RequiredError('accountId', 'Required parameter accountId was null or undefined when calling getAccount1.');
             }
             const localVarPath = `/api/v2/operation/accounts/{accountId}`
                 .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
@@ -1081,8 +1081,8 @@ exports.OperationControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAccount(accountId, options) {
-            const localVarAxiosArgs = await exports.OperationControllerApiAxiosParamCreator(configuration).getAccount(accountId, options);
+        async getAccount1(accountId, options) {
+            const localVarAxiosArgs = await exports.OperationControllerApiAxiosParamCreator(configuration).getAccount1(accountId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -1137,8 +1137,8 @@ exports.OperationControllerApiFactory = function (configuration, basePath, axios
         approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options) {
             return exports.OperationControllerApiFp(configuration).approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options).then((request) => request(axios, basePath));
         },
-        getAccount(accountId, options) {
-            return exports.OperationControllerApiFp(configuration).getAccount(accountId, options).then((request) => request(axios, basePath));
+        getAccount1(accountId, options) {
+            return exports.OperationControllerApiFp(configuration).getAccount1(accountId, options).then((request) => request(axios, basePath));
         },
         getAccountByEmail(email, options) {
             return exports.OperationControllerApiFp(configuration).getAccountByEmail(email, options).then((request) => request(axios, basePath));
@@ -1164,8 +1164,8 @@ class OperationControllerApi extends base_1.BaseAPI {
     approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options) {
         return exports.OperationControllerApiFp(this.configuration).approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    getAccount(accountId, options) {
-        return exports.OperationControllerApiFp(this.configuration).getAccount(accountId, options).then((request) => request(this.axios, this.basePath));
+    getAccount1(accountId, options) {
+        return exports.OperationControllerApiFp(this.configuration).getAccount1(accountId, options).then((request) => request(this.axios, this.basePath));
     }
     getAccountByEmail(email, options) {
         return exports.OperationControllerApiFp(this.configuration).getAccountByEmail(email, options).then((request) => request(this.axios, this.basePath));

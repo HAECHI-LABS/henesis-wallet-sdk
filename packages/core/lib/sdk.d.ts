@@ -7,6 +7,7 @@ import { WithdrawalApprovals } from "./withdrawalApprovals";
 import { Billings } from "./billings";
 import { Notices } from "./notices";
 import { CoinListings } from "./coinListings";
+import { LtcModule } from "./ltc";
 export declare const enum Env {
     Local = 0,
     Dev = 1,
@@ -30,6 +31,7 @@ export declare class SDK {
     readonly klay: KlayModule;
     readonly fil: FilModule;
     readonly btc: BtcModule;
+    readonly ltc: LtcModule;
     private readonly client;
     constructor(params: SDKOptions);
 }

@@ -36,6 +36,7 @@ export interface BuildTransactionRequest {
     params: string;
     gasLimit: string;
     gasPremium?: string;
+    otpCode?: string;
 }
 export interface CreateDepositAddressRequest {
     name: string;
@@ -46,6 +47,7 @@ export interface CreateDepositAddressRequest {
 }
 export interface CreateFlushRequest {
     targets: Array<FlushTarget>;
+    metadata?: string;
 }
 export interface CreateHenesisKeyRequest {
     orgId: string;
@@ -56,14 +58,20 @@ export interface CreateMasterWalletRequest {
     accountKey: AccountKeyDTO;
     backupKey: BackupKeyDTO;
 }
-export interface CreateTransactionRequest {
+export interface CreateMultiSigTransactionRequest {
     amount: string;
+    metadata?: string;
     proposalGasPremium?: Amount;
     proposalGasLimit?: Amount;
     proposalNonce?: string;
     toAddress: string;
     proposalTransaction: RawSignedTransactionDTO;
     gasPremium?: string;
+    otpCode?: string;
+}
+export interface CreateTransactionRequest {
+    transaction: RawSignedTransactionDTO;
+    metadata?: string;
     otpCode?: string;
 }
 export interface DepositAddressDTO {
@@ -261,6 +269,14 @@ export interface SignatureDTO {
     type: number;
 }
 export interface SimplifiedWalletDTO {
+    masterWalletId: string;
+    masterWalletAddress: string;
+    masterWalletName: string;
+    depositAddressId?: string;
+    depositAddress?: string;
+    depositAddressName?: string;
+}
+export interface SimplifiedWalletInternalDTO {
     id?: string;
     address: string;
     name?: string;
@@ -297,6 +313,7 @@ export interface TransferDTO {
     transaction?: TransactionDTO;
     status: TransferStatus;
     type: TransferType;
+    metadata?: string;
     fromAddress: string;
     toAddress: string;
     orgId: string;
@@ -313,8 +330,9 @@ export interface TransferInternalDTO {
     status: TransferStatus;
     type: TransferType;
     confirmation: string;
-    fromAddress: SimplifiedWalletDTO;
-    toAddress: SimplifiedWalletDTO;
+    metadata?: string;
+    fromAddress: SimplifiedWalletInternalDTO;
+    toAddress: SimplifiedWalletInternalDTO;
     orgId: string;
     masterWalletId: string;
     walletId: string;
@@ -381,25 +399,25 @@ export declare class FeeWalletControllerApi extends BaseAPI {
 export declare const InternalControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     getFlush: (flushId: string, options?: any) => Promise<RequestArgs>;
     getFlushes: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    getTransfer: (transferId: string, options?: any) => Promise<RequestArgs>;
+    getTransfer1: (transferId: string, options?: any) => Promise<RequestArgs>;
     getTransfers1: (pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any) => Promise<RequestArgs>;
 };
 export declare const InternalControllerApiFp: (configuration?: Configuration) => {
     getFlush(flushId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlushInternalDTO>>;
     getFlushes(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushInternalDTO>>;
-    getTransfer(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferInternalDTO>>;
+    getTransfer1(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferInternalDTO>>;
     getTransfers1(pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferInternalDTO>>;
 };
 export declare const InternalControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
     getFlush(flushId: string, options?: any): AxiosPromise<FlushInternalDTO>;
     getFlushes(pageable: Pageable, options?: any): AxiosPromise<PaginationFlushInternalDTO>;
-    getTransfer(transferId: string, options?: any): AxiosPromise<TransferInternalDTO>;
+    getTransfer1(transferId: string, options?: any): AxiosPromise<TransferInternalDTO>;
     getTransfers1(pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any): AxiosPromise<PaginationTransferInternalDTO>;
 };
 export declare class InternalControllerApi extends BaseAPI {
     getFlush(flushId: string, options?: any): Promise<import("axios").AxiosResponse<FlushInternalDTO>>;
     getFlushes(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationFlushInternalDTO>>;
-    getTransfer(transferId: string, options?: any): Promise<import("axios").AxiosResponse<TransferInternalDTO>>;
+    getTransfer1(transferId: string, options?: any): Promise<import("axios").AxiosResponse<TransferInternalDTO>>;
     getTransfers1(pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationTransferInternalDTO>>;
 }
 export declare const NetworkControllerApiAxiosParamCreator: (configuration?: Configuration) => {
@@ -427,22 +445,23 @@ export declare class OperationControllerApi extends BaseAPI {
     createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): Promise<import("axios").AxiosResponse<HenesisKeyDTO>>;
 }
 export declare const TransferControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getTransfer1: (transferId: string, options?: any) => Promise<RequestArgs>;
+    getTransfer: (transferId: string, options?: any) => Promise<RequestArgs>;
     getTransfers: (pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any) => Promise<RequestArgs>;
 };
 export declare const TransferControllerApiFp: (configuration?: Configuration) => {
-    getTransfer1(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>>;
+    getTransfer(transferId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>>;
     getTransfers(pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransferDTO>>;
 };
 export declare const TransferControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getTransfer1(transferId: string, options?: any): AxiosPromise<TransferDTO>;
+    getTransfer(transferId: string, options?: any): AxiosPromise<TransferDTO>;
     getTransfers(pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any): AxiosPromise<PaginationTransferDTO>;
 };
 export declare class TransferControllerApi extends BaseAPI {
-    getTransfer1(transferId: string, options?: any): Promise<import("axios").AxiosResponse<TransferDTO>>;
+    getTransfer(transferId: string, options?: any): Promise<import("axios").AxiosResponse<TransferDTO>>;
     getTransfers(pageable: Pageable, transferSearchCondition: TransferSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationTransferDTO>>;
 }
 export declare const WalletControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    buildDepositAddressTransaction: (masterWalletId: string, depositAddressId: string, buildTransactionRequest: BuildTransactionRequest, options?: any) => Promise<RequestArgs>;
     buildFlush: (masterWalletId: string, buildFlushRequest: BuildFlushRequest, options?: any) => Promise<RequestArgs>;
     buildTransaction: (masterWalletId: string, buildTransactionRequest: BuildTransactionRequest, options?: any) => Promise<RequestArgs>;
     createDepositAddress: (masterWalletId: string, createDepositAddressRequest: CreateDepositAddressRequest, options?: any) => Promise<RequestArgs>;
@@ -462,9 +481,11 @@ export declare const WalletControllerApiAxiosParamCreator: (configuration?: Conf
     patchMasterWalletAccountKey: (masterWalletId: string, patchAccountKeyRequest: PatchAccountKeyRequest, options?: any) => Promise<RequestArgs>;
     patchWalletMasterName: (masterWalletId: string, patchWalletNameRequest: PatchWalletNameRequest, options?: any) => Promise<RequestArgs>;
     recreateWallet: (masterWalletId: string, options?: any) => Promise<RequestArgs>;
-    sendTransaction: (masterWalletId: string, createTransactionRequest: CreateTransactionRequest, options?: any) => Promise<RequestArgs>;
+    sendTransaction: (masterWalletId: string, createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
+    sendTransaction1: (masterWalletId: string, depositAddressId: string, createTransactionRequest: CreateTransactionRequest, options?: any) => Promise<RequestArgs>;
 };
 export declare const WalletControllerApiFp: (configuration?: Configuration) => {
+    buildDepositAddressTransaction(masterWalletId: string, depositAddressId: string, buildTransactionRequest: BuildTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RawTransactionDTO>>;
     buildFlush(masterWalletId: string, buildFlushRequest: BuildFlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RawFlushDTO>>;
     buildTransaction(masterWalletId: string, buildTransactionRequest: BuildTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RawTransactionDTO>>;
     createDepositAddress(masterWalletId: string, createDepositAddressRequest: CreateDepositAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DepositAddressDTO>>;
@@ -484,9 +505,11 @@ export declare const WalletControllerApiFp: (configuration?: Configuration) => {
     patchMasterWalletAccountKey(masterWalletId: string, patchAccountKeyRequest: PatchAccountKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountKeyDTO>>;
     patchWalletMasterName(masterWalletId: string, patchWalletNameRequest: PatchWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
     recreateWallet(masterWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    sendTransaction(masterWalletId: string, createTransactionRequest: CreateTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>>;
+    sendTransaction(masterWalletId: string, createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>>;
+    sendTransaction1(masterWalletId: string, depositAddressId: string, createTransactionRequest: CreateTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransferDTO>>;
 };
 export declare const WalletControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    buildDepositAddressTransaction(masterWalletId: string, depositAddressId: string, buildTransactionRequest: BuildTransactionRequest, options?: any): AxiosPromise<RawTransactionDTO>;
     buildFlush(masterWalletId: string, buildFlushRequest: BuildFlushRequest, options?: any): AxiosPromise<RawFlushDTO>;
     buildTransaction(masterWalletId: string, buildTransactionRequest: BuildTransactionRequest, options?: any): AxiosPromise<RawTransactionDTO>;
     createDepositAddress(masterWalletId: string, createDepositAddressRequest: CreateDepositAddressRequest, options?: any): AxiosPromise<DepositAddressDTO>;
@@ -506,9 +529,11 @@ export declare const WalletControllerApiFactory: (configuration?: Configuration,
     patchMasterWalletAccountKey(masterWalletId: string, patchAccountKeyRequest: PatchAccountKeyRequest, options?: any): AxiosPromise<AccountKeyDTO>;
     patchWalletMasterName(masterWalletId: string, patchWalletNameRequest: PatchWalletNameRequest, options?: any): AxiosPromise<MasterWalletDTO>;
     recreateWallet(masterWalletId: string, options?: any): AxiosPromise<MasterWalletDTO>;
-    sendTransaction(masterWalletId: string, createTransactionRequest: CreateTransactionRequest, options?: any): AxiosPromise<TransferDTO>;
+    sendTransaction(masterWalletId: string, createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransferDTO>;
+    sendTransaction1(masterWalletId: string, depositAddressId: string, createTransactionRequest: CreateTransactionRequest, options?: any): AxiosPromise<TransferDTO>;
 };
 export declare class WalletControllerApi extends BaseAPI {
+    buildDepositAddressTransaction(masterWalletId: string, depositAddressId: string, buildTransactionRequest: BuildTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<RawTransactionDTO>>;
     buildFlush(masterWalletId: string, buildFlushRequest: BuildFlushRequest, options?: any): Promise<import("axios").AxiosResponse<RawFlushDTO>>;
     buildTransaction(masterWalletId: string, buildTransactionRequest: BuildTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<RawTransactionDTO>>;
     createDepositAddress(masterWalletId: string, createDepositAddressRequest: CreateDepositAddressRequest, options?: any): Promise<import("axios").AxiosResponse<DepositAddressDTO>>;
@@ -528,5 +553,6 @@ export declare class WalletControllerApi extends BaseAPI {
     patchMasterWalletAccountKey(masterWalletId: string, patchAccountKeyRequest: PatchAccountKeyRequest, options?: any): Promise<import("axios").AxiosResponse<AccountKeyDTO>>;
     patchWalletMasterName(masterWalletId: string, patchWalletNameRequest: PatchWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
     recreateWallet(masterWalletId: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    sendTransaction(masterWalletId: string, createTransactionRequest: CreateTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransferDTO>>;
+    sendTransaction(masterWalletId: string, createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransferDTO>>;
+    sendTransaction1(masterWalletId: string, depositAddressId: string, createTransactionRequest: CreateTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransferDTO>>;
 }

@@ -368,7 +368,7 @@ export declare const AccountControllerApiAxiosParamCreator: (configuration?: Con
     createAccessToken1: (refreshAccessTokenRequest: RefreshAccessTokenRequest, options?: any) => Promise<RequestArgs>;
     deleteAccessToken: (options?: any) => Promise<RequestArgs>;
     getAccessToken: (options?: any) => Promise<RequestArgs>;
-    getAccount1: (options?: any) => Promise<RequestArgs>;
+    getAccount: (options?: any) => Promise<RequestArgs>;
     login: (inlineObject: InlineObject, options?: any) => Promise<RequestArgs>;
     signup: (signUpRequest: SignUpRequest, options?: any) => Promise<RequestArgs>;
     updateLanguage: (updateLanguageRequest: UpdateLanguageRequest, options?: any) => Promise<RequestArgs>;
@@ -383,7 +383,7 @@ export declare const AccountControllerApiFp: (configuration?: Configuration) => 
     createAccessToken1(refreshAccessTokenRequest: RefreshAccessTokenRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccessTokenDTO>>;
     deleteAccessToken(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     getAccessToken(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccessTokenDTO>>;
-    getAccount1(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>>;
+    getAccount(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>>;
     login(inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LoginResponse>>;
     signup(signUpRequest: SignUpRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SignUpResponse>>;
     updateLanguage(updateLanguageRequest: UpdateLanguageRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
@@ -398,7 +398,7 @@ export declare const AccountControllerApiFactory: (configuration?: Configuration
     createAccessToken1(refreshAccessTokenRequest: RefreshAccessTokenRequest, options?: any): AxiosPromise<AccessTokenDTO>;
     deleteAccessToken(options?: any): AxiosPromise<void>;
     getAccessToken(options?: any): AxiosPromise<AccessTokenDTO>;
-    getAccount1(options?: any): AxiosPromise<AccountDTO>;
+    getAccount(options?: any): AxiosPromise<AccountDTO>;
     login(inlineObject: InlineObject, options?: any): AxiosPromise<LoginResponse>;
     signup(signUpRequest: SignUpRequest, options?: any): AxiosPromise<SignUpResponse>;
     updateLanguage(updateLanguageRequest: UpdateLanguageRequest, options?: any): AxiosPromise<void>;
@@ -413,7 +413,7 @@ export declare class AccountControllerApi extends BaseAPI {
     createAccessToken1(refreshAccessTokenRequest: RefreshAccessTokenRequest, options?: any): Promise<import("axios").AxiosResponse<AccessTokenDTO>>;
     deleteAccessToken(options?: any): Promise<import("axios").AxiosResponse<void>>;
     getAccessToken(options?: any): Promise<import("axios").AxiosResponse<AccessTokenDTO>>;
-    getAccount1(options?: any): Promise<import("axios").AxiosResponse<AccountDTO>>;
+    getAccount(options?: any): Promise<import("axios").AxiosResponse<AccountDTO>>;
     login(inlineObject: InlineObject, options?: any): Promise<import("axios").AxiosResponse<LoginResponse>>;
     signup(signUpRequest: SignUpRequest, options?: any): Promise<import("axios").AxiosResponse<SignUpResponse>>;
     updateLanguage(updateLanguageRequest: UpdateLanguageRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
@@ -465,7 +465,7 @@ export declare class NoticeControllerApi extends BaseAPI {
 }
 export declare const OperationControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     approveCoinListingRequest: (requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any) => Promise<RequestArgs>;
-    getAccount: (accountId: string, options?: any) => Promise<RequestArgs>;
+    getAccount1: (accountId: string, options?: any) => Promise<RequestArgs>;
     getAccountByEmail: (email: string, options?: any) => Promise<RequestArgs>;
     getAllAccountsByOrganizationId: (organizationId: string, options?: any) => Promise<RequestArgs>;
     getCoinListingRequest: (requestId: string, options?: any) => Promise<RequestArgs>;
@@ -475,7 +475,7 @@ export declare const OperationControllerApiAxiosParamCreator: (configuration?: C
 };
 export declare const OperationControllerApiFp: (configuration?: Configuration) => {
     approveCoinListingRequest(requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    getAccount(accountId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>>;
+    getAccount1(accountId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>>;
     getAccountByEmail(email: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>>;
     getAllAccountsByOrganizationId(organizationId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AccountDTO>>>;
     getCoinListingRequest(requestId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinListingRequestDTO>>;
@@ -485,7 +485,7 @@ export declare const OperationControllerApiFp: (configuration?: Configuration) =
 };
 export declare const OperationControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
     approveCoinListingRequest(requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): AxiosPromise<void>;
-    getAccount(accountId: string, options?: any): AxiosPromise<AccountDTO>;
+    getAccount1(accountId: string, options?: any): AxiosPromise<AccountDTO>;
     getAccountByEmail(email: string, options?: any): AxiosPromise<AccountDTO>;
     getAllAccountsByOrganizationId(organizationId: string, options?: any): AxiosPromise<Array<AccountDTO>>;
     getCoinListingRequest(requestId: string, options?: any): AxiosPromise<CoinListingRequestDTO>;
@@ -495,7 +495,7 @@ export declare const OperationControllerApiFactory: (configuration?: Configurati
 };
 export declare class OperationControllerApi extends BaseAPI {
     approveCoinListingRequest(requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    getAccount(accountId: string, options?: any): Promise<import("axios").AxiosResponse<AccountDTO>>;
+    getAccount1(accountId: string, options?: any): Promise<import("axios").AxiosResponse<AccountDTO>>;
     getAccountByEmail(email: string, options?: any): Promise<import("axios").AxiosResponse<AccountDTO>>;
     getAllAccountsByOrganizationId(organizationId: string, options?: any): Promise<import("axios").AxiosResponse<AccountDTO[]>>;
     getCoinListingRequest(requestId: string, options?: any): Promise<import("axios").AxiosResponse<CoinListingRequestDTO>>;

@@ -19,6 +19,7 @@ exports.makePrefixPathByBlockchainType = (blockchain) => {
         [blockchain_1.BlockchainType.ETHEREUM]: "/eth",
         [blockchain_1.BlockchainType.KLAYTN]: "/klay",
         [blockchain_1.BlockchainType.BITCOIN]: "/btc",
+        [blockchain_1.BlockchainType.LITECOIN]: "/ltc",
         [blockchain_1.BlockchainType.FILECOIN]: "/fil",
         [blockchain_1.BlockchainType.BINANCE_SMART_CHAIN]: "/bsc",
     };

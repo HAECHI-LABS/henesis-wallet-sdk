@@ -303,9 +303,9 @@ class AdminControllerApi extends base_1.BaseAPI {
 exports.AdminControllerApi = AdminControllerApi;
 exports.InternalControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getTransfer1: async (transferId, options = {}) => {
+        getTransfer: async (transferId, options = {}) => {
             if (transferId === null || transferId === undefined) {
-                throw new base_1.RequiredError('transferId', 'Required parameter transferId was null or undefined when calling getTransfer1.');
+                throw new base_1.RequiredError('transferId', 'Required parameter transferId was null or undefined when calling getTransfer.');
             }
             const localVarPath = `/api/v2/btc/internal/transfers/{transferId}`
                 .replace(`{${"transferId"}}`, encodeURIComponent(String(transferId)));
@@ -326,12 +326,12 @@ exports.InternalControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getTransfers1: async (pageable, specs, options = {}) => {
+        getTransfers: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransfers1.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransfers.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getTransfers1.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getTransfers.');
             }
             const localVarPath = `/api/v2/btc/internal/transfers`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -361,15 +361,15 @@ exports.InternalControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.InternalControllerApiFp = function (configuration) {
     return {
-        async getTransfer1(transferId, options) {
-            const localVarAxiosArgs = await exports.InternalControllerApiAxiosParamCreator(configuration).getTransfer1(transferId, options);
+        async getTransfer(transferId, options) {
+            const localVarAxiosArgs = await exports.InternalControllerApiAxiosParamCreator(configuration).getTransfer(transferId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getTransfers1(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.InternalControllerApiAxiosParamCreator(configuration).getTransfers1(pageable, specs, options);
+        async getTransfers(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.InternalControllerApiAxiosParamCreator(configuration).getTransfers(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -379,28 +379,28 @@ exports.InternalControllerApiFp = function (configuration) {
 };
 exports.InternalControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getTransfer1(transferId, options) {
-            return exports.InternalControllerApiFp(configuration).getTransfer1(transferId, options).then((request) => request(axios, basePath));
+        getTransfer(transferId, options) {
+            return exports.InternalControllerApiFp(configuration).getTransfer(transferId, options).then((request) => request(axios, basePath));
         },
-        getTransfers1(pageable, specs, options) {
-            return exports.InternalControllerApiFp(configuration).getTransfers1(pageable, specs, options).then((request) => request(axios, basePath));
+        getTransfers(pageable, specs, options) {
+            return exports.InternalControllerApiFp(configuration).getTransfers(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
 class InternalControllerApi extends base_1.BaseAPI {
-    getTransfer1(transferId, options) {
-        return exports.InternalControllerApiFp(this.configuration).getTransfer1(transferId, options).then((request) => request(this.axios, this.basePath));
+    getTransfer(transferId, options) {
+        return exports.InternalControllerApiFp(this.configuration).getTransfer(transferId, options).then((request) => request(this.axios, this.basePath));
     }
-    getTransfers1(pageable, specs, options) {
-        return exports.InternalControllerApiFp(this.configuration).getTransfers1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getTransfers(pageable, specs, options) {
+        return exports.InternalControllerApiFp(this.configuration).getTransfers(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.InternalControllerApi = InternalControllerApi;
 exports.TransferControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getTransfer: async (transferId, options = {}) => {
+        getTransfer1: async (transferId, options = {}) => {
             if (transferId === null || transferId === undefined) {
-                throw new base_1.RequiredError('transferId', 'Required parameter transferId was null or undefined when calling getTransfer.');
+                throw new base_1.RequiredError('transferId', 'Required parameter transferId was null or undefined when calling getTransfer1.');
             }
             const localVarPath = `/api/v2/btc/transfers/{transferId}`
                 .replace(`{${"transferId"}}`, encodeURIComponent(String(transferId)));
@@ -421,12 +421,12 @@ exports.TransferControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getTransfers: async (pageable, specs, options = {}) => {
+        getTransfers1: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransfers.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransfers1.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getTransfers.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getTransfers1.');
             }
             const localVarPath = `/api/v2/btc/transfers`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -456,15 +456,15 @@ exports.TransferControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.TransferControllerApiFp = function (configuration) {
     return {
-        async getTransfer(transferId, options) {
-            const localVarAxiosArgs = await exports.TransferControllerApiAxiosParamCreator(configuration).getTransfer(transferId, options);
+        async getTransfer1(transferId, options) {
+            const localVarAxiosArgs = await exports.TransferControllerApiAxiosParamCreator(configuration).getTransfer1(transferId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getTransfers(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.TransferControllerApiAxiosParamCreator(configuration).getTransfers(pageable, specs, options);
+        async getTransfers1(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.TransferControllerApiAxiosParamCreator(configuration).getTransfers1(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -474,20 +474,20 @@ exports.TransferControllerApiFp = function (configuration) {
 };
 exports.TransferControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getTransfer(transferId, options) {
-            return exports.TransferControllerApiFp(configuration).getTransfer(transferId, options).then((request) => request(axios, basePath));
+        getTransfer1(transferId, options) {
+            return exports.TransferControllerApiFp(configuration).getTransfer1(transferId, options).then((request) => request(axios, basePath));
         },
-        getTransfers(pageable, specs, options) {
-            return exports.TransferControllerApiFp(configuration).getTransfers(pageable, specs, options).then((request) => request(axios, basePath));
+        getTransfers1(pageable, specs, options) {
+            return exports.TransferControllerApiFp(configuration).getTransfers1(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
 class TransferControllerApi extends base_1.BaseAPI {
-    getTransfer(transferId, options) {
-        return exports.TransferControllerApiFp(this.configuration).getTransfer(transferId, options).then((request) => request(this.axios, this.basePath));
+    getTransfer1(transferId, options) {
+        return exports.TransferControllerApiFp(this.configuration).getTransfer1(transferId, options).then((request) => request(this.axios, this.basePath));
     }
-    getTransfers(pageable, specs, options) {
-        return exports.TransferControllerApiFp(this.configuration).getTransfers(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getTransfers1(pageable, specs, options) {
+        return exports.TransferControllerApiFp(this.configuration).getTransfers1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.TransferControllerApi = TransferControllerApi;

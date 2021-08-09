@@ -165,9 +165,9 @@ var WithdrawalPolicyType;
 })(WithdrawalPolicyType = exports.WithdrawalPolicyType || (exports.WithdrawalPolicyType = {}));
 exports.BscAdminControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getCoin4: async (coinId, options = {}) => {
+        getCoin2: async (coinId, options = {}) => {
             if (coinId === null || coinId === undefined) {
-                throw new base_1.RequiredError('coinId', 'Required parameter coinId was null or undefined when calling getCoin4.');
+                throw new base_1.RequiredError('coinId', 'Required parameter coinId was null or undefined when calling getCoin2.');
             }
             const localVarPath = `/api/v2/bnb/admin/coins/{coinId}`
                 .replace(`{${"coinId"}}`, encodeURIComponent(String(coinId)));
@@ -188,12 +188,12 @@ exports.BscAdminControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getExternalWithdrawals2: async (pageable, searchCondition, options = {}) => {
+        getExternalWithdrawals1: async (pageable, searchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getExternalWithdrawals2.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getExternalWithdrawals1.');
             }
             if (searchCondition === null || searchCondition === undefined) {
-                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getExternalWithdrawals2.');
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getExternalWithdrawals1.');
             }
             const localVarPath = `/api/v2/bnb/admin/external-withdrawals`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -219,9 +219,9 @@ exports.BscAdminControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWallets4: async (pageable, options = {}) => {
+        getMasterWallets2: async (pageable, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getMasterWallets4.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getMasterWallets2.');
             }
             const localVarPath = `/api/v2/bnb/admin/master-wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -244,9 +244,9 @@ exports.BscAdminControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWallets4: async (pageable, options = {}) => {
+        getUserWallets2: async (pageable, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getUserWallets4.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getUserWallets2.');
             }
             const localVarPath = `/api/v2/bnb/admin/user-wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -269,12 +269,12 @@ exports.BscAdminControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getValueTransferEvents6: async (pageable, searchCondition, options = {}) => {
+        getValueTransferEvents5: async (pageable, searchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents6.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents5.');
             }
             if (searchCondition === null || searchCondition === undefined) {
-                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents6.');
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents5.');
             }
             const localVarPath = `/api/v2/bnb/admin/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -304,36 +304,36 @@ exports.BscAdminControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.BscAdminControllerApiFp = function (configuration) {
     return {
-        async getCoin4(coinId, options) {
-            const localVarAxiosArgs = await exports.BscAdminControllerApiAxiosParamCreator(configuration).getCoin4(coinId, options);
+        async getCoin2(coinId, options) {
+            const localVarAxiosArgs = await exports.BscAdminControllerApiAxiosParamCreator(configuration).getCoin2(coinId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getExternalWithdrawals2(pageable, searchCondition, options) {
-            const localVarAxiosArgs = await exports.BscAdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawals2(pageable, searchCondition, options);
+        async getExternalWithdrawals1(pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.BscAdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawals1(pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWallets4(pageable, options) {
-            const localVarAxiosArgs = await exports.BscAdminControllerApiAxiosParamCreator(configuration).getMasterWallets4(pageable, options);
+        async getMasterWallets2(pageable, options) {
+            const localVarAxiosArgs = await exports.BscAdminControllerApiAxiosParamCreator(configuration).getMasterWallets2(pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWallets4(pageable, options) {
-            const localVarAxiosArgs = await exports.BscAdminControllerApiAxiosParamCreator(configuration).getUserWallets4(pageable, options);
+        async getUserWallets2(pageable, options) {
+            const localVarAxiosArgs = await exports.BscAdminControllerApiAxiosParamCreator(configuration).getUserWallets2(pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getValueTransferEvents6(pageable, searchCondition, options) {
-            const localVarAxiosArgs = await exports.BscAdminControllerApiAxiosParamCreator(configuration).getValueTransferEvents6(pageable, searchCondition, options);
+        async getValueTransferEvents5(pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.BscAdminControllerApiAxiosParamCreator(configuration).getValueTransferEvents5(pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -343,46 +343,46 @@ exports.BscAdminControllerApiFp = function (configuration) {
 };
 exports.BscAdminControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getCoin4(coinId, options) {
-            return exports.BscAdminControllerApiFp(configuration).getCoin4(coinId, options).then((request) => request(axios, basePath));
+        getCoin2(coinId, options) {
+            return exports.BscAdminControllerApiFp(configuration).getCoin2(coinId, options).then((request) => request(axios, basePath));
         },
-        getExternalWithdrawals2(pageable, searchCondition, options) {
-            return exports.BscAdminControllerApiFp(configuration).getExternalWithdrawals2(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getExternalWithdrawals1(pageable, searchCondition, options) {
+            return exports.BscAdminControllerApiFp(configuration).getExternalWithdrawals1(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
-        getMasterWallets4(pageable, options) {
-            return exports.BscAdminControllerApiFp(configuration).getMasterWallets4(pageable, options).then((request) => request(axios, basePath));
+        getMasterWallets2(pageable, options) {
+            return exports.BscAdminControllerApiFp(configuration).getMasterWallets2(pageable, options).then((request) => request(axios, basePath));
         },
-        getUserWallets4(pageable, options) {
-            return exports.BscAdminControllerApiFp(configuration).getUserWallets4(pageable, options).then((request) => request(axios, basePath));
+        getUserWallets2(pageable, options) {
+            return exports.BscAdminControllerApiFp(configuration).getUserWallets2(pageable, options).then((request) => request(axios, basePath));
         },
-        getValueTransferEvents6(pageable, searchCondition, options) {
-            return exports.BscAdminControllerApiFp(configuration).getValueTransferEvents6(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents5(pageable, searchCondition, options) {
+            return exports.BscAdminControllerApiFp(configuration).getValueTransferEvents5(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
 class BscAdminControllerApi extends base_1.BaseAPI {
-    getCoin4(coinId, options) {
-        return exports.BscAdminControllerApiFp(this.configuration).getCoin4(coinId, options).then((request) => request(this.axios, this.basePath));
+    getCoin2(coinId, options) {
+        return exports.BscAdminControllerApiFp(this.configuration).getCoin2(coinId, options).then((request) => request(this.axios, this.basePath));
     }
-    getExternalWithdrawals2(pageable, searchCondition, options) {
-        return exports.BscAdminControllerApiFp(this.configuration).getExternalWithdrawals2(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    getExternalWithdrawals1(pageable, searchCondition, options) {
+        return exports.BscAdminControllerApiFp(this.configuration).getExternalWithdrawals1(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWallets4(pageable, options) {
-        return exports.BscAdminControllerApiFp(this.configuration).getMasterWallets4(pageable, options).then((request) => request(this.axios, this.basePath));
+    getMasterWallets2(pageable, options) {
+        return exports.BscAdminControllerApiFp(this.configuration).getMasterWallets2(pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWallets4(pageable, options) {
-        return exports.BscAdminControllerApiFp(this.configuration).getUserWallets4(pageable, options).then((request) => request(this.axios, this.basePath));
+    getUserWallets2(pageable, options) {
+        return exports.BscAdminControllerApiFp(this.configuration).getUserWallets2(pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    getValueTransferEvents6(pageable, searchCondition, options) {
-        return exports.BscAdminControllerApiFp(this.configuration).getValueTransferEvents6(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    getValueTransferEvents5(pageable, searchCondition, options) {
+        return exports.BscAdminControllerApiFp(this.configuration).getValueTransferEvents5(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.BscAdminControllerApi = BscAdminControllerApi;
 exports.BscCoinControllerApiAxiosParamCreator = function (configuration) {
     return {
-        createCoin2: async (createCoinRequest, options = {}) => {
+        createCoin1: async (createCoinRequest, options = {}) => {
             if (createCoinRequest === null || createCoinRequest === undefined) {
-                throw new base_1.RequiredError('createCoinRequest', 'Required parameter createCoinRequest was null or undefined when calling createCoin2.');
+                throw new base_1.RequiredError('createCoinRequest', 'Required parameter createCoinRequest was null or undefined when calling createCoin1.');
             }
             const localVarPath = `/api/v2/bnb/coins`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -405,9 +405,9 @@ exports.BscCoinControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        deleteCoin2: async (symbol, options = {}) => {
+        deleteCoin1: async (symbol, options = {}) => {
             if (symbol === null || symbol === undefined) {
-                throw new base_1.RequiredError('symbol', 'Required parameter symbol was null or undefined when calling deleteCoin2.');
+                throw new base_1.RequiredError('symbol', 'Required parameter symbol was null or undefined when calling deleteCoin1.');
             }
             const localVarPath = `/api/v2/bnb/coins/{symbol}`
                 .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
@@ -428,9 +428,9 @@ exports.BscCoinControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAllCoins3: async (flag, options = {}) => {
+        getAllCoins2: async (flag, options = {}) => {
             if (flag === null || flag === undefined) {
-                throw new base_1.RequiredError('flag', 'Required parameter flag was null or undefined when calling getAllCoins3.');
+                throw new base_1.RequiredError('flag', 'Required parameter flag was null or undefined when calling getAllCoins2.');
             }
             const localVarPath = `/api/v2/bnb/coins`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -453,9 +453,9 @@ exports.BscCoinControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getCoin5: async (symbol, options = {}) => {
+        getCoin3: async (symbol, options = {}) => {
             if (symbol === null || symbol === undefined) {
-                throw new base_1.RequiredError('symbol', 'Required parameter symbol was null or undefined when calling getCoin5.');
+                throw new base_1.RequiredError('symbol', 'Required parameter symbol was null or undefined when calling getCoin3.');
             }
             const localVarPath = `/api/v2/bnb/coins/{symbol}`
                 .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
@@ -476,9 +476,9 @@ exports.BscCoinControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchCoin2: async (updateCoinRequest, options = {}) => {
+        patchCoin1: async (updateCoinRequest, options = {}) => {
             if (updateCoinRequest === null || updateCoinRequest === undefined) {
-                throw new base_1.RequiredError('updateCoinRequest', 'Required parameter updateCoinRequest was null or undefined when calling patchCoin2.');
+                throw new base_1.RequiredError('updateCoinRequest', 'Required parameter updateCoinRequest was null or undefined when calling patchCoin1.');
             }
             const localVarPath = `/api/v2/bnb/coins`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -505,36 +505,36 @@ exports.BscCoinControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.BscCoinControllerApiFp = function (configuration) {
     return {
-        async createCoin2(createCoinRequest, options) {
-            const localVarAxiosArgs = await exports.BscCoinControllerApiAxiosParamCreator(configuration).createCoin2(createCoinRequest, options);
+        async createCoin1(createCoinRequest, options) {
+            const localVarAxiosArgs = await exports.BscCoinControllerApiAxiosParamCreator(configuration).createCoin1(createCoinRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async deleteCoin2(symbol, options) {
-            const localVarAxiosArgs = await exports.BscCoinControllerApiAxiosParamCreator(configuration).deleteCoin2(symbol, options);
+        async deleteCoin1(symbol, options) {
+            const localVarAxiosArgs = await exports.BscCoinControllerApiAxiosParamCreator(configuration).deleteCoin1(symbol, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAllCoins3(flag, options) {
-            const localVarAxiosArgs = await exports.BscCoinControllerApiAxiosParamCreator(configuration).getAllCoins3(flag, options);
+        async getAllCoins2(flag, options) {
+            const localVarAxiosArgs = await exports.BscCoinControllerApiAxiosParamCreator(configuration).getAllCoins2(flag, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getCoin5(symbol, options) {
-            const localVarAxiosArgs = await exports.BscCoinControllerApiAxiosParamCreator(configuration).getCoin5(symbol, options);
+        async getCoin3(symbol, options) {
+            const localVarAxiosArgs = await exports.BscCoinControllerApiAxiosParamCreator(configuration).getCoin3(symbol, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchCoin2(updateCoinRequest, options) {
-            const localVarAxiosArgs = await exports.BscCoinControllerApiAxiosParamCreator(configuration).patchCoin2(updateCoinRequest, options);
+        async patchCoin1(updateCoinRequest, options) {
+            const localVarAxiosArgs = await exports.BscCoinControllerApiAxiosParamCreator(configuration).patchCoin1(updateCoinRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -544,49 +544,49 @@ exports.BscCoinControllerApiFp = function (configuration) {
 };
 exports.BscCoinControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        createCoin2(createCoinRequest, options) {
-            return exports.BscCoinControllerApiFp(configuration).createCoin2(createCoinRequest, options).then((request) => request(axios, basePath));
+        createCoin1(createCoinRequest, options) {
+            return exports.BscCoinControllerApiFp(configuration).createCoin1(createCoinRequest, options).then((request) => request(axios, basePath));
         },
-        deleteCoin2(symbol, options) {
-            return exports.BscCoinControllerApiFp(configuration).deleteCoin2(symbol, options).then((request) => request(axios, basePath));
+        deleteCoin1(symbol, options) {
+            return exports.BscCoinControllerApiFp(configuration).deleteCoin1(symbol, options).then((request) => request(axios, basePath));
         },
-        getAllCoins3(flag, options) {
-            return exports.BscCoinControllerApiFp(configuration).getAllCoins3(flag, options).then((request) => request(axios, basePath));
+        getAllCoins2(flag, options) {
+            return exports.BscCoinControllerApiFp(configuration).getAllCoins2(flag, options).then((request) => request(axios, basePath));
         },
-        getCoin5(symbol, options) {
-            return exports.BscCoinControllerApiFp(configuration).getCoin5(symbol, options).then((request) => request(axios, basePath));
+        getCoin3(symbol, options) {
+            return exports.BscCoinControllerApiFp(configuration).getCoin3(symbol, options).then((request) => request(axios, basePath));
         },
-        patchCoin2(updateCoinRequest, options) {
-            return exports.BscCoinControllerApiFp(configuration).patchCoin2(updateCoinRequest, options).then((request) => request(axios, basePath));
+        patchCoin1(updateCoinRequest, options) {
+            return exports.BscCoinControllerApiFp(configuration).patchCoin1(updateCoinRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 class BscCoinControllerApi extends base_1.BaseAPI {
-    createCoin2(createCoinRequest, options) {
-        return exports.BscCoinControllerApiFp(this.configuration).createCoin2(createCoinRequest, options).then((request) => request(this.axios, this.basePath));
+    createCoin1(createCoinRequest, options) {
+        return exports.BscCoinControllerApiFp(this.configuration).createCoin1(createCoinRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    deleteCoin2(symbol, options) {
-        return exports.BscCoinControllerApiFp(this.configuration).deleteCoin2(symbol, options).then((request) => request(this.axios, this.basePath));
+    deleteCoin1(symbol, options) {
+        return exports.BscCoinControllerApiFp(this.configuration).deleteCoin1(symbol, options).then((request) => request(this.axios, this.basePath));
     }
-    getAllCoins3(flag, options) {
-        return exports.BscCoinControllerApiFp(this.configuration).getAllCoins3(flag, options).then((request) => request(this.axios, this.basePath));
+    getAllCoins2(flag, options) {
+        return exports.BscCoinControllerApiFp(this.configuration).getAllCoins2(flag, options).then((request) => request(this.axios, this.basePath));
     }
-    getCoin5(symbol, options) {
-        return exports.BscCoinControllerApiFp(this.configuration).getCoin5(symbol, options).then((request) => request(this.axios, this.basePath));
+    getCoin3(symbol, options) {
+        return exports.BscCoinControllerApiFp(this.configuration).getCoin3(symbol, options).then((request) => request(this.axios, this.basePath));
     }
-    patchCoin2(updateCoinRequest, options) {
-        return exports.BscCoinControllerApiFp(this.configuration).patchCoin2(updateCoinRequest, options).then((request) => request(this.axios, this.basePath));
+    patchCoin1(updateCoinRequest, options) {
+        return exports.BscCoinControllerApiFp(this.configuration).patchCoin1(updateCoinRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.BscCoinControllerApi = BscCoinControllerApi;
 exports.BscEventControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getCallEvents5: async (pageable, specs, options = {}) => {
+        getCallEvents3: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getCallEvents5.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getCallEvents3.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getCallEvents5.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getCallEvents3.');
             }
             const localVarPath = `/api/v2/bnb/call-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -612,12 +612,12 @@ exports.BscEventControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getValueTransferEvents8: async (pageable, searchCondition, options = {}) => {
+        getValueTransferEvents4: async (pageable, searchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents8.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents4.');
             }
             if (searchCondition === null || searchCondition === undefined) {
-                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents8.');
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents4.');
             }
             const localVarPath = `/api/v2/bnb/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -647,15 +647,15 @@ exports.BscEventControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.BscEventControllerApiFp = function (configuration) {
     return {
-        async getCallEvents5(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.BscEventControllerApiAxiosParamCreator(configuration).getCallEvents5(pageable, specs, options);
+        async getCallEvents3(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.BscEventControllerApiAxiosParamCreator(configuration).getCallEvents3(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getValueTransferEvents8(pageable, searchCondition, options) {
-            const localVarAxiosArgs = await exports.BscEventControllerApiAxiosParamCreator(configuration).getValueTransferEvents8(pageable, searchCondition, options);
+        async getValueTransferEvents4(pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.BscEventControllerApiAxiosParamCreator(configuration).getValueTransferEvents4(pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -665,26 +665,26 @@ exports.BscEventControllerApiFp = function (configuration) {
 };
 exports.BscEventControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getCallEvents5(pageable, specs, options) {
-            return exports.BscEventControllerApiFp(configuration).getCallEvents5(pageable, specs, options).then((request) => request(axios, basePath));
+        getCallEvents3(pageable, specs, options) {
+            return exports.BscEventControllerApiFp(configuration).getCallEvents3(pageable, specs, options).then((request) => request(axios, basePath));
         },
-        getValueTransferEvents8(pageable, searchCondition, options) {
-            return exports.BscEventControllerApiFp(configuration).getValueTransferEvents8(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents4(pageable, searchCondition, options) {
+            return exports.BscEventControllerApiFp(configuration).getValueTransferEvents4(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
 class BscEventControllerApi extends base_1.BaseAPI {
-    getCallEvents5(pageable, specs, options) {
-        return exports.BscEventControllerApiFp(this.configuration).getCallEvents5(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getCallEvents3(pageable, specs, options) {
+        return exports.BscEventControllerApiFp(this.configuration).getCallEvents3(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
-    getValueTransferEvents8(pageable, searchCondition, options) {
-        return exports.BscEventControllerApiFp(this.configuration).getValueTransferEvents8(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    getValueTransferEvents4(pageable, searchCondition, options) {
+        return exports.BscEventControllerApiFp(this.configuration).getValueTransferEvents4(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.BscEventControllerApi = BscEventControllerApi;
 exports.BscGasPriceControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getGasPrice2: async (options = {}) => {
+        getGasPrice1: async (options = {}) => {
             const localVarPath = `/api/v2/bnb/gas-price`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -707,8 +707,8 @@ exports.BscGasPriceControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.BscGasPriceControllerApiFp = function (configuration) {
     return {
-        async getGasPrice2(options) {
-            const localVarAxiosArgs = await exports.BscGasPriceControllerApiAxiosParamCreator(configuration).getGasPrice2(options);
+        async getGasPrice1(options) {
+            const localVarAxiosArgs = await exports.BscGasPriceControllerApiAxiosParamCreator(configuration).getGasPrice1(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -718,20 +718,20 @@ exports.BscGasPriceControllerApiFp = function (configuration) {
 };
 exports.BscGasPriceControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getGasPrice2(options) {
-            return exports.BscGasPriceControllerApiFp(configuration).getGasPrice2(options).then((request) => request(axios, basePath));
+        getGasPrice1(options) {
+            return exports.BscGasPriceControllerApiFp(configuration).getGasPrice1(options).then((request) => request(axios, basePath));
         },
     };
 };
 class BscGasPriceControllerApi extends base_1.BaseAPI {
-    getGasPrice2(options) {
-        return exports.BscGasPriceControllerApiFp(this.configuration).getGasPrice2(options).then((request) => request(this.axios, this.basePath));
+    getGasPrice1(options) {
+        return exports.BscGasPriceControllerApiFp(this.configuration).getGasPrice1(options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.BscGasPriceControllerApi = BscGasPriceControllerApi;
 exports.BscHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
     return {
-        createExampleHenesisKey2: async (options = {}) => {
+        createExampleHenesisKey1: async (options = {}) => {
             const localVarPath = `/api/v2/bnb/henesis-keys/example`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -750,9 +750,9 @@ exports.BscHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createTransaction2: async (createTransactionRequest, options = {}) => {
+        createTransaction1: async (createTransactionRequest, options = {}) => {
             if (createTransactionRequest === null || createTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createTransactionRequest', 'Required parameter createTransactionRequest was null or undefined when calling createTransaction2.');
+                throw new base_1.RequiredError('createTransactionRequest', 'Required parameter createTransactionRequest was null or undefined when calling createTransaction1.');
             }
             const localVarPath = `/api/v2/bnb/henesis-keys/transactions`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -775,7 +775,7 @@ exports.BscHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getHenesisKey2: async (options = {}) => {
+        getHenesisKey1: async (options = {}) => {
             const localVarPath = `/api/v2/bnb/henesis-keys/me`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -794,7 +794,7 @@ exports.BscHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getHenesisKeyBalance2: async (options = {}) => {
+        getHenesisKeyBalance1: async (options = {}) => {
             const localVarPath = `/api/v2/bnb/henesis-keys/balance`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -813,12 +813,12 @@ exports.BscHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getHistoriesCsv2: async (createdAtGte, createdAtLt, options = {}) => {
+        getHistoriesCsv1: async (createdAtGte, createdAtLt, options = {}) => {
             if (createdAtGte === null || createdAtGte === undefined) {
-                throw new base_1.RequiredError('createdAtGte', 'Required parameter createdAtGte was null or undefined when calling getHistoriesCsv2.');
+                throw new base_1.RequiredError('createdAtGte', 'Required parameter createdAtGte was null or undefined when calling getHistoriesCsv1.');
             }
             if (createdAtLt === null || createdAtLt === undefined) {
-                throw new base_1.RequiredError('createdAtLt', 'Required parameter createdAtLt was null or undefined when calling getHistoriesCsv2.');
+                throw new base_1.RequiredError('createdAtLt', 'Required parameter createdAtLt was null or undefined when calling getHistoriesCsv1.');
             }
             const localVarPath = `/api/v2/bnb/henesis-keys/histories/csv`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -844,12 +844,12 @@ exports.BscHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getTransactionHistories2: async (pageable, specs, options = {}) => {
+        getTransactionHistories1: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransactionHistories2.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransactionHistories1.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getTransactionHistories2.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getTransactionHistories1.');
             }
             const localVarPath = `/api/v2/bnb/henesis-keys/histories`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -879,43 +879,43 @@ exports.BscHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.BscHenesisKeyControllerApiFp = function (configuration) {
     return {
-        async createExampleHenesisKey2(options) {
-            const localVarAxiosArgs = await exports.BscHenesisKeyControllerApiAxiosParamCreator(configuration).createExampleHenesisKey2(options);
+        async createExampleHenesisKey1(options) {
+            const localVarAxiosArgs = await exports.BscHenesisKeyControllerApiAxiosParamCreator(configuration).createExampleHenesisKey1(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createTransaction2(createTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.BscHenesisKeyControllerApiAxiosParamCreator(configuration).createTransaction2(createTransactionRequest, options);
+        async createTransaction1(createTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.BscHenesisKeyControllerApiAxiosParamCreator(configuration).createTransaction1(createTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getHenesisKey2(options) {
-            const localVarAxiosArgs = await exports.BscHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKey2(options);
+        async getHenesisKey1(options) {
+            const localVarAxiosArgs = await exports.BscHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKey1(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getHenesisKeyBalance2(options) {
-            const localVarAxiosArgs = await exports.BscHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKeyBalance2(options);
+        async getHenesisKeyBalance1(options) {
+            const localVarAxiosArgs = await exports.BscHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKeyBalance1(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getHistoriesCsv2(createdAtGte, createdAtLt, options) {
-            const localVarAxiosArgs = await exports.BscHenesisKeyControllerApiAxiosParamCreator(configuration).getHistoriesCsv2(createdAtGte, createdAtLt, options);
+        async getHistoriesCsv1(createdAtGte, createdAtLt, options) {
+            const localVarAxiosArgs = await exports.BscHenesisKeyControllerApiAxiosParamCreator(configuration).getHistoriesCsv1(createdAtGte, createdAtLt, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getTransactionHistories2(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.BscHenesisKeyControllerApiAxiosParamCreator(configuration).getTransactionHistories2(pageable, specs, options);
+        async getTransactionHistories1(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.BscHenesisKeyControllerApiAxiosParamCreator(configuration).getTransactionHistories1(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -925,55 +925,55 @@ exports.BscHenesisKeyControllerApiFp = function (configuration) {
 };
 exports.BscHenesisKeyControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        createExampleHenesisKey2(options) {
-            return exports.BscHenesisKeyControllerApiFp(configuration).createExampleHenesisKey2(options).then((request) => request(axios, basePath));
+        createExampleHenesisKey1(options) {
+            return exports.BscHenesisKeyControllerApiFp(configuration).createExampleHenesisKey1(options).then((request) => request(axios, basePath));
         },
-        createTransaction2(createTransactionRequest, options) {
-            return exports.BscHenesisKeyControllerApiFp(configuration).createTransaction2(createTransactionRequest, options).then((request) => request(axios, basePath));
+        createTransaction1(createTransactionRequest, options) {
+            return exports.BscHenesisKeyControllerApiFp(configuration).createTransaction1(createTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        getHenesisKey2(options) {
-            return exports.BscHenesisKeyControllerApiFp(configuration).getHenesisKey2(options).then((request) => request(axios, basePath));
+        getHenesisKey1(options) {
+            return exports.BscHenesisKeyControllerApiFp(configuration).getHenesisKey1(options).then((request) => request(axios, basePath));
         },
-        getHenesisKeyBalance2(options) {
-            return exports.BscHenesisKeyControllerApiFp(configuration).getHenesisKeyBalance2(options).then((request) => request(axios, basePath));
+        getHenesisKeyBalance1(options) {
+            return exports.BscHenesisKeyControllerApiFp(configuration).getHenesisKeyBalance1(options).then((request) => request(axios, basePath));
         },
-        getHistoriesCsv2(createdAtGte, createdAtLt, options) {
-            return exports.BscHenesisKeyControllerApiFp(configuration).getHistoriesCsv2(createdAtGte, createdAtLt, options).then((request) => request(axios, basePath));
+        getHistoriesCsv1(createdAtGte, createdAtLt, options) {
+            return exports.BscHenesisKeyControllerApiFp(configuration).getHistoriesCsv1(createdAtGte, createdAtLt, options).then((request) => request(axios, basePath));
         },
-        getTransactionHistories2(pageable, specs, options) {
-            return exports.BscHenesisKeyControllerApiFp(configuration).getTransactionHistories2(pageable, specs, options).then((request) => request(axios, basePath));
+        getTransactionHistories1(pageable, specs, options) {
+            return exports.BscHenesisKeyControllerApiFp(configuration).getTransactionHistories1(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
 class BscHenesisKeyControllerApi extends base_1.BaseAPI {
-    createExampleHenesisKey2(options) {
-        return exports.BscHenesisKeyControllerApiFp(this.configuration).createExampleHenesisKey2(options).then((request) => request(this.axios, this.basePath));
+    createExampleHenesisKey1(options) {
+        return exports.BscHenesisKeyControllerApiFp(this.configuration).createExampleHenesisKey1(options).then((request) => request(this.axios, this.basePath));
     }
-    createTransaction2(createTransactionRequest, options) {
-        return exports.BscHenesisKeyControllerApiFp(this.configuration).createTransaction2(createTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    createTransaction1(createTransactionRequest, options) {
+        return exports.BscHenesisKeyControllerApiFp(this.configuration).createTransaction1(createTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    getHenesisKey2(options) {
-        return exports.BscHenesisKeyControllerApiFp(this.configuration).getHenesisKey2(options).then((request) => request(this.axios, this.basePath));
+    getHenesisKey1(options) {
+        return exports.BscHenesisKeyControllerApiFp(this.configuration).getHenesisKey1(options).then((request) => request(this.axios, this.basePath));
     }
-    getHenesisKeyBalance2(options) {
-        return exports.BscHenesisKeyControllerApiFp(this.configuration).getHenesisKeyBalance2(options).then((request) => request(this.axios, this.basePath));
+    getHenesisKeyBalance1(options) {
+        return exports.BscHenesisKeyControllerApiFp(this.configuration).getHenesisKeyBalance1(options).then((request) => request(this.axios, this.basePath));
     }
-    getHistoriesCsv2(createdAtGte, createdAtLt, options) {
-        return exports.BscHenesisKeyControllerApiFp(this.configuration).getHistoriesCsv2(createdAtGte, createdAtLt, options).then((request) => request(this.axios, this.basePath));
+    getHistoriesCsv1(createdAtGte, createdAtLt, options) {
+        return exports.BscHenesisKeyControllerApiFp(this.configuration).getHistoriesCsv1(createdAtGte, createdAtLt, options).then((request) => request(this.axios, this.basePath));
     }
-    getTransactionHistories2(pageable, specs, options) {
-        return exports.BscHenesisKeyControllerApiFp(this.configuration).getTransactionHistories2(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getTransactionHistories1(pageable, specs, options) {
+        return exports.BscHenesisKeyControllerApiFp(this.configuration).getTransactionHistories1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.BscHenesisKeyControllerApi = BscHenesisKeyControllerApi;
 exports.BscInternalControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getCallEvents4: async (pageable, specs, options = {}) => {
+        getCallEvents2: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getCallEvents4.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getCallEvents2.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getCallEvents4.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getCallEvents2.');
             }
             const localVarPath = `/api/v2/bnb/internal/call-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -999,12 +999,12 @@ exports.BscInternalControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getValueTransferEvents7: async (pageable, searchCondition, options = {}) => {
+        getValueTransferEvents3: async (pageable, searchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents7.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents3.');
             }
             if (searchCondition === null || searchCondition === undefined) {
-                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents7.');
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents3.');
             }
             const localVarPath = `/api/v2/bnb/internal/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1034,15 +1034,15 @@ exports.BscInternalControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.BscInternalControllerApiFp = function (configuration) {
     return {
-        async getCallEvents4(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.BscInternalControllerApiAxiosParamCreator(configuration).getCallEvents4(pageable, specs, options);
+        async getCallEvents2(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.BscInternalControllerApiAxiosParamCreator(configuration).getCallEvents2(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getValueTransferEvents7(pageable, searchCondition, options) {
-            const localVarAxiosArgs = await exports.BscInternalControllerApiAxiosParamCreator(configuration).getValueTransferEvents7(pageable, searchCondition, options);
+        async getValueTransferEvents3(pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.BscInternalControllerApiAxiosParamCreator(configuration).getValueTransferEvents3(pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -1052,28 +1052,28 @@ exports.BscInternalControllerApiFp = function (configuration) {
 };
 exports.BscInternalControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getCallEvents4(pageable, specs, options) {
-            return exports.BscInternalControllerApiFp(configuration).getCallEvents4(pageable, specs, options).then((request) => request(axios, basePath));
+        getCallEvents2(pageable, specs, options) {
+            return exports.BscInternalControllerApiFp(configuration).getCallEvents2(pageable, specs, options).then((request) => request(axios, basePath));
         },
-        getValueTransferEvents7(pageable, searchCondition, options) {
-            return exports.BscInternalControllerApiFp(configuration).getValueTransferEvents7(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents3(pageable, searchCondition, options) {
+            return exports.BscInternalControllerApiFp(configuration).getValueTransferEvents3(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
 class BscInternalControllerApi extends base_1.BaseAPI {
-    getCallEvents4(pageable, specs, options) {
-        return exports.BscInternalControllerApiFp(this.configuration).getCallEvents4(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getCallEvents2(pageable, specs, options) {
+        return exports.BscInternalControllerApiFp(this.configuration).getCallEvents2(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
-    getValueTransferEvents7(pageable, searchCondition, options) {
-        return exports.BscInternalControllerApiFp(this.configuration).getValueTransferEvents7(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    getValueTransferEvents3(pageable, searchCondition, options) {
+        return exports.BscInternalControllerApiFp(this.configuration).getValueTransferEvents3(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.BscInternalControllerApi = BscInternalControllerApi;
 exports.BscMethodGasUsageControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getMethodGasUsages2: async (name, options = {}) => {
+        getMethodGasUsages1: async (name, options = {}) => {
             if (name === null || name === undefined) {
-                throw new base_1.RequiredError('name', 'Required parameter name was null or undefined when calling getMethodGasUsages2.');
+                throw new base_1.RequiredError('name', 'Required parameter name was null or undefined when calling getMethodGasUsages1.');
             }
             const localVarPath = `/api/v2/bnb/method-gas-usages`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1100,8 +1100,8 @@ exports.BscMethodGasUsageControllerApiAxiosParamCreator = function (configuratio
 };
 exports.BscMethodGasUsageControllerApiFp = function (configuration) {
     return {
-        async getMethodGasUsages2(name, options) {
-            const localVarAxiosArgs = await exports.BscMethodGasUsageControllerApiAxiosParamCreator(configuration).getMethodGasUsages2(name, options);
+        async getMethodGasUsages1(name, options) {
+            const localVarAxiosArgs = await exports.BscMethodGasUsageControllerApiAxiosParamCreator(configuration).getMethodGasUsages1(name, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -1111,25 +1111,25 @@ exports.BscMethodGasUsageControllerApiFp = function (configuration) {
 };
 exports.BscMethodGasUsageControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getMethodGasUsages2(name, options) {
-            return exports.BscMethodGasUsageControllerApiFp(configuration).getMethodGasUsages2(name, options).then((request) => request(axios, basePath));
+        getMethodGasUsages1(name, options) {
+            return exports.BscMethodGasUsageControllerApiFp(configuration).getMethodGasUsages1(name, options).then((request) => request(axios, basePath));
         },
     };
 };
 class BscMethodGasUsageControllerApi extends base_1.BaseAPI {
-    getMethodGasUsages2(name, options) {
-        return exports.BscMethodGasUsageControllerApiFp(this.configuration).getMethodGasUsages2(name, options).then((request) => request(this.axios, this.basePath));
+    getMethodGasUsages1(name, options) {
+        return exports.BscMethodGasUsageControllerApiFp(this.configuration).getMethodGasUsages1(name, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.BscMethodGasUsageControllerApi = BscMethodGasUsageControllerApi;
 exports.BscOperationControllerApiAxiosParamCreator = function (configuration) {
     return {
-        bindHenesisKeyToWallet2: async (keyId, bindHenesisKeyToWalletRequest, options = {}) => {
+        bindHenesisKeyToWallet1: async (keyId, bindHenesisKeyToWalletRequest, options = {}) => {
             if (keyId === null || keyId === undefined) {
-                throw new base_1.RequiredError('keyId', 'Required parameter keyId was null or undefined when calling bindHenesisKeyToWallet2.');
+                throw new base_1.RequiredError('keyId', 'Required parameter keyId was null or undefined when calling bindHenesisKeyToWallet1.');
             }
             if (bindHenesisKeyToWalletRequest === null || bindHenesisKeyToWalletRequest === undefined) {
-                throw new base_1.RequiredError('bindHenesisKeyToWalletRequest', 'Required parameter bindHenesisKeyToWalletRequest was null or undefined when calling bindHenesisKeyToWallet2.');
+                throw new base_1.RequiredError('bindHenesisKeyToWalletRequest', 'Required parameter bindHenesisKeyToWalletRequest was null or undefined when calling bindHenesisKeyToWallet1.');
             }
             const localVarPath = `/api/v2/bnb/operation/henesis-keys/{keyId}/bind`
                 .replace(`{${"keyId"}}`, encodeURIComponent(String(keyId)));
@@ -1153,9 +1153,9 @@ exports.BscOperationControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createHenesisKey2: async (createHenesisKeyRequest, options = {}) => {
+        createHenesisKey1: async (createHenesisKeyRequest, options = {}) => {
             if (createHenesisKeyRequest === null || createHenesisKeyRequest === undefined) {
-                throw new base_1.RequiredError('createHenesisKeyRequest', 'Required parameter createHenesisKeyRequest was null or undefined when calling createHenesisKey2.');
+                throw new base_1.RequiredError('createHenesisKeyRequest', 'Required parameter createHenesisKeyRequest was null or undefined when calling createHenesisKey1.');
             }
             const localVarPath = `/api/v2/bnb/operation/henesis-keys`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1182,15 +1182,15 @@ exports.BscOperationControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.BscOperationControllerApiFp = function (configuration) {
     return {
-        async bindHenesisKeyToWallet2(keyId, bindHenesisKeyToWalletRequest, options) {
-            const localVarAxiosArgs = await exports.BscOperationControllerApiAxiosParamCreator(configuration).bindHenesisKeyToWallet2(keyId, bindHenesisKeyToWalletRequest, options);
+        async bindHenesisKeyToWallet1(keyId, bindHenesisKeyToWalletRequest, options) {
+            const localVarAxiosArgs = await exports.BscOperationControllerApiAxiosParamCreator(configuration).bindHenesisKeyToWallet1(keyId, bindHenesisKeyToWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createHenesisKey2(createHenesisKeyRequest, options) {
-            const localVarAxiosArgs = await exports.BscOperationControllerApiAxiosParamCreator(configuration).createHenesisKey2(createHenesisKeyRequest, options);
+        async createHenesisKey1(createHenesisKeyRequest, options) {
+            const localVarAxiosArgs = await exports.BscOperationControllerApiAxiosParamCreator(configuration).createHenesisKey1(createHenesisKeyRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -1200,31 +1200,31 @@ exports.BscOperationControllerApiFp = function (configuration) {
 };
 exports.BscOperationControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        bindHenesisKeyToWallet2(keyId, bindHenesisKeyToWalletRequest, options) {
-            return exports.BscOperationControllerApiFp(configuration).bindHenesisKeyToWallet2(keyId, bindHenesisKeyToWalletRequest, options).then((request) => request(axios, basePath));
+        bindHenesisKeyToWallet1(keyId, bindHenesisKeyToWalletRequest, options) {
+            return exports.BscOperationControllerApiFp(configuration).bindHenesisKeyToWallet1(keyId, bindHenesisKeyToWalletRequest, options).then((request) => request(axios, basePath));
         },
-        createHenesisKey2(createHenesisKeyRequest, options) {
-            return exports.BscOperationControllerApiFp(configuration).createHenesisKey2(createHenesisKeyRequest, options).then((request) => request(axios, basePath));
+        createHenesisKey1(createHenesisKeyRequest, options) {
+            return exports.BscOperationControllerApiFp(configuration).createHenesisKey1(createHenesisKeyRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 class BscOperationControllerApi extends base_1.BaseAPI {
-    bindHenesisKeyToWallet2(keyId, bindHenesisKeyToWalletRequest, options) {
-        return exports.BscOperationControllerApiFp(this.configuration).bindHenesisKeyToWallet2(keyId, bindHenesisKeyToWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    bindHenesisKeyToWallet1(keyId, bindHenesisKeyToWalletRequest, options) {
+        return exports.BscOperationControllerApiFp(this.configuration).bindHenesisKeyToWallet1(keyId, bindHenesisKeyToWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createHenesisKey2(createHenesisKeyRequest, options) {
-        return exports.BscOperationControllerApiFp(this.configuration).createHenesisKey2(createHenesisKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    createHenesisKey1(createHenesisKeyRequest, options) {
+        return exports.BscOperationControllerApiFp(this.configuration).createHenesisKey1(createHenesisKeyRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.BscOperationControllerApi = BscOperationControllerApi;
 exports.BscTransactionControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getAllTransactions2: async (pageable, specs, options = {}) => {
+        getAllTransactions1: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllTransactions2.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllTransactions1.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getAllTransactions2.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getAllTransactions1.');
             }
             const localVarPath = `/api/v2/bnb/transactions`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1250,9 +1250,9 @@ exports.BscTransactionControllerApiAxiosParamCreator = function (configuration) 
                 options: localVarRequestOptions,
             };
         },
-        getRawTransactionByHash2: async (transactionHash, options = {}) => {
+        getRawTransactionByHash1: async (transactionHash, options = {}) => {
             if (transactionHash === null || transactionHash === undefined) {
-                throw new base_1.RequiredError('transactionHash', 'Required parameter transactionHash was null or undefined when calling getRawTransactionByHash2.');
+                throw new base_1.RequiredError('transactionHash', 'Required parameter transactionHash was null or undefined when calling getRawTransactionByHash1.');
             }
             const localVarPath = `/api/v2/bnb/raw-transactions/{transactionHash}`
                 .replace(`{${"transactionHash"}}`, encodeURIComponent(String(transactionHash)));
@@ -1273,9 +1273,9 @@ exports.BscTransactionControllerApiAxiosParamCreator = function (configuration) 
                 options: localVarRequestOptions,
             };
         },
-        getTransactionById2: async (transactionId, options = {}) => {
+        getTransactionById1: async (transactionId, options = {}) => {
             if (transactionId === null || transactionId === undefined) {
-                throw new base_1.RequiredError('transactionId', 'Required parameter transactionId was null or undefined when calling getTransactionById2.');
+                throw new base_1.RequiredError('transactionId', 'Required parameter transactionId was null or undefined when calling getTransactionById1.');
             }
             const localVarPath = `/api/v2/bnb/transactions/{transactionId}`
                 .replace(`{${"transactionId"}}`, encodeURIComponent(String(transactionId)));
@@ -1300,22 +1300,22 @@ exports.BscTransactionControllerApiAxiosParamCreator = function (configuration) 
 };
 exports.BscTransactionControllerApiFp = function (configuration) {
     return {
-        async getAllTransactions2(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.BscTransactionControllerApiAxiosParamCreator(configuration).getAllTransactions2(pageable, specs, options);
+        async getAllTransactions1(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.BscTransactionControllerApiAxiosParamCreator(configuration).getAllTransactions1(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getRawTransactionByHash2(transactionHash, options) {
-            const localVarAxiosArgs = await exports.BscTransactionControllerApiAxiosParamCreator(configuration).getRawTransactionByHash2(transactionHash, options);
+        async getRawTransactionByHash1(transactionHash, options) {
+            const localVarAxiosArgs = await exports.BscTransactionControllerApiAxiosParamCreator(configuration).getRawTransactionByHash1(transactionHash, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getTransactionById2(transactionId, options) {
-            const localVarAxiosArgs = await exports.BscTransactionControllerApiAxiosParamCreator(configuration).getTransactionById2(transactionId, options);
+        async getTransactionById1(transactionId, options) {
+            const localVarAxiosArgs = await exports.BscTransactionControllerApiAxiosParamCreator(configuration).getTransactionById1(transactionId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -1325,37 +1325,37 @@ exports.BscTransactionControllerApiFp = function (configuration) {
 };
 exports.BscTransactionControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getAllTransactions2(pageable, specs, options) {
-            return exports.BscTransactionControllerApiFp(configuration).getAllTransactions2(pageable, specs, options).then((request) => request(axios, basePath));
+        getAllTransactions1(pageable, specs, options) {
+            return exports.BscTransactionControllerApiFp(configuration).getAllTransactions1(pageable, specs, options).then((request) => request(axios, basePath));
         },
-        getRawTransactionByHash2(transactionHash, options) {
-            return exports.BscTransactionControllerApiFp(configuration).getRawTransactionByHash2(transactionHash, options).then((request) => request(axios, basePath));
+        getRawTransactionByHash1(transactionHash, options) {
+            return exports.BscTransactionControllerApiFp(configuration).getRawTransactionByHash1(transactionHash, options).then((request) => request(axios, basePath));
         },
-        getTransactionById2(transactionId, options) {
-            return exports.BscTransactionControllerApiFp(configuration).getTransactionById2(transactionId, options).then((request) => request(axios, basePath));
+        getTransactionById1(transactionId, options) {
+            return exports.BscTransactionControllerApiFp(configuration).getTransactionById1(transactionId, options).then((request) => request(axios, basePath));
         },
     };
 };
 class BscTransactionControllerApi extends base_1.BaseAPI {
-    getAllTransactions2(pageable, specs, options) {
-        return exports.BscTransactionControllerApiFp(this.configuration).getAllTransactions2(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getAllTransactions1(pageable, specs, options) {
+        return exports.BscTransactionControllerApiFp(this.configuration).getAllTransactions1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
-    getRawTransactionByHash2(transactionHash, options) {
-        return exports.BscTransactionControllerApiFp(this.configuration).getRawTransactionByHash2(transactionHash, options).then((request) => request(this.axios, this.basePath));
+    getRawTransactionByHash1(transactionHash, options) {
+        return exports.BscTransactionControllerApiFp(this.configuration).getRawTransactionByHash1(transactionHash, options).then((request) => request(this.axios, this.basePath));
     }
-    getTransactionById2(transactionId, options) {
-        return exports.BscTransactionControllerApiFp(this.configuration).getTransactionById2(transactionId, options).then((request) => request(this.axios, this.basePath));
+    getTransactionById1(transactionId, options) {
+        return exports.BscTransactionControllerApiFp(this.configuration).getTransactionById1(transactionId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.BscTransactionControllerApi = BscTransactionControllerApi;
 exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
     return {
-        activateAllowedAddresses2: async (walletId, activateAllowedAddressesRequest, options = {}) => {
+        activateAllowedAddresses1: async (walletId, activateAllowedAddressesRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling activateAllowedAddresses2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling activateAllowedAddresses1.');
             }
             if (activateAllowedAddressesRequest === null || activateAllowedAddressesRequest === undefined) {
-                throw new base_1.RequiredError('activateAllowedAddressesRequest', 'Required parameter activateAllowedAddressesRequest was null or undefined when calling activateAllowedAddresses2.');
+                throw new base_1.RequiredError('activateAllowedAddressesRequest', 'Required parameter activateAllowedAddressesRequest was null or undefined when calling activateAllowedAddresses1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/activate-allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1379,12 +1379,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        activateMasterWallet2: async (walletId, activateMasterWalletRequest, options = {}) => {
+        activateMasterWallet1: async (walletId, activateMasterWalletRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling activateMasterWallet2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling activateMasterWallet1.');
             }
             if (activateMasterWalletRequest === null || activateMasterWalletRequest === undefined) {
-                throw new base_1.RequiredError('activateMasterWalletRequest', 'Required parameter activateMasterWalletRequest was null or undefined when calling activateMasterWallet2.');
+                throw new base_1.RequiredError('activateMasterWalletRequest', 'Required parameter activateMasterWalletRequest was null or undefined when calling activateMasterWallet1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/activate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1408,12 +1408,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createAllowedAddress2: async (walletId, createAllowedAddressRequest, options = {}) => {
+        createAllowedAddress1: async (walletId, createAllowedAddressRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createAllowedAddress2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createAllowedAddress1.');
             }
             if (createAllowedAddressRequest === null || createAllowedAddressRequest === undefined) {
-                throw new base_1.RequiredError('createAllowedAddressRequest', 'Required parameter createAllowedAddressRequest was null or undefined when calling createAllowedAddress2.');
+                throw new base_1.RequiredError('createAllowedAddressRequest', 'Required parameter createAllowedAddressRequest was null or undefined when calling createAllowedAddress1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1437,9 +1437,9 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createMasterWallet3: async (createInactiveMasterWalletRequest, options = {}) => {
+        createMasterWallet2: async (createInactiveMasterWalletRequest, options = {}) => {
             if (createInactiveMasterWalletRequest === null || createInactiveMasterWalletRequest === undefined) {
-                throw new base_1.RequiredError('createInactiveMasterWalletRequest', 'Required parameter createInactiveMasterWalletRequest was null or undefined when calling createMasterWallet3.');
+                throw new base_1.RequiredError('createInactiveMasterWalletRequest', 'Required parameter createInactiveMasterWalletRequest was null or undefined when calling createMasterWallet2.');
             }
             const localVarPath = `/api/v2/bnb/wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1462,12 +1462,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createUserWallet2: async (walletId, createUserWalletRequest, options = {}) => {
+        createUserWallet1: async (walletId, createUserWalletRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createUserWallet2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createUserWallet1.');
             }
             if (createUserWalletRequest === null || createUserWalletRequest === undefined) {
-                throw new base_1.RequiredError('createUserWalletRequest', 'Required parameter createUserWalletRequest was null or undefined when calling createUserWallet2.');
+                throw new base_1.RequiredError('createUserWalletRequest', 'Required parameter createUserWalletRequest was null or undefined when calling createUserWallet1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/user-wallets`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1491,12 +1491,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createWalletWithdrawalPolicy2: async (walletId, createWithdrawalPolicyRequest, options = {}) => {
+        createWalletWithdrawalPolicy1: async (walletId, createWithdrawalPolicyRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createWalletWithdrawalPolicy2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createWalletWithdrawalPolicy1.');
             }
             if (createWithdrawalPolicyRequest === null || createWithdrawalPolicyRequest === undefined) {
-                throw new base_1.RequiredError('createWithdrawalPolicyRequest', 'Required parameter createWithdrawalPolicyRequest was null or undefined when calling createWalletWithdrawalPolicy2.');
+                throw new base_1.RequiredError('createWithdrawalPolicyRequest', 'Required parameter createWithdrawalPolicyRequest was null or undefined when calling createWalletWithdrawalPolicy1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/withdrawal-policies`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1520,15 +1520,15 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        deleteAllowedAddress2: async (walletId, allowedAddressId, deleteAllowedAddressRequest, options = {}) => {
+        deleteAllowedAddress1: async (walletId, allowedAddressId, deleteAllowedAddressRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling deleteAllowedAddress2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling deleteAllowedAddress1.');
             }
             if (allowedAddressId === null || allowedAddressId === undefined) {
-                throw new base_1.RequiredError('allowedAddressId', 'Required parameter allowedAddressId was null or undefined when calling deleteAllowedAddress2.');
+                throw new base_1.RequiredError('allowedAddressId', 'Required parameter allowedAddressId was null or undefined when calling deleteAllowedAddress1.');
             }
             if (deleteAllowedAddressRequest === null || deleteAllowedAddressRequest === undefined) {
-                throw new base_1.RequiredError('deleteAllowedAddressRequest', 'Required parameter deleteAllowedAddressRequest was null or undefined when calling deleteAllowedAddress2.');
+                throw new base_1.RequiredError('deleteAllowedAddressRequest', 'Required parameter deleteAllowedAddressRequest was null or undefined when calling deleteAllowedAddress1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/allowed-addresses/{allowedAddressId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -1582,12 +1582,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAllWalletWithdrawalPolicies2: async (walletId, pageable, options = {}) => {
+        getAllWalletWithdrawalPolicies1: async (walletId, pageable, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllWalletWithdrawalPolicies2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllWalletWithdrawalPolicies1.');
             }
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllWalletWithdrawalPolicies2.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllWalletWithdrawalPolicies1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/withdrawal-policies`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1611,12 +1611,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAllowedAddress2: async (walletId, allowedAddressId, options = {}) => {
+        getAllowedAddress1: async (walletId, allowedAddressId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllowedAddress2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllowedAddress1.');
             }
             if (allowedAddressId === null || allowedAddressId === undefined) {
-                throw new base_1.RequiredError('allowedAddressId', 'Required parameter allowedAddressId was null or undefined when calling getAllowedAddress2.');
+                throw new base_1.RequiredError('allowedAddressId', 'Required parameter allowedAddressId was null or undefined when calling getAllowedAddress1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/allowed-addresses/{allowedAddressId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -1638,15 +1638,15 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAllowedAddressesByCoinId3: async (walletId, coinId, pageable, options = {}) => {
+        getAllowedAddressesByCoinId2: async (walletId, coinId, pageable, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllowedAddressesByCoinId3.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllowedAddressesByCoinId2.');
             }
             if (coinId === null || coinId === undefined) {
-                throw new base_1.RequiredError('coinId', 'Required parameter coinId was null or undefined when calling getAllowedAddressesByCoinId3.');
+                throw new base_1.RequiredError('coinId', 'Required parameter coinId was null or undefined when calling getAllowedAddressesByCoinId2.');
             }
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllowedAddressesByCoinId3.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllowedAddressesByCoinId2.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1735,9 +1735,9 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWallet2: async (walletId, options = {}) => {
+        getMasterWallet1: async (walletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWallet2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWallet1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1758,9 +1758,9 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWalletAccountKey2: async (walletId, options = {}) => {
+        getMasterWalletAccountKey1: async (walletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletAccountKey2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletAccountKey1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/account-key`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1781,9 +1781,9 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWalletBalance2: async (walletId, symbol, options = {}) => {
+        getMasterWalletBalance1: async (walletId, symbol, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletBalance2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletBalance1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/balance`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1807,9 +1807,9 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWalletInitialKey2: async (walletId, options = {}) => {
+        getMasterWalletInitialKey1: async (walletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletInitialKey2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletInitialKey1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/initial-key`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1830,9 +1830,9 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWallets5: async (sort, options = {}) => {
+        getMasterWallets3: async (sort, options = {}) => {
             if (sort === null || sort === undefined) {
-                throw new base_1.RequiredError('sort', 'Required parameter sort was null or undefined when calling getMasterWallets5.');
+                throw new base_1.RequiredError('sort', 'Required parameter sort was null or undefined when calling getMasterWallets3.');
             }
             const localVarPath = `/api/v2/bnb/wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -1855,12 +1855,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWallet2: async (walletId, userWalletId, options = {}) => {
+        getUserWallet1: async (walletId, userWalletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWallet2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWallet1.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWallet2.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWallet1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/user-wallets/{userWalletId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -1882,12 +1882,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWalletBalance2: async (walletId, userWalletId, symbol, options = {}) => {
+        getUserWalletBalance1: async (walletId, userWalletId, symbol, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWalletBalance2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWalletBalance1.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWalletBalance2.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWalletBalance1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/user-wallets/{userWalletId}/balance`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -1912,12 +1912,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWallets5: async (walletId, pageable, options = {}) => {
+        getUserWallets3: async (walletId, pageable, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWallets5.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWallets3.');
             }
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getUserWallets5.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getUserWallets3.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/user-wallets`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1941,12 +1941,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        inactivateAllowedAddresses2: async (walletId, inactivateAllowedAddressesRequest, options = {}) => {
+        inactivateAllowedAddresses1: async (walletId, inactivateAllowedAddressesRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling inactivateAllowedAddresses2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling inactivateAllowedAddresses1.');
             }
             if (inactivateAllowedAddressesRequest === null || inactivateAllowedAddressesRequest === undefined) {
-                throw new base_1.RequiredError('inactivateAllowedAddressesRequest', 'Required parameter inactivateAllowedAddressesRequest was null or undefined when calling inactivateAllowedAddresses2.');
+                throw new base_1.RequiredError('inactivateAllowedAddressesRequest', 'Required parameter inactivateAllowedAddressesRequest was null or undefined when calling inactivateAllowedAddresses1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/inactivate-allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1970,12 +1970,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchAccountKey2: async (walletId, updateAccountKeyRequest, options = {}) => {
+        patchAccountKey1: async (walletId, updateAccountKeyRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchAccountKey2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchAccountKey1.');
             }
             if (updateAccountKeyRequest === null || updateAccountKeyRequest === undefined) {
-                throw new base_1.RequiredError('updateAccountKeyRequest', 'Required parameter updateAccountKeyRequest was null or undefined when calling patchAccountKey2.');
+                throw new base_1.RequiredError('updateAccountKeyRequest', 'Required parameter updateAccountKeyRequest was null or undefined when calling patchAccountKey1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/account-key`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -1999,12 +1999,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchMasterWalletName2: async (walletId, changeWalletNameRequest, options = {}) => {
+        patchMasterWalletName1: async (walletId, changeWalletNameRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchMasterWalletName2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchMasterWalletName1.');
             }
             if (changeWalletNameRequest === null || changeWalletNameRequest === undefined) {
-                throw new base_1.RequiredError('changeWalletNameRequest', 'Required parameter changeWalletNameRequest was null or undefined when calling patchMasterWalletName2.');
+                throw new base_1.RequiredError('changeWalletNameRequest', 'Required parameter changeWalletNameRequest was null or undefined when calling patchMasterWalletName1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/name`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -2028,15 +2028,15 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchUserWalletName2: async (walletId, userWalletId, changeWalletNameRequest, options = {}) => {
+        patchUserWalletName1: async (walletId, userWalletId, changeWalletNameRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchUserWalletName2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchUserWalletName1.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling patchUserWalletName2.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling patchUserWalletName1.');
             }
             if (changeWalletNameRequest === null || changeWalletNameRequest === undefined) {
-                throw new base_1.RequiredError('changeWalletNameRequest', 'Required parameter changeWalletNameRequest was null or undefined when calling patchUserWalletName2.');
+                throw new base_1.RequiredError('changeWalletNameRequest', 'Required parameter changeWalletNameRequest was null or undefined when calling patchUserWalletName1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/user-wallets/{userWalletId}/name`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -2061,15 +2061,15 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchWalletWithdrawalPolicy2: async (walletId, policyId, patchWithdrawalPolicyRequest, options = {}) => {
+        patchWalletWithdrawalPolicy1: async (walletId, policyId, patchWithdrawalPolicyRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchWalletWithdrawalPolicy2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchWalletWithdrawalPolicy1.');
             }
             if (policyId === null || policyId === undefined) {
-                throw new base_1.RequiredError('policyId', 'Required parameter policyId was null or undefined when calling patchWalletWithdrawalPolicy2.');
+                throw new base_1.RequiredError('policyId', 'Required parameter policyId was null or undefined when calling patchWalletWithdrawalPolicy1.');
             }
             if (patchWithdrawalPolicyRequest === null || patchWithdrawalPolicyRequest === undefined) {
-                throw new base_1.RequiredError('patchWithdrawalPolicyRequest', 'Required parameter patchWithdrawalPolicyRequest was null or undefined when calling patchWalletWithdrawalPolicy2.');
+                throw new base_1.RequiredError('patchWithdrawalPolicyRequest', 'Required parameter patchWithdrawalPolicyRequest was null or undefined when calling patchWalletWithdrawalPolicy1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/withdrawal-policies/{policyId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -2094,12 +2094,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        recreateMasterWallet2: async (walletId, recreateWalletRequest, options = {}) => {
+        recreateMasterWallet1: async (walletId, recreateWalletRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling recreateMasterWallet2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling recreateMasterWallet1.');
             }
             if (recreateWalletRequest === null || recreateWalletRequest === undefined) {
-                throw new base_1.RequiredError('recreateWalletRequest', 'Required parameter recreateWalletRequest was null or undefined when calling recreateMasterWallet2.');
+                throw new base_1.RequiredError('recreateWalletRequest', 'Required parameter recreateWalletRequest was null or undefined when calling recreateMasterWallet1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/recreate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -2123,15 +2123,15 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        recreateUserWallet2: async (walletId, userWalletId, recreateWalletRequest, options = {}) => {
+        recreateUserWallet1: async (walletId, userWalletId, recreateWalletRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling recreateUserWallet2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling recreateUserWallet1.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling recreateUserWallet2.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling recreateUserWallet1.');
             }
             if (recreateWalletRequest === null || recreateWalletRequest === undefined) {
-                throw new base_1.RequiredError('recreateWalletRequest', 'Required parameter recreateWalletRequest was null or undefined when calling recreateUserWallet2.');
+                throw new base_1.RequiredError('recreateWalletRequest', 'Required parameter recreateWalletRequest was null or undefined when calling recreateUserWallet1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/user-wallets/{userWalletId}/recreate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -2181,9 +2181,9 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        resendTransaction2: async (resendTransactionRequest, options = {}) => {
+        resendTransaction1: async (resendTransactionRequest, options = {}) => {
             if (resendTransactionRequest === null || resendTransactionRequest === undefined) {
-                throw new base_1.RequiredError('resendTransactionRequest', 'Required parameter resendTransactionRequest was null or undefined when calling resendTransaction2.');
+                throw new base_1.RequiredError('resendTransactionRequest', 'Required parameter resendTransactionRequest was null or undefined when calling resendTransaction1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/transactions/resend`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2206,9 +2206,9 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        sendBatchTransaction2: async (createBatchTransactionRequest, options = {}) => {
+        sendBatchTransaction1: async (createBatchTransactionRequest, options = {}) => {
             if (createBatchTransactionRequest === null || createBatchTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createBatchTransactionRequest', 'Required parameter createBatchTransactionRequest was null or undefined when calling sendBatchTransaction2.');
+                throw new base_1.RequiredError('createBatchTransactionRequest', 'Required parameter createBatchTransactionRequest was null or undefined when calling sendBatchTransaction1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/batch-transactions`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2231,9 +2231,9 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        sendTransaction2: async (createMultiSigTransactionRequest, options = {}) => {
+        sendTransaction1: async (createMultiSigTransactionRequest, options = {}) => {
             if (createMultiSigTransactionRequest === null || createMultiSigTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createMultiSigTransactionRequest', 'Required parameter createMultiSigTransactionRequest was null or undefined when calling sendTransaction2.');
+                throw new base_1.RequiredError('createMultiSigTransactionRequest', 'Required parameter createMultiSigTransactionRequest was null or undefined when calling sendTransaction1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/transactions`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2256,12 +2256,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        validateIsAllowedAddress2: async (walletId, validateIsAllowedAddressRequest, options = {}) => {
+        validateIsAllowedAddress1: async (walletId, validateIsAllowedAddressRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling validateIsAllowedAddress2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling validateIsAllowedAddress1.');
             }
             if (validateIsAllowedAddressRequest === null || validateIsAllowedAddressRequest === undefined) {
-                throw new base_1.RequiredError('validateIsAllowedAddressRequest', 'Required parameter validateIsAllowedAddressRequest was null or undefined when calling validateIsAllowedAddress2.');
+                throw new base_1.RequiredError('validateIsAllowedAddressRequest', 'Required parameter validateIsAllowedAddressRequest was null or undefined when calling validateIsAllowedAddress1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/allowed-addresses/validate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -2289,50 +2289,50 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.BscWalletControllerApiFp = function (configuration) {
     return {
-        async activateAllowedAddresses2(walletId, activateAllowedAddressesRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).activateAllowedAddresses2(walletId, activateAllowedAddressesRequest, options);
+        async activateAllowedAddresses1(walletId, activateAllowedAddressesRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).activateAllowedAddresses1(walletId, activateAllowedAddressesRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async activateMasterWallet2(walletId, activateMasterWalletRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).activateMasterWallet2(walletId, activateMasterWalletRequest, options);
+        async activateMasterWallet1(walletId, activateMasterWalletRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).activateMasterWallet1(walletId, activateMasterWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createAllowedAddress2(walletId, createAllowedAddressRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).createAllowedAddress2(walletId, createAllowedAddressRequest, options);
+        async createAllowedAddress1(walletId, createAllowedAddressRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).createAllowedAddress1(walletId, createAllowedAddressRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createMasterWallet3(createInactiveMasterWalletRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).createMasterWallet3(createInactiveMasterWalletRequest, options);
+        async createMasterWallet2(createInactiveMasterWalletRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).createMasterWallet2(createInactiveMasterWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createUserWallet2(walletId, createUserWalletRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).createUserWallet2(walletId, createUserWalletRequest, options);
+        async createUserWallet1(walletId, createUserWalletRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).createUserWallet1(walletId, createUserWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createWalletWithdrawalPolicy2(walletId, createWithdrawalPolicyRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).createWalletWithdrawalPolicy2(walletId, createWithdrawalPolicyRequest, options);
+        async createWalletWithdrawalPolicy1(walletId, createWithdrawalPolicyRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).createWalletWithdrawalPolicy1(walletId, createWithdrawalPolicyRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options);
+        async deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -2345,22 +2345,22 @@ exports.BscWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAllWalletWithdrawalPolicies2(walletId, pageable, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getAllWalletWithdrawalPolicies2(walletId, pageable, options);
+        async getAllWalletWithdrawalPolicies1(walletId, pageable, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getAllWalletWithdrawalPolicies1(walletId, pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAllowedAddress2(walletId, allowedAddressId, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getAllowedAddress2(walletId, allowedAddressId, options);
+        async getAllowedAddress1(walletId, allowedAddressId, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getAllowedAddress1(walletId, allowedAddressId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAllowedAddressesByCoinId3(walletId, coinId, pageable, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getAllowedAddressesByCoinId3(walletId, coinId, pageable, options);
+        async getAllowedAddressesByCoinId2(walletId, coinId, pageable, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getAllowedAddressesByCoinId2(walletId, coinId, pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -2380,106 +2380,106 @@ exports.BscWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWallet2(walletId, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getMasterWallet2(walletId, options);
+        async getMasterWallet1(walletId, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getMasterWallet1(walletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWalletAccountKey2(walletId, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getMasterWalletAccountKey2(walletId, options);
+        async getMasterWalletAccountKey1(walletId, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getMasterWalletAccountKey1(walletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWalletBalance2(walletId, symbol, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getMasterWalletBalance2(walletId, symbol, options);
+        async getMasterWalletBalance1(walletId, symbol, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getMasterWalletBalance1(walletId, symbol, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWalletInitialKey2(walletId, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getMasterWalletInitialKey2(walletId, options);
+        async getMasterWalletInitialKey1(walletId, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getMasterWalletInitialKey1(walletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWallets5(sort, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getMasterWallets5(sort, options);
+        async getMasterWallets3(sort, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getMasterWallets3(sort, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWallet2(walletId, userWalletId, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getUserWallet2(walletId, userWalletId, options);
+        async getUserWallet1(walletId, userWalletId, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getUserWallet1(walletId, userWalletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWalletBalance2(walletId, userWalletId, symbol, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getUserWalletBalance2(walletId, userWalletId, symbol, options);
+        async getUserWalletBalance1(walletId, userWalletId, symbol, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getUserWalletBalance1(walletId, userWalletId, symbol, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWallets5(walletId, pageable, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getUserWallets5(walletId, pageable, options);
+        async getUserWallets3(walletId, pageable, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).getUserWallets3(walletId, pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async inactivateAllowedAddresses2(walletId, inactivateAllowedAddressesRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).inactivateAllowedAddresses2(walletId, inactivateAllowedAddressesRequest, options);
+        async inactivateAllowedAddresses1(walletId, inactivateAllowedAddressesRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).inactivateAllowedAddresses1(walletId, inactivateAllowedAddressesRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchAccountKey2(walletId, updateAccountKeyRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).patchAccountKey2(walletId, updateAccountKeyRequest, options);
+        async patchAccountKey1(walletId, updateAccountKeyRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).patchAccountKey1(walletId, updateAccountKeyRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchMasterWalletName2(walletId, changeWalletNameRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).patchMasterWalletName2(walletId, changeWalletNameRequest, options);
+        async patchMasterWalletName1(walletId, changeWalletNameRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).patchMasterWalletName1(walletId, changeWalletNameRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchUserWalletName2(walletId, userWalletId, changeWalletNameRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).patchUserWalletName2(walletId, userWalletId, changeWalletNameRequest, options);
+        async patchUserWalletName1(walletId, userWalletId, changeWalletNameRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).patchUserWalletName1(walletId, userWalletId, changeWalletNameRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchWalletWithdrawalPolicy2(walletId, policyId, patchWithdrawalPolicyRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).patchWalletWithdrawalPolicy2(walletId, policyId, patchWithdrawalPolicyRequest, options);
+        async patchWalletWithdrawalPolicy1(walletId, policyId, patchWithdrawalPolicyRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).patchWalletWithdrawalPolicy1(walletId, policyId, patchWithdrawalPolicyRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async recreateMasterWallet2(walletId, recreateWalletRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).recreateMasterWallet2(walletId, recreateWalletRequest, options);
+        async recreateMasterWallet1(walletId, recreateWalletRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).recreateMasterWallet1(walletId, recreateWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async recreateUserWallet2(walletId, userWalletId, recreateWalletRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).recreateUserWallet2(walletId, userWalletId, recreateWalletRequest, options);
+        async recreateUserWallet1(walletId, userWalletId, recreateWalletRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).recreateUserWallet1(walletId, userWalletId, recreateWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -2492,29 +2492,29 @@ exports.BscWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async resendTransaction2(resendTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).resendTransaction2(resendTransactionRequest, options);
+        async resendTransaction1(resendTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).resendTransaction1(resendTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async sendBatchTransaction2(createBatchTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).sendBatchTransaction2(createBatchTransactionRequest, options);
+        async sendBatchTransaction1(createBatchTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).sendBatchTransaction1(createBatchTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async sendTransaction2(createMultiSigTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).sendTransaction2(createMultiSigTransactionRequest, options);
+        async sendTransaction1(createMultiSigTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).sendTransaction1(createMultiSigTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async validateIsAllowedAddress2(walletId, validateIsAllowedAddressRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).validateIsAllowedAddress2(walletId, validateIsAllowedAddressRequest, options);
+        async validateIsAllowedAddress1(walletId, validateIsAllowedAddressRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).validateIsAllowedAddress1(walletId, validateIsAllowedAddressRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -2524,38 +2524,38 @@ exports.BscWalletControllerApiFp = function (configuration) {
 };
 exports.BscWalletControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        activateAllowedAddresses2(walletId, activateAllowedAddressesRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).activateAllowedAddresses2(walletId, activateAllowedAddressesRequest, options).then((request) => request(axios, basePath));
+        activateAllowedAddresses1(walletId, activateAllowedAddressesRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).activateAllowedAddresses1(walletId, activateAllowedAddressesRequest, options).then((request) => request(axios, basePath));
         },
-        activateMasterWallet2(walletId, activateMasterWalletRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).activateMasterWallet2(walletId, activateMasterWalletRequest, options).then((request) => request(axios, basePath));
+        activateMasterWallet1(walletId, activateMasterWalletRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).activateMasterWallet1(walletId, activateMasterWalletRequest, options).then((request) => request(axios, basePath));
         },
-        createAllowedAddress2(walletId, createAllowedAddressRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).createAllowedAddress2(walletId, createAllowedAddressRequest, options).then((request) => request(axios, basePath));
+        createAllowedAddress1(walletId, createAllowedAddressRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).createAllowedAddress1(walletId, createAllowedAddressRequest, options).then((request) => request(axios, basePath));
         },
-        createMasterWallet3(createInactiveMasterWalletRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).createMasterWallet3(createInactiveMasterWalletRequest, options).then((request) => request(axios, basePath));
+        createMasterWallet2(createInactiveMasterWalletRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).createMasterWallet2(createInactiveMasterWalletRequest, options).then((request) => request(axios, basePath));
         },
-        createUserWallet2(walletId, createUserWalletRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).createUserWallet2(walletId, createUserWalletRequest, options).then((request) => request(axios, basePath));
+        createUserWallet1(walletId, createUserWalletRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).createUserWallet1(walletId, createUserWalletRequest, options).then((request) => request(axios, basePath));
         },
-        createWalletWithdrawalPolicy2(walletId, createWithdrawalPolicyRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).createWalletWithdrawalPolicy2(walletId, createWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
+        createWalletWithdrawalPolicy1(walletId, createWithdrawalPolicyRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).createWalletWithdrawalPolicy1(walletId, createWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
         },
-        deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(axios, basePath));
+        deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(axios, basePath));
         },
         flush1(walletId, flushRequest, options) {
             return exports.BscWalletControllerApiFp(configuration).flush1(walletId, flushRequest, options).then((request) => request(axios, basePath));
         },
-        getAllWalletWithdrawalPolicies2(walletId, pageable, options) {
-            return exports.BscWalletControllerApiFp(configuration).getAllWalletWithdrawalPolicies2(walletId, pageable, options).then((request) => request(axios, basePath));
+        getAllWalletWithdrawalPolicies1(walletId, pageable, options) {
+            return exports.BscWalletControllerApiFp(configuration).getAllWalletWithdrawalPolicies1(walletId, pageable, options).then((request) => request(axios, basePath));
         },
-        getAllowedAddress2(walletId, allowedAddressId, options) {
-            return exports.BscWalletControllerApiFp(configuration).getAllowedAddress2(walletId, allowedAddressId, options).then((request) => request(axios, basePath));
+        getAllowedAddress1(walletId, allowedAddressId, options) {
+            return exports.BscWalletControllerApiFp(configuration).getAllowedAddress1(walletId, allowedAddressId, options).then((request) => request(axios, basePath));
         },
-        getAllowedAddressesByCoinId3(walletId, coinId, pageable, options) {
-            return exports.BscWalletControllerApiFp(configuration).getAllowedAddressesByCoinId3(walletId, coinId, pageable, options).then((request) => request(axios, basePath));
+        getAllowedAddressesByCoinId2(walletId, coinId, pageable, options) {
+            return exports.BscWalletControllerApiFp(configuration).getAllowedAddressesByCoinId2(walletId, coinId, pageable, options).then((request) => request(axios, basePath));
         },
         getFlushTransaction1(walletId, transactionId, options) {
             return exports.BscWalletControllerApiFp(configuration).getFlushTransaction1(walletId, transactionId, options).then((request) => request(axios, basePath));
@@ -2563,101 +2563,101 @@ exports.BscWalletControllerApiFactory = function (configuration, basePath, axios
         getFlushTransactions1(walletId, pageable, searchCondition, options) {
             return exports.BscWalletControllerApiFp(configuration).getFlushTransactions1(walletId, pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
-        getMasterWallet2(walletId, options) {
-            return exports.BscWalletControllerApiFp(configuration).getMasterWallet2(walletId, options).then((request) => request(axios, basePath));
+        getMasterWallet1(walletId, options) {
+            return exports.BscWalletControllerApiFp(configuration).getMasterWallet1(walletId, options).then((request) => request(axios, basePath));
         },
-        getMasterWalletAccountKey2(walletId, options) {
-            return exports.BscWalletControllerApiFp(configuration).getMasterWalletAccountKey2(walletId, options).then((request) => request(axios, basePath));
+        getMasterWalletAccountKey1(walletId, options) {
+            return exports.BscWalletControllerApiFp(configuration).getMasterWalletAccountKey1(walletId, options).then((request) => request(axios, basePath));
         },
-        getMasterWalletBalance2(walletId, symbol, options) {
-            return exports.BscWalletControllerApiFp(configuration).getMasterWalletBalance2(walletId, symbol, options).then((request) => request(axios, basePath));
+        getMasterWalletBalance1(walletId, symbol, options) {
+            return exports.BscWalletControllerApiFp(configuration).getMasterWalletBalance1(walletId, symbol, options).then((request) => request(axios, basePath));
         },
-        getMasterWalletInitialKey2(walletId, options) {
-            return exports.BscWalletControllerApiFp(configuration).getMasterWalletInitialKey2(walletId, options).then((request) => request(axios, basePath));
+        getMasterWalletInitialKey1(walletId, options) {
+            return exports.BscWalletControllerApiFp(configuration).getMasterWalletInitialKey1(walletId, options).then((request) => request(axios, basePath));
         },
-        getMasterWallets5(sort, options) {
-            return exports.BscWalletControllerApiFp(configuration).getMasterWallets5(sort, options).then((request) => request(axios, basePath));
+        getMasterWallets3(sort, options) {
+            return exports.BscWalletControllerApiFp(configuration).getMasterWallets3(sort, options).then((request) => request(axios, basePath));
         },
-        getUserWallet2(walletId, userWalletId, options) {
-            return exports.BscWalletControllerApiFp(configuration).getUserWallet2(walletId, userWalletId, options).then((request) => request(axios, basePath));
+        getUserWallet1(walletId, userWalletId, options) {
+            return exports.BscWalletControllerApiFp(configuration).getUserWallet1(walletId, userWalletId, options).then((request) => request(axios, basePath));
         },
-        getUserWalletBalance2(walletId, userWalletId, symbol, options) {
-            return exports.BscWalletControllerApiFp(configuration).getUserWalletBalance2(walletId, userWalletId, symbol, options).then((request) => request(axios, basePath));
+        getUserWalletBalance1(walletId, userWalletId, symbol, options) {
+            return exports.BscWalletControllerApiFp(configuration).getUserWalletBalance1(walletId, userWalletId, symbol, options).then((request) => request(axios, basePath));
         },
-        getUserWallets5(walletId, pageable, options) {
-            return exports.BscWalletControllerApiFp(configuration).getUserWallets5(walletId, pageable, options).then((request) => request(axios, basePath));
+        getUserWallets3(walletId, pageable, options) {
+            return exports.BscWalletControllerApiFp(configuration).getUserWallets3(walletId, pageable, options).then((request) => request(axios, basePath));
         },
-        inactivateAllowedAddresses2(walletId, inactivateAllowedAddressesRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).inactivateAllowedAddresses2(walletId, inactivateAllowedAddressesRequest, options).then((request) => request(axios, basePath));
+        inactivateAllowedAddresses1(walletId, inactivateAllowedAddressesRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).inactivateAllowedAddresses1(walletId, inactivateAllowedAddressesRequest, options).then((request) => request(axios, basePath));
         },
-        patchAccountKey2(walletId, updateAccountKeyRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).patchAccountKey2(walletId, updateAccountKeyRequest, options).then((request) => request(axios, basePath));
+        patchAccountKey1(walletId, updateAccountKeyRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).patchAccountKey1(walletId, updateAccountKeyRequest, options).then((request) => request(axios, basePath));
         },
-        patchMasterWalletName2(walletId, changeWalletNameRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).patchMasterWalletName2(walletId, changeWalletNameRequest, options).then((request) => request(axios, basePath));
+        patchMasterWalletName1(walletId, changeWalletNameRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).patchMasterWalletName1(walletId, changeWalletNameRequest, options).then((request) => request(axios, basePath));
         },
-        patchUserWalletName2(walletId, userWalletId, changeWalletNameRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).patchUserWalletName2(walletId, userWalletId, changeWalletNameRequest, options).then((request) => request(axios, basePath));
+        patchUserWalletName1(walletId, userWalletId, changeWalletNameRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).patchUserWalletName1(walletId, userWalletId, changeWalletNameRequest, options).then((request) => request(axios, basePath));
         },
-        patchWalletWithdrawalPolicy2(walletId, policyId, patchWithdrawalPolicyRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).patchWalletWithdrawalPolicy2(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
+        patchWalletWithdrawalPolicy1(walletId, policyId, patchWithdrawalPolicyRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).patchWalletWithdrawalPolicy1(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
         },
-        recreateMasterWallet2(walletId, recreateWalletRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).recreateMasterWallet2(walletId, recreateWalletRequest, options).then((request) => request(axios, basePath));
+        recreateMasterWallet1(walletId, recreateWalletRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).recreateMasterWallet1(walletId, recreateWalletRequest, options).then((request) => request(axios, basePath));
         },
-        recreateUserWallet2(walletId, userWalletId, recreateWalletRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).recreateUserWallet2(walletId, userWalletId, recreateWalletRequest, options).then((request) => request(axios, basePath));
+        recreateUserWallet1(walletId, userWalletId, recreateWalletRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).recreateUserWallet1(walletId, userWalletId, recreateWalletRequest, options).then((request) => request(axios, basePath));
         },
         replaceTransaction1(replaceTransactionRequest, options) {
             return exports.BscWalletControllerApiFp(configuration).replaceTransaction1(replaceTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        resendTransaction2(resendTransactionRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).resendTransaction2(resendTransactionRequest, options).then((request) => request(axios, basePath));
+        resendTransaction1(resendTransactionRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).resendTransaction1(resendTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        sendBatchTransaction2(createBatchTransactionRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).sendBatchTransaction2(createBatchTransactionRequest, options).then((request) => request(axios, basePath));
+        sendBatchTransaction1(createBatchTransactionRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).sendBatchTransaction1(createBatchTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        sendTransaction2(createMultiSigTransactionRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).sendTransaction2(createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
+        sendTransaction1(createMultiSigTransactionRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).sendTransaction1(createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        validateIsAllowedAddress2(walletId, validateIsAllowedAddressRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).validateIsAllowedAddress2(walletId, validateIsAllowedAddressRequest, options).then((request) => request(axios, basePath));
+        validateIsAllowedAddress1(walletId, validateIsAllowedAddressRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).validateIsAllowedAddress1(walletId, validateIsAllowedAddressRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 class BscWalletControllerApi extends base_1.BaseAPI {
-    activateAllowedAddresses2(walletId, activateAllowedAddressesRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).activateAllowedAddresses2(walletId, activateAllowedAddressesRequest, options).then((request) => request(this.axios, this.basePath));
+    activateAllowedAddresses1(walletId, activateAllowedAddressesRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).activateAllowedAddresses1(walletId, activateAllowedAddressesRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    activateMasterWallet2(walletId, activateMasterWalletRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).activateMasterWallet2(walletId, activateMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    activateMasterWallet1(walletId, activateMasterWalletRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).activateMasterWallet1(walletId, activateMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createAllowedAddress2(walletId, createAllowedAddressRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).createAllowedAddress2(walletId, createAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
+    createAllowedAddress1(walletId, createAllowedAddressRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).createAllowedAddress1(walletId, createAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createMasterWallet3(createInactiveMasterWalletRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).createMasterWallet3(createInactiveMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    createMasterWallet2(createInactiveMasterWalletRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).createMasterWallet2(createInactiveMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createUserWallet2(walletId, createUserWalletRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).createUserWallet2(walletId, createUserWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    createUserWallet1(walletId, createUserWalletRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).createUserWallet1(walletId, createUserWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createWalletWithdrawalPolicy2(walletId, createWithdrawalPolicyRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).createWalletWithdrawalPolicy2(walletId, createWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
+    createWalletWithdrawalPolicy1(walletId, createWithdrawalPolicyRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).createWalletWithdrawalPolicy1(walletId, createWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
+    deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
     }
     flush1(walletId, flushRequest, options) {
         return exports.BscWalletControllerApiFp(this.configuration).flush1(walletId, flushRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    getAllWalletWithdrawalPolicies2(walletId, pageable, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).getAllWalletWithdrawalPolicies2(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
+    getAllWalletWithdrawalPolicies1(walletId, pageable, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).getAllWalletWithdrawalPolicies1(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    getAllowedAddress2(walletId, allowedAddressId, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).getAllowedAddress2(walletId, allowedAddressId, options).then((request) => request(this.axios, this.basePath));
+    getAllowedAddress1(walletId, allowedAddressId, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).getAllowedAddress1(walletId, allowedAddressId, options).then((request) => request(this.axios, this.basePath));
     }
-    getAllowedAddressesByCoinId3(walletId, coinId, pageable, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).getAllowedAddressesByCoinId3(walletId, coinId, pageable, options).then((request) => request(this.axios, this.basePath));
+    getAllowedAddressesByCoinId2(walletId, coinId, pageable, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).getAllowedAddressesByCoinId2(walletId, coinId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
     getFlushTransaction1(walletId, transactionId, options) {
         return exports.BscWalletControllerApiFp(this.configuration).getFlushTransaction1(walletId, transactionId, options).then((request) => request(this.axios, this.basePath));
@@ -2665,76 +2665,76 @@ class BscWalletControllerApi extends base_1.BaseAPI {
     getFlushTransactions1(walletId, pageable, searchCondition, options) {
         return exports.BscWalletControllerApiFp(this.configuration).getFlushTransactions1(walletId, pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWallet2(walletId, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).getMasterWallet2(walletId, options).then((request) => request(this.axios, this.basePath));
+    getMasterWallet1(walletId, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).getMasterWallet1(walletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWalletAccountKey2(walletId, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).getMasterWalletAccountKey2(walletId, options).then((request) => request(this.axios, this.basePath));
+    getMasterWalletAccountKey1(walletId, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).getMasterWalletAccountKey1(walletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWalletBalance2(walletId, symbol, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).getMasterWalletBalance2(walletId, symbol, options).then((request) => request(this.axios, this.basePath));
+    getMasterWalletBalance1(walletId, symbol, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).getMasterWalletBalance1(walletId, symbol, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWalletInitialKey2(walletId, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).getMasterWalletInitialKey2(walletId, options).then((request) => request(this.axios, this.basePath));
+    getMasterWalletInitialKey1(walletId, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).getMasterWalletInitialKey1(walletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWallets5(sort, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).getMasterWallets5(sort, options).then((request) => request(this.axios, this.basePath));
+    getMasterWallets3(sort, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).getMasterWallets3(sort, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWallet2(walletId, userWalletId, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).getUserWallet2(walletId, userWalletId, options).then((request) => request(this.axios, this.basePath));
+    getUserWallet1(walletId, userWalletId, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).getUserWallet1(walletId, userWalletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWalletBalance2(walletId, userWalletId, symbol, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).getUserWalletBalance2(walletId, userWalletId, symbol, options).then((request) => request(this.axios, this.basePath));
+    getUserWalletBalance1(walletId, userWalletId, symbol, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).getUserWalletBalance1(walletId, userWalletId, symbol, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWallets5(walletId, pageable, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).getUserWallets5(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
+    getUserWallets3(walletId, pageable, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).getUserWallets3(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    inactivateAllowedAddresses2(walletId, inactivateAllowedAddressesRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).inactivateAllowedAddresses2(walletId, inactivateAllowedAddressesRequest, options).then((request) => request(this.axios, this.basePath));
+    inactivateAllowedAddresses1(walletId, inactivateAllowedAddressesRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).inactivateAllowedAddresses1(walletId, inactivateAllowedAddressesRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    patchAccountKey2(walletId, updateAccountKeyRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).patchAccountKey2(walletId, updateAccountKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    patchAccountKey1(walletId, updateAccountKeyRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).patchAccountKey1(walletId, updateAccountKeyRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    patchMasterWalletName2(walletId, changeWalletNameRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).patchMasterWalletName2(walletId, changeWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
+    patchMasterWalletName1(walletId, changeWalletNameRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).patchMasterWalletName1(walletId, changeWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    patchUserWalletName2(walletId, userWalletId, changeWalletNameRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).patchUserWalletName2(walletId, userWalletId, changeWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
+    patchUserWalletName1(walletId, userWalletId, changeWalletNameRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).patchUserWalletName1(walletId, userWalletId, changeWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    patchWalletWithdrawalPolicy2(walletId, policyId, patchWithdrawalPolicyRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicy2(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
+    patchWalletWithdrawalPolicy1(walletId, policyId, patchWithdrawalPolicyRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicy1(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    recreateMasterWallet2(walletId, recreateWalletRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).recreateMasterWallet2(walletId, recreateWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    recreateMasterWallet1(walletId, recreateWalletRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).recreateMasterWallet1(walletId, recreateWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    recreateUserWallet2(walletId, userWalletId, recreateWalletRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).recreateUserWallet2(walletId, userWalletId, recreateWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    recreateUserWallet1(walletId, userWalletId, recreateWalletRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).recreateUserWallet1(walletId, userWalletId, recreateWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
     replaceTransaction1(replaceTransactionRequest, options) {
         return exports.BscWalletControllerApiFp(this.configuration).replaceTransaction1(replaceTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    resendTransaction2(resendTransactionRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).resendTransaction2(resendTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    resendTransaction1(resendTransactionRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).resendTransaction1(resendTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    sendBatchTransaction2(createBatchTransactionRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).sendBatchTransaction2(createBatchTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    sendBatchTransaction1(createBatchTransactionRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).sendBatchTransaction1(createBatchTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    sendTransaction2(createMultiSigTransactionRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).sendTransaction2(createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    sendTransaction1(createMultiSigTransactionRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).sendTransaction1(createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    validateIsAllowedAddress2(walletId, validateIsAllowedAddressRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).validateIsAllowedAddress2(walletId, validateIsAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
+    validateIsAllowedAddress1(walletId, validateIsAllowedAddressRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).validateIsAllowedAddress1(walletId, validateIsAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.BscWalletControllerApi = BscWalletControllerApi;
 exports.BscWithdrawalApprovalControllerApiAxiosParamCreator = function (configuration) {
     return {
-        approveWithdrawalApproval2: async (withdrawalApprovalId, approveWithdrawalApprovalRequest, options = {}) => {
+        approveWithdrawalApproval1: async (withdrawalApprovalId, approveWithdrawalApprovalRequest, options = {}) => {
             if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
-                throw new base_1.RequiredError('withdrawalApprovalId', 'Required parameter withdrawalApprovalId was null or undefined when calling approveWithdrawalApproval2.');
+                throw new base_1.RequiredError('withdrawalApprovalId', 'Required parameter withdrawalApprovalId was null or undefined when calling approveWithdrawalApproval1.');
             }
             if (approveWithdrawalApprovalRequest === null || approveWithdrawalApprovalRequest === undefined) {
-                throw new base_1.RequiredError('approveWithdrawalApprovalRequest', 'Required parameter approveWithdrawalApprovalRequest was null or undefined when calling approveWithdrawalApproval2.');
+                throw new base_1.RequiredError('approveWithdrawalApprovalRequest', 'Required parameter approveWithdrawalApprovalRequest was null or undefined when calling approveWithdrawalApproval1.');
             }
             const localVarPath = `/api/v2/bnb/withdrawal-approvals/{withdrawalApprovalId}/approve`
                 .replace(`{${"withdrawalApprovalId"}}`, encodeURIComponent(String(withdrawalApprovalId)));
@@ -2758,12 +2758,12 @@ exports.BscWithdrawalApprovalControllerApiAxiosParamCreator = function (configur
                 options: localVarRequestOptions,
             };
         },
-        rejectWithdrawalApproval2: async (withdrawalApprovalId, rejectWithdrawalApprovalRequest, options = {}) => {
+        rejectWithdrawalApproval1: async (withdrawalApprovalId, rejectWithdrawalApprovalRequest, options = {}) => {
             if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
-                throw new base_1.RequiredError('withdrawalApprovalId', 'Required parameter withdrawalApprovalId was null or undefined when calling rejectWithdrawalApproval2.');
+                throw new base_1.RequiredError('withdrawalApprovalId', 'Required parameter withdrawalApprovalId was null or undefined when calling rejectWithdrawalApproval1.');
             }
             if (rejectWithdrawalApprovalRequest === null || rejectWithdrawalApprovalRequest === undefined) {
-                throw new base_1.RequiredError('rejectWithdrawalApprovalRequest', 'Required parameter rejectWithdrawalApprovalRequest was null or undefined when calling rejectWithdrawalApproval2.');
+                throw new base_1.RequiredError('rejectWithdrawalApprovalRequest', 'Required parameter rejectWithdrawalApprovalRequest was null or undefined when calling rejectWithdrawalApproval1.');
             }
             const localVarPath = `/api/v2/bnb/withdrawal-approvals/{withdrawalApprovalId}/reject`
                 .replace(`{${"withdrawalApprovalId"}}`, encodeURIComponent(String(withdrawalApprovalId)));
@@ -2791,15 +2791,15 @@ exports.BscWithdrawalApprovalControllerApiAxiosParamCreator = function (configur
 };
 exports.BscWithdrawalApprovalControllerApiFp = function (configuration) {
     return {
-        async approveWithdrawalApproval2(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
-            const localVarAxiosArgs = await exports.BscWithdrawalApprovalControllerApiAxiosParamCreator(configuration).approveWithdrawalApproval2(withdrawalApprovalId, approveWithdrawalApprovalRequest, options);
+        async approveWithdrawalApproval1(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
+            const localVarAxiosArgs = await exports.BscWithdrawalApprovalControllerApiAxiosParamCreator(configuration).approveWithdrawalApproval1(withdrawalApprovalId, approveWithdrawalApprovalRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async rejectWithdrawalApproval2(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
-            const localVarAxiosArgs = await exports.BscWithdrawalApprovalControllerApiAxiosParamCreator(configuration).rejectWithdrawalApproval2(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options);
+        async rejectWithdrawalApproval1(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
+            const localVarAxiosArgs = await exports.BscWithdrawalApprovalControllerApiAxiosParamCreator(configuration).rejectWithdrawalApproval1(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -2809,20 +2809,20 @@ exports.BscWithdrawalApprovalControllerApiFp = function (configuration) {
 };
 exports.BscWithdrawalApprovalControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        approveWithdrawalApproval2(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
-            return exports.BscWithdrawalApprovalControllerApiFp(configuration).approveWithdrawalApproval2(withdrawalApprovalId, approveWithdrawalApprovalRequest, options).then((request) => request(axios, basePath));
+        approveWithdrawalApproval1(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
+            return exports.BscWithdrawalApprovalControllerApiFp(configuration).approveWithdrawalApproval1(withdrawalApprovalId, approveWithdrawalApprovalRequest, options).then((request) => request(axios, basePath));
         },
-        rejectWithdrawalApproval2(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
-            return exports.BscWithdrawalApprovalControllerApiFp(configuration).rejectWithdrawalApproval2(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options).then((request) => request(axios, basePath));
+        rejectWithdrawalApproval1(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
+            return exports.BscWithdrawalApprovalControllerApiFp(configuration).rejectWithdrawalApproval1(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 class BscWithdrawalApprovalControllerApi extends base_1.BaseAPI {
-    approveWithdrawalApproval2(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
-        return exports.BscWithdrawalApprovalControllerApiFp(this.configuration).approveWithdrawalApproval2(withdrawalApprovalId, approveWithdrawalApprovalRequest, options).then((request) => request(this.axios, this.basePath));
+    approveWithdrawalApproval1(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
+        return exports.BscWithdrawalApprovalControllerApiFp(this.configuration).approveWithdrawalApproval1(withdrawalApprovalId, approveWithdrawalApprovalRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    rejectWithdrawalApproval2(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
-        return exports.BscWithdrawalApprovalControllerApiFp(this.configuration).rejectWithdrawalApproval2(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options).then((request) => request(this.axios, this.basePath));
+    rejectWithdrawalApproval1(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
+        return exports.BscWithdrawalApprovalControllerApiFp(this.configuration).rejectWithdrawalApproval1(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.BscWithdrawalApprovalControllerApi = BscWithdrawalApprovalControllerApi;
@@ -2917,9 +2917,9 @@ class CoinControllerApi extends base_1.BaseAPI {
 exports.CoinControllerApi = CoinControllerApi;
 exports.EthAdminControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getCoin3: async (coinId, options = {}) => {
+        getCoin1: async (coinId, options = {}) => {
             if (coinId === null || coinId === undefined) {
-                throw new base_1.RequiredError('coinId', 'Required parameter coinId was null or undefined when calling getCoin3.');
+                throw new base_1.RequiredError('coinId', 'Required parameter coinId was null or undefined when calling getCoin1.');
             }
             const localVarPath = `/api/v2/eth/admin/coins/{coinId}`
                 .replace(`{${"coinId"}}`, encodeURIComponent(String(coinId)));
@@ -2940,12 +2940,12 @@ exports.EthAdminControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getExternalWithdrawals1: async (pageable, searchCondition, options = {}) => {
+        getExternalWithdrawals: async (pageable, searchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getExternalWithdrawals1.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getExternalWithdrawals.');
             }
             if (searchCondition === null || searchCondition === undefined) {
-                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getExternalWithdrawals1.');
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getExternalWithdrawals.');
             }
             const localVarPath = `/api/v2/eth/admin/external-withdrawals`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2971,9 +2971,9 @@ exports.EthAdminControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWallets3: async (pageable, options = {}) => {
+        getMasterWallets: async (pageable, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getMasterWallets3.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getMasterWallets.');
             }
             const localVarPath = `/api/v2/eth/admin/master-wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -2996,9 +2996,9 @@ exports.EthAdminControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWallets3: async (pageable, options = {}) => {
+        getUserWallets: async (pageable, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getUserWallets3.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getUserWallets.');
             }
             const localVarPath = `/api/v2/eth/admin/user-wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3021,12 +3021,12 @@ exports.EthAdminControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getValueTransferEvents3: async (pageable, searchCondition, options = {}) => {
+        getValueTransferEvents1: async (pageable, searchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents3.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents1.');
             }
             if (searchCondition === null || searchCondition === undefined) {
-                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents3.');
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents1.');
             }
             const localVarPath = `/api/v2/eth/admin/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3056,36 +3056,36 @@ exports.EthAdminControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.EthAdminControllerApiFp = function (configuration) {
     return {
-        async getCoin3(coinId, options) {
-            const localVarAxiosArgs = await exports.EthAdminControllerApiAxiosParamCreator(configuration).getCoin3(coinId, options);
+        async getCoin1(coinId, options) {
+            const localVarAxiosArgs = await exports.EthAdminControllerApiAxiosParamCreator(configuration).getCoin1(coinId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getExternalWithdrawals1(pageable, searchCondition, options) {
-            const localVarAxiosArgs = await exports.EthAdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawals1(pageable, searchCondition, options);
+        async getExternalWithdrawals(pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.EthAdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawals(pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWallets3(pageable, options) {
-            const localVarAxiosArgs = await exports.EthAdminControllerApiAxiosParamCreator(configuration).getMasterWallets3(pageable, options);
+        async getMasterWallets(pageable, options) {
+            const localVarAxiosArgs = await exports.EthAdminControllerApiAxiosParamCreator(configuration).getMasterWallets(pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWallets3(pageable, options) {
-            const localVarAxiosArgs = await exports.EthAdminControllerApiAxiosParamCreator(configuration).getUserWallets3(pageable, options);
+        async getUserWallets(pageable, options) {
+            const localVarAxiosArgs = await exports.EthAdminControllerApiAxiosParamCreator(configuration).getUserWallets(pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getValueTransferEvents3(pageable, searchCondition, options) {
-            const localVarAxiosArgs = await exports.EthAdminControllerApiAxiosParamCreator(configuration).getValueTransferEvents3(pageable, searchCondition, options);
+        async getValueTransferEvents1(pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.EthAdminControllerApiAxiosParamCreator(configuration).getValueTransferEvents1(pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -3095,46 +3095,46 @@ exports.EthAdminControllerApiFp = function (configuration) {
 };
 exports.EthAdminControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getCoin3(coinId, options) {
-            return exports.EthAdminControllerApiFp(configuration).getCoin3(coinId, options).then((request) => request(axios, basePath));
+        getCoin1(coinId, options) {
+            return exports.EthAdminControllerApiFp(configuration).getCoin1(coinId, options).then((request) => request(axios, basePath));
         },
-        getExternalWithdrawals1(pageable, searchCondition, options) {
-            return exports.EthAdminControllerApiFp(configuration).getExternalWithdrawals1(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getExternalWithdrawals(pageable, searchCondition, options) {
+            return exports.EthAdminControllerApiFp(configuration).getExternalWithdrawals(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
-        getMasterWallets3(pageable, options) {
-            return exports.EthAdminControllerApiFp(configuration).getMasterWallets3(pageable, options).then((request) => request(axios, basePath));
+        getMasterWallets(pageable, options) {
+            return exports.EthAdminControllerApiFp(configuration).getMasterWallets(pageable, options).then((request) => request(axios, basePath));
         },
-        getUserWallets3(pageable, options) {
-            return exports.EthAdminControllerApiFp(configuration).getUserWallets3(pageable, options).then((request) => request(axios, basePath));
+        getUserWallets(pageable, options) {
+            return exports.EthAdminControllerApiFp(configuration).getUserWallets(pageable, options).then((request) => request(axios, basePath));
         },
-        getValueTransferEvents3(pageable, searchCondition, options) {
-            return exports.EthAdminControllerApiFp(configuration).getValueTransferEvents3(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents1(pageable, searchCondition, options) {
+            return exports.EthAdminControllerApiFp(configuration).getValueTransferEvents1(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
 class EthAdminControllerApi extends base_1.BaseAPI {
-    getCoin3(coinId, options) {
-        return exports.EthAdminControllerApiFp(this.configuration).getCoin3(coinId, options).then((request) => request(this.axios, this.basePath));
+    getCoin1(coinId, options) {
+        return exports.EthAdminControllerApiFp(this.configuration).getCoin1(coinId, options).then((request) => request(this.axios, this.basePath));
     }
-    getExternalWithdrawals1(pageable, searchCondition, options) {
-        return exports.EthAdminControllerApiFp(this.configuration).getExternalWithdrawals1(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    getExternalWithdrawals(pageable, searchCondition, options) {
+        return exports.EthAdminControllerApiFp(this.configuration).getExternalWithdrawals(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWallets3(pageable, options) {
-        return exports.EthAdminControllerApiFp(this.configuration).getMasterWallets3(pageable, options).then((request) => request(this.axios, this.basePath));
+    getMasterWallets(pageable, options) {
+        return exports.EthAdminControllerApiFp(this.configuration).getMasterWallets(pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWallets3(pageable, options) {
-        return exports.EthAdminControllerApiFp(this.configuration).getUserWallets3(pageable, options).then((request) => request(this.axios, this.basePath));
+    getUserWallets(pageable, options) {
+        return exports.EthAdminControllerApiFp(this.configuration).getUserWallets(pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    getValueTransferEvents3(pageable, searchCondition, options) {
-        return exports.EthAdminControllerApiFp(this.configuration).getValueTransferEvents3(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    getValueTransferEvents1(pageable, searchCondition, options) {
+        return exports.EthAdminControllerApiFp(this.configuration).getValueTransferEvents1(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.EthAdminControllerApi = EthAdminControllerApi;
 exports.EthCoinControllerApiAxiosParamCreator = function (configuration) {
     return {
-        createCoin1: async (createCoinRequest, options = {}) => {
+        createCoin: async (createCoinRequest, options = {}) => {
             if (createCoinRequest === null || createCoinRequest === undefined) {
-                throw new base_1.RequiredError('createCoinRequest', 'Required parameter createCoinRequest was null or undefined when calling createCoin1.');
+                throw new base_1.RequiredError('createCoinRequest', 'Required parameter createCoinRequest was null or undefined when calling createCoin.');
             }
             const localVarPath = `/api/v2/eth/coins`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3157,9 +3157,9 @@ exports.EthCoinControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        deleteCoin1: async (symbol, options = {}) => {
+        deleteCoin: async (symbol, options = {}) => {
             if (symbol === null || symbol === undefined) {
-                throw new base_1.RequiredError('symbol', 'Required parameter symbol was null or undefined when calling deleteCoin1.');
+                throw new base_1.RequiredError('symbol', 'Required parameter symbol was null or undefined when calling deleteCoin.');
             }
             const localVarPath = `/api/v2/eth/coins/{symbol}`
                 .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
@@ -3180,9 +3180,9 @@ exports.EthCoinControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAllCoins2: async (flag, options = {}) => {
+        getAllCoins1: async (flag, options = {}) => {
             if (flag === null || flag === undefined) {
-                throw new base_1.RequiredError('flag', 'Required parameter flag was null or undefined when calling getAllCoins2.');
+                throw new base_1.RequiredError('flag', 'Required parameter flag was null or undefined when calling getAllCoins1.');
             }
             const localVarPath = `/api/v2/eth/coins`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3205,9 +3205,9 @@ exports.EthCoinControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getCoin2: async (symbol, options = {}) => {
+        getCoin: async (symbol, options = {}) => {
             if (symbol === null || symbol === undefined) {
-                throw new base_1.RequiredError('symbol', 'Required parameter symbol was null or undefined when calling getCoin2.');
+                throw new base_1.RequiredError('symbol', 'Required parameter symbol was null or undefined when calling getCoin.');
             }
             const localVarPath = `/api/v2/eth/coins/{symbol}`
                 .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
@@ -3228,9 +3228,9 @@ exports.EthCoinControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchCoin1: async (updateCoinRequest, options = {}) => {
+        patchCoin: async (updateCoinRequest, options = {}) => {
             if (updateCoinRequest === null || updateCoinRequest === undefined) {
-                throw new base_1.RequiredError('updateCoinRequest', 'Required parameter updateCoinRequest was null or undefined when calling patchCoin1.');
+                throw new base_1.RequiredError('updateCoinRequest', 'Required parameter updateCoinRequest was null or undefined when calling patchCoin.');
             }
             const localVarPath = `/api/v2/eth/coins`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3257,36 +3257,36 @@ exports.EthCoinControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.EthCoinControllerApiFp = function (configuration) {
     return {
-        async createCoin1(createCoinRequest, options) {
-            const localVarAxiosArgs = await exports.EthCoinControllerApiAxiosParamCreator(configuration).createCoin1(createCoinRequest, options);
+        async createCoin(createCoinRequest, options) {
+            const localVarAxiosArgs = await exports.EthCoinControllerApiAxiosParamCreator(configuration).createCoin(createCoinRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async deleteCoin1(symbol, options) {
-            const localVarAxiosArgs = await exports.EthCoinControllerApiAxiosParamCreator(configuration).deleteCoin1(symbol, options);
+        async deleteCoin(symbol, options) {
+            const localVarAxiosArgs = await exports.EthCoinControllerApiAxiosParamCreator(configuration).deleteCoin(symbol, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAllCoins2(flag, options) {
-            const localVarAxiosArgs = await exports.EthCoinControllerApiAxiosParamCreator(configuration).getAllCoins2(flag, options);
+        async getAllCoins1(flag, options) {
+            const localVarAxiosArgs = await exports.EthCoinControllerApiAxiosParamCreator(configuration).getAllCoins1(flag, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getCoin2(symbol, options) {
-            const localVarAxiosArgs = await exports.EthCoinControllerApiAxiosParamCreator(configuration).getCoin2(symbol, options);
+        async getCoin(symbol, options) {
+            const localVarAxiosArgs = await exports.EthCoinControllerApiAxiosParamCreator(configuration).getCoin(symbol, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchCoin1(updateCoinRequest, options) {
-            const localVarAxiosArgs = await exports.EthCoinControllerApiAxiosParamCreator(configuration).patchCoin1(updateCoinRequest, options);
+        async patchCoin(updateCoinRequest, options) {
+            const localVarAxiosArgs = await exports.EthCoinControllerApiAxiosParamCreator(configuration).patchCoin(updateCoinRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -3296,49 +3296,49 @@ exports.EthCoinControllerApiFp = function (configuration) {
 };
 exports.EthCoinControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        createCoin1(createCoinRequest, options) {
-            return exports.EthCoinControllerApiFp(configuration).createCoin1(createCoinRequest, options).then((request) => request(axios, basePath));
+        createCoin(createCoinRequest, options) {
+            return exports.EthCoinControllerApiFp(configuration).createCoin(createCoinRequest, options).then((request) => request(axios, basePath));
         },
-        deleteCoin1(symbol, options) {
-            return exports.EthCoinControllerApiFp(configuration).deleteCoin1(symbol, options).then((request) => request(axios, basePath));
+        deleteCoin(symbol, options) {
+            return exports.EthCoinControllerApiFp(configuration).deleteCoin(symbol, options).then((request) => request(axios, basePath));
         },
-        getAllCoins2(flag, options) {
-            return exports.EthCoinControllerApiFp(configuration).getAllCoins2(flag, options).then((request) => request(axios, basePath));
+        getAllCoins1(flag, options) {
+            return exports.EthCoinControllerApiFp(configuration).getAllCoins1(flag, options).then((request) => request(axios, basePath));
         },
-        getCoin2(symbol, options) {
-            return exports.EthCoinControllerApiFp(configuration).getCoin2(symbol, options).then((request) => request(axios, basePath));
+        getCoin(symbol, options) {
+            return exports.EthCoinControllerApiFp(configuration).getCoin(symbol, options).then((request) => request(axios, basePath));
         },
-        patchCoin1(updateCoinRequest, options) {
-            return exports.EthCoinControllerApiFp(configuration).patchCoin1(updateCoinRequest, options).then((request) => request(axios, basePath));
+        patchCoin(updateCoinRequest, options) {
+            return exports.EthCoinControllerApiFp(configuration).patchCoin(updateCoinRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 class EthCoinControllerApi extends base_1.BaseAPI {
-    createCoin1(createCoinRequest, options) {
-        return exports.EthCoinControllerApiFp(this.configuration).createCoin1(createCoinRequest, options).then((request) => request(this.axios, this.basePath));
+    createCoin(createCoinRequest, options) {
+        return exports.EthCoinControllerApiFp(this.configuration).createCoin(createCoinRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    deleteCoin1(symbol, options) {
-        return exports.EthCoinControllerApiFp(this.configuration).deleteCoin1(symbol, options).then((request) => request(this.axios, this.basePath));
+    deleteCoin(symbol, options) {
+        return exports.EthCoinControllerApiFp(this.configuration).deleteCoin(symbol, options).then((request) => request(this.axios, this.basePath));
     }
-    getAllCoins2(flag, options) {
-        return exports.EthCoinControllerApiFp(this.configuration).getAllCoins2(flag, options).then((request) => request(this.axios, this.basePath));
+    getAllCoins1(flag, options) {
+        return exports.EthCoinControllerApiFp(this.configuration).getAllCoins1(flag, options).then((request) => request(this.axios, this.basePath));
     }
-    getCoin2(symbol, options) {
-        return exports.EthCoinControllerApiFp(this.configuration).getCoin2(symbol, options).then((request) => request(this.axios, this.basePath));
+    getCoin(symbol, options) {
+        return exports.EthCoinControllerApiFp(this.configuration).getCoin(symbol, options).then((request) => request(this.axios, this.basePath));
     }
-    patchCoin1(updateCoinRequest, options) {
-        return exports.EthCoinControllerApiFp(this.configuration).patchCoin1(updateCoinRequest, options).then((request) => request(this.axios, this.basePath));
+    patchCoin(updateCoinRequest, options) {
+        return exports.EthCoinControllerApiFp(this.configuration).patchCoin(updateCoinRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.EthCoinControllerApi = EthCoinControllerApi;
 exports.EthEventControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getCallEvents3: async (pageable, specs, options = {}) => {
+        getCallEvents1: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getCallEvents3.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getCallEvents1.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getCallEvents3.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getCallEvents1.');
             }
             const localVarPath = `/api/v2/eth/call-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3364,12 +3364,12 @@ exports.EthEventControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getValueTransferEvents5: async (pageable, searchCondition, options = {}) => {
+        getValueTransferEvents2: async (pageable, searchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents5.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents2.');
             }
             if (searchCondition === null || searchCondition === undefined) {
-                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents5.');
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents2.');
             }
             const localVarPath = `/api/v2/eth/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3399,15 +3399,15 @@ exports.EthEventControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.EthEventControllerApiFp = function (configuration) {
     return {
-        async getCallEvents3(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.EthEventControllerApiAxiosParamCreator(configuration).getCallEvents3(pageable, specs, options);
+        async getCallEvents1(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.EthEventControllerApiAxiosParamCreator(configuration).getCallEvents1(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getValueTransferEvents5(pageable, searchCondition, options) {
-            const localVarAxiosArgs = await exports.EthEventControllerApiAxiosParamCreator(configuration).getValueTransferEvents5(pageable, searchCondition, options);
+        async getValueTransferEvents2(pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.EthEventControllerApiAxiosParamCreator(configuration).getValueTransferEvents2(pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -3417,26 +3417,26 @@ exports.EthEventControllerApiFp = function (configuration) {
 };
 exports.EthEventControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getCallEvents3(pageable, specs, options) {
-            return exports.EthEventControllerApiFp(configuration).getCallEvents3(pageable, specs, options).then((request) => request(axios, basePath));
+        getCallEvents1(pageable, specs, options) {
+            return exports.EthEventControllerApiFp(configuration).getCallEvents1(pageable, specs, options).then((request) => request(axios, basePath));
         },
-        getValueTransferEvents5(pageable, searchCondition, options) {
-            return exports.EthEventControllerApiFp(configuration).getValueTransferEvents5(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents2(pageable, searchCondition, options) {
+            return exports.EthEventControllerApiFp(configuration).getValueTransferEvents2(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
 class EthEventControllerApi extends base_1.BaseAPI {
-    getCallEvents3(pageable, specs, options) {
-        return exports.EthEventControllerApiFp(this.configuration).getCallEvents3(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getCallEvents1(pageable, specs, options) {
+        return exports.EthEventControllerApiFp(this.configuration).getCallEvents1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
-    getValueTransferEvents5(pageable, searchCondition, options) {
-        return exports.EthEventControllerApiFp(this.configuration).getValueTransferEvents5(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    getValueTransferEvents2(pageable, searchCondition, options) {
+        return exports.EthEventControllerApiFp(this.configuration).getValueTransferEvents2(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.EthEventControllerApi = EthEventControllerApi;
 exports.EthGasPriceControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getGasPrice1: async (options = {}) => {
+        getGasPrice: async (options = {}) => {
             const localVarPath = `/api/v2/eth/gas-price`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -3459,8 +3459,8 @@ exports.EthGasPriceControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.EthGasPriceControllerApiFp = function (configuration) {
     return {
-        async getGasPrice1(options) {
-            const localVarAxiosArgs = await exports.EthGasPriceControllerApiAxiosParamCreator(configuration).getGasPrice1(options);
+        async getGasPrice(options) {
+            const localVarAxiosArgs = await exports.EthGasPriceControllerApiAxiosParamCreator(configuration).getGasPrice(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -3470,20 +3470,20 @@ exports.EthGasPriceControllerApiFp = function (configuration) {
 };
 exports.EthGasPriceControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getGasPrice1(options) {
-            return exports.EthGasPriceControllerApiFp(configuration).getGasPrice1(options).then((request) => request(axios, basePath));
+        getGasPrice(options) {
+            return exports.EthGasPriceControllerApiFp(configuration).getGasPrice(options).then((request) => request(axios, basePath));
         },
     };
 };
 class EthGasPriceControllerApi extends base_1.BaseAPI {
-    getGasPrice1(options) {
-        return exports.EthGasPriceControllerApiFp(this.configuration).getGasPrice1(options).then((request) => request(this.axios, this.basePath));
+    getGasPrice(options) {
+        return exports.EthGasPriceControllerApiFp(this.configuration).getGasPrice(options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.EthGasPriceControllerApi = EthGasPriceControllerApi;
 exports.EthHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
     return {
-        createExampleHenesisKey1: async (options = {}) => {
+        createExampleHenesisKey: async (options = {}) => {
             const localVarPath = `/api/v2/eth/henesis-keys/example`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -3502,9 +3502,9 @@ exports.EthHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createTransaction1: async (createTransactionRequest, options = {}) => {
+        createTransaction: async (createTransactionRequest, options = {}) => {
             if (createTransactionRequest === null || createTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createTransactionRequest', 'Required parameter createTransactionRequest was null or undefined when calling createTransaction1.');
+                throw new base_1.RequiredError('createTransactionRequest', 'Required parameter createTransactionRequest was null or undefined when calling createTransaction.');
             }
             const localVarPath = `/api/v2/eth/henesis-keys/transactions`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3527,7 +3527,7 @@ exports.EthHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getHenesisKey1: async (options = {}) => {
+        getHenesisKey: async (options = {}) => {
             const localVarPath = `/api/v2/eth/henesis-keys/me`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -3546,7 +3546,7 @@ exports.EthHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getHenesisKeyBalance1: async (options = {}) => {
+        getHenesisKeyBalance: async (options = {}) => {
             const localVarPath = `/api/v2/eth/henesis-keys/balance`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -3565,12 +3565,12 @@ exports.EthHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getHistoriesCsv1: async (createdAtGte, createdAtLt, options = {}) => {
+        getHistoriesCsv: async (createdAtGte, createdAtLt, options = {}) => {
             if (createdAtGte === null || createdAtGte === undefined) {
-                throw new base_1.RequiredError('createdAtGte', 'Required parameter createdAtGte was null or undefined when calling getHistoriesCsv1.');
+                throw new base_1.RequiredError('createdAtGte', 'Required parameter createdAtGte was null or undefined when calling getHistoriesCsv.');
             }
             if (createdAtLt === null || createdAtLt === undefined) {
-                throw new base_1.RequiredError('createdAtLt', 'Required parameter createdAtLt was null or undefined when calling getHistoriesCsv1.');
+                throw new base_1.RequiredError('createdAtLt', 'Required parameter createdAtLt was null or undefined when calling getHistoriesCsv.');
             }
             const localVarPath = `/api/v2/eth/henesis-keys/histories/csv`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3596,12 +3596,12 @@ exports.EthHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getTransactionHistories1: async (pageable, specs, options = {}) => {
+        getTransactionHistories: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransactionHistories1.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransactionHistories.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getTransactionHistories1.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getTransactionHistories.');
             }
             const localVarPath = `/api/v2/eth/henesis-keys/histories`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3631,43 +3631,43 @@ exports.EthHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.EthHenesisKeyControllerApiFp = function (configuration) {
     return {
-        async createExampleHenesisKey1(options) {
-            const localVarAxiosArgs = await exports.EthHenesisKeyControllerApiAxiosParamCreator(configuration).createExampleHenesisKey1(options);
+        async createExampleHenesisKey(options) {
+            const localVarAxiosArgs = await exports.EthHenesisKeyControllerApiAxiosParamCreator(configuration).createExampleHenesisKey(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createTransaction1(createTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.EthHenesisKeyControllerApiAxiosParamCreator(configuration).createTransaction1(createTransactionRequest, options);
+        async createTransaction(createTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.EthHenesisKeyControllerApiAxiosParamCreator(configuration).createTransaction(createTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getHenesisKey1(options) {
-            const localVarAxiosArgs = await exports.EthHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKey1(options);
+        async getHenesisKey(options) {
+            const localVarAxiosArgs = await exports.EthHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKey(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getHenesisKeyBalance1(options) {
-            const localVarAxiosArgs = await exports.EthHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKeyBalance1(options);
+        async getHenesisKeyBalance(options) {
+            const localVarAxiosArgs = await exports.EthHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKeyBalance(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getHistoriesCsv1(createdAtGte, createdAtLt, options) {
-            const localVarAxiosArgs = await exports.EthHenesisKeyControllerApiAxiosParamCreator(configuration).getHistoriesCsv1(createdAtGte, createdAtLt, options);
+        async getHistoriesCsv(createdAtGte, createdAtLt, options) {
+            const localVarAxiosArgs = await exports.EthHenesisKeyControllerApiAxiosParamCreator(configuration).getHistoriesCsv(createdAtGte, createdAtLt, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getTransactionHistories1(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.EthHenesisKeyControllerApiAxiosParamCreator(configuration).getTransactionHistories1(pageable, specs, options);
+        async getTransactionHistories(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.EthHenesisKeyControllerApiAxiosParamCreator(configuration).getTransactionHistories(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -3677,55 +3677,55 @@ exports.EthHenesisKeyControllerApiFp = function (configuration) {
 };
 exports.EthHenesisKeyControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        createExampleHenesisKey1(options) {
-            return exports.EthHenesisKeyControllerApiFp(configuration).createExampleHenesisKey1(options).then((request) => request(axios, basePath));
+        createExampleHenesisKey(options) {
+            return exports.EthHenesisKeyControllerApiFp(configuration).createExampleHenesisKey(options).then((request) => request(axios, basePath));
         },
-        createTransaction1(createTransactionRequest, options) {
-            return exports.EthHenesisKeyControllerApiFp(configuration).createTransaction1(createTransactionRequest, options).then((request) => request(axios, basePath));
+        createTransaction(createTransactionRequest, options) {
+            return exports.EthHenesisKeyControllerApiFp(configuration).createTransaction(createTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        getHenesisKey1(options) {
-            return exports.EthHenesisKeyControllerApiFp(configuration).getHenesisKey1(options).then((request) => request(axios, basePath));
+        getHenesisKey(options) {
+            return exports.EthHenesisKeyControllerApiFp(configuration).getHenesisKey(options).then((request) => request(axios, basePath));
         },
-        getHenesisKeyBalance1(options) {
-            return exports.EthHenesisKeyControllerApiFp(configuration).getHenesisKeyBalance1(options).then((request) => request(axios, basePath));
+        getHenesisKeyBalance(options) {
+            return exports.EthHenesisKeyControllerApiFp(configuration).getHenesisKeyBalance(options).then((request) => request(axios, basePath));
         },
-        getHistoriesCsv1(createdAtGte, createdAtLt, options) {
-            return exports.EthHenesisKeyControllerApiFp(configuration).getHistoriesCsv1(createdAtGte, createdAtLt, options).then((request) => request(axios, basePath));
+        getHistoriesCsv(createdAtGte, createdAtLt, options) {
+            return exports.EthHenesisKeyControllerApiFp(configuration).getHistoriesCsv(createdAtGte, createdAtLt, options).then((request) => request(axios, basePath));
         },
-        getTransactionHistories1(pageable, specs, options) {
-            return exports.EthHenesisKeyControllerApiFp(configuration).getTransactionHistories1(pageable, specs, options).then((request) => request(axios, basePath));
+        getTransactionHistories(pageable, specs, options) {
+            return exports.EthHenesisKeyControllerApiFp(configuration).getTransactionHistories(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
 class EthHenesisKeyControllerApi extends base_1.BaseAPI {
-    createExampleHenesisKey1(options) {
-        return exports.EthHenesisKeyControllerApiFp(this.configuration).createExampleHenesisKey1(options).then((request) => request(this.axios, this.basePath));
+    createExampleHenesisKey(options) {
+        return exports.EthHenesisKeyControllerApiFp(this.configuration).createExampleHenesisKey(options).then((request) => request(this.axios, this.basePath));
     }
-    createTransaction1(createTransactionRequest, options) {
-        return exports.EthHenesisKeyControllerApiFp(this.configuration).createTransaction1(createTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    createTransaction(createTransactionRequest, options) {
+        return exports.EthHenesisKeyControllerApiFp(this.configuration).createTransaction(createTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    getHenesisKey1(options) {
-        return exports.EthHenesisKeyControllerApiFp(this.configuration).getHenesisKey1(options).then((request) => request(this.axios, this.basePath));
+    getHenesisKey(options) {
+        return exports.EthHenesisKeyControllerApiFp(this.configuration).getHenesisKey(options).then((request) => request(this.axios, this.basePath));
     }
-    getHenesisKeyBalance1(options) {
-        return exports.EthHenesisKeyControllerApiFp(this.configuration).getHenesisKeyBalance1(options).then((request) => request(this.axios, this.basePath));
+    getHenesisKeyBalance(options) {
+        return exports.EthHenesisKeyControllerApiFp(this.configuration).getHenesisKeyBalance(options).then((request) => request(this.axios, this.basePath));
     }
-    getHistoriesCsv1(createdAtGte, createdAtLt, options) {
-        return exports.EthHenesisKeyControllerApiFp(this.configuration).getHistoriesCsv1(createdAtGte, createdAtLt, options).then((request) => request(this.axios, this.basePath));
+    getHistoriesCsv(createdAtGte, createdAtLt, options) {
+        return exports.EthHenesisKeyControllerApiFp(this.configuration).getHistoriesCsv(createdAtGte, createdAtLt, options).then((request) => request(this.axios, this.basePath));
     }
-    getTransactionHistories1(pageable, specs, options) {
-        return exports.EthHenesisKeyControllerApiFp(this.configuration).getTransactionHistories1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getTransactionHistories(pageable, specs, options) {
+        return exports.EthHenesisKeyControllerApiFp(this.configuration).getTransactionHistories(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.EthHenesisKeyControllerApi = EthHenesisKeyControllerApi;
 exports.EthInternalControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getCallEvents2: async (pageable, specs, options = {}) => {
+        getCallEvents: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getCallEvents2.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getCallEvents.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getCallEvents2.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getCallEvents.');
             }
             const localVarPath = `/api/v2/eth/internal/call-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3751,12 +3751,12 @@ exports.EthInternalControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getValueTransferEvents4: async (pageable, searchCondition, options = {}) => {
+        getValueTransferEvents: async (pageable, searchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents4.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents.');
             }
             if (searchCondition === null || searchCondition === undefined) {
-                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents4.');
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents.');
             }
             const localVarPath = `/api/v2/eth/internal/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3786,15 +3786,15 @@ exports.EthInternalControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.EthInternalControllerApiFp = function (configuration) {
     return {
-        async getCallEvents2(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.EthInternalControllerApiAxiosParamCreator(configuration).getCallEvents2(pageable, specs, options);
+        async getCallEvents(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.EthInternalControllerApiAxiosParamCreator(configuration).getCallEvents(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getValueTransferEvents4(pageable, searchCondition, options) {
-            const localVarAxiosArgs = await exports.EthInternalControllerApiAxiosParamCreator(configuration).getValueTransferEvents4(pageable, searchCondition, options);
+        async getValueTransferEvents(pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.EthInternalControllerApiAxiosParamCreator(configuration).getValueTransferEvents(pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -3804,28 +3804,28 @@ exports.EthInternalControllerApiFp = function (configuration) {
 };
 exports.EthInternalControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getCallEvents2(pageable, specs, options) {
-            return exports.EthInternalControllerApiFp(configuration).getCallEvents2(pageable, specs, options).then((request) => request(axios, basePath));
+        getCallEvents(pageable, specs, options) {
+            return exports.EthInternalControllerApiFp(configuration).getCallEvents(pageable, specs, options).then((request) => request(axios, basePath));
         },
-        getValueTransferEvents4(pageable, searchCondition, options) {
-            return exports.EthInternalControllerApiFp(configuration).getValueTransferEvents4(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents(pageable, searchCondition, options) {
+            return exports.EthInternalControllerApiFp(configuration).getValueTransferEvents(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
 class EthInternalControllerApi extends base_1.BaseAPI {
-    getCallEvents2(pageable, specs, options) {
-        return exports.EthInternalControllerApiFp(this.configuration).getCallEvents2(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getCallEvents(pageable, specs, options) {
+        return exports.EthInternalControllerApiFp(this.configuration).getCallEvents(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
-    getValueTransferEvents4(pageable, searchCondition, options) {
-        return exports.EthInternalControllerApiFp(this.configuration).getValueTransferEvents4(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    getValueTransferEvents(pageable, searchCondition, options) {
+        return exports.EthInternalControllerApiFp(this.configuration).getValueTransferEvents(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.EthInternalControllerApi = EthInternalControllerApi;
 exports.EthMethodGasUsageControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getMethodGasUsages1: async (name, options = {}) => {
+        getMethodGasUsages: async (name, options = {}) => {
             if (name === null || name === undefined) {
-                throw new base_1.RequiredError('name', 'Required parameter name was null or undefined when calling getMethodGasUsages1.');
+                throw new base_1.RequiredError('name', 'Required parameter name was null or undefined when calling getMethodGasUsages.');
             }
             const localVarPath = `/api/v2/eth/method-gas-usages`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3852,8 +3852,8 @@ exports.EthMethodGasUsageControllerApiAxiosParamCreator = function (configuratio
 };
 exports.EthMethodGasUsageControllerApiFp = function (configuration) {
     return {
-        async getMethodGasUsages1(name, options) {
-            const localVarAxiosArgs = await exports.EthMethodGasUsageControllerApiAxiosParamCreator(configuration).getMethodGasUsages1(name, options);
+        async getMethodGasUsages(name, options) {
+            const localVarAxiosArgs = await exports.EthMethodGasUsageControllerApiAxiosParamCreator(configuration).getMethodGasUsages(name, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -3863,25 +3863,25 @@ exports.EthMethodGasUsageControllerApiFp = function (configuration) {
 };
 exports.EthMethodGasUsageControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getMethodGasUsages1(name, options) {
-            return exports.EthMethodGasUsageControllerApiFp(configuration).getMethodGasUsages1(name, options).then((request) => request(axios, basePath));
+        getMethodGasUsages(name, options) {
+            return exports.EthMethodGasUsageControllerApiFp(configuration).getMethodGasUsages(name, options).then((request) => request(axios, basePath));
         },
     };
 };
 class EthMethodGasUsageControllerApi extends base_1.BaseAPI {
-    getMethodGasUsages1(name, options) {
-        return exports.EthMethodGasUsageControllerApiFp(this.configuration).getMethodGasUsages1(name, options).then((request) => request(this.axios, this.basePath));
+    getMethodGasUsages(name, options) {
+        return exports.EthMethodGasUsageControllerApiFp(this.configuration).getMethodGasUsages(name, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.EthMethodGasUsageControllerApi = EthMethodGasUsageControllerApi;
 exports.EthOperationControllerApiAxiosParamCreator = function (configuration) {
     return {
-        bindHenesisKeyToWallet1: async (keyId, bindHenesisKeyToWalletRequest, options = {}) => {
+        bindHenesisKeyToWallet: async (keyId, bindHenesisKeyToWalletRequest, options = {}) => {
             if (keyId === null || keyId === undefined) {
-                throw new base_1.RequiredError('keyId', 'Required parameter keyId was null or undefined when calling bindHenesisKeyToWallet1.');
+                throw new base_1.RequiredError('keyId', 'Required parameter keyId was null or undefined when calling bindHenesisKeyToWallet.');
             }
             if (bindHenesisKeyToWalletRequest === null || bindHenesisKeyToWalletRequest === undefined) {
-                throw new base_1.RequiredError('bindHenesisKeyToWalletRequest', 'Required parameter bindHenesisKeyToWalletRequest was null or undefined when calling bindHenesisKeyToWallet1.');
+                throw new base_1.RequiredError('bindHenesisKeyToWalletRequest', 'Required parameter bindHenesisKeyToWalletRequest was null or undefined when calling bindHenesisKeyToWallet.');
             }
             const localVarPath = `/api/v2/eth/operation/henesis-keys/{keyId}/bind`
                 .replace(`{${"keyId"}}`, encodeURIComponent(String(keyId)));
@@ -3905,9 +3905,9 @@ exports.EthOperationControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createHenesisKey1: async (createHenesisKeyRequest, options = {}) => {
+        createHenesisKey: async (createHenesisKeyRequest, options = {}) => {
             if (createHenesisKeyRequest === null || createHenesisKeyRequest === undefined) {
-                throw new base_1.RequiredError('createHenesisKeyRequest', 'Required parameter createHenesisKeyRequest was null or undefined when calling createHenesisKey1.');
+                throw new base_1.RequiredError('createHenesisKeyRequest', 'Required parameter createHenesisKeyRequest was null or undefined when calling createHenesisKey.');
             }
             const localVarPath = `/api/v2/eth/operation/henesis-keys`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3930,9 +3930,9 @@ exports.EthOperationControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getCoinByAddress1: async (address, options = {}) => {
+        getCoinByAddress: async (address, options = {}) => {
             if (address === null || address === undefined) {
-                throw new base_1.RequiredError('address', 'Required parameter address was null or undefined when calling getCoinByAddress1.');
+                throw new base_1.RequiredError('address', 'Required parameter address was null or undefined when calling getCoinByAddress.');
             }
             const localVarPath = `/api/v2/eth/operation/coins/address/{address}`
                 .replace(`{${"address"}}`, encodeURIComponent(String(address)));
@@ -3957,22 +3957,22 @@ exports.EthOperationControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.EthOperationControllerApiFp = function (configuration) {
     return {
-        async bindHenesisKeyToWallet1(keyId, bindHenesisKeyToWalletRequest, options) {
-            const localVarAxiosArgs = await exports.EthOperationControllerApiAxiosParamCreator(configuration).bindHenesisKeyToWallet1(keyId, bindHenesisKeyToWalletRequest, options);
+        async bindHenesisKeyToWallet(keyId, bindHenesisKeyToWalletRequest, options) {
+            const localVarAxiosArgs = await exports.EthOperationControllerApiAxiosParamCreator(configuration).bindHenesisKeyToWallet(keyId, bindHenesisKeyToWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createHenesisKey1(createHenesisKeyRequest, options) {
-            const localVarAxiosArgs = await exports.EthOperationControllerApiAxiosParamCreator(configuration).createHenesisKey1(createHenesisKeyRequest, options);
+        async createHenesisKey(createHenesisKeyRequest, options) {
+            const localVarAxiosArgs = await exports.EthOperationControllerApiAxiosParamCreator(configuration).createHenesisKey(createHenesisKeyRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getCoinByAddress1(address, options) {
-            const localVarAxiosArgs = await exports.EthOperationControllerApiAxiosParamCreator(configuration).getCoinByAddress1(address, options);
+        async getCoinByAddress(address, options) {
+            const localVarAxiosArgs = await exports.EthOperationControllerApiAxiosParamCreator(configuration).getCoinByAddress(address, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -3982,37 +3982,37 @@ exports.EthOperationControllerApiFp = function (configuration) {
 };
 exports.EthOperationControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        bindHenesisKeyToWallet1(keyId, bindHenesisKeyToWalletRequest, options) {
-            return exports.EthOperationControllerApiFp(configuration).bindHenesisKeyToWallet1(keyId, bindHenesisKeyToWalletRequest, options).then((request) => request(axios, basePath));
+        bindHenesisKeyToWallet(keyId, bindHenesisKeyToWalletRequest, options) {
+            return exports.EthOperationControllerApiFp(configuration).bindHenesisKeyToWallet(keyId, bindHenesisKeyToWalletRequest, options).then((request) => request(axios, basePath));
         },
-        createHenesisKey1(createHenesisKeyRequest, options) {
-            return exports.EthOperationControllerApiFp(configuration).createHenesisKey1(createHenesisKeyRequest, options).then((request) => request(axios, basePath));
+        createHenesisKey(createHenesisKeyRequest, options) {
+            return exports.EthOperationControllerApiFp(configuration).createHenesisKey(createHenesisKeyRequest, options).then((request) => request(axios, basePath));
         },
-        getCoinByAddress1(address, options) {
-            return exports.EthOperationControllerApiFp(configuration).getCoinByAddress1(address, options).then((request) => request(axios, basePath));
+        getCoinByAddress(address, options) {
+            return exports.EthOperationControllerApiFp(configuration).getCoinByAddress(address, options).then((request) => request(axios, basePath));
         },
     };
 };
 class EthOperationControllerApi extends base_1.BaseAPI {
-    bindHenesisKeyToWallet1(keyId, bindHenesisKeyToWalletRequest, options) {
-        return exports.EthOperationControllerApiFp(this.configuration).bindHenesisKeyToWallet1(keyId, bindHenesisKeyToWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    bindHenesisKeyToWallet(keyId, bindHenesisKeyToWalletRequest, options) {
+        return exports.EthOperationControllerApiFp(this.configuration).bindHenesisKeyToWallet(keyId, bindHenesisKeyToWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createHenesisKey1(createHenesisKeyRequest, options) {
-        return exports.EthOperationControllerApiFp(this.configuration).createHenesisKey1(createHenesisKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    createHenesisKey(createHenesisKeyRequest, options) {
+        return exports.EthOperationControllerApiFp(this.configuration).createHenesisKey(createHenesisKeyRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    getCoinByAddress1(address, options) {
-        return exports.EthOperationControllerApiFp(this.configuration).getCoinByAddress1(address, options).then((request) => request(this.axios, this.basePath));
+    getCoinByAddress(address, options) {
+        return exports.EthOperationControllerApiFp(this.configuration).getCoinByAddress(address, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.EthOperationControllerApi = EthOperationControllerApi;
 exports.EthTransactionControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getAllTransactions1: async (pageable, specs, options = {}) => {
+        getAllTransactions: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllTransactions1.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllTransactions.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getAllTransactions1.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getAllTransactions.');
             }
             const localVarPath = `/api/v2/eth/transactions`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -4038,9 +4038,9 @@ exports.EthTransactionControllerApiAxiosParamCreator = function (configuration) 
                 options: localVarRequestOptions,
             };
         },
-        getRawTransactionByHash1: async (transactionHash, options = {}) => {
+        getRawTransactionByHash: async (transactionHash, options = {}) => {
             if (transactionHash === null || transactionHash === undefined) {
-                throw new base_1.RequiredError('transactionHash', 'Required parameter transactionHash was null or undefined when calling getRawTransactionByHash1.');
+                throw new base_1.RequiredError('transactionHash', 'Required parameter transactionHash was null or undefined when calling getRawTransactionByHash.');
             }
             const localVarPath = `/api/v2/eth/raw-transactions/{transactionHash}`
                 .replace(`{${"transactionHash"}}`, encodeURIComponent(String(transactionHash)));
@@ -4061,9 +4061,9 @@ exports.EthTransactionControllerApiAxiosParamCreator = function (configuration) 
                 options: localVarRequestOptions,
             };
         },
-        getTransactionById1: async (transactionId, options = {}) => {
+        getTransactionById: async (transactionId, options = {}) => {
             if (transactionId === null || transactionId === undefined) {
-                throw new base_1.RequiredError('transactionId', 'Required parameter transactionId was null or undefined when calling getTransactionById1.');
+                throw new base_1.RequiredError('transactionId', 'Required parameter transactionId was null or undefined when calling getTransactionById.');
             }
             const localVarPath = `/api/v2/eth/transactions/{transactionId}`
                 .replace(`{${"transactionId"}}`, encodeURIComponent(String(transactionId)));
@@ -4088,22 +4088,22 @@ exports.EthTransactionControllerApiAxiosParamCreator = function (configuration) 
 };
 exports.EthTransactionControllerApiFp = function (configuration) {
     return {
-        async getAllTransactions1(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.EthTransactionControllerApiAxiosParamCreator(configuration).getAllTransactions1(pageable, specs, options);
+        async getAllTransactions(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.EthTransactionControllerApiAxiosParamCreator(configuration).getAllTransactions(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getRawTransactionByHash1(transactionHash, options) {
-            const localVarAxiosArgs = await exports.EthTransactionControllerApiAxiosParamCreator(configuration).getRawTransactionByHash1(transactionHash, options);
+        async getRawTransactionByHash(transactionHash, options) {
+            const localVarAxiosArgs = await exports.EthTransactionControllerApiAxiosParamCreator(configuration).getRawTransactionByHash(transactionHash, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getTransactionById1(transactionId, options) {
-            const localVarAxiosArgs = await exports.EthTransactionControllerApiAxiosParamCreator(configuration).getTransactionById1(transactionId, options);
+        async getTransactionById(transactionId, options) {
+            const localVarAxiosArgs = await exports.EthTransactionControllerApiAxiosParamCreator(configuration).getTransactionById(transactionId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -4113,37 +4113,37 @@ exports.EthTransactionControllerApiFp = function (configuration) {
 };
 exports.EthTransactionControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getAllTransactions1(pageable, specs, options) {
-            return exports.EthTransactionControllerApiFp(configuration).getAllTransactions1(pageable, specs, options).then((request) => request(axios, basePath));
+        getAllTransactions(pageable, specs, options) {
+            return exports.EthTransactionControllerApiFp(configuration).getAllTransactions(pageable, specs, options).then((request) => request(axios, basePath));
         },
-        getRawTransactionByHash1(transactionHash, options) {
-            return exports.EthTransactionControllerApiFp(configuration).getRawTransactionByHash1(transactionHash, options).then((request) => request(axios, basePath));
+        getRawTransactionByHash(transactionHash, options) {
+            return exports.EthTransactionControllerApiFp(configuration).getRawTransactionByHash(transactionHash, options).then((request) => request(axios, basePath));
         },
-        getTransactionById1(transactionId, options) {
-            return exports.EthTransactionControllerApiFp(configuration).getTransactionById1(transactionId, options).then((request) => request(axios, basePath));
+        getTransactionById(transactionId, options) {
+            return exports.EthTransactionControllerApiFp(configuration).getTransactionById(transactionId, options).then((request) => request(axios, basePath));
         },
     };
 };
 class EthTransactionControllerApi extends base_1.BaseAPI {
-    getAllTransactions1(pageable, specs, options) {
-        return exports.EthTransactionControllerApiFp(this.configuration).getAllTransactions1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getAllTransactions(pageable, specs, options) {
+        return exports.EthTransactionControllerApiFp(this.configuration).getAllTransactions(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
-    getRawTransactionByHash1(transactionHash, options) {
-        return exports.EthTransactionControllerApiFp(this.configuration).getRawTransactionByHash1(transactionHash, options).then((request) => request(this.axios, this.basePath));
+    getRawTransactionByHash(transactionHash, options) {
+        return exports.EthTransactionControllerApiFp(this.configuration).getRawTransactionByHash(transactionHash, options).then((request) => request(this.axios, this.basePath));
     }
-    getTransactionById1(transactionId, options) {
-        return exports.EthTransactionControllerApiFp(this.configuration).getTransactionById1(transactionId, options).then((request) => request(this.axios, this.basePath));
+    getTransactionById(transactionId, options) {
+        return exports.EthTransactionControllerApiFp(this.configuration).getTransactionById(transactionId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.EthTransactionControllerApi = EthTransactionControllerApi;
 exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
     return {
-        activateAllowedAddresses1: async (walletId, activateAllowedAddressesRequest, options = {}) => {
+        activateAllowedAddresses: async (walletId, activateAllowedAddressesRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling activateAllowedAddresses1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling activateAllowedAddresses.');
             }
             if (activateAllowedAddressesRequest === null || activateAllowedAddressesRequest === undefined) {
-                throw new base_1.RequiredError('activateAllowedAddressesRequest', 'Required parameter activateAllowedAddressesRequest was null or undefined when calling activateAllowedAddresses1.');
+                throw new base_1.RequiredError('activateAllowedAddressesRequest', 'Required parameter activateAllowedAddressesRequest was null or undefined when calling activateAllowedAddresses.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/activate-allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4167,12 +4167,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        activateMasterWallet1: async (walletId, activateMasterWalletRequest, options = {}) => {
+        activateMasterWallet: async (walletId, activateMasterWalletRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling activateMasterWallet1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling activateMasterWallet.');
             }
             if (activateMasterWalletRequest === null || activateMasterWalletRequest === undefined) {
-                throw new base_1.RequiredError('activateMasterWalletRequest', 'Required parameter activateMasterWalletRequest was null or undefined when calling activateMasterWallet1.');
+                throw new base_1.RequiredError('activateMasterWalletRequest', 'Required parameter activateMasterWalletRequest was null or undefined when calling activateMasterWallet.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/activate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4196,12 +4196,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createAllowedAddress1: async (walletId, createAllowedAddressRequest, options = {}) => {
+        createAllowedAddress: async (walletId, createAllowedAddressRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createAllowedAddress1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createAllowedAddress.');
             }
             if (createAllowedAddressRequest === null || createAllowedAddressRequest === undefined) {
-                throw new base_1.RequiredError('createAllowedAddressRequest', 'Required parameter createAllowedAddressRequest was null or undefined when calling createAllowedAddress1.');
+                throw new base_1.RequiredError('createAllowedAddressRequest', 'Required parameter createAllowedAddressRequest was null or undefined when calling createAllowedAddress.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4225,9 +4225,9 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createMasterWallet2: async (createInactiveMasterWalletRequest, options = {}) => {
+        createMasterWallet1: async (createInactiveMasterWalletRequest, options = {}) => {
             if (createInactiveMasterWalletRequest === null || createInactiveMasterWalletRequest === undefined) {
-                throw new base_1.RequiredError('createInactiveMasterWalletRequest', 'Required parameter createInactiveMasterWalletRequest was null or undefined when calling createMasterWallet2.');
+                throw new base_1.RequiredError('createInactiveMasterWalletRequest', 'Required parameter createInactiveMasterWalletRequest was null or undefined when calling createMasterWallet1.');
             }
             const localVarPath = `/api/v2/eth/wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -4250,12 +4250,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createUserWallet1: async (walletId, createUserWalletRequest, options = {}) => {
+        createUserWallet: async (walletId, createUserWalletRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createUserWallet1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createUserWallet.');
             }
             if (createUserWalletRequest === null || createUserWalletRequest === undefined) {
-                throw new base_1.RequiredError('createUserWalletRequest', 'Required parameter createUserWalletRequest was null or undefined when calling createUserWallet1.');
+                throw new base_1.RequiredError('createUserWalletRequest', 'Required parameter createUserWalletRequest was null or undefined when calling createUserWallet.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4279,12 +4279,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createWalletWithdrawalPolicy1: async (walletId, createWithdrawalPolicyRequest, options = {}) => {
+        createWalletWithdrawalPolicy: async (walletId, createWithdrawalPolicyRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createWalletWithdrawalPolicy1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createWalletWithdrawalPolicy.');
             }
             if (createWithdrawalPolicyRequest === null || createWithdrawalPolicyRequest === undefined) {
-                throw new base_1.RequiredError('createWithdrawalPolicyRequest', 'Required parameter createWithdrawalPolicyRequest was null or undefined when calling createWalletWithdrawalPolicy1.');
+                throw new base_1.RequiredError('createWithdrawalPolicyRequest', 'Required parameter createWithdrawalPolicyRequest was null or undefined when calling createWalletWithdrawalPolicy.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/withdrawal-policies`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4308,15 +4308,15 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        deleteAllowedAddress1: async (walletId, allowedAddressId, deleteAllowedAddressRequest, options = {}) => {
+        deleteAllowedAddress: async (walletId, allowedAddressId, deleteAllowedAddressRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling deleteAllowedAddress1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling deleteAllowedAddress.');
             }
             if (allowedAddressId === null || allowedAddressId === undefined) {
-                throw new base_1.RequiredError('allowedAddressId', 'Required parameter allowedAddressId was null or undefined when calling deleteAllowedAddress1.');
+                throw new base_1.RequiredError('allowedAddressId', 'Required parameter allowedAddressId was null or undefined when calling deleteAllowedAddress.');
             }
             if (deleteAllowedAddressRequest === null || deleteAllowedAddressRequest === undefined) {
-                throw new base_1.RequiredError('deleteAllowedAddressRequest', 'Required parameter deleteAllowedAddressRequest was null or undefined when calling deleteAllowedAddress1.');
+                throw new base_1.RequiredError('deleteAllowedAddressRequest', 'Required parameter deleteAllowedAddressRequest was null or undefined when calling deleteAllowedAddress.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/allowed-addresses/{allowedAddressId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -4370,12 +4370,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAllWalletWithdrawalPolicies1: async (walletId, pageable, options = {}) => {
+        getAllWalletWithdrawalPolicies: async (walletId, pageable, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllWalletWithdrawalPolicies1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllWalletWithdrawalPolicies.');
             }
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllWalletWithdrawalPolicies1.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllWalletWithdrawalPolicies.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/withdrawal-policies`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4399,12 +4399,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAllowedAddress1: async (walletId, allowedAddressId, options = {}) => {
+        getAllowedAddress: async (walletId, allowedAddressId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllowedAddress1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllowedAddress.');
             }
             if (allowedAddressId === null || allowedAddressId === undefined) {
-                throw new base_1.RequiredError('allowedAddressId', 'Required parameter allowedAddressId was null or undefined when calling getAllowedAddress1.');
+                throw new base_1.RequiredError('allowedAddressId', 'Required parameter allowedAddressId was null or undefined when calling getAllowedAddress.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/allowed-addresses/{allowedAddressId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -4426,15 +4426,15 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAllowedAddressesByCoinId2: async (walletId, coinId, pageable, options = {}) => {
+        getAllowedAddressesByCoinId1: async (walletId, coinId, pageable, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllowedAddressesByCoinId2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllowedAddressesByCoinId1.');
             }
             if (coinId === null || coinId === undefined) {
-                throw new base_1.RequiredError('coinId', 'Required parameter coinId was null or undefined when calling getAllowedAddressesByCoinId2.');
+                throw new base_1.RequiredError('coinId', 'Required parameter coinId was null or undefined when calling getAllowedAddressesByCoinId1.');
             }
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllowedAddressesByCoinId2.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllowedAddressesByCoinId1.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4523,9 +4523,9 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWallet1: async (walletId, options = {}) => {
+        getMasterWallet: async (walletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWallet1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWallet.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4546,9 +4546,9 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWalletAccountKey1: async (walletId, options = {}) => {
+        getMasterWalletAccountKey: async (walletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletAccountKey1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletAccountKey.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/account-key`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4569,9 +4569,9 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWalletBalance1: async (walletId, symbol, options = {}) => {
+        getMasterWalletBalance: async (walletId, symbol, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletBalance1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletBalance.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/balance`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4595,9 +4595,9 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWalletInitialKey1: async (walletId, options = {}) => {
+        getMasterWalletInitialKey: async (walletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletInitialKey1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletInitialKey.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/initial-key`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4618,9 +4618,9 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWalletNonce1: async (walletId, options = {}) => {
+        getMasterWalletNonce: async (walletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletNonce1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletNonce.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/nonce`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4641,9 +4641,9 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWallets2: async (sort, options = {}) => {
+        getMasterWallets1: async (sort, options = {}) => {
             if (sort === null || sort === undefined) {
-                throw new base_1.RequiredError('sort', 'Required parameter sort was null or undefined when calling getMasterWallets2.');
+                throw new base_1.RequiredError('sort', 'Required parameter sort was null or undefined when calling getMasterWallets1.');
             }
             const localVarPath = `/api/v2/eth/wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -4666,12 +4666,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWallet1: async (walletId, userWalletId, options = {}) => {
+        getUserWallet: async (walletId, userWalletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWallet1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWallet.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWallet1.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWallet.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets/{userWalletId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -4693,12 +4693,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWalletBalance1: async (walletId, userWalletId, symbol, options = {}) => {
+        getUserWalletBalance: async (walletId, userWalletId, symbol, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWalletBalance1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWalletBalance.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWalletBalance1.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWalletBalance.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets/{userWalletId}/balance`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -4723,12 +4723,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWalletNonce1: async (walletId, userWalletId, options = {}) => {
+        getUserWalletNonce: async (walletId, userWalletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWalletNonce1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWalletNonce.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWalletNonce1.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWalletNonce.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets/{userWalletId}/nonce`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -4750,12 +4750,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWallets2: async (walletId, pageable, options = {}) => {
+        getUserWallets1: async (walletId, pageable, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWallets2.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWallets1.');
             }
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getUserWallets2.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getUserWallets1.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4779,12 +4779,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        inactivateAllowedAddresses1: async (walletId, inactivateAllowedAddressesRequest, options = {}) => {
+        inactivateAllowedAddresses: async (walletId, inactivateAllowedAddressesRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling inactivateAllowedAddresses1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling inactivateAllowedAddresses.');
             }
             if (inactivateAllowedAddressesRequest === null || inactivateAllowedAddressesRequest === undefined) {
-                throw new base_1.RequiredError('inactivateAllowedAddressesRequest', 'Required parameter inactivateAllowedAddressesRequest was null or undefined when calling inactivateAllowedAddresses1.');
+                throw new base_1.RequiredError('inactivateAllowedAddressesRequest', 'Required parameter inactivateAllowedAddressesRequest was null or undefined when calling inactivateAllowedAddresses.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/inactivate-allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4808,12 +4808,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchAccountKey1: async (walletId, updateAccountKeyRequest, options = {}) => {
+        patchAccountKey: async (walletId, updateAccountKeyRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchAccountKey1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchAccountKey.');
             }
             if (updateAccountKeyRequest === null || updateAccountKeyRequest === undefined) {
-                throw new base_1.RequiredError('updateAccountKeyRequest', 'Required parameter updateAccountKeyRequest was null or undefined when calling patchAccountKey1.');
+                throw new base_1.RequiredError('updateAccountKeyRequest', 'Required parameter updateAccountKeyRequest was null or undefined when calling patchAccountKey.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/account-key`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4837,12 +4837,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchMasterWalletName1: async (walletId, changeWalletNameRequest, options = {}) => {
+        patchMasterWalletName: async (walletId, changeWalletNameRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchMasterWalletName1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchMasterWalletName.');
             }
             if (changeWalletNameRequest === null || changeWalletNameRequest === undefined) {
-                throw new base_1.RequiredError('changeWalletNameRequest', 'Required parameter changeWalletNameRequest was null or undefined when calling patchMasterWalletName1.');
+                throw new base_1.RequiredError('changeWalletNameRequest', 'Required parameter changeWalletNameRequest was null or undefined when calling patchMasterWalletName.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/name`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4866,15 +4866,15 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchUserWalletName1: async (walletId, userWalletId, changeWalletNameRequest, options = {}) => {
+        patchUserWalletName: async (walletId, userWalletId, changeWalletNameRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchUserWalletName1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchUserWalletName.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling patchUserWalletName1.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling patchUserWalletName.');
             }
             if (changeWalletNameRequest === null || changeWalletNameRequest === undefined) {
-                throw new base_1.RequiredError('changeWalletNameRequest', 'Required parameter changeWalletNameRequest was null or undefined when calling patchUserWalletName1.');
+                throw new base_1.RequiredError('changeWalletNameRequest', 'Required parameter changeWalletNameRequest was null or undefined when calling patchUserWalletName.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets/{userWalletId}/name`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -4899,15 +4899,15 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchWalletWithdrawalPolicy1: async (walletId, policyId, patchWithdrawalPolicyRequest, options = {}) => {
+        patchWalletWithdrawalPolicy: async (walletId, policyId, patchWithdrawalPolicyRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchWalletWithdrawalPolicy1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchWalletWithdrawalPolicy.');
             }
             if (policyId === null || policyId === undefined) {
-                throw new base_1.RequiredError('policyId', 'Required parameter policyId was null or undefined when calling patchWalletWithdrawalPolicy1.');
+                throw new base_1.RequiredError('policyId', 'Required parameter policyId was null or undefined when calling patchWalletWithdrawalPolicy.');
             }
             if (patchWithdrawalPolicyRequest === null || patchWithdrawalPolicyRequest === undefined) {
-                throw new base_1.RequiredError('patchWithdrawalPolicyRequest', 'Required parameter patchWithdrawalPolicyRequest was null or undefined when calling patchWalletWithdrawalPolicy1.');
+                throw new base_1.RequiredError('patchWithdrawalPolicyRequest', 'Required parameter patchWithdrawalPolicyRequest was null or undefined when calling patchWalletWithdrawalPolicy.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/withdrawal-policies/{policyId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -4932,12 +4932,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        recreateMasterWallet1: async (walletId, recreateWalletRequest, options = {}) => {
+        recreateMasterWallet: async (walletId, recreateWalletRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling recreateMasterWallet1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling recreateMasterWallet.');
             }
             if (recreateWalletRequest === null || recreateWalletRequest === undefined) {
-                throw new base_1.RequiredError('recreateWalletRequest', 'Required parameter recreateWalletRequest was null or undefined when calling recreateMasterWallet1.');
+                throw new base_1.RequiredError('recreateWalletRequest', 'Required parameter recreateWalletRequest was null or undefined when calling recreateMasterWallet.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/recreate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4961,15 +4961,15 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        recreateUserWallet1: async (walletId, userWalletId, recreateWalletRequest, options = {}) => {
+        recreateUserWallet: async (walletId, userWalletId, recreateWalletRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling recreateUserWallet1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling recreateUserWallet.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling recreateUserWallet1.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling recreateUserWallet.');
             }
             if (recreateWalletRequest === null || recreateWalletRequest === undefined) {
-                throw new base_1.RequiredError('recreateWalletRequest', 'Required parameter recreateWalletRequest was null or undefined when calling recreateUserWallet1.');
+                throw new base_1.RequiredError('recreateWalletRequest', 'Required parameter recreateWalletRequest was null or undefined when calling recreateUserWallet.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets/{userWalletId}/recreate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -5019,9 +5019,9 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        resendTransaction1: async (resendTransactionRequest, options = {}) => {
+        resendTransaction: async (resendTransactionRequest, options = {}) => {
             if (resendTransactionRequest === null || resendTransactionRequest === undefined) {
-                throw new base_1.RequiredError('resendTransactionRequest', 'Required parameter resendTransactionRequest was null or undefined when calling resendTransaction1.');
+                throw new base_1.RequiredError('resendTransactionRequest', 'Required parameter resendTransactionRequest was null or undefined when calling resendTransaction.');
             }
             const localVarPath = `/api/v2/eth/wallets/transactions/resend`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -5044,9 +5044,9 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        sendBatchTransaction1: async (createBatchTransactionRequest, options = {}) => {
+        sendBatchTransaction: async (createBatchTransactionRequest, options = {}) => {
             if (createBatchTransactionRequest === null || createBatchTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createBatchTransactionRequest', 'Required parameter createBatchTransactionRequest was null or undefined when calling sendBatchTransaction1.');
+                throw new base_1.RequiredError('createBatchTransactionRequest', 'Required parameter createBatchTransactionRequest was null or undefined when calling sendBatchTransaction.');
             }
             const localVarPath = `/api/v2/eth/wallets/batch-transactions`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -5069,9 +5069,9 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        sendTransaction1: async (createMultiSigTransactionRequest, options = {}) => {
+        sendTransaction: async (createMultiSigTransactionRequest, options = {}) => {
             if (createMultiSigTransactionRequest === null || createMultiSigTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createMultiSigTransactionRequest', 'Required parameter createMultiSigTransactionRequest was null or undefined when calling sendTransaction1.');
+                throw new base_1.RequiredError('createMultiSigTransactionRequest', 'Required parameter createMultiSigTransactionRequest was null or undefined when calling sendTransaction.');
             }
             const localVarPath = `/api/v2/eth/wallets/transactions`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -5094,12 +5094,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        validateIsAllowedAddress1: async (walletId, validateIsAllowedAddressRequest, options = {}) => {
+        validateIsAllowedAddress: async (walletId, validateIsAllowedAddressRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling validateIsAllowedAddress1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling validateIsAllowedAddress.');
             }
             if (validateIsAllowedAddressRequest === null || validateIsAllowedAddressRequest === undefined) {
-                throw new base_1.RequiredError('validateIsAllowedAddressRequest', 'Required parameter validateIsAllowedAddressRequest was null or undefined when calling validateIsAllowedAddress1.');
+                throw new base_1.RequiredError('validateIsAllowedAddressRequest', 'Required parameter validateIsAllowedAddressRequest was null or undefined when calling validateIsAllowedAddress.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/allowed-addresses/validate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -5127,50 +5127,50 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.EthWalletControllerApiFp = function (configuration) {
     return {
-        async activateAllowedAddresses1(walletId, activateAllowedAddressesRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).activateAllowedAddresses1(walletId, activateAllowedAddressesRequest, options);
+        async activateAllowedAddresses(walletId, activateAllowedAddressesRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).activateAllowedAddresses(walletId, activateAllowedAddressesRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async activateMasterWallet1(walletId, activateMasterWalletRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).activateMasterWallet1(walletId, activateMasterWalletRequest, options);
+        async activateMasterWallet(walletId, activateMasterWalletRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).activateMasterWallet(walletId, activateMasterWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createAllowedAddress1(walletId, createAllowedAddressRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).createAllowedAddress1(walletId, createAllowedAddressRequest, options);
+        async createAllowedAddress(walletId, createAllowedAddressRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).createAllowedAddress(walletId, createAllowedAddressRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createMasterWallet2(createInactiveMasterWalletRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).createMasterWallet2(createInactiveMasterWalletRequest, options);
+        async createMasterWallet1(createInactiveMasterWalletRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).createMasterWallet1(createInactiveMasterWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createUserWallet1(walletId, createUserWalletRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).createUserWallet1(walletId, createUserWalletRequest, options);
+        async createUserWallet(walletId, createUserWalletRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).createUserWallet(walletId, createUserWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createWalletWithdrawalPolicy1(walletId, createWithdrawalPolicyRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).createWalletWithdrawalPolicy1(walletId, createWithdrawalPolicyRequest, options);
+        async createWalletWithdrawalPolicy(walletId, createWithdrawalPolicyRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).createWalletWithdrawalPolicy(walletId, createWithdrawalPolicyRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options);
+        async deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -5183,22 +5183,22 @@ exports.EthWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAllWalletWithdrawalPolicies1(walletId, pageable, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getAllWalletWithdrawalPolicies1(walletId, pageable, options);
+        async getAllWalletWithdrawalPolicies(walletId, pageable, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getAllWalletWithdrawalPolicies(walletId, pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAllowedAddress1(walletId, allowedAddressId, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getAllowedAddress1(walletId, allowedAddressId, options);
+        async getAllowedAddress(walletId, allowedAddressId, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getAllowedAddress(walletId, allowedAddressId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAllowedAddressesByCoinId2(walletId, coinId, pageable, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getAllowedAddressesByCoinId2(walletId, coinId, pageable, options);
+        async getAllowedAddressesByCoinId1(walletId, coinId, pageable, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getAllowedAddressesByCoinId1(walletId, coinId, pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -5218,120 +5218,120 @@ exports.EthWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWallet1(walletId, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getMasterWallet1(walletId, options);
+        async getMasterWallet(walletId, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getMasterWallet(walletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWalletAccountKey1(walletId, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getMasterWalletAccountKey1(walletId, options);
+        async getMasterWalletAccountKey(walletId, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getMasterWalletAccountKey(walletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWalletBalance1(walletId, symbol, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getMasterWalletBalance1(walletId, symbol, options);
+        async getMasterWalletBalance(walletId, symbol, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getMasterWalletBalance(walletId, symbol, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWalletInitialKey1(walletId, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getMasterWalletInitialKey1(walletId, options);
+        async getMasterWalletInitialKey(walletId, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getMasterWalletInitialKey(walletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWalletNonce1(walletId, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getMasterWalletNonce1(walletId, options);
+        async getMasterWalletNonce(walletId, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getMasterWalletNonce(walletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWallets2(sort, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getMasterWallets2(sort, options);
+        async getMasterWallets1(sort, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getMasterWallets1(sort, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWallet1(walletId, userWalletId, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getUserWallet1(walletId, userWalletId, options);
+        async getUserWallet(walletId, userWalletId, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getUserWallet(walletId, userWalletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWalletBalance1(walletId, userWalletId, symbol, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getUserWalletBalance1(walletId, userWalletId, symbol, options);
+        async getUserWalletBalance(walletId, userWalletId, symbol, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getUserWalletBalance(walletId, userWalletId, symbol, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWalletNonce1(walletId, userWalletId, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getUserWalletNonce1(walletId, userWalletId, options);
+        async getUserWalletNonce(walletId, userWalletId, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getUserWalletNonce(walletId, userWalletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWallets2(walletId, pageable, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getUserWallets2(walletId, pageable, options);
+        async getUserWallets1(walletId, pageable, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getUserWallets1(walletId, pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async inactivateAllowedAddresses1(walletId, inactivateAllowedAddressesRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).inactivateAllowedAddresses1(walletId, inactivateAllowedAddressesRequest, options);
+        async inactivateAllowedAddresses(walletId, inactivateAllowedAddressesRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).inactivateAllowedAddresses(walletId, inactivateAllowedAddressesRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchAccountKey1(walletId, updateAccountKeyRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).patchAccountKey1(walletId, updateAccountKeyRequest, options);
+        async patchAccountKey(walletId, updateAccountKeyRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).patchAccountKey(walletId, updateAccountKeyRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchMasterWalletName1(walletId, changeWalletNameRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).patchMasterWalletName1(walletId, changeWalletNameRequest, options);
+        async patchMasterWalletName(walletId, changeWalletNameRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).patchMasterWalletName(walletId, changeWalletNameRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchUserWalletName1(walletId, userWalletId, changeWalletNameRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).patchUserWalletName1(walletId, userWalletId, changeWalletNameRequest, options);
+        async patchUserWalletName(walletId, userWalletId, changeWalletNameRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).patchUserWalletName(walletId, userWalletId, changeWalletNameRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchWalletWithdrawalPolicy1(walletId, policyId, patchWithdrawalPolicyRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).patchWalletWithdrawalPolicy1(walletId, policyId, patchWithdrawalPolicyRequest, options);
+        async patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async recreateMasterWallet1(walletId, recreateWalletRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).recreateMasterWallet1(walletId, recreateWalletRequest, options);
+        async recreateMasterWallet(walletId, recreateWalletRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).recreateMasterWallet(walletId, recreateWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async recreateUserWallet1(walletId, userWalletId, recreateWalletRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).recreateUserWallet1(walletId, userWalletId, recreateWalletRequest, options);
+        async recreateUserWallet(walletId, userWalletId, recreateWalletRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).recreateUserWallet(walletId, userWalletId, recreateWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -5344,29 +5344,29 @@ exports.EthWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async resendTransaction1(resendTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).resendTransaction1(resendTransactionRequest, options);
+        async resendTransaction(resendTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).resendTransaction(resendTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async sendBatchTransaction1(createBatchTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).sendBatchTransaction1(createBatchTransactionRequest, options);
+        async sendBatchTransaction(createBatchTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).sendBatchTransaction(createBatchTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async sendTransaction1(createMultiSigTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).sendTransaction1(createMultiSigTransactionRequest, options);
+        async sendTransaction(createMultiSigTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).sendTransaction(createMultiSigTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async validateIsAllowedAddress1(walletId, validateIsAllowedAddressRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).validateIsAllowedAddress1(walletId, validateIsAllowedAddressRequest, options);
+        async validateIsAllowedAddress(walletId, validateIsAllowedAddressRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).validateIsAllowedAddress(walletId, validateIsAllowedAddressRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -5376,38 +5376,38 @@ exports.EthWalletControllerApiFp = function (configuration) {
 };
 exports.EthWalletControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        activateAllowedAddresses1(walletId, activateAllowedAddressesRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).activateAllowedAddresses1(walletId, activateAllowedAddressesRequest, options).then((request) => request(axios, basePath));
+        activateAllowedAddresses(walletId, activateAllowedAddressesRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).activateAllowedAddresses(walletId, activateAllowedAddressesRequest, options).then((request) => request(axios, basePath));
         },
-        activateMasterWallet1(walletId, activateMasterWalletRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).activateMasterWallet1(walletId, activateMasterWalletRequest, options).then((request) => request(axios, basePath));
+        activateMasterWallet(walletId, activateMasterWalletRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).activateMasterWallet(walletId, activateMasterWalletRequest, options).then((request) => request(axios, basePath));
         },
-        createAllowedAddress1(walletId, createAllowedAddressRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).createAllowedAddress1(walletId, createAllowedAddressRequest, options).then((request) => request(axios, basePath));
+        createAllowedAddress(walletId, createAllowedAddressRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).createAllowedAddress(walletId, createAllowedAddressRequest, options).then((request) => request(axios, basePath));
         },
-        createMasterWallet2(createInactiveMasterWalletRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).createMasterWallet2(createInactiveMasterWalletRequest, options).then((request) => request(axios, basePath));
+        createMasterWallet1(createInactiveMasterWalletRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).createMasterWallet1(createInactiveMasterWalletRequest, options).then((request) => request(axios, basePath));
         },
-        createUserWallet1(walletId, createUserWalletRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).createUserWallet1(walletId, createUserWalletRequest, options).then((request) => request(axios, basePath));
+        createUserWallet(walletId, createUserWalletRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).createUserWallet(walletId, createUserWalletRequest, options).then((request) => request(axios, basePath));
         },
-        createWalletWithdrawalPolicy1(walletId, createWithdrawalPolicyRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).createWalletWithdrawalPolicy1(walletId, createWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
+        createWalletWithdrawalPolicy(walletId, createWithdrawalPolicyRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).createWalletWithdrawalPolicy(walletId, createWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
         },
-        deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(axios, basePath));
+        deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(axios, basePath));
         },
         flush(walletId, flushRequest, options) {
             return exports.EthWalletControllerApiFp(configuration).flush(walletId, flushRequest, options).then((request) => request(axios, basePath));
         },
-        getAllWalletWithdrawalPolicies1(walletId, pageable, options) {
-            return exports.EthWalletControllerApiFp(configuration).getAllWalletWithdrawalPolicies1(walletId, pageable, options).then((request) => request(axios, basePath));
+        getAllWalletWithdrawalPolicies(walletId, pageable, options) {
+            return exports.EthWalletControllerApiFp(configuration).getAllWalletWithdrawalPolicies(walletId, pageable, options).then((request) => request(axios, basePath));
         },
-        getAllowedAddress1(walletId, allowedAddressId, options) {
-            return exports.EthWalletControllerApiFp(configuration).getAllowedAddress1(walletId, allowedAddressId, options).then((request) => request(axios, basePath));
+        getAllowedAddress(walletId, allowedAddressId, options) {
+            return exports.EthWalletControllerApiFp(configuration).getAllowedAddress(walletId, allowedAddressId, options).then((request) => request(axios, basePath));
         },
-        getAllowedAddressesByCoinId2(walletId, coinId, pageable, options) {
-            return exports.EthWalletControllerApiFp(configuration).getAllowedAddressesByCoinId2(walletId, coinId, pageable, options).then((request) => request(axios, basePath));
+        getAllowedAddressesByCoinId1(walletId, coinId, pageable, options) {
+            return exports.EthWalletControllerApiFp(configuration).getAllowedAddressesByCoinId1(walletId, coinId, pageable, options).then((request) => request(axios, basePath));
         },
         getFlushTransaction(walletId, transactionId, options) {
             return exports.EthWalletControllerApiFp(configuration).getFlushTransaction(walletId, transactionId, options).then((request) => request(axios, basePath));
@@ -5415,107 +5415,107 @@ exports.EthWalletControllerApiFactory = function (configuration, basePath, axios
         getFlushTransactions(walletId, pageable, searchCondition, options) {
             return exports.EthWalletControllerApiFp(configuration).getFlushTransactions(walletId, pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
-        getMasterWallet1(walletId, options) {
-            return exports.EthWalletControllerApiFp(configuration).getMasterWallet1(walletId, options).then((request) => request(axios, basePath));
+        getMasterWallet(walletId, options) {
+            return exports.EthWalletControllerApiFp(configuration).getMasterWallet(walletId, options).then((request) => request(axios, basePath));
         },
-        getMasterWalletAccountKey1(walletId, options) {
-            return exports.EthWalletControllerApiFp(configuration).getMasterWalletAccountKey1(walletId, options).then((request) => request(axios, basePath));
+        getMasterWalletAccountKey(walletId, options) {
+            return exports.EthWalletControllerApiFp(configuration).getMasterWalletAccountKey(walletId, options).then((request) => request(axios, basePath));
         },
-        getMasterWalletBalance1(walletId, symbol, options) {
-            return exports.EthWalletControllerApiFp(configuration).getMasterWalletBalance1(walletId, symbol, options).then((request) => request(axios, basePath));
+        getMasterWalletBalance(walletId, symbol, options) {
+            return exports.EthWalletControllerApiFp(configuration).getMasterWalletBalance(walletId, symbol, options).then((request) => request(axios, basePath));
         },
-        getMasterWalletInitialKey1(walletId, options) {
-            return exports.EthWalletControllerApiFp(configuration).getMasterWalletInitialKey1(walletId, options).then((request) => request(axios, basePath));
+        getMasterWalletInitialKey(walletId, options) {
+            return exports.EthWalletControllerApiFp(configuration).getMasterWalletInitialKey(walletId, options).then((request) => request(axios, basePath));
         },
-        getMasterWalletNonce1(walletId, options) {
-            return exports.EthWalletControllerApiFp(configuration).getMasterWalletNonce1(walletId, options).then((request) => request(axios, basePath));
+        getMasterWalletNonce(walletId, options) {
+            return exports.EthWalletControllerApiFp(configuration).getMasterWalletNonce(walletId, options).then((request) => request(axios, basePath));
         },
-        getMasterWallets2(sort, options) {
-            return exports.EthWalletControllerApiFp(configuration).getMasterWallets2(sort, options).then((request) => request(axios, basePath));
+        getMasterWallets1(sort, options) {
+            return exports.EthWalletControllerApiFp(configuration).getMasterWallets1(sort, options).then((request) => request(axios, basePath));
         },
-        getUserWallet1(walletId, userWalletId, options) {
-            return exports.EthWalletControllerApiFp(configuration).getUserWallet1(walletId, userWalletId, options).then((request) => request(axios, basePath));
+        getUserWallet(walletId, userWalletId, options) {
+            return exports.EthWalletControllerApiFp(configuration).getUserWallet(walletId, userWalletId, options).then((request) => request(axios, basePath));
         },
-        getUserWalletBalance1(walletId, userWalletId, symbol, options) {
-            return exports.EthWalletControllerApiFp(configuration).getUserWalletBalance1(walletId, userWalletId, symbol, options).then((request) => request(axios, basePath));
+        getUserWalletBalance(walletId, userWalletId, symbol, options) {
+            return exports.EthWalletControllerApiFp(configuration).getUserWalletBalance(walletId, userWalletId, symbol, options).then((request) => request(axios, basePath));
         },
-        getUserWalletNonce1(walletId, userWalletId, options) {
-            return exports.EthWalletControllerApiFp(configuration).getUserWalletNonce1(walletId, userWalletId, options).then((request) => request(axios, basePath));
+        getUserWalletNonce(walletId, userWalletId, options) {
+            return exports.EthWalletControllerApiFp(configuration).getUserWalletNonce(walletId, userWalletId, options).then((request) => request(axios, basePath));
         },
-        getUserWallets2(walletId, pageable, options) {
-            return exports.EthWalletControllerApiFp(configuration).getUserWallets2(walletId, pageable, options).then((request) => request(axios, basePath));
+        getUserWallets1(walletId, pageable, options) {
+            return exports.EthWalletControllerApiFp(configuration).getUserWallets1(walletId, pageable, options).then((request) => request(axios, basePath));
         },
-        inactivateAllowedAddresses1(walletId, inactivateAllowedAddressesRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).inactivateAllowedAddresses1(walletId, inactivateAllowedAddressesRequest, options).then((request) => request(axios, basePath));
+        inactivateAllowedAddresses(walletId, inactivateAllowedAddressesRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).inactivateAllowedAddresses(walletId, inactivateAllowedAddressesRequest, options).then((request) => request(axios, basePath));
         },
-        patchAccountKey1(walletId, updateAccountKeyRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).patchAccountKey1(walletId, updateAccountKeyRequest, options).then((request) => request(axios, basePath));
+        patchAccountKey(walletId, updateAccountKeyRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).patchAccountKey(walletId, updateAccountKeyRequest, options).then((request) => request(axios, basePath));
         },
-        patchMasterWalletName1(walletId, changeWalletNameRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).patchMasterWalletName1(walletId, changeWalletNameRequest, options).then((request) => request(axios, basePath));
+        patchMasterWalletName(walletId, changeWalletNameRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).patchMasterWalletName(walletId, changeWalletNameRequest, options).then((request) => request(axios, basePath));
         },
-        patchUserWalletName1(walletId, userWalletId, changeWalletNameRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).patchUserWalletName1(walletId, userWalletId, changeWalletNameRequest, options).then((request) => request(axios, basePath));
+        patchUserWalletName(walletId, userWalletId, changeWalletNameRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).patchUserWalletName(walletId, userWalletId, changeWalletNameRequest, options).then((request) => request(axios, basePath));
         },
-        patchWalletWithdrawalPolicy1(walletId, policyId, patchWithdrawalPolicyRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).patchWalletWithdrawalPolicy1(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
+        patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
         },
-        recreateMasterWallet1(walletId, recreateWalletRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).recreateMasterWallet1(walletId, recreateWalletRequest, options).then((request) => request(axios, basePath));
+        recreateMasterWallet(walletId, recreateWalletRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).recreateMasterWallet(walletId, recreateWalletRequest, options).then((request) => request(axios, basePath));
         },
-        recreateUserWallet1(walletId, userWalletId, recreateWalletRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).recreateUserWallet1(walletId, userWalletId, recreateWalletRequest, options).then((request) => request(axios, basePath));
+        recreateUserWallet(walletId, userWalletId, recreateWalletRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).recreateUserWallet(walletId, userWalletId, recreateWalletRequest, options).then((request) => request(axios, basePath));
         },
         replaceTransaction(replaceTransactionRequest, options) {
             return exports.EthWalletControllerApiFp(configuration).replaceTransaction(replaceTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        resendTransaction1(resendTransactionRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).resendTransaction1(resendTransactionRequest, options).then((request) => request(axios, basePath));
+        resendTransaction(resendTransactionRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).resendTransaction(resendTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        sendBatchTransaction1(createBatchTransactionRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).sendBatchTransaction1(createBatchTransactionRequest, options).then((request) => request(axios, basePath));
+        sendBatchTransaction(createBatchTransactionRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).sendBatchTransaction(createBatchTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        sendTransaction1(createMultiSigTransactionRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).sendTransaction1(createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
+        sendTransaction(createMultiSigTransactionRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).sendTransaction(createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        validateIsAllowedAddress1(walletId, validateIsAllowedAddressRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).validateIsAllowedAddress1(walletId, validateIsAllowedAddressRequest, options).then((request) => request(axios, basePath));
+        validateIsAllowedAddress(walletId, validateIsAllowedAddressRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).validateIsAllowedAddress(walletId, validateIsAllowedAddressRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 class EthWalletControllerApi extends base_1.BaseAPI {
-    activateAllowedAddresses1(walletId, activateAllowedAddressesRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).activateAllowedAddresses1(walletId, activateAllowedAddressesRequest, options).then((request) => request(this.axios, this.basePath));
+    activateAllowedAddresses(walletId, activateAllowedAddressesRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).activateAllowedAddresses(walletId, activateAllowedAddressesRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    activateMasterWallet1(walletId, activateMasterWalletRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).activateMasterWallet1(walletId, activateMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    activateMasterWallet(walletId, activateMasterWalletRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).activateMasterWallet(walletId, activateMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createAllowedAddress1(walletId, createAllowedAddressRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).createAllowedAddress1(walletId, createAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
+    createAllowedAddress(walletId, createAllowedAddressRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).createAllowedAddress(walletId, createAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createMasterWallet2(createInactiveMasterWalletRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).createMasterWallet2(createInactiveMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    createMasterWallet1(createInactiveMasterWalletRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).createMasterWallet1(createInactiveMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createUserWallet1(walletId, createUserWalletRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).createUserWallet1(walletId, createUserWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    createUserWallet(walletId, createUserWalletRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).createUserWallet(walletId, createUserWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createWalletWithdrawalPolicy1(walletId, createWithdrawalPolicyRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).createWalletWithdrawalPolicy1(walletId, createWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
+    createWalletWithdrawalPolicy(walletId, createWithdrawalPolicyRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).createWalletWithdrawalPolicy(walletId, createWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
+    deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
     }
     flush(walletId, flushRequest, options) {
         return exports.EthWalletControllerApiFp(this.configuration).flush(walletId, flushRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    getAllWalletWithdrawalPolicies1(walletId, pageable, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getAllWalletWithdrawalPolicies1(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
+    getAllWalletWithdrawalPolicies(walletId, pageable, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getAllWalletWithdrawalPolicies(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    getAllowedAddress1(walletId, allowedAddressId, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getAllowedAddress1(walletId, allowedAddressId, options).then((request) => request(this.axios, this.basePath));
+    getAllowedAddress(walletId, allowedAddressId, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getAllowedAddress(walletId, allowedAddressId, options).then((request) => request(this.axios, this.basePath));
     }
-    getAllowedAddressesByCoinId2(walletId, coinId, pageable, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getAllowedAddressesByCoinId2(walletId, coinId, pageable, options).then((request) => request(this.axios, this.basePath));
+    getAllowedAddressesByCoinId1(walletId, coinId, pageable, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getAllowedAddressesByCoinId1(walletId, coinId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
     getFlushTransaction(walletId, transactionId, options) {
         return exports.EthWalletControllerApiFp(this.configuration).getFlushTransaction(walletId, transactionId, options).then((request) => request(this.axios, this.basePath));
@@ -5523,82 +5523,82 @@ class EthWalletControllerApi extends base_1.BaseAPI {
     getFlushTransactions(walletId, pageable, searchCondition, options) {
         return exports.EthWalletControllerApiFp(this.configuration).getFlushTransactions(walletId, pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWallet1(walletId, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getMasterWallet1(walletId, options).then((request) => request(this.axios, this.basePath));
+    getMasterWallet(walletId, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getMasterWallet(walletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWalletAccountKey1(walletId, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getMasterWalletAccountKey1(walletId, options).then((request) => request(this.axios, this.basePath));
+    getMasterWalletAccountKey(walletId, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getMasterWalletAccountKey(walletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWalletBalance1(walletId, symbol, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getMasterWalletBalance1(walletId, symbol, options).then((request) => request(this.axios, this.basePath));
+    getMasterWalletBalance(walletId, symbol, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getMasterWalletBalance(walletId, symbol, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWalletInitialKey1(walletId, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getMasterWalletInitialKey1(walletId, options).then((request) => request(this.axios, this.basePath));
+    getMasterWalletInitialKey(walletId, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getMasterWalletInitialKey(walletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWalletNonce1(walletId, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getMasterWalletNonce1(walletId, options).then((request) => request(this.axios, this.basePath));
+    getMasterWalletNonce(walletId, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getMasterWalletNonce(walletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWallets2(sort, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getMasterWallets2(sort, options).then((request) => request(this.axios, this.basePath));
+    getMasterWallets1(sort, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getMasterWallets1(sort, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWallet1(walletId, userWalletId, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getUserWallet1(walletId, userWalletId, options).then((request) => request(this.axios, this.basePath));
+    getUserWallet(walletId, userWalletId, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getUserWallet(walletId, userWalletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWalletBalance1(walletId, userWalletId, symbol, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getUserWalletBalance1(walletId, userWalletId, symbol, options).then((request) => request(this.axios, this.basePath));
+    getUserWalletBalance(walletId, userWalletId, symbol, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getUserWalletBalance(walletId, userWalletId, symbol, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWalletNonce1(walletId, userWalletId, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getUserWalletNonce1(walletId, userWalletId, options).then((request) => request(this.axios, this.basePath));
+    getUserWalletNonce(walletId, userWalletId, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getUserWalletNonce(walletId, userWalletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWallets2(walletId, pageable, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getUserWallets2(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
+    getUserWallets1(walletId, pageable, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getUserWallets1(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    inactivateAllowedAddresses1(walletId, inactivateAllowedAddressesRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).inactivateAllowedAddresses1(walletId, inactivateAllowedAddressesRequest, options).then((request) => request(this.axios, this.basePath));
+    inactivateAllowedAddresses(walletId, inactivateAllowedAddressesRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).inactivateAllowedAddresses(walletId, inactivateAllowedAddressesRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    patchAccountKey1(walletId, updateAccountKeyRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).patchAccountKey1(walletId, updateAccountKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    patchAccountKey(walletId, updateAccountKeyRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).patchAccountKey(walletId, updateAccountKeyRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    patchMasterWalletName1(walletId, changeWalletNameRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).patchMasterWalletName1(walletId, changeWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
+    patchMasterWalletName(walletId, changeWalletNameRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).patchMasterWalletName(walletId, changeWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    patchUserWalletName1(walletId, userWalletId, changeWalletNameRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).patchUserWalletName1(walletId, userWalletId, changeWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
+    patchUserWalletName(walletId, userWalletId, changeWalletNameRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).patchUserWalletName(walletId, userWalletId, changeWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    patchWalletWithdrawalPolicy1(walletId, policyId, patchWithdrawalPolicyRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicy1(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
+    patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    recreateMasterWallet1(walletId, recreateWalletRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).recreateMasterWallet1(walletId, recreateWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    recreateMasterWallet(walletId, recreateWalletRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).recreateMasterWallet(walletId, recreateWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    recreateUserWallet1(walletId, userWalletId, recreateWalletRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).recreateUserWallet1(walletId, userWalletId, recreateWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    recreateUserWallet(walletId, userWalletId, recreateWalletRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).recreateUserWallet(walletId, userWalletId, recreateWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
     replaceTransaction(replaceTransactionRequest, options) {
         return exports.EthWalletControllerApiFp(this.configuration).replaceTransaction(replaceTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    resendTransaction1(resendTransactionRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).resendTransaction1(resendTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    resendTransaction(resendTransactionRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).resendTransaction(resendTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    sendBatchTransaction1(createBatchTransactionRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).sendBatchTransaction1(createBatchTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    sendBatchTransaction(createBatchTransactionRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).sendBatchTransaction(createBatchTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    sendTransaction1(createMultiSigTransactionRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).sendTransaction1(createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    sendTransaction(createMultiSigTransactionRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).sendTransaction(createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    validateIsAllowedAddress1(walletId, validateIsAllowedAddressRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).validateIsAllowedAddress1(walletId, validateIsAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
+    validateIsAllowedAddress(walletId, validateIsAllowedAddressRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).validateIsAllowedAddress(walletId, validateIsAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.EthWalletControllerApi = EthWalletControllerApi;
 exports.EthWithdrawalApprovalControllerApiAxiosParamCreator = function (configuration) {
     return {
-        approveWithdrawalApproval1: async (withdrawalApprovalId, approveWithdrawalApprovalRequest, options = {}) => {
+        approveWithdrawalApproval: async (withdrawalApprovalId, approveWithdrawalApprovalRequest, options = {}) => {
             if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
-                throw new base_1.RequiredError('withdrawalApprovalId', 'Required parameter withdrawalApprovalId was null or undefined when calling approveWithdrawalApproval1.');
+                throw new base_1.RequiredError('withdrawalApprovalId', 'Required parameter withdrawalApprovalId was null or undefined when calling approveWithdrawalApproval.');
             }
             if (approveWithdrawalApprovalRequest === null || approveWithdrawalApprovalRequest === undefined) {
-                throw new base_1.RequiredError('approveWithdrawalApprovalRequest', 'Required parameter approveWithdrawalApprovalRequest was null or undefined when calling approveWithdrawalApproval1.');
+                throw new base_1.RequiredError('approveWithdrawalApprovalRequest', 'Required parameter approveWithdrawalApprovalRequest was null or undefined when calling approveWithdrawalApproval.');
             }
             const localVarPath = `/api/v2/eth/withdrawal-approvals/{withdrawalApprovalId}/approve`
                 .replace(`{${"withdrawalApprovalId"}}`, encodeURIComponent(String(withdrawalApprovalId)));
@@ -5622,12 +5622,12 @@ exports.EthWithdrawalApprovalControllerApiAxiosParamCreator = function (configur
                 options: localVarRequestOptions,
             };
         },
-        rejectWithdrawalApproval1: async (withdrawalApprovalId, rejectWithdrawalApprovalRequest, options = {}) => {
+        rejectWithdrawalApproval: async (withdrawalApprovalId, rejectWithdrawalApprovalRequest, options = {}) => {
             if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
-                throw new base_1.RequiredError('withdrawalApprovalId', 'Required parameter withdrawalApprovalId was null or undefined when calling rejectWithdrawalApproval1.');
+                throw new base_1.RequiredError('withdrawalApprovalId', 'Required parameter withdrawalApprovalId was null or undefined when calling rejectWithdrawalApproval.');
             }
             if (rejectWithdrawalApprovalRequest === null || rejectWithdrawalApprovalRequest === undefined) {
-                throw new base_1.RequiredError('rejectWithdrawalApprovalRequest', 'Required parameter rejectWithdrawalApprovalRequest was null or undefined when calling rejectWithdrawalApproval1.');
+                throw new base_1.RequiredError('rejectWithdrawalApprovalRequest', 'Required parameter rejectWithdrawalApprovalRequest was null or undefined when calling rejectWithdrawalApproval.');
             }
             const localVarPath = `/api/v2/eth/withdrawal-approvals/{withdrawalApprovalId}/reject`
                 .replace(`{${"withdrawalApprovalId"}}`, encodeURIComponent(String(withdrawalApprovalId)));
@@ -5655,15 +5655,15 @@ exports.EthWithdrawalApprovalControllerApiAxiosParamCreator = function (configur
 };
 exports.EthWithdrawalApprovalControllerApiFp = function (configuration) {
     return {
-        async approveWithdrawalApproval1(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
-            const localVarAxiosArgs = await exports.EthWithdrawalApprovalControllerApiAxiosParamCreator(configuration).approveWithdrawalApproval1(withdrawalApprovalId, approveWithdrawalApprovalRequest, options);
+        async approveWithdrawalApproval(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
+            const localVarAxiosArgs = await exports.EthWithdrawalApprovalControllerApiAxiosParamCreator(configuration).approveWithdrawalApproval(withdrawalApprovalId, approveWithdrawalApprovalRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async rejectWithdrawalApproval1(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
-            const localVarAxiosArgs = await exports.EthWithdrawalApprovalControllerApiAxiosParamCreator(configuration).rejectWithdrawalApproval1(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options);
+        async rejectWithdrawalApproval(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
+            const localVarAxiosArgs = await exports.EthWithdrawalApprovalControllerApiAxiosParamCreator(configuration).rejectWithdrawalApproval(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -5673,20 +5673,20 @@ exports.EthWithdrawalApprovalControllerApiFp = function (configuration) {
 };
 exports.EthWithdrawalApprovalControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        approveWithdrawalApproval1(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
-            return exports.EthWithdrawalApprovalControllerApiFp(configuration).approveWithdrawalApproval1(withdrawalApprovalId, approveWithdrawalApprovalRequest, options).then((request) => request(axios, basePath));
+        approveWithdrawalApproval(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
+            return exports.EthWithdrawalApprovalControllerApiFp(configuration).approveWithdrawalApproval(withdrawalApprovalId, approveWithdrawalApprovalRequest, options).then((request) => request(axios, basePath));
         },
-        rejectWithdrawalApproval1(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
-            return exports.EthWithdrawalApprovalControllerApiFp(configuration).rejectWithdrawalApproval1(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options).then((request) => request(axios, basePath));
+        rejectWithdrawalApproval(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
+            return exports.EthWithdrawalApprovalControllerApiFp(configuration).rejectWithdrawalApproval(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 class EthWithdrawalApprovalControllerApi extends base_1.BaseAPI {
-    approveWithdrawalApproval1(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
-        return exports.EthWithdrawalApprovalControllerApiFp(this.configuration).approveWithdrawalApproval1(withdrawalApprovalId, approveWithdrawalApprovalRequest, options).then((request) => request(this.axios, this.basePath));
+    approveWithdrawalApproval(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
+        return exports.EthWithdrawalApprovalControllerApiFp(this.configuration).approveWithdrawalApproval(withdrawalApprovalId, approveWithdrawalApprovalRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    rejectWithdrawalApproval1(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
-        return exports.EthWithdrawalApprovalControllerApiFp(this.configuration).rejectWithdrawalApproval1(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options).then((request) => request(this.axios, this.basePath));
+    rejectWithdrawalApproval(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
+        return exports.EthWithdrawalApprovalControllerApiFp(this.configuration).rejectWithdrawalApproval(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.EthWithdrawalApprovalControllerApi = EthWithdrawalApprovalControllerApi;
@@ -5795,9 +5795,9 @@ class EventControllerApi extends base_1.BaseAPI {
 exports.EventControllerApi = EventControllerApi;
 exports.KlayAdminControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getCoin1: async (coinId, options = {}) => {
+        getCoin5: async (coinId, options = {}) => {
             if (coinId === null || coinId === undefined) {
-                throw new base_1.RequiredError('coinId', 'Required parameter coinId was null or undefined when calling getCoin1.');
+                throw new base_1.RequiredError('coinId', 'Required parameter coinId was null or undefined when calling getCoin5.');
             }
             const localVarPath = `/api/v2/klay/admin/coins/{coinId}`
                 .replace(`{${"coinId"}}`, encodeURIComponent(String(coinId)));
@@ -5818,12 +5818,12 @@ exports.KlayAdminControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getExternalWithdrawals: async (pageable, searchCondition, options = {}) => {
+        getExternalWithdrawals2: async (pageable, searchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getExternalWithdrawals.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getExternalWithdrawals2.');
             }
             if (searchCondition === null || searchCondition === undefined) {
-                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getExternalWithdrawals.');
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getExternalWithdrawals2.');
             }
             const localVarPath = `/api/v2/klay/admin/external-withdrawals`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -5849,9 +5849,9 @@ exports.KlayAdminControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWallets1: async (pageable, options = {}) => {
+        getMasterWallets5: async (pageable, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getMasterWallets1.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getMasterWallets5.');
             }
             const localVarPath = `/api/v2/klay/admin/master-wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -5874,9 +5874,9 @@ exports.KlayAdminControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWallets1: async (pageable, options = {}) => {
+        getUserWallets5: async (pageable, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getUserWallets1.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getUserWallets5.');
             }
             const localVarPath = `/api/v2/klay/admin/user-wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -5899,12 +5899,12 @@ exports.KlayAdminControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getValueTransferEvents: async (pageable, searchCondition, options = {}) => {
+        getValueTransferEvents8: async (pageable, searchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents8.');
             }
             if (searchCondition === null || searchCondition === undefined) {
-                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents.');
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents8.');
             }
             const localVarPath = `/api/v2/klay/admin/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -5934,36 +5934,36 @@ exports.KlayAdminControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.KlayAdminControllerApiFp = function (configuration) {
     return {
-        async getCoin1(coinId, options) {
-            const localVarAxiosArgs = await exports.KlayAdminControllerApiAxiosParamCreator(configuration).getCoin1(coinId, options);
+        async getCoin5(coinId, options) {
+            const localVarAxiosArgs = await exports.KlayAdminControllerApiAxiosParamCreator(configuration).getCoin5(coinId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getExternalWithdrawals(pageable, searchCondition, options) {
-            const localVarAxiosArgs = await exports.KlayAdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawals(pageable, searchCondition, options);
+        async getExternalWithdrawals2(pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.KlayAdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawals2(pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWallets1(pageable, options) {
-            const localVarAxiosArgs = await exports.KlayAdminControllerApiAxiosParamCreator(configuration).getMasterWallets1(pageable, options);
+        async getMasterWallets5(pageable, options) {
+            const localVarAxiosArgs = await exports.KlayAdminControllerApiAxiosParamCreator(configuration).getMasterWallets5(pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWallets1(pageable, options) {
-            const localVarAxiosArgs = await exports.KlayAdminControllerApiAxiosParamCreator(configuration).getUserWallets1(pageable, options);
+        async getUserWallets5(pageable, options) {
+            const localVarAxiosArgs = await exports.KlayAdminControllerApiAxiosParamCreator(configuration).getUserWallets5(pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getValueTransferEvents(pageable, searchCondition, options) {
-            const localVarAxiosArgs = await exports.KlayAdminControllerApiAxiosParamCreator(configuration).getValueTransferEvents(pageable, searchCondition, options);
+        async getValueTransferEvents8(pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.KlayAdminControllerApiAxiosParamCreator(configuration).getValueTransferEvents8(pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -5973,46 +5973,46 @@ exports.KlayAdminControllerApiFp = function (configuration) {
 };
 exports.KlayAdminControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getCoin1(coinId, options) {
-            return exports.KlayAdminControllerApiFp(configuration).getCoin1(coinId, options).then((request) => request(axios, basePath));
+        getCoin5(coinId, options) {
+            return exports.KlayAdminControllerApiFp(configuration).getCoin5(coinId, options).then((request) => request(axios, basePath));
         },
-        getExternalWithdrawals(pageable, searchCondition, options) {
-            return exports.KlayAdminControllerApiFp(configuration).getExternalWithdrawals(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getExternalWithdrawals2(pageable, searchCondition, options) {
+            return exports.KlayAdminControllerApiFp(configuration).getExternalWithdrawals2(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
-        getMasterWallets1(pageable, options) {
-            return exports.KlayAdminControllerApiFp(configuration).getMasterWallets1(pageable, options).then((request) => request(axios, basePath));
+        getMasterWallets5(pageable, options) {
+            return exports.KlayAdminControllerApiFp(configuration).getMasterWallets5(pageable, options).then((request) => request(axios, basePath));
         },
-        getUserWallets1(pageable, options) {
-            return exports.KlayAdminControllerApiFp(configuration).getUserWallets1(pageable, options).then((request) => request(axios, basePath));
+        getUserWallets5(pageable, options) {
+            return exports.KlayAdminControllerApiFp(configuration).getUserWallets5(pageable, options).then((request) => request(axios, basePath));
         },
-        getValueTransferEvents(pageable, searchCondition, options) {
-            return exports.KlayAdminControllerApiFp(configuration).getValueTransferEvents(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents8(pageable, searchCondition, options) {
+            return exports.KlayAdminControllerApiFp(configuration).getValueTransferEvents8(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
 class KlayAdminControllerApi extends base_1.BaseAPI {
-    getCoin1(coinId, options) {
-        return exports.KlayAdminControllerApiFp(this.configuration).getCoin1(coinId, options).then((request) => request(this.axios, this.basePath));
+    getCoin5(coinId, options) {
+        return exports.KlayAdminControllerApiFp(this.configuration).getCoin5(coinId, options).then((request) => request(this.axios, this.basePath));
     }
-    getExternalWithdrawals(pageable, searchCondition, options) {
-        return exports.KlayAdminControllerApiFp(this.configuration).getExternalWithdrawals(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    getExternalWithdrawals2(pageable, searchCondition, options) {
+        return exports.KlayAdminControllerApiFp(this.configuration).getExternalWithdrawals2(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWallets1(pageable, options) {
-        return exports.KlayAdminControllerApiFp(this.configuration).getMasterWallets1(pageable, options).then((request) => request(this.axios, this.basePath));
+    getMasterWallets5(pageable, options) {
+        return exports.KlayAdminControllerApiFp(this.configuration).getMasterWallets5(pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWallets1(pageable, options) {
-        return exports.KlayAdminControllerApiFp(this.configuration).getUserWallets1(pageable, options).then((request) => request(this.axios, this.basePath));
+    getUserWallets5(pageable, options) {
+        return exports.KlayAdminControllerApiFp(this.configuration).getUserWallets5(pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    getValueTransferEvents(pageable, searchCondition, options) {
-        return exports.KlayAdminControllerApiFp(this.configuration).getValueTransferEvents(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    getValueTransferEvents8(pageable, searchCondition, options) {
+        return exports.KlayAdminControllerApiFp(this.configuration).getValueTransferEvents8(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.KlayAdminControllerApi = KlayAdminControllerApi;
 exports.KlayCoinControllerApiAxiosParamCreator = function (configuration) {
     return {
-        createCoin: async (createCoinRequest, options = {}) => {
+        createCoin2: async (createCoinRequest, options = {}) => {
             if (createCoinRequest === null || createCoinRequest === undefined) {
-                throw new base_1.RequiredError('createCoinRequest', 'Required parameter createCoinRequest was null or undefined when calling createCoin.');
+                throw new base_1.RequiredError('createCoinRequest', 'Required parameter createCoinRequest was null or undefined when calling createCoin2.');
             }
             const localVarPath = `/api/v2/klay/coins`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6035,9 +6035,9 @@ exports.KlayCoinControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        deleteCoin: async (symbol, options = {}) => {
+        deleteCoin2: async (symbol, options = {}) => {
             if (symbol === null || symbol === undefined) {
-                throw new base_1.RequiredError('symbol', 'Required parameter symbol was null or undefined when calling deleteCoin.');
+                throw new base_1.RequiredError('symbol', 'Required parameter symbol was null or undefined when calling deleteCoin2.');
             }
             const localVarPath = `/api/v2/klay/coins/{symbol}`
                 .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
@@ -6058,9 +6058,9 @@ exports.KlayCoinControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAllCoins1: async (flag, options = {}) => {
+        getAllCoins3: async (flag, options = {}) => {
             if (flag === null || flag === undefined) {
-                throw new base_1.RequiredError('flag', 'Required parameter flag was null or undefined when calling getAllCoins1.');
+                throw new base_1.RequiredError('flag', 'Required parameter flag was null or undefined when calling getAllCoins3.');
             }
             const localVarPath = `/api/v2/klay/coins`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6083,9 +6083,9 @@ exports.KlayCoinControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getCoin: async (symbol, options = {}) => {
+        getCoin4: async (symbol, options = {}) => {
             if (symbol === null || symbol === undefined) {
-                throw new base_1.RequiredError('symbol', 'Required parameter symbol was null or undefined when calling getCoin.');
+                throw new base_1.RequiredError('symbol', 'Required parameter symbol was null or undefined when calling getCoin4.');
             }
             const localVarPath = `/api/v2/klay/coins/{symbol}`
                 .replace(`{${"symbol"}}`, encodeURIComponent(String(symbol)));
@@ -6106,9 +6106,9 @@ exports.KlayCoinControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchCoin: async (updateCoinRequest, options = {}) => {
+        patchCoin2: async (updateCoinRequest, options = {}) => {
             if (updateCoinRequest === null || updateCoinRequest === undefined) {
-                throw new base_1.RequiredError('updateCoinRequest', 'Required parameter updateCoinRequest was null or undefined when calling patchCoin.');
+                throw new base_1.RequiredError('updateCoinRequest', 'Required parameter updateCoinRequest was null or undefined when calling patchCoin2.');
             }
             const localVarPath = `/api/v2/klay/coins`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6135,36 +6135,36 @@ exports.KlayCoinControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.KlayCoinControllerApiFp = function (configuration) {
     return {
-        async createCoin(createCoinRequest, options) {
-            const localVarAxiosArgs = await exports.KlayCoinControllerApiAxiosParamCreator(configuration).createCoin(createCoinRequest, options);
+        async createCoin2(createCoinRequest, options) {
+            const localVarAxiosArgs = await exports.KlayCoinControllerApiAxiosParamCreator(configuration).createCoin2(createCoinRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async deleteCoin(symbol, options) {
-            const localVarAxiosArgs = await exports.KlayCoinControllerApiAxiosParamCreator(configuration).deleteCoin(symbol, options);
+        async deleteCoin2(symbol, options) {
+            const localVarAxiosArgs = await exports.KlayCoinControllerApiAxiosParamCreator(configuration).deleteCoin2(symbol, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAllCoins1(flag, options) {
-            const localVarAxiosArgs = await exports.KlayCoinControllerApiAxiosParamCreator(configuration).getAllCoins1(flag, options);
+        async getAllCoins3(flag, options) {
+            const localVarAxiosArgs = await exports.KlayCoinControllerApiAxiosParamCreator(configuration).getAllCoins3(flag, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getCoin(symbol, options) {
-            const localVarAxiosArgs = await exports.KlayCoinControllerApiAxiosParamCreator(configuration).getCoin(symbol, options);
+        async getCoin4(symbol, options) {
+            const localVarAxiosArgs = await exports.KlayCoinControllerApiAxiosParamCreator(configuration).getCoin4(symbol, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchCoin(updateCoinRequest, options) {
-            const localVarAxiosArgs = await exports.KlayCoinControllerApiAxiosParamCreator(configuration).patchCoin(updateCoinRequest, options);
+        async patchCoin2(updateCoinRequest, options) {
+            const localVarAxiosArgs = await exports.KlayCoinControllerApiAxiosParamCreator(configuration).patchCoin2(updateCoinRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -6174,49 +6174,49 @@ exports.KlayCoinControllerApiFp = function (configuration) {
 };
 exports.KlayCoinControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        createCoin(createCoinRequest, options) {
-            return exports.KlayCoinControllerApiFp(configuration).createCoin(createCoinRequest, options).then((request) => request(axios, basePath));
+        createCoin2(createCoinRequest, options) {
+            return exports.KlayCoinControllerApiFp(configuration).createCoin2(createCoinRequest, options).then((request) => request(axios, basePath));
         },
-        deleteCoin(symbol, options) {
-            return exports.KlayCoinControllerApiFp(configuration).deleteCoin(symbol, options).then((request) => request(axios, basePath));
+        deleteCoin2(symbol, options) {
+            return exports.KlayCoinControllerApiFp(configuration).deleteCoin2(symbol, options).then((request) => request(axios, basePath));
         },
-        getAllCoins1(flag, options) {
-            return exports.KlayCoinControllerApiFp(configuration).getAllCoins1(flag, options).then((request) => request(axios, basePath));
+        getAllCoins3(flag, options) {
+            return exports.KlayCoinControllerApiFp(configuration).getAllCoins3(flag, options).then((request) => request(axios, basePath));
         },
-        getCoin(symbol, options) {
-            return exports.KlayCoinControllerApiFp(configuration).getCoin(symbol, options).then((request) => request(axios, basePath));
+        getCoin4(symbol, options) {
+            return exports.KlayCoinControllerApiFp(configuration).getCoin4(symbol, options).then((request) => request(axios, basePath));
         },
-        patchCoin(updateCoinRequest, options) {
-            return exports.KlayCoinControllerApiFp(configuration).patchCoin(updateCoinRequest, options).then((request) => request(axios, basePath));
+        patchCoin2(updateCoinRequest, options) {
+            return exports.KlayCoinControllerApiFp(configuration).patchCoin2(updateCoinRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 class KlayCoinControllerApi extends base_1.BaseAPI {
-    createCoin(createCoinRequest, options) {
-        return exports.KlayCoinControllerApiFp(this.configuration).createCoin(createCoinRequest, options).then((request) => request(this.axios, this.basePath));
+    createCoin2(createCoinRequest, options) {
+        return exports.KlayCoinControllerApiFp(this.configuration).createCoin2(createCoinRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    deleteCoin(symbol, options) {
-        return exports.KlayCoinControllerApiFp(this.configuration).deleteCoin(symbol, options).then((request) => request(this.axios, this.basePath));
+    deleteCoin2(symbol, options) {
+        return exports.KlayCoinControllerApiFp(this.configuration).deleteCoin2(symbol, options).then((request) => request(this.axios, this.basePath));
     }
-    getAllCoins1(flag, options) {
-        return exports.KlayCoinControllerApiFp(this.configuration).getAllCoins1(flag, options).then((request) => request(this.axios, this.basePath));
+    getAllCoins3(flag, options) {
+        return exports.KlayCoinControllerApiFp(this.configuration).getAllCoins3(flag, options).then((request) => request(this.axios, this.basePath));
     }
-    getCoin(symbol, options) {
-        return exports.KlayCoinControllerApiFp(this.configuration).getCoin(symbol, options).then((request) => request(this.axios, this.basePath));
+    getCoin4(symbol, options) {
+        return exports.KlayCoinControllerApiFp(this.configuration).getCoin4(symbol, options).then((request) => request(this.axios, this.basePath));
     }
-    patchCoin(updateCoinRequest, options) {
-        return exports.KlayCoinControllerApiFp(this.configuration).patchCoin(updateCoinRequest, options).then((request) => request(this.axios, this.basePath));
+    patchCoin2(updateCoinRequest, options) {
+        return exports.KlayCoinControllerApiFp(this.configuration).patchCoin2(updateCoinRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.KlayCoinControllerApi = KlayCoinControllerApi;
 exports.KlayEventControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getCallEvents1: async (pageable, specs, options = {}) => {
+        getCallEvents5: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getCallEvents1.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getCallEvents5.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getCallEvents1.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getCallEvents5.');
             }
             const localVarPath = `/api/v2/klay/call-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6242,12 +6242,12 @@ exports.KlayEventControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getValueTransferEvents2: async (pageable, searchCondition, options = {}) => {
+        getValueTransferEvents7: async (pageable, searchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents2.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents7.');
             }
             if (searchCondition === null || searchCondition === undefined) {
-                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents2.');
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents7.');
             }
             const localVarPath = `/api/v2/klay/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6277,15 +6277,15 @@ exports.KlayEventControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.KlayEventControllerApiFp = function (configuration) {
     return {
-        async getCallEvents1(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.KlayEventControllerApiAxiosParamCreator(configuration).getCallEvents1(pageable, specs, options);
+        async getCallEvents5(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.KlayEventControllerApiAxiosParamCreator(configuration).getCallEvents5(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getValueTransferEvents2(pageable, searchCondition, options) {
-            const localVarAxiosArgs = await exports.KlayEventControllerApiAxiosParamCreator(configuration).getValueTransferEvents2(pageable, searchCondition, options);
+        async getValueTransferEvents7(pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.KlayEventControllerApiAxiosParamCreator(configuration).getValueTransferEvents7(pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -6295,26 +6295,26 @@ exports.KlayEventControllerApiFp = function (configuration) {
 };
 exports.KlayEventControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getCallEvents1(pageable, specs, options) {
-            return exports.KlayEventControllerApiFp(configuration).getCallEvents1(pageable, specs, options).then((request) => request(axios, basePath));
+        getCallEvents5(pageable, specs, options) {
+            return exports.KlayEventControllerApiFp(configuration).getCallEvents5(pageable, specs, options).then((request) => request(axios, basePath));
         },
-        getValueTransferEvents2(pageable, searchCondition, options) {
-            return exports.KlayEventControllerApiFp(configuration).getValueTransferEvents2(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents7(pageable, searchCondition, options) {
+            return exports.KlayEventControllerApiFp(configuration).getValueTransferEvents7(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
 class KlayEventControllerApi extends base_1.BaseAPI {
-    getCallEvents1(pageable, specs, options) {
-        return exports.KlayEventControllerApiFp(this.configuration).getCallEvents1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getCallEvents5(pageable, specs, options) {
+        return exports.KlayEventControllerApiFp(this.configuration).getCallEvents5(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
-    getValueTransferEvents2(pageable, searchCondition, options) {
-        return exports.KlayEventControllerApiFp(this.configuration).getValueTransferEvents2(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    getValueTransferEvents7(pageable, searchCondition, options) {
+        return exports.KlayEventControllerApiFp(this.configuration).getValueTransferEvents7(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.KlayEventControllerApi = KlayEventControllerApi;
 exports.KlayGasPriceControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getGasPrice: async (options = {}) => {
+        getGasPrice2: async (options = {}) => {
             const localVarPath = `/api/v2/klay/gas-price`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -6337,8 +6337,8 @@ exports.KlayGasPriceControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.KlayGasPriceControllerApiFp = function (configuration) {
     return {
-        async getGasPrice(options) {
-            const localVarAxiosArgs = await exports.KlayGasPriceControllerApiAxiosParamCreator(configuration).getGasPrice(options);
+        async getGasPrice2(options) {
+            const localVarAxiosArgs = await exports.KlayGasPriceControllerApiAxiosParamCreator(configuration).getGasPrice2(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -6348,20 +6348,20 @@ exports.KlayGasPriceControllerApiFp = function (configuration) {
 };
 exports.KlayGasPriceControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getGasPrice(options) {
-            return exports.KlayGasPriceControllerApiFp(configuration).getGasPrice(options).then((request) => request(axios, basePath));
+        getGasPrice2(options) {
+            return exports.KlayGasPriceControllerApiFp(configuration).getGasPrice2(options).then((request) => request(axios, basePath));
         },
     };
 };
 class KlayGasPriceControllerApi extends base_1.BaseAPI {
-    getGasPrice(options) {
-        return exports.KlayGasPriceControllerApiFp(this.configuration).getGasPrice(options).then((request) => request(this.axios, this.basePath));
+    getGasPrice2(options) {
+        return exports.KlayGasPriceControllerApiFp(this.configuration).getGasPrice2(options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.KlayGasPriceControllerApi = KlayGasPriceControllerApi;
 exports.KlayHenesisKeyControllerApiAxiosParamCreator = function (configuration) {
     return {
-        createExampleHenesisKey: async (options = {}) => {
+        createExampleHenesisKey2: async (options = {}) => {
             const localVarPath = `/api/v2/klay/henesis-keys/example`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -6380,9 +6380,9 @@ exports.KlayHenesisKeyControllerApiAxiosParamCreator = function (configuration) 
                 options: localVarRequestOptions,
             };
         },
-        createTransaction: async (createTransactionRequest, options = {}) => {
+        createTransaction2: async (createTransactionRequest, options = {}) => {
             if (createTransactionRequest === null || createTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createTransactionRequest', 'Required parameter createTransactionRequest was null or undefined when calling createTransaction.');
+                throw new base_1.RequiredError('createTransactionRequest', 'Required parameter createTransactionRequest was null or undefined when calling createTransaction2.');
             }
             const localVarPath = `/api/v2/klay/henesis-keys/transactions`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6405,7 +6405,7 @@ exports.KlayHenesisKeyControllerApiAxiosParamCreator = function (configuration) 
                 options: localVarRequestOptions,
             };
         },
-        getHenesisKey: async (options = {}) => {
+        getHenesisKey2: async (options = {}) => {
             const localVarPath = `/api/v2/klay/henesis-keys/me`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -6424,7 +6424,7 @@ exports.KlayHenesisKeyControllerApiAxiosParamCreator = function (configuration) 
                 options: localVarRequestOptions,
             };
         },
-        getHenesisKeyBalance: async (options = {}) => {
+        getHenesisKeyBalance2: async (options = {}) => {
             const localVarPath = `/api/v2/klay/henesis-keys/balance`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -6443,12 +6443,12 @@ exports.KlayHenesisKeyControllerApiAxiosParamCreator = function (configuration) 
                 options: localVarRequestOptions,
             };
         },
-        getHistoriesCsv: async (createdAtGte, createdAtLt, options = {}) => {
+        getHistoriesCsv2: async (createdAtGte, createdAtLt, options = {}) => {
             if (createdAtGte === null || createdAtGte === undefined) {
-                throw new base_1.RequiredError('createdAtGte', 'Required parameter createdAtGte was null or undefined when calling getHistoriesCsv.');
+                throw new base_1.RequiredError('createdAtGte', 'Required parameter createdAtGte was null or undefined when calling getHistoriesCsv2.');
             }
             if (createdAtLt === null || createdAtLt === undefined) {
-                throw new base_1.RequiredError('createdAtLt', 'Required parameter createdAtLt was null or undefined when calling getHistoriesCsv.');
+                throw new base_1.RequiredError('createdAtLt', 'Required parameter createdAtLt was null or undefined when calling getHistoriesCsv2.');
             }
             const localVarPath = `/api/v2/klay/henesis-keys/histories/csv`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6474,12 +6474,12 @@ exports.KlayHenesisKeyControllerApiAxiosParamCreator = function (configuration) 
                 options: localVarRequestOptions,
             };
         },
-        getTransactionHistories: async (pageable, specs, options = {}) => {
+        getTransactionHistories2: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransactionHistories.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransactionHistories2.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getTransactionHistories.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getTransactionHistories2.');
             }
             const localVarPath = `/api/v2/klay/henesis-keys/histories`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6509,43 +6509,43 @@ exports.KlayHenesisKeyControllerApiAxiosParamCreator = function (configuration) 
 };
 exports.KlayHenesisKeyControllerApiFp = function (configuration) {
     return {
-        async createExampleHenesisKey(options) {
-            const localVarAxiosArgs = await exports.KlayHenesisKeyControllerApiAxiosParamCreator(configuration).createExampleHenesisKey(options);
+        async createExampleHenesisKey2(options) {
+            const localVarAxiosArgs = await exports.KlayHenesisKeyControllerApiAxiosParamCreator(configuration).createExampleHenesisKey2(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createTransaction(createTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.KlayHenesisKeyControllerApiAxiosParamCreator(configuration).createTransaction(createTransactionRequest, options);
+        async createTransaction2(createTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.KlayHenesisKeyControllerApiAxiosParamCreator(configuration).createTransaction2(createTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getHenesisKey(options) {
-            const localVarAxiosArgs = await exports.KlayHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKey(options);
+        async getHenesisKey2(options) {
+            const localVarAxiosArgs = await exports.KlayHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKey2(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getHenesisKeyBalance(options) {
-            const localVarAxiosArgs = await exports.KlayHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKeyBalance(options);
+        async getHenesisKeyBalance2(options) {
+            const localVarAxiosArgs = await exports.KlayHenesisKeyControllerApiAxiosParamCreator(configuration).getHenesisKeyBalance2(options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getHistoriesCsv(createdAtGte, createdAtLt, options) {
-            const localVarAxiosArgs = await exports.KlayHenesisKeyControllerApiAxiosParamCreator(configuration).getHistoriesCsv(createdAtGte, createdAtLt, options);
+        async getHistoriesCsv2(createdAtGte, createdAtLt, options) {
+            const localVarAxiosArgs = await exports.KlayHenesisKeyControllerApiAxiosParamCreator(configuration).getHistoriesCsv2(createdAtGte, createdAtLt, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getTransactionHistories(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.KlayHenesisKeyControllerApiAxiosParamCreator(configuration).getTransactionHistories(pageable, specs, options);
+        async getTransactionHistories2(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.KlayHenesisKeyControllerApiAxiosParamCreator(configuration).getTransactionHistories2(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -6555,55 +6555,55 @@ exports.KlayHenesisKeyControllerApiFp = function (configuration) {
 };
 exports.KlayHenesisKeyControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        createExampleHenesisKey(options) {
-            return exports.KlayHenesisKeyControllerApiFp(configuration).createExampleHenesisKey(options).then((request) => request(axios, basePath));
+        createExampleHenesisKey2(options) {
+            return exports.KlayHenesisKeyControllerApiFp(configuration).createExampleHenesisKey2(options).then((request) => request(axios, basePath));
         },
-        createTransaction(createTransactionRequest, options) {
-            return exports.KlayHenesisKeyControllerApiFp(configuration).createTransaction(createTransactionRequest, options).then((request) => request(axios, basePath));
+        createTransaction2(createTransactionRequest, options) {
+            return exports.KlayHenesisKeyControllerApiFp(configuration).createTransaction2(createTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        getHenesisKey(options) {
-            return exports.KlayHenesisKeyControllerApiFp(configuration).getHenesisKey(options).then((request) => request(axios, basePath));
+        getHenesisKey2(options) {
+            return exports.KlayHenesisKeyControllerApiFp(configuration).getHenesisKey2(options).then((request) => request(axios, basePath));
         },
-        getHenesisKeyBalance(options) {
-            return exports.KlayHenesisKeyControllerApiFp(configuration).getHenesisKeyBalance(options).then((request) => request(axios, basePath));
+        getHenesisKeyBalance2(options) {
+            return exports.KlayHenesisKeyControllerApiFp(configuration).getHenesisKeyBalance2(options).then((request) => request(axios, basePath));
         },
-        getHistoriesCsv(createdAtGte, createdAtLt, options) {
-            return exports.KlayHenesisKeyControllerApiFp(configuration).getHistoriesCsv(createdAtGte, createdAtLt, options).then((request) => request(axios, basePath));
+        getHistoriesCsv2(createdAtGte, createdAtLt, options) {
+            return exports.KlayHenesisKeyControllerApiFp(configuration).getHistoriesCsv2(createdAtGte, createdAtLt, options).then((request) => request(axios, basePath));
         },
-        getTransactionHistories(pageable, specs, options) {
-            return exports.KlayHenesisKeyControllerApiFp(configuration).getTransactionHistories(pageable, specs, options).then((request) => request(axios, basePath));
+        getTransactionHistories2(pageable, specs, options) {
+            return exports.KlayHenesisKeyControllerApiFp(configuration).getTransactionHistories2(pageable, specs, options).then((request) => request(axios, basePath));
         },
     };
 };
 class KlayHenesisKeyControllerApi extends base_1.BaseAPI {
-    createExampleHenesisKey(options) {
-        return exports.KlayHenesisKeyControllerApiFp(this.configuration).createExampleHenesisKey(options).then((request) => request(this.axios, this.basePath));
+    createExampleHenesisKey2(options) {
+        return exports.KlayHenesisKeyControllerApiFp(this.configuration).createExampleHenesisKey2(options).then((request) => request(this.axios, this.basePath));
     }
-    createTransaction(createTransactionRequest, options) {
-        return exports.KlayHenesisKeyControllerApiFp(this.configuration).createTransaction(createTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    createTransaction2(createTransactionRequest, options) {
+        return exports.KlayHenesisKeyControllerApiFp(this.configuration).createTransaction2(createTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    getHenesisKey(options) {
-        return exports.KlayHenesisKeyControllerApiFp(this.configuration).getHenesisKey(options).then((request) => request(this.axios, this.basePath));
+    getHenesisKey2(options) {
+        return exports.KlayHenesisKeyControllerApiFp(this.configuration).getHenesisKey2(options).then((request) => request(this.axios, this.basePath));
     }
-    getHenesisKeyBalance(options) {
-        return exports.KlayHenesisKeyControllerApiFp(this.configuration).getHenesisKeyBalance(options).then((request) => request(this.axios, this.basePath));
+    getHenesisKeyBalance2(options) {
+        return exports.KlayHenesisKeyControllerApiFp(this.configuration).getHenesisKeyBalance2(options).then((request) => request(this.axios, this.basePath));
     }
-    getHistoriesCsv(createdAtGte, createdAtLt, options) {
-        return exports.KlayHenesisKeyControllerApiFp(this.configuration).getHistoriesCsv(createdAtGte, createdAtLt, options).then((request) => request(this.axios, this.basePath));
+    getHistoriesCsv2(createdAtGte, createdAtLt, options) {
+        return exports.KlayHenesisKeyControllerApiFp(this.configuration).getHistoriesCsv2(createdAtGte, createdAtLt, options).then((request) => request(this.axios, this.basePath));
     }
-    getTransactionHistories(pageable, specs, options) {
-        return exports.KlayHenesisKeyControllerApiFp(this.configuration).getTransactionHistories(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getTransactionHistories2(pageable, specs, options) {
+        return exports.KlayHenesisKeyControllerApiFp(this.configuration).getTransactionHistories2(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.KlayHenesisKeyControllerApi = KlayHenesisKeyControllerApi;
 exports.KlayInternalControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getCallEvents: async (pageable, specs, options = {}) => {
+        getCallEvents4: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getCallEvents.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getCallEvents4.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getCallEvents.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getCallEvents4.');
             }
             const localVarPath = `/api/v2/klay/internal/call-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6629,12 +6629,12 @@ exports.KlayInternalControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getValueTransferEvents1: async (pageable, searchCondition, options = {}) => {
+        getValueTransferEvents6: async (pageable, searchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents1.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getValueTransferEvents6.');
             }
             if (searchCondition === null || searchCondition === undefined) {
-                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents1.');
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getValueTransferEvents6.');
             }
             const localVarPath = `/api/v2/klay/internal/value-transfer-events`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6664,15 +6664,15 @@ exports.KlayInternalControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.KlayInternalControllerApiFp = function (configuration) {
     return {
-        async getCallEvents(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.KlayInternalControllerApiAxiosParamCreator(configuration).getCallEvents(pageable, specs, options);
+        async getCallEvents4(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.KlayInternalControllerApiAxiosParamCreator(configuration).getCallEvents4(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getValueTransferEvents1(pageable, searchCondition, options) {
-            const localVarAxiosArgs = await exports.KlayInternalControllerApiAxiosParamCreator(configuration).getValueTransferEvents1(pageable, searchCondition, options);
+        async getValueTransferEvents6(pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.KlayInternalControllerApiAxiosParamCreator(configuration).getValueTransferEvents6(pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -6682,28 +6682,28 @@ exports.KlayInternalControllerApiFp = function (configuration) {
 };
 exports.KlayInternalControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getCallEvents(pageable, specs, options) {
-            return exports.KlayInternalControllerApiFp(configuration).getCallEvents(pageable, specs, options).then((request) => request(axios, basePath));
+        getCallEvents4(pageable, specs, options) {
+            return exports.KlayInternalControllerApiFp(configuration).getCallEvents4(pageable, specs, options).then((request) => request(axios, basePath));
         },
-        getValueTransferEvents1(pageable, searchCondition, options) {
-            return exports.KlayInternalControllerApiFp(configuration).getValueTransferEvents1(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        getValueTransferEvents6(pageable, searchCondition, options) {
+            return exports.KlayInternalControllerApiFp(configuration).getValueTransferEvents6(pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
 class KlayInternalControllerApi extends base_1.BaseAPI {
-    getCallEvents(pageable, specs, options) {
-        return exports.KlayInternalControllerApiFp(this.configuration).getCallEvents(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getCallEvents4(pageable, specs, options) {
+        return exports.KlayInternalControllerApiFp(this.configuration).getCallEvents4(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
-    getValueTransferEvents1(pageable, searchCondition, options) {
-        return exports.KlayInternalControllerApiFp(this.configuration).getValueTransferEvents1(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    getValueTransferEvents6(pageable, searchCondition, options) {
+        return exports.KlayInternalControllerApiFp(this.configuration).getValueTransferEvents6(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.KlayInternalControllerApi = KlayInternalControllerApi;
 exports.KlayMethodGasUsageControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getMethodGasUsages: async (name, options = {}) => {
+        getMethodGasUsages2: async (name, options = {}) => {
             if (name === null || name === undefined) {
-                throw new base_1.RequiredError('name', 'Required parameter name was null or undefined when calling getMethodGasUsages.');
+                throw new base_1.RequiredError('name', 'Required parameter name was null or undefined when calling getMethodGasUsages2.');
             }
             const localVarPath = `/api/v2/klay/method-gas-usages`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6730,8 +6730,8 @@ exports.KlayMethodGasUsageControllerApiAxiosParamCreator = function (configurati
 };
 exports.KlayMethodGasUsageControllerApiFp = function (configuration) {
     return {
-        async getMethodGasUsages(name, options) {
-            const localVarAxiosArgs = await exports.KlayMethodGasUsageControllerApiAxiosParamCreator(configuration).getMethodGasUsages(name, options);
+        async getMethodGasUsages2(name, options) {
+            const localVarAxiosArgs = await exports.KlayMethodGasUsageControllerApiAxiosParamCreator(configuration).getMethodGasUsages2(name, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -6741,25 +6741,25 @@ exports.KlayMethodGasUsageControllerApiFp = function (configuration) {
 };
 exports.KlayMethodGasUsageControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getMethodGasUsages(name, options) {
-            return exports.KlayMethodGasUsageControllerApiFp(configuration).getMethodGasUsages(name, options).then((request) => request(axios, basePath));
+        getMethodGasUsages2(name, options) {
+            return exports.KlayMethodGasUsageControllerApiFp(configuration).getMethodGasUsages2(name, options).then((request) => request(axios, basePath));
         },
     };
 };
 class KlayMethodGasUsageControllerApi extends base_1.BaseAPI {
-    getMethodGasUsages(name, options) {
-        return exports.KlayMethodGasUsageControllerApiFp(this.configuration).getMethodGasUsages(name, options).then((request) => request(this.axios, this.basePath));
+    getMethodGasUsages2(name, options) {
+        return exports.KlayMethodGasUsageControllerApiFp(this.configuration).getMethodGasUsages2(name, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.KlayMethodGasUsageControllerApi = KlayMethodGasUsageControllerApi;
 exports.KlayOperationControllerApiAxiosParamCreator = function (configuration) {
     return {
-        bindHenesisKeyToWallet: async (keyId, bindHenesisKeyToWalletRequest, options = {}) => {
+        bindHenesisKeyToWallet2: async (keyId, bindHenesisKeyToWalletRequest, options = {}) => {
             if (keyId === null || keyId === undefined) {
-                throw new base_1.RequiredError('keyId', 'Required parameter keyId was null or undefined when calling bindHenesisKeyToWallet.');
+                throw new base_1.RequiredError('keyId', 'Required parameter keyId was null or undefined when calling bindHenesisKeyToWallet2.');
             }
             if (bindHenesisKeyToWalletRequest === null || bindHenesisKeyToWalletRequest === undefined) {
-                throw new base_1.RequiredError('bindHenesisKeyToWalletRequest', 'Required parameter bindHenesisKeyToWalletRequest was null or undefined when calling bindHenesisKeyToWallet.');
+                throw new base_1.RequiredError('bindHenesisKeyToWalletRequest', 'Required parameter bindHenesisKeyToWalletRequest was null or undefined when calling bindHenesisKeyToWallet2.');
             }
             const localVarPath = `/api/v2/klay/operation/henesis-keys/{keyId}/bind`
                 .replace(`{${"keyId"}}`, encodeURIComponent(String(keyId)));
@@ -6783,9 +6783,9 @@ exports.KlayOperationControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createHenesisKey: async (createHenesisKeyRequest, options = {}) => {
+        createHenesisKey2: async (createHenesisKeyRequest, options = {}) => {
             if (createHenesisKeyRequest === null || createHenesisKeyRequest === undefined) {
-                throw new base_1.RequiredError('createHenesisKeyRequest', 'Required parameter createHenesisKeyRequest was null or undefined when calling createHenesisKey.');
+                throw new base_1.RequiredError('createHenesisKeyRequest', 'Required parameter createHenesisKeyRequest was null or undefined when calling createHenesisKey2.');
             }
             const localVarPath = `/api/v2/klay/operation/henesis-keys`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6808,9 +6808,9 @@ exports.KlayOperationControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getCoinByAddress: async (address, options = {}) => {
+        getCoinByAddress1: async (address, options = {}) => {
             if (address === null || address === undefined) {
-                throw new base_1.RequiredError('address', 'Required parameter address was null or undefined when calling getCoinByAddress.');
+                throw new base_1.RequiredError('address', 'Required parameter address was null or undefined when calling getCoinByAddress1.');
             }
             const localVarPath = `/api/v2/klay/operation/coins/address/{address}`
                 .replace(`{${"address"}}`, encodeURIComponent(String(address)));
@@ -6835,22 +6835,22 @@ exports.KlayOperationControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.KlayOperationControllerApiFp = function (configuration) {
     return {
-        async bindHenesisKeyToWallet(keyId, bindHenesisKeyToWalletRequest, options) {
-            const localVarAxiosArgs = await exports.KlayOperationControllerApiAxiosParamCreator(configuration).bindHenesisKeyToWallet(keyId, bindHenesisKeyToWalletRequest, options);
+        async bindHenesisKeyToWallet2(keyId, bindHenesisKeyToWalletRequest, options) {
+            const localVarAxiosArgs = await exports.KlayOperationControllerApiAxiosParamCreator(configuration).bindHenesisKeyToWallet2(keyId, bindHenesisKeyToWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createHenesisKey(createHenesisKeyRequest, options) {
-            const localVarAxiosArgs = await exports.KlayOperationControllerApiAxiosParamCreator(configuration).createHenesisKey(createHenesisKeyRequest, options);
+        async createHenesisKey2(createHenesisKeyRequest, options) {
+            const localVarAxiosArgs = await exports.KlayOperationControllerApiAxiosParamCreator(configuration).createHenesisKey2(createHenesisKeyRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getCoinByAddress(address, options) {
-            const localVarAxiosArgs = await exports.KlayOperationControllerApiAxiosParamCreator(configuration).getCoinByAddress(address, options);
+        async getCoinByAddress1(address, options) {
+            const localVarAxiosArgs = await exports.KlayOperationControllerApiAxiosParamCreator(configuration).getCoinByAddress1(address, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -6860,37 +6860,37 @@ exports.KlayOperationControllerApiFp = function (configuration) {
 };
 exports.KlayOperationControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        bindHenesisKeyToWallet(keyId, bindHenesisKeyToWalletRequest, options) {
-            return exports.KlayOperationControllerApiFp(configuration).bindHenesisKeyToWallet(keyId, bindHenesisKeyToWalletRequest, options).then((request) => request(axios, basePath));
+        bindHenesisKeyToWallet2(keyId, bindHenesisKeyToWalletRequest, options) {
+            return exports.KlayOperationControllerApiFp(configuration).bindHenesisKeyToWallet2(keyId, bindHenesisKeyToWalletRequest, options).then((request) => request(axios, basePath));
         },
-        createHenesisKey(createHenesisKeyRequest, options) {
-            return exports.KlayOperationControllerApiFp(configuration).createHenesisKey(createHenesisKeyRequest, options).then((request) => request(axios, basePath));
+        createHenesisKey2(createHenesisKeyRequest, options) {
+            return exports.KlayOperationControllerApiFp(configuration).createHenesisKey2(createHenesisKeyRequest, options).then((request) => request(axios, basePath));
         },
-        getCoinByAddress(address, options) {
-            return exports.KlayOperationControllerApiFp(configuration).getCoinByAddress(address, options).then((request) => request(axios, basePath));
+        getCoinByAddress1(address, options) {
+            return exports.KlayOperationControllerApiFp(configuration).getCoinByAddress1(address, options).then((request) => request(axios, basePath));
         },
     };
 };
 class KlayOperationControllerApi extends base_1.BaseAPI {
-    bindHenesisKeyToWallet(keyId, bindHenesisKeyToWalletRequest, options) {
-        return exports.KlayOperationControllerApiFp(this.configuration).bindHenesisKeyToWallet(keyId, bindHenesisKeyToWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    bindHenesisKeyToWallet2(keyId, bindHenesisKeyToWalletRequest, options) {
+        return exports.KlayOperationControllerApiFp(this.configuration).bindHenesisKeyToWallet2(keyId, bindHenesisKeyToWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createHenesisKey(createHenesisKeyRequest, options) {
-        return exports.KlayOperationControllerApiFp(this.configuration).createHenesisKey(createHenesisKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    createHenesisKey2(createHenesisKeyRequest, options) {
+        return exports.KlayOperationControllerApiFp(this.configuration).createHenesisKey2(createHenesisKeyRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    getCoinByAddress(address, options) {
-        return exports.KlayOperationControllerApiFp(this.configuration).getCoinByAddress(address, options).then((request) => request(this.axios, this.basePath));
+    getCoinByAddress1(address, options) {
+        return exports.KlayOperationControllerApiFp(this.configuration).getCoinByAddress1(address, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.KlayOperationControllerApi = KlayOperationControllerApi;
 exports.KlayTransactionControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getAllTransactions: async (pageable, specs, options = {}) => {
+        getAllTransactions2: async (pageable, specs, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllTransactions.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllTransactions2.');
             }
             if (specs === null || specs === undefined) {
-                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getAllTransactions.');
+                throw new base_1.RequiredError('specs', 'Required parameter specs was null or undefined when calling getAllTransactions2.');
             }
             const localVarPath = `/api/v2/klay/transactions`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -6916,9 +6916,9 @@ exports.KlayTransactionControllerApiAxiosParamCreator = function (configuration)
                 options: localVarRequestOptions,
             };
         },
-        getRawTransactionByHash: async (transactionHash, options = {}) => {
+        getRawTransactionByHash2: async (transactionHash, options = {}) => {
             if (transactionHash === null || transactionHash === undefined) {
-                throw new base_1.RequiredError('transactionHash', 'Required parameter transactionHash was null or undefined when calling getRawTransactionByHash.');
+                throw new base_1.RequiredError('transactionHash', 'Required parameter transactionHash was null or undefined when calling getRawTransactionByHash2.');
             }
             const localVarPath = `/api/v2/klay/raw-transactions/{transactionHash}`
                 .replace(`{${"transactionHash"}}`, encodeURIComponent(String(transactionHash)));
@@ -6939,9 +6939,9 @@ exports.KlayTransactionControllerApiAxiosParamCreator = function (configuration)
                 options: localVarRequestOptions,
             };
         },
-        getTransactionById: async (transactionId, options = {}) => {
+        getTransactionById2: async (transactionId, options = {}) => {
             if (transactionId === null || transactionId === undefined) {
-                throw new base_1.RequiredError('transactionId', 'Required parameter transactionId was null or undefined when calling getTransactionById.');
+                throw new base_1.RequiredError('transactionId', 'Required parameter transactionId was null or undefined when calling getTransactionById2.');
             }
             const localVarPath = `/api/v2/klay/transactions/{transactionId}`
                 .replace(`{${"transactionId"}}`, encodeURIComponent(String(transactionId)));
@@ -6966,22 +6966,22 @@ exports.KlayTransactionControllerApiAxiosParamCreator = function (configuration)
 };
 exports.KlayTransactionControllerApiFp = function (configuration) {
     return {
-        async getAllTransactions(pageable, specs, options) {
-            const localVarAxiosArgs = await exports.KlayTransactionControllerApiAxiosParamCreator(configuration).getAllTransactions(pageable, specs, options);
+        async getAllTransactions2(pageable, specs, options) {
+            const localVarAxiosArgs = await exports.KlayTransactionControllerApiAxiosParamCreator(configuration).getAllTransactions2(pageable, specs, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getRawTransactionByHash(transactionHash, options) {
-            const localVarAxiosArgs = await exports.KlayTransactionControllerApiAxiosParamCreator(configuration).getRawTransactionByHash(transactionHash, options);
+        async getRawTransactionByHash2(transactionHash, options) {
+            const localVarAxiosArgs = await exports.KlayTransactionControllerApiAxiosParamCreator(configuration).getRawTransactionByHash2(transactionHash, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getTransactionById(transactionId, options) {
-            const localVarAxiosArgs = await exports.KlayTransactionControllerApiAxiosParamCreator(configuration).getTransactionById(transactionId, options);
+        async getTransactionById2(transactionId, options) {
+            const localVarAxiosArgs = await exports.KlayTransactionControllerApiAxiosParamCreator(configuration).getTransactionById2(transactionId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -6991,37 +6991,37 @@ exports.KlayTransactionControllerApiFp = function (configuration) {
 };
 exports.KlayTransactionControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getAllTransactions(pageable, specs, options) {
-            return exports.KlayTransactionControllerApiFp(configuration).getAllTransactions(pageable, specs, options).then((request) => request(axios, basePath));
+        getAllTransactions2(pageable, specs, options) {
+            return exports.KlayTransactionControllerApiFp(configuration).getAllTransactions2(pageable, specs, options).then((request) => request(axios, basePath));
         },
-        getRawTransactionByHash(transactionHash, options) {
-            return exports.KlayTransactionControllerApiFp(configuration).getRawTransactionByHash(transactionHash, options).then((request) => request(axios, basePath));
+        getRawTransactionByHash2(transactionHash, options) {
+            return exports.KlayTransactionControllerApiFp(configuration).getRawTransactionByHash2(transactionHash, options).then((request) => request(axios, basePath));
         },
-        getTransactionById(transactionId, options) {
-            return exports.KlayTransactionControllerApiFp(configuration).getTransactionById(transactionId, options).then((request) => request(axios, basePath));
+        getTransactionById2(transactionId, options) {
+            return exports.KlayTransactionControllerApiFp(configuration).getTransactionById2(transactionId, options).then((request) => request(axios, basePath));
         },
     };
 };
 class KlayTransactionControllerApi extends base_1.BaseAPI {
-    getAllTransactions(pageable, specs, options) {
-        return exports.KlayTransactionControllerApiFp(this.configuration).getAllTransactions(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    getAllTransactions2(pageable, specs, options) {
+        return exports.KlayTransactionControllerApiFp(this.configuration).getAllTransactions2(pageable, specs, options).then((request) => request(this.axios, this.basePath));
     }
-    getRawTransactionByHash(transactionHash, options) {
-        return exports.KlayTransactionControllerApiFp(this.configuration).getRawTransactionByHash(transactionHash, options).then((request) => request(this.axios, this.basePath));
+    getRawTransactionByHash2(transactionHash, options) {
+        return exports.KlayTransactionControllerApiFp(this.configuration).getRawTransactionByHash2(transactionHash, options).then((request) => request(this.axios, this.basePath));
     }
-    getTransactionById(transactionId, options) {
-        return exports.KlayTransactionControllerApiFp(this.configuration).getTransactionById(transactionId, options).then((request) => request(this.axios, this.basePath));
+    getTransactionById2(transactionId, options) {
+        return exports.KlayTransactionControllerApiFp(this.configuration).getTransactionById2(transactionId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.KlayTransactionControllerApi = KlayTransactionControllerApi;
 exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
     return {
-        activateAllowedAddresses: async (walletId, activateAllowedAddressesRequest, options = {}) => {
+        activateAllowedAddresses2: async (walletId, activateAllowedAddressesRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling activateAllowedAddresses.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling activateAllowedAddresses2.');
             }
             if (activateAllowedAddressesRequest === null || activateAllowedAddressesRequest === undefined) {
-                throw new base_1.RequiredError('activateAllowedAddressesRequest', 'Required parameter activateAllowedAddressesRequest was null or undefined when calling activateAllowedAddresses.');
+                throw new base_1.RequiredError('activateAllowedAddressesRequest', 'Required parameter activateAllowedAddressesRequest was null or undefined when calling activateAllowedAddresses2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/activate-allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7045,12 +7045,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        activateMasterWallet: async (walletId, activateMasterWalletRequest, options = {}) => {
+        activateMasterWallet2: async (walletId, activateMasterWalletRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling activateMasterWallet.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling activateMasterWallet2.');
             }
             if (activateMasterWalletRequest === null || activateMasterWalletRequest === undefined) {
-                throw new base_1.RequiredError('activateMasterWalletRequest', 'Required parameter activateMasterWalletRequest was null or undefined when calling activateMasterWallet.');
+                throw new base_1.RequiredError('activateMasterWalletRequest', 'Required parameter activateMasterWalletRequest was null or undefined when calling activateMasterWallet2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/activate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7074,12 +7074,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createAllowedAddress: async (walletId, createAllowedAddressRequest, options = {}) => {
+        createAllowedAddress2: async (walletId, createAllowedAddressRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createAllowedAddress.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createAllowedAddress2.');
             }
             if (createAllowedAddressRequest === null || createAllowedAddressRequest === undefined) {
-                throw new base_1.RequiredError('createAllowedAddressRequest', 'Required parameter createAllowedAddressRequest was null or undefined when calling createAllowedAddress.');
+                throw new base_1.RequiredError('createAllowedAddressRequest', 'Required parameter createAllowedAddressRequest was null or undefined when calling createAllowedAddress2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7103,9 +7103,9 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createMasterWallet1: async (createInactiveMasterWalletRequest, options = {}) => {
+        createMasterWallet3: async (createInactiveMasterWalletRequest, options = {}) => {
             if (createInactiveMasterWalletRequest === null || createInactiveMasterWalletRequest === undefined) {
-                throw new base_1.RequiredError('createInactiveMasterWalletRequest', 'Required parameter createInactiveMasterWalletRequest was null or undefined when calling createMasterWallet1.');
+                throw new base_1.RequiredError('createInactiveMasterWalletRequest', 'Required parameter createInactiveMasterWalletRequest was null or undefined when calling createMasterWallet3.');
             }
             const localVarPath = `/api/v2/klay/wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -7128,12 +7128,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createUserWallet: async (walletId, createUserWalletRequest, options = {}) => {
+        createUserWallet2: async (walletId, createUserWalletRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createUserWallet.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createUserWallet2.');
             }
             if (createUserWalletRequest === null || createUserWalletRequest === undefined) {
-                throw new base_1.RequiredError('createUserWalletRequest', 'Required parameter createUserWalletRequest was null or undefined when calling createUserWallet.');
+                throw new base_1.RequiredError('createUserWalletRequest', 'Required parameter createUserWalletRequest was null or undefined when calling createUserWallet2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7157,12 +7157,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        createWalletWithdrawalPolicy: async (walletId, createWithdrawalPolicyRequest, options = {}) => {
+        createWalletWithdrawalPolicy2: async (walletId, createWithdrawalPolicyRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createWalletWithdrawalPolicy.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling createWalletWithdrawalPolicy2.');
             }
             if (createWithdrawalPolicyRequest === null || createWithdrawalPolicyRequest === undefined) {
-                throw new base_1.RequiredError('createWithdrawalPolicyRequest', 'Required parameter createWithdrawalPolicyRequest was null or undefined when calling createWalletWithdrawalPolicy.');
+                throw new base_1.RequiredError('createWithdrawalPolicyRequest', 'Required parameter createWithdrawalPolicyRequest was null or undefined when calling createWalletWithdrawalPolicy2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/withdrawal-policies`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7186,15 +7186,15 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        deleteAllowedAddress: async (walletId, allowedAddressId, deleteAllowedAddressRequest, options = {}) => {
+        deleteAllowedAddress2: async (walletId, allowedAddressId, deleteAllowedAddressRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling deleteAllowedAddress.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling deleteAllowedAddress2.');
             }
             if (allowedAddressId === null || allowedAddressId === undefined) {
-                throw new base_1.RequiredError('allowedAddressId', 'Required parameter allowedAddressId was null or undefined when calling deleteAllowedAddress.');
+                throw new base_1.RequiredError('allowedAddressId', 'Required parameter allowedAddressId was null or undefined when calling deleteAllowedAddress2.');
             }
             if (deleteAllowedAddressRequest === null || deleteAllowedAddressRequest === undefined) {
-                throw new base_1.RequiredError('deleteAllowedAddressRequest', 'Required parameter deleteAllowedAddressRequest was null or undefined when calling deleteAllowedAddress.');
+                throw new base_1.RequiredError('deleteAllowedAddressRequest', 'Required parameter deleteAllowedAddressRequest was null or undefined when calling deleteAllowedAddress2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/allowed-addresses/{allowedAddressId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -7219,12 +7219,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAllWalletWithdrawalPolicies: async (walletId, pageable, options = {}) => {
+        getAllWalletWithdrawalPolicies2: async (walletId, pageable, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllWalletWithdrawalPolicies.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllWalletWithdrawalPolicies2.');
             }
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllWalletWithdrawalPolicies.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllWalletWithdrawalPolicies2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/withdrawal-policies`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7248,12 +7248,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAllowedAddress: async (walletId, allowedAddressId, options = {}) => {
+        getAllowedAddress2: async (walletId, allowedAddressId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllowedAddress.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllowedAddress2.');
             }
             if (allowedAddressId === null || allowedAddressId === undefined) {
-                throw new base_1.RequiredError('allowedAddressId', 'Required parameter allowedAddressId was null or undefined when calling getAllowedAddress.');
+                throw new base_1.RequiredError('allowedAddressId', 'Required parameter allowedAddressId was null or undefined when calling getAllowedAddress2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/allowed-addresses/{allowedAddressId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -7275,15 +7275,15 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getAllowedAddressesByCoinId1: async (walletId, coinId, pageable, options = {}) => {
+        getAllowedAddressesByCoinId3: async (walletId, coinId, pageable, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllowedAddressesByCoinId1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllowedAddressesByCoinId3.');
             }
             if (coinId === null || coinId === undefined) {
-                throw new base_1.RequiredError('coinId', 'Required parameter coinId was null or undefined when calling getAllowedAddressesByCoinId1.');
+                throw new base_1.RequiredError('coinId', 'Required parameter coinId was null or undefined when calling getAllowedAddressesByCoinId3.');
             }
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllowedAddressesByCoinId1.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getAllowedAddressesByCoinId3.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7310,9 +7310,9 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWallet: async (walletId, options = {}) => {
+        getMasterWallet2: async (walletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWallet.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWallet2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7333,9 +7333,9 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWalletAccountKey: async (walletId, options = {}) => {
+        getMasterWalletAccountKey2: async (walletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletAccountKey.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletAccountKey2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/account-key`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7356,9 +7356,9 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWalletBalance: async (walletId, symbol, options = {}) => {
+        getMasterWalletBalance2: async (walletId, symbol, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletBalance.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletBalance2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/balance`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7382,9 +7382,9 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWalletInitialKey: async (walletId, options = {}) => {
+        getMasterWalletInitialKey2: async (walletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletInitialKey.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletInitialKey2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/initial-key`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7405,9 +7405,9 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWalletNonce: async (walletId, options = {}) => {
+        getMasterWalletNonce1: async (walletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletNonce.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getMasterWalletNonce1.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/nonce`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7428,9 +7428,9 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getMasterWallets: async (sort, options = {}) => {
+        getMasterWallets4: async (sort, options = {}) => {
             if (sort === null || sort === undefined) {
-                throw new base_1.RequiredError('sort', 'Required parameter sort was null or undefined when calling getMasterWallets.');
+                throw new base_1.RequiredError('sort', 'Required parameter sort was null or undefined when calling getMasterWallets4.');
             }
             const localVarPath = `/api/v2/klay/wallets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -7453,12 +7453,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWallet: async (walletId, userWalletId, options = {}) => {
+        getUserWallet2: async (walletId, userWalletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWallet.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWallet2.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWallet.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWallet2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -7480,12 +7480,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWalletBalance: async (walletId, userWalletId, symbol, options = {}) => {
+        getUserWalletBalance2: async (walletId, userWalletId, symbol, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWalletBalance.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWalletBalance2.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWalletBalance.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWalletBalance2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}/balance`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -7510,12 +7510,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWalletNonce: async (walletId, userWalletId, options = {}) => {
+        getUserWalletNonce1: async (walletId, userWalletId, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWalletNonce.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWalletNonce1.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWalletNonce.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling getUserWalletNonce1.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}/nonce`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -7537,12 +7537,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getUserWallets: async (walletId, pageable, options = {}) => {
+        getUserWallets4: async (walletId, pageable, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWallets.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getUserWallets4.');
             }
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getUserWallets.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getUserWallets4.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7566,12 +7566,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        inactivateAllowedAddresses: async (walletId, inactivateAllowedAddressesRequest, options = {}) => {
+        inactivateAllowedAddresses2: async (walletId, inactivateAllowedAddressesRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling inactivateAllowedAddresses.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling inactivateAllowedAddresses2.');
             }
             if (inactivateAllowedAddressesRequest === null || inactivateAllowedAddressesRequest === undefined) {
-                throw new base_1.RequiredError('inactivateAllowedAddressesRequest', 'Required parameter inactivateAllowedAddressesRequest was null or undefined when calling inactivateAllowedAddresses.');
+                throw new base_1.RequiredError('inactivateAllowedAddressesRequest', 'Required parameter inactivateAllowedAddressesRequest was null or undefined when calling inactivateAllowedAddresses2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/inactivate-allowed-addresses`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7595,12 +7595,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchAccountKey: async (walletId, updateAccountKeyRequest, options = {}) => {
+        patchAccountKey2: async (walletId, updateAccountKeyRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchAccountKey.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchAccountKey2.');
             }
             if (updateAccountKeyRequest === null || updateAccountKeyRequest === undefined) {
-                throw new base_1.RequiredError('updateAccountKeyRequest', 'Required parameter updateAccountKeyRequest was null or undefined when calling patchAccountKey.');
+                throw new base_1.RequiredError('updateAccountKeyRequest', 'Required parameter updateAccountKeyRequest was null or undefined when calling patchAccountKey2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/account-key`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7624,12 +7624,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchMasterWalletName: async (walletId, changeWalletNameRequest, options = {}) => {
+        patchMasterWalletName2: async (walletId, changeWalletNameRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchMasterWalletName.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchMasterWalletName2.');
             }
             if (changeWalletNameRequest === null || changeWalletNameRequest === undefined) {
-                throw new base_1.RequiredError('changeWalletNameRequest', 'Required parameter changeWalletNameRequest was null or undefined when calling patchMasterWalletName.');
+                throw new base_1.RequiredError('changeWalletNameRequest', 'Required parameter changeWalletNameRequest was null or undefined when calling patchMasterWalletName2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/name`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7653,15 +7653,15 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchUserWalletName: async (walletId, userWalletId, changeWalletNameRequest, options = {}) => {
+        patchUserWalletName2: async (walletId, userWalletId, changeWalletNameRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchUserWalletName.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchUserWalletName2.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling patchUserWalletName.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling patchUserWalletName2.');
             }
             if (changeWalletNameRequest === null || changeWalletNameRequest === undefined) {
-                throw new base_1.RequiredError('changeWalletNameRequest', 'Required parameter changeWalletNameRequest was null or undefined when calling patchUserWalletName.');
+                throw new base_1.RequiredError('changeWalletNameRequest', 'Required parameter changeWalletNameRequest was null or undefined when calling patchUserWalletName2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}/name`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -7686,15 +7686,15 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        patchWalletWithdrawalPolicy: async (walletId, policyId, patchWithdrawalPolicyRequest, options = {}) => {
+        patchWalletWithdrawalPolicy2: async (walletId, policyId, patchWithdrawalPolicyRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchWalletWithdrawalPolicy.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling patchWalletWithdrawalPolicy2.');
             }
             if (policyId === null || policyId === undefined) {
-                throw new base_1.RequiredError('policyId', 'Required parameter policyId was null or undefined when calling patchWalletWithdrawalPolicy.');
+                throw new base_1.RequiredError('policyId', 'Required parameter policyId was null or undefined when calling patchWalletWithdrawalPolicy2.');
             }
             if (patchWithdrawalPolicyRequest === null || patchWithdrawalPolicyRequest === undefined) {
-                throw new base_1.RequiredError('patchWithdrawalPolicyRequest', 'Required parameter patchWithdrawalPolicyRequest was null or undefined when calling patchWalletWithdrawalPolicy.');
+                throw new base_1.RequiredError('patchWithdrawalPolicyRequest', 'Required parameter patchWithdrawalPolicyRequest was null or undefined when calling patchWalletWithdrawalPolicy2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/withdrawal-policies/{policyId}`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -7719,12 +7719,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        recreateMasterWallet: async (walletId, recreateWalletRequest, options = {}) => {
+        recreateMasterWallet2: async (walletId, recreateWalletRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling recreateMasterWallet.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling recreateMasterWallet2.');
             }
             if (recreateWalletRequest === null || recreateWalletRequest === undefined) {
-                throw new base_1.RequiredError('recreateWalletRequest', 'Required parameter recreateWalletRequest was null or undefined when calling recreateMasterWallet.');
+                throw new base_1.RequiredError('recreateWalletRequest', 'Required parameter recreateWalletRequest was null or undefined when calling recreateMasterWallet2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/recreate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7748,15 +7748,15 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        recreateUserWallet: async (walletId, userWalletId, recreateWalletRequest, options = {}) => {
+        recreateUserWallet2: async (walletId, userWalletId, recreateWalletRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling recreateUserWallet.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling recreateUserWallet2.');
             }
             if (userWalletId === null || userWalletId === undefined) {
-                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling recreateUserWallet.');
+                throw new base_1.RequiredError('userWalletId', 'Required parameter userWalletId was null or undefined when calling recreateUserWallet2.');
             }
             if (recreateWalletRequest === null || recreateWalletRequest === undefined) {
-                throw new base_1.RequiredError('recreateWalletRequest', 'Required parameter recreateWalletRequest was null or undefined when calling recreateUserWallet.');
+                throw new base_1.RequiredError('recreateWalletRequest', 'Required parameter recreateWalletRequest was null or undefined when calling recreateUserWallet2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}/recreate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
@@ -7781,9 +7781,9 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        resendTransaction: async (resendTransactionRequest, options = {}) => {
+        resendTransaction2: async (resendTransactionRequest, options = {}) => {
             if (resendTransactionRequest === null || resendTransactionRequest === undefined) {
-                throw new base_1.RequiredError('resendTransactionRequest', 'Required parameter resendTransactionRequest was null or undefined when calling resendTransaction.');
+                throw new base_1.RequiredError('resendTransactionRequest', 'Required parameter resendTransactionRequest was null or undefined when calling resendTransaction2.');
             }
             const localVarPath = `/api/v2/klay/wallets/transactions/resend`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -7806,9 +7806,9 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        sendBatchTransaction: async (createBatchTransactionRequest, options = {}) => {
+        sendBatchTransaction2: async (createBatchTransactionRequest, options = {}) => {
             if (createBatchTransactionRequest === null || createBatchTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createBatchTransactionRequest', 'Required parameter createBatchTransactionRequest was null or undefined when calling sendBatchTransaction.');
+                throw new base_1.RequiredError('createBatchTransactionRequest', 'Required parameter createBatchTransactionRequest was null or undefined when calling sendBatchTransaction2.');
             }
             const localVarPath = `/api/v2/klay/wallets/batch-transactions`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -7831,9 +7831,9 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        sendTransaction: async (createMultiSigTransactionRequest, options = {}) => {
+        sendTransaction2: async (createMultiSigTransactionRequest, options = {}) => {
             if (createMultiSigTransactionRequest === null || createMultiSigTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createMultiSigTransactionRequest', 'Required parameter createMultiSigTransactionRequest was null or undefined when calling sendTransaction.');
+                throw new base_1.RequiredError('createMultiSigTransactionRequest', 'Required parameter createMultiSigTransactionRequest was null or undefined when calling sendTransaction2.');
             }
             const localVarPath = `/api/v2/klay/wallets/transactions`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -7856,12 +7856,12 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        validateIsAllowedAddress: async (walletId, validateIsAllowedAddressRequest, options = {}) => {
+        validateIsAllowedAddress2: async (walletId, validateIsAllowedAddressRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling validateIsAllowedAddress.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling validateIsAllowedAddress2.');
             }
             if (validateIsAllowedAddressRequest === null || validateIsAllowedAddressRequest === undefined) {
-                throw new base_1.RequiredError('validateIsAllowedAddressRequest', 'Required parameter validateIsAllowedAddressRequest was null or undefined when calling validateIsAllowedAddress.');
+                throw new base_1.RequiredError('validateIsAllowedAddressRequest', 'Required parameter validateIsAllowedAddressRequest was null or undefined when calling validateIsAllowedAddress2.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/allowed-addresses/validate`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7889,218 +7889,218 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.KlayWalletControllerApiFp = function (configuration) {
     return {
-        async activateAllowedAddresses(walletId, activateAllowedAddressesRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).activateAllowedAddresses(walletId, activateAllowedAddressesRequest, options);
+        async activateAllowedAddresses2(walletId, activateAllowedAddressesRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).activateAllowedAddresses2(walletId, activateAllowedAddressesRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async activateMasterWallet(walletId, activateMasterWalletRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).activateMasterWallet(walletId, activateMasterWalletRequest, options);
+        async activateMasterWallet2(walletId, activateMasterWalletRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).activateMasterWallet2(walletId, activateMasterWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createAllowedAddress(walletId, createAllowedAddressRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).createAllowedAddress(walletId, createAllowedAddressRequest, options);
+        async createAllowedAddress2(walletId, createAllowedAddressRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).createAllowedAddress2(walletId, createAllowedAddressRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createMasterWallet1(createInactiveMasterWalletRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).createMasterWallet1(createInactiveMasterWalletRequest, options);
+        async createMasterWallet3(createInactiveMasterWalletRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).createMasterWallet3(createInactiveMasterWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createUserWallet(walletId, createUserWalletRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).createUserWallet(walletId, createUserWalletRequest, options);
+        async createUserWallet2(walletId, createUserWalletRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).createUserWallet2(walletId, createUserWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async createWalletWithdrawalPolicy(walletId, createWithdrawalPolicyRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).createWalletWithdrawalPolicy(walletId, createWithdrawalPolicyRequest, options);
+        async createWalletWithdrawalPolicy2(walletId, createWithdrawalPolicyRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).createWalletWithdrawalPolicy2(walletId, createWithdrawalPolicyRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options);
+        async deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAllWalletWithdrawalPolicies(walletId, pageable, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getAllWalletWithdrawalPolicies(walletId, pageable, options);
+        async getAllWalletWithdrawalPolicies2(walletId, pageable, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getAllWalletWithdrawalPolicies2(walletId, pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAllowedAddress(walletId, allowedAddressId, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getAllowedAddress(walletId, allowedAddressId, options);
+        async getAllowedAddress2(walletId, allowedAddressId, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getAllowedAddress2(walletId, allowedAddressId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getAllowedAddressesByCoinId1(walletId, coinId, pageable, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getAllowedAddressesByCoinId1(walletId, coinId, pageable, options);
+        async getAllowedAddressesByCoinId3(walletId, coinId, pageable, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getAllowedAddressesByCoinId3(walletId, coinId, pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWallet(walletId, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWallet(walletId, options);
+        async getMasterWallet2(walletId, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWallet2(walletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWalletAccountKey(walletId, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWalletAccountKey(walletId, options);
+        async getMasterWalletAccountKey2(walletId, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWalletAccountKey2(walletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWalletBalance(walletId, symbol, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWalletBalance(walletId, symbol, options);
+        async getMasterWalletBalance2(walletId, symbol, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWalletBalance2(walletId, symbol, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWalletInitialKey(walletId, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWalletInitialKey(walletId, options);
+        async getMasterWalletInitialKey2(walletId, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWalletInitialKey2(walletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWalletNonce(walletId, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWalletNonce(walletId, options);
+        async getMasterWalletNonce1(walletId, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWalletNonce1(walletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getMasterWallets(sort, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWallets(sort, options);
+        async getMasterWallets4(sort, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getMasterWallets4(sort, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWallet(walletId, userWalletId, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getUserWallet(walletId, userWalletId, options);
+        async getUserWallet2(walletId, userWalletId, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getUserWallet2(walletId, userWalletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWalletBalance(walletId, userWalletId, symbol, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getUserWalletBalance(walletId, userWalletId, symbol, options);
+        async getUserWalletBalance2(walletId, userWalletId, symbol, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getUserWalletBalance2(walletId, userWalletId, symbol, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWalletNonce(walletId, userWalletId, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getUserWalletNonce(walletId, userWalletId, options);
+        async getUserWalletNonce1(walletId, userWalletId, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getUserWalletNonce1(walletId, userWalletId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getUserWallets(walletId, pageable, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getUserWallets(walletId, pageable, options);
+        async getUserWallets4(walletId, pageable, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getUserWallets4(walletId, pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async inactivateAllowedAddresses(walletId, inactivateAllowedAddressesRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).inactivateAllowedAddresses(walletId, inactivateAllowedAddressesRequest, options);
+        async inactivateAllowedAddresses2(walletId, inactivateAllowedAddressesRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).inactivateAllowedAddresses2(walletId, inactivateAllowedAddressesRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchAccountKey(walletId, updateAccountKeyRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).patchAccountKey(walletId, updateAccountKeyRequest, options);
+        async patchAccountKey2(walletId, updateAccountKeyRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).patchAccountKey2(walletId, updateAccountKeyRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchMasterWalletName(walletId, changeWalletNameRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).patchMasterWalletName(walletId, changeWalletNameRequest, options);
+        async patchMasterWalletName2(walletId, changeWalletNameRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).patchMasterWalletName2(walletId, changeWalletNameRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchUserWalletName(walletId, userWalletId, changeWalletNameRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).patchUserWalletName(walletId, userWalletId, changeWalletNameRequest, options);
+        async patchUserWalletName2(walletId, userWalletId, changeWalletNameRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).patchUserWalletName2(walletId, userWalletId, changeWalletNameRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options);
+        async patchWalletWithdrawalPolicy2(walletId, policyId, patchWithdrawalPolicyRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).patchWalletWithdrawalPolicy2(walletId, policyId, patchWithdrawalPolicyRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async recreateMasterWallet(walletId, recreateWalletRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).recreateMasterWallet(walletId, recreateWalletRequest, options);
+        async recreateMasterWallet2(walletId, recreateWalletRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).recreateMasterWallet2(walletId, recreateWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async recreateUserWallet(walletId, userWalletId, recreateWalletRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).recreateUserWallet(walletId, userWalletId, recreateWalletRequest, options);
+        async recreateUserWallet2(walletId, userWalletId, recreateWalletRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).recreateUserWallet2(walletId, userWalletId, recreateWalletRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async resendTransaction(resendTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).resendTransaction(resendTransactionRequest, options);
+        async resendTransaction2(resendTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).resendTransaction2(resendTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async sendBatchTransaction(createBatchTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).sendBatchTransaction(createBatchTransactionRequest, options);
+        async sendBatchTransaction2(createBatchTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).sendBatchTransaction2(createBatchTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async sendTransaction(createMultiSigTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).sendTransaction(createMultiSigTransactionRequest, options);
+        async sendTransaction2(createMultiSigTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).sendTransaction2(createMultiSigTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async validateIsAllowedAddress(walletId, validateIsAllowedAddressRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).validateIsAllowedAddress(walletId, validateIsAllowedAddressRequest, options);
+        async validateIsAllowedAddress2(walletId, validateIsAllowedAddressRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).validateIsAllowedAddress2(walletId, validateIsAllowedAddressRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -8110,205 +8110,205 @@ exports.KlayWalletControllerApiFp = function (configuration) {
 };
 exports.KlayWalletControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        activateAllowedAddresses(walletId, activateAllowedAddressesRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).activateAllowedAddresses(walletId, activateAllowedAddressesRequest, options).then((request) => request(axios, basePath));
+        activateAllowedAddresses2(walletId, activateAllowedAddressesRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).activateAllowedAddresses2(walletId, activateAllowedAddressesRequest, options).then((request) => request(axios, basePath));
         },
-        activateMasterWallet(walletId, activateMasterWalletRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).activateMasterWallet(walletId, activateMasterWalletRequest, options).then((request) => request(axios, basePath));
+        activateMasterWallet2(walletId, activateMasterWalletRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).activateMasterWallet2(walletId, activateMasterWalletRequest, options).then((request) => request(axios, basePath));
         },
-        createAllowedAddress(walletId, createAllowedAddressRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).createAllowedAddress(walletId, createAllowedAddressRequest, options).then((request) => request(axios, basePath));
+        createAllowedAddress2(walletId, createAllowedAddressRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).createAllowedAddress2(walletId, createAllowedAddressRequest, options).then((request) => request(axios, basePath));
         },
-        createMasterWallet1(createInactiveMasterWalletRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).createMasterWallet1(createInactiveMasterWalletRequest, options).then((request) => request(axios, basePath));
+        createMasterWallet3(createInactiveMasterWalletRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).createMasterWallet3(createInactiveMasterWalletRequest, options).then((request) => request(axios, basePath));
         },
-        createUserWallet(walletId, createUserWalletRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).createUserWallet(walletId, createUserWalletRequest, options).then((request) => request(axios, basePath));
+        createUserWallet2(walletId, createUserWalletRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).createUserWallet2(walletId, createUserWalletRequest, options).then((request) => request(axios, basePath));
         },
-        createWalletWithdrawalPolicy(walletId, createWithdrawalPolicyRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).createWalletWithdrawalPolicy(walletId, createWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
+        createWalletWithdrawalPolicy2(walletId, createWithdrawalPolicyRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).createWalletWithdrawalPolicy2(walletId, createWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
         },
-        deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(axios, basePath));
+        deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(axios, basePath));
         },
-        getAllWalletWithdrawalPolicies(walletId, pageable, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getAllWalletWithdrawalPolicies(walletId, pageable, options).then((request) => request(axios, basePath));
+        getAllWalletWithdrawalPolicies2(walletId, pageable, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getAllWalletWithdrawalPolicies2(walletId, pageable, options).then((request) => request(axios, basePath));
         },
-        getAllowedAddress(walletId, allowedAddressId, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getAllowedAddress(walletId, allowedAddressId, options).then((request) => request(axios, basePath));
+        getAllowedAddress2(walletId, allowedAddressId, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getAllowedAddress2(walletId, allowedAddressId, options).then((request) => request(axios, basePath));
         },
-        getAllowedAddressesByCoinId1(walletId, coinId, pageable, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getAllowedAddressesByCoinId1(walletId, coinId, pageable, options).then((request) => request(axios, basePath));
+        getAllowedAddressesByCoinId3(walletId, coinId, pageable, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getAllowedAddressesByCoinId3(walletId, coinId, pageable, options).then((request) => request(axios, basePath));
         },
-        getMasterWallet(walletId, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getMasterWallet(walletId, options).then((request) => request(axios, basePath));
+        getMasterWallet2(walletId, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getMasterWallet2(walletId, options).then((request) => request(axios, basePath));
         },
-        getMasterWalletAccountKey(walletId, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getMasterWalletAccountKey(walletId, options).then((request) => request(axios, basePath));
+        getMasterWalletAccountKey2(walletId, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getMasterWalletAccountKey2(walletId, options).then((request) => request(axios, basePath));
         },
-        getMasterWalletBalance(walletId, symbol, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getMasterWalletBalance(walletId, symbol, options).then((request) => request(axios, basePath));
+        getMasterWalletBalance2(walletId, symbol, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getMasterWalletBalance2(walletId, symbol, options).then((request) => request(axios, basePath));
         },
-        getMasterWalletInitialKey(walletId, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getMasterWalletInitialKey(walletId, options).then((request) => request(axios, basePath));
+        getMasterWalletInitialKey2(walletId, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getMasterWalletInitialKey2(walletId, options).then((request) => request(axios, basePath));
         },
-        getMasterWalletNonce(walletId, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getMasterWalletNonce(walletId, options).then((request) => request(axios, basePath));
+        getMasterWalletNonce1(walletId, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getMasterWalletNonce1(walletId, options).then((request) => request(axios, basePath));
         },
-        getMasterWallets(sort, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getMasterWallets(sort, options).then((request) => request(axios, basePath));
+        getMasterWallets4(sort, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getMasterWallets4(sort, options).then((request) => request(axios, basePath));
         },
-        getUserWallet(walletId, userWalletId, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getUserWallet(walletId, userWalletId, options).then((request) => request(axios, basePath));
+        getUserWallet2(walletId, userWalletId, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getUserWallet2(walletId, userWalletId, options).then((request) => request(axios, basePath));
         },
-        getUserWalletBalance(walletId, userWalletId, symbol, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getUserWalletBalance(walletId, userWalletId, symbol, options).then((request) => request(axios, basePath));
+        getUserWalletBalance2(walletId, userWalletId, symbol, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getUserWalletBalance2(walletId, userWalletId, symbol, options).then((request) => request(axios, basePath));
         },
-        getUserWalletNonce(walletId, userWalletId, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getUserWalletNonce(walletId, userWalletId, options).then((request) => request(axios, basePath));
+        getUserWalletNonce1(walletId, userWalletId, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getUserWalletNonce1(walletId, userWalletId, options).then((request) => request(axios, basePath));
         },
-        getUserWallets(walletId, pageable, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getUserWallets(walletId, pageable, options).then((request) => request(axios, basePath));
+        getUserWallets4(walletId, pageable, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getUserWallets4(walletId, pageable, options).then((request) => request(axios, basePath));
         },
-        inactivateAllowedAddresses(walletId, inactivateAllowedAddressesRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).inactivateAllowedAddresses(walletId, inactivateAllowedAddressesRequest, options).then((request) => request(axios, basePath));
+        inactivateAllowedAddresses2(walletId, inactivateAllowedAddressesRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).inactivateAllowedAddresses2(walletId, inactivateAllowedAddressesRequest, options).then((request) => request(axios, basePath));
         },
-        patchAccountKey(walletId, updateAccountKeyRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).patchAccountKey(walletId, updateAccountKeyRequest, options).then((request) => request(axios, basePath));
+        patchAccountKey2(walletId, updateAccountKeyRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).patchAccountKey2(walletId, updateAccountKeyRequest, options).then((request) => request(axios, basePath));
         },
-        patchMasterWalletName(walletId, changeWalletNameRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).patchMasterWalletName(walletId, changeWalletNameRequest, options).then((request) => request(axios, basePath));
+        patchMasterWalletName2(walletId, changeWalletNameRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).patchMasterWalletName2(walletId, changeWalletNameRequest, options).then((request) => request(axios, basePath));
         },
-        patchUserWalletName(walletId, userWalletId, changeWalletNameRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).patchUserWalletName(walletId, userWalletId, changeWalletNameRequest, options).then((request) => request(axios, basePath));
+        patchUserWalletName2(walletId, userWalletId, changeWalletNameRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).patchUserWalletName2(walletId, userWalletId, changeWalletNameRequest, options).then((request) => request(axios, basePath));
         },
-        patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
+        patchWalletWithdrawalPolicy2(walletId, policyId, patchWithdrawalPolicyRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).patchWalletWithdrawalPolicy2(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(axios, basePath));
         },
-        recreateMasterWallet(walletId, recreateWalletRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).recreateMasterWallet(walletId, recreateWalletRequest, options).then((request) => request(axios, basePath));
+        recreateMasterWallet2(walletId, recreateWalletRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).recreateMasterWallet2(walletId, recreateWalletRequest, options).then((request) => request(axios, basePath));
         },
-        recreateUserWallet(walletId, userWalletId, recreateWalletRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).recreateUserWallet(walletId, userWalletId, recreateWalletRequest, options).then((request) => request(axios, basePath));
+        recreateUserWallet2(walletId, userWalletId, recreateWalletRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).recreateUserWallet2(walletId, userWalletId, recreateWalletRequest, options).then((request) => request(axios, basePath));
         },
-        resendTransaction(resendTransactionRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).resendTransaction(resendTransactionRequest, options).then((request) => request(axios, basePath));
+        resendTransaction2(resendTransactionRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).resendTransaction2(resendTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        sendBatchTransaction(createBatchTransactionRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).sendBatchTransaction(createBatchTransactionRequest, options).then((request) => request(axios, basePath));
+        sendBatchTransaction2(createBatchTransactionRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).sendBatchTransaction2(createBatchTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        sendTransaction(createMultiSigTransactionRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).sendTransaction(createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
+        sendTransaction2(createMultiSigTransactionRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).sendTransaction2(createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        validateIsAllowedAddress(walletId, validateIsAllowedAddressRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).validateIsAllowedAddress(walletId, validateIsAllowedAddressRequest, options).then((request) => request(axios, basePath));
+        validateIsAllowedAddress2(walletId, validateIsAllowedAddressRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).validateIsAllowedAddress2(walletId, validateIsAllowedAddressRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 class KlayWalletControllerApi extends base_1.BaseAPI {
-    activateAllowedAddresses(walletId, activateAllowedAddressesRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).activateAllowedAddresses(walletId, activateAllowedAddressesRequest, options).then((request) => request(this.axios, this.basePath));
+    activateAllowedAddresses2(walletId, activateAllowedAddressesRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).activateAllowedAddresses2(walletId, activateAllowedAddressesRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    activateMasterWallet(walletId, activateMasterWalletRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).activateMasterWallet(walletId, activateMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    activateMasterWallet2(walletId, activateMasterWalletRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).activateMasterWallet2(walletId, activateMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createAllowedAddress(walletId, createAllowedAddressRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).createAllowedAddress(walletId, createAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
+    createAllowedAddress2(walletId, createAllowedAddressRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).createAllowedAddress2(walletId, createAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createMasterWallet1(createInactiveMasterWalletRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).createMasterWallet1(createInactiveMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    createMasterWallet3(createInactiveMasterWalletRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).createMasterWallet3(createInactiveMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createUserWallet(walletId, createUserWalletRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).createUserWallet(walletId, createUserWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    createUserWallet2(walletId, createUserWalletRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).createUserWallet2(walletId, createUserWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    createWalletWithdrawalPolicy(walletId, createWithdrawalPolicyRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).createWalletWithdrawalPolicy(walletId, createWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
+    createWalletWithdrawalPolicy2(walletId, createWithdrawalPolicyRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).createWalletWithdrawalPolicy2(walletId, createWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
+    deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    getAllWalletWithdrawalPolicies(walletId, pageable, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getAllWalletWithdrawalPolicies(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
+    getAllWalletWithdrawalPolicies2(walletId, pageable, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getAllWalletWithdrawalPolicies2(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    getAllowedAddress(walletId, allowedAddressId, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getAllowedAddress(walletId, allowedAddressId, options).then((request) => request(this.axios, this.basePath));
+    getAllowedAddress2(walletId, allowedAddressId, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getAllowedAddress2(walletId, allowedAddressId, options).then((request) => request(this.axios, this.basePath));
     }
-    getAllowedAddressesByCoinId1(walletId, coinId, pageable, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getAllowedAddressesByCoinId1(walletId, coinId, pageable, options).then((request) => request(this.axios, this.basePath));
+    getAllowedAddressesByCoinId3(walletId, coinId, pageable, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getAllowedAddressesByCoinId3(walletId, coinId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWallet(walletId, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getMasterWallet(walletId, options).then((request) => request(this.axios, this.basePath));
+    getMasterWallet2(walletId, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getMasterWallet2(walletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWalletAccountKey(walletId, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getMasterWalletAccountKey(walletId, options).then((request) => request(this.axios, this.basePath));
+    getMasterWalletAccountKey2(walletId, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getMasterWalletAccountKey2(walletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWalletBalance(walletId, symbol, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getMasterWalletBalance(walletId, symbol, options).then((request) => request(this.axios, this.basePath));
+    getMasterWalletBalance2(walletId, symbol, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getMasterWalletBalance2(walletId, symbol, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWalletInitialKey(walletId, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getMasterWalletInitialKey(walletId, options).then((request) => request(this.axios, this.basePath));
+    getMasterWalletInitialKey2(walletId, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getMasterWalletInitialKey2(walletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWalletNonce(walletId, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getMasterWalletNonce(walletId, options).then((request) => request(this.axios, this.basePath));
+    getMasterWalletNonce1(walletId, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getMasterWalletNonce1(walletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getMasterWallets(sort, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getMasterWallets(sort, options).then((request) => request(this.axios, this.basePath));
+    getMasterWallets4(sort, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getMasterWallets4(sort, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWallet(walletId, userWalletId, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getUserWallet(walletId, userWalletId, options).then((request) => request(this.axios, this.basePath));
+    getUserWallet2(walletId, userWalletId, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getUserWallet2(walletId, userWalletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWalletBalance(walletId, userWalletId, symbol, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getUserWalletBalance(walletId, userWalletId, symbol, options).then((request) => request(this.axios, this.basePath));
+    getUserWalletBalance2(walletId, userWalletId, symbol, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getUserWalletBalance2(walletId, userWalletId, symbol, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWalletNonce(walletId, userWalletId, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getUserWalletNonce(walletId, userWalletId, options).then((request) => request(this.axios, this.basePath));
+    getUserWalletNonce1(walletId, userWalletId, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getUserWalletNonce1(walletId, userWalletId, options).then((request) => request(this.axios, this.basePath));
     }
-    getUserWallets(walletId, pageable, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getUserWallets(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
+    getUserWallets4(walletId, pageable, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getUserWallets4(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
     }
-    inactivateAllowedAddresses(walletId, inactivateAllowedAddressesRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).inactivateAllowedAddresses(walletId, inactivateAllowedAddressesRequest, options).then((request) => request(this.axios, this.basePath));
+    inactivateAllowedAddresses2(walletId, inactivateAllowedAddressesRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).inactivateAllowedAddresses2(walletId, inactivateAllowedAddressesRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    patchAccountKey(walletId, updateAccountKeyRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).patchAccountKey(walletId, updateAccountKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    patchAccountKey2(walletId, updateAccountKeyRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).patchAccountKey2(walletId, updateAccountKeyRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    patchMasterWalletName(walletId, changeWalletNameRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).patchMasterWalletName(walletId, changeWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
+    patchMasterWalletName2(walletId, changeWalletNameRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).patchMasterWalletName2(walletId, changeWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    patchUserWalletName(walletId, userWalletId, changeWalletNameRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).patchUserWalletName(walletId, userWalletId, changeWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
+    patchUserWalletName2(walletId, userWalletId, changeWalletNameRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).patchUserWalletName2(walletId, userWalletId, changeWalletNameRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicy(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
+    patchWalletWithdrawalPolicy2(walletId, policyId, patchWithdrawalPolicyRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).patchWalletWithdrawalPolicy2(walletId, policyId, patchWithdrawalPolicyRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    recreateMasterWallet(walletId, recreateWalletRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).recreateMasterWallet(walletId, recreateWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    recreateMasterWallet2(walletId, recreateWalletRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).recreateMasterWallet2(walletId, recreateWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    recreateUserWallet(walletId, userWalletId, recreateWalletRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).recreateUserWallet(walletId, userWalletId, recreateWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    recreateUserWallet2(walletId, userWalletId, recreateWalletRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).recreateUserWallet2(walletId, userWalletId, recreateWalletRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    resendTransaction(resendTransactionRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).resendTransaction(resendTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    resendTransaction2(resendTransactionRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).resendTransaction2(resendTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    sendBatchTransaction(createBatchTransactionRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).sendBatchTransaction(createBatchTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    sendBatchTransaction2(createBatchTransactionRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).sendBatchTransaction2(createBatchTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    sendTransaction(createMultiSigTransactionRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).sendTransaction(createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    sendTransaction2(createMultiSigTransactionRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).sendTransaction2(createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    validateIsAllowedAddress(walletId, validateIsAllowedAddressRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).validateIsAllowedAddress(walletId, validateIsAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
+    validateIsAllowedAddress2(walletId, validateIsAllowedAddressRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).validateIsAllowedAddress2(walletId, validateIsAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.KlayWalletControllerApi = KlayWalletControllerApi;
 exports.KlayWithdrawalApprovalControllerApiAxiosParamCreator = function (configuration) {
     return {
-        approveWithdrawalApproval: async (withdrawalApprovalId, approveWithdrawalApprovalRequest, options = {}) => {
+        approveWithdrawalApproval2: async (withdrawalApprovalId, approveWithdrawalApprovalRequest, options = {}) => {
             if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
-                throw new base_1.RequiredError('withdrawalApprovalId', 'Required parameter withdrawalApprovalId was null or undefined when calling approveWithdrawalApproval.');
+                throw new base_1.RequiredError('withdrawalApprovalId', 'Required parameter withdrawalApprovalId was null or undefined when calling approveWithdrawalApproval2.');
             }
             if (approveWithdrawalApprovalRequest === null || approveWithdrawalApprovalRequest === undefined) {
-                throw new base_1.RequiredError('approveWithdrawalApprovalRequest', 'Required parameter approveWithdrawalApprovalRequest was null or undefined when calling approveWithdrawalApproval.');
+                throw new base_1.RequiredError('approveWithdrawalApprovalRequest', 'Required parameter approveWithdrawalApprovalRequest was null or undefined when calling approveWithdrawalApproval2.');
             }
             const localVarPath = `/api/v2/klay/withdrawal-approvals/{withdrawalApprovalId}/approve`
                 .replace(`{${"withdrawalApprovalId"}}`, encodeURIComponent(String(withdrawalApprovalId)));
@@ -8332,12 +8332,12 @@ exports.KlayWithdrawalApprovalControllerApiAxiosParamCreator = function (configu
                 options: localVarRequestOptions,
             };
         },
-        rejectWithdrawalApproval: async (withdrawalApprovalId, rejectWithdrawalApprovalRequest, options = {}) => {
+        rejectWithdrawalApproval2: async (withdrawalApprovalId, rejectWithdrawalApprovalRequest, options = {}) => {
             if (withdrawalApprovalId === null || withdrawalApprovalId === undefined) {
-                throw new base_1.RequiredError('withdrawalApprovalId', 'Required parameter withdrawalApprovalId was null or undefined when calling rejectWithdrawalApproval.');
+                throw new base_1.RequiredError('withdrawalApprovalId', 'Required parameter withdrawalApprovalId was null or undefined when calling rejectWithdrawalApproval2.');
             }
             if (rejectWithdrawalApprovalRequest === null || rejectWithdrawalApprovalRequest === undefined) {
-                throw new base_1.RequiredError('rejectWithdrawalApprovalRequest', 'Required parameter rejectWithdrawalApprovalRequest was null or undefined when calling rejectWithdrawalApproval.');
+                throw new base_1.RequiredError('rejectWithdrawalApprovalRequest', 'Required parameter rejectWithdrawalApprovalRequest was null or undefined when calling rejectWithdrawalApproval2.');
             }
             const localVarPath = `/api/v2/klay/withdrawal-approvals/{withdrawalApprovalId}/reject`
                 .replace(`{${"withdrawalApprovalId"}}`, encodeURIComponent(String(withdrawalApprovalId)));
@@ -8365,15 +8365,15 @@ exports.KlayWithdrawalApprovalControllerApiAxiosParamCreator = function (configu
 };
 exports.KlayWithdrawalApprovalControllerApiFp = function (configuration) {
     return {
-        async approveWithdrawalApproval(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWithdrawalApprovalControllerApiAxiosParamCreator(configuration).approveWithdrawalApproval(withdrawalApprovalId, approveWithdrawalApprovalRequest, options);
+        async approveWithdrawalApproval2(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWithdrawalApprovalControllerApiAxiosParamCreator(configuration).approveWithdrawalApproval2(withdrawalApprovalId, approveWithdrawalApprovalRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async rejectWithdrawalApproval(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWithdrawalApprovalControllerApiAxiosParamCreator(configuration).rejectWithdrawalApproval(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options);
+        async rejectWithdrawalApproval2(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWithdrawalApprovalControllerApiAxiosParamCreator(configuration).rejectWithdrawalApproval2(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -8383,20 +8383,20 @@ exports.KlayWithdrawalApprovalControllerApiFp = function (configuration) {
 };
 exports.KlayWithdrawalApprovalControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        approveWithdrawalApproval(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
-            return exports.KlayWithdrawalApprovalControllerApiFp(configuration).approveWithdrawalApproval(withdrawalApprovalId, approveWithdrawalApprovalRequest, options).then((request) => request(axios, basePath));
+        approveWithdrawalApproval2(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
+            return exports.KlayWithdrawalApprovalControllerApiFp(configuration).approveWithdrawalApproval2(withdrawalApprovalId, approveWithdrawalApprovalRequest, options).then((request) => request(axios, basePath));
         },
-        rejectWithdrawalApproval(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
-            return exports.KlayWithdrawalApprovalControllerApiFp(configuration).rejectWithdrawalApproval(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options).then((request) => request(axios, basePath));
+        rejectWithdrawalApproval2(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
+            return exports.KlayWithdrawalApprovalControllerApiFp(configuration).rejectWithdrawalApproval2(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 class KlayWithdrawalApprovalControllerApi extends base_1.BaseAPI {
-    approveWithdrawalApproval(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
-        return exports.KlayWithdrawalApprovalControllerApiFp(this.configuration).approveWithdrawalApproval(withdrawalApprovalId, approveWithdrawalApprovalRequest, options).then((request) => request(this.axios, this.basePath));
+    approveWithdrawalApproval2(withdrawalApprovalId, approveWithdrawalApprovalRequest, options) {
+        return exports.KlayWithdrawalApprovalControllerApiFp(this.configuration).approveWithdrawalApproval2(withdrawalApprovalId, approveWithdrawalApprovalRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    rejectWithdrawalApproval(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
-        return exports.KlayWithdrawalApprovalControllerApiFp(this.configuration).rejectWithdrawalApproval(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options).then((request) => request(this.axios, this.basePath));
+    rejectWithdrawalApproval2(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options) {
+        return exports.KlayWithdrawalApprovalControllerApiFp(this.configuration).rejectWithdrawalApproval2(withdrawalApprovalId, rejectWithdrawalApprovalRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.KlayWithdrawalApprovalControllerApi = KlayWithdrawalApprovalControllerApi;

@@ -2,7 +2,6 @@ import BN from "bn.js";
 import { ActivatingMasterWallet, WalletStatus } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import { Balance, Key, Keychains, Pagination, PaginationOptions } from "../types";
-import { SignedMultiSigPayload } from "./transactions";
 import { Client } from "../httpClient";
 import { MasterWalletDTO, FlushQuerySearchCondition, FlushTransactionValueTransferEventDTO, FlushTransactionDTO } from "../__generate__/eth";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
@@ -34,11 +33,6 @@ export declare type FlushTransaction = Omit<FlushTransactionDTO, "blockchain" | 
 export declare class EthWallet extends EthLikeWallet {
     private walletContract;
     constructor(client: Client, data: EthMasterWalletData, keychains: Keychains, blockchain: BlockchainType);
-    resendTransaction(transactionId: string, gasPrice?: BN): Promise<EthTransaction>;
-    contractCall(contractAddress: string, value: BN, data: string, passphrase: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
-    transfer(coin: string | Coin, to: string, amount: BN, passphrase: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
-    sendTransaction(signedMultiSigPayload: SignedMultiSigPayload, walletId: string, otpCode?: string, gasPrice?: BN): Promise<EthTransaction>;
-    sendBatchTransaction(blockchain: BlockchainType, signedMultiSigPayloads: SignedMultiSigPayload[], walletId: string, otpCode?: string, gasPrice?: BN): Promise<EthTransaction[]>;
     getEncryptionKey(): string;
     getAccountKey(): Key;
     updateAccountKey(key: Key): void;

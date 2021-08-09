@@ -15,9 +15,7 @@ const ipld_dag_cbor_1 = __importDefault(require("ipld-dag-cbor"));
 const data_1 = require("./fil-core-lib/data");
 const utils_1 = require("./fil-core-lib/utils");
 const types_1 = require("./fil-core-lib/types");
-const signer_1 = require("./fil-core-lib/signer");
 const utils_2 = require("./utils");
-const constants_1 = require("./fil-core-lib/constants");
 exports.convertWalletData = (data) => {
     return Object.assign(Object.assign({}, data), { blockchain: blockchain_1.BlockchainType.FILECOIN, status: wallet_1.convertWalletStatus(data.status) });
 };
@@ -81,7 +79,7 @@ class FilMasterWallet extends abstractWallet_1.FilAbstractWallet {
         return new depositAddress_1.FilDepositAddress(this.client, this.data, this.keychains, depositAddress_1.convertDepositAddressData(depositAddressData));
     }
     async transfer(to, amount, passphrase, otpCode, gasPremium, metadata) {
-        const rawTransaction = await this.client.post(`${this.baseUrl}/transactions/build`, this.createBuildTransactionRequest(to, amount, gasPremium));
+        const rawTransaction = await this.client.post(`${this.baseUrl}/transactions/build`, this.createBuildTransactionRequest(to, amount, otpCode, gasPremium));
         const signedTransaction = this.signRawTransaction(rawTransaction, this.getAccountKey(), passphrase, true);
         const transferData = await this.client.post(`${this.baseUrl}/transactions`, {
             toAddress: to,
@@ -134,7 +132,7 @@ class FilMasterWallet extends abstractWallet_1.FilAbstractWallet {
     getConfirmation() {
         return this.confirmation;
     }
-    createBuildTransactionRequest(to, amount, gasPremium) {
+    createBuildTransactionRequest(to, amount, otpCode, gasPremium) {
         const msgParams = [
             utils_1.addressAsBytes(to),
             data_1.serializeBigNum(amount.toString(10)),
@@ -151,39 +149,8 @@ class FilMasterWallet extends abstractWallet_1.FilAbstractWallet {
             gasPremium: common_1.BNConverter.bnToHexStringOrElseNull(gasPremium),
             method: types_1.MethodMultisig.Propose,
             params: Buffer.from(serializedMsgParams).toString("base64"),
+            otpCode: otpCode,
         };
-    }
-    signRawTransaction(rawTransaction, key, passphrase, fromSeed) {
-        const message = utils_2.convertRawTransactionToMessage(rawTransaction);
-        const signature = this.createMessageSignature(message, key, passphrase, fromSeed);
-        message.cid = this.calculateCidFromMessage(message);
-        const cid = this.calculateCidFromMessageAndSignature(message, signature);
-        return {
-            cid,
-            message,
-            signature,
-        };
-    }
-    createMessageSignature(message, key, passphrase, fromSeed) {
-        const msgObject = utils_2.convertMessageToObject(message);
-        const serializedMsg = signer_1.transactionSerialize(msgObject);
-        const signature = this.keychains.sign(key, passphrase, serializedMsg, fromSeed);
-        return {
-            data: signature,
-            type: constants_1.ProtocolIndicator.SECP256K1,
-        };
-    }
-    calculateCidFromMessage(message) {
-        const messageObject = utils_2.convertMessageToObject(message);
-        return new TextDecoder()
-            .decode(utils_1.encode(utils_1.getCID(signer_1.transactionSerializeRaw(messageObject))))
-            .toLocaleLowerCase();
-    }
-    calculateCidFromMessageAndSignature(message, signature) {
-        const messageObject = utils_2.convertMessageToObject(message);
-        return new TextDecoder()
-            .decode(utils_1.encode(utils_1.getCID(signer_1.signedTransactionSerializeRaw(messageObject, signature))))
-            .toLocaleLowerCase();
     }
     createFlushTarget(rawFlushTransaction, passphrase) {
         const rawTransaction = rawFlushTransaction.rawTransaction;
