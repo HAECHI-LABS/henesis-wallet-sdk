@@ -22,12 +22,12 @@ import {
   UserWalletDTO,
 } from "../dto/user-wallet.dto";
 import {
+  ApiCreatedResponse,
+  ApiExtraModels,
   ApiNoContentResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
-  ApiOkResponse,
-  ApiExtraModels,
-  ApiCreatedResponse,
 } from "@nestjs/swagger";
 import express from "express";
 import { SendMasterWalletContractCallRequestDTO } from "../dto/send-master-wallet-contract-call-request.dto";
@@ -339,11 +339,7 @@ export class WalletsController {
         name,
         address,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      request
     );
   }
 

@@ -273,6 +273,10 @@ components:
           type: string
           description: '입출금 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)'
           example: '1612411724023'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
       required:
         - id
         - from
@@ -438,7 +442,7 @@ components:
           example: 49e129bd5e1e67eddc5e317ed2e42b4c
         transfers:
           description: 집금을 통해 발생한 입출금 목록
-          example: &ref_21
+          example: &ref_22
             - &ref_9
               id: 5b0d5c94f8fa6c2a891eb4f833767f03
               from: t1tian42omo3lnk6lh7mw6k3d4muelbfvvlmhufni
@@ -451,6 +455,7 @@ components:
               transaction: *ref_0
               createdAt: '1612411568760'
               updatedAt: '1612411724023'
+              metadata: metadata
           type: array
           items:
             $ref: '#/components/schemas/TransferDTO'
@@ -547,11 +552,14 @@ components:
             트랜잭션에 사용할 gas premium (단위: attoFIL) null일 경우, Henesis가 자동으로 0블럭 안에
             채굴될 수 있는 값으로 설정합니다.
           example: '199659'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
       required:
         - to
         - amount
         - passphrase
-        - gasPremium
     FlushRequestDTO:
       type: object
       properties:
@@ -573,10 +581,13 @@ components:
             트랜잭션에 사용할 gas premium (단위: attoFIL) null일 경우, Henesis가 자동으로 0블럭 안에
             채굴될 수 있는 값으로 설정합니다.
           example: '199659'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
       required:
         - targets
         - passphrase
-        - gasPremium
     GetManyResponseForDepositAddressDTO:
       type: object
       properties:
@@ -597,6 +608,29 @@ components:
           example: test-deposit-address
       required:
         - name
+    DepositAddressTransferRequestDTO:
+      type: object
+      properties:
+        to:
+          type: string
+          description: 암호화폐를 받을 지갑 주소
+          example: t1rxcckgd5rye7thpngyvykpfokfh7dwk3oggnx3a
+        amount:
+          type: string
+          description: '암호화폐의 양 (단위: attoFIL)'
+          example: '1304000000000000000'
+        passphrase:
+          type: string
+          description: 지갑의 비밀번호
+          example: passphrase
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+      required:
+        - to
+        - amount
+        - passphrase
     GetManyResponseForFlushDTO:
       type: object
       properties:
@@ -1186,7 +1220,7 @@ paths:
                 MasterWalletNotFoundException:
                   value: *ref_18
                 DepositAddressNotFoundException:
-                  value:
+                  value: &ref_21
                     message: >-
                       deposit address 'c27732256a1f8d45df5aec31ba7ef85cd' does
                       not exist
@@ -1224,6 +1258,49 @@ paths:
           description: ''
         '401': *ref_16
       tags: *ref_17
+  /api/v3/filecoin/wallets/{masterWalletId}/deposit-addresses/{depositAddressId}/transfer:
+    post:
+      operationId: filecoin-WalletsController_transferFromDepositAddress
+      summary: 입금 주소에서 코인 전송하기
+      description: 특정 입금 주소에서 가상자산을 송금합니다.
+      parameters:
+        - *ref_13
+        - *ref_14
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: depositAddressId
+          required: true
+          in: path
+          description: 입금 주소 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositAddressTransferRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferDTO'
+              example: *ref_9
+          description: ''
+        '400':
+          description: 해당하는 id의 입금 주소가 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositAddressNotFoundException'
+              example: *ref_21
+        '401': *ref_16
+      tags: *ref_17
   /api/v3/filecoin/wallets/{masterWalletId}/flushes:
     get:
       operationId: filecoin-WalletsController_getFlushes
@@ -1259,10 +1336,10 @@ paths:
               example:
                 pagination: *ref_19
                 results:
-                  - &ref_22
+                  - &ref_23
                     id: 76f42bbea97c5e5fb6420ee29060ffc3
                     masterWalletId: 49e129bd5e1e67eddc5e317ed2e42b4c
-                    transfers: *ref_21
+                    transfers: *ref_22
                     createdAt: '1612411568760'
                     updatedAt: '1612411724023'
           description: ''
@@ -1301,7 +1378,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForFlushDTO'
-              example: *ref_22
+              example: *ref_23
           description: ''
         '400':
           description: 다음과 같은 bad request 에러가 발생할 수 있습니다.

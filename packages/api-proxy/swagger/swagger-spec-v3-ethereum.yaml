@@ -665,6 +665,10 @@ components:
             트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
             값으로 설정합니다.
           example: '8000000000'
+        gasLimit:
+          type: string
+          description: 트랜잭션에 사용할 gas limit. null일 경우, Henesis가 자동으로 설정합니다.
+          example: '500000'
         metadata:
           type: string
           description: 기타 정보 기록용 메타 데이터 (255자 제한)
@@ -699,6 +703,10 @@ components:
             트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
             값으로 설정합니다.
           example: '10000000000'
+        gasLimit:
+          type: string
+          description: 트랜잭션에 사용할 gas limit. null일 경우, Henesis가 자동으로 설정합니다.
+          example: '500000'
         metadata:
           type: string
           description: 기타 정보 기록용 메타 데이터 (255자 제한)

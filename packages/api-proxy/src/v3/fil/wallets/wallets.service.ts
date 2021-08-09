@@ -20,7 +20,9 @@ import { PaginationDTO } from "../dto/pagination.dto";
 import { FilDepositAddress } from "@haechi-labs/henesis-wallet-core/lib/fil/depositAddress";
 import { MasterWalletBalanceDto } from "../dto/master-wallet-balance.dto";
 import { PaginationOptionsDTO } from "../dto/pagination-options.dto";
-import { getPaginationMeta } from "../../../utils/pagination";
+import { changeUrlHost } from "../../../utils/pagination";
+import { DepositAddressTransferRequestDTO } from "./dto/deposit-address-transfer-request.dto";
+import express from "express";
 
 @Injectable()
 export class WalletsService {
@@ -105,20 +107,20 @@ export class WalletsService {
     sdk: SDK,
     masterWalletId: string,
     options: GetDepositAddressesOptionsDTO,
-    path: string
+    request: express.Request
   ): Promise<PaginationDTO<DepositAddressDTO>> {
     const masterWallet: FilMasterWallet = await sdk.fil.wallets.getMasterWallet(
       masterWalletId
     );
     const data = await masterWallet.getDepositAddresses(options);
+
+    data.pagination.nextUrl = changeUrlHost(data.pagination.nextUrl, request);
+    data.pagination.previousUrl = changeUrlHost(
+      data.pagination.previousUrl,
+      request
+    );
     return {
-      pagination: getPaginationMeta(
-        path,
-        options.page,
-        options.size,
-        data.pagination.totalCount,
-        options
-      ),
+      pagination: data.pagination,
       results: data.results.map(DepositAddressDTO.fromDepositAddress),
     };
   }
@@ -165,12 +167,19 @@ export class WalletsService {
   public async getFlushes(
     sdk: SDK,
     masterWalletId: string,
-    options: PaginationOptionsDTO
+    options: PaginationOptionsDTO,
+    request: express.Request
   ): Promise<PaginationDTO<FlushDTO>> {
     const masterWallet: FilMasterWallet = await sdk.fil.wallets.getMasterWallet(
       masterWalletId
     );
     const data = await masterWallet.getFlushes(options);
+
+    data.pagination.nextUrl = changeUrlHost(data.pagination.nextUrl, request);
+    data.pagination.previousUrl = changeUrlHost(
+      data.pagination.previousUrl,
+      request
+    );
     return {
       pagination: data.pagination,
       results: data.results.map(FlushDTO.fromFlush),
@@ -186,5 +195,26 @@ export class WalletsService {
       masterWalletId
     );
     return FlushDTO.fromFlush(await masterWallet.getFlush(flushId));
+  }
+
+  public async transferFromDepositAddress(
+    sdk: SDK,
+    masterWalletId: string,
+    depositAddressId: string,
+    request: DepositAddressTransferRequestDTO
+  ): Promise<TransferDTO> {
+    const masterWallet: FilMasterWallet = await sdk.fil.wallets.getMasterWallet(
+      masterWalletId
+    );
+    const depositAddress: FilDepositAddress =
+      await masterWallet.getDepositAddress(depositAddressId);
+    const transfer: FilTransfer = await depositAddress.transfer(
+      request.to,
+      new BN(request.amount),
+      request.passphrase,
+      null,
+      request.metadata
+    );
+    return TransferDTO.fromTransfer(transfer);
   }
 }

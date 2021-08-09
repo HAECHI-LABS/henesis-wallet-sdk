@@ -3,6 +3,95 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.9...v3.2.10) (2021-07-23)
+
+
+### Bug Fixes
+
+* chnage SimplifiedWalletDTO to SimplifiedWalletInternalDTO ([8b9becf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8b9becfa50567587e81ce01abc23ad77effa171a))
+
+
+
+
+
+## [3.2.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.8...v3.2.9) (2021-07-22)
+
+
+### Bug Fixes
+
+* add otp code to transfer of deposit address in filecoin ([a9778e1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a9778e13d42dd49699b9f3b9b42279ac581e28b3))
+
+
+
+
+
+## [3.2.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.7...v3.2.8) (2021-07-20)
+
+
+### Bug Fixes
+
+* remove default function ([#519](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/519)) ([78a4d7b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/78a4d7bde7ab49ebeb4ad3120af34516790e34e5))
+
+
+
+
+
+## [3.2.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6...v3.2.7) (2021-07-20)
+
+
+### Bug Fixes
+
+* add convert method to filecoin transfer from deposit address ([e327ab9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e327ab9453795121d8cd5d8c80b76d32918b3ca8))
+
+
+### Features
+
+* implement transfer from deposit address in filecoin ([173d222](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/173d222244427cf2599a0875d3a170568c9358c2))
+
+
+
+
+
+## [3.2.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6-alpha.2...v3.2.6) (2021-07-15)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-core
+
+
+
+
+
+## [3.2.6-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6-alpha.1...v3.2.6-alpha.2) (2021-07-15)
+
+
+### Bug Fixes
+
+* add metadata to trasnfer dto in filecoin ([2890070](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/28900703c5bd73ac2d08c8eb1b6a42a246aaac08))
+
+
+
+
+
+## [3.2.6-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6-alpha.0...v3.2.6-alpha.1) (2021-07-15)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-core
+
+
+
+
+
+## [3.2.6-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.5...v3.2.6-alpha.0) (2021-07-15)
+
+
+### Bug Fixes
+
+* add metadata to transfer and api ([5bb1dfc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5bb1dfcab375617df10eaa83d1bf49d4bc91ac15))
+* fix signing bug when change password in filecoin ([c236448](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c236448f69f7ce71e7a858361730cd4c689dc3f5))
+* fix to pad pk when it has less length than 64 ([f74f53d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f74f53d32be05c1b63181f86521228ea5bd87b00))
+
+
+
+
+
 ## [3.2.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.4...v3.2.5) (2021-07-12)
 
 

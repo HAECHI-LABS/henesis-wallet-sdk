@@ -2,7 +2,7 @@ import { EventsService } from "./events.service";
 import { Controller, Get, Query, Request } from "@nestjs/common";
 import { ValueTransferEventDTO } from "../dto/value-transfer-event.dto";
 import { CallEventDTO } from "../dto/call-event.dto";
-import { ApiOperation, ApiTags, ApiExtraModels } from "@nestjs/swagger";
+import { ApiExtraModels, ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import {
   EXAMPLE_ETH_KLAY_PAGINATION_CALL_EVENT_DTO,
@@ -93,11 +93,7 @@ export class EventsController {
         size,
         page,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      request
     );
   }
 
@@ -146,11 +142,7 @@ export class EventsController {
         size,
         page,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      request
     );
   }
 }

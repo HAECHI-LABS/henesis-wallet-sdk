@@ -4,10 +4,10 @@ import {
   TransactionDTO,
 } from "../dto/transaction.dto";
 import {
+  ApiExtraModels,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
-  ApiOkResponse,
-  ApiExtraModels,
 } from "@nestjs/swagger";
 import express from "express";
 import {
@@ -95,6 +95,7 @@ export class TransactionsController {
   ): Promise<PaginationDTO<TransactionDTO>> {
     return await this.transactionsService.getTransactions(
       request.sdk,
+      request,
       address,
       toAddress,
       fromAddress,

@@ -345,11 +345,7 @@ export class WalletsController {
         name,
         address,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      request
     );
   }
 

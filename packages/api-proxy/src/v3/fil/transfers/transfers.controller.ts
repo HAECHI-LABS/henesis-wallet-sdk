@@ -29,9 +29,9 @@ import {
   InvalidStatusException,
 } from "../dto/exceptions.dto";
 import {
+  MASTER_WALLET_ID_OPTIONAL,
   TRANSACTION_HASH_OPTIONAL,
   TRANSACTION_ID_OPTIONAL,
-  MASTER_WALLET_ID_OPTIONAL,
   WALLET_ID_OPTIONAL,
 } from "../wallets/dto/params.dto";
 import {
@@ -106,11 +106,7 @@ export class TransfersController {
         size,
         page,
       },
-      `${request.protocol}://${
-        request.hostname == "localhost"
-          ? `${request.hostname}:3000`
-          : request.hostname
-      }${request.path}`
+      request
     );
   }
 }
