@@ -40,7 +40,6 @@ export class BalanceDTO {
     example: EXAMPLE_BITCOIN_BALANCE_DTO.aggregatedAmount,
   })
   aggregatedAmount?: string;
-  asd;
 
   @ApiModelProperty({
     description: "암호화폐 이름",
