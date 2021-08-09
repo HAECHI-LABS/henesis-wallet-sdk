@@ -32,7 +32,7 @@ export class DepositAddressDTO {
     description: "입금 주소 공개키",
     example: EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO.pub,
   })
-  pub?: string;
+  pub: string;
 
   @ApiModelProperty({
     description: "입금 주소 생성 시간 (단위: ms, UNIX time)",

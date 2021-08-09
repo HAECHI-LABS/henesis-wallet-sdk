@@ -4,7 +4,6 @@ export class ChangeWalletNameRequestDTO {
   @ApiModelProperty({
     description: "변경할 지갑 이름",
     example: "walletName",
-    default: "walletName",
   })
   name: string;
 }

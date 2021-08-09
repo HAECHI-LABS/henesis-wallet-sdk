@@ -4,7 +4,10 @@ import {
 } from "./btc-transaction-output.dto";
 import { BtcTransaction } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
-import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import {
+  ApiModelProperty,
+  ApiModelPropertyOptional,
+} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_BITCOIN_BTC_TRANSACTION_DTO: BtcTransactionDTO = {
   id: "beb70cf0b90afb6683ece78e0dfb4a140cf498310b833eea8092b5edd271e9c3",
@@ -33,7 +36,7 @@ export class BtcTransactionDTO {
   })
   transactionHash: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description:
       "트랜잭션이 담긴 블록 번호 (형식: 16진법) (트랜잭션 상태가 PENDING일 때는 존재하지 않습니다.)",
     example: EXAMPLE_BITCOIN_BTC_TRANSACTION_DTO.blockNumber,
@@ -46,7 +49,7 @@ export class BtcTransactionDTO {
   })
   amount: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "수수료 금액",
     example: EXAMPLE_BITCOIN_BTC_TRANSACTION_DTO.feeAmount,
   })
