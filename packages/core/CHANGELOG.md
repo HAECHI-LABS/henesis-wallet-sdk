@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.12...v3.2.13-alpha.0) (2021-08-10)
+
+
+### Features
+
+* add dummy LTC implementation ([#531](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/531)) ([6adeb1b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6adeb1b3162028fee24156775e8b9a1622f68a81))
+
+
+
+
+
 ## [3.2.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.9...v3.2.10) (2021-07-23)
 
 
