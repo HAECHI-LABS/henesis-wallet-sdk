@@ -36,7 +36,7 @@ export class BalanceDTO {
 
   @ApiModelPropertyOptional({
     description:
-      "마스터 지갑의 잔액과 하위 입금 주소들의 잔액을 모두 합한 잔액 (= 마스터 지갑 잔액 + 입금 주소 1 잔액 + 입금  주소 2 잔액 + ...) (단위: satoshi) (형식: 16진법)",
+      "마스터 지갑의 잔액과 하위 입금 주소들의 잔액을 모두 합한 잔액 (= 마스터 지갑 잔액 + 입금 주소 1 잔액 + 입금 주소 2 잔액 + ...) (단위: satoshi) (형식: 16진법)",
     example: EXAMPLE_BITCOIN_BALANCE_DTO.aggregatedAmount,
   })
   aggregatedAmount?: string;

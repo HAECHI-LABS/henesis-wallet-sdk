@@ -23,7 +23,7 @@ export class CreateUserWalletRequestDTO {
   gasPrice?: string;
 
   @ApiModelPropertyOptional({
-    description: "salt",
+    description: "지갑 생성에 사용되는 난수",
     example: "salt",
   })
   salt?: string;

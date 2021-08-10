@@ -24,13 +24,13 @@ export class MultiSigPayloadDTO {
   value?: string;
 
   @ApiModelPropertyOptional({
-    description: "지갑의 nonce",
+    description: "multi-sig 서명에 추가로 사용되는 지갑의 난수값",
     example: "0x0",
   })
   walletNonce?: string;
 
   @ApiModelProperty({
-    description: "hexData",
+    description: "multi-sig를 통해 실행할 data",
     example: "hexData",
   })
   hexData: string;
