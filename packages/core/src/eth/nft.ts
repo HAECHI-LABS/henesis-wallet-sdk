@@ -3,6 +3,9 @@ import { Contract } from "web3-eth-contract";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import walletAbi from "../contracts/Wallet.json";
+import { EthLikeWallet } from "./abstractWallet";
+import { MultiSigPayload } from "./transactions";
+import { BNConverter } from "../utils/common";
 
 export type NftData = NftDTO;
 
@@ -15,11 +18,37 @@ export class Nft {
     this.walletContract = new new Web3().eth.Contract(walletAbi as AbiItem[]);
   }
 
+  protected async buildTransferMultiSigPayloadTemplate(wallet: EthLikeWallet) {
+    return {
+      walletNonce: wallet.getNonce(),
+      value: BNConverter.hexStringToBN("0x0"),
+      walletAddress: wallet.getAddress(),
+    };
+  }
+
   getName(): string {
     return this.nftData.name;
   }
 
   getAddress(): string {
     return this.nftData.address;
+  }
+
+  async buildTransferMultiSigPayload(
+    wallet: EthLikeWallet,
+    to: string,
+    tokenOnchainId: string
+  ): Promise<MultiSigPayload> {
+    return {
+      ...(await this.buildTransferMultiSigPayloadTemplate(wallet)),
+      hexData: this.walletContract.methods
+        .transferNFT({
+          token: this.getAddress(),
+          to: to,
+          tokenId: BNConverter.hexStringToBN(tokenOnchainId),
+        })
+        .encodeABI(),
+      toAddress: wallet.getAddress(),
+    };
   }
 }

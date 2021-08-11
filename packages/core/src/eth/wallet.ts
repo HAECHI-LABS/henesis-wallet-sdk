@@ -15,23 +15,14 @@ import {
   Pagination,
   PaginationOptions,
 } from "../types";
-import {
-  formatMultiSigPayload,
-  MultiSigPayload,
-  SignedMultiSigPayload,
-} from "./transactions";
+import { MultiSigPayload } from "./transactions";
 import { Client } from "../httpClient";
-import BatchRequest from "./batch";
 import walletAbi from "../contracts/Wallet.json";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
-import { WalletData, Wallet } from "../wallet";
 import { makeQueryString } from "../utils/url";
-import { Coins } from "./coins";
 import {
   TransactionDTO,
-  BatchTransactionDTO,
   UserWalletDTO,
-  BalanceDTO,
   MasterWalletBalanceDTO,
   PaginationUserWalletDTO,
   MasterWalletDTO,
@@ -39,24 +30,17 @@ import {
   RejectWithdrawalApprovalRequest,
   CreateUserWalletRequest,
   SignedMultiSigPayloadDTO,
-  CreateMultiSigTransactionRequest,
   ChangeWalletNameRequest,
-  ReplaceTransactionRequest,
   ActivateMasterWalletRequest,
   KeyDTO,
-  ResendTransactionRequest,
   FlushRequest,
   PaginationFlushTransactionDTO,
-  TransactionStatus,
   FlushQuerySearchCondition,
   FlushTransactionValueTransferEventDTO,
-  FlushTransactionValueTransferEventDTOStatus,
   FlushTransactionDTO,
 } from "../__generate__/eth";
-import _, { result } from "lodash";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { Coin } from "./coin";
-import { randomBytes } from "crypto";
 import {
   EthDepositAddress,
   transformDepositAddressData,
