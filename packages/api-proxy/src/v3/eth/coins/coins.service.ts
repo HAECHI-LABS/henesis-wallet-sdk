@@ -11,7 +11,7 @@ export class CoinsService {
     return coins.map(CoinDTO.fromCoin);
   }
 
-  public async getCoin(coinId: string, sdk: SDK): Promise<CoinDTO> {
-    return CoinDTO.fromCoin(await sdk.eth.coins.getCoin(coinId));
+  public async getCoin(sdk: SDK, ticker: string): Promise<CoinDTO> {
+    return CoinDTO.fromCoin(await sdk.eth.coins.getCoin(ticker));
   }
 }
