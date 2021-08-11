@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.0...v3.2.13-alpha.1) (2021-08-11)
+
+
+### Features
+
+* define nft sdk interface ([e07b582](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e07b582c4648da997ffe7c04adc47c5d4f03f429))
+
+
+
+
+
 ## [3.2.13-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.12...v3.2.13-alpha.0) (2021-08-10)
 
 
