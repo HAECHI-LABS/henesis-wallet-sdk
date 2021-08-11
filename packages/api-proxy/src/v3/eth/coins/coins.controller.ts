@@ -57,7 +57,7 @@ export class CoinsController {
     return await this.coinsService.getCoins(request.sdk, flag);
   }
 
-  @Get("/:coinId")
+  @Get("/:ticker")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(CoinDTO, EXAMPLE_ETHEREUM_COIN_DTO),
   })
