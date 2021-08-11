@@ -18,7 +18,9 @@ export class MultiSigPayloadDTO {
   toAddress: string;
 
   @ApiModelPropertyOptional({
-    description: "전송할 금액",
+    description:
+      "전송할 금액(단위: wei, peb)\n" +
+      "(16진법, 맨 앞에 반드시 '0x' 붙여야 함)",
     example: "0x1",
   })
   value?: string;

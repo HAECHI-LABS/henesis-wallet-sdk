@@ -11,7 +11,8 @@ export class TransferRequestDTO {
   to: string;
 
   @ApiModelProperty({
-    description: "보낼 금액",
+    description:
+      "보낼 금액 (단위: satoshi) (16진법, 맨 앞에 반드시 '0x' 붙여야 함)",
     example: "0x12",
   })
   amount: string;
