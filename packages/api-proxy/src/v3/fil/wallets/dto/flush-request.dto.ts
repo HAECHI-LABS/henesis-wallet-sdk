@@ -27,7 +27,7 @@ export class FlushRequestDTO {
   })
   passphrase: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description:
       "트랜잭션에 사용할 gas premium (단위: attoFIL) null일 경우, Henesis가 자동으로 0블럭 안에 채굴될 수 있는 값으로 설정합니다.",
     example: EXAMPLE_FILECOIN_FLUSH_REQUEST_DTO.gasPremium,

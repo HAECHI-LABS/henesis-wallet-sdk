@@ -1,4 +1,7 @@
-import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import {
+  ApiModelProperty,
+  ApiModelPropertyOptional,
+} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_BITCOIN_KEY_DTO: KeyDTO = {
   address: "undefined",
@@ -7,7 +10,7 @@ export const EXAMPLE_BITCOIN_KEY_DTO: KeyDTO = {
 };
 
 export class KeyDTO {
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "Key의 주소 (BTC 지갑은 값이 없습니다)",
     example: EXAMPLE_BITCOIN_KEY_DTO.address,
   })
@@ -19,7 +22,7 @@ export class KeyDTO {
   })
   pub: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "Key의 Private Key를 암호화한 값",
     example: EXAMPLE_BITCOIN_KEY_DTO.keyFile,
   })
