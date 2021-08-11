@@ -15,6 +15,7 @@ const lodash_1 = __importDefault(require("lodash"));
 const error_1 = require("../error");
 const crypto_1 = require("crypto");
 const eth_crypto_1 = __importDefault(require("eth-crypto"));
+const url_1 = require("../utils/url");
 function convertSignedMultiSigPayloadToDTO(signedMultiSigPayload) {
     return {
         signature: signedMultiSigPayload.signature,
@@ -39,6 +40,7 @@ class EthLikeWallet extends wallet_1.Wallet {
         this.DEFAULT_CONTRACT_CALL_GAS_LIMIT = new bn_js_1.default(1000000);
         this.DEFAULT_COIN_TRANSFER_GAS_LIMIT = new bn_js_1.default(150000);
         this.DEFAULT_TOKEN_TRANSFER_GAS_LIMIT = new bn_js_1.default(500000);
+        this.DEFAULT_NFT_TRANSFER_GAS_LIMIT = new bn_js_1.default(1);
         this.data = data;
         this.blockchain = blockchain;
         this.coins = new coins_1.Coins(this.client);
@@ -157,6 +159,21 @@ class EthLikeWallet extends wallet_1.Wallet {
             return this.DEFAULT_COIN_TRANSFER_GAS_LIMIT;
         }
         return this.DEFAULT_TOKEN_TRANSFER_GAS_LIMIT;
+    }
+    async getNftBalance(tokenOnchainId, tokenName) {
+        const queryString = url_1.makeQueryString({ tokenOnchainId, tokenName });
+        const balances = await this.client.get(`${this.baseUrl}/nft/balance${queryString ? `?${queryString}` : ""}`);
+        return balances.map((dto) => dto);
+    }
+    async transferNft(nft, tokenOnchainId, to, passphrase, otpCode, gasPrice, gasLimit, metadata) {
+        const n = typeof nft === "number" ? await this.nfts.getNft(nft) : nft;
+        return this.sendNftTransaction(await this.buildTransferNftPayload(n, tokenOnchainId, to, passphrase), this.getId(), otpCode, gasPrice, gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT, metadata);
+    }
+    async sendNftTransaction(signedMultiSigPayload, walletId, otpCode, gasPrice, gasLimit, metadata) {
+        throw new Error("Implement me!");
+    }
+    async buildTransferNftPayload(n, tokenOnchainId, to, passphrase) {
+        throw new Error("Implement me!");
     }
 }
 exports.EthLikeWallet = EthLikeWallet;

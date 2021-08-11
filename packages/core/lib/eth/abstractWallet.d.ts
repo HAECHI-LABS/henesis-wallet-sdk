@@ -6,8 +6,10 @@ import { Client } from "../httpClient";
 import BatchRequest from "./batch";
 import { WalletData, Wallet } from "../wallet";
 import { Coins } from "./coins";
-import { TransactionDTO, SignedMultiSigPayloadDTO } from "../__generate__/eth";
+import { TransactionDTO, SignedMultiSigPayloadDTO, NftBalanceDTO } from "../__generate__/eth";
 import { Coin } from "./coin";
+import { Nft } from "./nft";
+import { Nfts } from "./nfts";
 export declare type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
     blockchain: BlockchainType;
 };
@@ -23,13 +25,16 @@ export interface EthMasterWalletData extends EthWalletData {
 }
 export declare function convertSignedMultiSigPayloadToDTO(signedMultiSigPayload: SignedMultiSigPayload): SignedMultiSigPayloadDTO;
 export declare function getAddressFromCompressedPub(pub: string): string;
+export declare type NftBalance = NftBalanceDTO;
 export declare abstract class EthLikeWallet extends Wallet<EthTransaction> {
     protected data: EthMasterWalletData;
     protected readonly DEFAULT_CONTRACT_CALL_GAS_LIMIT: BN;
     protected readonly DEFAULT_COIN_TRANSFER_GAS_LIMIT: BN;
     protected readonly DEFAULT_TOKEN_TRANSFER_GAS_LIMIT: BN;
+    protected readonly DEFAULT_NFT_TRANSFER_GAS_LIMIT: BN;
     protected readonly blockchain: BlockchainType;
     protected readonly coins: Coins;
+    protected readonly nfts: Nfts;
     protected constructor(client: Client, data: EthMasterWalletData, keychains: Keychains, blockchain: BlockchainType, baseUrl: string);
     getChain(): BlockchainType;
     getVersion(): string;
@@ -47,4 +52,8 @@ export declare abstract class EthLikeWallet extends Wallet<EthTransaction> {
     protected sendBatchTransaction(blockchain: BlockchainType, signedMultiSigPayloads: SignedMultiSigPayload[], walletId: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN): Promise<EthTransaction[]>;
     getNonce(): BN;
     protected getGasLimitByTicker(coin: Coin): BN;
+    getNftBalance(tokenOnchainId: string, tokenName?: string): Promise<NftBalance[]>;
+    transferNft(nft: number | Nft, tokenOnchainId: string, to: string, passphrase: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
+    sendNftTransaction(signedMultiSigPayload: SignedMultiSigPayload, walletId: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
+    private buildTransferNftPayload;
 }

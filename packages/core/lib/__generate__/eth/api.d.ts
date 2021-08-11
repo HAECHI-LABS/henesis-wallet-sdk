@@ -391,6 +391,29 @@ export interface MultiSigPayloadDTO {
     walletNonce: string;
     hexData?: string;
 }
+export interface NftBalanceDTO {
+    nft: NftDTO;
+    token: NftTokenDTO;
+    walletId: string;
+    masterWalletId: string;
+}
+export interface NftDTO {
+    id: number;
+    name: string;
+    symbol: string;
+    address: string;
+}
+export interface NftItemDTO {
+    nft: NftDTO;
+    token: NftTokenDTO;
+}
+export interface NftTokenDTO {
+    name: string;
+    uri: string;
+    onchainId: string;
+    externalUrl: string;
+    imageUrl: string;
+}
 export interface NonceDTO {
     nonce: string;
 }
@@ -419,6 +442,10 @@ export interface PaginationMeta {
     nextUrl: string;
     previousUrl: string;
     totalCount: number;
+}
+export interface PaginationNftBalanceDTO {
+    pagination: PaginationMeta;
+    results: Array<NftBalanceDTO>;
 }
 export interface PaginationTransactionDTO {
     pagination: PaginationMeta;
@@ -516,6 +543,9 @@ export interface Sort {
     sorted?: boolean;
     unsorted?: boolean;
     empty?: boolean;
+}
+export interface SyncMetadataRequest {
+    tokenOnchainId: string;
 }
 export interface TransactionDTO {
     id: string;
@@ -721,76 +751,76 @@ export declare enum WithdrawalPolicyType {
     TRANSACTION = "TRANSACTION"
 }
 export declare const BscAdminControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getCoin2: (coinId: number, options?: any) => Promise<RequestArgs>;
+    getCoin4: (coinId: number, options?: any) => Promise<RequestArgs>;
     getExternalWithdrawals1: (pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any) => Promise<RequestArgs>;
-    getMasterWallets2: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    getUserWallets2: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    getValueTransferEvents5: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
+    getMasterWallets4: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
+    getUserWallets4: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
+    getValueTransferEvents6: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
 };
 export declare const BscAdminControllerApiFp: (configuration?: Configuration) => {
-    getCoin2(coinId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
+    getCoin4(coinId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
     getExternalWithdrawals1(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
-    getMasterWallets2(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>>;
-    getUserWallets2(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>>;
-    getValueTransferEvents5(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
+    getMasterWallets4(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>>;
+    getUserWallets4(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>>;
+    getValueTransferEvents6(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
 };
 export declare const BscAdminControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getCoin2(coinId: number, options?: any): AxiosPromise<CoinDTO>;
+    getCoin4(coinId: number, options?: any): AxiosPromise<CoinDTO>;
     getExternalWithdrawals1(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
-    getMasterWallets2(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO>;
-    getUserWallets2(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO>;
-    getValueTransferEvents5(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
+    getMasterWallets4(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO>;
+    getUserWallets4(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO>;
+    getValueTransferEvents6(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
 };
 export declare class BscAdminControllerApi extends BaseAPI {
-    getCoin2(coinId: number, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
+    getCoin4(coinId: number, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
     getExternalWithdrawals1(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
-    getMasterWallets2(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletDTO>>;
-    getUserWallets2(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletDTO>>;
-    getValueTransferEvents5(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
+    getMasterWallets4(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletDTO>>;
+    getUserWallets4(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletDTO>>;
+    getValueTransferEvents6(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
 }
 export declare const BscCoinControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     createCoin1: (createCoinRequest: CreateCoinRequest, options?: any) => Promise<RequestArgs>;
     deleteCoin1: (symbol: string, options?: any) => Promise<RequestArgs>;
-    getAllCoins2: (flag: boolean, options?: any) => Promise<RequestArgs>;
+    getAllCoins12: (flag: boolean, options?: any) => Promise<RequestArgs>;
     getCoin3: (symbol: string, options?: any) => Promise<RequestArgs>;
     patchCoin1: (updateCoinRequest: UpdateCoinRequest, options?: any) => Promise<RequestArgs>;
 };
 export declare const BscCoinControllerApiFp: (configuration?: Configuration) => {
     createCoin1(createCoinRequest: CreateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
     deleteCoin1(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    getAllCoins2(flag: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CoinDTO>>>;
+    getAllCoins12(flag: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CoinDTO>>>;
     getCoin3(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
     patchCoin1(updateCoinRequest: UpdateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
 };
 export declare const BscCoinControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
     createCoin1(createCoinRequest: CreateCoinRequest, options?: any): AxiosPromise<CoinDTO>;
     deleteCoin1(symbol: string, options?: any): AxiosPromise<void>;
-    getAllCoins2(flag: boolean, options?: any): AxiosPromise<Array<CoinDTO>>;
+    getAllCoins12(flag: boolean, options?: any): AxiosPromise<Array<CoinDTO>>;
     getCoin3(symbol: string, options?: any): AxiosPromise<CoinDTO>;
     patchCoin1(updateCoinRequest: UpdateCoinRequest, options?: any): AxiosPromise<void>;
 };
 export declare class BscCoinControllerApi extends BaseAPI {
     createCoin1(createCoinRequest: CreateCoinRequest, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
     deleteCoin1(symbol: string, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    getAllCoins2(flag: boolean, options?: any): Promise<import("axios").AxiosResponse<CoinDTO[]>>;
+    getAllCoins12(flag: boolean, options?: any): Promise<import("axios").AxiosResponse<CoinDTO[]>>;
     getCoin3(symbol: string, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
     patchCoin1(updateCoinRequest: UpdateCoinRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
 }
 export declare const BscEventControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getCallEvents3: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
-    getValueTransferEvents4: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
+    getCallEvents4: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
+    getValueTransferEvents5: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
 };
 export declare const BscEventControllerApiFp: (configuration?: Configuration) => {
-    getCallEvents3(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>>;
-    getValueTransferEvents4(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
+    getCallEvents4(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>>;
+    getValueTransferEvents5(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
 };
 export declare const BscEventControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getCallEvents3(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO>;
-    getValueTransferEvents4(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
+    getCallEvents4(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO>;
+    getValueTransferEvents5(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
 };
 export declare class BscEventControllerApi extends BaseAPI {
-    getCallEvents3(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventDTO>>;
-    getValueTransferEvents4(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
+    getCallEvents4(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventDTO>>;
+    getValueTransferEvents5(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
 }
 export declare const BscGasPriceControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     getGasPrice1: (options?: any) => Promise<RequestArgs>;
@@ -837,32 +867,32 @@ export declare class BscHenesisKeyControllerApi extends BaseAPI {
     getTransactionHistories1(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransactionHistoryDTO>>;
 }
 export declare const BscInternalControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getCallEvents2: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
-    getValueTransferEvents3: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
+    getCallEvents3: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
+    getValueTransferEvents4: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
 };
 export declare const BscInternalControllerApiFp: (configuration?: Configuration) => {
-    getCallEvents2(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventInternalDTO>>;
-    getValueTransferEvents3(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventInternalDTO>>;
+    getCallEvents3(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventInternalDTO>>;
+    getValueTransferEvents4(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventInternalDTO>>;
 };
 export declare const BscInternalControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getCallEvents2(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventInternalDTO>;
-    getValueTransferEvents3(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventInternalDTO>;
+    getCallEvents3(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventInternalDTO>;
+    getValueTransferEvents4(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventInternalDTO>;
 };
 export declare class BscInternalControllerApi extends BaseAPI {
-    getCallEvents2(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventInternalDTO>>;
-    getValueTransferEvents3(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventInternalDTO>>;
+    getCallEvents3(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventInternalDTO>>;
+    getValueTransferEvents4(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventInternalDTO>>;
 }
 export declare const BscMethodGasUsageControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getMethodGasUsages1: (name: string, options?: any) => Promise<RequestArgs>;
+    getMethodGasUsages2: (name: string, options?: any) => Promise<RequestArgs>;
 };
 export declare const BscMethodGasUsageControllerApiFp: (configuration?: Configuration) => {
-    getMethodGasUsages1(name: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MethodGasUsageDTO>>;
+    getMethodGasUsages2(name: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MethodGasUsageDTO>>;
 };
 export declare const BscMethodGasUsageControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getMethodGasUsages1(name: string, options?: any): AxiosPromise<MethodGasUsageDTO>;
+    getMethodGasUsages2(name: string, options?: any): AxiosPromise<MethodGasUsageDTO>;
 };
 export declare class BscMethodGasUsageControllerApi extends BaseAPI {
-    getMethodGasUsages1(name: string, options?: any): Promise<import("axios").AxiosResponse<MethodGasUsageDTO>>;
+    getMethodGasUsages2(name: string, options?: any): Promise<import("axios").AxiosResponse<MethodGasUsageDTO>>;
 }
 export declare const BscOperationControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     bindHenesisKeyToWallet1: (keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any) => Promise<RequestArgs>;
@@ -881,163 +911,163 @@ export declare class BscOperationControllerApi extends BaseAPI {
     createHenesisKey1(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): Promise<import("axios").AxiosResponse<HenesisKeyDTO>>;
 }
 export declare const BscTransactionControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getAllTransactions1: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
+    getAllTransactions2: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
     getRawTransactionByHash1: (transactionHash: string, options?: any) => Promise<RequestArgs>;
-    getTransactionById1: (transactionId: string, options?: any) => Promise<RequestArgs>;
+    getTransactionById2: (transactionId: string, options?: any) => Promise<RequestArgs>;
 };
 export declare const BscTransactionControllerApiFp: (configuration?: Configuration) => {
-    getAllTransactions1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionDTO>>;
+    getAllTransactions2(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionDTO>>;
     getRawTransactionByHash1(transactionHash: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetailedRawTransactionDTO>>;
-    getTransactionById1(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    getTransactionById2(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
 };
 export declare const BscTransactionControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getAllTransactions1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionDTO>;
+    getAllTransactions2(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionDTO>;
     getRawTransactionByHash1(transactionHash: string, options?: any): AxiosPromise<DetailedRawTransactionDTO>;
-    getTransactionById1(transactionId: string, options?: any): AxiosPromise<TransactionDTO>;
+    getTransactionById2(transactionId: string, options?: any): AxiosPromise<TransactionDTO>;
 };
 export declare class BscTransactionControllerApi extends BaseAPI {
-    getAllTransactions1(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransactionDTO>>;
+    getAllTransactions2(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransactionDTO>>;
     getRawTransactionByHash1(transactionHash: string, options?: any): Promise<import("axios").AxiosResponse<DetailedRawTransactionDTO>>;
-    getTransactionById1(transactionId: string, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    getTransactionById2(transactionId: string, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
 }
 export declare const BscWalletControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     activateAllowedAddresses1: (walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any) => Promise<RequestArgs>;
     activateMasterWallet1: (walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any) => Promise<RequestArgs>;
     createAllowedAddress1: (walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
-    createMasterWallet2: (createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any) => Promise<RequestArgs>;
-    createUserWallet1: (walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any) => Promise<RequestArgs>;
+    createMasterWallet12: (createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any) => Promise<RequestArgs>;
+    createUserWallet2: (walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any) => Promise<RequestArgs>;
     createWalletWithdrawalPolicy1: (walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any) => Promise<RequestArgs>;
     deleteAllowedAddress1: (walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
-    flush1: (walletId: string, flushRequest: FlushRequest, options?: any) => Promise<RequestArgs>;
+    flush: (walletId: string, flushRequest: FlushRequest, options?: any) => Promise<RequestArgs>;
     getAllWalletWithdrawalPolicies1: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
     getAllowedAddress1: (walletId: string, allowedAddressId: string, options?: any) => Promise<RequestArgs>;
     getAllowedAddressesByCoinId2: (walletId: string, coinId: number, pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    getFlushTransaction1: (walletId: string, transactionId: string, options?: any) => Promise<RequestArgs>;
-    getFlushTransactions1: (walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any) => Promise<RequestArgs>;
-    getMasterWallet1: (walletId: string, options?: any) => Promise<RequestArgs>;
-    getMasterWalletAccountKey1: (walletId: string, options?: any) => Promise<RequestArgs>;
-    getMasterWalletBalance1: (walletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
-    getMasterWalletInitialKey1: (walletId: string, options?: any) => Promise<RequestArgs>;
+    getFlushTransaction: (walletId: string, transactionId: string, options?: any) => Promise<RequestArgs>;
+    getFlushTransactions: (walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any) => Promise<RequestArgs>;
+    getMasterWallet2: (walletId: string, options?: any) => Promise<RequestArgs>;
+    getMasterWalletAccountKey2: (walletId: string, options?: any) => Promise<RequestArgs>;
+    getMasterWalletBalance2: (walletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
+    getMasterWalletInitialKey2: (walletId: string, options?: any) => Promise<RequestArgs>;
     getMasterWallets3: (sort: Sort, options?: any) => Promise<RequestArgs>;
-    getUserWallet1: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
-    getUserWalletBalance1: (walletId: string, userWalletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
+    getUserWallet2: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
+    getUserWalletBalance2: (walletId: string, userWalletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
     getUserWallets3: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
     inactivateAllowedAddresses1: (walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any) => Promise<RequestArgs>;
-    patchAccountKey1: (walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any) => Promise<RequestArgs>;
-    patchMasterWalletName1: (walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
-    patchUserWalletName1: (walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
+    patchAccountKey2: (walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any) => Promise<RequestArgs>;
+    patchMasterWalletName2: (walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
+    patchUserWalletName2: (walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
     patchWalletWithdrawalPolicy1: (walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any) => Promise<RequestArgs>;
-    recreateMasterWallet1: (walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
-    recreateUserWallet1: (walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
-    replaceTransaction1: (replaceTransactionRequest: ReplaceTransactionRequest, options?: any) => Promise<RequestArgs>;
+    recreateMasterWallet2: (walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
+    recreateUserWallet2: (walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
+    replaceTransaction: (replaceTransactionRequest: ReplaceTransactionRequest, options?: any) => Promise<RequestArgs>;
     resendTransaction1: (resendTransactionRequest: ResendTransactionRequest, options?: any) => Promise<RequestArgs>;
-    sendBatchTransaction1: (createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any) => Promise<RequestArgs>;
-    sendTransaction1: (createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
+    sendBatchTransaction2: (createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any) => Promise<RequestArgs>;
+    sendTransaction2: (createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
     validateIsAllowedAddress1: (walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
 };
 export declare const BscWalletControllerApiFp: (configuration?: Configuration) => {
     activateAllowedAddresses1(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     activateMasterWallet1(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
     createAllowedAddress1(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
-    createMasterWallet2(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InactiveMasterWalletDTO | MasterWalletDTO>>;
-    createUserWallet1(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    createMasterWallet12(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InactiveMasterWalletDTO | MasterWalletDTO>>;
+    createUserWallet2(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
     createWalletWithdrawalPolicy1(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
     deleteAllowedAddress1(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    flush1(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    flush(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     getAllWalletWithdrawalPolicies1(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletWithdrawalPolicyDTO>>;
     getAllowedAddress1(walletId: string, allowedAddressId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
     getAllowedAddressesByCoinId2(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationAllowedAddressDTO>>;
-    getFlushTransaction1(walletId: string, transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlushTransactionDTO>>;
-    getFlushTransactions1(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushTransactionDTO>>;
-    getMasterWallet1(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    getMasterWalletAccountKey1(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
-    getMasterWalletBalance1(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletBalanceDTO>>>;
-    getMasterWalletInitialKey1(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
+    getFlushTransaction(walletId: string, transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlushTransactionDTO>>;
+    getFlushTransactions(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushTransactionDTO>>;
+    getMasterWallet2(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    getMasterWalletAccountKey2(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
+    getMasterWalletBalance2(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletBalanceDTO>>>;
+    getMasterWalletInitialKey2(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
     getMasterWallets3(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>>;
-    getUserWallet1(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
-    getUserWalletBalance1(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BalanceDTO>>>;
+    getUserWallet2(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    getUserWalletBalance2(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BalanceDTO>>>;
     getUserWallets3(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationUserWalletDTO>>;
     inactivateAllowedAddresses1(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    patchAccountKey1(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
-    patchMasterWalletName1(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    patchUserWalletName1(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    patchAccountKey2(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
+    patchMasterWalletName2(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    patchUserWalletName2(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
     patchWalletWithdrawalPolicy1(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
-    recreateMasterWallet1(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    recreateUserWallet1(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
-    replaceTransaction1(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    recreateMasterWallet2(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    recreateUserWallet2(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    replaceTransaction(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     resendTransaction1(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
-    sendBatchTransaction1(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BatchTransactionDTO>>>;
-    sendTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    sendBatchTransaction2(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BatchTransactionDTO>>>;
+    sendTransaction2(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     validateIsAllowedAddress1(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateIsAllowedAddressResponse>>;
 };
 export declare const BscWalletControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
     activateAllowedAddresses1(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): AxiosPromise<void>;
     activateMasterWallet1(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): AxiosPromise<MasterWalletDTO>;
     createAllowedAddress1(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): AxiosPromise<AllowedAddressDTO>;
-    createMasterWallet2(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): AxiosPromise<InactiveMasterWalletDTO | MasterWalletDTO>;
-    createUserWallet1(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
+    createMasterWallet12(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): AxiosPromise<InactiveMasterWalletDTO | MasterWalletDTO>;
+    createUserWallet2(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
     createWalletWithdrawalPolicy1(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
     deleteAllowedAddress1(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): AxiosPromise<void>;
-    flush1(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO>;
+    flush(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO>;
     getAllWalletWithdrawalPolicies1(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationWalletWithdrawalPolicyDTO>;
     getAllowedAddress1(walletId: string, allowedAddressId: string, options?: any): AxiosPromise<AllowedAddressDTO>;
     getAllowedAddressesByCoinId2(walletId: string, coinId: number, pageable: Pageable, options?: any): AxiosPromise<PaginationAllowedAddressDTO>;
-    getFlushTransaction1(walletId: string, transactionId: string, options?: any): AxiosPromise<FlushTransactionDTO>;
-    getFlushTransactions1(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): AxiosPromise<PaginationFlushTransactionDTO>;
-    getMasterWallet1(walletId: string, options?: any): AxiosPromise<MasterWalletDTO>;
-    getMasterWalletAccountKey1(walletId: string, options?: any): AxiosPromise<KeyDTO>;
-    getMasterWalletBalance1(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<MasterWalletBalanceDTO>>;
-    getMasterWalletInitialKey1(walletId: string, options?: any): AxiosPromise<KeyDTO>;
+    getFlushTransaction(walletId: string, transactionId: string, options?: any): AxiosPromise<FlushTransactionDTO>;
+    getFlushTransactions(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): AxiosPromise<PaginationFlushTransactionDTO>;
+    getMasterWallet2(walletId: string, options?: any): AxiosPromise<MasterWalletDTO>;
+    getMasterWalletAccountKey2(walletId: string, options?: any): AxiosPromise<KeyDTO>;
+    getMasterWalletBalance2(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<MasterWalletBalanceDTO>>;
+    getMasterWalletInitialKey2(walletId: string, options?: any): AxiosPromise<KeyDTO>;
     getMasterWallets3(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>>;
-    getUserWallet1(walletId: string, userWalletId: string, options?: any): AxiosPromise<UserWalletDTO>;
-    getUserWalletBalance1(walletId: string, userWalletId: string, symbol?: string, options?: any): AxiosPromise<Array<BalanceDTO>>;
+    getUserWallet2(walletId: string, userWalletId: string, options?: any): AxiosPromise<UserWalletDTO>;
+    getUserWalletBalance2(walletId: string, userWalletId: string, symbol?: string, options?: any): AxiosPromise<Array<BalanceDTO>>;
     getUserWallets3(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationUserWalletDTO>;
     inactivateAllowedAddresses1(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): AxiosPromise<void>;
-    patchAccountKey1(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): AxiosPromise<KeyDTO>;
-    patchMasterWalletName1(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<MasterWalletDTO>;
-    patchUserWalletName1(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<UserWalletDTO>;
+    patchAccountKey2(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): AxiosPromise<KeyDTO>;
+    patchMasterWalletName2(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<MasterWalletDTO>;
+    patchUserWalletName2(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<UserWalletDTO>;
     patchWalletWithdrawalPolicy1(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
-    recreateMasterWallet1(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<MasterWalletDTO>;
-    recreateUserWallet1(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
-    replaceTransaction1(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
+    recreateMasterWallet2(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<MasterWalletDTO>;
+    recreateUserWallet2(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
+    replaceTransaction(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
     resendTransaction1(resendTransactionRequest: ResendTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
-    sendBatchTransaction1(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): AxiosPromise<Array<BatchTransactionDTO>>;
-    sendTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
+    sendBatchTransaction2(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): AxiosPromise<Array<BatchTransactionDTO>>;
+    sendTransaction2(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
     validateIsAllowedAddress1(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): AxiosPromise<ValidateIsAllowedAddressResponse>;
 };
 export declare class BscWalletControllerApi extends BaseAPI {
     activateAllowedAddresses1(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
     activateMasterWallet1(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
     createAllowedAddress1(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
-    createMasterWallet2(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): Promise<import("axios").AxiosResponse<InactiveMasterWalletDTO | MasterWalletDTO>>;
-    createUserWallet1(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    createMasterWallet12(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): Promise<import("axios").AxiosResponse<InactiveMasterWalletDTO | MasterWalletDTO>>;
+    createUserWallet2(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
     createWalletWithdrawalPolicy1(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
     deleteAllowedAddress1(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    flush1(walletId: string, flushRequest: FlushRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    flush(walletId: string, flushRequest: FlushRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     getAllWalletWithdrawalPolicies1(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletWithdrawalPolicyDTO>>;
     getAllowedAddress1(walletId: string, allowedAddressId: string, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
     getAllowedAddressesByCoinId2(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationAllowedAddressDTO>>;
-    getFlushTransaction1(walletId: string, transactionId: string, options?: any): Promise<import("axios").AxiosResponse<FlushTransactionDTO>>;
-    getFlushTransactions1(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationFlushTransactionDTO>>;
-    getMasterWallet1(walletId: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    getMasterWalletAccountKey1(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
-    getMasterWalletBalance1(walletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletBalanceDTO[]>>;
-    getMasterWalletInitialKey1(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
+    getFlushTransaction(walletId: string, transactionId: string, options?: any): Promise<import("axios").AxiosResponse<FlushTransactionDTO>>;
+    getFlushTransactions(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationFlushTransactionDTO>>;
+    getMasterWallet2(walletId: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    getMasterWalletAccountKey2(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
+    getMasterWalletBalance2(walletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletBalanceDTO[]>>;
+    getMasterWalletInitialKey2(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
     getMasterWallets3(sort: Sort, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO[]>>;
-    getUserWallet1(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
-    getUserWalletBalance1(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<BalanceDTO[]>>;
+    getUserWallet2(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    getUserWalletBalance2(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<BalanceDTO[]>>;
     getUserWallets3(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationUserWalletDTO>>;
     inactivateAllowedAddresses1(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    patchAccountKey1(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
-    patchMasterWalletName1(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    patchUserWalletName1(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    patchAccountKey2(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
+    patchMasterWalletName2(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    patchUserWalletName2(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
     patchWalletWithdrawalPolicy1(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
-    recreateMasterWallet1(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    recreateUserWallet1(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
-    replaceTransaction1(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    recreateMasterWallet2(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    recreateUserWallet2(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    replaceTransaction(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     resendTransaction1(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
-    sendBatchTransaction1(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<BatchTransactionDTO[]>>;
-    sendTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    sendBatchTransaction2(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<BatchTransactionDTO[]>>;
+    sendTransaction2(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     validateIsAllowedAddress1(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<ValidateIsAllowedAddressResponse>>;
 }
 export declare const BscWithdrawalApprovalControllerApiAxiosParamCreator: (configuration?: Configuration) => {
@@ -1058,469 +1088,105 @@ export declare class BscWithdrawalApprovalControllerApi extends BaseAPI {
 }
 export declare const CoinControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     getAllCoins: (options?: any) => Promise<RequestArgs>;
-    getCoin6: (symbol: string, blockchain: string, options?: any) => Promise<RequestArgs>;
+    getCoin: (symbol: string, blockchain: string, options?: any) => Promise<RequestArgs>;
 };
 export declare const CoinControllerApiFp: (configuration?: Configuration) => {
     getAllCoins(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CoinDTO>>>;
-    getCoin6(symbol: string, blockchain: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
+    getCoin(symbol: string, blockchain: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
 };
 export declare const CoinControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
     getAllCoins(options?: any): AxiosPromise<Array<CoinDTO>>;
-    getCoin6(symbol: string, blockchain: string, options?: any): AxiosPromise<CoinDTO>;
+    getCoin(symbol: string, blockchain: string, options?: any): AxiosPromise<CoinDTO>;
 };
 export declare class CoinControllerApi extends BaseAPI {
     getAllCoins(options?: any): Promise<import("axios").AxiosResponse<CoinDTO[]>>;
-    getCoin6(symbol: string, blockchain: string, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
+    getCoin(symbol: string, blockchain: string, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
 }
 export declare const EthAdminControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getCoin1: (coinId: number, options?: any) => Promise<RequestArgs>;
-    getExternalWithdrawals: (pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any) => Promise<RequestArgs>;
-    getMasterWallets: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    getUserWallets: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    getValueTransferEvents1: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
+    getCoin5: (coinId: number, options?: any) => Promise<RequestArgs>;
+    getExternalWithdrawals2: (pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any) => Promise<RequestArgs>;
+    getMasterWallets6: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
+    getUserWallets6: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
+    getValueTransferEvents8: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
 };
 export declare const EthAdminControllerApiFp: (configuration?: Configuration) => {
-    getCoin1(coinId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
-    getExternalWithdrawals(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
-    getMasterWallets(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>>;
-    getUserWallets(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>>;
-    getValueTransferEvents1(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
+    getCoin5(coinId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
+    getExternalWithdrawals2(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
+    getMasterWallets6(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>>;
+    getUserWallets6(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>>;
+    getValueTransferEvents8(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
 };
 export declare const EthAdminControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getCoin1(coinId: number, options?: any): AxiosPromise<CoinDTO>;
-    getExternalWithdrawals(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
-    getMasterWallets(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO>;
-    getUserWallets(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO>;
-    getValueTransferEvents1(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
+    getCoin5(coinId: number, options?: any): AxiosPromise<CoinDTO>;
+    getExternalWithdrawals2(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
+    getMasterWallets6(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO>;
+    getUserWallets6(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO>;
+    getValueTransferEvents8(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
 };
 export declare class EthAdminControllerApi extends BaseAPI {
-    getCoin1(coinId: number, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
-    getExternalWithdrawals(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
-    getMasterWallets(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletDTO>>;
-    getUserWallets(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletDTO>>;
-    getValueTransferEvents1(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
+    getCoin5(coinId: number, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
+    getExternalWithdrawals2(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
+    getMasterWallets6(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletDTO>>;
+    getUserWallets6(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletDTO>>;
+    getValueTransferEvents8(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
 }
 export declare const EthCoinControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    createCoin: (createCoinRequest: CreateCoinRequest, options?: any) => Promise<RequestArgs>;
-    deleteCoin: (symbol: string, options?: any) => Promise<RequestArgs>;
-    getAllCoins1: (flag: boolean, options?: any) => Promise<RequestArgs>;
-    getCoin: (symbol: string, options?: any) => Promise<RequestArgs>;
-    patchCoin: (updateCoinRequest: UpdateCoinRequest, options?: any) => Promise<RequestArgs>;
+    createCoin2: (createCoinRequest: CreateCoinRequest, options?: any) => Promise<RequestArgs>;
+    deleteCoin2: (symbol: string, options?: any) => Promise<RequestArgs>;
+    getAllCoins13: (flag: boolean, options?: any) => Promise<RequestArgs>;
+    getCoin6: (symbol: string, options?: any) => Promise<RequestArgs>;
+    patchCoin2: (updateCoinRequest: UpdateCoinRequest, options?: any) => Promise<RequestArgs>;
 };
 export declare const EthCoinControllerApiFp: (configuration?: Configuration) => {
-    createCoin(createCoinRequest: CreateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
-    deleteCoin(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    getAllCoins1(flag: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CoinDTO>>>;
-    getCoin(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
-    patchCoin(updateCoinRequest: UpdateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    createCoin2(createCoinRequest: CreateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
+    deleteCoin2(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getAllCoins13(flag: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CoinDTO>>>;
+    getCoin6(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
+    patchCoin2(updateCoinRequest: UpdateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
 };
 export declare const EthCoinControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    createCoin(createCoinRequest: CreateCoinRequest, options?: any): AxiosPromise<CoinDTO>;
-    deleteCoin(symbol: string, options?: any): AxiosPromise<void>;
-    getAllCoins1(flag: boolean, options?: any): AxiosPromise<Array<CoinDTO>>;
-    getCoin(symbol: string, options?: any): AxiosPromise<CoinDTO>;
-    patchCoin(updateCoinRequest: UpdateCoinRequest, options?: any): AxiosPromise<void>;
+    createCoin2(createCoinRequest: CreateCoinRequest, options?: any): AxiosPromise<CoinDTO>;
+    deleteCoin2(symbol: string, options?: any): AxiosPromise<void>;
+    getAllCoins13(flag: boolean, options?: any): AxiosPromise<Array<CoinDTO>>;
+    getCoin6(symbol: string, options?: any): AxiosPromise<CoinDTO>;
+    patchCoin2(updateCoinRequest: UpdateCoinRequest, options?: any): AxiosPromise<void>;
 };
 export declare class EthCoinControllerApi extends BaseAPI {
-    createCoin(createCoinRequest: CreateCoinRequest, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
-    deleteCoin(symbol: string, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    getAllCoins1(flag: boolean, options?: any): Promise<import("axios").AxiosResponse<CoinDTO[]>>;
-    getCoin(symbol: string, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
-    patchCoin(updateCoinRequest: UpdateCoinRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
+    createCoin2(createCoinRequest: CreateCoinRequest, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
+    deleteCoin2(symbol: string, options?: any): Promise<import("axios").AxiosResponse<void>>;
+    getAllCoins13(flag: boolean, options?: any): Promise<import("axios").AxiosResponse<CoinDTO[]>>;
+    getCoin6(symbol: string, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
+    patchCoin2(updateCoinRequest: UpdateCoinRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
 }
 export declare const EthEventControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getCallEvents1: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
-    getValueTransferEvents2: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
-};
-export declare const EthEventControllerApiFp: (configuration?: Configuration) => {
-    getCallEvents1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>>;
-    getValueTransferEvents2(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
-};
-export declare const EthEventControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getCallEvents1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO>;
-    getValueTransferEvents2(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
-};
-export declare class EthEventControllerApi extends BaseAPI {
-    getCallEvents1(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventDTO>>;
-    getValueTransferEvents2(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
-}
-export declare const EthGasPriceControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getGasPrice: (options?: any) => Promise<RequestArgs>;
-};
-export declare const EthGasPriceControllerApiFp: (configuration?: Configuration) => {
-    getGasPrice(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetGasPriceResponse>>;
-};
-export declare const EthGasPriceControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getGasPrice(options?: any): AxiosPromise<GetGasPriceResponse>;
-};
-export declare class EthGasPriceControllerApi extends BaseAPI {
-    getGasPrice(options?: any): Promise<import("axios").AxiosResponse<GetGasPriceResponse>>;
-}
-export declare const EthHenesisKeyControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    createExampleHenesisKey: (options?: any) => Promise<RequestArgs>;
-    createTransaction: (createTransactionRequest: CreateTransactionRequest, options?: any) => Promise<RequestArgs>;
-    getHenesisKey: (options?: any) => Promise<RequestArgs>;
-    getHenesisKeyBalance: (options?: any) => Promise<RequestArgs>;
-    getHistoriesCsv: (createdAtGte: string, createdAtLt: string, options?: any) => Promise<RequestArgs>;
-    getTransactionHistories: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
-};
-export declare const EthHenesisKeyControllerApiFp: (configuration?: Configuration) => {
-    createExampleHenesisKey(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExampleHenesisKeyDTO>>;
-    createTransaction(createTransactionRequest: CreateTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
-    getHenesisKey(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HenesisKeyDTO>>;
-    getHenesisKeyBalance(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HenesisKeyBalanceDTO>>;
-    getHistoriesCsv(createdAtGte: string, createdAtLt: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    getTransactionHistories(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionHistoryDTO>>;
-};
-export declare const EthHenesisKeyControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    createExampleHenesisKey(options?: any): AxiosPromise<ExampleHenesisKeyDTO>;
-    createTransaction(createTransactionRequest: CreateTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
-    getHenesisKey(options?: any): AxiosPromise<HenesisKeyDTO>;
-    getHenesisKeyBalance(options?: any): AxiosPromise<HenesisKeyBalanceDTO>;
-    getHistoriesCsv(createdAtGte: string, createdAtLt: string, options?: any): AxiosPromise<void>;
-    getTransactionHistories(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionHistoryDTO>;
-};
-export declare class EthHenesisKeyControllerApi extends BaseAPI {
-    createExampleHenesisKey(options?: any): Promise<import("axios").AxiosResponse<ExampleHenesisKeyDTO>>;
-    createTransaction(createTransactionRequest: CreateTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
-    getHenesisKey(options?: any): Promise<import("axios").AxiosResponse<HenesisKeyDTO>>;
-    getHenesisKeyBalance(options?: any): Promise<import("axios").AxiosResponse<HenesisKeyBalanceDTO>>;
-    getHistoriesCsv(createdAtGte: string, createdAtLt: string, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    getTransactionHistories(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransactionHistoryDTO>>;
-}
-export declare const EthInternalControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getCallEvents: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
-    getValueTransferEvents: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
-};
-export declare const EthInternalControllerApiFp: (configuration?: Configuration) => {
-    getCallEvents(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventInternalDTO>>;
-    getValueTransferEvents(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventInternalDTO>>;
-};
-export declare const EthInternalControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getCallEvents(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventInternalDTO>;
-    getValueTransferEvents(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventInternalDTO>;
-};
-export declare class EthInternalControllerApi extends BaseAPI {
-    getCallEvents(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventInternalDTO>>;
-    getValueTransferEvents(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventInternalDTO>>;
-}
-export declare const EthMethodGasUsageControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getMethodGasUsages: (name: string, options?: any) => Promise<RequestArgs>;
-};
-export declare const EthMethodGasUsageControllerApiFp: (configuration?: Configuration) => {
-    getMethodGasUsages(name: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MethodGasUsageDTO>>;
-};
-export declare const EthMethodGasUsageControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getMethodGasUsages(name: string, options?: any): AxiosPromise<MethodGasUsageDTO>;
-};
-export declare class EthMethodGasUsageControllerApi extends BaseAPI {
-    getMethodGasUsages(name: string, options?: any): Promise<import("axios").AxiosResponse<MethodGasUsageDTO>>;
-}
-export declare const EthOperationControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    bindHenesisKeyToWallet: (keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any) => Promise<RequestArgs>;
-    createHenesisKey: (createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any) => Promise<RequestArgs>;
-    getCoinByAddress: (address: string, options?: any) => Promise<RequestArgs>;
-};
-export declare const EthOperationControllerApiFp: (configuration?: Configuration) => {
-    bindHenesisKeyToWallet(keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BindHenesisKeyToWalletDTO>>;
-    createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HenesisKeyDTO>>;
-    getCoinByAddress(address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
-};
-export declare const EthOperationControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    bindHenesisKeyToWallet(keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any): AxiosPromise<BindHenesisKeyToWalletDTO>;
-    createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): AxiosPromise<HenesisKeyDTO>;
-    getCoinByAddress(address: string, options?: any): AxiosPromise<CoinDTO>;
-};
-export declare class EthOperationControllerApi extends BaseAPI {
-    bindHenesisKeyToWallet(keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any): Promise<import("axios").AxiosResponse<BindHenesisKeyToWalletDTO>>;
-    createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): Promise<import("axios").AxiosResponse<HenesisKeyDTO>>;
-    getCoinByAddress(address: string, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
-}
-export declare const EthTransactionControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getAllTransactions: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
-    getRawTransactionByHash: (transactionHash: string, options?: any) => Promise<RequestArgs>;
-    getTransactionById: (transactionId: string, options?: any) => Promise<RequestArgs>;
-};
-export declare const EthTransactionControllerApiFp: (configuration?: Configuration) => {
-    getAllTransactions(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionDTO>>;
-    getRawTransactionByHash(transactionHash: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetailedRawTransactionDTO>>;
-    getTransactionById(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
-};
-export declare const EthTransactionControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getAllTransactions(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionDTO>;
-    getRawTransactionByHash(transactionHash: string, options?: any): AxiosPromise<DetailedRawTransactionDTO>;
-    getTransactionById(transactionId: string, options?: any): AxiosPromise<TransactionDTO>;
-};
-export declare class EthTransactionControllerApi extends BaseAPI {
-    getAllTransactions(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransactionDTO>>;
-    getRawTransactionByHash(transactionHash: string, options?: any): Promise<import("axios").AxiosResponse<DetailedRawTransactionDTO>>;
-    getTransactionById(transactionId: string, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
-}
-export declare const EthWalletControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    activateAllowedAddresses: (walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any) => Promise<RequestArgs>;
-    activateMasterWallet: (walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any) => Promise<RequestArgs>;
-    createAllowedAddress: (walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
-    createMasterWallet1: (createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any) => Promise<RequestArgs>;
-    createUserWallet: (walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any) => Promise<RequestArgs>;
-    createWalletWithdrawalPolicy: (walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any) => Promise<RequestArgs>;
-    deleteAllowedAddress: (walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
-    flush: (walletId: string, flushRequest: FlushRequest, options?: any) => Promise<RequestArgs>;
-    getAllWalletWithdrawalPolicies: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    getAllowedAddress: (walletId: string, allowedAddressId: string, options?: any) => Promise<RequestArgs>;
-    getAllowedAddressesByCoinId1: (walletId: string, coinId: number, pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    getFlushTransaction: (walletId: string, transactionId: string, options?: any) => Promise<RequestArgs>;
-    getFlushTransactions: (walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any) => Promise<RequestArgs>;
-    getMasterWallet: (walletId: string, options?: any) => Promise<RequestArgs>;
-    getMasterWalletAccountKey: (walletId: string, options?: any) => Promise<RequestArgs>;
-    getMasterWalletBalance: (walletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
-    getMasterWalletInitialKey: (walletId: string, options?: any) => Promise<RequestArgs>;
-    getMasterWalletNonce: (walletId: string, options?: any) => Promise<RequestArgs>;
-    getMasterWallets1: (sort: Sort, options?: any) => Promise<RequestArgs>;
-    getUserWallet: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
-    getUserWalletBalance: (walletId: string, userWalletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
-    getUserWalletNonce: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
-    getUserWallets1: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    inactivateAllowedAddresses: (walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any) => Promise<RequestArgs>;
-    patchAccountKey: (walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any) => Promise<RequestArgs>;
-    patchMasterWalletName: (walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
-    patchUserWalletName: (walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
-    patchWalletWithdrawalPolicy: (walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any) => Promise<RequestArgs>;
-    recreateMasterWallet: (walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
-    recreateUserWallet: (walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
-    replaceTransaction: (replaceTransactionRequest: ReplaceTransactionRequest, options?: any) => Promise<RequestArgs>;
-    resendTransaction: (resendTransactionRequest: ResendTransactionRequest, options?: any) => Promise<RequestArgs>;
-    sendBatchTransaction: (createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any) => Promise<RequestArgs>;
-    sendTransaction: (createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
-    validateIsAllowedAddress: (walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
-};
-export declare const EthWalletControllerApiFp: (configuration?: Configuration) => {
-    activateAllowedAddresses(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    activateMasterWallet(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    createAllowedAddress(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
-    createMasterWallet1(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InactiveMasterWalletDTO | MasterWalletDTO>>;
-    createUserWallet(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
-    createWalletWithdrawalPolicy(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
-    deleteAllowedAddress(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    flush(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
-    getAllWalletWithdrawalPolicies(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletWithdrawalPolicyDTO>>;
-    getAllowedAddress(walletId: string, allowedAddressId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
-    getAllowedAddressesByCoinId1(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationAllowedAddressDTO>>;
-    getFlushTransaction(walletId: string, transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlushTransactionDTO>>;
-    getFlushTransactions(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushTransactionDTO>>;
-    getMasterWallet(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    getMasterWalletAccountKey(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
-    getMasterWalletBalance(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletBalanceDTO>>>;
-    getMasterWalletInitialKey(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
-    getMasterWalletNonce(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
-    getMasterWallets1(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>>;
-    getUserWallet(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
-    getUserWalletBalance(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BalanceDTO>>>;
-    getUserWalletNonce(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
-    getUserWallets1(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationUserWalletDTO>>;
-    inactivateAllowedAddresses(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    patchAccountKey(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
-    patchMasterWalletName(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    patchUserWalletName(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
-    patchWalletWithdrawalPolicy(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
-    recreateMasterWallet(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    recreateUserWallet(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
-    replaceTransaction(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
-    resendTransaction(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
-    sendBatchTransaction(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BatchTransactionDTO>>>;
-    sendTransaction(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
-    validateIsAllowedAddress(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateIsAllowedAddressResponse>>;
-};
-export declare const EthWalletControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    activateAllowedAddresses(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): AxiosPromise<void>;
-    activateMasterWallet(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): AxiosPromise<MasterWalletDTO>;
-    createAllowedAddress(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): AxiosPromise<AllowedAddressDTO>;
-    createMasterWallet1(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): AxiosPromise<InactiveMasterWalletDTO | MasterWalletDTO>;
-    createUserWallet(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
-    createWalletWithdrawalPolicy(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
-    deleteAllowedAddress(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): AxiosPromise<void>;
-    flush(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO>;
-    getAllWalletWithdrawalPolicies(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationWalletWithdrawalPolicyDTO>;
-    getAllowedAddress(walletId: string, allowedAddressId: string, options?: any): AxiosPromise<AllowedAddressDTO>;
-    getAllowedAddressesByCoinId1(walletId: string, coinId: number, pageable: Pageable, options?: any): AxiosPromise<PaginationAllowedAddressDTO>;
-    getFlushTransaction(walletId: string, transactionId: string, options?: any): AxiosPromise<FlushTransactionDTO>;
-    getFlushTransactions(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): AxiosPromise<PaginationFlushTransactionDTO>;
-    getMasterWallet(walletId: string, options?: any): AxiosPromise<MasterWalletDTO>;
-    getMasterWalletAccountKey(walletId: string, options?: any): AxiosPromise<KeyDTO>;
-    getMasterWalletBalance(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<MasterWalletBalanceDTO>>;
-    getMasterWalletInitialKey(walletId: string, options?: any): AxiosPromise<KeyDTO>;
-    getMasterWalletNonce(walletId: string, options?: any): AxiosPromise<NonceDTO>;
-    getMasterWallets1(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>>;
-    getUserWallet(walletId: string, userWalletId: string, options?: any): AxiosPromise<UserWalletDTO>;
-    getUserWalletBalance(walletId: string, userWalletId: string, symbol?: string, options?: any): AxiosPromise<Array<BalanceDTO>>;
-    getUserWalletNonce(walletId: string, userWalletId: string, options?: any): AxiosPromise<NonceDTO>;
-    getUserWallets1(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationUserWalletDTO>;
-    inactivateAllowedAddresses(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): AxiosPromise<void>;
-    patchAccountKey(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): AxiosPromise<KeyDTO>;
-    patchMasterWalletName(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<MasterWalletDTO>;
-    patchUserWalletName(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<UserWalletDTO>;
-    patchWalletWithdrawalPolicy(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
-    recreateMasterWallet(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<MasterWalletDTO>;
-    recreateUserWallet(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
-    replaceTransaction(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
-    resendTransaction(resendTransactionRequest: ResendTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
-    sendBatchTransaction(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): AxiosPromise<Array<BatchTransactionDTO>>;
-    sendTransaction(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
-    validateIsAllowedAddress(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): AxiosPromise<ValidateIsAllowedAddressResponse>;
-};
-export declare class EthWalletControllerApi extends BaseAPI {
-    activateAllowedAddresses(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    activateMasterWallet(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    createAllowedAddress(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
-    createMasterWallet1(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): Promise<import("axios").AxiosResponse<InactiveMasterWalletDTO | MasterWalletDTO>>;
-    createUserWallet(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
-    createWalletWithdrawalPolicy(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
-    deleteAllowedAddress(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    flush(walletId: string, flushRequest: FlushRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
-    getAllWalletWithdrawalPolicies(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletWithdrawalPolicyDTO>>;
-    getAllowedAddress(walletId: string, allowedAddressId: string, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
-    getAllowedAddressesByCoinId1(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationAllowedAddressDTO>>;
-    getFlushTransaction(walletId: string, transactionId: string, options?: any): Promise<import("axios").AxiosResponse<FlushTransactionDTO>>;
-    getFlushTransactions(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationFlushTransactionDTO>>;
-    getMasterWallet(walletId: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    getMasterWalletAccountKey(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
-    getMasterWalletBalance(walletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletBalanceDTO[]>>;
-    getMasterWalletInitialKey(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
-    getMasterWalletNonce(walletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
-    getMasterWallets1(sort: Sort, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO[]>>;
-    getUserWallet(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
-    getUserWalletBalance(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<BalanceDTO[]>>;
-    getUserWalletNonce(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
-    getUserWallets1(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationUserWalletDTO>>;
-    inactivateAllowedAddresses(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    patchAccountKey(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
-    patchMasterWalletName(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    patchUserWalletName(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
-    patchWalletWithdrawalPolicy(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
-    recreateMasterWallet(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    recreateUserWallet(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
-    replaceTransaction(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
-    resendTransaction(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
-    sendBatchTransaction(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<BatchTransactionDTO[]>>;
-    sendTransaction(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
-    validateIsAllowedAddress(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<ValidateIsAllowedAddressResponse>>;
-}
-export declare const EthWithdrawalApprovalControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    approveWithdrawalApproval: (withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any) => Promise<RequestArgs>;
-    rejectWithdrawalApproval: (withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any) => Promise<RequestArgs>;
-};
-export declare const EthWithdrawalApprovalControllerApiFp: (configuration?: Configuration) => {
-    approveWithdrawalApproval(withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
-    rejectWithdrawalApproval(withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-};
-export declare const EthWithdrawalApprovalControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    approveWithdrawalApproval(withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any): AxiosPromise<TransactionDTO>;
-    rejectWithdrawalApproval(withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any): AxiosPromise<void>;
-};
-export declare class EthWithdrawalApprovalControllerApi extends BaseAPI {
-    approveWithdrawalApproval(withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
-    rejectWithdrawalApproval(withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-}
-export declare const EventControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     getCallEvents6: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
     getValueTransferEvents9: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
 };
-export declare const EventControllerApiFp: (configuration?: Configuration) => {
+export declare const EthEventControllerApiFp: (configuration?: Configuration) => {
     getCallEvents6(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>>;
     getValueTransferEvents9(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
 };
-export declare const EventControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+export declare const EthEventControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
     getCallEvents6(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO>;
     getValueTransferEvents9(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
 };
-export declare class EventControllerApi extends BaseAPI {
+export declare class EthEventControllerApi extends BaseAPI {
     getCallEvents6(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventDTO>>;
     getValueTransferEvents9(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
 }
-export declare const KlayAdminControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getCoin5: (coinId: number, options?: any) => Promise<RequestArgs>;
-    getExternalWithdrawals2: (pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any) => Promise<RequestArgs>;
-    getMasterWallets5: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    getUserWallets5: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    getValueTransferEvents8: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
-};
-export declare const KlayAdminControllerApiFp: (configuration?: Configuration) => {
-    getCoin5(coinId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
-    getExternalWithdrawals2(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
-    getMasterWallets5(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>>;
-    getUserWallets5(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>>;
-    getValueTransferEvents8(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
-};
-export declare const KlayAdminControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getCoin5(coinId: number, options?: any): AxiosPromise<CoinDTO>;
-    getExternalWithdrawals2(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
-    getMasterWallets5(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO>;
-    getUserWallets5(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO>;
-    getValueTransferEvents8(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
-};
-export declare class KlayAdminControllerApi extends BaseAPI {
-    getCoin5(coinId: number, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
-    getExternalWithdrawals2(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
-    getMasterWallets5(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletDTO>>;
-    getUserWallets5(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletDTO>>;
-    getValueTransferEvents8(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
-}
-export declare const KlayCoinControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    createCoin2: (createCoinRequest: CreateCoinRequest, options?: any) => Promise<RequestArgs>;
-    deleteCoin2: (symbol: string, options?: any) => Promise<RequestArgs>;
-    getAllCoins3: (flag: boolean, options?: any) => Promise<RequestArgs>;
-    getCoin4: (symbol: string, options?: any) => Promise<RequestArgs>;
-    patchCoin2: (updateCoinRequest: UpdateCoinRequest, options?: any) => Promise<RequestArgs>;
-};
-export declare const KlayCoinControllerApiFp: (configuration?: Configuration) => {
-    createCoin2(createCoinRequest: CreateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
-    deleteCoin2(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    getAllCoins3(flag: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CoinDTO>>>;
-    getCoin4(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
-    patchCoin2(updateCoinRequest: UpdateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-};
-export declare const KlayCoinControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    createCoin2(createCoinRequest: CreateCoinRequest, options?: any): AxiosPromise<CoinDTO>;
-    deleteCoin2(symbol: string, options?: any): AxiosPromise<void>;
-    getAllCoins3(flag: boolean, options?: any): AxiosPromise<Array<CoinDTO>>;
-    getCoin4(symbol: string, options?: any): AxiosPromise<CoinDTO>;
-    patchCoin2(updateCoinRequest: UpdateCoinRequest, options?: any): AxiosPromise<void>;
-};
-export declare class KlayCoinControllerApi extends BaseAPI {
-    createCoin2(createCoinRequest: CreateCoinRequest, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
-    deleteCoin2(symbol: string, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    getAllCoins3(flag: boolean, options?: any): Promise<import("axios").AxiosResponse<CoinDTO[]>>;
-    getCoin4(symbol: string, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
-    patchCoin2(updateCoinRequest: UpdateCoinRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-}
-export declare const KlayEventControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getCallEvents5: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
-    getValueTransferEvents7: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
-};
-export declare const KlayEventControllerApiFp: (configuration?: Configuration) => {
-    getCallEvents5(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>>;
-    getValueTransferEvents7(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
-};
-export declare const KlayEventControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getCallEvents5(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO>;
-    getValueTransferEvents7(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
-};
-export declare class KlayEventControllerApi extends BaseAPI {
-    getCallEvents5(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventDTO>>;
-    getValueTransferEvents7(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
-}
-export declare const KlayGasPriceControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+export declare const EthGasPriceControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     getGasPrice2: (options?: any) => Promise<RequestArgs>;
 };
-export declare const KlayGasPriceControllerApiFp: (configuration?: Configuration) => {
+export declare const EthGasPriceControllerApiFp: (configuration?: Configuration) => {
     getGasPrice2(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetGasPriceResponse>>;
 };
-export declare const KlayGasPriceControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+export declare const EthGasPriceControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
     getGasPrice2(options?: any): AxiosPromise<GetGasPriceResponse>;
 };
-export declare class KlayGasPriceControllerApi extends BaseAPI {
+export declare class EthGasPriceControllerApi extends BaseAPI {
     getGasPrice2(options?: any): Promise<import("axios").AxiosResponse<GetGasPriceResponse>>;
 }
-export declare const KlayHenesisKeyControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+export declare const EthHenesisKeyControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     createExampleHenesisKey2: (options?: any) => Promise<RequestArgs>;
     createTransaction2: (createTransactionRequest: CreateTransactionRequest, options?: any) => Promise<RequestArgs>;
     getHenesisKey2: (options?: any) => Promise<RequestArgs>;
@@ -1528,7 +1194,7 @@ export declare const KlayHenesisKeyControllerApiAxiosParamCreator: (configuratio
     getHistoriesCsv2: (createdAtGte: string, createdAtLt: string, options?: any) => Promise<RequestArgs>;
     getTransactionHistories2: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
 };
-export declare const KlayHenesisKeyControllerApiFp: (configuration?: Configuration) => {
+export declare const EthHenesisKeyControllerApiFp: (configuration?: Configuration) => {
     createExampleHenesisKey2(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExampleHenesisKeyDTO>>;
     createTransaction2(createTransactionRequest: CreateTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     getHenesisKey2(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HenesisKeyDTO>>;
@@ -1536,7 +1202,7 @@ export declare const KlayHenesisKeyControllerApiFp: (configuration?: Configurati
     getHistoriesCsv2(createdAtGte: string, createdAtLt: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     getTransactionHistories2(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionHistoryDTO>>;
 };
-export declare const KlayHenesisKeyControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+export declare const EthHenesisKeyControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
     createExampleHenesisKey2(options?: any): AxiosPromise<ExampleHenesisKeyDTO>;
     createTransaction2(createTransactionRequest: CreateTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
     getHenesisKey2(options?: any): AxiosPromise<HenesisKeyDTO>;
@@ -1544,7 +1210,7 @@ export declare const KlayHenesisKeyControllerApiFactory: (configuration?: Config
     getHistoriesCsv2(createdAtGte: string, createdAtLt: string, options?: any): AxiosPromise<void>;
     getTransactionHistories2(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionHistoryDTO>;
 };
-export declare class KlayHenesisKeyControllerApi extends BaseAPI {
+export declare class EthHenesisKeyControllerApi extends BaseAPI {
     createExampleHenesisKey2(options?: any): Promise<import("axios").AxiosResponse<ExampleHenesisKeyDTO>>;
     createTransaction2(createTransactionRequest: CreateTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     getHenesisKey2(options?: any): Promise<import("axios").AxiosResponse<HenesisKeyDTO>>;
@@ -1552,331 +1218,751 @@ export declare class KlayHenesisKeyControllerApi extends BaseAPI {
     getHistoriesCsv2(createdAtGte: string, createdAtLt: string, options?: any): Promise<import("axios").AxiosResponse<void>>;
     getTransactionHistories2(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransactionHistoryDTO>>;
 }
-export declare const KlayInternalControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getCallEvents4: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
-    getValueTransferEvents6: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
+export declare const EthInternalControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getCallEvents5: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
+    getValueTransferEvents7: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
 };
-export declare const KlayInternalControllerApiFp: (configuration?: Configuration) => {
-    getCallEvents4(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventInternalDTO>>;
-    getValueTransferEvents6(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventInternalDTO>>;
+export declare const EthInternalControllerApiFp: (configuration?: Configuration) => {
+    getCallEvents5(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventInternalDTO>>;
+    getValueTransferEvents7(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventInternalDTO>>;
 };
-export declare const KlayInternalControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getCallEvents4(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventInternalDTO>;
-    getValueTransferEvents6(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventInternalDTO>;
+export declare const EthInternalControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getCallEvents5(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventInternalDTO>;
+    getValueTransferEvents7(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventInternalDTO>;
 };
-export declare class KlayInternalControllerApi extends BaseAPI {
-    getCallEvents4(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventInternalDTO>>;
-    getValueTransferEvents6(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventInternalDTO>>;
+export declare class EthInternalControllerApi extends BaseAPI {
+    getCallEvents5(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventInternalDTO>>;
+    getValueTransferEvents7(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventInternalDTO>>;
 }
-export declare const KlayMethodGasUsageControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getMethodGasUsages2: (name: string, options?: any) => Promise<RequestArgs>;
+export declare const EthMethodGasUsageControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getMethodGasUsages3: (name: string, options?: any) => Promise<RequestArgs>;
 };
-export declare const KlayMethodGasUsageControllerApiFp: (configuration?: Configuration) => {
-    getMethodGasUsages2(name: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MethodGasUsageDTO>>;
+export declare const EthMethodGasUsageControllerApiFp: (configuration?: Configuration) => {
+    getMethodGasUsages3(name: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MethodGasUsageDTO>>;
 };
-export declare const KlayMethodGasUsageControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getMethodGasUsages2(name: string, options?: any): AxiosPromise<MethodGasUsageDTO>;
+export declare const EthMethodGasUsageControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getMethodGasUsages3(name: string, options?: any): AxiosPromise<MethodGasUsageDTO>;
 };
-export declare class KlayMethodGasUsageControllerApi extends BaseAPI {
-    getMethodGasUsages2(name: string, options?: any): Promise<import("axios").AxiosResponse<MethodGasUsageDTO>>;
+export declare class EthMethodGasUsageControllerApi extends BaseAPI {
+    getMethodGasUsages3(name: string, options?: any): Promise<import("axios").AxiosResponse<MethodGasUsageDTO>>;
 }
-export declare const KlayOperationControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+export declare const EthNftControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getAllNfts1: (options?: any) => Promise<RequestArgs>;
+    getNft1: (nftId: number, options?: any) => Promise<RequestArgs>;
+    syncMetadata1: (nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any) => Promise<RequestArgs>;
+};
+export declare const EthNftControllerApiFp: (configuration?: Configuration) => {
+    getAllNfts1(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NftDTO>>>;
+    getNft1(nftId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftDTO>>;
+    syncMetadata1(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftItemDTO>>;
+};
+export declare const EthNftControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getAllNfts1(options?: any): AxiosPromise<Array<NftDTO>>;
+    getNft1(nftId: number, options?: any): AxiosPromise<NftDTO>;
+    syncMetadata1(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): AxiosPromise<NftItemDTO>;
+};
+export declare class EthNftControllerApi extends BaseAPI {
+    getAllNfts1(options?: any): Promise<import("axios").AxiosResponse<NftDTO[]>>;
+    getNft1(nftId: number, options?: any): Promise<import("axios").AxiosResponse<NftDTO>>;
+    syncMetadata1(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<import("axios").AxiosResponse<NftItemDTO>>;
+}
+export declare const EthOperationControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     bindHenesisKeyToWallet2: (keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any) => Promise<RequestArgs>;
     createHenesisKey2: (createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any) => Promise<RequestArgs>;
     getCoinByAddress1: (address: string, options?: any) => Promise<RequestArgs>;
 };
-export declare const KlayOperationControllerApiFp: (configuration?: Configuration) => {
+export declare const EthOperationControllerApiFp: (configuration?: Configuration) => {
     bindHenesisKeyToWallet2(keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BindHenesisKeyToWalletDTO>>;
     createHenesisKey2(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HenesisKeyDTO>>;
     getCoinByAddress1(address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
 };
-export declare const KlayOperationControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+export declare const EthOperationControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
     bindHenesisKeyToWallet2(keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any): AxiosPromise<BindHenesisKeyToWalletDTO>;
     createHenesisKey2(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): AxiosPromise<HenesisKeyDTO>;
     getCoinByAddress1(address: string, options?: any): AxiosPromise<CoinDTO>;
 };
-export declare class KlayOperationControllerApi extends BaseAPI {
+export declare class EthOperationControllerApi extends BaseAPI {
     bindHenesisKeyToWallet2(keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any): Promise<import("axios").AxiosResponse<BindHenesisKeyToWalletDTO>>;
     createHenesisKey2(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): Promise<import("axios").AxiosResponse<HenesisKeyDTO>>;
     getCoinByAddress1(address: string, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
 }
-export declare const KlayTransactionControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getAllTransactions2: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
+export declare const EthTransactionControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getAllTransactions3: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
     getRawTransactionByHash2: (transactionHash: string, options?: any) => Promise<RequestArgs>;
-    getTransactionById2: (transactionId: string, options?: any) => Promise<RequestArgs>;
+    getTransactionById3: (transactionId: string, options?: any) => Promise<RequestArgs>;
 };
-export declare const KlayTransactionControllerApiFp: (configuration?: Configuration) => {
-    getAllTransactions2(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionDTO>>;
+export declare const EthTransactionControllerApiFp: (configuration?: Configuration) => {
+    getAllTransactions3(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionDTO>>;
     getRawTransactionByHash2(transactionHash: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetailedRawTransactionDTO>>;
-    getTransactionById2(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    getTransactionById3(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
 };
-export declare const KlayTransactionControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getAllTransactions2(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionDTO>;
+export declare const EthTransactionControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getAllTransactions3(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionDTO>;
     getRawTransactionByHash2(transactionHash: string, options?: any): AxiosPromise<DetailedRawTransactionDTO>;
-    getTransactionById2(transactionId: string, options?: any): AxiosPromise<TransactionDTO>;
+    getTransactionById3(transactionId: string, options?: any): AxiosPromise<TransactionDTO>;
 };
-export declare class KlayTransactionControllerApi extends BaseAPI {
-    getAllTransactions2(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransactionDTO>>;
+export declare class EthTransactionControllerApi extends BaseAPI {
+    getAllTransactions3(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransactionDTO>>;
     getRawTransactionByHash2(transactionHash: string, options?: any): Promise<import("axios").AxiosResponse<DetailedRawTransactionDTO>>;
-    getTransactionById2(transactionId: string, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    getTransactionById3(transactionId: string, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
 }
-export declare const KlayWalletControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+export declare const EthWalletControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     activateAllowedAddresses2: (walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any) => Promise<RequestArgs>;
     activateMasterWallet2: (walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any) => Promise<RequestArgs>;
     createAllowedAddress2: (walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
-    createMasterWallet3: (createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any) => Promise<RequestArgs>;
-    createUserWallet2: (walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any) => Promise<RequestArgs>;
+    createMasterWallet13: (createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any) => Promise<RequestArgs>;
+    createUserWallet3: (walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any) => Promise<RequestArgs>;
     createWalletWithdrawalPolicy2: (walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any) => Promise<RequestArgs>;
     deleteAllowedAddress2: (walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
+    flush1: (walletId: string, flushRequest: FlushRequest, options?: any) => Promise<RequestArgs>;
     getAllWalletWithdrawalPolicies2: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
     getAllowedAddress2: (walletId: string, allowedAddressId: string, options?: any) => Promise<RequestArgs>;
     getAllowedAddressesByCoinId3: (walletId: string, coinId: number, pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    getMasterWallet2: (walletId: string, options?: any) => Promise<RequestArgs>;
-    getMasterWalletAccountKey2: (walletId: string, options?: any) => Promise<RequestArgs>;
-    getMasterWalletBalance2: (walletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
-    getMasterWalletInitialKey2: (walletId: string, options?: any) => Promise<RequestArgs>;
-    getMasterWalletNonce1: (walletId: string, options?: any) => Promise<RequestArgs>;
-    getMasterWallets4: (sort: Sort, options?: any) => Promise<RequestArgs>;
-    getUserWallet2: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
-    getUserWalletBalance2: (walletId: string, userWalletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
-    getUserWalletNonce1: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
-    getUserWallets4: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
-    inactivateAllowedAddresses2: (walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any) => Promise<RequestArgs>;
-    patchAccountKey2: (walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any) => Promise<RequestArgs>;
-    patchMasterWalletName2: (walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
-    patchUserWalletName2: (walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
-    patchWalletWithdrawalPolicy2: (walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any) => Promise<RequestArgs>;
-    recreateMasterWallet2: (walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
-    recreateUserWallet2: (walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
-    resendTransaction2: (resendTransactionRequest: ResendTransactionRequest, options?: any) => Promise<RequestArgs>;
-    sendBatchTransaction2: (createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any) => Promise<RequestArgs>;
-    sendTransaction2: (createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
-    validateIsAllowedAddress2: (walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
-};
-export declare const KlayWalletControllerApiFp: (configuration?: Configuration) => {
-    activateAllowedAddresses2(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    activateMasterWallet2(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    createAllowedAddress2(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
-    createMasterWallet3(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InactiveMasterWalletDTO | MasterWalletDTO>>;
-    createUserWallet2(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
-    createWalletWithdrawalPolicy2(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
-    deleteAllowedAddress2(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    getAllWalletWithdrawalPolicies2(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletWithdrawalPolicyDTO>>;
-    getAllowedAddress2(walletId: string, allowedAddressId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
-    getAllowedAddressesByCoinId3(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationAllowedAddressDTO>>;
-    getMasterWallet2(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    getMasterWalletAccountKey2(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
-    getMasterWalletBalance2(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletBalanceDTO>>>;
-    getMasterWalletInitialKey2(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
-    getMasterWalletNonce1(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
-    getMasterWallets4(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>>;
-    getUserWallet2(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
-    getUserWalletBalance2(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BalanceDTO>>>;
-    getUserWalletNonce1(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
-    getUserWallets4(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationUserWalletDTO>>;
-    inactivateAllowedAddresses2(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    patchAccountKey2(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
-    patchMasterWalletName2(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    patchUserWalletName2(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
-    patchWalletWithdrawalPolicy2(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
-    recreateMasterWallet2(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    recreateUserWallet2(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
-    resendTransaction2(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
-    sendBatchTransaction2(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BatchTransactionDTO>>>;
-    sendTransaction2(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
-    validateIsAllowedAddress2(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateIsAllowedAddressResponse>>;
-};
-export declare const KlayWalletControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    activateAllowedAddresses2(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): AxiosPromise<void>;
-    activateMasterWallet2(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): AxiosPromise<MasterWalletDTO>;
-    createAllowedAddress2(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): AxiosPromise<AllowedAddressDTO>;
-    createMasterWallet3(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): AxiosPromise<InactiveMasterWalletDTO | MasterWalletDTO>;
-    createUserWallet2(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
-    createWalletWithdrawalPolicy2(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
-    deleteAllowedAddress2(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): AxiosPromise<void>;
-    getAllWalletWithdrawalPolicies2(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationWalletWithdrawalPolicyDTO>;
-    getAllowedAddress2(walletId: string, allowedAddressId: string, options?: any): AxiosPromise<AllowedAddressDTO>;
-    getAllowedAddressesByCoinId3(walletId: string, coinId: number, pageable: Pageable, options?: any): AxiosPromise<PaginationAllowedAddressDTO>;
-    getMasterWallet2(walletId: string, options?: any): AxiosPromise<MasterWalletDTO>;
-    getMasterWalletAccountKey2(walletId: string, options?: any): AxiosPromise<KeyDTO>;
-    getMasterWalletBalance2(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<MasterWalletBalanceDTO>>;
-    getMasterWalletInitialKey2(walletId: string, options?: any): AxiosPromise<KeyDTO>;
-    getMasterWalletNonce1(walletId: string, options?: any): AxiosPromise<NonceDTO>;
-    getMasterWallets4(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>>;
-    getUserWallet2(walletId: string, userWalletId: string, options?: any): AxiosPromise<UserWalletDTO>;
-    getUserWalletBalance2(walletId: string, userWalletId: string, symbol?: string, options?: any): AxiosPromise<Array<BalanceDTO>>;
-    getUserWalletNonce1(walletId: string, userWalletId: string, options?: any): AxiosPromise<NonceDTO>;
-    getUserWallets4(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationUserWalletDTO>;
-    inactivateAllowedAddresses2(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): AxiosPromise<void>;
-    patchAccountKey2(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): AxiosPromise<KeyDTO>;
-    patchMasterWalletName2(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<MasterWalletDTO>;
-    patchUserWalletName2(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<UserWalletDTO>;
-    patchWalletWithdrawalPolicy2(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
-    recreateMasterWallet2(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<MasterWalletDTO>;
-    recreateUserWallet2(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
-    resendTransaction2(resendTransactionRequest: ResendTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
-    sendBatchTransaction2(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): AxiosPromise<Array<BatchTransactionDTO>>;
-    sendTransaction2(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
-    validateIsAllowedAddress2(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): AxiosPromise<ValidateIsAllowedAddressResponse>;
-};
-export declare class KlayWalletControllerApi extends BaseAPI {
-    activateAllowedAddresses2(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    activateMasterWallet2(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    createAllowedAddress2(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
-    createMasterWallet3(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): Promise<import("axios").AxiosResponse<InactiveMasterWalletDTO | MasterWalletDTO>>;
-    createUserWallet2(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
-    createWalletWithdrawalPolicy2(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
-    deleteAllowedAddress2(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    getAllWalletWithdrawalPolicies2(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletWithdrawalPolicyDTO>>;
-    getAllowedAddress2(walletId: string, allowedAddressId: string, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
-    getAllowedAddressesByCoinId3(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationAllowedAddressDTO>>;
-    getMasterWallet2(walletId: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    getMasterWalletAccountKey2(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
-    getMasterWalletBalance2(walletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletBalanceDTO[]>>;
-    getMasterWalletInitialKey2(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
-    getMasterWalletNonce1(walletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
-    getMasterWallets4(sort: Sort, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO[]>>;
-    getUserWallet2(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
-    getUserWalletBalance2(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<BalanceDTO[]>>;
-    getUserWalletNonce1(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
-    getUserWallets4(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationUserWalletDTO>>;
-    inactivateAllowedAddresses2(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    patchAccountKey2(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
-    patchMasterWalletName2(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    patchUserWalletName2(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
-    patchWalletWithdrawalPolicy2(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
-    recreateMasterWallet2(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    recreateUserWallet2(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
-    resendTransaction2(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
-    sendBatchTransaction2(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<BatchTransactionDTO[]>>;
-    sendTransaction2(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
-    validateIsAllowedAddress2(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<ValidateIsAllowedAddressResponse>>;
-}
-export declare const KlayWithdrawalApprovalControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    approveWithdrawalApproval2: (withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any) => Promise<RequestArgs>;
-    rejectWithdrawalApproval2: (withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any) => Promise<RequestArgs>;
-};
-export declare const KlayWithdrawalApprovalControllerApiFp: (configuration?: Configuration) => {
-    approveWithdrawalApproval2(withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
-    rejectWithdrawalApproval2(withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-};
-export declare const KlayWithdrawalApprovalControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    approveWithdrawalApproval2(withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any): AxiosPromise<TransactionDTO>;
-    rejectWithdrawalApproval2(withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any): AxiosPromise<void>;
-};
-export declare class KlayWithdrawalApprovalControllerApi extends BaseAPI {
-    approveWithdrawalApproval2(withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
-    rejectWithdrawalApproval2(withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-}
-export declare const MethodGasUsageControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getMethodGasUsages3: (blockchain?: string, name?: string, options?: any) => Promise<RequestArgs>;
-};
-export declare const MethodGasUsageControllerApiFp: (configuration?: Configuration) => {
-    getMethodGasUsages3(blockchain?: string, name?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MethodGasUsageDTO>>;
-};
-export declare const MethodGasUsageControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getMethodGasUsages3(blockchain?: string, name?: string, options?: any): AxiosPromise<MethodGasUsageDTO>;
-};
-export declare class MethodGasUsageControllerApi extends BaseAPI {
-    getMethodGasUsages3(blockchain?: string, name?: string, options?: any): Promise<import("axios").AxiosResponse<MethodGasUsageDTO>>;
-}
-export declare const TransactionControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    getAllTransactions3: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
-    getTransactionById3: (blockchain: string, transactionId: string, options?: any) => Promise<RequestArgs>;
-};
-export declare const TransactionControllerApiFp: (configuration?: Configuration) => {
-    getAllTransactions3(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionDTO>>;
-    getTransactionById3(blockchain: string, transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
-};
-export declare const TransactionControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    getAllTransactions3(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionDTO>;
-    getTransactionById3(blockchain: string, transactionId: string, options?: any): AxiosPromise<TransactionDTO>;
-};
-export declare class TransactionControllerApi extends BaseAPI {
-    getAllTransactions3(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransactionDTO>>;
-    getTransactionById3(blockchain: string, transactionId: string, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
-}
-export declare const WalletControllerApiAxiosParamCreator: (configuration?: Configuration) => {
-    createMasterWallet: (createMasterWalletRequestV1: CreateMasterWalletRequestV1, options?: any) => Promise<RequestArgs>;
-    createUserWallet3: (walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any) => Promise<RequestArgs>;
+    getFlushTransaction1: (walletId: string, transactionId: string, options?: any) => Promise<RequestArgs>;
+    getFlushTransactions1: (walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any) => Promise<RequestArgs>;
     getMasterWallet3: (walletId: string, options?: any) => Promise<RequestArgs>;
     getMasterWalletAccountKey3: (walletId: string, options?: any) => Promise<RequestArgs>;
     getMasterWalletBalance3: (walletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
     getMasterWalletInitialKey3: (walletId: string, options?: any) => Promise<RequestArgs>;
     getMasterWalletNonce2: (walletId: string, options?: any) => Promise<RequestArgs>;
-    getMasterWallets6: (sort: Sort, options?: any) => Promise<RequestArgs>;
+    getMasterWallets5: (sort: Sort, options?: any) => Promise<RequestArgs>;
+    getNftBalance1: (walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any) => Promise<RequestArgs>;
     getUserWallet3: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
     getUserWalletBalance3: (walletId: string, userWalletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
     getUserWalletNonce2: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
-    getUserWallets6: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
+    getUserWallets5: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
+    inactivateAllowedAddresses2: (walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any) => Promise<RequestArgs>;
     patchAccountKey3: (walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any) => Promise<RequestArgs>;
     patchMasterWalletName3: (walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
     patchUserWalletName3: (walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
-    recreateMasterWallet3: (walletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any) => Promise<RequestArgs>;
-    recreateUserWallet3: (walletId: string, userWalletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any) => Promise<RequestArgs>;
+    patchWalletWithdrawalPolicy2: (walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any) => Promise<RequestArgs>;
+    recreateMasterWallet3: (walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
+    recreateUserWallet3: (walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
+    replaceTransaction1: (replaceTransactionRequest: ReplaceTransactionRequest, options?: any) => Promise<RequestArgs>;
+    resendTransaction2: (resendTransactionRequest: ResendTransactionRequest, options?: any) => Promise<RequestArgs>;
     sendBatchTransaction3: (createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any) => Promise<RequestArgs>;
-    sendTransaction3: (createMultiSigTransactionRequestV1: CreateMultiSigTransactionRequestV1, options?: any) => Promise<RequestArgs>;
+    sendNftTransaction1: (createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
+    sendTransaction3: (createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
+    validateIsAllowedAddress2: (walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
 };
-export declare const WalletControllerApiFp: (configuration?: Configuration) => {
-    createMasterWallet(createMasterWalletRequestV1: CreateMasterWalletRequestV1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+export declare const EthWalletControllerApiFp: (configuration?: Configuration) => {
+    activateAllowedAddresses2(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    activateMasterWallet2(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    createAllowedAddress2(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
+    createMasterWallet13(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InactiveMasterWalletDTO | MasterWalletDTO>>;
     createUserWallet3(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    createWalletWithdrawalPolicy2(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
+    deleteAllowedAddress2(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    flush1(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    getAllWalletWithdrawalPolicies2(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletWithdrawalPolicyDTO>>;
+    getAllowedAddress2(walletId: string, allowedAddressId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
+    getAllowedAddressesByCoinId3(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationAllowedAddressDTO>>;
+    getFlushTransaction1(walletId: string, transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FlushTransactionDTO>>;
+    getFlushTransactions1(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationFlushTransactionDTO>>;
     getMasterWallet3(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
     getMasterWalletAccountKey3(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
     getMasterWalletBalance3(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletBalanceDTO>>>;
     getMasterWalletInitialKey3(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
     getMasterWalletNonce2(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
-    getMasterWallets6(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>>;
+    getMasterWallets5(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>>;
+    getNftBalance1(walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationNftBalanceDTO>>;
     getUserWallet3(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
     getUserWalletBalance3(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BalanceDTO>>>;
     getUserWalletNonce2(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
-    getUserWallets6(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationUserWalletDTO>>;
+    getUserWallets5(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationUserWalletDTO>>;
+    inactivateAllowedAddresses2(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     patchAccountKey3(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
     patchMasterWalletName3(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
     patchUserWalletName3(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
-    recreateMasterWallet3(walletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
-    recreateUserWallet3(walletId: string, userWalletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    patchWalletWithdrawalPolicy2(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
+    recreateMasterWallet3(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    recreateUserWallet3(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    replaceTransaction1(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    resendTransaction2(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     sendBatchTransaction3(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BatchTransactionDTO>>>;
-    sendTransaction3(createMultiSigTransactionRequestV1: CreateMultiSigTransactionRequestV1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    sendNftTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    sendTransaction3(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    validateIsAllowedAddress2(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateIsAllowedAddressResponse>>;
 };
-export declare const WalletControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
-    createMasterWallet(createMasterWalletRequestV1: CreateMasterWalletRequestV1, options?: any): AxiosPromise<MasterWalletDTO>;
+export declare const EthWalletControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    activateAllowedAddresses2(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): AxiosPromise<void>;
+    activateMasterWallet2(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): AxiosPromise<MasterWalletDTO>;
+    createAllowedAddress2(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): AxiosPromise<AllowedAddressDTO>;
+    createMasterWallet13(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): AxiosPromise<InactiveMasterWalletDTO | MasterWalletDTO>;
     createUserWallet3(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
+    createWalletWithdrawalPolicy2(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
+    deleteAllowedAddress2(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): AxiosPromise<void>;
+    flush1(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO>;
+    getAllWalletWithdrawalPolicies2(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationWalletWithdrawalPolicyDTO>;
+    getAllowedAddress2(walletId: string, allowedAddressId: string, options?: any): AxiosPromise<AllowedAddressDTO>;
+    getAllowedAddressesByCoinId3(walletId: string, coinId: number, pageable: Pageable, options?: any): AxiosPromise<PaginationAllowedAddressDTO>;
+    getFlushTransaction1(walletId: string, transactionId: string, options?: any): AxiosPromise<FlushTransactionDTO>;
+    getFlushTransactions1(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): AxiosPromise<PaginationFlushTransactionDTO>;
     getMasterWallet3(walletId: string, options?: any): AxiosPromise<MasterWalletDTO>;
     getMasterWalletAccountKey3(walletId: string, options?: any): AxiosPromise<KeyDTO>;
     getMasterWalletBalance3(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<MasterWalletBalanceDTO>>;
     getMasterWalletInitialKey3(walletId: string, options?: any): AxiosPromise<KeyDTO>;
     getMasterWalletNonce2(walletId: string, options?: any): AxiosPromise<NonceDTO>;
-    getMasterWallets6(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>>;
+    getMasterWallets5(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>>;
+    getNftBalance1(walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any): AxiosPromise<PaginationNftBalanceDTO>;
     getUserWallet3(walletId: string, userWalletId: string, options?: any): AxiosPromise<UserWalletDTO>;
     getUserWalletBalance3(walletId: string, userWalletId: string, symbol?: string, options?: any): AxiosPromise<Array<BalanceDTO>>;
     getUserWalletNonce2(walletId: string, userWalletId: string, options?: any): AxiosPromise<NonceDTO>;
-    getUserWallets6(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationUserWalletDTO>;
+    getUserWallets5(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationUserWalletDTO>;
+    inactivateAllowedAddresses2(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): AxiosPromise<void>;
     patchAccountKey3(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): AxiosPromise<KeyDTO>;
     patchMasterWalletName3(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<MasterWalletDTO>;
     patchUserWalletName3(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<UserWalletDTO>;
-    recreateMasterWallet3(walletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any): AxiosPromise<MasterWalletDTO>;
-    recreateUserWallet3(walletId: string, userWalletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any): AxiosPromise<UserWalletDTO>;
+    patchWalletWithdrawalPolicy2(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
+    recreateMasterWallet3(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<MasterWalletDTO>;
+    recreateUserWallet3(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
+    replaceTransaction1(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
+    resendTransaction2(resendTransactionRequest: ResendTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
     sendBatchTransaction3(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): AxiosPromise<Array<BatchTransactionDTO>>;
-    sendTransaction3(createMultiSigTransactionRequestV1: CreateMultiSigTransactionRequestV1, options?: any): AxiosPromise<TransactionDTO>;
+    sendNftTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
+    sendTransaction3(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
+    validateIsAllowedAddress2(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): AxiosPromise<ValidateIsAllowedAddressResponse>;
 };
-export declare class WalletControllerApi extends BaseAPI {
-    createMasterWallet(createMasterWalletRequestV1: CreateMasterWalletRequestV1, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+export declare class EthWalletControllerApi extends BaseAPI {
+    activateAllowedAddresses2(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
+    activateMasterWallet2(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    createAllowedAddress2(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
+    createMasterWallet13(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): Promise<import("axios").AxiosResponse<InactiveMasterWalletDTO | MasterWalletDTO>>;
     createUserWallet3(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    createWalletWithdrawalPolicy2(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
+    deleteAllowedAddress2(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
+    flush1(walletId: string, flushRequest: FlushRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    getAllWalletWithdrawalPolicies2(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletWithdrawalPolicyDTO>>;
+    getAllowedAddress2(walletId: string, allowedAddressId: string, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
+    getAllowedAddressesByCoinId3(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationAllowedAddressDTO>>;
+    getFlushTransaction1(walletId: string, transactionId: string, options?: any): Promise<import("axios").AxiosResponse<FlushTransactionDTO>>;
+    getFlushTransactions1(walletId: string, pageable: Pageable, searchCondition: FlushQuerySearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationFlushTransactionDTO>>;
     getMasterWallet3(walletId: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
     getMasterWalletAccountKey3(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
     getMasterWalletBalance3(walletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletBalanceDTO[]>>;
     getMasterWalletInitialKey3(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
     getMasterWalletNonce2(walletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
-    getMasterWallets6(sort: Sort, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO[]>>;
+    getMasterWallets5(sort: Sort, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO[]>>;
+    getNftBalance1(walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any): Promise<import("axios").AxiosResponse<PaginationNftBalanceDTO>>;
     getUserWallet3(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
     getUserWalletBalance3(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<BalanceDTO[]>>;
     getUserWalletNonce2(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
-    getUserWallets6(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationUserWalletDTO>>;
+    getUserWallets5(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationUserWalletDTO>>;
+    inactivateAllowedAddresses2(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
     patchAccountKey3(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
     patchMasterWalletName3(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
     patchUserWalletName3(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
-    recreateMasterWallet3(walletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
-    recreateUserWallet3(walletId: string, userWalletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    patchWalletWithdrawalPolicy2(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
+    recreateMasterWallet3(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    recreateUserWallet3(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    replaceTransaction1(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    resendTransaction2(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     sendBatchTransaction3(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<BatchTransactionDTO[]>>;
-    sendTransaction3(createMultiSigTransactionRequestV1: CreateMultiSigTransactionRequestV1, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    sendNftTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    sendTransaction3(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    validateIsAllowedAddress2(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<ValidateIsAllowedAddressResponse>>;
+}
+export declare const EthWithdrawalApprovalControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    approveWithdrawalApproval2: (withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any) => Promise<RequestArgs>;
+    rejectWithdrawalApproval2: (withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any) => Promise<RequestArgs>;
+};
+export declare const EthWithdrawalApprovalControllerApiFp: (configuration?: Configuration) => {
+    approveWithdrawalApproval2(withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    rejectWithdrawalApproval2(withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+};
+export declare const EthWithdrawalApprovalControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    approveWithdrawalApproval2(withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any): AxiosPromise<TransactionDTO>;
+    rejectWithdrawalApproval2(withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any): AxiosPromise<void>;
+};
+export declare class EthWithdrawalApprovalControllerApi extends BaseAPI {
+    approveWithdrawalApproval2(withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    rejectWithdrawalApproval2(withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
+}
+export declare const EventControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getCallEvents: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
+    getValueTransferEvents: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
+};
+export declare const EventControllerApiFp: (configuration?: Configuration) => {
+    getCallEvents(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>>;
+    getValueTransferEvents(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
+};
+export declare const EventControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getCallEvents(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO>;
+    getValueTransferEvents(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
+};
+export declare class EventControllerApi extends BaseAPI {
+    getCallEvents(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventDTO>>;
+    getValueTransferEvents(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
+}
+export declare const KlayAdminControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getCoin2: (coinId: number, options?: any) => Promise<RequestArgs>;
+    getExternalWithdrawals: (pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any) => Promise<RequestArgs>;
+    getMasterWallets2: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
+    getUserWallets2: (pageable: Pageable, options?: any) => Promise<RequestArgs>;
+    getValueTransferEvents3: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
+};
+export declare const KlayAdminControllerApiFp: (configuration?: Configuration) => {
+    getCoin2(coinId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
+    getExternalWithdrawals(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
+    getMasterWallets2(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>>;
+    getUserWallets2(pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>>;
+    getValueTransferEvents3(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
+};
+export declare const KlayAdminControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getCoin2(coinId: number, options?: any): AxiosPromise<CoinDTO>;
+    getExternalWithdrawals(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
+    getMasterWallets2(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO>;
+    getUserWallets2(pageable: Pageable, options?: any): AxiosPromise<PaginationWalletDTO>;
+    getValueTransferEvents3(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
+};
+export declare class KlayAdminControllerApi extends BaseAPI {
+    getCoin2(coinId: number, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
+    getExternalWithdrawals(pageable: Pageable, searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
+    getMasterWallets2(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletDTO>>;
+    getUserWallets2(pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletDTO>>;
+    getValueTransferEvents3(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
+}
+export declare const KlayCoinControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    createCoin: (createCoinRequest: CreateCoinRequest, options?: any) => Promise<RequestArgs>;
+    deleteCoin: (symbol: string, options?: any) => Promise<RequestArgs>;
+    getAllCoins11: (flag: boolean, options?: any) => Promise<RequestArgs>;
+    getCoin1: (symbol: string, options?: any) => Promise<RequestArgs>;
+    patchCoin: (updateCoinRequest: UpdateCoinRequest, options?: any) => Promise<RequestArgs>;
+};
+export declare const KlayCoinControllerApiFp: (configuration?: Configuration) => {
+    createCoin(createCoinRequest: CreateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
+    deleteCoin(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getAllCoins11(flag: boolean, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<CoinDTO>>>;
+    getCoin1(symbol: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
+    patchCoin(updateCoinRequest: UpdateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+};
+export declare const KlayCoinControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    createCoin(createCoinRequest: CreateCoinRequest, options?: any): AxiosPromise<CoinDTO>;
+    deleteCoin(symbol: string, options?: any): AxiosPromise<void>;
+    getAllCoins11(flag: boolean, options?: any): AxiosPromise<Array<CoinDTO>>;
+    getCoin1(symbol: string, options?: any): AxiosPromise<CoinDTO>;
+    patchCoin(updateCoinRequest: UpdateCoinRequest, options?: any): AxiosPromise<void>;
+};
+export declare class KlayCoinControllerApi extends BaseAPI {
+    createCoin(createCoinRequest: CreateCoinRequest, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
+    deleteCoin(symbol: string, options?: any): Promise<import("axios").AxiosResponse<void>>;
+    getAllCoins11(flag: boolean, options?: any): Promise<import("axios").AxiosResponse<CoinDTO[]>>;
+    getCoin1(symbol: string, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
+    patchCoin(updateCoinRequest: UpdateCoinRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
+}
+export declare const KlayEventControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getCallEvents1: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
+    getValueTransferEvents1: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
+};
+export declare const KlayEventControllerApiFp: (configuration?: Configuration) => {
+    getCallEvents1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventDTO>>;
+    getValueTransferEvents1(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventDTO>>;
+};
+export declare const KlayEventControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getCallEvents1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventDTO>;
+    getValueTransferEvents1(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventDTO>;
+};
+export declare class KlayEventControllerApi extends BaseAPI {
+    getCallEvents1(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventDTO>>;
+    getValueTransferEvents1(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventDTO>>;
+}
+export declare const KlayGasPriceControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getGasPrice: (options?: any) => Promise<RequestArgs>;
+};
+export declare const KlayGasPriceControllerApiFp: (configuration?: Configuration) => {
+    getGasPrice(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetGasPriceResponse>>;
+};
+export declare const KlayGasPriceControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getGasPrice(options?: any): AxiosPromise<GetGasPriceResponse>;
+};
+export declare class KlayGasPriceControllerApi extends BaseAPI {
+    getGasPrice(options?: any): Promise<import("axios").AxiosResponse<GetGasPriceResponse>>;
+}
+export declare const KlayHenesisKeyControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    createExampleHenesisKey: (options?: any) => Promise<RequestArgs>;
+    createTransaction: (createTransactionRequest: CreateTransactionRequest, options?: any) => Promise<RequestArgs>;
+    getHenesisKey: (options?: any) => Promise<RequestArgs>;
+    getHenesisKeyBalance: (options?: any) => Promise<RequestArgs>;
+    getHistoriesCsv: (createdAtGte: string, createdAtLt: string, options?: any) => Promise<RequestArgs>;
+    getTransactionHistories: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
+};
+export declare const KlayHenesisKeyControllerApiFp: (configuration?: Configuration) => {
+    createExampleHenesisKey(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExampleHenesisKeyDTO>>;
+    createTransaction(createTransactionRequest: CreateTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    getHenesisKey(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HenesisKeyDTO>>;
+    getHenesisKeyBalance(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HenesisKeyBalanceDTO>>;
+    getHistoriesCsv(createdAtGte: string, createdAtLt: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getTransactionHistories(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionHistoryDTO>>;
+};
+export declare const KlayHenesisKeyControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    createExampleHenesisKey(options?: any): AxiosPromise<ExampleHenesisKeyDTO>;
+    createTransaction(createTransactionRequest: CreateTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
+    getHenesisKey(options?: any): AxiosPromise<HenesisKeyDTO>;
+    getHenesisKeyBalance(options?: any): AxiosPromise<HenesisKeyBalanceDTO>;
+    getHistoriesCsv(createdAtGte: string, createdAtLt: string, options?: any): AxiosPromise<void>;
+    getTransactionHistories(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionHistoryDTO>;
+};
+export declare class KlayHenesisKeyControllerApi extends BaseAPI {
+    createExampleHenesisKey(options?: any): Promise<import("axios").AxiosResponse<ExampleHenesisKeyDTO>>;
+    createTransaction(createTransactionRequest: CreateTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    getHenesisKey(options?: any): Promise<import("axios").AxiosResponse<HenesisKeyDTO>>;
+    getHenesisKeyBalance(options?: any): Promise<import("axios").AxiosResponse<HenesisKeyBalanceDTO>>;
+    getHistoriesCsv(createdAtGte: string, createdAtLt: string, options?: any): Promise<import("axios").AxiosResponse<void>>;
+    getTransactionHistories(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransactionHistoryDTO>>;
+}
+export declare const KlayInternalControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getCallEvents2: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
+    getValueTransferEvents2: (pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any) => Promise<RequestArgs>;
+};
+export declare const KlayInternalControllerApiFp: (configuration?: Configuration) => {
+    getCallEvents2(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationCallEventInternalDTO>>;
+    getValueTransferEvents2(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationValueTransferEventInternalDTO>>;
+};
+export declare const KlayInternalControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getCallEvents2(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationCallEventInternalDTO>;
+    getValueTransferEvents2(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): AxiosPromise<PaginationValueTransferEventInternalDTO>;
+};
+export declare class KlayInternalControllerApi extends BaseAPI {
+    getCallEvents2(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationCallEventInternalDTO>>;
+    getValueTransferEvents2(pageable: Pageable, searchCondition: ValueTransferEventSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationValueTransferEventInternalDTO>>;
+}
+export declare const KlayMethodGasUsageControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getMethodGasUsages1: (name: string, options?: any) => Promise<RequestArgs>;
+};
+export declare const KlayMethodGasUsageControllerApiFp: (configuration?: Configuration) => {
+    getMethodGasUsages1(name: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MethodGasUsageDTO>>;
+};
+export declare const KlayMethodGasUsageControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getMethodGasUsages1(name: string, options?: any): AxiosPromise<MethodGasUsageDTO>;
+};
+export declare class KlayMethodGasUsageControllerApi extends BaseAPI {
+    getMethodGasUsages1(name: string, options?: any): Promise<import("axios").AxiosResponse<MethodGasUsageDTO>>;
+}
+export declare const KlayNftControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getAllNfts: (options?: any) => Promise<RequestArgs>;
+    getNft: (nftId: number, options?: any) => Promise<RequestArgs>;
+    syncMetadata: (nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any) => Promise<RequestArgs>;
+};
+export declare const KlayNftControllerApiFp: (configuration?: Configuration) => {
+    getAllNfts(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NftDTO>>>;
+    getNft(nftId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftDTO>>;
+    syncMetadata(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftItemDTO>>;
+};
+export declare const KlayNftControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getAllNfts(options?: any): AxiosPromise<Array<NftDTO>>;
+    getNft(nftId: number, options?: any): AxiosPromise<NftDTO>;
+    syncMetadata(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): AxiosPromise<NftItemDTO>;
+};
+export declare class KlayNftControllerApi extends BaseAPI {
+    getAllNfts(options?: any): Promise<import("axios").AxiosResponse<NftDTO[]>>;
+    getNft(nftId: number, options?: any): Promise<import("axios").AxiosResponse<NftDTO>>;
+    syncMetadata(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<import("axios").AxiosResponse<NftItemDTO>>;
+}
+export declare const KlayOperationControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    bindHenesisKeyToWallet: (keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any) => Promise<RequestArgs>;
+    createHenesisKey: (createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any) => Promise<RequestArgs>;
+    getCoinByAddress: (address: string, options?: any) => Promise<RequestArgs>;
+};
+export declare const KlayOperationControllerApiFp: (configuration?: Configuration) => {
+    bindHenesisKeyToWallet(keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BindHenesisKeyToWalletDTO>>;
+    createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HenesisKeyDTO>>;
+    getCoinByAddress(address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>>;
+};
+export declare const KlayOperationControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    bindHenesisKeyToWallet(keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any): AxiosPromise<BindHenesisKeyToWalletDTO>;
+    createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): AxiosPromise<HenesisKeyDTO>;
+    getCoinByAddress(address: string, options?: any): AxiosPromise<CoinDTO>;
+};
+export declare class KlayOperationControllerApi extends BaseAPI {
+    bindHenesisKeyToWallet(keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any): Promise<import("axios").AxiosResponse<BindHenesisKeyToWalletDTO>>;
+    createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): Promise<import("axios").AxiosResponse<HenesisKeyDTO>>;
+    getCoinByAddress(address: string, options?: any): Promise<import("axios").AxiosResponse<CoinDTO>>;
+}
+export declare const KlayTransactionControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getAllTransactions1: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
+    getRawTransactionByHash: (transactionHash: string, options?: any) => Promise<RequestArgs>;
+    getTransactionById1: (transactionId: string, options?: any) => Promise<RequestArgs>;
+};
+export declare const KlayTransactionControllerApiFp: (configuration?: Configuration) => {
+    getAllTransactions1(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionDTO>>;
+    getRawTransactionByHash(transactionHash: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DetailedRawTransactionDTO>>;
+    getTransactionById1(transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+};
+export declare const KlayTransactionControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getAllTransactions1(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionDTO>;
+    getRawTransactionByHash(transactionHash: string, options?: any): AxiosPromise<DetailedRawTransactionDTO>;
+    getTransactionById1(transactionId: string, options?: any): AxiosPromise<TransactionDTO>;
+};
+export declare class KlayTransactionControllerApi extends BaseAPI {
+    getAllTransactions1(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransactionDTO>>;
+    getRawTransactionByHash(transactionHash: string, options?: any): Promise<import("axios").AxiosResponse<DetailedRawTransactionDTO>>;
+    getTransactionById1(transactionId: string, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+}
+export declare const KlayWalletControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    activateAllowedAddresses: (walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any) => Promise<RequestArgs>;
+    activateMasterWallet: (walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any) => Promise<RequestArgs>;
+    createAllowedAddress: (walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
+    createMasterWallet11: (createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any) => Promise<RequestArgs>;
+    createUserWallet1: (walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any) => Promise<RequestArgs>;
+    createWalletWithdrawalPolicy: (walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any) => Promise<RequestArgs>;
+    deleteAllowedAddress: (walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
+    getAllWalletWithdrawalPolicies: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
+    getAllowedAddress: (walletId: string, allowedAddressId: string, options?: any) => Promise<RequestArgs>;
+    getAllowedAddressesByCoinId1: (walletId: string, coinId: number, pageable: Pageable, options?: any) => Promise<RequestArgs>;
+    getMasterWallet1: (walletId: string, options?: any) => Promise<RequestArgs>;
+    getMasterWalletAccountKey1: (walletId: string, options?: any) => Promise<RequestArgs>;
+    getMasterWalletBalance1: (walletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
+    getMasterWalletInitialKey1: (walletId: string, options?: any) => Promise<RequestArgs>;
+    getMasterWalletNonce1: (walletId: string, options?: any) => Promise<RequestArgs>;
+    getMasterWallets1: (sort: Sort, options?: any) => Promise<RequestArgs>;
+    getNftBalance: (walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any) => Promise<RequestArgs>;
+    getUserWallet1: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
+    getUserWalletBalance1: (walletId: string, userWalletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
+    getUserWalletNonce1: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
+    getUserWallets1: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
+    inactivateAllowedAddresses: (walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any) => Promise<RequestArgs>;
+    patchAccountKey1: (walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any) => Promise<RequestArgs>;
+    patchMasterWalletName1: (walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
+    patchUserWalletName1: (walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
+    patchWalletWithdrawalPolicy: (walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any) => Promise<RequestArgs>;
+    recreateMasterWallet1: (walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
+    recreateUserWallet1: (walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
+    resendTransaction: (resendTransactionRequest: ResendTransactionRequest, options?: any) => Promise<RequestArgs>;
+    sendBatchTransaction1: (createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any) => Promise<RequestArgs>;
+    sendNftTransaction: (createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
+    sendTransaction1: (createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
+    validateIsAllowedAddress: (walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
+};
+export declare const KlayWalletControllerApiFp: (configuration?: Configuration) => {
+    activateAllowedAddresses(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    activateMasterWallet(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    createAllowedAddress(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
+    createMasterWallet11(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InactiveMasterWalletDTO | MasterWalletDTO>>;
+    createUserWallet1(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    createWalletWithdrawalPolicy(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
+    deleteAllowedAddress(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getAllWalletWithdrawalPolicies(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletWithdrawalPolicyDTO>>;
+    getAllowedAddress(walletId: string, allowedAddressId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
+    getAllowedAddressesByCoinId1(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationAllowedAddressDTO>>;
+    getMasterWallet1(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    getMasterWalletAccountKey1(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
+    getMasterWalletBalance1(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletBalanceDTO>>>;
+    getMasterWalletInitialKey1(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
+    getMasterWalletNonce1(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
+    getMasterWallets1(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>>;
+    getNftBalance(walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationNftBalanceDTO>>;
+    getUserWallet1(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    getUserWalletBalance1(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BalanceDTO>>>;
+    getUserWalletNonce1(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
+    getUserWallets1(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationUserWalletDTO>>;
+    inactivateAllowedAddresses(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    patchAccountKey1(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
+    patchMasterWalletName1(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    patchUserWalletName1(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    patchWalletWithdrawalPolicy(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
+    recreateMasterWallet1(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    recreateUserWallet1(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    resendTransaction(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    sendBatchTransaction1(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BatchTransactionDTO>>>;
+    sendNftTransaction(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    sendTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    validateIsAllowedAddress(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateIsAllowedAddressResponse>>;
+};
+export declare const KlayWalletControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    activateAllowedAddresses(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): AxiosPromise<void>;
+    activateMasterWallet(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): AxiosPromise<MasterWalletDTO>;
+    createAllowedAddress(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): AxiosPromise<AllowedAddressDTO>;
+    createMasterWallet11(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): AxiosPromise<InactiveMasterWalletDTO | MasterWalletDTO>;
+    createUserWallet1(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
+    createWalletWithdrawalPolicy(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
+    deleteAllowedAddress(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): AxiosPromise<void>;
+    getAllWalletWithdrawalPolicies(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationWalletWithdrawalPolicyDTO>;
+    getAllowedAddress(walletId: string, allowedAddressId: string, options?: any): AxiosPromise<AllowedAddressDTO>;
+    getAllowedAddressesByCoinId1(walletId: string, coinId: number, pageable: Pageable, options?: any): AxiosPromise<PaginationAllowedAddressDTO>;
+    getMasterWallet1(walletId: string, options?: any): AxiosPromise<MasterWalletDTO>;
+    getMasterWalletAccountKey1(walletId: string, options?: any): AxiosPromise<KeyDTO>;
+    getMasterWalletBalance1(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<MasterWalletBalanceDTO>>;
+    getMasterWalletInitialKey1(walletId: string, options?: any): AxiosPromise<KeyDTO>;
+    getMasterWalletNonce1(walletId: string, options?: any): AxiosPromise<NonceDTO>;
+    getMasterWallets1(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>>;
+    getNftBalance(walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any): AxiosPromise<PaginationNftBalanceDTO>;
+    getUserWallet1(walletId: string, userWalletId: string, options?: any): AxiosPromise<UserWalletDTO>;
+    getUserWalletBalance1(walletId: string, userWalletId: string, symbol?: string, options?: any): AxiosPromise<Array<BalanceDTO>>;
+    getUserWalletNonce1(walletId: string, userWalletId: string, options?: any): AxiosPromise<NonceDTO>;
+    getUserWallets1(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationUserWalletDTO>;
+    inactivateAllowedAddresses(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): AxiosPromise<void>;
+    patchAccountKey1(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): AxiosPromise<KeyDTO>;
+    patchMasterWalletName1(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<MasterWalletDTO>;
+    patchUserWalletName1(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<UserWalletDTO>;
+    patchWalletWithdrawalPolicy(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
+    recreateMasterWallet1(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<MasterWalletDTO>;
+    recreateUserWallet1(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
+    resendTransaction(resendTransactionRequest: ResendTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
+    sendBatchTransaction1(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): AxiosPromise<Array<BatchTransactionDTO>>;
+    sendNftTransaction(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
+    sendTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
+    validateIsAllowedAddress(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): AxiosPromise<ValidateIsAllowedAddressResponse>;
+};
+export declare class KlayWalletControllerApi extends BaseAPI {
+    activateAllowedAddresses(walletId: string, activateAllowedAddressesRequest: ActivateAllowedAddressesRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
+    activateMasterWallet(walletId: string, activateMasterWalletRequest: ActivateMasterWalletRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    createAllowedAddress(walletId: string, createAllowedAddressRequest: CreateAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
+    createMasterWallet11(createInactiveMasterWalletRequest: CreateInactiveMasterWalletRequest, options?: any): Promise<import("axios").AxiosResponse<InactiveMasterWalletDTO | MasterWalletDTO>>;
+    createUserWallet1(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    createWalletWithdrawalPolicy(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
+    deleteAllowedAddress(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
+    getAllWalletWithdrawalPolicies(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletWithdrawalPolicyDTO>>;
+    getAllowedAddress(walletId: string, allowedAddressId: string, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
+    getAllowedAddressesByCoinId1(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationAllowedAddressDTO>>;
+    getMasterWallet1(walletId: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    getMasterWalletAccountKey1(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
+    getMasterWalletBalance1(walletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletBalanceDTO[]>>;
+    getMasterWalletInitialKey1(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
+    getMasterWalletNonce1(walletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
+    getMasterWallets1(sort: Sort, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO[]>>;
+    getNftBalance(walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any): Promise<import("axios").AxiosResponse<PaginationNftBalanceDTO>>;
+    getUserWallet1(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    getUserWalletBalance1(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<BalanceDTO[]>>;
+    getUserWalletNonce1(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
+    getUserWallets1(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationUserWalletDTO>>;
+    inactivateAllowedAddresses(walletId: string, inactivateAllowedAddressesRequest: InactivateAllowedAddressesRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
+    patchAccountKey1(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
+    patchMasterWalletName1(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    patchUserWalletName1(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    patchWalletWithdrawalPolicy(walletId: string, policyId: string, patchWithdrawalPolicyRequest: PatchWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
+    recreateMasterWallet1(walletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    recreateUserWallet1(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    resendTransaction(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    sendBatchTransaction1(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<BatchTransactionDTO[]>>;
+    sendNftTransaction(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    sendTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    validateIsAllowedAddress(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<ValidateIsAllowedAddressResponse>>;
+}
+export declare const KlayWithdrawalApprovalControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    approveWithdrawalApproval: (withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any) => Promise<RequestArgs>;
+    rejectWithdrawalApproval: (withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any) => Promise<RequestArgs>;
+};
+export declare const KlayWithdrawalApprovalControllerApiFp: (configuration?: Configuration) => {
+    approveWithdrawalApproval(withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    rejectWithdrawalApproval(withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+};
+export declare const KlayWithdrawalApprovalControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    approveWithdrawalApproval(withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any): AxiosPromise<TransactionDTO>;
+    rejectWithdrawalApproval(withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any): AxiosPromise<void>;
+};
+export declare class KlayWithdrawalApprovalControllerApi extends BaseAPI {
+    approveWithdrawalApproval(withdrawalApprovalId: string, approveWithdrawalApprovalRequest: ApproveWithdrawalApprovalRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    rejectWithdrawalApproval(withdrawalApprovalId: string, rejectWithdrawalApprovalRequest: RejectWithdrawalApprovalRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
+}
+export declare const MethodGasUsageControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getMethodGasUsages: (blockchain?: string, name?: string, options?: any) => Promise<RequestArgs>;
+};
+export declare const MethodGasUsageControllerApiFp: (configuration?: Configuration) => {
+    getMethodGasUsages(blockchain?: string, name?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MethodGasUsageDTO>>;
+};
+export declare const MethodGasUsageControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getMethodGasUsages(blockchain?: string, name?: string, options?: any): AxiosPromise<MethodGasUsageDTO>;
+};
+export declare class MethodGasUsageControllerApi extends BaseAPI {
+    getMethodGasUsages(blockchain?: string, name?: string, options?: any): Promise<import("axios").AxiosResponse<MethodGasUsageDTO>>;
+}
+export declare const TransactionControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    getAllTransactions: (pageable: Pageable, specs: object, options?: any) => Promise<RequestArgs>;
+    getTransactionById: (blockchain: string, transactionId: string, options?: any) => Promise<RequestArgs>;
+};
+export declare const TransactionControllerApiFp: (configuration?: Configuration) => {
+    getAllTransactions(pageable: Pageable, specs: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationTransactionDTO>>;
+    getTransactionById(blockchain: string, transactionId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+};
+export declare const TransactionControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    getAllTransactions(pageable: Pageable, specs: object, options?: any): AxiosPromise<PaginationTransactionDTO>;
+    getTransactionById(blockchain: string, transactionId: string, options?: any): AxiosPromise<TransactionDTO>;
+};
+export declare class TransactionControllerApi extends BaseAPI {
+    getAllTransactions(pageable: Pageable, specs: object, options?: any): Promise<import("axios").AxiosResponse<PaginationTransactionDTO>>;
+    getTransactionById(blockchain: string, transactionId: string, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+}
+export declare const WalletControllerApiAxiosParamCreator: (configuration?: Configuration) => {
+    createMasterWallet: (createMasterWalletRequestV1: CreateMasterWalletRequestV1, options?: any) => Promise<RequestArgs>;
+    createUserWallet: (walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any) => Promise<RequestArgs>;
+    getMasterWallet: (walletId: string, options?: any) => Promise<RequestArgs>;
+    getMasterWalletAccountKey: (walletId: string, options?: any) => Promise<RequestArgs>;
+    getMasterWalletBalance: (walletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
+    getMasterWalletInitialKey: (walletId: string, options?: any) => Promise<RequestArgs>;
+    getMasterWalletNonce: (walletId: string, options?: any) => Promise<RequestArgs>;
+    getMasterWallets: (sort: Sort, options?: any) => Promise<RequestArgs>;
+    getUserWallet: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
+    getUserWalletBalance: (walletId: string, userWalletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
+    getUserWalletNonce: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
+    getUserWallets: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
+    patchAccountKey: (walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any) => Promise<RequestArgs>;
+    patchMasterWalletName: (walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
+    patchUserWalletName: (walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any) => Promise<RequestArgs>;
+    recreateMasterWallet: (walletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any) => Promise<RequestArgs>;
+    recreateUserWallet: (walletId: string, userWalletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any) => Promise<RequestArgs>;
+    sendBatchTransaction: (createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any) => Promise<RequestArgs>;
+    sendTransaction: (createMultiSigTransactionRequestV1: CreateMultiSigTransactionRequestV1, options?: any) => Promise<RequestArgs>;
+};
+export declare const WalletControllerApiFp: (configuration?: Configuration) => {
+    createMasterWallet(createMasterWalletRequestV1: CreateMasterWalletRequestV1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    createUserWallet(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    getMasterWallet(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    getMasterWalletAccountKey(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
+    getMasterWalletBalance(walletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletBalanceDTO>>>;
+    getMasterWalletInitialKey(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
+    getMasterWalletNonce(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
+    getMasterWallets(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>>;
+    getUserWallet(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    getUserWalletBalance(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BalanceDTO>>>;
+    getUserWalletNonce(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
+    getUserWallets(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationUserWalletDTO>>;
+    patchAccountKey(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
+    patchMasterWalletName(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    patchUserWalletName(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    recreateMasterWallet(walletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>>;
+    recreateUserWallet(walletId: string, userWalletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
+    sendBatchTransaction(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BatchTransactionDTO>>>;
+    sendTransaction(createMultiSigTransactionRequestV1: CreateMultiSigTransactionRequestV1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+};
+export declare const WalletControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
+    createMasterWallet(createMasterWalletRequestV1: CreateMasterWalletRequestV1, options?: any): AxiosPromise<MasterWalletDTO>;
+    createUserWallet(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
+    getMasterWallet(walletId: string, options?: any): AxiosPromise<MasterWalletDTO>;
+    getMasterWalletAccountKey(walletId: string, options?: any): AxiosPromise<KeyDTO>;
+    getMasterWalletBalance(walletId: string, symbol?: string, options?: any): AxiosPromise<Array<MasterWalletBalanceDTO>>;
+    getMasterWalletInitialKey(walletId: string, options?: any): AxiosPromise<KeyDTO>;
+    getMasterWalletNonce(walletId: string, options?: any): AxiosPromise<NonceDTO>;
+    getMasterWallets(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>>;
+    getUserWallet(walletId: string, userWalletId: string, options?: any): AxiosPromise<UserWalletDTO>;
+    getUserWalletBalance(walletId: string, userWalletId: string, symbol?: string, options?: any): AxiosPromise<Array<BalanceDTO>>;
+    getUserWalletNonce(walletId: string, userWalletId: string, options?: any): AxiosPromise<NonceDTO>;
+    getUserWallets(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationUserWalletDTO>;
+    patchAccountKey(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): AxiosPromise<KeyDTO>;
+    patchMasterWalletName(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<MasterWalletDTO>;
+    patchUserWalletName(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): AxiosPromise<UserWalletDTO>;
+    recreateMasterWallet(walletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any): AxiosPromise<MasterWalletDTO>;
+    recreateUserWallet(walletId: string, userWalletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any): AxiosPromise<UserWalletDTO>;
+    sendBatchTransaction(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): AxiosPromise<Array<BatchTransactionDTO>>;
+    sendTransaction(createMultiSigTransactionRequestV1: CreateMultiSigTransactionRequestV1, options?: any): AxiosPromise<TransactionDTO>;
+};
+export declare class WalletControllerApi extends BaseAPI {
+    createMasterWallet(createMasterWalletRequestV1: CreateMasterWalletRequestV1, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    createUserWallet(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    getMasterWallet(walletId: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    getMasterWalletAccountKey(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
+    getMasterWalletBalance(walletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<MasterWalletBalanceDTO[]>>;
+    getMasterWalletInitialKey(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
+    getMasterWalletNonce(walletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
+    getMasterWallets(sort: Sort, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO[]>>;
+    getUserWallet(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    getUserWalletBalance(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<BalanceDTO[]>>;
+    getUserWalletNonce(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
+    getUserWallets(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationUserWalletDTO>>;
+    patchAccountKey(walletId: string, updateAccountKeyRequest: UpdateAccountKeyRequest, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
+    patchMasterWalletName(walletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    patchUserWalletName(walletId: string, userWalletId: string, changeWalletNameRequest: ChangeWalletNameRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    recreateMasterWallet(walletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO>>;
+    recreateUserWallet(walletId: string, userWalletId: string, recreateWalletRequestV1: RecreateWalletRequestV1, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
+    sendBatchTransaction(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<BatchTransactionDTO[]>>;
+    sendTransaction(createMultiSigTransactionRequestV1: CreateMultiSigTransactionRequestV1, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
 }
