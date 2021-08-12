@@ -17,7 +17,6 @@ import {
 import { convertWalletStatus } from "../wallet";
 import BN from "bn.js";
 import { Coin } from "./coin";
-import { Nft } from "./nft";
 
 export const transformDepositAddressData = (
   data: UserWalletDTO
@@ -151,19 +150,6 @@ export class EthDepositAddress extends EthLikeWallet {
   }
 
   updateAccountKey(key: Key) {
-    throw new Error("unimplemented method");
-  }
-
-  async transferNft(
-    nft: number | Nft,
-    tokenOnchainId: string,
-    to: string,
-    passphrase: string,
-    otpCode?: string,
-    gasPrice?: BN,
-    gasLimit?: BN,
-    metadata?: string
-  ): Promise<EthTransaction> {
     throw new Error("unimplemented method");
   }
 }

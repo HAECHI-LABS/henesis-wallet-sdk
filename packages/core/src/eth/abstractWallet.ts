@@ -364,58 +364,10 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     return balances.map((dto) => dto as NftBalance);
   }
 
-  async transferNft(
-    nft: number | Nft,
-    tokenOnchainId: string,
-    to: string,
-    passphrase: string,
-    otpCode?: string,
-    gasPrice?: BN,
-    gasLimit?: BN,
-    metadata?: string
-  ): Promise<EthTransaction> {
-    const n = typeof nft === "number" ? await this.nfts.getNft(nft) : nft;
-    return this.sendNftTransaction(
-      await this.buildTransferNftPayload(n, tokenOnchainId, to, passphrase),
-      this.getId(),
-      otpCode,
-      gasPrice,
-      gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT,
-      metadata
-    );
-  }
-
-  async sendNftTransaction(
-    signedMultiSigPayload: SignedMultiSigPayload,
-    walletId: string,
-    otpCode?: string,
-    gasPrice?: BN,
-    gasLimit?: BN,
-    metadata?: string
-  ): Promise<EthTransaction> {
-    const request: CreateMultiSigTransactionRequest = {
-      walletId,
-      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
-        signedMultiSigPayload
-      ),
-      gasPrice: BNConverter.bnToHexStringOrElseNull(gasPrice),
-      gasLimit: BNConverter.bnToHexStringOrElseNull(gasLimit),
-      otpCode,
-      metadata,
-    };
-    const response = await this.client.post<TransactionDTO>(
-      `/wallets/nft/transactions`,
-      request
-    );
-    return {
-      ...response,
-      blockchain: transformBlockchainType(response.blockchain),
-    };
-  }
-
-  private async buildTransferNftPayload(
+  protected async buildTransferNftPayload(
     nft: Nft,
     tokenOnchainId: string,
+    from: EthLikeWallet,
     to: string,
     passphrase: string
   ): Promise<SignedMultiSigPayload> {
@@ -425,7 +377,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       passphrase,
     });
     return this.signPayload(
-      await nft.buildTransferMultiSigPayload(this, to, tokenOnchainId),
+      await nft.buildTransferMultiSigPayload(from, to, tokenOnchainId),
       passphrase
     );
   }

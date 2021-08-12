@@ -26,6 +26,10 @@ export class Nft {
     };
   }
 
+  getId(): number {
+    return this.nftData.id;
+  }
+
   getName(): string {
     return this.nftData.name;
   }

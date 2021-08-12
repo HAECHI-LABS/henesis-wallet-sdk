@@ -15,7 +15,7 @@ import {
   Pagination,
   PaginationOptions,
 } from "../types";
-import { MultiSigPayload } from "./transactions";
+import { MultiSigPayload, SignedMultiSigPayload } from "./transactions";
 import { Client } from "../httpClient";
 import walletAbi from "../contracts/Wallet.json";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
@@ -38,6 +38,8 @@ import {
   FlushQuerySearchCondition,
   FlushTransactionValueTransferEventDTO,
   FlushTransactionDTO,
+  CreateMultiSigTransactionRequest,
+  CreateNftMultiSigTransactionRequest,
 } from "../__generate__/eth";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { Coin } from "./coin";
@@ -53,6 +55,7 @@ import {
   convertSignedMultiSigPayloadToDTO,
   getAddressFromCompressedPub,
 } from "./abstractWallet";
+import { Nft } from "./nft";
 
 export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;
@@ -713,5 +716,63 @@ export class EthMasterWallet extends EthLikeWallet {
       `${this.withdrawalApprovalUrl}/${params.id}/reject`,
       request
     );
+  }
+
+  async transferNft(
+    nft: number | Nft,
+    tokenOnchainId: string,
+    to: string,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const n = typeof nft === "number" ? await this.nfts.getNft(nft) : nft;
+    return this.sendNftTransaction(
+      await this.buildTransferNftPayload(
+        n,
+        tokenOnchainId,
+        this,
+        to,
+        passphrase
+      ),
+      n,
+      tokenOnchainId,
+      otpCode,
+      gasPrice,
+      gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT,
+      metadata
+    );
+  }
+
+  async sendNftTransaction(
+    signedMultiSigPayload: SignedMultiSigPayload,
+    nft: Nft,
+    tokenOnchainId: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const request: CreateNftMultiSigTransactionRequest = {
+      nftId: nft.getId(),
+      tokenOnchainId,
+      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
+        signedMultiSigPayload
+      ),
+      gasPrice: BNConverter.bnToHexStringOrElseNull(gasPrice),
+      gasLimit: BNConverter.bnToHexStringOrElseNull(gasLimit),
+      otpCode,
+      metadata,
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `/wallets/${this.getId()}/nft/transactions`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
   }
 }
