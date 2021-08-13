@@ -11,6 +11,7 @@ import {
   ApiModelProperty,
   ApiModelPropertyOptional,
 } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import { LtcMasterWallet } from "@haechi-labs/henesis-wallet-core/lib/ltc/wallet";
 
 export const EXAMPLE_BITCOIN_WALLET_DTO: WalletDTO = {
   id: "cce4f485764767f256155390873668b3",
@@ -88,6 +89,10 @@ export class WalletDTO {
   whitelistActivated: boolean;
 
   static fromBTCMasterWallet(wallet: BtcMasterWallet): WalletDTO {
+    return wallet.getData();
+  }
+
+  static fromLTCMasterWallet(wallet: LtcMasterWallet): WalletDTO {
     return wallet.getData();
   }
 
