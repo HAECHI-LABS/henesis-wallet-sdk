@@ -49,7 +49,7 @@ export class Nft {
         .transferNFT({
           token: this.getAddress(),
           to: to,
-          tokenId: BNConverter.hexStringToBN(tokenOnchainId),
+          tokenId: BNConverter.decimalStringToBn(tokenOnchainId),
         })
         .encodeABI(),
       toAddress: wallet.getAddress(),
