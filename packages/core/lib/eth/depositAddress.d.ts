@@ -25,4 +25,6 @@ export declare class EthDepositAddress extends EthLikeWallet {
     getEncryptionKey(): any;
     getAccountKey(): Key;
     updateAccountKey(key: Key): void;
+    transferNft(): Promise<EthTransaction>;
+    sendNftTransaction(): Promise<EthTransaction>;
 }

@@ -54,4 +54,6 @@ export declare abstract class EthLikeWallet extends Wallet<EthTransaction> {
     protected sendBatchTransaction(blockchain: BlockchainType, signedMultiSigPayloads: SignedMultiSigPayload[], walletId: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN): Promise<EthTransaction[]>;
     protected getGasLimitByTicker(coin: Coin): BN;
     protected buildTransferNftPayload(nft: Nft, tokenOnchainId: string, from: EthLikeWallet, to: string, passphrase: string): Promise<SignedMultiSigPayload>;
+    abstract transferNft(nft: number | Nft, tokenOnchainId: string, to: string, passphrase: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
+    abstract sendNftTransaction(signedMultiSigPayload: SignedMultiSigPayload, nft: Nft, tokenOnchainId: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
 }

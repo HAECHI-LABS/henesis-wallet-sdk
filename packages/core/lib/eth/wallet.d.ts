@@ -59,6 +59,8 @@ export declare class EthWallet extends EthLikeWallet {
         id: string;
         otpCode: string;
     }): Promise<void>;
+    transferNft(nft: number | Nft, tokenOnchainId: string, to: string, passphrase: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
+    sendNftTransaction(signedMultiSigPayload: SignedMultiSigPayload, nft: Nft, tokenOnchainId: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
 }
 export declare class EthMasterWallet extends EthLikeWallet {
     private walletContract;

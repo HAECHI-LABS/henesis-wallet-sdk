@@ -73,6 +73,12 @@ class EthDepositAddress extends abstractWallet_1.EthLikeWallet {
     updateAccountKey(key) {
         throw new Error("unimplemented method");
     }
+    transferNft() {
+        throw new Error("unimplemented method");
+    }
+    sendNftTransaction() {
+        throw new Error("unimplemented method");
+    }
 }
 exports.EthDepositAddress = EthDepositAddress;
 //# sourceMappingURL=depositAddress.js.map

@@ -183,6 +183,23 @@ class EthWallet extends abstractWallet_1.EthLikeWallet {
         };
         await this.client.post(`${this.withdrawalApprovalUrl}/${params.id}/reject`, request);
     }
+    async transferNft(nft, tokenOnchainId, to, passphrase, otpCode, gasPrice, gasLimit, metadata) {
+        const n = typeof nft === "number" ? await this.nfts.getNft(nft) : nft;
+        return this.sendNftTransaction(await this.buildTransferNftPayload(n, tokenOnchainId, this, to, passphrase), n, tokenOnchainId, otpCode, gasPrice, gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT, metadata);
+    }
+    async sendNftTransaction(signedMultiSigPayload, nft, tokenOnchainId, otpCode, gasPrice, gasLimit, metadata) {
+        const request = {
+            nftId: nft.getId(),
+            tokenOnchainId,
+            signedMultiSigPayload: abstractWallet_1.convertSignedMultiSigPayloadToDTO(signedMultiSigPayload),
+            gasPrice: common_1.BNConverter.bnToHexStringOrElseNull(gasPrice),
+            gasLimit: common_1.BNConverter.bnToHexStringOrElseNull(gasLimit),
+            otpCode,
+            metadata,
+        };
+        const response = await this.client.post(`/wallets/${this.getId()}/nft/transactions`, request);
+        return Object.assign(Object.assign({}, response), { blockchain: blockchain_1.transformBlockchainType(response.blockchain) });
+    }
 }
 exports.EthWallet = EthWallet;
 class EthMasterWallet extends abstractWallet_1.EthLikeWallet {

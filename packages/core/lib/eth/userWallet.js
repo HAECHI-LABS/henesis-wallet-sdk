@@ -70,6 +70,9 @@ class EthUserWallet extends abstractWallet_1.EthLikeWallet {
     async transferNft(nft, tokenOnchainId, to, passphrase, otpCode, gasPrice, gasLimit, metadata) {
         throw new Error("implement me!");
     }
+    async sendNftTransaction(signedMultiSigPayload, nft, tokenOnchainId, otpCode, gasPrice, gasLimit, metadata) {
+        throw new Error("implement me!");
+    }
 }
 exports.EthUserWallet = EthUserWallet;
 //# sourceMappingURL=userWallet.js.map
