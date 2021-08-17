@@ -13,16 +13,16 @@ import {
   checkNullAndUndefinedParameter,
   HexConverter,
 } from "../utils/common";
-import { WalletData, Wallet } from "../wallet";
+import { Wallet, WalletData } from "../wallet";
 import { Coins } from "./coins";
 import {
-  TransactionDTO,
   BatchTransactionDTO,
-  SignedMultiSigPayloadDTO,
   CreateMultiSigTransactionRequest,
+  NftBalanceDTO,
   ReplaceTransactionRequest,
   ResendTransactionRequest,
-  NftBalanceDTO,
+  SignedMultiSigPayloadDTO,
+  TransactionDTO,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
@@ -268,20 +268,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
   }
 
-  protected signPayload(
-    multiSigPayload: MultiSigPayload,
-    passphrase: string
-  ): SignedMultiSigPayload {
-    return {
-      signature: this.keychains.sign(
-        this.data.accountKey,
-        passphrase,
-        formatMultiSigPayload(multiSigPayload)
-      ),
-      multiSigPayload,
-    };
-  }
-
   async sendTransaction(
     signedMultiSigPayload: SignedMultiSigPayload,
     walletId: string,
@@ -307,6 +293,35 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     return {
       ...response,
       blockchain: transformBlockchainType(response.blockchain),
+    };
+  }
+
+  getNonce(): BN {
+    return BNConverter.hexStringToBN("0x" + randomBytes(32).toString("hex"));
+  }
+
+  async getNftBalance(
+    tokenOnchainId?: string,
+    tokenName?: string
+  ): Promise<NftBalance[]> {
+    const queryString = makeQueryString({ tokenOnchainId, tokenName });
+    const balances = await this.client.get<NoUndefinedField<NftBalanceDTO>[]>(
+      `${this.baseUrl}/nft/balance${queryString ? `?${queryString}` : ""}`
+    );
+    return balances.map((dto) => dto as NftBalance);
+  }
+
+  protected signPayload(
+    multiSigPayload: MultiSigPayload,
+    passphrase: string
+  ): SignedMultiSigPayload {
+    return {
+      signature: this.keychains.sign(
+        this.data.accountKey,
+        passphrase,
+        formatMultiSigPayload(multiSigPayload)
+      ),
+      multiSigPayload,
     };
   }
 
@@ -341,27 +356,12 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     });
   }
 
-  getNonce(): BN {
-    return BNConverter.hexStringToBN("0x" + randomBytes(32).toString("hex"));
-  }
-
   protected getGasLimitByTicker(coin: Coin): BN {
     const ticker = coin.getCoinData().symbol;
     if (ticker.toUpperCase() === "ETH" || ticker.toUpperCase() === "KLAY") {
       return this.DEFAULT_COIN_TRANSFER_GAS_LIMIT;
     }
     return this.DEFAULT_TOKEN_TRANSFER_GAS_LIMIT;
-  }
-
-  async getNftBalance(
-    tokenOnchainId: string,
-    tokenName?: string
-  ): Promise<NftBalance[]> {
-    const queryString = makeQueryString({ tokenOnchainId, tokenName });
-    const balances = await this.client.get<NoUndefinedField<NftBalanceDTO>[]>(
-      `${this.baseUrl}/nft/balance${queryString ? `?${queryString}` : ""}`
-    );
-    return balances.map((dto) => dto as NftBalance);
   }
 
   protected async buildTransferNftPayload(

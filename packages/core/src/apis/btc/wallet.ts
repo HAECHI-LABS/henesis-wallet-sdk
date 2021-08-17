@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { AxiosInstance } from "axios";
 import {
-  WalletControllerApiFactory,
   CreateDepositAddressRequest,
+  WalletControllerApiFactory,
 } from "../../__generate__/btc";
 import { Client } from "../../httpClient";
 
@@ -21,7 +21,7 @@ export const createDepositAddressApi = async ({
   walletId: string;
   request: CreateDepositAddressRequest;
 }) => {
-  const response = await walletControllerApi(client).createDepositAddress(
+  const response = await walletControllerApi(client).createDepositAddress1(
     walletId,
     request
   );
@@ -37,7 +37,7 @@ export const getDepositAddressApi = async ({
   walletId: string;
   depositAddressId: string;
 }) => {
-  const response = await walletControllerApi(client).getDepositAddress(
+  const response = await walletControllerApi(client).getDepositAddress1(
     walletId,
     depositAddressId
   );

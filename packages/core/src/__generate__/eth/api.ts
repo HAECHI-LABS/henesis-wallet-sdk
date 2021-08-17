@@ -1977,6 +1977,18 @@ export interface NftBalanceDTO {
      * @memberof NftBalanceDTO
      */
     masterWalletId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftBalanceDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftBalanceDTO
+     */
+    updatedAt: string;
 }
 /**
  * 
@@ -10925,12 +10937,12 @@ export const EthNftControllerApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @param {string} nftId 
+         * @param {number} nftId 
          * @param {SyncMetadataRequest} syncMetadataRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        syncMetadata1: async (nftId: string, syncMetadataRequest: SyncMetadataRequest, options: any = {}): Promise<RequestArgs> => {
+        syncMetadata1: async (nftId: number, syncMetadataRequest: SyncMetadataRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'nftId' is not null or undefined
             if (nftId === null || nftId === undefined) {
                 throw new RequiredError('nftId','Required parameter nftId was null or undefined when calling syncMetadata1.');
@@ -11003,12 +11015,12 @@ export const EthNftControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} nftId 
+         * @param {number} nftId 
          * @param {SyncMetadataRequest} syncMetadataRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async syncMetadata1(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftItemDTO>> {
+        async syncMetadata1(nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftItemDTO>> {
             const localVarAxiosArgs = await EthNftControllerApiAxiosParamCreator(configuration).syncMetadata1(nftId, syncMetadataRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -11043,12 +11055,12 @@ export const EthNftControllerApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @param {string} nftId 
+         * @param {number} nftId 
          * @param {SyncMetadataRequest} syncMetadataRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        syncMetadata1(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): AxiosPromise<NftItemDTO> {
+        syncMetadata1(nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any): AxiosPromise<NftItemDTO> {
             return EthNftControllerApiFp(configuration).syncMetadata1(nftId, syncMetadataRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -11084,13 +11096,13 @@ export class EthNftControllerApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} nftId 
+     * @param {number} nftId 
      * @param {SyncMetadataRequest} syncMetadataRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EthNftControllerApi
      */
-    public syncMetadata1(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any) {
+    public syncMetadata1(nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any) {
         return EthNftControllerApiFp(this.configuration).syncMetadata1(nftId, syncMetadataRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -16897,12 +16909,12 @@ export const KlayNftControllerApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @param {string} nftId 
+         * @param {number} nftId 
          * @param {SyncMetadataRequest} syncMetadataRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        syncMetadata: async (nftId: string, syncMetadataRequest: SyncMetadataRequest, options: any = {}): Promise<RequestArgs> => {
+        syncMetadata: async (nftId: number, syncMetadataRequest: SyncMetadataRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'nftId' is not null or undefined
             if (nftId === null || nftId === undefined) {
                 throw new RequiredError('nftId','Required parameter nftId was null or undefined when calling syncMetadata.');
@@ -16975,12 +16987,12 @@ export const KlayNftControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} nftId 
+         * @param {number} nftId 
          * @param {SyncMetadataRequest} syncMetadataRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async syncMetadata(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftItemDTO>> {
+        async syncMetadata(nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftItemDTO>> {
             const localVarAxiosArgs = await KlayNftControllerApiAxiosParamCreator(configuration).syncMetadata(nftId, syncMetadataRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -17015,12 +17027,12 @@ export const KlayNftControllerApiFactory = function (configuration?: Configurati
         },
         /**
          * 
-         * @param {string} nftId 
+         * @param {number} nftId 
          * @param {SyncMetadataRequest} syncMetadataRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        syncMetadata(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): AxiosPromise<NftItemDTO> {
+        syncMetadata(nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any): AxiosPromise<NftItemDTO> {
             return KlayNftControllerApiFp(configuration).syncMetadata(nftId, syncMetadataRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -17056,13 +17068,13 @@ export class KlayNftControllerApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} nftId 
+     * @param {number} nftId 
      * @param {SyncMetadataRequest} syncMetadataRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KlayNftControllerApi
      */
-    public syncMetadata(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any) {
+    public syncMetadata(nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any) {
         return KlayNftControllerApiFp(this.configuration).syncMetadata(nftId, syncMetadataRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
