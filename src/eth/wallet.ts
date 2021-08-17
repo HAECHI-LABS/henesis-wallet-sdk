@@ -418,6 +418,64 @@ export class EthWallet extends EthLikeWallet {
       request
     );
   }
+
+  async transferNft(
+    nft: number | Nft,
+    tokenOnchainId: string,
+    to: string,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const n = typeof nft === "number" ? await this.nfts.getNft(nft) : nft;
+    return this.sendNftTransaction(
+      await this.buildTransferNftPayload(
+        n,
+        tokenOnchainId,
+        this,
+        to,
+        passphrase
+      ),
+      n,
+      tokenOnchainId,
+      otpCode,
+      gasPrice,
+      gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT,
+      metadata
+    );
+  }
+
+  async sendNftTransaction(
+    signedMultiSigPayload: SignedMultiSigPayload,
+    nft: Nft,
+    tokenOnchainId: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const request: CreateNftMultiSigTransactionRequest = {
+      nftId: nft.getId(),
+      tokenOnchainId,
+      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
+        signedMultiSigPayload
+      ),
+      gasPrice: BNConverter.bnToHexStringOrElseNull(gasPrice),
+      gasLimit: BNConverter.bnToHexStringOrElseNull(gasLimit),
+      otpCode,
+      metadata,
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `/wallets/${this.getId()}/nft/transactions`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
+  }
 }
 
 export class EthMasterWallet extends EthLikeWallet {
@@ -746,6 +804,7 @@ export class EthMasterWallet extends EthLikeWallet {
     );
   }
 
+  // TODO: Implement me!
   async sendNftTransaction(
     signedMultiSigPayload: SignedMultiSigPayload,
     nft: Nft,
@@ -755,24 +814,6 @@ export class EthMasterWallet extends EthLikeWallet {
     gasLimit?: BN,
     metadata?: string
   ): Promise<EthTransaction> {
-    const request: CreateNftMultiSigTransactionRequest = {
-      nftId: nft.getId(),
-      tokenOnchainId,
-      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
-        signedMultiSigPayload
-      ),
-      gasPrice: BNConverter.bnToHexStringOrElseNull(gasPrice),
-      gasLimit: BNConverter.bnToHexStringOrElseNull(gasLimit),
-      otpCode,
-      metadata,
-    };
-    const response = await this.client.post<TransactionDTO>(
-      `/wallets/${this.getId()}/nft/transactions`,
-      request
-    );
-    return {
-      ...response,
-      blockchain: transformBlockchainType(response.blockchain),
-    };
+    throw new Error("implement me!");
   }
 }
