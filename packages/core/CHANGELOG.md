@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.2...v3.2.13-alpha.3) (2021-08-17)
+
+
+### Bug Fixes
+
+* add userwallet, deposit transferNft method ([7c5553a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7c5553a017977a74f6c28f8f2b454aa21d22a571))
+* fixed style code ([b81351f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b81351fa05699689806d900acbd58e6fe63c070a))
+* implement masterwallet sendNftTransaction ([8f36319](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8f36319478f36cf5384db0dd936d1a65cf9a91aa))
+* move to ethwallet transfer nft ([a3134fc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a3134fcf4360038edbffdd124d371373329dcc2c))
+
+
+
+
+
 ## [3.2.13-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.1...v3.2.13-alpha.2) (2021-08-17)
 
 
