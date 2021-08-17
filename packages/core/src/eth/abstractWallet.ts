@@ -381,4 +381,25 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
       passphrase
     );
   }
+
+  abstract transferNft(
+    nft: number | Nft,
+    tokenOnchainId: string,
+    to: string,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction>;
+
+  abstract sendNftTransaction(
+    signedMultiSigPayload: SignedMultiSigPayload,
+    nft: Nft,
+    tokenOnchainId: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction>;
 }
