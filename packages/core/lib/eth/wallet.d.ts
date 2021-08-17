@@ -2,6 +2,7 @@ import BN from "bn.js";
 import { ActivatingMasterWallet, WalletStatus } from "../wallet";
 import { BlockchainType } from "../blockchain";
 import { Balance, Key, Keychains, Pagination, PaginationOptions } from "../types";
+import { SignedMultiSigPayload } from "./transactions";
 import { Client } from "../httpClient";
 import { MasterWalletDTO, FlushQuerySearchCondition, FlushTransactionValueTransferEventDTO, FlushTransactionDTO } from "../__generate__/eth";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
@@ -9,6 +10,7 @@ import { Coin } from "./coin";
 import { EthDepositAddress } from "./depositAddress";
 import { EthUserWallet } from "./userWallet";
 import { EthLikeWallet, EthMasterWalletData, EthTransaction } from "./abstractWallet";
+import { Nft } from "./nft";
 export interface UserWalletPaginationOptions extends PaginationOptions {
     name?: string;
     id?: string;
@@ -80,4 +82,6 @@ export declare class EthMasterWallet extends EthLikeWallet {
         id: string;
         otpCode: string;
     }): Promise<void>;
+    transferNft(nft: number | Nft, tokenOnchainId: string, to: string, passphrase: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
+    sendNftTransaction(signedMultiSigPayload: SignedMultiSigPayload, nft: Nft, tokenOnchainId: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
 }

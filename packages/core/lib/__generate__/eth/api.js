@@ -38,6 +38,7 @@ var BindHenesisKeyToWalletDTOBlockchainEnum;
     BindHenesisKeyToWalletDTOBlockchainEnum["BITCOIN"] = "BITCOIN";
     BindHenesisKeyToWalletDTOBlockchainEnum["FILECOIN"] = "FILECOIN";
     BindHenesisKeyToWalletDTOBlockchainEnum["BINANCESMARTCHAIN"] = "BINANCE_SMART_CHAIN";
+    BindHenesisKeyToWalletDTOBlockchainEnum["LITECOIN"] = "LITECOIN";
 })(BindHenesisKeyToWalletDTOBlockchainEnum = exports.BindHenesisKeyToWalletDTOBlockchainEnum || (exports.BindHenesisKeyToWalletDTOBlockchainEnum = {}));
 var Blockchain;
 (function (Blockchain) {
@@ -46,6 +47,7 @@ var Blockchain;
     Blockchain["BITCOIN"] = "BITCOIN";
     Blockchain["FILECOIN"] = "FILECOIN";
     Blockchain["BINANCESMARTCHAIN"] = "BINANCE_SMART_CHAIN";
+    Blockchain["LITECOIN"] = "LITECOIN";
 })(Blockchain = exports.Blockchain || (exports.Blockchain = {}));
 var CoinDTOAttributesEnum;
 (function (CoinDTOAttributesEnum) {
@@ -62,6 +64,7 @@ var CoinType;
     CoinType["FILECOIN"] = "FILECOIN";
     CoinType["BINANCESMARTCHAIN"] = "BINANCE_SMART_CHAIN";
     CoinType["TOKEN"] = "TOKEN";
+    CoinType["NFT"] = "NFT";
 })(CoinType = exports.CoinType || (exports.CoinType = {}));
 var CreateCoinRequestAttributesEnum;
 (function (CreateCoinRequestAttributesEnum) {
@@ -140,6 +143,7 @@ var UserWalletDTOBlockchainEnum;
     UserWalletDTOBlockchainEnum["BITCOIN"] = "BITCOIN";
     UserWalletDTOBlockchainEnum["FILECOIN"] = "FILECOIN";
     UserWalletDTOBlockchainEnum["BINANCESMARTCHAIN"] = "BINANCE_SMART_CHAIN";
+    UserWalletDTOBlockchainEnum["LITECOIN"] = "LITECOIN";
 })(UserWalletDTOBlockchainEnum = exports.UserWalletDTOBlockchainEnum || (exports.UserWalletDTOBlockchainEnum = {}));
 var WalletStatus;
 (function (WalletStatus) {
@@ -4791,9 +4795,15 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getNftBalance1: async (walletId, tokenOnchainId, tokenName, options = {}) => {
+        getNftBalance1: async (walletId, pageable, searchCondition, options = {}) => {
             if (walletId === null || walletId === undefined) {
                 throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getNftBalance1.');
+            }
+            if (pageable === null || pageable === undefined) {
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getNftBalance1.');
+            }
+            if (searchCondition === null || searchCondition === undefined) {
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getNftBalance1.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/nft/balance`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -4805,11 +4815,11 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            if (tokenOnchainId !== undefined) {
-                localVarQueryParameter['tokenOnchainId'] = tokenOnchainId;
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
             }
-            if (tokenName !== undefined) {
-                localVarQueryParameter['tokenName'] = tokenName;
+            if (searchCondition !== undefined) {
+                localVarQueryParameter['searchCondition'] = searchCondition;
             }
             localVarUrlObj.query = Object.assign(Object.assign(Object.assign({}, localVarUrlObj.query), localVarQueryParameter), options.query);
             delete localVarUrlObj.search;
@@ -5223,11 +5233,15 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        sendNftTransaction1: async (createMultiSigTransactionRequest, options = {}) => {
-            if (createMultiSigTransactionRequest === null || createMultiSigTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createMultiSigTransactionRequest', 'Required parameter createMultiSigTransactionRequest was null or undefined when calling sendNftTransaction1.');
+        sendNftTransaction1: async (walletId, createNftMultiSigTransactionRequest, options = {}) => {
+            if (walletId === null || walletId === undefined) {
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling sendNftTransaction1.');
             }
-            const localVarPath = `/api/v2/eth/wallets/nft/transactions`;
+            if (createNftMultiSigTransactionRequest === null || createNftMultiSigTransactionRequest === undefined) {
+                throw new base_1.RequiredError('createNftMultiSigTransactionRequest', 'Required parameter createNftMultiSigTransactionRequest was null or undefined when calling sendNftTransaction1.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/nft/transactions`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -5241,8 +5255,8 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof createMultiSigTransactionRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(createMultiSigTransactionRequest !== undefined ? createMultiSigTransactionRequest : {}) : (createMultiSigTransactionRequest || "");
+            const needsSerialization = (typeof createNftMultiSigTransactionRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data = needsSerialization ? JSON.stringify(createNftMultiSigTransactionRequest !== undefined ? createNftMultiSigTransactionRequest : {}) : (createNftMultiSigTransactionRequest || "");
             return {
                 url: globalImportUrl.format(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -5439,8 +5453,8 @@ exports.EthWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getNftBalance1(walletId, tokenOnchainId, tokenName, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getNftBalance1(walletId, tokenOnchainId, tokenName, options);
+        async getNftBalance1(walletId, pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).getNftBalance1(walletId, pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -5544,8 +5558,8 @@ exports.EthWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async sendNftTransaction1(createMultiSigTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).sendNftTransaction1(createMultiSigTransactionRequest, options);
+        async sendNftTransaction1(walletId, createNftMultiSigTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).sendNftTransaction1(walletId, createNftMultiSigTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -5626,8 +5640,8 @@ exports.EthWalletControllerApiFactory = function (configuration, basePath, axios
         getMasterWallets5(sort, options) {
             return exports.EthWalletControllerApiFp(configuration).getMasterWallets5(sort, options).then((request) => request(axios, basePath));
         },
-        getNftBalance1(walletId, tokenOnchainId, tokenName, options) {
-            return exports.EthWalletControllerApiFp(configuration).getNftBalance1(walletId, tokenOnchainId, tokenName, options).then((request) => request(axios, basePath));
+        getNftBalance1(walletId, pageable, searchCondition, options) {
+            return exports.EthWalletControllerApiFp(configuration).getNftBalance1(walletId, pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
         getUserWallet3(walletId, userWalletId, options) {
             return exports.EthWalletControllerApiFp(configuration).getUserWallet3(walletId, userWalletId, options).then((request) => request(axios, basePath));
@@ -5671,8 +5685,8 @@ exports.EthWalletControllerApiFactory = function (configuration, basePath, axios
         sendBatchTransaction3(createBatchTransactionRequest, options) {
             return exports.EthWalletControllerApiFp(configuration).sendBatchTransaction3(createBatchTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        sendNftTransaction1(createMultiSigTransactionRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).sendNftTransaction1(createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
+        sendNftTransaction1(walletId, createNftMultiSigTransactionRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).sendNftTransaction1(walletId, createNftMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
         },
         sendTransaction3(createMultiSigTransactionRequest, options) {
             return exports.EthWalletControllerApiFp(configuration).sendTransaction3(createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
@@ -5740,8 +5754,8 @@ class EthWalletControllerApi extends base_1.BaseAPI {
     getMasterWallets5(sort, options) {
         return exports.EthWalletControllerApiFp(this.configuration).getMasterWallets5(sort, options).then((request) => request(this.axios, this.basePath));
     }
-    getNftBalance1(walletId, tokenOnchainId, tokenName, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).getNftBalance1(walletId, tokenOnchainId, tokenName, options).then((request) => request(this.axios, this.basePath));
+    getNftBalance1(walletId, pageable, searchCondition, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).getNftBalance1(walletId, pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
     getUserWallet3(walletId, userWalletId, options) {
         return exports.EthWalletControllerApiFp(this.configuration).getUserWallet3(walletId, userWalletId, options).then((request) => request(this.axios, this.basePath));
@@ -5785,8 +5799,8 @@ class EthWalletControllerApi extends base_1.BaseAPI {
     sendBatchTransaction3(createBatchTransactionRequest, options) {
         return exports.EthWalletControllerApiFp(this.configuration).sendBatchTransaction3(createBatchTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    sendNftTransaction1(createMultiSigTransactionRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).sendNftTransaction1(createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    sendNftTransaction1(walletId, createNftMultiSigTransactionRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).sendNftTransaction1(walletId, createNftMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
     sendTransaction3(createMultiSigTransactionRequest, options) {
         return exports.EthWalletControllerApiFp(this.configuration).sendTransaction3(createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
@@ -7783,9 +7797,15 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getNftBalance: async (walletId, tokenOnchainId, tokenName, options = {}) => {
+        getNftBalance: async (walletId, pageable, searchCondition, options = {}) => {
             if (walletId === null || walletId === undefined) {
                 throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getNftBalance.');
+            }
+            if (pageable === null || pageable === undefined) {
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getNftBalance.');
+            }
+            if (searchCondition === null || searchCondition === undefined) {
+                throw new base_1.RequiredError('searchCondition', 'Required parameter searchCondition was null or undefined when calling getNftBalance.');
             }
             const localVarPath = `/api/v2/klay/wallets/{walletId}/nft/balance`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7797,11 +7817,11 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            if (tokenOnchainId !== undefined) {
-                localVarQueryParameter['tokenOnchainId'] = tokenOnchainId;
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
             }
-            if (tokenName !== undefined) {
-                localVarQueryParameter['tokenName'] = tokenName;
+            if (searchCondition !== undefined) {
+                localVarQueryParameter['searchCondition'] = searchCondition;
             }
             localVarUrlObj.query = Object.assign(Object.assign(Object.assign({}, localVarUrlObj.query), localVarQueryParameter), options.query);
             delete localVarUrlObj.search;
@@ -8190,11 +8210,15 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        sendNftTransaction: async (createMultiSigTransactionRequest, options = {}) => {
-            if (createMultiSigTransactionRequest === null || createMultiSigTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createMultiSigTransactionRequest', 'Required parameter createMultiSigTransactionRequest was null or undefined when calling sendNftTransaction.');
+        sendNftTransaction: async (walletId, createNftMultiSigTransactionRequest, options = {}) => {
+            if (walletId === null || walletId === undefined) {
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling sendNftTransaction.');
             }
-            const localVarPath = `/api/v2/klay/wallets/nft/transactions`;
+            if (createNftMultiSigTransactionRequest === null || createNftMultiSigTransactionRequest === undefined) {
+                throw new base_1.RequiredError('createNftMultiSigTransactionRequest', 'Required parameter createNftMultiSigTransactionRequest was null or undefined when calling sendNftTransaction.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/nft/transactions`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -8208,8 +8232,8 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof createMultiSigTransactionRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(createMultiSigTransactionRequest !== undefined ? createMultiSigTransactionRequest : {}) : (createMultiSigTransactionRequest || "");
+            const needsSerialization = (typeof createNftMultiSigTransactionRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data = needsSerialization ? JSON.stringify(createNftMultiSigTransactionRequest !== undefined ? createNftMultiSigTransactionRequest : {}) : (createNftMultiSigTransactionRequest || "");
             return {
                 url: globalImportUrl.format(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -8385,8 +8409,8 @@ exports.KlayWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getNftBalance(walletId, tokenOnchainId, tokenName, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getNftBalance(walletId, tokenOnchainId, tokenName, options);
+        async getNftBalance(walletId, pageable, searchCondition, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getNftBalance(walletId, pageable, searchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -8483,8 +8507,8 @@ exports.KlayWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async sendNftTransaction(createMultiSigTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).sendNftTransaction(createMultiSigTransactionRequest, options);
+        async sendNftTransaction(walletId, createNftMultiSigTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).sendNftTransaction(walletId, createNftMultiSigTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -8556,8 +8580,8 @@ exports.KlayWalletControllerApiFactory = function (configuration, basePath, axio
         getMasterWallets1(sort, options) {
             return exports.KlayWalletControllerApiFp(configuration).getMasterWallets1(sort, options).then((request) => request(axios, basePath));
         },
-        getNftBalance(walletId, tokenOnchainId, tokenName, options) {
-            return exports.KlayWalletControllerApiFp(configuration).getNftBalance(walletId, tokenOnchainId, tokenName, options).then((request) => request(axios, basePath));
+        getNftBalance(walletId, pageable, searchCondition, options) {
+            return exports.KlayWalletControllerApiFp(configuration).getNftBalance(walletId, pageable, searchCondition, options).then((request) => request(axios, basePath));
         },
         getUserWallet1(walletId, userWalletId, options) {
             return exports.KlayWalletControllerApiFp(configuration).getUserWallet1(walletId, userWalletId, options).then((request) => request(axios, basePath));
@@ -8598,8 +8622,8 @@ exports.KlayWalletControllerApiFactory = function (configuration, basePath, axio
         sendBatchTransaction1(createBatchTransactionRequest, options) {
             return exports.KlayWalletControllerApiFp(configuration).sendBatchTransaction1(createBatchTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        sendNftTransaction(createMultiSigTransactionRequest, options) {
-            return exports.KlayWalletControllerApiFp(configuration).sendNftTransaction(createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
+        sendNftTransaction(walletId, createNftMultiSigTransactionRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).sendNftTransaction(walletId, createNftMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
         },
         sendTransaction1(createMultiSigTransactionRequest, options) {
             return exports.KlayWalletControllerApiFp(configuration).sendTransaction1(createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
@@ -8658,8 +8682,8 @@ class KlayWalletControllerApi extends base_1.BaseAPI {
     getMasterWallets1(sort, options) {
         return exports.KlayWalletControllerApiFp(this.configuration).getMasterWallets1(sort, options).then((request) => request(this.axios, this.basePath));
     }
-    getNftBalance(walletId, tokenOnchainId, tokenName, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).getNftBalance(walletId, tokenOnchainId, tokenName, options).then((request) => request(this.axios, this.basePath));
+    getNftBalance(walletId, pageable, searchCondition, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).getNftBalance(walletId, pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
     getUserWallet1(walletId, userWalletId, options) {
         return exports.KlayWalletControllerApiFp(this.configuration).getUserWallet1(walletId, userWalletId, options).then((request) => request(this.axios, this.basePath));
@@ -8700,8 +8724,8 @@ class KlayWalletControllerApi extends base_1.BaseAPI {
     sendBatchTransaction1(createBatchTransactionRequest, options) {
         return exports.KlayWalletControllerApiFp(this.configuration).sendBatchTransaction1(createBatchTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    sendNftTransaction(createMultiSigTransactionRequest, options) {
-        return exports.KlayWalletControllerApiFp(this.configuration).sendNftTransaction(createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    sendNftTransaction(walletId, createNftMultiSigTransactionRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).sendNftTransaction(walletId, createNftMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
     sendTransaction1(createMultiSigTransactionRequest, options) {
         return exports.KlayWalletControllerApiFp(this.configuration).sendTransaction1(createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));

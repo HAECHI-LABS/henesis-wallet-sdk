@@ -11,6 +11,8 @@ export declare class BNConverter {
     static hexStringToBN(hexString: string): BN;
     static bnToHexStringOrElseNull(bn: BN): string | null;
     static hexStringToBnOrElseNull(hexString: string): BN | null;
+    static decimalStringToBn(decimalString: string): BN;
+    static bnToDecimalString(bn: BN): string;
 }
 export declare function checkNullAndUndefinedParameter(requiredParams: object): void;
 export declare class HexConverter {

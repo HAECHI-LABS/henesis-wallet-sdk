@@ -117,12 +117,6 @@ class EthLikeWallet extends wallet_1.Wallet {
     createBatchRequest(otpCode) {
         return new batch_1.default((signedMultiSigPayloads) => this.sendBatchTransaction(this.getChain(), signedMultiSigPayloads, this.getId(), otpCode));
     }
-    signPayload(multiSigPayload, passphrase) {
-        return {
-            signature: this.keychains.sign(this.data.accountKey, passphrase, transactions_1.formatMultiSigPayload(multiSigPayload)),
-            multiSigPayload,
-        };
-    }
     async sendTransaction(signedMultiSigPayload, walletId, otpCode, gasPrice, gasLimit, metadata) {
         const request = {
             walletId,
@@ -134,6 +128,20 @@ class EthLikeWallet extends wallet_1.Wallet {
         };
         const response = await this.client.post(`/wallets/transactions`, request);
         return Object.assign(Object.assign({}, response), { blockchain: blockchain_1.transformBlockchainType(response.blockchain) });
+    }
+    getNonce() {
+        return common_1.BNConverter.hexStringToBN("0x" + crypto_1.randomBytes(32).toString("hex"));
+    }
+    async getNftBalance(tokenOnchainId, tokenName) {
+        const queryString = url_1.makeQueryString({ tokenOnchainId, tokenName });
+        const balances = await this.client.get(`${this.baseUrl}/nft/balance${queryString ? `?${queryString}` : ""}`);
+        return balances.map((dto) => dto);
+    }
+    signPayload(multiSigPayload, passphrase) {
+        return {
+            signature: this.keychains.sign(this.data.accountKey, passphrase, transactions_1.formatMultiSigPayload(multiSigPayload)),
+            multiSigPayload,
+        };
     }
     async sendBatchTransaction(blockchain, signedMultiSigPayloads, walletId, otpCode, gasPrice, gasLimit) {
         const signedMultiSigPayloadDTOs = signedMultiSigPayloads.map((signedMultiSigPayload) => convertSignedMultiSigPayloadToDTO(signedMultiSigPayload));
@@ -150,9 +158,6 @@ class EthLikeWallet extends wallet_1.Wallet {
             return Object.assign(Object.assign({}, transaction), { blockchain: blockchain_1.transformBlockchainType(transaction.blockchain) });
         });
     }
-    getNonce() {
-        return common_1.BNConverter.hexStringToBN("0x" + crypto_1.randomBytes(32).toString("hex"));
-    }
     getGasLimitByTicker(coin) {
         const ticker = coin.getCoinData().symbol;
         if (ticker.toUpperCase() === "ETH" || ticker.toUpperCase() === "KLAY") {
@@ -160,20 +165,13 @@ class EthLikeWallet extends wallet_1.Wallet {
         }
         return this.DEFAULT_TOKEN_TRANSFER_GAS_LIMIT;
     }
-    async getNftBalance(tokenOnchainId, tokenName) {
-        const queryString = url_1.makeQueryString({ tokenOnchainId, tokenName });
-        const balances = await this.client.get(`${this.baseUrl}/nft/balance${queryString ? `?${queryString}` : ""}`);
-        return balances.map((dto) => dto);
-    }
-    async transferNft(nft, tokenOnchainId, to, passphrase, otpCode, gasPrice, gasLimit, metadata) {
-        const n = typeof nft === "number" ? await this.nfts.getNft(nft) : nft;
-        return this.sendNftTransaction(await this.buildTransferNftPayload(n, tokenOnchainId, to, passphrase), this.getId(), otpCode, gasPrice, gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT, metadata);
-    }
-    async sendNftTransaction(signedMultiSigPayload, walletId, otpCode, gasPrice, gasLimit, metadata) {
-        throw new Error("Implement me!");
-    }
-    async buildTransferNftPayload(n, tokenOnchainId, to, passphrase) {
-        throw new Error("Implement me!");
+    async buildTransferNftPayload(nft, tokenOnchainId, from, to, passphrase) {
+        common_1.checkNullAndUndefinedParameter({
+            nft,
+            to,
+            passphrase,
+        });
+        return this.signPayload(await nft.buildTransferMultiSigPayload(from, to, tokenOnchainId), passphrase);
     }
 }
 exports.EthLikeWallet = EthLikeWallet;

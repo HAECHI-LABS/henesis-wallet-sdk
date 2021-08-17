@@ -4,12 +4,12 @@ import { Key, Keychains } from "../types";
 import { MultiSigPayload, SignedMultiSigPayload } from "./transactions";
 import { Client } from "../httpClient";
 import BatchRequest from "./batch";
-import { WalletData, Wallet } from "../wallet";
+import { Wallet, WalletData } from "../wallet";
 import { Coins } from "./coins";
-import { TransactionDTO, SignedMultiSigPayloadDTO, NftBalanceDTO } from "../__generate__/eth";
+import { NftBalanceDTO, SignedMultiSigPayloadDTO, TransactionDTO } from "../__generate__/eth";
 import { Coin } from "./coin";
-import { Nft } from "./nft";
 import { Nfts } from "./nfts";
+import { Nft } from "./nft";
 export declare type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
     blockchain: BlockchainType;
 };
@@ -47,13 +47,11 @@ export declare abstract class EthLikeWallet extends Wallet<EthTransaction> {
     buildTransferPayload(coin: string | Coin, to: string, amount: BN, passphrase: string): Promise<SignedMultiSigPayload>;
     createRawTransaction(coin: string | Coin, to: string, amount: BN): Promise<MultiSigPayload>;
     createBatchRequest(otpCode?: string): BatchRequest;
-    protected signPayload(multiSigPayload: MultiSigPayload, passphrase: string): SignedMultiSigPayload;
     sendTransaction(signedMultiSigPayload: SignedMultiSigPayload, walletId: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
-    protected sendBatchTransaction(blockchain: BlockchainType, signedMultiSigPayloads: SignedMultiSigPayload[], walletId: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN): Promise<EthTransaction[]>;
     getNonce(): BN;
+    getNftBalance(tokenOnchainId?: string, tokenName?: string): Promise<NftBalance[]>;
+    protected signPayload(multiSigPayload: MultiSigPayload, passphrase: string): SignedMultiSigPayload;
+    protected sendBatchTransaction(blockchain: BlockchainType, signedMultiSigPayloads: SignedMultiSigPayload[], walletId: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN): Promise<EthTransaction[]>;
     protected getGasLimitByTicker(coin: Coin): BN;
-    getNftBalance(tokenOnchainId: string, tokenName?: string): Promise<NftBalance[]>;
-    transferNft(nft: number | Nft, tokenOnchainId: string, to: string, passphrase: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
-    sendNftTransaction(signedMultiSigPayload: SignedMultiSigPayload, walletId: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
-    private buildTransferNftPayload;
+    protected buildTransferNftPayload(nft: Nft, tokenOnchainId: string, from: EthLikeWallet, to: string, passphrase: string): Promise<SignedMultiSigPayload>;
 }

@@ -11,11 +11,11 @@ const walletControllerApi = (client) => {
     return btc_1.WalletControllerApiFactory(undefined, "", apiClient);
 };
 exports.createDepositAddressApi = async ({ client, walletId, request, }) => {
-    const response = await walletControllerApi(client).createDepositAddress(walletId, request);
+    const response = await walletControllerApi(client).createDepositAddress1(walletId, request);
     return response.data;
 };
 exports.getDepositAddressApi = async ({ client, walletId, depositAddressId, }) => {
-    const response = await walletControllerApi(client).getDepositAddress(walletId, depositAddressId);
+    const response = await walletControllerApi(client).getDepositAddress1(walletId, depositAddressId);
     return response.data;
 };
 //# sourceMappingURL=wallet.js.map

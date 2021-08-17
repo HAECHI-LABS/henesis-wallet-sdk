@@ -51,7 +51,8 @@ export declare enum BindHenesisKeyToWalletDTOBlockchainEnum {
     KLAYTN = "KLAYTN",
     BITCOIN = "BITCOIN",
     FILECOIN = "FILECOIN",
-    BINANCESMARTCHAIN = "BINANCE_SMART_CHAIN"
+    BINANCESMARTCHAIN = "BINANCE_SMART_CHAIN",
+    LITECOIN = "LITECOIN"
 }
 export interface BindHenesisKeyToWalletRequest {
     walletId?: string;
@@ -61,7 +62,8 @@ export declare enum Blockchain {
     KLAYTN = "KLAYTN",
     BITCOIN = "BITCOIN",
     FILECOIN = "FILECOIN",
-    BINANCESMARTCHAIN = "BINANCE_SMART_CHAIN"
+    BINANCESMARTCHAIN = "BINANCE_SMART_CHAIN",
+    LITECOIN = "LITECOIN"
 }
 export interface CallEventDTO {
     id: number;
@@ -119,7 +121,8 @@ export declare enum CoinType {
     BITCOIN = "BITCOIN",
     FILECOIN = "FILECOIN",
     BINANCESMARTCHAIN = "BINANCE_SMART_CHAIN",
-    TOKEN = "TOKEN"
+    TOKEN = "TOKEN",
+    NFT = "NFT"
 }
 export interface CreateAllowedAddressRequest {
     address: string;
@@ -186,6 +189,16 @@ export interface CreateMultiSigTransactionRequestV1 {
     blockchain?: string;
     walletId: string;
     signedMultiSigPayload: SignedMultiSigPayloadDTO;
+    transactionId?: string;
+    gasPrice?: string;
+    gasLimit?: string;
+    otpCode?: string;
+}
+export interface CreateNftMultiSigTransactionRequest {
+    metadata?: string;
+    signedMultiSigPayload: SignedMultiSigPayloadDTO;
+    nftId: number;
+    tokenOnchainId: string;
     transactionId?: string;
     gasPrice?: string;
     gasLimit?: string;
@@ -396,6 +409,12 @@ export interface NftBalanceDTO {
     token: NftTokenDTO;
     walletId: string;
     masterWalletId: string;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface NftBalanceSearchCondition {
+    tokenOnchainId?: string;
+    tokenName?: string;
 }
 export interface NftDTO {
     id: number;
@@ -410,6 +429,9 @@ export interface NftItemDTO {
 export interface NftTokenDTO {
     name: string;
     uri: string;
+    metadata?: {
+        [key: string]: object;
+    };
     onchainId: string;
     externalUrl: string;
     imageUrl: string;
@@ -642,7 +664,8 @@ export declare enum UserWalletDTOBlockchainEnum {
     KLAYTN = "KLAYTN",
     BITCOIN = "BITCOIN",
     FILECOIN = "FILECOIN",
-    BINANCESMARTCHAIN = "BINANCE_SMART_CHAIN"
+    BINANCESMARTCHAIN = "BINANCE_SMART_CHAIN",
+    LITECOIN = "LITECOIN"
 }
 export interface ValidateIsAllowedAddressRequest {
     address: string;
@@ -1249,22 +1272,22 @@ export declare class EthMethodGasUsageControllerApi extends BaseAPI {
 export declare const EthNftControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     getAllNfts1: (options?: any) => Promise<RequestArgs>;
     getNft1: (nftId: number, options?: any) => Promise<RequestArgs>;
-    syncMetadata1: (nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any) => Promise<RequestArgs>;
+    syncMetadata1: (nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any) => Promise<RequestArgs>;
 };
 export declare const EthNftControllerApiFp: (configuration?: Configuration) => {
     getAllNfts1(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NftDTO>>>;
     getNft1(nftId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftDTO>>;
-    syncMetadata1(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftItemDTO>>;
+    syncMetadata1(nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftItemDTO>>;
 };
 export declare const EthNftControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
     getAllNfts1(options?: any): AxiosPromise<Array<NftDTO>>;
     getNft1(nftId: number, options?: any): AxiosPromise<NftDTO>;
-    syncMetadata1(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): AxiosPromise<NftItemDTO>;
+    syncMetadata1(nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any): AxiosPromise<NftItemDTO>;
 };
 export declare class EthNftControllerApi extends BaseAPI {
     getAllNfts1(options?: any): Promise<import("axios").AxiosResponse<NftDTO[]>>;
     getNft1(nftId: number, options?: any): Promise<import("axios").AxiosResponse<NftDTO>>;
-    syncMetadata1(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<import("axios").AxiosResponse<NftItemDTO>>;
+    syncMetadata1(nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<import("axios").AxiosResponse<NftItemDTO>>;
 }
 export declare const EthOperationControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     bindHenesisKeyToWallet2: (keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any) => Promise<RequestArgs>;
@@ -1326,7 +1349,7 @@ export declare const EthWalletControllerApiAxiosParamCreator: (configuration?: C
     getMasterWalletInitialKey3: (walletId: string, options?: any) => Promise<RequestArgs>;
     getMasterWalletNonce2: (walletId: string, options?: any) => Promise<RequestArgs>;
     getMasterWallets5: (sort: Sort, options?: any) => Promise<RequestArgs>;
-    getNftBalance1: (walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any) => Promise<RequestArgs>;
+    getNftBalance1: (walletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any) => Promise<RequestArgs>;
     getUserWallet3: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
     getUserWalletBalance3: (walletId: string, userWalletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
     getUserWalletNonce2: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
@@ -1341,7 +1364,7 @@ export declare const EthWalletControllerApiAxiosParamCreator: (configuration?: C
     replaceTransaction1: (replaceTransactionRequest: ReplaceTransactionRequest, options?: any) => Promise<RequestArgs>;
     resendTransaction2: (resendTransactionRequest: ResendTransactionRequest, options?: any) => Promise<RequestArgs>;
     sendBatchTransaction3: (createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any) => Promise<RequestArgs>;
-    sendNftTransaction1: (createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
+    sendNftTransaction1: (walletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
     sendTransaction3: (createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
     validateIsAllowedAddress2: (walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
 };
@@ -1365,7 +1388,7 @@ export declare const EthWalletControllerApiFp: (configuration?: Configuration) =
     getMasterWalletInitialKey3(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
     getMasterWalletNonce2(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
     getMasterWallets5(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>>;
-    getNftBalance1(walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationNftBalanceDTO>>;
+    getNftBalance1(walletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationNftBalanceDTO>>;
     getUserWallet3(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
     getUserWalletBalance3(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BalanceDTO>>>;
     getUserWalletNonce2(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
@@ -1380,7 +1403,7 @@ export declare const EthWalletControllerApiFp: (configuration?: Configuration) =
     replaceTransaction1(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     resendTransaction2(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     sendBatchTransaction3(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BatchTransactionDTO>>>;
-    sendNftTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    sendNftTransaction1(walletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     sendTransaction3(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     validateIsAllowedAddress2(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateIsAllowedAddressResponse>>;
 };
@@ -1404,7 +1427,7 @@ export declare const EthWalletControllerApiFactory: (configuration?: Configurati
     getMasterWalletInitialKey3(walletId: string, options?: any): AxiosPromise<KeyDTO>;
     getMasterWalletNonce2(walletId: string, options?: any): AxiosPromise<NonceDTO>;
     getMasterWallets5(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>>;
-    getNftBalance1(walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any): AxiosPromise<PaginationNftBalanceDTO>;
+    getNftBalance1(walletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any): AxiosPromise<PaginationNftBalanceDTO>;
     getUserWallet3(walletId: string, userWalletId: string, options?: any): AxiosPromise<UserWalletDTO>;
     getUserWalletBalance3(walletId: string, userWalletId: string, symbol?: string, options?: any): AxiosPromise<Array<BalanceDTO>>;
     getUserWalletNonce2(walletId: string, userWalletId: string, options?: any): AxiosPromise<NonceDTO>;
@@ -1419,7 +1442,7 @@ export declare const EthWalletControllerApiFactory: (configuration?: Configurati
     replaceTransaction1(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
     resendTransaction2(resendTransactionRequest: ResendTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
     sendBatchTransaction3(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): AxiosPromise<Array<BatchTransactionDTO>>;
-    sendNftTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
+    sendNftTransaction1(walletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
     sendTransaction3(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
     validateIsAllowedAddress2(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): AxiosPromise<ValidateIsAllowedAddressResponse>;
 };
@@ -1443,7 +1466,7 @@ export declare class EthWalletControllerApi extends BaseAPI {
     getMasterWalletInitialKey3(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
     getMasterWalletNonce2(walletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
     getMasterWallets5(sort: Sort, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO[]>>;
-    getNftBalance1(walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any): Promise<import("axios").AxiosResponse<PaginationNftBalanceDTO>>;
+    getNftBalance1(walletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationNftBalanceDTO>>;
     getUserWallet3(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
     getUserWalletBalance3(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<BalanceDTO[]>>;
     getUserWalletNonce2(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
@@ -1458,7 +1481,7 @@ export declare class EthWalletControllerApi extends BaseAPI {
     replaceTransaction1(replaceTransactionRequest: ReplaceTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     resendTransaction2(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     sendBatchTransaction3(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<BatchTransactionDTO[]>>;
-    sendNftTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    sendNftTransaction1(walletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     sendTransaction3(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     validateIsAllowedAddress2(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<ValidateIsAllowedAddressResponse>>;
 }
@@ -1641,22 +1664,22 @@ export declare class KlayMethodGasUsageControllerApi extends BaseAPI {
 export declare const KlayNftControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     getAllNfts: (options?: any) => Promise<RequestArgs>;
     getNft: (nftId: number, options?: any) => Promise<RequestArgs>;
-    syncMetadata: (nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any) => Promise<RequestArgs>;
+    syncMetadata: (nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any) => Promise<RequestArgs>;
 };
 export declare const KlayNftControllerApiFp: (configuration?: Configuration) => {
     getAllNfts(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<NftDTO>>>;
     getNft(nftId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftDTO>>;
-    syncMetadata(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftItemDTO>>;
+    syncMetadata(nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftItemDTO>>;
 };
 export declare const KlayNftControllerApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
     getAllNfts(options?: any): AxiosPromise<Array<NftDTO>>;
     getNft(nftId: number, options?: any): AxiosPromise<NftDTO>;
-    syncMetadata(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): AxiosPromise<NftItemDTO>;
+    syncMetadata(nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any): AxiosPromise<NftItemDTO>;
 };
 export declare class KlayNftControllerApi extends BaseAPI {
     getAllNfts(options?: any): Promise<import("axios").AxiosResponse<NftDTO[]>>;
     getNft(nftId: number, options?: any): Promise<import("axios").AxiosResponse<NftDTO>>;
-    syncMetadata(nftId: string, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<import("axios").AxiosResponse<NftItemDTO>>;
+    syncMetadata(nftId: number, syncMetadataRequest: SyncMetadataRequest, options?: any): Promise<import("axios").AxiosResponse<NftItemDTO>>;
 }
 export declare const KlayOperationControllerApiAxiosParamCreator: (configuration?: Configuration) => {
     bindHenesisKeyToWallet: (keyId: string, bindHenesisKeyToWalletRequest: BindHenesisKeyToWalletRequest, options?: any) => Promise<RequestArgs>;
@@ -1715,7 +1738,7 @@ export declare const KlayWalletControllerApiAxiosParamCreator: (configuration?: 
     getMasterWalletInitialKey1: (walletId: string, options?: any) => Promise<RequestArgs>;
     getMasterWalletNonce1: (walletId: string, options?: any) => Promise<RequestArgs>;
     getMasterWallets1: (sort: Sort, options?: any) => Promise<RequestArgs>;
-    getNftBalance: (walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any) => Promise<RequestArgs>;
+    getNftBalance: (walletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any) => Promise<RequestArgs>;
     getUserWallet1: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
     getUserWalletBalance1: (walletId: string, userWalletId: string, symbol?: string, options?: any) => Promise<RequestArgs>;
     getUserWalletNonce1: (walletId: string, userWalletId: string, options?: any) => Promise<RequestArgs>;
@@ -1729,7 +1752,7 @@ export declare const KlayWalletControllerApiAxiosParamCreator: (configuration?: 
     recreateUserWallet1: (walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any) => Promise<RequestArgs>;
     resendTransaction: (resendTransactionRequest: ResendTransactionRequest, options?: any) => Promise<RequestArgs>;
     sendBatchTransaction1: (createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any) => Promise<RequestArgs>;
-    sendNftTransaction: (createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
+    sendNftTransaction: (walletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
     sendTransaction1: (createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) => Promise<RequestArgs>;
     validateIsAllowedAddress: (walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
 };
@@ -1750,7 +1773,7 @@ export declare const KlayWalletControllerApiFp: (configuration?: Configuration) 
     getMasterWalletInitialKey1(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDTO>>;
     getMasterWalletNonce1(walletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
     getMasterWallets1(sort: Sort, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MasterWalletDTO>>>;
-    getNftBalance(walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationNftBalanceDTO>>;
+    getNftBalance(walletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationNftBalanceDTO>>;
     getUserWallet1(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
     getUserWalletBalance1(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BalanceDTO>>>;
     getUserWalletNonce1(walletId: string, userWalletId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NonceDTO>>;
@@ -1764,7 +1787,7 @@ export declare const KlayWalletControllerApiFp: (configuration?: Configuration) 
     recreateUserWallet1(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
     resendTransaction(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     sendBatchTransaction1(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BatchTransactionDTO>>>;
-    sendNftTransaction(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    sendNftTransaction(walletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     sendTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     validateIsAllowedAddress(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ValidateIsAllowedAddressResponse>>;
 };
@@ -1785,7 +1808,7 @@ export declare const KlayWalletControllerApiFactory: (configuration?: Configurat
     getMasterWalletInitialKey1(walletId: string, options?: any): AxiosPromise<KeyDTO>;
     getMasterWalletNonce1(walletId: string, options?: any): AxiosPromise<NonceDTO>;
     getMasterWallets1(sort: Sort, options?: any): AxiosPromise<Array<MasterWalletDTO>>;
-    getNftBalance(walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any): AxiosPromise<PaginationNftBalanceDTO>;
+    getNftBalance(walletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any): AxiosPromise<PaginationNftBalanceDTO>;
     getUserWallet1(walletId: string, userWalletId: string, options?: any): AxiosPromise<UserWalletDTO>;
     getUserWalletBalance1(walletId: string, userWalletId: string, symbol?: string, options?: any): AxiosPromise<Array<BalanceDTO>>;
     getUserWalletNonce1(walletId: string, userWalletId: string, options?: any): AxiosPromise<NonceDTO>;
@@ -1799,7 +1822,7 @@ export declare const KlayWalletControllerApiFactory: (configuration?: Configurat
     recreateUserWallet1(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
     resendTransaction(resendTransactionRequest: ResendTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
     sendBatchTransaction1(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): AxiosPromise<Array<BatchTransactionDTO>>;
-    sendNftTransaction(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
+    sendNftTransaction(walletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
     sendTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO>;
     validateIsAllowedAddress(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): AxiosPromise<ValidateIsAllowedAddressResponse>;
 };
@@ -1820,7 +1843,7 @@ export declare class KlayWalletControllerApi extends BaseAPI {
     getMasterWalletInitialKey1(walletId: string, options?: any): Promise<import("axios").AxiosResponse<KeyDTO>>;
     getMasterWalletNonce1(walletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
     getMasterWallets1(sort: Sort, options?: any): Promise<import("axios").AxiosResponse<MasterWalletDTO[]>>;
-    getNftBalance(walletId: string, tokenOnchainId?: string, tokenName?: string, options?: any): Promise<import("axios").AxiosResponse<PaginationNftBalanceDTO>>;
+    getNftBalance(walletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any): Promise<import("axios").AxiosResponse<PaginationNftBalanceDTO>>;
     getUserWallet1(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
     getUserWalletBalance1(walletId: string, userWalletId: string, symbol?: string, options?: any): Promise<import("axios").AxiosResponse<BalanceDTO[]>>;
     getUserWalletNonce1(walletId: string, userWalletId: string, options?: any): Promise<import("axios").AxiosResponse<NonceDTO>>;
@@ -1834,7 +1857,7 @@ export declare class KlayWalletControllerApi extends BaseAPI {
     recreateUserWallet1(walletId: string, userWalletId: string, recreateWalletRequest: RecreateWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
     resendTransaction(resendTransactionRequest: ResendTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     sendBatchTransaction1(createBatchTransactionRequest: CreateBatchTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<BatchTransactionDTO[]>>;
-    sendNftTransaction(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    sendNftTransaction(walletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     sendTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     validateIsAllowedAddress(walletId: string, validateIsAllowedAddressRequest: ValidateIsAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<ValidateIsAllowedAddressResponse>>;
 }

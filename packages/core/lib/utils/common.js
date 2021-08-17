@@ -72,6 +72,12 @@ class BNConverter {
         }
         return this.hexStringToBN(hexString);
     }
+    static decimalStringToBn(decimalString) {
+        return new bn_js_1.default(decimalString, 10);
+    }
+    static bnToDecimalString(bn) {
+        return bn.toString(10);
+    }
 }
 exports.BNConverter = BNConverter;
 function checkNullAndUndefinedParameter(requiredParams) {
