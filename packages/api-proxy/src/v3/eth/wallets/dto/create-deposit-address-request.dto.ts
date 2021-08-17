@@ -1,7 +1,9 @@
+import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+
 export class CreateDepositAddressRequestDTO {
-  /**
-   * 입금 주소 이름
-   * @example test-deposit-address
-   */
+  @ApiModelProperty({
+    description: "입금 주소 이름",
+    example: "test-deposit-address",
+  })
   name: string;
 }

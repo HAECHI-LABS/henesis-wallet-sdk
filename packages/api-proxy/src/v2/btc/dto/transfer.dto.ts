@@ -32,11 +32,11 @@ export const EXAMPLE_BITCOIN_TRANSFER_DTO: TransferDTO = {
 };
 
 export class TransferDTO {
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "해당 전송(Transfer)이 포함되는 온체인 트랜잭션의 정보",
     example: EXAMPLE_BITCOIN_TRANSFER_DTO.transaction,
   })
-  transaction: BtcTransactionDTO;
+  transaction?: BtcTransactionDTO;
 
   @ApiModelProperty({
     description: "지갑 ID",
@@ -62,20 +62,20 @@ export class TransferDTO {
   })
   id: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description:
       "해당 전송(Transfer)을 통해 발생한 Output이 같은 트랜잭션에 포함된 여러 UTXO 중에 몇 번째 Output 인지?",
     example: EXAMPLE_BITCOIN_TRANSFER_DTO.outputIndex,
   })
   outputIndex?: number;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "받는 주소",
     example: EXAMPLE_BITCOIN_TRANSFER_DTO.receivedAt,
   })
   receivedAt?: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "보내는 주소",
     example: EXAMPLE_BITCOIN_TRANSFER_DTO.sendTo,
   })
@@ -106,7 +106,7 @@ export class TransferDTO {
   })
   updatedAt: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "사용된 수수료의 양 (단위: satoshi) (형식: 16진법)",
     example: EXAMPLE_BITCOIN_TRANSFER_DTO.feeAmount,
   })

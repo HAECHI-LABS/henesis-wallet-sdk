@@ -15,23 +15,14 @@ import {
   Pagination,
   PaginationOptions,
 } from "../types";
-import {
-  formatMultiSigPayload,
-  MultiSigPayload,
-  SignedMultiSigPayload,
-} from "./transactions";
+import { MultiSigPayload, SignedMultiSigPayload } from "./transactions";
 import { Client } from "../httpClient";
-import BatchRequest from "./batch";
 import walletAbi from "../contracts/Wallet.json";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
-import { WalletData, Wallet } from "../wallet";
 import { makeQueryString } from "../utils/url";
-import { Coins } from "./coins";
 import {
   TransactionDTO,
-  BatchTransactionDTO,
   UserWalletDTO,
-  BalanceDTO,
   MasterWalletBalanceDTO,
   PaginationUserWalletDTO,
   MasterWalletDTO,
@@ -39,24 +30,19 @@ import {
   RejectWithdrawalApprovalRequest,
   CreateUserWalletRequest,
   SignedMultiSigPayloadDTO,
-  CreateMultiSigTransactionRequest,
   ChangeWalletNameRequest,
-  ReplaceTransactionRequest,
   ActivateMasterWalletRequest,
   KeyDTO,
-  ResendTransactionRequest,
   FlushRequest,
   PaginationFlushTransactionDTO,
-  TransactionStatus,
   FlushQuerySearchCondition,
   FlushTransactionValueTransferEventDTO,
-  FlushTransactionValueTransferEventDTOStatus,
   FlushTransactionDTO,
+  CreateMultiSigTransactionRequest,
+  CreateNftMultiSigTransactionRequest,
 } from "../__generate__/eth";
-import _, { result } from "lodash";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { Coin } from "./coin";
-import { randomBytes } from "crypto";
 import {
   EthDepositAddress,
   transformDepositAddressData,
@@ -69,6 +55,7 @@ import {
   convertSignedMultiSigPayloadToDTO,
   getAddressFromCompressedPub,
 } from "./abstractWallet";
+import { Nft } from "./nft";
 
 export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;
@@ -729,5 +716,63 @@ export class EthMasterWallet extends EthLikeWallet {
       `${this.withdrawalApprovalUrl}/${params.id}/reject`,
       request
     );
+  }
+
+  async transferNft(
+    nft: number | Nft,
+    tokenOnchainId: string,
+    to: string,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const n = typeof nft === "number" ? await this.nfts.getNft(nft) : nft;
+    return this.sendNftTransaction(
+      await this.buildTransferNftPayload(
+        n,
+        tokenOnchainId,
+        this,
+        to,
+        passphrase
+      ),
+      n,
+      tokenOnchainId,
+      otpCode,
+      gasPrice,
+      gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT,
+      metadata
+    );
+  }
+
+  async sendNftTransaction(
+    signedMultiSigPayload: SignedMultiSigPayload,
+    nft: Nft,
+    tokenOnchainId: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const request: CreateNftMultiSigTransactionRequest = {
+      nftId: nft.getId(),
+      tokenOnchainId,
+      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
+        signedMultiSigPayload
+      ),
+      gasPrice: BNConverter.bnToHexStringOrElseNull(gasPrice),
+      gasLimit: BNConverter.bnToHexStringOrElseNull(gasLimit),
+      otpCode,
+      metadata,
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `/wallets/${this.getId()}/nft/transactions`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
   }
 }

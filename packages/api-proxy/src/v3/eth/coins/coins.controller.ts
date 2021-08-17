@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  HttpStatus,
-  Param,
-  Query,
-  Request,
-} from "@nestjs/common";
+import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import { CoinsService } from "./coins.service";
 import {
   ApiBadRequestResponse,
@@ -64,7 +57,7 @@ export class CoinsController {
     return await this.coinsService.getCoins(request.sdk, flag);
   }
 
-  @Get("/:coinId")
+  @Get("/:ticker")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(CoinDTO, EXAMPLE_ETHEREUM_COIN_DTO),
   })
@@ -84,8 +77,8 @@ export class CoinsController {
   @ReadMeExtension()
   public async getCoin(
     @Request() request: express.Request,
-    @Param("coinId") coinId: string
+    @Param("ticker") ticker: string
   ): Promise<CoinDTO> {
-    return await this.coinsService.getCoin(coinId, request.sdk);
+    return await this.coinsService.getCoin(request.sdk, ticker);
   }
 }
