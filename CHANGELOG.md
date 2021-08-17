@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.1...v3.2.13-alpha.2) (2021-08-17)
+
+
+### Bug Fixes
+
+* add createdAt, updatedAt to NftBalance ([#538](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/538)) ([32db7cf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/32db7cf76b3f58a226c63ed4237ae5c57576ab17))
+* change coin api ticker path parameter ([#534](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/534)) ([e1f9912](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e1f9912c82cfaf4f47d881c0fd9c9e3f8ce5771b))
+* change wrong api properties ([#532](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/532)) ([9ab3a51](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9ab3a51995e5a5f256bc281d5513f65bea37af6f))
+
+
+### Features
+
+* implement to transfer nft ([#537](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/537)) ([28c118b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/28c118bc4588cbe99b90268365d452f03e76272f))
+
+
+
+
+
 ## [3.2.13-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.0...v3.2.13-alpha.1) (2021-08-11)
 
 
