@@ -1,4 +1,8 @@
-import { EXAMPLE_BITCOIN_KEY_DTO, KeyDTO } from "./key.dto";
+import {
+  EXAMPLE_BITCOIN_KEY_DTO,
+  EXAMPLE_LITECOIN_KEY_DTO,
+  KeyDTO,
+} from "./key.dto";
 import {
   BtcActivatingMasterWallet,
   BtcMasterWallet,
@@ -25,6 +29,13 @@ export const EXAMPLE_BITCOIN_WALLET_DTO: WalletDTO = {
   orgId: "0u1a431da7361na9e75648180bbd4fbc",
   accountKey: EXAMPLE_BITCOIN_KEY_DTO,
   whitelistActivated: false,
+};
+
+export const EXAMPLE_LITECOIN_WALLET_DTO: WalletDTO = {
+  ...EXAMPLE_BITCOIN_WALLET_DTO,
+  name: "litecoin-wallet",
+  address: "QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV",
+  accountKey: EXAMPLE_LITECOIN_KEY_DTO,
 };
 
 export class WalletDTO {

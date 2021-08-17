@@ -13,6 +13,12 @@ export const EXAMPLE_BITCOIN_BTC_TRANSACTION_OUTPUT_DTO: BtcTransactionOutputDTO
     isChange: false,
   };
 
+export const EXAMPLE_LITECOIN_BTC_TRANSACTION_OUTPUT_DTO: BtcTransactionOutputDTO =
+  {
+    ...EXAMPLE_BITCOIN_BTC_TRANSACTION_OUTPUT_DTO,
+    address: "QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV",
+  };
+
 export class BtcTransactionOutputDTO {
   @ApiModelProperty({
     description: "해당 UTXO를 소유한 주소",
