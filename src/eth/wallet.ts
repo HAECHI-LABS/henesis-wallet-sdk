@@ -804,7 +804,6 @@ export class EthMasterWallet extends EthLikeWallet {
     );
   }
 
-  // TODO: Implement me!
   async sendNftTransaction(
     signedMultiSigPayload: SignedMultiSigPayload,
     nft: Nft,
@@ -814,6 +813,24 @@ export class EthMasterWallet extends EthLikeWallet {
     gasLimit?: BN,
     metadata?: string
   ): Promise<EthTransaction> {
-    throw new Error("implement me!");
+    const request: CreateNftMultiSigTransactionRequest = {
+      nftId: nft.getId(),
+      tokenOnchainId,
+      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
+        signedMultiSigPayload
+      ),
+      gasPrice: BNConverter.bnToHexStringOrElseNull(gasPrice),
+      gasLimit: BNConverter.bnToHexStringOrElseNull(gasLimit),
+      otpCode,
+      metadata,
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `/wallets/${this.getId()}/nft/transactions`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
   }
 }
