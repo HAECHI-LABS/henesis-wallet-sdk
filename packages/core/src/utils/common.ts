@@ -88,6 +88,14 @@ export class BNConverter {
     }
     return this.hexStringToBN(hexString);
   }
+
+  static decimalStringToBn(decimalString: string): BN {
+    return new BN(decimalString, 10);
+  }
+
+  static bnToDecimalString(bn: BN): string {
+    return bn.toString(10);
+  }
 }
 
 export function checkNullAndUndefinedParameter(requiredParams: object): void {

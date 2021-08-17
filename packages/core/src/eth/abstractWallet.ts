@@ -1,12 +1,6 @@
 import BN from "bn.js";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
-import {
-  Balance,
-  Key,
-  Keychains,
-  Pagination,
-  PaginationOptions,
-} from "../types";
+import { Key, Keychains } from "../types";
 import {
   formatMultiSigPayload,
   MultiSigPayload,
@@ -28,20 +22,16 @@ import {
   CreateMultiSigTransactionRequest,
   ReplaceTransactionRequest,
   ResendTransactionRequest,
-  MasterWalletBalanceDTO,
   NftBalanceDTO,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
 import { Coin } from "./coin";
 import { randomBytes } from "crypto";
-import { keccak256 } from "./eth-core-lib/hash";
-import { toChecksum } from "./keychains";
-import { Address } from "cluster";
 import EthCrypto from "eth-crypto";
-import { Nft } from "./nft";
 import { Nfts } from "./nfts";
 import { makeQueryString } from "../utils/url";
+import { Nft } from "./nft";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -363,7 +353,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     return this.DEFAULT_TOKEN_TRANSFER_GAS_LIMIT;
   }
 
-  // TODO: Implement me!
   async getNftBalance(
     tokenOnchainId: string,
     tokenName?: string
@@ -375,47 +364,21 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     return balances.map((dto) => dto as NftBalance);
   }
 
-  // TODO: Implement me!
-  async transferNft(
-    nft: number | Nft,
+  protected async buildTransferNftPayload(
+    nft: Nft,
     tokenOnchainId: string,
-    to: string,
-    passphrase: string,
-    otpCode?: string,
-    gasPrice?: BN,
-    gasLimit?: BN,
-    metadata?: string
-  ): Promise<EthTransaction> {
-    const n = typeof nft === "number" ? await this.nfts.getNft(nft) : nft;
-    return this.sendNftTransaction(
-      await this.buildTransferNftPayload(n, tokenOnchainId, to, passphrase),
-      this.getId(),
-      otpCode,
-      gasPrice,
-      gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT,
-      metadata
-    );
-  }
-
-  // TODO: Implement me!
-  async sendNftTransaction(
-    signedMultiSigPayload: SignedMultiSigPayload,
-    walletId: string,
-    otpCode?: string,
-    gasPrice?: BN,
-    gasLimit?: BN,
-    metadata?: string
-  ): Promise<EthTransaction> {
-    throw new Error("Implement me!");
-  }
-
-  // TODO: Implement me!
-  private async buildTransferNftPayload(
-    n: Nft,
-    tokenOnchainId: string,
+    from: EthLikeWallet,
     to: string,
     passphrase: string
   ): Promise<SignedMultiSigPayload> {
-    throw new Error("Implement me!");
+    checkNullAndUndefinedParameter({
+      nft,
+      to,
+      passphrase,
+    });
+    return this.signPayload(
+      await nft.buildTransferMultiSigPayload(from, to, tokenOnchainId),
+      passphrase
+    );
   }
 }
