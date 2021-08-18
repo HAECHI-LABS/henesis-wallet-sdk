@@ -70,24 +70,21 @@ export abstract class FilAbstractWallet extends Wallet<FilTransaction> {
   protected data: FilWalletData;
   protected keychains: FilKeychains;
 
-  protected readonly blockchain: BlockchainType;
-
   protected constructor(
     client: Client,
     data: FilWalletData,
     keychains: FilKeychains,
     baseUrl: string
   ) {
-    super(client, keychains, baseUrl);
+    super(client, keychains, baseUrl, BlockchainType.FILECOIN);
     this.data = data;
-    this.blockchain = BlockchainType.FILECOIN;
   }
 
   getChain(): BlockchainType {
-    return this.data.blockchain;
+    return this.blockchain;
   }
 
-  abstract async transfer(
+  abstract transfer(
     to: string,
     amount: BN,
     passphrase: string
