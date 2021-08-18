@@ -13,6 +13,7 @@ const url_1 = require("../utils/url");
 const lodash_1 = __importDefault(require("lodash"));
 const wallet_2 = require("../apis/ltc/wallet");
 const utils_1 = require("./utils");
+const network_1 = require("./network");
 exports.transformWalletData = (data) => {
     return Object.assign(Object.assign({}, data), { status: wallet_1.convertWalletStatus(data.status) });
 };
@@ -30,7 +31,7 @@ class LtcMasterWallet extends wallet_1.Wallet {
             tx.addInput(new Buffer(new Buffer(input.transactionOutput.transactionId, "hex").reverse()), input.transactionOutput.outputIndex);
         });
         rawTransaction.outputs.forEach((output) => {
-            tx.addOutput(bitcoinjs_lib_1.address.toOutputScript(output.to, this.env === 3 ? bitcoinjs_lib_1.networks.bitcoin : bitcoinjs_lib_1.networks.testnet), new bn_js_1.default(output.amount.slice(2), "hex").toNumber());
+            tx.addOutput(bitcoinjs_lib_1.address.toOutputScript(output.to, this.env === 3 ? network_1.litecoinMainnet : network_1.litecoinTestnet), new bn_js_1.default(output.amount.slice(2), "hex").toNumber());
         });
         const accountSigs = [];
         for (let i = 0; i < rawTransaction.inputs.length; i++) {
@@ -94,7 +95,7 @@ class LtcMasterWallet extends wallet_1.Wallet {
         };
     }
     getChain() {
-        return blockchain_1.BlockchainType.BITCOIN;
+        return blockchain_1.BlockchainType.LITECOIN;
     }
     async getBalance() {
         const response = await this.client.get(`${this.baseUrl}/balance`);
@@ -185,7 +186,7 @@ class LtcMasterWallet extends wallet_1.Wallet {
         return {
             id,
             name: walletName,
-            blockchain: blockchain_1.BlockchainType.BITCOIN,
+            blockchain: blockchain_1.BlockchainType.LITECOIN,
             address,
             status,
             createdAt,

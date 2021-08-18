@@ -13,6 +13,7 @@ const js_base64_1 = require("js-base64");
 const recoveryKit_1 = require("./recoveryKit");
 const bitcoinjs_lib_1 = require("bitcoinjs-lib");
 const __1 = require("..");
+const network_1 = require("./network");
 class LtcWallets extends wallets_1.Wallets {
     constructor(env, client, keychains) {
         super(env, client, keychains);
@@ -41,7 +42,7 @@ class LtcWallets extends wallets_1.Wallets {
     verifyAddress(address) {
         __1.checkNullAndUndefinedParameter({ address });
         try {
-            bitcoinjs_lib_1.address.toOutputScript(address, this.env === 3 ? bitcoinjs_lib_1.networks.bitcoin : bitcoinjs_lib_1.networks.testnet);
+            bitcoinjs_lib_1.address.toOutputScript(address, this.env === 3 ? network_1.litecoinMainnet : network_1.litecoinTestnet);
             return true;
         }
         catch (e) {

@@ -5,18 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LtcKeyChains = void 0;
 const bitcoinjs_lib_1 = require("bitcoinjs-lib");
-const bitcoinjs_lib_2 = require("bitcoinjs-lib");
 const sjcl_1 = __importDefault(require("../eth/eth-core-lib/sjcl"));
 const crypto_1 = __importDefault(require("crypto"));
 const eth_1 = require("../eth");
 const common_1 = require("../utils/common");
+const network_1 = require("./network");
 class LtcKeyChains {
     constructor(env) {
         this.env = env;
     }
     create(password) {
         const ecPair = bitcoinjs_lib_1.ECPair.makeRandom({
-            network: 3 ? bitcoinjs_lib_2.networks.bitcoin : bitcoinjs_lib_2.networks.testnet,
+            network: 3 ? network_1.litecoinMainnet : network_1.litecoinTestnet,
             compressed: true,
         });
         return {
@@ -78,7 +78,7 @@ class LtcKeyChains {
         const decryptedKey = this.decrypt(key, password);
         return bitcoinjs_lib_1.ECPair.fromPrivateKey(Buffer.from(common_1.BNConverter.remove0x(decryptedKey), "hex"), {
             compressed: true,
-            network: 3 ? bitcoinjs_lib_2.networks.bitcoin : bitcoinjs_lib_2.networks.testnet,
+            network: 3 ? network_1.litecoinMainnet : network_1.litecoinTestnet,
         });
     }
 }
