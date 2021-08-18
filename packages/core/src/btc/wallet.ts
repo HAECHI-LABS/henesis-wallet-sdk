@@ -141,7 +141,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
     keychains: Keychains,
     env: Env
   ) {
-    super(client, keychains, `/wallets/${data.id}`);
+    super(client, keychains, `/wallets/${data.id}`, BlockchainType.BITCOIN);
     this.data = data;
     this.env = env;
   }
@@ -293,7 +293,7 @@ export class BtcMasterWallet extends Wallet<BtcTransaction> {
   }
 
   getChain(): BlockchainType {
-    return BlockchainType.BITCOIN;
+    return this.blockchain;
   }
 
   async getBalance(): Promise<Balance[]> {
