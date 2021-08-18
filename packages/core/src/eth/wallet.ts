@@ -38,7 +38,6 @@ import {
   FlushQuerySearchCondition,
   FlushTransactionValueTransferEventDTO,
   FlushTransactionDTO,
-  CreateMultiSigTransactionRequest,
   CreateNftMultiSigTransactionRequest,
 } from "../__generate__/eth";
 import { ApproveWithdrawal } from "../withdrawalApprovals";

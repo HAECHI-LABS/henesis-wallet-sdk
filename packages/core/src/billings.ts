@@ -1,8 +1,7 @@
 import BN from "bn.js";
 
 import { Client } from "./httpClient";
-import { Pagination, PaginationOptions, Secret, Balance } from "./types";
-import { Account, AccountWithIps, Role } from "./accounts";
+import { Pagination, PaginationOptions, Balance } from "./types";
 import { makeQueryString } from "./utils/url";
 import { BlockchainType } from "./blockchain";
 import { SimplifiedCoinInternalDTO } from "./__generate__/eth";

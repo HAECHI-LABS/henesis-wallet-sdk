@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { KeyDTO } from "../dto/key.dto";
 import { SDK } from "@haechi-labs/henesis-wallet-core";
 import { BalanceDTO } from "../dto/balance.dto";
 

@@ -1,5 +1,4 @@
 import { SDK } from "../src";
-import { FlushHistory } from "../src/eth/wallet";
 import "dotenv/config";
 
 async function main() {
