@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.4...v3.2.13-alpha.5) (2021-08-18)
+
+
+### Bug Fixes
+
+* fixed btc -> ltc ([a749baa](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a749baa0796391c067af1e8472ebeb16139dfc37))
+
+
+### Features
+
+* add abstract wallet blockchain type ([e107085](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e107085a67befde1cc350d7a58a85f8342458520))
+
+
+
+
+
 ## [3.2.13-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.3...v3.2.13-alpha.4) (2021-08-18)
 
 
