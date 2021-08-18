@@ -141,7 +141,7 @@ export class LtcMasterWallet extends Wallet<LtcTransaction> {
     keychains: Keychains,
     env: Env
   ) {
-    super(client, keychains, `/wallets/${data.id}`, BlockchainType.BITCOIN);
+    super(client, keychains, `/wallets/${data.id}`, BlockchainType.LITECOIN);
     this.data = data;
     this.env = env;
   }
