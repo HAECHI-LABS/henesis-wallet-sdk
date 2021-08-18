@@ -119,7 +119,7 @@ export class LtcWallets extends Wallets<LtcMasterWallet> {
 
     return new LtcRecoveryKit(
       name,
-      BlockchainType.BITCOIN,
+      BlockchainType.LITECOIN,
       masterWalletResponse.henesisKey,
       accountKey,
       backupKey,
@@ -174,7 +174,7 @@ export class LtcWallets extends Wallets<LtcMasterWallet> {
     return {
       id,
       name: walletName,
-      blockchain: BlockchainType.BITCOIN,
+      blockchain: BlockchainType.LITECOIN,
       henesisKey: {
         pub: masterWalletResponse.henesisKey.pub,
         keyFile: undefined,
