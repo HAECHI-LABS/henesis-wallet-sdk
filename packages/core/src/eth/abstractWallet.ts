@@ -1,6 +1,6 @@
 import BN from "bn.js";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
-import { Key, Keychains } from "../types";
+import { Key, Keychains, Pagination, PaginationOptions } from "../types";
 import {
   formatMultiSigPayload,
   MultiSigPayload,
@@ -19,6 +19,7 @@ import {
   BatchTransactionDTO,
   CreateMultiSigTransactionRequest,
   NftBalanceDTO,
+  PaginationNftBalanceDTO,
   ReplaceTransactionRequest,
   ResendTransactionRequest,
   SignedMultiSigPayloadDTO,
@@ -32,10 +33,19 @@ import EthCrypto from "eth-crypto";
 import { Nfts } from "./nfts";
 import { makeQueryString } from "../utils/url";
 import { Nft } from "./nft";
+import {
+  EthDepositAddress,
+  transformDepositAddressData,
+} from "./depositAddress";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
 };
+
+export interface NftBalancePaginationOptions extends PaginationOptions {
+  tokenOnchainId?: string;
+  tokenName?: string;
+}
 
 export interface EthWalletData extends WalletData {
   blockchain: BlockchainType;
@@ -99,6 +109,10 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     this.data = data;
     this.blockchain = blockchain;
     this.coins = new Coins(this.client);
+  }
+
+  getNfts(): Nfts {
+    return this.nfts;
   }
 
   getChain(): BlockchainType {
@@ -301,14 +315,16 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   }
 
   async getNftBalance(
-    tokenOnchainId?: string,
-    tokenName?: string
-  ): Promise<NftBalance[]> {
-    const queryString = makeQueryString({ tokenOnchainId, tokenName });
-    const balances = await this.client.get<NoUndefinedField<NftBalanceDTO>[]>(
-      `${this.baseUrl}/nft/balance${queryString ? `?${queryString}` : ""}`
-    );
-    return balances.map((dto) => dto as NftBalance);
+    options: NftBalancePaginationOptions
+  ): Promise<Pagination<NftBalance>> {
+    const queryString = makeQueryString(options);
+    const data = await this.client.get<
+      NoUndefinedField<PaginationNftBalanceDTO>
+    >(`${this.baseUrl}/nft/balance${queryString ? `?${queryString}` : ""}`);
+    return {
+      pagination: data.pagination,
+      results: data.results.map((data) => data as NftBalance),
+    };
   }
 
   protected signPayload(
