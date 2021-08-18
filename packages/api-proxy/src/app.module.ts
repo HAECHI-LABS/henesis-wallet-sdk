@@ -7,10 +7,9 @@ import {
 import { SdkMiddleware } from "./middlewares/sdk-injector";
 import { LoggerMiddleware } from "./middlewares/logger";
 import { CamelCaseConvertor } from "./middlewares/camel-case-convertor";
-import { RouterModule, Routes } from "nest-router";
+import { RouterModule } from "nest-router";
 import { routes } from "./routes";
 import { VersionModule } from "./version/version.module";
-import VersionController from "./version/version.controller";
 
 @Module({
   imports: [RouterModule.forRoutes(routes), VersionModule.register()],

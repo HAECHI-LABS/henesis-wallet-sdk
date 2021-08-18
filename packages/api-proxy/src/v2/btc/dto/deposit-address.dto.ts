@@ -9,6 +9,11 @@ export const EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO: DepositAddressDTO = {
   createdAt: "1620041696849",
 };
 
+export const EXAMPLE_LITECOIN_DEPOSIT_ADDRESS_DTO: DepositAddressDTO = {
+  ...EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO,
+  address: "QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV",
+};
+
 export class DepositAddressDTO {
   @ApiModelProperty({
     description: "입금 주소 ID",

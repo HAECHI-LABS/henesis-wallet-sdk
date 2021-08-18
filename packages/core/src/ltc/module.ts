@@ -1,6 +1,3 @@
-// FIXME: the code is copied from btc and changed only btc->ltc
-// we need to check the code line by line later.
-
 import { Client } from "../httpClient";
 import { ModuleOptions } from "../module";
 import { LtcWallets } from "./wallets";

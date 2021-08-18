@@ -1,14 +1,11 @@
-// FIXME: the code is copied from btc and changed only btc->ltc
-// we need to check the code line by line later.
-
 import { Key, Keychains, KeyWithPriv } from "../types";
 import { ECPair } from "bitcoinjs-lib";
-import { networks } from "bitcoinjs-lib";
 import sjcl from "../eth/eth-core-lib/sjcl";
 import crypto from "crypto";
 import { bytesToWord } from "../eth";
 import { BNConverter } from "../utils/common";
 import { Env } from "../sdk";
+import { litecoinMainnet, litecoinTestnet } from "./network";
 
 export class LtcKeyChains implements Keychains {
   private env: Env;
@@ -19,7 +16,7 @@ export class LtcKeyChains implements Keychains {
 
   create(password: string): KeyWithPriv {
     const ecPair = ECPair.makeRandom({
-      network: Env.Prod ? networks.bitcoin : networks.testnet,
+      network: Env.Prod ? litecoinMainnet : litecoinTestnet,
       compressed: true,
     });
 
@@ -98,7 +95,7 @@ export class LtcKeyChains implements Keychains {
       Buffer.from(BNConverter.remove0x(decryptedKey), "hex"),
       {
         compressed: true,
-        network: Env.Prod ? networks.bitcoin : networks.testnet,
+        network: Env.Prod ? litecoinMainnet : litecoinTestnet,
       }
     );
   }
