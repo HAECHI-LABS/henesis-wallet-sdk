@@ -32,7 +32,6 @@ export declare abstract class EthLikeWallet extends Wallet<EthTransaction> {
     protected readonly DEFAULT_COIN_TRANSFER_GAS_LIMIT: BN;
     protected readonly DEFAULT_TOKEN_TRANSFER_GAS_LIMIT: BN;
     protected readonly DEFAULT_NFT_TRANSFER_GAS_LIMIT: BN;
-    protected readonly blockchain: BlockchainType;
     protected readonly coins: Coins;
     protected readonly nfts: Nfts;
     protected constructor(client: Client, data: EthMasterWalletData, keychains: Keychains, blockchain: BlockchainType, baseUrl: string);

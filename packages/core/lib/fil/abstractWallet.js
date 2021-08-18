@@ -9,12 +9,11 @@ const constants_1 = require("./fil-core-lib/constants");
 const utils_2 = require("./fil-core-lib/utils");
 class FilAbstractWallet extends wallet_1.Wallet {
     constructor(client, data, keychains, baseUrl) {
-        super(client, keychains, baseUrl);
+        super(client, keychains, baseUrl, blockchain_1.BlockchainType.FILECOIN);
         this.data = data;
-        this.blockchain = blockchain_1.BlockchainType.FILECOIN;
     }
     getChain() {
-        return this.data.blockchain;
+        return this.blockchain;
     }
     signRawTransaction(rawTransaction, key, passphrase, fromSeed) {
         const message = utils_1.convertRawTransactionToMessage(rawTransaction);

@@ -18,7 +18,7 @@ exports.transformWalletData = (data) => {
 };
 class BtcMasterWallet extends wallet_1.Wallet {
     constructor(data, client, keychains, env) {
-        super(client, keychains, `/wallets/${data.id}`);
+        super(client, keychains, `/wallets/${data.id}`, blockchain_1.BlockchainType.BITCOIN);
         this.data = data;
         this.env = env;
     }
@@ -94,7 +94,7 @@ class BtcMasterWallet extends wallet_1.Wallet {
         };
     }
     getChain() {
-        return blockchain_1.BlockchainType.BITCOIN;
+        return this.blockchain;
     }
     async getBalance() {
         const response = await this.client.get(`${this.baseUrl}/balance`);

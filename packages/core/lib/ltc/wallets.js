@@ -65,7 +65,7 @@ class LtcWallets extends wallets_1.Wallets {
         const masterWalletResponse = await this.client.post(`${this.baseUrl}?type=inactive`, params);
         const aes = new aes_js_1.default.ModeOfOperation.ctr(encryptionKeyBuffer);
         const encryptedPassphrase = aes_js_1.default.utils.hex.fromBytes(aes.encrypt(aes_js_1.default.utils.utf8.toBytes(passphrase)));
-        return new recoveryKit_1.LtcRecoveryKit(name, blockchain_1.BlockchainType.BITCOIN, masterWalletResponse.henesisKey, accountKey, backupKey, js_base64_1.Base64.encode(encryptedPassphrase), aes_js_1.default.utils.hex.fromBytes(encryptionKeyBuffer), this.env, masterWalletResponse.id);
+        return new recoveryKit_1.LtcRecoveryKit(name, blockchain_1.BlockchainType.LITECOIN, masterWalletResponse.henesisKey, accountKey, backupKey, js_base64_1.Base64.encode(encryptedPassphrase), aes_js_1.default.utils.hex.fromBytes(encryptionKeyBuffer), this.env, masterWalletResponse.id);
     }
     async createMasterWalletWithKit(recoveryKit) {
         const accountKey = recoveryKit.getAccountKey();
@@ -95,7 +95,7 @@ class LtcWallets extends wallets_1.Wallets {
         return {
             id,
             name: walletName,
-            blockchain: blockchain_1.BlockchainType.BITCOIN,
+            blockchain: blockchain_1.BlockchainType.LITECOIN,
             henesisKey: {
                 pub: masterWalletResponse.henesisKey.pub,
                 keyFile: undefined,

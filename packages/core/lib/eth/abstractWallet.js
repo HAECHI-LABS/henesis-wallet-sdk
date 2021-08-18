@@ -36,13 +36,12 @@ function getAddressFromCompressedPub(pub) {
 exports.getAddressFromCompressedPub = getAddressFromCompressedPub;
 class EthLikeWallet extends wallet_1.Wallet {
     constructor(client, data, keychains, blockchain, baseUrl) {
-        super(client, keychains, baseUrl);
+        super(client, keychains, baseUrl, blockchain);
         this.DEFAULT_CONTRACT_CALL_GAS_LIMIT = new bn_js_1.default(1000000);
         this.DEFAULT_COIN_TRANSFER_GAS_LIMIT = new bn_js_1.default(150000);
         this.DEFAULT_TOKEN_TRANSFER_GAS_LIMIT = new bn_js_1.default(500000);
         this.DEFAULT_NFT_TRANSFER_GAS_LIMIT = new bn_js_1.default(1);
         this.data = data;
-        this.blockchain = blockchain;
         this.coins = new coins_1.Coins(this.client);
     }
     getChain() {

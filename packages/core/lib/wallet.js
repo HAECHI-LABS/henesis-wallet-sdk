@@ -41,11 +41,12 @@ exports.convertWalletStatus = (status) => {
     return byWalletStatus[status];
 };
 class Wallet {
-    constructor(client, keychains, baseUrl) {
+    constructor(client, keychains, baseUrl, blockchain) {
         this.withdrawalApprovalUrl = "/withdrawal-approvals";
         this.client = client;
         this.keychains = keychains;
         this.baseUrl = baseUrl;
+        this.blockchain = blockchain;
     }
     recoverPassphrase(encryptedPassphrase) {
         try {

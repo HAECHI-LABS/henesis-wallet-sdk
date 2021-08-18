@@ -73,7 +73,8 @@ export declare abstract class Wallet<T> {
     protected readonly withdrawalApprovalUrl: string;
     protected readonly baseUrl: any;
     protected readonly keychains: Keychains;
-    protected constructor(client: Client, keychains: Keychains, baseUrl: string);
+    protected readonly blockchain: BlockchainType;
+    protected constructor(client: Client, keychains: Keychains, baseUrl: string, blockchain: BlockchainType);
     abstract getChain(): BlockchainType;
     abstract getBalance(flag?: boolean, symbol?: string): Promise<Balance[]>;
     abstract getAddress(): string;

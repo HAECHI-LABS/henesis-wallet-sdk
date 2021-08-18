@@ -33,7 +33,6 @@ export interface FilWalletData extends FilAbstractWalletData {
 export declare abstract class FilAbstractWallet extends Wallet<FilTransaction> {
     protected data: FilWalletData;
     protected keychains: FilKeychains;
-    protected readonly blockchain: BlockchainType;
     protected constructor(client: Client, data: FilWalletData, keychains: FilKeychains, baseUrl: string);
     getChain(): BlockchainType;
     abstract transfer(to: string, amount: BN, passphrase: string): Promise<FilTransfer>;

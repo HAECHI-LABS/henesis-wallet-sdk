@@ -19,7 +19,7 @@ exports.transformWalletData = (data) => {
 };
 class LtcMasterWallet extends wallet_1.Wallet {
     constructor(data, client, keychains, env) {
-        super(client, keychains, `/wallets/${data.id}`);
+        super(client, keychains, `/wallets/${data.id}`, blockchain_1.BlockchainType.LITECOIN);
         this.data = data;
         this.env = env;
     }
@@ -95,7 +95,7 @@ class LtcMasterWallet extends wallet_1.Wallet {
         };
     }
     getChain() {
-        return blockchain_1.BlockchainType.LITECOIN;
+        return this.blockchain;
     }
     async getBalance() {
         const response = await this.client.get(`${this.baseUrl}/balance`);
