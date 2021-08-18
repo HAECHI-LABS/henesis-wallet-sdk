@@ -1,6 +1,6 @@
 import { Coin, SDK } from "@haechi-labs/henesis-wallet-core";
 import { Injectable } from "@nestjs/common";
-import { CoinDTO } from "../dto/coin.dto";
+import { CoinDTO } from "../../eth/dto/coin.dto";
 
 @Injectable()
 export class CoinsService {

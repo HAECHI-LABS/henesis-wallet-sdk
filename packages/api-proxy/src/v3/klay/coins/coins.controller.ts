@@ -7,7 +7,7 @@ import {
   ApiOperation,
   ApiTags,
 } from "@nestjs/swagger";
-import { CoinDTO, EXAMPLE_ETHEREUM_COIN_DTO } from "../dto/coin.dto";
+import { CoinDTO, EXAMPLE_ETHEREUM_COIN_DTO } from "../../eth/dto/coin.dto";
 import express from "express";
 import {
   ApiResponseContentGenerator,
@@ -16,14 +16,14 @@ import {
   PathParams,
   ReadMeExtension,
 } from "../../../decorators";
-import { COIN_REQUIRED } from "../dto/params";
+import { COIN_REQUIRED } from "../../eth/dto/params";
 import {
   AccessTokenNotProvidedException,
   EXAMPLE_NO_COIN_EXCEPTION_DTO,
   InvalidAccessIpException,
   InvalidAccessTokenException,
   NoCoinException,
-} from "../dto/exceptions.dto";
+} from "../../eth/dto/exceptions.dto";
 
 @Controller("coins")
 @ApiTags("coins")
