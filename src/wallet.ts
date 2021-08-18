@@ -168,10 +168,18 @@ export abstract class Wallet<T> {
   protected readonly withdrawalApprovalUrl: string = "/withdrawal-approvals";
   protected readonly baseUrl;
   protected readonly keychains: Keychains;
-  protected constructor(client: Client, keychains: Keychains, baseUrl: string) {
+  protected readonly blockchain: BlockchainType;
+
+  protected constructor(
+    client: Client,
+    keychains: Keychains,
+    baseUrl: string,
+    blockchain: BlockchainType
+  ) {
     this.client = client;
     this.keychains = keychains;
     this.baseUrl = baseUrl;
+    this.blockchain = blockchain;
   }
   abstract getChain(): BlockchainType;
   abstract getBalance(flag?: boolean, symbol?: string): Promise<Balance[]>;
