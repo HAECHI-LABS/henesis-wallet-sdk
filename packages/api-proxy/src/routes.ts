@@ -5,6 +5,7 @@ import { EthModule } from "./v3/eth/eth.module";
 import { EthModule as EthV2Module } from "./v2/eth/eth.module";
 import { KlayModule as KlayV2Module } from "./v2/klay/klay.module";
 import { BtcModule as BtcV2Module } from "./v2/btc/btc.module";
+import { LtcModule as LtcV2Module } from "./v2/ltc/ltc.module";
 import { FilModule } from "./v3/fil/fil.module";
 
 export const routes: Routes = [
@@ -25,6 +26,10 @@ export const routes: Routes = [
       {
         path: "/btc",
         module: BtcV2Module,
+      },
+      {
+        path: "/ltc",
+        module: LtcV2Module,
       },
     ],
   },

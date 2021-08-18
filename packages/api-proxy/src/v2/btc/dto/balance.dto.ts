@@ -14,6 +14,13 @@ export const EXAMPLE_BITCOIN_BALANCE_DTO: BalanceDTO = {
   symbol: "BTC",
 };
 
+export const EXAMPLE_LITECOIN_BALANCE_DTO: BalanceDTO = {
+  ...EXAMPLE_BITCOIN_BALANCE_DTO,
+  coinType: "LTC",
+  name: "라이트코인",
+  symbol: "LTC",
+};
+
 export class BalanceDTO {
   @ApiModelProperty({
     description: "암호화폐 타입",

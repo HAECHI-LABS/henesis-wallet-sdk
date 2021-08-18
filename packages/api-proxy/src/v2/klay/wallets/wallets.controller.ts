@@ -111,7 +111,7 @@ export class WalletsController {
   })
   @ApiOperation({
     summary: "마스터 지갑 조회하기",
-    description: "마스터 지갑 목록을 조회합니다.",
+    description: "특정 마스터 지갑을 조회합니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID)
   @ReadMeExtension()

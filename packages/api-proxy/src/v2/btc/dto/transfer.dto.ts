@@ -1,6 +1,7 @@
 import {
   BtcTransactionDTO,
   EXAMPLE_BITCOIN_BTC_TRANSACTION_DTO,
+  EXAMPLE_LITECOIN_BTC_TRANSACTION_DTO,
 } from "./btc-transaction.dto";
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
@@ -29,6 +30,13 @@ export const EXAMPLE_BITCOIN_TRANSFER_DTO: TransferDTO = {
   feeAmount: "0x2ee",
   confirmation: "0x8a3b",
   metadata: "metadata",
+};
+
+export const EXAMPLE_LITECOIN_TRANSFER_DTO: TransferDTO = {
+  ...EXAMPLE_BITCOIN_TRANSFER_DTO,
+  receivedAt: "QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV",
+  sendTo: "QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV",
+  transaction: EXAMPLE_LITECOIN_BTC_TRANSACTION_DTO,
 };
 
 export class TransferDTO {
