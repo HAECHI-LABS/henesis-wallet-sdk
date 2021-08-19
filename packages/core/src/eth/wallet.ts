@@ -440,7 +440,7 @@ export class EthWallet extends EthLikeWallet {
       n,
       tokenOnchainId,
       otpCode,
-      gasPrice ? gasPrice : undefined,
+      gasPrice,
       gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT,
       metadata
     );
