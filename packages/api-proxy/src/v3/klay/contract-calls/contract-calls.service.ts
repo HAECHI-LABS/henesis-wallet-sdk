@@ -20,7 +20,7 @@ export class ContractCallsService {
       status: EventStatus;
     }
   ): Promise<PaginationDTO<ContractCallsDTO>> {
-    const result = await sdk.eth.events.getCallEvents({
+    const result = await sdk.klay.events.getCallEvents({
       walletId: options.walletId,
       symbol: options.ticker,
       updatedAtGte: options.updatedAtGte,

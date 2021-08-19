@@ -6,7 +6,7 @@ import { BalanceDTO } from "../../eth/dto/balance.dto";
 export class FeeWalletService {
   public async getBalance(sdk: SDK): Promise<BalanceDTO> {
     return BalanceDTO.fromBalance(
-      await sdk.eth.henesisKeys.getHenesisKeyBalance()
+      await sdk.klay.henesisKeys.getHenesisKeyBalance()
     );
   }
 }

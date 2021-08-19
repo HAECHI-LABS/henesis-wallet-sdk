@@ -19,6 +19,7 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import {
+  ApiPaginationResponse,
   ApiResponseContentGenerator,
   ApiResponseContentsGenerator,
   AuthErrorResponses,
@@ -45,8 +46,11 @@ import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto"
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
 import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
 import {
+  ADDRESS_OPTIONAL,
   MASTER_WALLET_ID_REQUIRED,
   NAME_OPTIONAL,
+  SIZE_OPTIONAL,
+  SORT_OPTIONAL,
   TICKER_OPTIONAL,
   USER_WALLET_ID_REQUIRED,
 } from "../../eth/dto/params";
@@ -62,9 +66,12 @@ import {
   EXAMPLE_ETHEREUM_MASTER_WALLET_DTO,
   MasterWalletDTO,
 } from "../../eth/dto/master-wallet.dto";
-import { UserWalletDTO } from "../../../v2/eth/dto/user-wallet.dto";
-import { EXAMPLE_ETHEREUM_USER_WALLET_DTO } from "../../eth/dto/user-wallet.dto";
+import {
+  EXAMPLE_ETHEREUM_USER_WALLET_DTO,
+  UserWalletDTO,
+} from "../../eth/dto/user-wallet.dto";
 import { CreateUserWalletRequestDTO } from "../../eth/wallets/dto/create-user-wallet-request.dto";
+import { PaginationDTO } from "../../eth/dto/pagination.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -300,13 +307,14 @@ export class WalletsController {
   }
 
   @Get("/:masterWalletId/user-wallets")
-  @ApiOkResponse({
-    content: ApiResponseContentGenerator(WalletDTO, [
-      EXAMPLE_ETHEREUM_USER_WALLET_DTO,
-    ]),
-    isArray: true,
-  })
-  @Queries(NAME_OPTIONAL)
+  @ApiPaginationResponse(UserWalletDTO, EXAMPLE_ETHEREUM_USER_WALLET_DTO)
+  @Queries(
+    NAME_OPTIONAL,
+    SIZE_OPTIONAL,
+    NAME_OPTIONAL,
+    SORT_OPTIONAL,
+    ADDRESS_OPTIONAL
+  )
   @ApiOperation({
     summary: "전체 사용자 지갑 목록 조회하기",
     description: "특정 마스터 지갑에 속한 모든 사용자 지갑 목록을 조회합니다.",
@@ -315,12 +323,22 @@ export class WalletsController {
   public async getUserWallets(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
-    @Query("name") name?: string
-  ): Promise<UserWalletDTO[]> {
+    @Query("page") page?: number,
+    @Query("size") size?: number,
+    @Query("sort") sort?: string,
+    @Query("name") name?: string,
+    @Query("address") address?: string
+  ): Promise<PaginationDTO<UserWalletDTO>> {
     return await this.walletsService.getUserWallets(
       request.sdk,
       masterWalletId,
-      name,
+      {
+        page,
+        size,
+        sort,
+        name,
+        address,
+      },
       request
     );
   }
