@@ -24,6 +24,7 @@ import { changeUrlHost } from "../../../utils/pagination";
 import express from "express";
 import { TransferNftRequestDTO } from "./dto/transfer-nft-request.dto";
 import { NftBalanceDTO } from "../dto/nft-balance.dto";
+import { GetDepositAddressOption } from "./dto/get-deposit-addresses-option.dto";
 
 @Injectable()
 export class WalletsService {

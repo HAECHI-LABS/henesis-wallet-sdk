@@ -12,10 +12,6 @@ import {
   TransactionDTO,
 } from "./transaction.dto";
 import {
-  EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO,
-  MasterWalletDTO,
-} from "./master-wallet.dto";
-import {
   EXAMPLE_ETH_KLAY_USER_WALLET_DTO,
   UserWalletDTO,
 } from "./user-wallet.dto";

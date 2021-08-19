@@ -9,6 +9,8 @@ export const EXAMPLE_BITCOIN_KEY_DTO: KeyDTO = {
   keyFile: `{\\"iv\\":\\"fk4p/phK72zMXOf7NzHr8g==\\",\\"v\\":1,\\"iter\\":10000,\\"ks\\":256,\\"ts\\":64,\\"mode\\":\\"ccm\\",\\"adata\\":\\"\\",\\"cipher\\":\\"aes\\",\\"salt\\":\\"31kCiaHPr1P=\\",\\"ct\\":\\"B2x5ckUjDMs+oU+jF5C8BkT3DHAfIw9gFEETSBI3U1+8xkUC6KQSh132Q2SZewhkYezSh3A8kKir36hDttFCy58o9GDHR+SO\\"}`,
 };
 
+export const EXAMPLE_LITECOIN_KEY_DTO: KeyDTO = EXAMPLE_BITCOIN_KEY_DTO;
+
 export class KeyDTO {
   @ApiModelPropertyOptional({
     description: "Key의 주소 (BTC 지갑은 값이 없습니다)",

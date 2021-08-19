@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Query, Request } from "@nestjs/common";
+import { Controller, Get, Query, Request } from "@nestjs/common";
 import { ContractCallsService } from "./contract-calls.service";
 import { ContractCallsDTO } from "../../eth/dto/contract-calls.dto";
 import express from "express";

@@ -1,6 +1,3 @@
-// FIXME: the code is copied from btc and changed only btc->ltc
-// we need to check the code line by line later.
-
 import { Client } from "../httpClient";
 import { LtcMasterWallet, transformWalletData } from "./wallet";
 import { Wallets, WalletSearchOptions } from "../wallets";
@@ -11,7 +8,7 @@ import { Env } from "../sdk";
 import { BlockchainType } from "../blockchain";
 import { Base64 } from "js-base64";
 import { LtcRecoveryKit } from "./recoveryKit";
-import { address as BitcoinAddress, networks } from "bitcoinjs-lib";
+import { address as BitcoinAddress } from "bitcoinjs-lib";
 import {
   ActivateMasterWalletRequest,
   CreateInactiveMasterWalletRequest,
@@ -20,6 +17,7 @@ import {
 } from "../__generate__/ltc";
 import { checkNullAndUndefinedParameter } from "..";
 import { InactiveWallet } from "../wallet";
+import { litecoinMainnet, litecoinTestnet } from "./network";
 
 export class LtcWallets extends Wallets<LtcMasterWallet> {
   constructor(env: Env, client: Client, keychains: Keychains) {
@@ -65,12 +63,13 @@ export class LtcWallets extends Wallets<LtcMasterWallet> {
     );
   }
 
+  // TODO: litecoin의 legacy p2sh addres prefix를 잘 처리할 수 있는지 확인 필요.
   verifyAddress(address: string): boolean {
     checkNullAndUndefinedParameter({ address });
     try {
       BitcoinAddress.toOutputScript(
         address,
-        this.env === Env.Prod ? networks.bitcoin : networks.testnet
+        this.env === Env.Prod ? litecoinMainnet : litecoinTestnet
       );
       return true;
     } catch (e) {
@@ -120,7 +119,7 @@ export class LtcWallets extends Wallets<LtcMasterWallet> {
 
     return new LtcRecoveryKit(
       name,
-      BlockchainType.BITCOIN,
+      BlockchainType.LITECOIN,
       masterWalletResponse.henesisKey,
       accountKey,
       backupKey,
@@ -175,7 +174,7 @@ export class LtcWallets extends Wallets<LtcMasterWallet> {
     return {
       id,
       name: walletName,
-      blockchain: BlockchainType.BITCOIN,
+      blockchain: BlockchainType.LITECOIN,
       henesisKey: {
         pub: masterWalletResponse.henesisKey.pub,
         keyFile: undefined,

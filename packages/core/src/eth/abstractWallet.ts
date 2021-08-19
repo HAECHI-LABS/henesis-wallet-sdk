@@ -93,8 +93,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   // TODO: Implement me!
   protected readonly DEFAULT_NFT_TRANSFER_GAS_LIMIT: BN = new BN(1);
 
-  protected readonly blockchain: BlockchainType;
-
   protected readonly coins: Coins;
   protected readonly nfts: Nfts;
 
@@ -105,9 +103,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     blockchain: BlockchainType,
     baseUrl: string
   ) {
-    super(client, keychains, baseUrl);
+    super(client, keychains, baseUrl, blockchain);
     this.data = data;
-    this.blockchain = blockchain;
     this.coins = new Coins(this.client);
   }
 

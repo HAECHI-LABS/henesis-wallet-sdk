@@ -23,7 +23,7 @@ import {
 } from "./utils";
 import BN from "bn.js";
 import { BNConverter } from "../utils/common";
-import { MethodMultisig, MethodTransfer } from "./fil-core-lib/types";
+import { MethodTransfer } from "./fil-core-lib/types";
 import { FilTransfer } from "./transfers";
 
 export interface FilDepositAddressData

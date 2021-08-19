@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
-import { WalletDTO } from "../../eth/dto/wallet.dto";
 import { BalanceDTO } from "../../eth/dto/balance.dto";
 import { ChangeWalletNameRequestDTO } from "../../eth/wallets/dto/change-wallet-name-request.dto";
 import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto";
@@ -8,22 +7,16 @@ import { TransactionDTO } from "../../eth/dto/transaction.dto";
 import BN from "bn.js";
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
 import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
-import { PaginationDTO } from "../../eth/dto/pagination.dto";
-import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
-import { CreateDepositAddressRequestDTO } from "../../eth/wallets/dto/create-deposit-address-request.dto";
 import {
   EthMasterWallet,
   EthWallet,
-  UserWalletPaginationOptions,
 } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 import { ReplaceTransactionRequestDTO } from "../../eth/transactions/dto/replace-transaction-request.dto";
 import { EthTransaction } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
-import { changeUrlHost } from "../../../utils/pagination";
 import express from "express";
 import { MasterWalletDTO } from "../../eth/dto/master-wallet.dto";
 import { UserWalletDTO } from "../../eth/dto/user-wallet.dto";
 import { EthUserWallet } from "@haechi-labs/henesis-wallet-core/lib/eth/userWallet";
-import { object } from "../../../utils/object";
 import { CreateUserWalletRequestDTO } from "../../../v2/eth/dto/create-user-wallet-request.dto";
 
 @Injectable()

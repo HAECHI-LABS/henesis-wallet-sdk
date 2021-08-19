@@ -1,6 +1,3 @@
-// FIXME: the code is copied from btc and changed only btc->ltc
-// we need to check the code line by line later.
-
 import { Client } from "../httpClient";
 import BN from "bn.js";
 import {
@@ -13,7 +10,6 @@ import {
 } from "../types";
 import {
   address,
-  networks,
   script,
   Transaction as LitecoinTransaction,
 } from "bitcoinjs-lib";
@@ -50,6 +46,7 @@ import {
   getDepositAddressApi,
 } from "../apis/ltc/wallet";
 import { convertTransferDTO } from "./utils";
+import { litecoinMainnet, litecoinTestnet } from "./network";
 
 export interface LtcTransaction
   extends Omit<
@@ -144,7 +141,7 @@ export class LtcMasterWallet extends Wallet<LtcTransaction> {
     keychains: Keychains,
     env: Env
   ) {
-    super(client, keychains, `/wallets/${data.id}`);
+    super(client, keychains, `/wallets/${data.id}`, BlockchainType.LITECOIN);
     this.data = data;
     this.env = env;
   }
@@ -177,7 +174,7 @@ export class LtcMasterWallet extends Wallet<LtcTransaction> {
       tx.addOutput(
         address.toOutputScript(
           output.to,
-          this.env === Env.Prod ? networks.bitcoin : networks.testnet
+          this.env === Env.Prod ? litecoinMainnet : litecoinTestnet
         ),
         new BN(output.amount.slice(2), "hex").toNumber()
       );
@@ -296,7 +293,7 @@ export class LtcMasterWallet extends Wallet<LtcTransaction> {
   }
 
   getChain(): BlockchainType {
-    return BlockchainType.BITCOIN;
+    return this.blockchain;
   }
 
   async getBalance(): Promise<Balance[]> {
@@ -439,7 +436,7 @@ export class LtcMasterWallet extends Wallet<LtcTransaction> {
     return {
       id,
       name: walletName,
-      blockchain: BlockchainType.BITCOIN,
+      blockchain: BlockchainType.LITECOIN,
       address,
       status,
       createdAt,
