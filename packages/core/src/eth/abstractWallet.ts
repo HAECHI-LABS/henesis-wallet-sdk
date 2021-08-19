@@ -111,10 +111,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     this.coins = new Coins(this.client);
   }
 
-  getNfts(): Nfts {
-    return this.nfts;
-  }
-
   getChain(): BlockchainType {
     return this.blockchain;
   }

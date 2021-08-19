@@ -4,9 +4,26 @@ import { NftBalance } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWal
 
 export const EXAMPLE_ETHEREUM_NFT_BALANCE_DTO: NftBalanceDTO = {
   nft: EXAMPLE_ETHEREUM_NFT_DTO,
-  tokenOnchainId: "PR",
-  tokenUri: "PR",
-  tokenMetadata: {},
+  tokenOnchainId: "1",
+  tokenUri: "https://opensea-creatures-api.herokuapp.com/api/creature/3",
+  tokenMetadata: {
+    description:
+      "Friendly OpenSea Creature that enjoys long swims in the ocean.",
+    external_url: "https://openseacreatures.io/3",
+    image:
+      "https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png",
+    name: "Dave Starbelly",
+    attributes: [
+      {
+        trait_type: "Base",
+        value: "Starfish",
+      },
+      {
+        trait_type: "Eyes",
+        value: "Big",
+      },
+    ],
+  },
 };
 
 export class NftBalanceDTO {
@@ -23,7 +40,7 @@ export class NftBalanceDTO {
   tokenOnchainId: string;
 
   @ApiModelProperty({
-    description: "토큰의 Uri",
+    description: "토큰의 URI",
     example: EXAMPLE_ETHEREUM_NFT_BALANCE_DTO.tokenUri,
   })
   tokenUri: string;

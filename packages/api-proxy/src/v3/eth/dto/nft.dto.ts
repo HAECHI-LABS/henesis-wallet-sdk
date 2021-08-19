@@ -3,8 +3,8 @@ import { Nft } from "@haechi-labs/henesis-wallet-core/lib/eth/nft";
 
 export const EXAMPLE_ETHEREUM_NFT_DTO: NftDTO = {
   id: 11,
-  name: "PR",
-  symbol: "PR",
+  name: "Dave Starbelly",
+  symbol: "1",
   address: "0xdd00383e5a51166bba3e96d84c14a36d72e6c128",
 };
 

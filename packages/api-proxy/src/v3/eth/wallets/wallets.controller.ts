@@ -559,7 +559,7 @@ export class WalletsController {
   @Queries(TICKER_OPTIONAL)
   @ApiOperation({
     summary: "NFT 잔고 조회하기",
-    description: "특정 NFT 컨트랙트의 잔고를 조회합니다.",
+    description: "특정 지갑의 NFT 잔고를 조회합니다.",
   })
   @ReadMeExtension()
   public async getNftBalance(
