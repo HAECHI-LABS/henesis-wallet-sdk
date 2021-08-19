@@ -535,7 +535,7 @@ export class WalletsController {
   @Queries(TICKER_OPTIONAL)
   @ApiOperation({
     summary: "NFT 출금하기",
-    description: "특정 NFT 컨트랙트에서 출금합니다.",
+    description: "특정 지갑에서 NFT 토큰을 출금합니다.",
   })
   @ReadMeExtension()
   public async transferNft(
