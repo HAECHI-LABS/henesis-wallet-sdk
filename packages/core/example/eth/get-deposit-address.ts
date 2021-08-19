@@ -1,6 +1,5 @@
 /// <reference path="../../src/typings/index.d.ts" />
 import { SDK, Env } from "../../src";
-import { EthWallet } from "../../src/eth/wallet";
 import "dotenv/config";
 
 async function main() {

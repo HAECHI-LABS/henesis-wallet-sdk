@@ -1,8 +1,7 @@
 import BN from "bn.js";
 
 import { Client } from "./httpClient";
-import { Pagination, PaginationOptions, Secret, Balance } from "./types";
-import { Account, AccountWithIps, Role } from "./accounts";
+import { Pagination, PaginationOptions, Balance } from "./types";
 import { makeQueryString } from "./utils/url";
 import { BlockchainType } from "./blockchain";
 import { SimplifiedCoinInternalDTO } from "./__generate__/eth";
@@ -66,8 +65,8 @@ export class Billings {
     year: string;
     month: string;
   }): Promise<Invoice> {
-    const { orgId } = request;
-    const queryString: string = makeQueryString({});
+    // const { orgId } = request;
+    // const queryString: string = makeQueryString({});
 
     return Promise.resolve({
       id: "1",
@@ -109,7 +108,7 @@ export class Billings {
     } & PaginationOptions
   ): Promise<Pagination<InvoiceExternalWithdrawals>> {
     const { orgId, ...rest } = request;
-    const queryString: string = makeQueryString(rest);
+    // const queryString: string = makeQueryString(rest);
 
     return Promise.resolve({
       results: [
@@ -146,7 +145,7 @@ export class Billings {
     endAt?: string;
   }): Promise<InvoiceTokenUsage[]> {
     const { orgId, ...rest } = request;
-    const queryString: string = makeQueryString(rest);
+    // const queryString: string = makeQueryString(rest);
 
     return Promise.resolve([
       {
@@ -171,7 +170,7 @@ export class Billings {
     endAt?: string;
   }): Promise<InvoiceMainnetUsage[]> {
     const { orgId, ...rest } = request;
-    const queryString: string = makeQueryString(rest);
+    // const queryString: string = makeQueryString(rest);
 
     return Promise.resolve([
       {

@@ -19,7 +19,6 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import {
-  ApiPaginationResponse,
   ApiResponseContentGenerator,
   ApiResponseContentsGenerator,
   AuthErrorResponses,
@@ -33,10 +32,6 @@ import {
   WalletDTO,
 } from "../../eth/dto/wallet.dto";
 import {
-  EXAMPLE_ETHEREUM_PAGINATION_DEPOSIT_ADDRESS_DTO,
-  PaginationDTO,
-} from "../../eth/dto/pagination.dto";
-import {
   BalanceDTO,
   EXAMPLE_ETHEREUM_BALANCE_DTO,
 } from "../../eth/dto/balance.dto";
@@ -44,39 +39,25 @@ import {
   EXAMPLE_ETHEREUM_TRANSACTION_DTO,
   TransactionDTO,
 } from "../../eth/dto/transaction.dto";
-import {
-  DepositAddressDTO,
-  EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO,
-} from "../../eth/dto/deposit-address.dto";
+import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
 import { ChangeWalletNameRequestDTO } from "../../eth/wallets/dto/change-wallet-name-request.dto";
 import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto";
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
 import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
-import { CreateDepositAddressRequestDTO } from "../../eth/wallets/dto/create-deposit-address-request.dto";
 import {
-  DEPOSIT_ADDRESS_ID_REQUIRED,
-  DEPOSIT_ADDRESS_OPTIONAL,
   MASTER_WALLET_ID_REQUIRED,
   NAME_OPTIONAL,
-  PAGE_OPTIONAL,
-  SIZE_OPTIONAL,
   TICKER_OPTIONAL,
-  TRANSACTION_ID_REQUIRED,
   USER_WALLET_ID_REQUIRED,
-  WALLET_ID_REQUIRED,
 } from "../../eth/dto/params";
 import express from "express";
 import {
   DepositAddressNotFoundException,
-  EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO,
   EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
-  EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO,
   EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
   NoWalletNameException,
-  TransactionIdNotFoundException,
   WalletNotFoundException,
 } from "../../eth/dto/exceptions.dto";
-import { ReplaceTransactionRequestDTO } from "../../eth/transactions/dto/replace-transaction-request.dto";
 import {
   EXAMPLE_ETHEREUM_MASTER_WALLET_DTO,
   MasterWalletDTO,

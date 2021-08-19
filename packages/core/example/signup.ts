@@ -1,6 +1,6 @@
 /// <reference path="../src/typings/index.d.ts" />
 import { SDK, Env } from "../src";
-import { Account, Role } from "../src/accounts";
+import { Role } from "../src/accounts";
 import "dotenv/config";
 
 async function main() {

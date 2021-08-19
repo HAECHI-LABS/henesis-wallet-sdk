@@ -12,13 +12,7 @@ describe("BTC integration tests", () => {
   const sdkAdmin = new SDK({
     accessToken: config.admin.accessToken,
     secret: config.admin.secret,
-    env: Env.Dev
-  });
-
-  const sdkViewer = new SDK({
-    accessToken: config.viewer.accessToken,
-    secret: config.viewer.secret,
-    env: Env.Dev
+    env: Env.Dev,
   });
 
   describe("#createMasterWallet()", () => {
