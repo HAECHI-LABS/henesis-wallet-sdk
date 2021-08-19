@@ -156,7 +156,7 @@ export class EthWallet extends EthLikeWallet {
     return {
       id,
       name: walletName,
-      blockchain: transformBlockchainType(masterWallet.blockchain),
+      blockchain: transformBlockchainType(blockchain),
       address,
       status,
       createdAt,

@@ -21,6 +21,8 @@ async function main() {
   /* 사용자 지갑, 입금 주소 */
   const userWallet = await masterWalletV2.getUserWallet(EthUserWalletId);
   const depositAddress = await wallet.getDepositAddress(EthDepositAddressId);
+
+  console.log({ userWallet, depositAddress });
 }
 
 main();

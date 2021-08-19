@@ -7,8 +7,6 @@ import {
 import _ from "lodash";
 import { FormatInvalidError, ValidationParameterError } from "../error";
 
-const packageJson = require("../../package.json");
-
 export class ObjectConverter {
   static toSnakeCase(obj: any) {
     return this.changeObjectProperty(obj, toStringSnakeCase);
