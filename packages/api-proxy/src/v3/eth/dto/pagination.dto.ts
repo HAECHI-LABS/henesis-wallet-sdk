@@ -12,6 +12,11 @@ import {
   DepositAddressDTO,
   EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO,
 } from "./deposit-address.dto";
+import {
+  EXAMPLE_ETHEREUM_NFT_BALANCE_DTO,
+  NftBalanceDTO,
+} from "./nft-balance.dto";
+import { NftDTO } from "./nft.dto";
 
 export const EXAMPLE_ETHEREUM_PAGINATION_METADATA: PaginationMetadata = {
   nextUrl: "http://localhost:3000/api/v3/ethereum/transfers?page=2",
@@ -23,6 +28,12 @@ export const EXAMPLE_ETHEREUM_PAGINATION_CONTRACT_CALLS_DTO: PaginationDTO<Contr
   {
     pagination: EXAMPLE_ETHEREUM_PAGINATION_METADATA,
     results: [EXAMPLE_ETHEREUM_CONTRACT_CALLS_DTO],
+  };
+
+export const EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO: PaginationDTO<NftBalanceDTO> =
+  {
+    pagination: EXAMPLE_ETHEREUM_PAGINATION_METADATA,
+    results: [EXAMPLE_ETHEREUM_NFT_BALANCE_DTO],
   };
 
 export const EXAMPLE_ETHEREUM_PAGINATION_DEPOSIT_ADDRESS_DTO: PaginationDTO<DepositAddressDTO> =

@@ -38,6 +38,10 @@ export class Nft {
     return this.nftData.address;
   }
 
+  getSymbol(): string {
+    return this.nftData.symbol;
+  }
+
   async buildTransferMultiSigPayload(
     wallet: EthLikeWallet,
     to: string,
