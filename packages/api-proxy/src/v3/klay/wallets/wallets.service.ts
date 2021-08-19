@@ -9,11 +9,8 @@ import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transa
 import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
 import {
   EthMasterWallet,
-  EthWallet,
   UserWalletPaginationOptions,
 } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
-import { ReplaceTransactionRequestDTO } from "../../eth/transactions/dto/replace-transaction-request.dto";
-import { EthTransaction } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import express from "express";
 import { MasterWalletDTO } from "../../eth/dto/master-wallet.dto";
 import { UserWalletDTO } from "../../eth/dto/user-wallet.dto";
@@ -100,10 +97,10 @@ export class WalletsService {
         createUserWalletRequestDTO.name,
         createUserWalletRequestDTO.passphrase,
         createUserWalletRequestDTO.gasPrice
-          ? BNConverter.hexStringToBN(createUserWalletRequestDTO.gasPrice)
+          ? new BN(createUserWalletRequestDTO.gasPrice)
           : undefined,
         createUserWalletRequestDTO.salt
-          ? BNConverter.hexStringToBN(createUserWalletRequestDTO.salt)
+          ? new BN(createUserWalletRequestDTO.salt)
           : undefined
       )
     ).getData();
@@ -185,15 +182,11 @@ export class WalletsService {
     return await masterWallet.transfer(
       await WalletsService.getCoinByTicker(sdk, request.ticker),
       request.to,
-      BNConverter.hexStringToBN(request.amount),
+      new BN(request.amount),
       request.passphrase,
       null,
-      request.gasPrice
-        ? BNConverter.hexStringToBN(request.gasPrice)
-        : undefined,
-      request.gasLimit
-        ? BNConverter.hexStringToBN(request.gasLimit)
-        : undefined,
+      request.gasPrice ? new BN(request.gasPrice) : undefined,
+      request.gasLimit ? new BN(request.gasLimit) : undefined,
       request.metadata
     );
   }
@@ -213,15 +206,11 @@ export class WalletsService {
     return await userWallet.transfer(
       await WalletsService.getCoinByTicker(sdk, request.ticker),
       request.to,
-      BNConverter.hexStringToBN(request.amount),
+      new BN(request.amount),
       request.passphrase,
       null,
-      request.gasPrice
-        ? BNConverter.hexStringToBN(request.gasPrice)
-        : undefined,
-      request.gasLimit
-        ? BNConverter.hexStringToBN(request.gasLimit)
-        : undefined,
+      request.gasPrice ? new BN(request.gasPrice) : undefined,
+      request.gasLimit ? new BN(request.gasLimit) : undefined,
       request.metadata
     );
   }
@@ -238,14 +227,12 @@ export class WalletsService {
 
     return await masterWallet.contractCall(
       request.to,
-      BNConverter.hexStringToBN(request.value),
+      new BN(request.value),
       request.data,
       request.passphrase,
       null,
-      request.gasPrice
-        ? BNConverter.hexStringToBN(request.gasPrice)
-        : undefined,
-      request.gasLimit ? BNConverter.hexStringToBN(request.gasLimit) : undefined
+      request.gasPrice ? new BN(request.gasPrice) : undefined,
+      request.gasLimit ? new BN(request.gasLimit) : undefined
     );
   }
 
@@ -263,16 +250,12 @@ export class WalletsService {
 
     return await userWallet.contractCall(
       request.to,
-      BNConverter.hexStringToBN(request.value),
+      new BN(request.value),
       request.data,
       request.passphrase,
       null,
-      request.gasPrice
-        ? BNConverter.hexStringToBN(request.gasPrice)
-        : undefined,
-      request.gasLimit
-        ? BNConverter.hexStringToBN(request.gasLimit)
-        : undefined,
+      request.gasPrice ? new BN(request.gasPrice) : undefined,
+      request.gasLimit ? new BN(request.gasLimit) : undefined,
       request.metadata
     );
   }
