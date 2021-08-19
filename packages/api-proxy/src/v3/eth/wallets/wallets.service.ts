@@ -19,6 +19,7 @@ import { ReplaceTransactionRequestDTO } from "../transactions/dto/replace-transa
 import { EthTransaction } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import { changeUrlHost } from "../../../utils/pagination";
 import express from "express";
+import { GetDepositAddressOption } from "./dto/get-deposit-addresses-option.dto";
 
 @Injectable()
 export class WalletsService {
