@@ -38,7 +38,6 @@ import {
   FlushQuerySearchCondition,
   FlushTransactionValueTransferEventDTO,
   FlushTransactionDTO,
-  CreateMultiSigTransactionRequest,
   CreateNftMultiSigTransactionRequest,
 } from "../__generate__/eth";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
@@ -157,7 +156,7 @@ export class EthWallet extends EthLikeWallet {
     return {
       id,
       name: walletName,
-      blockchain: transformBlockchainType(masterWallet.blockchain),
+      blockchain: transformBlockchainType(blockchain),
       address,
       status,
       createdAt,
