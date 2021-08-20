@@ -1,6 +1,6 @@
 import BN from "bn.js";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
-import { Key, Keychains } from "../types";
+import { Key, Keychains, Pagination, PaginationOptions } from "../types";
 import {
   formatMultiSigPayload,
   MultiSigPayload,
@@ -19,6 +19,7 @@ import {
   BatchTransactionDTO,
   CreateMultiSigTransactionRequest,
   NftBalanceDTO,
+  PaginationNftBalanceDTO,
   ReplaceTransactionRequest,
   ResendTransactionRequest,
   SignedMultiSigPayloadDTO,
@@ -32,10 +33,19 @@ import EthCrypto from "eth-crypto";
 import { Nfts } from "./nfts";
 import { makeQueryString } from "../utils/url";
 import { Nft } from "./nft";
+import {
+  EthDepositAddress,
+  transformDepositAddressData,
+} from "./depositAddress";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
 };
+
+export interface NftBalancePaginationOptions extends PaginationOptions {
+  tokenOnchainId?: string;
+  tokenName?: string;
+}
 
 export interface EthWalletData extends WalletData {
   blockchain: BlockchainType;
@@ -80,8 +90,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   protected readonly DEFAULT_CONTRACT_CALL_GAS_LIMIT: BN = new BN(1000000);
   protected readonly DEFAULT_COIN_TRANSFER_GAS_LIMIT: BN = new BN(150000);
   protected readonly DEFAULT_TOKEN_TRANSFER_GAS_LIMIT: BN = new BN(500000);
-  // TODO: Implement me!
-  protected readonly DEFAULT_NFT_TRANSFER_GAS_LIMIT: BN = new BN(1);
+  protected readonly DEFAULT_NFT_TRANSFER_GAS_LIMIT: BN = new BN(500000);
 
   protected readonly coins: Coins;
   protected readonly nfts: Nfts;
@@ -96,6 +105,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     super(client, keychains, baseUrl, blockchain);
     this.data = data;
     this.coins = new Coins(this.client);
+    this.nfts = new Nfts(this.client);
   }
 
   getChain(): BlockchainType {
@@ -298,14 +308,16 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   }
 
   async getNftBalance(
-    tokenOnchainId?: string,
-    tokenName?: string
-  ): Promise<NftBalance[]> {
-    const queryString = makeQueryString({ tokenOnchainId, tokenName });
-    const balances = await this.client.get<NoUndefinedField<NftBalanceDTO>[]>(
-      `${this.baseUrl}/nft/balance${queryString ? `?${queryString}` : ""}`
-    );
-    return balances.map((dto) => dto as NftBalance);
+    options: NftBalancePaginationOptions
+  ): Promise<Pagination<NftBalance>> {
+    const queryString = makeQueryString(options);
+    const data = await this.client.get<
+      NoUndefinedField<PaginationNftBalanceDTO>
+    >(`${this.baseUrl}/nft/balance${queryString ? `?${queryString}` : ""}`);
+    return {
+      pagination: data.pagination,
+      results: data.results.map((data) => data as NftBalance),
+    };
   }
 
   protected signPayload(

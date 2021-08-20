@@ -38,6 +38,10 @@ export class Nft {
     return this.nftData.address;
   }
 
+  getSymbol(): string {
+    return this.nftData.symbol;
+  }
+
   async buildTransferMultiSigPayload(
     wallet: EthLikeWallet,
     to: string,
@@ -49,7 +53,7 @@ export class Nft {
         .transferNFT({
           token: this.getAddress(),
           to: to,
-          tokenId: BNConverter.decimalStringToBn(tokenOnchainId),
+          tokenId: parseInt(tokenOnchainId),
         })
         .encodeABI(),
       toAddress: wallet.getAddress(),
