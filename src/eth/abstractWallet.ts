@@ -90,8 +90,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   protected readonly DEFAULT_CONTRACT_CALL_GAS_LIMIT: BN = new BN(1000000);
   protected readonly DEFAULT_COIN_TRANSFER_GAS_LIMIT: BN = new BN(150000);
   protected readonly DEFAULT_TOKEN_TRANSFER_GAS_LIMIT: BN = new BN(500000);
-  // TODO: Implement me!
-  protected readonly DEFAULT_NFT_TRANSFER_GAS_LIMIT: BN = new BN(1);
+  protected readonly DEFAULT_NFT_TRANSFER_GAS_LIMIT: BN = new BN(500000);
 
   protected readonly coins: Coins;
   protected readonly nfts: Nfts;
@@ -106,6 +105,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     super(client, keychains, baseUrl, blockchain);
     this.data = data;
     this.coins = new Coins(this.client);
+    this.nfts = new Nfts(this.client);
   }
 
   getChain(): BlockchainType {
