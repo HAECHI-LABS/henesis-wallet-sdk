@@ -8,7 +8,6 @@ const bn_js_1 = __importDefault(require("bn.js"));
 const string_1 = require("./string");
 const lodash_1 = __importDefault(require("lodash"));
 const error_1 = require("../error");
-const packageJson = require("../../package.json");
 class ObjectConverter {
     static toSnakeCase(obj) {
         return this.changeObjectProperty(obj, string_1.toSnakeCase);

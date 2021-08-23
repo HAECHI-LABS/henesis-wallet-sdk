@@ -1,6 +1,6 @@
 import BN from "bn.js";
 import { BlockchainType } from "../blockchain";
-import { Key, Keychains } from "../types";
+import { Key, Keychains, Pagination, PaginationOptions } from "../types";
 import { MultiSigPayload, SignedMultiSigPayload } from "./transactions";
 import { Client } from "../httpClient";
 import BatchRequest from "./batch";
@@ -13,6 +13,10 @@ import { Nft } from "./nft";
 export declare type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
     blockchain: BlockchainType;
 };
+export interface NftBalancePaginationOptions extends PaginationOptions {
+    tokenOnchainId?: string;
+    tokenName?: string;
+}
 export interface EthWalletData extends WalletData {
     blockchain: BlockchainType;
     transactionId?: string | null;
@@ -48,7 +52,7 @@ export declare abstract class EthLikeWallet extends Wallet<EthTransaction> {
     createBatchRequest(otpCode?: string): BatchRequest;
     sendTransaction(signedMultiSigPayload: SignedMultiSigPayload, walletId: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
     getNonce(): BN;
-    getNftBalance(tokenOnchainId?: string, tokenName?: string): Promise<NftBalance[]>;
+    getNftBalance(options: NftBalancePaginationOptions): Promise<Pagination<NftBalance>>;
     protected signPayload(multiSigPayload: MultiSigPayload, passphrase: string): SignedMultiSigPayload;
     protected sendBatchTransaction(blockchain: BlockchainType, signedMultiSigPayloads: SignedMultiSigPayload[], walletId: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN): Promise<EthTransaction[]>;
     protected getGasLimitByTicker(coin: Coin): BN;

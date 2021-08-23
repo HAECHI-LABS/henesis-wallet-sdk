@@ -28,12 +28,15 @@ class Nft {
     getAddress() {
         return this.nftData.address;
     }
+    getSymbol() {
+        return this.nftData.symbol;
+    }
     async buildTransferMultiSigPayload(wallet, to, tokenOnchainId) {
         return Object.assign(Object.assign({}, (await this.buildTransferMultiSigPayloadTemplate(wallet))), { hexData: this.walletContract.methods
                 .transferNFT({
                 token: this.getAddress(),
                 to: to,
-                tokenId: common_1.BNConverter.decimalStringToBn(tokenOnchainId),
+                tokenId: parseInt(tokenOnchainId),
             })
                 .encodeABI(), toAddress: wallet.getAddress() });
     }

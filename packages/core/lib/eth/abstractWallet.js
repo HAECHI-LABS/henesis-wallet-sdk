@@ -15,6 +15,7 @@ const lodash_1 = __importDefault(require("lodash"));
 const error_1 = require("../error");
 const crypto_1 = require("crypto");
 const eth_crypto_1 = __importDefault(require("eth-crypto"));
+const nfts_1 = require("./nfts");
 const url_1 = require("../utils/url");
 function convertSignedMultiSigPayloadToDTO(signedMultiSigPayload) {
     return {
@@ -40,9 +41,10 @@ class EthLikeWallet extends wallet_1.Wallet {
         this.DEFAULT_CONTRACT_CALL_GAS_LIMIT = new bn_js_1.default(1000000);
         this.DEFAULT_COIN_TRANSFER_GAS_LIMIT = new bn_js_1.default(150000);
         this.DEFAULT_TOKEN_TRANSFER_GAS_LIMIT = new bn_js_1.default(500000);
-        this.DEFAULT_NFT_TRANSFER_GAS_LIMIT = new bn_js_1.default(1);
+        this.DEFAULT_NFT_TRANSFER_GAS_LIMIT = new bn_js_1.default(500000);
         this.data = data;
         this.coins = new coins_1.Coins(this.client);
+        this.nfts = new nfts_1.Nfts(this.client);
     }
     getChain() {
         return this.blockchain;
@@ -131,10 +133,13 @@ class EthLikeWallet extends wallet_1.Wallet {
     getNonce() {
         return common_1.BNConverter.hexStringToBN("0x" + crypto_1.randomBytes(32).toString("hex"));
     }
-    async getNftBalance(tokenOnchainId, tokenName) {
-        const queryString = url_1.makeQueryString({ tokenOnchainId, tokenName });
-        const balances = await this.client.get(`${this.baseUrl}/nft/balance${queryString ? `?${queryString}` : ""}`);
-        return balances.map((dto) => dto);
+    async getNftBalance(options) {
+        const queryString = url_1.makeQueryString(options);
+        const data = await this.client.get(`${this.baseUrl}/nft/balance${queryString ? `?${queryString}` : ""}`);
+        return {
+            pagination: data.pagination,
+            results: data.results.map((data) => data),
+        };
     }
     signPayload(multiSigPayload, passphrase) {
         return {

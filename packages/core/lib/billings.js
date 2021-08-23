@@ -16,7 +16,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Billings = void 0;
 const bn_js_1 = __importDefault(require("bn.js"));
-const url_1 = require("./utils/url");
 const blockchain_1 = require("./blockchain");
 class Billings {
     constructor(client) {
@@ -24,8 +23,6 @@ class Billings {
         this.client = client;
     }
     async getInvoice(request) {
-        const { orgId } = request;
-        const queryString = url_1.makeQueryString({});
         return Promise.resolve({
             id: "1",
             orgName: "test",
@@ -58,7 +55,6 @@ class Billings {
     }
     async getInvoiceExternalWithdrawals(request) {
         const { orgId } = request, rest = __rest(request, ["orgId"]);
-        const queryString = url_1.makeQueryString(rest);
         return Promise.resolve({
             results: [
                 {
@@ -88,7 +84,6 @@ class Billings {
     }
     async getInvoiceTokenListingUsage(request) {
         const { orgId } = request, rest = __rest(request, ["orgId"]);
-        const queryString = url_1.makeQueryString(rest);
         return Promise.resolve([
             {
                 invoiceId: "1",
@@ -106,7 +101,6 @@ class Billings {
     }
     async getInvoiceMainnetUsage(request) {
         const { orgId } = request, rest = __rest(request, ["orgId"]);
-        const queryString = url_1.makeQueryString(rest);
         return Promise.resolve([
             {
                 invoiceId: "1",

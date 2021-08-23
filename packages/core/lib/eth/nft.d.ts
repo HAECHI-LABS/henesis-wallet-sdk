@@ -15,5 +15,6 @@ export declare class Nft {
     getId(): number;
     getName(): string;
     getAddress(): string;
+    getSymbol(): string;
     buildTransferMultiSigPayload(wallet: EthLikeWallet, to: string, tokenOnchainId: string): Promise<MultiSigPayload>;
 }

@@ -9,6 +9,7 @@ const keychains_1 = require("./keychains");
 const henesisKeys_1 = require("./henesisKeys");
 const coins_1 = require("./coins");
 const gasPrice_1 = require("./gasPrice");
+const nfts_1 = require("./nfts");
 class EthModule {
     constructor(options) {
         this.client = options.client;
@@ -20,6 +21,7 @@ class EthModule {
         this.gasUsages = new gasUsages_1.GasUsages(this.client);
         this.transactions = new transactions_1.Transactions(this.client);
         this.coins = new coins_1.Coins(this.client);
+        this.nfts = new nfts_1.Nfts(this.client);
     }
 }
 exports.EthModule = EthModule;

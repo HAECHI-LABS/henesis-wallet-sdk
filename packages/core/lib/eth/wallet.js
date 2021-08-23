@@ -49,7 +49,7 @@ class EthWallet extends abstractWallet_1.EthLikeWallet {
         return {
             id,
             name: walletName,
-            blockchain: blockchain_1.transformBlockchainType(masterWallet.blockchain),
+            blockchain: blockchain_1.transformBlockchainType(blockchain),
             address,
             status,
             createdAt,

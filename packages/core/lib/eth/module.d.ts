@@ -9,6 +9,7 @@ import { BlockchainType } from "../blockchain";
 import { HenesisKeys } from "./henesisKeys";
 import { Coins } from "./coins";
 import { GasPrice } from "./gasPrice";
+import { Nfts } from "./nfts";
 export interface ModuleOptions {
     client: Client;
     env: Env;
@@ -23,6 +24,7 @@ export declare class EthModule {
     readonly gasUsages: GasUsages;
     readonly transactions: Transactions;
     readonly coins: Coins;
+    readonly nfts: Nfts;
     private readonly client;
     constructor(options: ModuleOptions);
 }
