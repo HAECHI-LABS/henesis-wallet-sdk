@@ -2,16 +2,16 @@ import { Client } from "./httpClient";
 import { Pagination, PaginationOptions, Secret } from "./types";
 import { Account, Role } from "./accounts";
 import {
-  OrganizationDTO,
-  OrgAccountDTO,
-  CreateSecretResponse,
+  ActivateAllowedIpsRequest,
   AllowedIpDTO,
   CreateAllowedIpRequest,
-  PatchAllowedIpLabelRequest,
+  CreateSecretResponse,
   DeleteAllowedIpRequest,
-  ActivateAllowedIpsRequest,
   InactivateAllowedIpsRequest,
+  OrgAccountDTO,
+  OrganizationDTO,
   PaginationAllowedIpDTO,
+  PatchAllowedIpLabelRequest,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
 
@@ -20,6 +20,7 @@ export interface Organization {
   name: string;
   secret: string;
   whitelistActivated: boolean;
+  isNftSupported: boolean;
 }
 
 export interface AllowedIp {
