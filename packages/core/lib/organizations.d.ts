@@ -7,6 +7,7 @@ export interface Organization {
     name: string;
     secret: string;
     whitelistActivated: boolean;
+    isNftSupported: boolean;
 }
 export interface AllowedIp {
     id: string;
