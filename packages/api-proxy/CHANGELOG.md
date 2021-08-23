@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.5...v3.2.13-alpha.6) (2021-08-23)
+
+
+### Features
+
+* ethereum NFT API ([#541](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/541)) ([3df0bf4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3df0bf4935c7869188f6e502dfebfeeefc21b1e2))
+
+
+
+
+
 ## [3.2.13-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.4...v3.2.13-alpha.5) (2021-08-18)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.5...v3.2.13-alpha.6) (2021-08-23)
+
+
+### Bug Fixes
+
+* update NFT gas limit ([#545](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/545)) ([ec7564f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ec7564fa94d793e9d15b508006ac4f7ce1c0b32c))
+
+
+### Features
+
+* ethereum NFT API ([#541](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/541)) ([3df0bf4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3df0bf4935c7869188f6e502dfebfeeefc21b1e2))
+
+
+
+
+
 ## [3.2.13-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.4...v3.2.13-alpha.5) (2021-08-18)
 
 
