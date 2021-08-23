@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.6...v3.2.13-alpha.7) (2021-08-23)
+
+
+### Features
+
+* add isNftSupported to Organization ([#546](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/546)) ([ff167f7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ff167f7a6af9474d34642938500bba5ef613ecdf))
+
+
+
+
+
 ## [3.2.13-alpha.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.5...v3.2.13-alpha.6) (2021-08-23)
 
 
