@@ -4,7 +4,7 @@ import {
   FilWalletData,
 } from "./abstractWallet";
 import { Client } from "../httpClient";
-import { Balance, Key, Pagination, PaginationOptions } from "../types";
+import { Balance, Pagination, PaginationOptions } from "../types";
 import {
   convertDepositAddressData,
   DepositAddressPaginationOptions,

@@ -1,6 +1,6 @@
 # `API PROXY`
 
-> 
+We recommend using npm >= 7.20.6
 
 ## HOW TO START
 
