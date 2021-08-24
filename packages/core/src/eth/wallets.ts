@@ -46,14 +46,6 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
-    if (
-      walletData.blockchain === Blockchain.ETHEREUM &&
-      !isLessThanWalletV4(walletData.version)
-    ) {
-      throw new Error(
-        "This wallet is not a compatible version. Please use the v3 APIs."
-      );
-    }
     return new EthMasterWallet(
       this.client,
       transformMasterWalletData(walletData),
