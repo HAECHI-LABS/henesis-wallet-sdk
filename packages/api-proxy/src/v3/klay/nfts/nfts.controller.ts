@@ -25,11 +25,11 @@ import {
   PathParams,
   ReadMeExtension,
 } from "../../../decorators";
-import { NftsService } from "../../eth/nfts/nfts.service";
 import { EXAMPLE_ETHEREUM_NFT_DTO, NftDTO } from "../../eth/dto/nft.dto";
 import express from "express";
 import { WALLET_ID_REQUIRED } from "../../eth/dto/params";
 import { SyncMetadataRequestDTO } from "../../eth/nfts/dto/sync-metadata-request.dto";
+import { NftsService } from "./nfts.service";
 
 @Controller("nfts")
 @ApiTags("nfts")
