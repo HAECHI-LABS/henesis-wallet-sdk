@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.7...v3.2.13-alpha.8) (2021-08-24)
+
+
+### Features
+
+* add Litecoin legacy address util functions ([#547](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/547)) ([296fbb2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/296fbb2078d60470e78f6bfb34305909b2696231))
+
+
+
+
+
 ## [3.2.13-alpha.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.6...v3.2.13-alpha.7) (2021-08-23)
 
 
