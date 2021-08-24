@@ -158,6 +158,12 @@ export interface ApproveWithdrawalApprovalRequest {
      * @type {string}
      * @memberof ApproveWithdrawalApprovalRequest
      */
+    to?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApproveWithdrawalApprovalRequest
+     */
     metadata?: string;
     /**
      * 
@@ -418,6 +424,12 @@ export interface CreateTransactionRequest {
      * @memberof CreateTransactionRequest
      */
     outputs: Array<CreateTransactionOutputDTO>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateTransactionRequest
+     */
+    to?: string;
     /**
      * 
      * @type {string}
