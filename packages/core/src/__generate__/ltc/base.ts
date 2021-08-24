@@ -17,7 +17,7 @@ import { Configuration } from "./configuration";
 // @ts-ignore
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 
-export const BASE_PATH = "http://127.0.0.1:8080".replace(/\/+$/, "");
+export const BASE_PATH = "https://dev.wallet.henesis.io:80".replace(/\/+$/, "");
 
 /**
  *
