@@ -23,9 +23,6 @@ class EthWallets extends wallets_1.Wallets {
     }
     async getMasterWallet(id) {
         const walletData = await this.client.get(`${this.baseUrl}/${id}`);
-        if (!wallet_2.isLessThanWalletV4(walletData.version)) {
-            throw new Error("This wallet is not a compatible version. Please use the v3 APIs.");
-        }
         return new wallet_1.EthMasterWallet(this.client, wallet_1.transformMasterWalletData(walletData), this.keychains, this.blockchain);
     }
     async getWallet(id) {
