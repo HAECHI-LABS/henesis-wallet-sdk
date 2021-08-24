@@ -18,6 +18,7 @@ import { makeQueryString } from "../utils/url";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import { HenesisKeys } from "./henesisKeys";
 import {
+  Blockchain,
   CreateInactiveMasterWalletRequest,
   InactiveMasterWalletDTO,
   MasterWalletDTO,
@@ -77,7 +78,11 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
     return walletDatas
-      .filter((walletData) => !isLessThanWalletV4(walletData.version))
+      .filter((walletData) => {
+        if (walletData.blockchain === Blockchain.ETHEREUM)
+          return !isLessThanWalletV4(walletData.version);
+        return true;
+      })
       .map((walletData) => {
         return new EthWallet(
           this.client,

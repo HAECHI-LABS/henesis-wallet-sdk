@@ -7,11 +7,11 @@ export class CoinsService {
   public constructor() {}
 
   public async getCoins(sdk: SDK, flag: boolean = false): Promise<CoinDTO[]> {
-    const coins: Coin[] = await sdk.eth.coins.getCoins(flag);
+    const coins: Coin[] = await sdk.klay.coins.getCoins(flag);
     return coins.map(CoinDTO.fromCoin);
   }
 
   public async getCoin(sdk: SDK, ticker: string): Promise<CoinDTO> {
-    return CoinDTO.fromCoin(await sdk.eth.coins.getCoin(ticker));
+    return CoinDTO.fromCoin(await sdk.klay.coins.getCoin(ticker));
   }
 }

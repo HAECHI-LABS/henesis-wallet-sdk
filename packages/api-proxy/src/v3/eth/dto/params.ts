@@ -89,6 +89,16 @@ export const NAME_OPTIONAL: ApiQueryOptions = {
   required: false,
   description: "지갑 이름",
 };
+export const SORT_OPTIONAL: ApiQueryOptions = {
+  name: "sort",
+  required: false,
+  description: "결과 정렬 방식",
+};
+export const ADDRESS_OPTIONAL: ApiQueryOptions = {
+  name: "address",
+  required: false,
+  description: "지갑 주소",
+};
 export const COIN_REQUIRED: ApiParamOptions = {
   name: "coinId",
   required: true,
