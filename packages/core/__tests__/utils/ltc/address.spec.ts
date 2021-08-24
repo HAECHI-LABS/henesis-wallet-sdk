@@ -3,7 +3,7 @@ import {
   isLegacyAddress,
   convertToLegacyAddress,
   convertToNewAddress,
-} from "../../../src/utils/ltc/address";
+} from "../../../src/ltc/utils";
 
 const mainnet = {
   newAddress: "MTf4tP1TCNBn8dNkyxeBVoPrFCcVzxJvvh",
