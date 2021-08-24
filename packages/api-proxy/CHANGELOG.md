@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.11](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.10...v3.2.13-alpha.11) (2021-08-24)
+
+
+### Features
+
+* klaytn V3 implementation ([#544](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/544)) ([5c5a5eb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5c5a5ebbcac8dfc89f1cc434f6c154da8c682c39))
+
+
+
+
+
 ## [3.2.13-alpha.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.9...v3.2.13-alpha.10) (2021-08-24)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
