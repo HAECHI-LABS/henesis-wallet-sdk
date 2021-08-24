@@ -17,7 +17,7 @@ export class TransfersService {
     request: express.Request
   ): Promise<PaginationDTO<TransferDTO>> {
     const result: Pagination<EthValueTransferEvent> =
-      await sdk.eth.events.getValueTransferEvents(
+      await sdk.klay.events.getValueTransferEvents(
         object(GetTransfersOption.toSDKOption(options))
       );
 

@@ -47,6 +47,7 @@ export class ApiV3Module {
       } else {
         imports.push(
           EthModule,
+          KlayModule,
           FilModule,
           CacheModule.register({
             ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
