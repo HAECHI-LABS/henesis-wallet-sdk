@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.9...v3.2.13-alpha.10) (2021-08-24)
+
+
+### Features
+
+* give legacy p2sh address together when transfer LTC ([#549](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/549)) ([164ee30](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/164ee30e2c8ddfb93f5b0e25aae00cd683c03784))
+
+
+
+
+
 ## [3.2.13-alpha.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.8...v3.2.13-alpha.9) (2021-08-24)
 
 
