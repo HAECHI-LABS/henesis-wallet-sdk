@@ -59,7 +59,7 @@ class LtcMasterWallet extends wallet_1.Wallet {
         return payload;
     }
     async transfer(to, amount, passphrase, otpCode, feeRate, metadata) {
-        return this.sendSignedTransaction(Object.assign(Object.assign({}, (await this.build(to, amount, passphrase, feeRate, metadata))), { otpCode: otpCode }));
+        return this.sendSignedTransaction(Object.assign(Object.assign({}, (await this.build(to, amount, passphrase, feeRate, metadata))), { to, otpCode: otpCode }));
     }
     async sendSignedTransaction(signedRawTransactionRequest) {
         const transfer = await this.client.post(`${this.baseUrl}/transactions`, signedRawTransactionRequest);
@@ -134,7 +134,7 @@ class LtcMasterWallet extends wallet_1.Wallet {
         return this.client.get(`${this.baseUrl}/deposit-addresses${queryString ? `?${queryString}` : ""}`);
     }
     async approve(params) {
-        const request = Object.assign(Object.assign({}, (await this.build(params.toAddress, params.amount, params.passphrase))), { otpCode: params.otpCode });
+        const request = Object.assign(Object.assign({}, (await this.build(params.toAddress, params.amount, params.passphrase))), { to: params.toAddress, otpCode: params.otpCode });
         const transfer = await this.client.post(`${this.withdrawalApprovalUrl}/${params.id}/approve`, request);
         return utils_1.convertTransferDTO(transfer);
     }

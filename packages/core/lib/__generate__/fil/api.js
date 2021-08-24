@@ -220,9 +220,9 @@ class FeeWalletControllerApi extends base_1.BaseAPI {
 exports.FeeWalletControllerApi = FeeWalletControllerApi;
 exports.InternalControllerApiAxiosParamCreator = function (configuration) {
     return {
-        getFlush: async (flushId, options = {}) => {
+        getFlush1: async (flushId, options = {}) => {
             if (flushId === null || flushId === undefined) {
-                throw new base_1.RequiredError('flushId', 'Required parameter flushId was null or undefined when calling getFlush.');
+                throw new base_1.RequiredError('flushId', 'Required parameter flushId was null or undefined when calling getFlush1.');
             }
             const localVarPath = `/api/v2/fil/internal/flushes/{flushId}`
                 .replace(`{${"flushId"}}`, encodeURIComponent(String(flushId)));
@@ -291,12 +291,12 @@ exports.InternalControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getTransfers1: async (pageable, transferSearchCondition, options = {}) => {
+        getTransfers: async (pageable, transferSearchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransfers1.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransfers.');
             }
             if (transferSearchCondition === null || transferSearchCondition === undefined) {
-                throw new base_1.RequiredError('transferSearchCondition', 'Required parameter transferSearchCondition was null or undefined when calling getTransfers1.');
+                throw new base_1.RequiredError('transferSearchCondition', 'Required parameter transferSearchCondition was null or undefined when calling getTransfers.');
             }
             const localVarPath = `/api/v2/fil/internal/transfers`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -326,8 +326,8 @@ exports.InternalControllerApiAxiosParamCreator = function (configuration) {
 };
 exports.InternalControllerApiFp = function (configuration) {
     return {
-        async getFlush(flushId, options) {
-            const localVarAxiosArgs = await exports.InternalControllerApiAxiosParamCreator(configuration).getFlush(flushId, options);
+        async getFlush1(flushId, options) {
+            const localVarAxiosArgs = await exports.InternalControllerApiAxiosParamCreator(configuration).getFlush1(flushId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -347,8 +347,8 @@ exports.InternalControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getTransfers1(pageable, transferSearchCondition, options) {
-            const localVarAxiosArgs = await exports.InternalControllerApiAxiosParamCreator(configuration).getTransfers1(pageable, transferSearchCondition, options);
+        async getTransfers(pageable, transferSearchCondition, options) {
+            const localVarAxiosArgs = await exports.InternalControllerApiAxiosParamCreator(configuration).getTransfers(pageable, transferSearchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -358,8 +358,8 @@ exports.InternalControllerApiFp = function (configuration) {
 };
 exports.InternalControllerApiFactory = function (configuration, basePath, axios) {
     return {
-        getFlush(flushId, options) {
-            return exports.InternalControllerApiFp(configuration).getFlush(flushId, options).then((request) => request(axios, basePath));
+        getFlush1(flushId, options) {
+            return exports.InternalControllerApiFp(configuration).getFlush1(flushId, options).then((request) => request(axios, basePath));
         },
         getFlushes(pageable, options) {
             return exports.InternalControllerApiFp(configuration).getFlushes(pageable, options).then((request) => request(axios, basePath));
@@ -367,14 +367,14 @@ exports.InternalControllerApiFactory = function (configuration, basePath, axios)
         getTransfer1(transferId, options) {
             return exports.InternalControllerApiFp(configuration).getTransfer1(transferId, options).then((request) => request(axios, basePath));
         },
-        getTransfers1(pageable, transferSearchCondition, options) {
-            return exports.InternalControllerApiFp(configuration).getTransfers1(pageable, transferSearchCondition, options).then((request) => request(axios, basePath));
+        getTransfers(pageable, transferSearchCondition, options) {
+            return exports.InternalControllerApiFp(configuration).getTransfers(pageable, transferSearchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
 class InternalControllerApi extends base_1.BaseAPI {
-    getFlush(flushId, options) {
-        return exports.InternalControllerApiFp(this.configuration).getFlush(flushId, options).then((request) => request(this.axios, this.basePath));
+    getFlush1(flushId, options) {
+        return exports.InternalControllerApiFp(this.configuration).getFlush1(flushId, options).then((request) => request(this.axios, this.basePath));
     }
     getFlushes(pageable, options) {
         return exports.InternalControllerApiFp(this.configuration).getFlushes(pageable, options).then((request) => request(this.axios, this.basePath));
@@ -382,8 +382,8 @@ class InternalControllerApi extends base_1.BaseAPI {
     getTransfer1(transferId, options) {
         return exports.InternalControllerApiFp(this.configuration).getTransfer1(transferId, options).then((request) => request(this.axios, this.basePath));
     }
-    getTransfers1(pageable, transferSearchCondition, options) {
-        return exports.InternalControllerApiFp(this.configuration).getTransfers1(pageable, transferSearchCondition, options).then((request) => request(this.axios, this.basePath));
+    getTransfers(pageable, transferSearchCondition, options) {
+        return exports.InternalControllerApiFp(this.configuration).getTransfers(pageable, transferSearchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.InternalControllerApi = InternalControllerApi;
@@ -518,12 +518,12 @@ exports.TransferControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getTransfers: async (pageable, transferSearchCondition, options = {}) => {
+        getTransfers1: async (pageable, transferSearchCondition, options = {}) => {
             if (pageable === null || pageable === undefined) {
-                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransfers.');
+                throw new base_1.RequiredError('pageable', 'Required parameter pageable was null or undefined when calling getTransfers1.');
             }
             if (transferSearchCondition === null || transferSearchCondition === undefined) {
-                throw new base_1.RequiredError('transferSearchCondition', 'Required parameter transferSearchCondition was null or undefined when calling getTransfers.');
+                throw new base_1.RequiredError('transferSearchCondition', 'Required parameter transferSearchCondition was null or undefined when calling getTransfers1.');
             }
             const localVarPath = `/api/v2/fil/transfers`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -560,8 +560,8 @@ exports.TransferControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getTransfers(pageable, transferSearchCondition, options) {
-            const localVarAxiosArgs = await exports.TransferControllerApiAxiosParamCreator(configuration).getTransfers(pageable, transferSearchCondition, options);
+        async getTransfers1(pageable, transferSearchCondition, options) {
+            const localVarAxiosArgs = await exports.TransferControllerApiAxiosParamCreator(configuration).getTransfers1(pageable, transferSearchCondition, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -574,8 +574,8 @@ exports.TransferControllerApiFactory = function (configuration, basePath, axios)
         getTransfer(transferId, options) {
             return exports.TransferControllerApiFp(configuration).getTransfer(transferId, options).then((request) => request(axios, basePath));
         },
-        getTransfers(pageable, transferSearchCondition, options) {
-            return exports.TransferControllerApiFp(configuration).getTransfers(pageable, transferSearchCondition, options).then((request) => request(axios, basePath));
+        getTransfers1(pageable, transferSearchCondition, options) {
+            return exports.TransferControllerApiFp(configuration).getTransfers1(pageable, transferSearchCondition, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -583,8 +583,8 @@ class TransferControllerApi extends base_1.BaseAPI {
     getTransfer(transferId, options) {
         return exports.TransferControllerApiFp(this.configuration).getTransfer(transferId, options).then((request) => request(this.axios, this.basePath));
     }
-    getTransfers(pageable, transferSearchCondition, options) {
-        return exports.TransferControllerApiFp(this.configuration).getTransfers(pageable, transferSearchCondition, options).then((request) => request(this.axios, this.basePath));
+    getTransfers1(pageable, transferSearchCondition, options) {
+        return exports.TransferControllerApiFp(this.configuration).getTransfers1(pageable, transferSearchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.TransferControllerApi = TransferControllerApi;
@@ -936,12 +936,12 @@ exports.WalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        getFlush1: async (masterWalletId, flushId, options = {}) => {
+        getFlush: async (masterWalletId, flushId, options = {}) => {
             if (masterWalletId === null || masterWalletId === undefined) {
-                throw new base_1.RequiredError('masterWalletId', 'Required parameter masterWalletId was null or undefined when calling getFlush1.');
+                throw new base_1.RequiredError('masterWalletId', 'Required parameter masterWalletId was null or undefined when calling getFlush.');
             }
             if (flushId === null || flushId === undefined) {
-                throw new base_1.RequiredError('flushId', 'Required parameter flushId was null or undefined when calling getFlush1.');
+                throw new base_1.RequiredError('flushId', 'Required parameter flushId was null or undefined when calling getFlush.');
             }
             const localVarPath = `/api/v2/fil/wallets/{masterWalletId}/flushes/{flushId}`
                 .replace(`{${"masterWalletId"}}`, encodeURIComponent(String(masterWalletId)))
@@ -1152,44 +1152,15 @@ exports.WalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        sendTransaction: async (masterWalletId, createMultiSigTransactionRequest, options = {}) => {
+        sendTransaction: async (masterWalletId, depositAddressId, createTransactionRequest, options = {}) => {
             if (masterWalletId === null || masterWalletId === undefined) {
                 throw new base_1.RequiredError('masterWalletId', 'Required parameter masterWalletId was null or undefined when calling sendTransaction.');
             }
-            if (createMultiSigTransactionRequest === null || createMultiSigTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createMultiSigTransactionRequest', 'Required parameter createMultiSigTransactionRequest was null or undefined when calling sendTransaction.');
-            }
-            const localVarPath = `/api/v2/fil/wallets/{masterWalletId}/transactions`
-                .replace(`{${"masterWalletId"}}`, encodeURIComponent(String(masterWalletId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign(Object.assign(Object.assign({}, localVarUrlObj.query), localVarQueryParameter), options.query);
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof createMultiSigTransactionRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(createMultiSigTransactionRequest !== undefined ? createMultiSigTransactionRequest : {}) : (createMultiSigTransactionRequest || "");
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        sendTransaction1: async (masterWalletId, depositAddressId, createTransactionRequest, options = {}) => {
-            if (masterWalletId === null || masterWalletId === undefined) {
-                throw new base_1.RequiredError('masterWalletId', 'Required parameter masterWalletId was null or undefined when calling sendTransaction1.');
-            }
             if (depositAddressId === null || depositAddressId === undefined) {
-                throw new base_1.RequiredError('depositAddressId', 'Required parameter depositAddressId was null or undefined when calling sendTransaction1.');
+                throw new base_1.RequiredError('depositAddressId', 'Required parameter depositAddressId was null or undefined when calling sendTransaction.');
             }
             if (createTransactionRequest === null || createTransactionRequest === undefined) {
-                throw new base_1.RequiredError('createTransactionRequest', 'Required parameter createTransactionRequest was null or undefined when calling sendTransaction1.');
+                throw new base_1.RequiredError('createTransactionRequest', 'Required parameter createTransactionRequest was null or undefined when calling sendTransaction.');
             }
             const localVarPath = `/api/v2/fil/wallets/{masterWalletId}/deposit-addresses/{depositAddressId}/transactions`
                 .replace(`{${"masterWalletId"}}`, encodeURIComponent(String(masterWalletId)))
@@ -1209,6 +1180,35 @@ exports.WalletControllerApiAxiosParamCreator = function (configuration) {
             localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
             const needsSerialization = (typeof createTransactionRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.data = needsSerialization ? JSON.stringify(createTransactionRequest !== undefined ? createTransactionRequest : {}) : (createTransactionRequest || "");
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        sendTransaction1: async (masterWalletId, createMultiSigTransactionRequest, options = {}) => {
+            if (masterWalletId === null || masterWalletId === undefined) {
+                throw new base_1.RequiredError('masterWalletId', 'Required parameter masterWalletId was null or undefined when calling sendTransaction1.');
+            }
+            if (createMultiSigTransactionRequest === null || createMultiSigTransactionRequest === undefined) {
+                throw new base_1.RequiredError('createMultiSigTransactionRequest', 'Required parameter createMultiSigTransactionRequest was null or undefined when calling sendTransaction1.');
+            }
+            const localVarPath = `/api/v2/fil/wallets/{masterWalletId}/transactions`
+                .replace(`{${"masterWalletId"}}`, encodeURIComponent(String(masterWalletId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarHeaderParameter = {};
+            const localVarQueryParameter = {};
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign(Object.assign(Object.assign({}, localVarUrlObj.query), localVarQueryParameter), options.query);
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            const needsSerialization = (typeof createMultiSigTransactionRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data = needsSerialization ? JSON.stringify(createMultiSigTransactionRequest !== undefined ? createMultiSigTransactionRequest : {}) : (createMultiSigTransactionRequest || "");
             return {
                 url: globalImportUrl.format(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -1302,8 +1302,8 @@ exports.WalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async getFlush1(masterWalletId, flushId, options) {
-            const localVarAxiosArgs = await exports.WalletControllerApiAxiosParamCreator(configuration).getFlush1(masterWalletId, flushId, options);
+        async getFlush(masterWalletId, flushId, options) {
+            const localVarAxiosArgs = await exports.WalletControllerApiAxiosParamCreator(configuration).getFlush(masterWalletId, flushId, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -1358,15 +1358,15 @@ exports.WalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async sendTransaction(masterWalletId, createMultiSigTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.WalletControllerApiAxiosParamCreator(configuration).sendTransaction(masterWalletId, createMultiSigTransactionRequest, options);
+        async sendTransaction(masterWalletId, depositAddressId, createTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.WalletControllerApiAxiosParamCreator(configuration).sendTransaction(masterWalletId, depositAddressId, createTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
             };
         },
-        async sendTransaction1(masterWalletId, depositAddressId, createTransactionRequest, options) {
-            const localVarAxiosArgs = await exports.WalletControllerApiAxiosParamCreator(configuration).sendTransaction1(masterWalletId, depositAddressId, createTransactionRequest, options);
+        async sendTransaction1(masterWalletId, createMultiSigTransactionRequest, options) {
+            const localVarAxiosArgs = await exports.WalletControllerApiAxiosParamCreator(configuration).sendTransaction1(masterWalletId, createMultiSigTransactionRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -1412,8 +1412,8 @@ exports.WalletControllerApiFactory = function (configuration, basePath, axios) {
         getDepositAddressesBalance(masterWalletId, ids, options) {
             return exports.WalletControllerApiFp(configuration).getDepositAddressesBalance(masterWalletId, ids, options).then((request) => request(axios, basePath));
         },
-        getFlush1(masterWalletId, flushId, options) {
-            return exports.WalletControllerApiFp(configuration).getFlush1(masterWalletId, flushId, options).then((request) => request(axios, basePath));
+        getFlush(masterWalletId, flushId, options) {
+            return exports.WalletControllerApiFp(configuration).getFlush(masterWalletId, flushId, options).then((request) => request(axios, basePath));
         },
         getFlushes1(masterWalletId, pageable, options) {
             return exports.WalletControllerApiFp(configuration).getFlushes1(masterWalletId, pageable, options).then((request) => request(axios, basePath));
@@ -1436,11 +1436,11 @@ exports.WalletControllerApiFactory = function (configuration, basePath, axios) {
         recreateWallet(masterWalletId, options) {
             return exports.WalletControllerApiFp(configuration).recreateWallet(masterWalletId, options).then((request) => request(axios, basePath));
         },
-        sendTransaction(masterWalletId, createMultiSigTransactionRequest, options) {
-            return exports.WalletControllerApiFp(configuration).sendTransaction(masterWalletId, createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
+        sendTransaction(masterWalletId, depositAddressId, createTransactionRequest, options) {
+            return exports.WalletControllerApiFp(configuration).sendTransaction(masterWalletId, depositAddressId, createTransactionRequest, options).then((request) => request(axios, basePath));
         },
-        sendTransaction1(masterWalletId, depositAddressId, createTransactionRequest, options) {
-            return exports.WalletControllerApiFp(configuration).sendTransaction1(masterWalletId, depositAddressId, createTransactionRequest, options).then((request) => request(axios, basePath));
+        sendTransaction1(masterWalletId, createMultiSigTransactionRequest, options) {
+            return exports.WalletControllerApiFp(configuration).sendTransaction1(masterWalletId, createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1481,8 +1481,8 @@ class WalletControllerApi extends base_1.BaseAPI {
     getDepositAddressesBalance(masterWalletId, ids, options) {
         return exports.WalletControllerApiFp(this.configuration).getDepositAddressesBalance(masterWalletId, ids, options).then((request) => request(this.axios, this.basePath));
     }
-    getFlush1(masterWalletId, flushId, options) {
-        return exports.WalletControllerApiFp(this.configuration).getFlush1(masterWalletId, flushId, options).then((request) => request(this.axios, this.basePath));
+    getFlush(masterWalletId, flushId, options) {
+        return exports.WalletControllerApiFp(this.configuration).getFlush(masterWalletId, flushId, options).then((request) => request(this.axios, this.basePath));
     }
     getFlushes1(masterWalletId, pageable, options) {
         return exports.WalletControllerApiFp(this.configuration).getFlushes1(masterWalletId, pageable, options).then((request) => request(this.axios, this.basePath));
@@ -1505,11 +1505,11 @@ class WalletControllerApi extends base_1.BaseAPI {
     recreateWallet(masterWalletId, options) {
         return exports.WalletControllerApiFp(this.configuration).recreateWallet(masterWalletId, options).then((request) => request(this.axios, this.basePath));
     }
-    sendTransaction(masterWalletId, createMultiSigTransactionRequest, options) {
-        return exports.WalletControllerApiFp(this.configuration).sendTransaction(masterWalletId, createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    sendTransaction(masterWalletId, depositAddressId, createTransactionRequest, options) {
+        return exports.WalletControllerApiFp(this.configuration).sendTransaction(masterWalletId, depositAddressId, createTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    sendTransaction1(masterWalletId, depositAddressId, createTransactionRequest, options) {
-        return exports.WalletControllerApiFp(this.configuration).sendTransaction1(masterWalletId, depositAddressId, createTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    sendTransaction1(masterWalletId, createMultiSigTransactionRequest, options) {
+        return exports.WalletControllerApiFp(this.configuration).sendTransaction1(masterWalletId, createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 exports.WalletControllerApi = WalletControllerApi;

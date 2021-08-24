@@ -63,6 +63,7 @@ var CoinType;
     CoinType["BITCOIN"] = "BITCOIN";
     CoinType["FILECOIN"] = "FILECOIN";
     CoinType["BINANCESMARTCHAIN"] = "BINANCE_SMART_CHAIN";
+    CoinType["LITECOIN"] = "LITECOIN";
     CoinType["TOKEN"] = "TOKEN";
     CoinType["NFT"] = "NFT";
 })(CoinType = exports.CoinType || (exports.CoinType = {}));
@@ -1557,12 +1558,12 @@ exports.BscWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        flush: async (walletId, flushRequest, options = {}) => {
+        flush1: async (walletId, flushRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling flush.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling flush1.');
             }
             if (flushRequest === null || flushRequest === undefined) {
-                throw new base_1.RequiredError('flushRequest', 'Required parameter flushRequest was null or undefined when calling flush.');
+                throw new base_1.RequiredError('flushRequest', 'Required parameter flushRequest was null or undefined when calling flush1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/flush`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -2342,8 +2343,8 @@ exports.BscWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async flush(walletId, flushRequest, options) {
-            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).flush(walletId, flushRequest, options);
+        async flush1(walletId, flushRequest, options) {
+            const localVarAxiosArgs = await exports.BscWalletControllerApiAxiosParamCreator(configuration).flush1(walletId, flushRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -2549,8 +2550,8 @@ exports.BscWalletControllerApiFactory = function (configuration, basePath, axios
         deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
             return exports.BscWalletControllerApiFp(configuration).deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(axios, basePath));
         },
-        flush(walletId, flushRequest, options) {
-            return exports.BscWalletControllerApiFp(configuration).flush(walletId, flushRequest, options).then((request) => request(axios, basePath));
+        flush1(walletId, flushRequest, options) {
+            return exports.BscWalletControllerApiFp(configuration).flush1(walletId, flushRequest, options).then((request) => request(axios, basePath));
         },
         getAllWalletWithdrawalPolicies1(walletId, pageable, options) {
             return exports.BscWalletControllerApiFp(configuration).getAllWalletWithdrawalPolicies1(walletId, pageable, options).then((request) => request(axios, basePath));
@@ -2651,8 +2652,8 @@ class BscWalletControllerApi extends base_1.BaseAPI {
     deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
         return exports.BscWalletControllerApiFp(this.configuration).deleteAllowedAddress1(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    flush(walletId, flushRequest, options) {
-        return exports.BscWalletControllerApiFp(this.configuration).flush(walletId, flushRequest, options).then((request) => request(this.axios, this.basePath));
+    flush1(walletId, flushRequest, options) {
+        return exports.BscWalletControllerApiFp(this.configuration).flush1(walletId, flushRequest, options).then((request) => request(this.axios, this.basePath));
     }
     getAllWalletWithdrawalPolicies1(walletId, pageable, options) {
         return exports.BscWalletControllerApiFp(this.configuration).getAllWalletWithdrawalPolicies1(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
@@ -4470,12 +4471,12 @@ exports.EthWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
-        flush1: async (walletId, flushRequest, options = {}) => {
+        flush2: async (walletId, flushRequest, options = {}) => {
             if (walletId === null || walletId === undefined) {
-                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling flush1.');
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling flush2.');
             }
             if (flushRequest === null || flushRequest === undefined) {
-                throw new base_1.RequiredError('flushRequest', 'Required parameter flushRequest was null or undefined when calling flush1.');
+                throw new base_1.RequiredError('flushRequest', 'Required parameter flushRequest was null or undefined when calling flush2.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/flush`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -5369,8 +5370,8 @@ exports.EthWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
-        async flush1(walletId, flushRequest, options) {
-            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).flush1(walletId, flushRequest, options);
+        async flush2(walletId, flushRequest, options) {
+            const localVarAxiosArgs = await exports.EthWalletControllerApiAxiosParamCreator(configuration).flush2(walletId, flushRequest, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
                 const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
                 return axios.request(axiosRequestArgs);
@@ -5604,8 +5605,8 @@ exports.EthWalletControllerApiFactory = function (configuration, basePath, axios
         deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
             return exports.EthWalletControllerApiFp(configuration).deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(axios, basePath));
         },
-        flush1(walletId, flushRequest, options) {
-            return exports.EthWalletControllerApiFp(configuration).flush1(walletId, flushRequest, options).then((request) => request(axios, basePath));
+        flush2(walletId, flushRequest, options) {
+            return exports.EthWalletControllerApiFp(configuration).flush2(walletId, flushRequest, options).then((request) => request(axios, basePath));
         },
         getAllWalletWithdrawalPolicies2(walletId, pageable, options) {
             return exports.EthWalletControllerApiFp(configuration).getAllWalletWithdrawalPolicies2(walletId, pageable, options).then((request) => request(axios, basePath));
@@ -5718,8 +5719,8 @@ class EthWalletControllerApi extends base_1.BaseAPI {
     deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
         return exports.EthWalletControllerApiFp(this.configuration).deleteAllowedAddress2(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
     }
-    flush1(walletId, flushRequest, options) {
-        return exports.EthWalletControllerApiFp(this.configuration).flush1(walletId, flushRequest, options).then((request) => request(this.axios, this.basePath));
+    flush2(walletId, flushRequest, options) {
+        return exports.EthWalletControllerApiFp(this.configuration).flush2(walletId, flushRequest, options).then((request) => request(this.axios, this.basePath));
     }
     getAllWalletWithdrawalPolicies2(walletId, pageable, options) {
         return exports.EthWalletControllerApiFp(this.configuration).getAllWalletWithdrawalPolicies2(walletId, pageable, options).then((request) => request(this.axios, this.basePath));
@@ -7563,6 +7564,35 @@ exports.KlayWalletControllerApiAxiosParamCreator = function (configuration) {
                 options: localVarRequestOptions,
             };
         },
+        flush: async (walletId, flushRequest, options = {}) => {
+            if (walletId === null || walletId === undefined) {
+                throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling flush.');
+            }
+            if (flushRequest === null || flushRequest === undefined) {
+                throw new base_1.RequiredError('flushRequest', 'Required parameter flushRequest was null or undefined when calling flush.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/flush`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
+            const localVarHeaderParameter = {};
+            const localVarQueryParameter = {};
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign(Object.assign(Object.assign({}, localVarUrlObj.query), localVarQueryParameter), options.query);
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            const needsSerialization = (typeof flushRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data = needsSerialization ? JSON.stringify(flushRequest !== undefined ? flushRequest : {}) : (flushRequest || "");
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         getAllWalletWithdrawalPolicies: async (walletId, pageable, options = {}) => {
             if (walletId === null || walletId === undefined) {
                 throw new base_1.RequiredError('walletId', 'Required parameter walletId was null or undefined when calling getAllWalletWithdrawalPolicies.');
@@ -8346,6 +8376,13 @@ exports.KlayWalletControllerApiFp = function (configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        async flush(walletId, flushRequest, options) {
+            const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).flush(walletId, flushRequest, options);
+            return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
+                const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                return axios.request(axiosRequestArgs);
+            };
+        },
         async getAllWalletWithdrawalPolicies(walletId, pageable, options) {
             const localVarAxiosArgs = await exports.KlayWalletControllerApiAxiosParamCreator(configuration).getAllWalletWithdrawalPolicies(walletId, pageable, options);
             return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
@@ -8553,6 +8590,9 @@ exports.KlayWalletControllerApiFactory = function (configuration, basePath, axio
         deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
             return exports.KlayWalletControllerApiFp(configuration).deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(axios, basePath));
         },
+        flush(walletId, flushRequest, options) {
+            return exports.KlayWalletControllerApiFp(configuration).flush(walletId, flushRequest, options).then((request) => request(axios, basePath));
+        },
         getAllWalletWithdrawalPolicies(walletId, pageable, options) {
             return exports.KlayWalletControllerApiFp(configuration).getAllWalletWithdrawalPolicies(walletId, pageable, options).then((request) => request(axios, basePath));
         },
@@ -8654,6 +8694,9 @@ class KlayWalletControllerApi extends base_1.BaseAPI {
     }
     deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options) {
         return exports.KlayWalletControllerApiFp(this.configuration).deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+    flush(walletId, flushRequest, options) {
+        return exports.KlayWalletControllerApiFp(this.configuration).flush(walletId, flushRequest, options).then((request) => request(this.axios, this.basePath));
     }
     getAllWalletWithdrawalPolicies(walletId, pageable, options) {
         return exports.KlayWalletControllerApiFp(this.configuration).getAllWalletWithdrawalPolicies(walletId, pageable, options).then((request) => request(this.axios, this.basePath));

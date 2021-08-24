@@ -29,6 +29,7 @@ export declare enum AllowedCoinType {
 export interface ApproveWithdrawalApprovalRequest {
     inputs: Array<CreateTransactionInputDTO>;
     outputs: Array<CreateTransactionOutputDTO>;
+    to?: string;
     metadata?: string;
     otpCode: string;
 }
@@ -92,6 +93,7 @@ export interface CreateTransactionOutputDTO {
 export interface CreateTransactionRequest {
     inputs: Array<CreateTransactionInputDTO>;
     outputs: Array<CreateTransactionOutputDTO>;
+    to?: string;
     metadata?: string;
     otpCode: string;
 }

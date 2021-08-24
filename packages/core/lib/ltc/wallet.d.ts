@@ -36,6 +36,7 @@ export interface LtcCreateTransactionOutput extends Omit<LtcTransactionOutput, "
     amount: string;
 }
 export interface LtcSignedRawTransactionRequest extends LtcSignedRawTransaction {
+    to?: string;
     otpCode?: string;
 }
 export interface LtcSignedRawTransaction {

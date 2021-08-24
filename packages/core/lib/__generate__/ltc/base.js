@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RequiredError = exports.BaseAPI = exports.COLLECTION_FORMATS = exports.BASE_PATH = void 0;
 const axios_1 = __importDefault(require("axios"));
-exports.BASE_PATH = "http://127.0.0.1:8080".replace(/\/+$/, "");
+exports.BASE_PATH = "https://dev.wallet.henesis.io:80".replace(/\/+$/, "");
 exports.COLLECTION_FORMATS = {
     csv: ",",
     ssv: " ",

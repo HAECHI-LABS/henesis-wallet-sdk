@@ -121,6 +121,7 @@ export declare enum CoinType {
     BITCOIN = "BITCOIN",
     FILECOIN = "FILECOIN",
     BINANCESMARTCHAIN = "BINANCE_SMART_CHAIN",
+    LITECOIN = "LITECOIN",
     TOKEN = "TOKEN",
     NFT = "NFT"
 }
@@ -961,7 +962,7 @@ export declare const BscWalletControllerApiAxiosParamCreator: (configuration?: C
     createUserWallet2: (walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any) => Promise<RequestArgs>;
     createWalletWithdrawalPolicy1: (walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any) => Promise<RequestArgs>;
     deleteAllowedAddress1: (walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
-    flush: (walletId: string, flushRequest: FlushRequest, options?: any) => Promise<RequestArgs>;
+    flush1: (walletId: string, flushRequest: FlushRequest, options?: any) => Promise<RequestArgs>;
     getAllWalletWithdrawalPolicies1: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
     getAllowedAddress1: (walletId: string, allowedAddressId: string, options?: any) => Promise<RequestArgs>;
     getAllowedAddressesByCoinId2: (walletId: string, coinId: number, pageable: Pageable, options?: any) => Promise<RequestArgs>;
@@ -996,7 +997,7 @@ export declare const BscWalletControllerApiFp: (configuration?: Configuration) =
     createUserWallet2(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
     createWalletWithdrawalPolicy1(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
     deleteAllowedAddress1(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    flush(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    flush1(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     getAllWalletWithdrawalPolicies1(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletWithdrawalPolicyDTO>>;
     getAllowedAddress1(walletId: string, allowedAddressId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
     getAllowedAddressesByCoinId2(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationAllowedAddressDTO>>;
@@ -1031,7 +1032,7 @@ export declare const BscWalletControllerApiFactory: (configuration?: Configurati
     createUserWallet2(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
     createWalletWithdrawalPolicy1(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
     deleteAllowedAddress1(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): AxiosPromise<void>;
-    flush(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO>;
+    flush1(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO>;
     getAllWalletWithdrawalPolicies1(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationWalletWithdrawalPolicyDTO>;
     getAllowedAddress1(walletId: string, allowedAddressId: string, options?: any): AxiosPromise<AllowedAddressDTO>;
     getAllowedAddressesByCoinId2(walletId: string, coinId: number, pageable: Pageable, options?: any): AxiosPromise<PaginationAllowedAddressDTO>;
@@ -1066,7 +1067,7 @@ export declare class BscWalletControllerApi extends BaseAPI {
     createUserWallet2(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
     createWalletWithdrawalPolicy1(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
     deleteAllowedAddress1(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    flush(walletId: string, flushRequest: FlushRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    flush1(walletId: string, flushRequest: FlushRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     getAllWalletWithdrawalPolicies1(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletWithdrawalPolicyDTO>>;
     getAllowedAddress1(walletId: string, allowedAddressId: string, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
     getAllowedAddressesByCoinId2(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationAllowedAddressDTO>>;
@@ -1337,7 +1338,7 @@ export declare const EthWalletControllerApiAxiosParamCreator: (configuration?: C
     createUserWallet3: (walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any) => Promise<RequestArgs>;
     createWalletWithdrawalPolicy2: (walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any) => Promise<RequestArgs>;
     deleteAllowedAddress2: (walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
-    flush1: (walletId: string, flushRequest: FlushRequest, options?: any) => Promise<RequestArgs>;
+    flush2: (walletId: string, flushRequest: FlushRequest, options?: any) => Promise<RequestArgs>;
     getAllWalletWithdrawalPolicies2: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
     getAllowedAddress2: (walletId: string, allowedAddressId: string, options?: any) => Promise<RequestArgs>;
     getAllowedAddressesByCoinId3: (walletId: string, coinId: number, pageable: Pageable, options?: any) => Promise<RequestArgs>;
@@ -1376,7 +1377,7 @@ export declare const EthWalletControllerApiFp: (configuration?: Configuration) =
     createUserWallet3(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
     createWalletWithdrawalPolicy2(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
     deleteAllowedAddress2(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
-    flush1(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
+    flush2(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     getAllWalletWithdrawalPolicies2(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletWithdrawalPolicyDTO>>;
     getAllowedAddress2(walletId: string, allowedAddressId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
     getAllowedAddressesByCoinId3(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationAllowedAddressDTO>>;
@@ -1415,7 +1416,7 @@ export declare const EthWalletControllerApiFactory: (configuration?: Configurati
     createUserWallet3(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
     createWalletWithdrawalPolicy2(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
     deleteAllowedAddress2(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): AxiosPromise<void>;
-    flush1(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO>;
+    flush2(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO>;
     getAllWalletWithdrawalPolicies2(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationWalletWithdrawalPolicyDTO>;
     getAllowedAddress2(walletId: string, allowedAddressId: string, options?: any): AxiosPromise<AllowedAddressDTO>;
     getAllowedAddressesByCoinId3(walletId: string, coinId: number, pageable: Pageable, options?: any): AxiosPromise<PaginationAllowedAddressDTO>;
@@ -1454,7 +1455,7 @@ export declare class EthWalletControllerApi extends BaseAPI {
     createUserWallet3(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
     createWalletWithdrawalPolicy2(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
     deleteAllowedAddress2(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
-    flush1(walletId: string, flushRequest: FlushRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
+    flush2(walletId: string, flushRequest: FlushRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     getAllWalletWithdrawalPolicies2(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletWithdrawalPolicyDTO>>;
     getAllowedAddress2(walletId: string, allowedAddressId: string, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
     getAllowedAddressesByCoinId3(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationAllowedAddressDTO>>;
@@ -1729,6 +1730,7 @@ export declare const KlayWalletControllerApiAxiosParamCreator: (configuration?: 
     createUserWallet1: (walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any) => Promise<RequestArgs>;
     createWalletWithdrawalPolicy: (walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any) => Promise<RequestArgs>;
     deleteAllowedAddress: (walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any) => Promise<RequestArgs>;
+    flush: (walletId: string, flushRequest: FlushRequest, options?: any) => Promise<RequestArgs>;
     getAllWalletWithdrawalPolicies: (walletId: string, pageable: Pageable, options?: any) => Promise<RequestArgs>;
     getAllowedAddress: (walletId: string, allowedAddressId: string, options?: any) => Promise<RequestArgs>;
     getAllowedAddressesByCoinId1: (walletId: string, coinId: number, pageable: Pageable, options?: any) => Promise<RequestArgs>;
@@ -1764,6 +1766,7 @@ export declare const KlayWalletControllerApiFp: (configuration?: Configuration) 
     createUserWallet1(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserWalletDTO>>;
     createWalletWithdrawalPolicy(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WalletWithdrawalPolicyDTO>>;
     deleteAllowedAddress(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    flush(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>>;
     getAllWalletWithdrawalPolicies(walletId: string, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletWithdrawalPolicyDTO>>;
     getAllowedAddress(walletId: string, allowedAddressId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AllowedAddressDTO>>;
     getAllowedAddressesByCoinId1(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationAllowedAddressDTO>>;
@@ -1799,6 +1802,7 @@ export declare const KlayWalletControllerApiFactory: (configuration?: Configurat
     createUserWallet1(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): AxiosPromise<UserWalletDTO>;
     createWalletWithdrawalPolicy(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): AxiosPromise<WalletWithdrawalPolicyDTO>;
     deleteAllowedAddress(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): AxiosPromise<void>;
+    flush(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO>;
     getAllWalletWithdrawalPolicies(walletId: string, pageable: Pageable, options?: any): AxiosPromise<PaginationWalletWithdrawalPolicyDTO>;
     getAllowedAddress(walletId: string, allowedAddressId: string, options?: any): AxiosPromise<AllowedAddressDTO>;
     getAllowedAddressesByCoinId1(walletId: string, coinId: number, pageable: Pageable, options?: any): AxiosPromise<PaginationAllowedAddressDTO>;
@@ -1834,6 +1838,7 @@ export declare class KlayWalletControllerApi extends BaseAPI {
     createUserWallet1(walletId: string, createUserWalletRequest: CreateUserWalletRequest, options?: any): Promise<import("axios").AxiosResponse<UserWalletDTO>>;
     createWalletWithdrawalPolicy(walletId: string, createWithdrawalPolicyRequest: CreateWithdrawalPolicyRequest, options?: any): Promise<import("axios").AxiosResponse<WalletWithdrawalPolicyDTO>>;
     deleteAllowedAddress(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any): Promise<import("axios").AxiosResponse<void>>;
+    flush(walletId: string, flushRequest: FlushRequest, options?: any): Promise<import("axios").AxiosResponse<TransactionDTO>>;
     getAllWalletWithdrawalPolicies(walletId: string, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationWalletWithdrawalPolicyDTO>>;
     getAllowedAddress(walletId: string, allowedAddressId: string, options?: any): Promise<import("axios").AxiosResponse<AllowedAddressDTO>>;
     getAllowedAddressesByCoinId1(walletId: string, coinId: number, pageable: Pageable, options?: any): Promise<import("axios").AxiosResponse<PaginationAllowedAddressDTO>>;
