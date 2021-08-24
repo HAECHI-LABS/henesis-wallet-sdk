@@ -690,6 +690,28 @@ export class EthMasterWallet extends EthLikeWallet {
     this.data.name = masterWalletData.name;
   }
 
+  async flushWithTargets(
+    flushTargets: Array<{ coinId: number; depositAddressId: string }>,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const request: FlushRequest = {
+      targets: flushTargets,
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
+      metadata,
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `${this.baseUrl}/flush`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
+  }
+
   async flush(
     coin: string | Coin,
     userWalletIds: string[],
