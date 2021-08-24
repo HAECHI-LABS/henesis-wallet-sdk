@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.8...v3.2.13-alpha.9) (2021-08-24)
+
+
+### Bug Fixes
+
+* remove wallet version condition ([e999dd3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e999dd3a112ca6cb6d51ff48ef9247cd7a99e301))
+
+
+
+
+
 ## [3.2.13-alpha.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.7...v3.2.13-alpha.8) (2021-08-24)
 
 
