@@ -18,6 +18,7 @@ import {
 import { checkNullAndUndefinedParameter } from "..";
 import { InactiveWallet } from "../wallet";
 import { litecoinMainnet, litecoinTestnet } from "./network";
+import { convertToNewAddress, isLegacyAddress } from "./utils";
 
 export class LtcWallets extends Wallets<LtcMasterWallet> {
   constructor(env: Env, client: Client, keychains: Keychains) {
@@ -63,12 +64,15 @@ export class LtcWallets extends Wallets<LtcMasterWallet> {
     );
   }
 
-  // TODO: litecoin의 legacy p2sh addres prefix를 잘 처리할 수 있는지 확인 필요.
   verifyAddress(address: string): boolean {
     checkNullAndUndefinedParameter({ address });
     try {
+      let addressToTest = address;
+      if (isLegacyAddress(address)) {
+        addressToTest = convertToNewAddress(address);
+      }
       BitcoinAddress.toOutputScript(
-        address,
+        addressToTest,
         this.env === Env.Prod ? litecoinMainnet : litecoinTestnet
       );
       return true;
