@@ -78,6 +78,10 @@ export declare class EthMasterWallet extends EthLikeWallet {
     retryCreateUserWallet(walletId: string, gasPrice?: BN): Promise<EthUserWallet>;
     getId(): string;
     changeName(name: string): Promise<void>;
+    flushWithTargets(flushTargets: Array<{
+        coinId: number;
+        depositAddressId: string;
+    }>, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
     flush(coin: string | Coin, userWalletIds: string[], passphrase: string, otpCode?: string, gasPrice?: BN, gasLimit?: BN, metadata?: string): Promise<EthTransaction>;
     approve(params: EthWithdrawalApproveParams): Promise<EthTransaction>;
     reject(params: {

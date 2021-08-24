@@ -14,6 +14,7 @@ const keychains_1 = require("./keychains");
 const hash_1 = require("./eth-core-lib/hash");
 const url_1 = require("../utils/url");
 const common_1 = require("../utils/common");
+const eth_1 = require("../__generate__/eth");
 const wallet_2 = require("../utils/wallet");
 class EthWallets extends wallets_1.Wallets {
     constructor(client, keychains, env, henesisKey, blockchain) {
@@ -36,7 +37,11 @@ class EthWallets extends wallets_1.Wallets {
         const queryString = url_1.makeQueryString(options);
         const walletDatas = await this.client.get(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
         return walletDatas
-            .filter((walletData) => !wallet_2.isLessThanWalletV4(walletData.version))
+            .filter((walletData) => {
+            if (walletData.blockchain === eth_1.Blockchain.ETHEREUM)
+                return !wallet_2.isLessThanWalletV4(walletData.version);
+            return true;
+        })
             .map((walletData) => {
             return new wallet_1.EthWallet(this.client, wallet_1.transformMasterWalletData(walletData), this.keychains, this.blockchain);
         });

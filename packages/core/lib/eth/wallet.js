@@ -318,6 +318,16 @@ class EthMasterWallet extends abstractWallet_1.EthLikeWallet {
         const masterWalletData = await this.client.patch(`${this.baseUrl}/name`, request);
         this.data.name = masterWalletData.name;
     }
+    async flushWithTargets(flushTargets, gasPrice, gasLimit, metadata) {
+        const request = {
+            targets: flushTargets,
+            gasPrice: gasPrice ? common_1.BNConverter.bnToHexString(gasPrice) : undefined,
+            gasLimit: gasLimit ? common_1.BNConverter.bnToHexString(gasLimit) : undefined,
+            metadata,
+        };
+        const response = await this.client.post(`${this.baseUrl}/flush`, request);
+        return Object.assign(Object.assign({}, response), { blockchain: blockchain_1.transformBlockchainType(response.blockchain) });
+    }
     async flush(coin, userWalletIds, passphrase, otpCode, gasPrice, gasLimit, metadata) {
         if (userWalletIds.length > 50 || userWalletIds.length == 0) {
             throw new Error(`only 1 ~ 50 accounts can be flushed at a time`);
