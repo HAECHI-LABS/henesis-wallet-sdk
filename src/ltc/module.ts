@@ -3,6 +3,12 @@ import { ModuleOptions } from "../module";
 import { LtcWallets } from "./wallets";
 import { LtcKeyChains } from "./keychains";
 import { LtcTransfers } from "./transfers";
+import {
+  isLegacyAddress,
+  isNewAddress,
+  convertToLegacyAddress,
+  convertToNewAddress,
+} from "./utils";
 
 export class LtcModule {
   public readonly wallets: LtcWallets;
@@ -12,6 +18,13 @@ export class LtcModule {
   public readonly transfers: LtcTransfers;
 
   private readonly client: Client;
+
+  private readonly utils = {
+    isLegacyAddress,
+    isNewAddress,
+    convertToLegacyAddress,
+    convertToNewAddress,
+  };
 
   constructor(options: ModuleOptions) {
     this.client = options.client;
