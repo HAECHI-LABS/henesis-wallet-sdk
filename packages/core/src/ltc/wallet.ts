@@ -91,6 +91,7 @@ export interface LtcCreateTransactionOutput
 
 export interface LtcSignedRawTransactionRequest
   extends LtcSignedRawTransaction {
+  originTo?: string;
   otpCode?: string;
 }
 
@@ -231,6 +232,7 @@ export class LtcMasterWallet extends Wallet<LtcTransaction> {
   ): Promise<Transfer> {
     return this.sendSignedTransaction({
       ...(await this.build(to, amount, passphrase, feeRate, metadata)),
+      originTo: to,
       otpCode: otpCode,
     });
   }
@@ -350,6 +352,7 @@ export class LtcMasterWallet extends Wallet<LtcTransaction> {
   async approve(params: LtcWithdrawalApproveParams): Promise<Transfer> {
     const request: ApproveWithdrawalApprovalRequest = {
       ...(await this.build(params.toAddress, params.amount, params.passphrase)),
+      originTo: params.toAddress,
       otpCode: params.otpCode,
     };
 

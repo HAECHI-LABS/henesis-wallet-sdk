@@ -164,6 +164,12 @@ export interface ApproveWithdrawalApprovalRequest {
      * @type {string}
      * @memberof ApproveWithdrawalApprovalRequest
      */
+    originTo?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApproveWithdrawalApprovalRequest
+     */
     otpCode: string;
 }
 /**
@@ -424,6 +430,12 @@ export interface CreateTransactionRequest {
      * @memberof CreateTransactionRequest
      */
     metadata?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateTransactionRequest
+     */
+    originTo?: string;
     /**
      * 
      * @type {string}
