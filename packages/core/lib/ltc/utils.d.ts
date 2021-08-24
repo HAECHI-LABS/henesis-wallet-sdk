@@ -4,3 +4,7 @@ import { LtcTransaction } from "./wallet";
 export declare const convertTransactionDTO: (transaction: LtcTransactionDTO) => LtcTransaction;
 export declare const convertTransferDTO: (t: TransferDTO) => Transfer;
 export declare const convertTransferInternalDTO: (transfer: TransferInternalDTO) => TransferInternal;
+export declare function isLegacyAddress(address: string): boolean;
+export declare function isNewAddress(address: string): boolean;
+export declare function convertToNewAddress(address: string): string | null;
+export declare function convertToLegacyAddress(address: string): string | null;

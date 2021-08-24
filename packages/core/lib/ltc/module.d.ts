@@ -7,5 +7,6 @@ export declare class LtcModule {
     readonly keychains: LtcKeyChains;
     readonly transfers: LtcTransfers;
     private readonly client;
+    private readonly utils;
     constructor(options: ModuleOptions);
 }
