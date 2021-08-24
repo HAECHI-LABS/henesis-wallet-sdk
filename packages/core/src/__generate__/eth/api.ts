@@ -548,6 +548,7 @@ export enum CoinType {
     BITCOIN = 'BITCOIN',
     FILECOIN = 'FILECOIN',
     BINANCESMARTCHAIN = 'BINANCE_SMART_CHAIN',
+    LITECOIN = 'LITECOIN',
     TOKEN = 'TOKEN',
     NFT = 'NFT'
 }
@@ -6314,14 +6315,14 @@ export const BscWalletControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        flush: async (walletId: string, flushRequest: FlushRequest, options: any = {}): Promise<RequestArgs> => {
+        flush1: async (walletId: string, flushRequest: FlushRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling flush.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling flush1.');
             }
             // verify required parameter 'flushRequest' is not null or undefined
             if (flushRequest === null || flushRequest === undefined) {
-                throw new RequiredError('flushRequest','Required parameter flushRequest was null or undefined when calling flush.');
+                throw new RequiredError('flushRequest','Required parameter flushRequest was null or undefined when calling flush1.');
             }
             const localVarPath = `/api/v2/bnb/wallets/{walletId}/flush`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -7533,8 +7534,8 @@ export const BscWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async flush(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
-            const localVarAxiosArgs = await BscWalletControllerApiAxiosParamCreator(configuration).flush(walletId, flushRequest, options);
+        async flush1(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
+            const localVarAxiosArgs = await BscWalletControllerApiAxiosParamCreator(configuration).flush1(walletId, flushRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -7974,8 +7975,8 @@ export const BscWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        flush(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO> {
-            return BscWalletControllerApiFp(configuration).flush(walletId, flushRequest, options).then((request) => request(axios, basePath));
+        flush1(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO> {
+            return BscWalletControllerApiFp(configuration).flush1(walletId, flushRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -8327,8 +8328,8 @@ export class BscWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BscWalletControllerApi
      */
-    public flush(walletId: string, flushRequest: FlushRequest, options?: any) {
-        return BscWalletControllerApiFp(this.configuration).flush(walletId, flushRequest, options).then((request) => request(this.axios, this.basePath));
+    public flush1(walletId: string, flushRequest: FlushRequest, options?: any) {
+        return BscWalletControllerApiFp(this.configuration).flush1(walletId, flushRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -11942,14 +11943,14 @@ export const EthWalletControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        flush1: async (walletId: string, flushRequest: FlushRequest, options: any = {}): Promise<RequestArgs> => {
+        flush2: async (walletId: string, flushRequest: FlushRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'walletId' is not null or undefined
             if (walletId === null || walletId === undefined) {
-                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling flush1.');
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling flush2.');
             }
             // verify required parameter 'flushRequest' is not null or undefined
             if (flushRequest === null || flushRequest === undefined) {
-                throw new RequiredError('flushRequest','Required parameter flushRequest was null or undefined when calling flush1.');
+                throw new RequiredError('flushRequest','Required parameter flushRequest was null or undefined when calling flush2.');
             }
             const localVarPath = `/api/v2/eth/wallets/{walletId}/flush`
                 .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
@@ -13334,8 +13335,8 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async flush1(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
-            const localVarAxiosArgs = await EthWalletControllerApiAxiosParamCreator(configuration).flush1(walletId, flushRequest, options);
+        async flush2(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
+            const localVarAxiosArgs = await EthWalletControllerApiAxiosParamCreator(configuration).flush2(walletId, flushRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -13831,8 +13832,8 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        flush1(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO> {
-            return EthWalletControllerApiFp(configuration).flush1(walletId, flushRequest, options).then((request) => request(axios, basePath));
+        flush2(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO> {
+            return EthWalletControllerApiFp(configuration).flush2(walletId, flushRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -14224,8 +14225,8 @@ export class EthWalletControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EthWalletControllerApi
      */
-    public flush1(walletId: string, flushRequest: FlushRequest, options?: any) {
-        return EthWalletControllerApiFp(this.configuration).flush1(walletId, flushRequest, options).then((request) => request(this.axios, this.basePath));
+    public flush2(walletId: string, flushRequest: FlushRequest, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).flush2(walletId, flushRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -17910,6 +17911,50 @@ export const KlayWalletControllerApiAxiosParamCreator = function (configuration?
         /**
          * 
          * @param {string} walletId 
+         * @param {FlushRequest} flushRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        flush: async (walletId: string, flushRequest: FlushRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling flush.');
+            }
+            // verify required parameter 'flushRequest' is not null or undefined
+            if (flushRequest === null || flushRequest === undefined) {
+                throw new RequiredError('flushRequest','Required parameter flushRequest was null or undefined when calling flush.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/flush`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof flushRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(flushRequest !== undefined ? flushRequest : {}) : (flushRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} walletId 
          * @param {Pageable} pageable 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19126,6 +19171,20 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
         /**
          * 
          * @param {string} walletId 
+         * @param {FlushRequest} flushRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async flush(walletId: string, flushRequest: FlushRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
+            const localVarAxiosArgs = await KlayWalletControllerApiAxiosParamCreator(configuration).flush(walletId, flushRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} walletId 
          * @param {Pageable} pageable 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19567,6 +19626,16 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
         /**
          * 
          * @param {string} walletId 
+         * @param {FlushRequest} flushRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        flush(walletId: string, flushRequest: FlushRequest, options?: any): AxiosPromise<TransactionDTO> {
+            return KlayWalletControllerApiFp(configuration).flush(walletId, flushRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} walletId 
          * @param {Pageable} pageable 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19914,6 +19983,18 @@ export class KlayWalletControllerApi extends BaseAPI {
      */
     public deleteAllowedAddress(walletId: string, allowedAddressId: string, deleteAllowedAddressRequest: DeleteAllowedAddressRequest, options?: any) {
         return KlayWalletControllerApiFp(this.configuration).deleteAllowedAddress(walletId, allowedAddressId, deleteAllowedAddressRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} walletId 
+     * @param {FlushRequest} flushRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public flush(walletId: string, flushRequest: FlushRequest, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).flush(walletId, flushRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
