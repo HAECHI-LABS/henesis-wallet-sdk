@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.12...v3.3.0) (2021-08-25)
+
+
+### Bug Fixes
+
+* change coin api ticker path parameter ([#534](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/534)) ([e1f9912](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e1f9912c82cfaf4f47d881c0fd9c9e3f8ce5771b))
+* change wrong api properties ([#532](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/532)) ([9ab3a51](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9ab3a51995e5a5f256bc281d5513f65bea37af6f))
+
+
+### Features
+
+* add Litecoin APIs for API proxy ([#535](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/535)) ([294b39e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/294b39e077e437fcb9d5d6a02fb4936e9e0f20fb))
+* ethereum NFT API ([#541](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/541)) ([3df0bf4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3df0bf4935c7869188f6e502dfebfeeefc21b1e2))
+* klaytn NFT implementation ([#552](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/552)) ([4c94d17](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4c94d1714d02df7e878b540e034dafd600d32d74))
+* klaytn V3 implementation ([#544](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/544)) ([5c5a5eb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5c5a5ebbcac8dfc89f1cc434f6c154da8c682c39))
+* klaytn V3 interface ([#540](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/540)) ([e333f94](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e333f9411a863269aa1beaf3af554a8e75ba5739))
+* klaytn version error ([#554](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/554)) ([04ad38d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/04ad38da1342c20e96897c6a474283e62c0d5249))
+
+
+
+
+
 ## [3.2.12](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.11...v3.2.12) (2021-08-03)
 
 

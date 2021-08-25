@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.12...v3.3.0) (2021-08-25)
+
+
+### Bug Fixes
+
+* add createdAt, updatedAt to NftBalance ([#538](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/538)) ([32db7cf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/32db7cf76b3f58a226c63ed4237ae5c57576ab17))
+* add klaytn all wallet condition ([4ef9f3d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4ef9f3d70bdc3f60d7823dc03ec48fa7b024d7a9))
+* add userwallet, deposit transferNft method ([7c5553a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7c5553a017977a74f6c28f8f2b454aa21d22a571))
+* fixed btc -> ltc ([a749baa](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a749baa0796391c067af1e8472ebeb16139dfc37))
+* fixed style code ([b81351f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b81351fa05699689806d900acbd58e6fe63c070a))
+* implement masterwallet sendNftTransaction ([8f36319](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8f36319478f36cf5384db0dd936d1a65cf9a91aa))
+* make Litecoin legacy address pass the verifyAddress function ([#551](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/551)) ([7bb4bd8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7bb4bd80282b549ffa451688f5e45da906fe09bd))
+* move to ethwallet transfer nft ([a3134fc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a3134fcf4360038edbffdd124d371373329dcc2c))
+* remove wallet version condition ([e999dd3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e999dd3a112ca6cb6d51ff48ef9247cd7a99e301))
+* update NFT gas limit ([#545](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/545)) ([ec7564f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ec7564fa94d793e9d15b508006ac4f7ce1c0b32c))
+
+
+### Features
+
+* add abstract wallet blockchain type ([e107085](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e107085a67befde1cc350d7a58a85f8342458520))
+* add dummy LTC implementation ([#531](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/531)) ([6adeb1b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6adeb1b3162028fee24156775e8b9a1622f68a81))
+* add isNftSupported to Organization ([#546](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/546)) ([ff167f7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ff167f7a6af9474d34642938500bba5ef613ecdf))
+* add Litecoin APIs for API proxy ([#535](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/535)) ([294b39e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/294b39e077e437fcb9d5d6a02fb4936e9e0f20fb))
+* add Litecoin legacy address util functions ([#547](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/547)) ([296fbb2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/296fbb2078d60470e78f6bfb34305909b2696231))
+* define nft sdk interface ([e07b582](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e07b582c4648da997ffe7c04adc47c5d4f03f429))
+* ethereum NFT API ([#541](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/541)) ([3df0bf4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3df0bf4935c7869188f6e502dfebfeeefc21b1e2))
+* give legacy p2sh address together when transfer LTC ([#549](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/549)) ([164ee30](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/164ee30e2c8ddfb93f5b0e25aae00cd683c03784))
+* implement to transfer nft ([#537](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/537)) ([28c118b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/28c118bc4588cbe99b90268365d452f03e76272f))
+* klaytn V3 implementation ([#544](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/544)) ([5c5a5eb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5c5a5ebbcac8dfc89f1cc434f6c154da8c682c39))
+* klaytn version error ([#554](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/554)) ([04ad38d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/04ad38da1342c20e96897c6a474283e62c0d5249))
+
+
+
+
+
 ## [3.2.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.9...v3.2.10) (2021-07-23)
 
 
