@@ -1,4 +1,8 @@
-import { EXAMPLE_BITCOIN_KEY_DTO, KeyDTO } from "./key.dto";
+import {
+  EXAMPLE_BITCOIN_KEY_DTO,
+  EXAMPLE_LITECOIN_KEY_DTO,
+  KeyDTO,
+} from "./key.dto";
 import {
   BtcActivatingMasterWallet,
   BtcMasterWallet,
@@ -7,7 +11,11 @@ import {
   InactiveMasterWallet,
   WalletStatus,
 } from "@haechi-labs/henesis-wallet-core/lib/wallet";
-import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import {
+  ApiModelProperty,
+  ApiModelPropertyOptional,
+} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import { LtcMasterWallet } from "@haechi-labs/henesis-wallet-core/lib/ltc/wallet";
 
 export const EXAMPLE_BITCOIN_WALLET_DTO: WalletDTO = {
   id: "cce4f485764767f256155390873668b3",
@@ -23,6 +31,13 @@ export const EXAMPLE_BITCOIN_WALLET_DTO: WalletDTO = {
   whitelistActivated: false,
 };
 
+export const EXAMPLE_LITECOIN_WALLET_DTO: WalletDTO = {
+  ...EXAMPLE_BITCOIN_WALLET_DTO,
+  name: "litecoin-wallet",
+  address: "QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV",
+  accountKey: EXAMPLE_LITECOIN_KEY_DTO,
+};
+
 export class WalletDTO {
   @ApiModelProperty({
     description: "지갑 ID",
@@ -36,13 +51,13 @@ export class WalletDTO {
   })
   name: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "지갑 주소",
     example: EXAMPLE_BITCOIN_WALLET_DTO.address,
   })
   address?: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "지갑 비밀번호를 복구하기 위해, 암호화하는 데에 쓰인 키",
     example: EXAMPLE_BITCOIN_WALLET_DTO.encryptionKey,
   })
@@ -66,13 +81,13 @@ export class WalletDTO {
   })
   status: WalletStatus;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "지갑이 속한 팀(Org)의 ID",
     example: EXAMPLE_BITCOIN_WALLET_DTO.orgId,
   })
   orgId?: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "지갑을 서명할 때 쓰이는 Account Key 정보",
     example: EXAMPLE_BITCOIN_WALLET_DTO.accountKey,
   })
@@ -85,6 +100,10 @@ export class WalletDTO {
   whitelistActivated: boolean;
 
   static fromBTCMasterWallet(wallet: BtcMasterWallet): WalletDTO {
+    return wallet.getData();
+  }
+
+  static fromLTCMasterWallet(wallet: LtcMasterWallet): WalletDTO {
     return wallet.getData();
   }
 

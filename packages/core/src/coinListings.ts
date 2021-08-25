@@ -2,7 +2,6 @@ import { Client } from "./httpClient";
 import {
   CreateCoinListingRequestRequest,
   CoinListingRequestDTO,
-  RejectCoinListingRequestRequest,
   CoinContractDTO,
 } from "./__generate__/accounts";
 import { BlockchainType, transformBlockchainType } from "./blockchain";

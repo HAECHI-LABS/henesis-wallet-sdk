@@ -1,4 +1,4 @@
-import { ApiParamOptions, ApiQueryOptions } from "@nestjs/swagger";
+import { ApiQueryOptions } from "@nestjs/swagger";
 
 export const QUERY_EVENT_SYMBOL_OPTIONAL: ApiQueryOptions = {
   name: "symbol",

@@ -10,6 +10,7 @@ import { BlockchainType } from "../blockchain";
 import { HenesisKeys } from "./henesisKeys";
 import { Coins } from "./coins";
 import { GasPrice } from "./gasPrice";
+import { Nfts } from "./nfts";
 
 export interface ModuleOptions {
   client: Client;
@@ -34,6 +35,8 @@ export class EthModule {
 
   public readonly coins: Coins;
 
+  public readonly nfts: Nfts;
+
   private readonly client: Client;
 
   constructor(options: ModuleOptions) {
@@ -52,6 +55,7 @@ export class EthModule {
     this.gasUsages = new GasUsages(this.client);
     this.transactions = new Transactions(this.client);
     this.coins = new Coins(this.client);
+    this.nfts = new Nfts(this.client);
   }
 }
 

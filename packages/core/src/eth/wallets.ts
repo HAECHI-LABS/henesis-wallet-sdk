@@ -18,6 +18,7 @@ import { makeQueryString } from "../utils/url";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import { HenesisKeys } from "./henesisKeys";
 import {
+  Blockchain,
   CreateInactiveMasterWalletRequest,
   InactiveMasterWalletDTO,
   MasterWalletDTO,
@@ -45,11 +46,6 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
-    if (!isLessThanWalletV4(walletData.version)) {
-      throw new Error(
-        "This wallet is not a compatible version. Please use the v3 APIs."
-      );
-    }
     return new EthMasterWallet(
       this.client,
       transformMasterWalletData(walletData),
@@ -82,7 +78,11 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
     return walletDatas
-      .filter((walletData) => !isLessThanWalletV4(walletData.version))
+      .filter((walletData) => {
+        if (walletData.blockchain === Blockchain.ETHEREUM)
+          return !isLessThanWalletV4(walletData.version);
+        return true;
+      })
       .map((walletData) => {
         return new EthWallet(
           this.client,
@@ -102,7 +102,15 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
     return walletDatas.map((walletData) => {
-      const { version } = walletData;
+      const { version, blockchain } = walletData;
+      if (blockchain === Blockchain.KLAYTN) {
+        return new EthMasterWallet(
+          this.client,
+          transformMasterWalletData(walletData),
+          this.keychains,
+          this.blockchain
+        );
+      }
       if (isLessThanWalletV4(version)) {
         return new EthMasterWallet(
           this.client,

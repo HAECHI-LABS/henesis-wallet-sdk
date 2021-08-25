@@ -1,5 +1,4 @@
 import { ApiParamOptions, ApiQueryOptions } from "@nestjs/swagger";
-import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const TICKER_OPTIONAL: ApiQueryOptions = {
   name: "ticker",
@@ -30,6 +29,16 @@ export const WALLET_ID_REQUIRED: ApiParamOptions = {
   name: "walletId",
   required: true,
   description: "지갑 ID",
+};
+export const MASTER_WALLET_ID_REQUIRED: ApiParamOptions = {
+  name: "masterWalletId",
+  required: true,
+  description: "마스터 지갑 ID",
+};
+export const USER_WALLET_ID_REQUIRED: ApiParamOptions = {
+  name: "userWalletId",
+  required: true,
+  description: "사용자 지갑 ID",
 };
 export const TRANSACTION_ID_OPTIONAL: ApiQueryOptions = {
   name: "transactionId",
@@ -79,6 +88,16 @@ export const NAME_OPTIONAL: ApiQueryOptions = {
   name: "name",
   required: false,
   description: "지갑 이름",
+};
+export const SORT_OPTIONAL: ApiQueryOptions = {
+  name: "sort",
+  required: false,
+  description: "결과 정렬 방식",
+};
+export const ADDRESS_OPTIONAL: ApiQueryOptions = {
+  name: "address",
+  required: false,
+  description: "지갑 주소",
 };
 export const COIN_REQUIRED: ApiParamOptions = {
   name: "coinId",

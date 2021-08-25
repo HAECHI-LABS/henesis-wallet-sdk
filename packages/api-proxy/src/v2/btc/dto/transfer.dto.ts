@@ -1,6 +1,7 @@
 import {
   BtcTransactionDTO,
   EXAMPLE_BITCOIN_BTC_TRANSACTION_DTO,
+  EXAMPLE_LITECOIN_BTC_TRANSACTION_DTO,
 } from "./btc-transaction.dto";
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
@@ -31,12 +32,19 @@ export const EXAMPLE_BITCOIN_TRANSFER_DTO: TransferDTO = {
   metadata: "metadata",
 };
 
+export const EXAMPLE_LITECOIN_TRANSFER_DTO: TransferDTO = {
+  ...EXAMPLE_BITCOIN_TRANSFER_DTO,
+  receivedAt: "QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV",
+  sendTo: "QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV",
+  transaction: EXAMPLE_LITECOIN_BTC_TRANSACTION_DTO,
+};
+
 export class TransferDTO {
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "해당 전송(Transfer)이 포함되는 온체인 트랜잭션의 정보",
     example: EXAMPLE_BITCOIN_TRANSFER_DTO.transaction,
   })
-  transaction: BtcTransactionDTO;
+  transaction?: BtcTransactionDTO;
 
   @ApiModelProperty({
     description: "지갑 ID",
@@ -62,20 +70,20 @@ export class TransferDTO {
   })
   id: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description:
       "해당 전송(Transfer)을 통해 발생한 Output이 같은 트랜잭션에 포함된 여러 UTXO 중에 몇 번째 Output 인지?",
     example: EXAMPLE_BITCOIN_TRANSFER_DTO.outputIndex,
   })
   outputIndex?: number;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "받는 주소",
     example: EXAMPLE_BITCOIN_TRANSFER_DTO.receivedAt,
   })
   receivedAt?: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "보내는 주소",
     example: EXAMPLE_BITCOIN_TRANSFER_DTO.sendTo,
   })
@@ -106,7 +114,7 @@ export class TransferDTO {
   })
   updatedAt: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "사용된 수수료의 양 (단위: satoshi) (형식: 16진법)",
     example: EXAMPLE_BITCOIN_TRANSFER_DTO.feeAmount,
   })

@@ -13,7 +13,6 @@ import {
   AuthHeaders,
   ReadMeExtension,
 } from "../../../decorators";
-import { KeyDTO } from "../../eth/dto/key.dto";
 import {
   BalanceDTO,
   EXAMPLE_ETH_KLAY_BALANCE_DTO,

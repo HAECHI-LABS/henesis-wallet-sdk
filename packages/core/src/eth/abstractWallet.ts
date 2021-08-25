@@ -1,12 +1,6 @@
 import BN from "bn.js";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
-import {
-  Balance,
-  Key,
-  Keychains,
-  Pagination,
-  PaginationOptions,
-} from "../types";
+import { Key, Keychains, Pagination, PaginationOptions } from "../types";
 import {
   formatMultiSigPayload,
   MultiSigPayload,
@@ -19,28 +13,39 @@ import {
   checkNullAndUndefinedParameter,
   HexConverter,
 } from "../utils/common";
-import { WalletData, Wallet } from "../wallet";
+import { Wallet, WalletData } from "../wallet";
 import { Coins } from "./coins";
 import {
-  TransactionDTO,
   BatchTransactionDTO,
-  SignedMultiSigPayloadDTO,
   CreateMultiSigTransactionRequest,
+  NftBalanceDTO,
+  PaginationNftBalanceDTO,
   ReplaceTransactionRequest,
   ResendTransactionRequest,
+  SignedMultiSigPayloadDTO,
+  TransactionDTO,
 } from "../__generate__/eth";
 import _ from "lodash";
 import { ValidationParameterError } from "../error";
 import { Coin } from "./coin";
 import { randomBytes } from "crypto";
-import { keccak256 } from "./eth-core-lib/hash";
-import { toChecksum } from "./keychains";
-import { Address } from "cluster";
 import EthCrypto from "eth-crypto";
+import { Nfts } from "./nfts";
+import { makeQueryString } from "../utils/url";
+import { Nft } from "./nft";
+import {
+  EthDepositAddress,
+  transformDepositAddressData,
+} from "./depositAddress";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
 };
+
+export interface NftBalancePaginationOptions extends PaginationOptions {
+  tokenOnchainId?: string;
+  tokenName?: string;
+}
 
 export interface EthWalletData extends WalletData {
   blockchain: BlockchainType;
@@ -78,15 +83,17 @@ export function getAddressFromCompressedPub(pub: string): string {
   return EthCrypto.publicKey.toAddress(pubKey);
 }
 
+export type NftBalance = NftBalanceDTO;
+
 export abstract class EthLikeWallet extends Wallet<EthTransaction> {
   protected data: EthMasterWalletData;
   protected readonly DEFAULT_CONTRACT_CALL_GAS_LIMIT: BN = new BN(1000000);
   protected readonly DEFAULT_COIN_TRANSFER_GAS_LIMIT: BN = new BN(150000);
   protected readonly DEFAULT_TOKEN_TRANSFER_GAS_LIMIT: BN = new BN(500000);
-
-  protected readonly blockchain: BlockchainType;
+  protected readonly DEFAULT_NFT_TRANSFER_GAS_LIMIT: BN = new BN(500000);
 
   protected readonly coins: Coins;
+  protected readonly nfts: Nfts;
 
   protected constructor(
     client: Client,
@@ -95,10 +102,10 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     blockchain: BlockchainType,
     baseUrl: string
   ) {
-    super(client, keychains, baseUrl);
+    super(client, keychains, baseUrl, blockchain);
     this.data = data;
-    this.blockchain = blockchain;
     this.coins = new Coins(this.client);
+    this.nfts = new Nfts(this.client);
   }
 
   getChain(): BlockchainType {
@@ -268,20 +275,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     );
   }
 
-  protected signPayload(
-    multiSigPayload: MultiSigPayload,
-    passphrase: string
-  ): SignedMultiSigPayload {
-    return {
-      signature: this.keychains.sign(
-        this.data.accountKey,
-        passphrase,
-        formatMultiSigPayload(multiSigPayload)
-      ),
-      multiSigPayload,
-    };
-  }
-
   async sendTransaction(
     signedMultiSigPayload: SignedMultiSigPayload,
     walletId: string,
@@ -307,6 +300,37 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     return {
       ...response,
       blockchain: transformBlockchainType(response.blockchain),
+    };
+  }
+
+  getNonce(): BN {
+    return BNConverter.hexStringToBN("0x" + randomBytes(32).toString("hex"));
+  }
+
+  async getNftBalance(
+    options: NftBalancePaginationOptions
+  ): Promise<Pagination<NftBalance>> {
+    const queryString = makeQueryString(options);
+    const data = await this.client.get<
+      NoUndefinedField<PaginationNftBalanceDTO>
+    >(`${this.baseUrl}/nft/balance${queryString ? `?${queryString}` : ""}`);
+    return {
+      pagination: data.pagination,
+      results: data.results.map((data) => data as NftBalance),
+    };
+  }
+
+  protected signPayload(
+    multiSigPayload: MultiSigPayload,
+    passphrase: string
+  ): SignedMultiSigPayload {
+    return {
+      signature: this.keychains.sign(
+        this.data.accountKey,
+        passphrase,
+        formatMultiSigPayload(multiSigPayload)
+      ),
+      multiSigPayload,
     };
   }
 
@@ -341,10 +365,6 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     });
   }
 
-  getNonce(): BN {
-    return BNConverter.hexStringToBN("0x" + randomBytes(32).toString("hex"));
-  }
-
   protected getGasLimitByTicker(coin: Coin): BN {
     const ticker = coin.getCoinData().symbol;
     if (ticker.toUpperCase() === "ETH" || ticker.toUpperCase() === "KLAY") {
@@ -352,4 +372,43 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     }
     return this.DEFAULT_TOKEN_TRANSFER_GAS_LIMIT;
   }
+
+  protected async buildTransferNftPayload(
+    nft: Nft,
+    tokenOnchainId: string,
+    from: EthLikeWallet,
+    to: string,
+    passphrase: string
+  ): Promise<SignedMultiSigPayload> {
+    checkNullAndUndefinedParameter({
+      nft,
+      to,
+      passphrase,
+    });
+    return this.signPayload(
+      await nft.buildTransferMultiSigPayload(from, to, tokenOnchainId),
+      passphrase
+    );
+  }
+
+  abstract transferNft(
+    nft: number | Nft,
+    tokenOnchainId: string,
+    to: string,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction>;
+
+  abstract sendNftTransaction(
+    signedMultiSigPayload: SignedMultiSigPayload,
+    nft: Nft,
+    tokenOnchainId: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction>;
 }

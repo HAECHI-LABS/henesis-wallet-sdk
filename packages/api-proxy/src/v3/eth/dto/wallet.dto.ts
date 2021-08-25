@@ -1,7 +1,10 @@
 import { WalletStatus } from "@haechi-labs/henesis-wallet-core/lib/wallet";
 import { EthWallet } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
-import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import {
+  ApiModelProperty,
+  ApiModelPropertyOptional,
+} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_ETHEREUM_WALLET_DTO: WalletDTO = {
   id: "ae40b1b3dd953e5592c21e58be30d807",
@@ -58,17 +61,17 @@ export class WalletDTO {
   })
   status: WalletStatus;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "출금 주소 화이트리스팅의 활성화 유무",
     example: EXAMPLE_ETHEREUM_WALLET_DTO.whitelistActivated,
   })
-  whitelistActivated: boolean;
+  whitelistActivated?: boolean;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "컨트랙트 버전",
     example: EXAMPLE_ETHEREUM_WALLET_DTO.version,
   })
-  version: string;
+  version?: string;
 
   static fromEthWallet(wallet: EthWallet): WalletDTO {
     const walletData = wallet.getData();

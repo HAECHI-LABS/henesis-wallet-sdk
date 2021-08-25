@@ -7,8 +7,6 @@ import {
 import _ from "lodash";
 import { FormatInvalidError, ValidationParameterError } from "../error";
 
-const packageJson = require("../../package.json");
-
 export class ObjectConverter {
   static toSnakeCase(obj: any) {
     return this.changeObjectProperty(obj, toStringSnakeCase);
@@ -87,6 +85,14 @@ export class BNConverter {
       return null;
     }
     return this.hexStringToBN(hexString);
+  }
+
+  static decimalStringToBn(decimalString: string): BN {
+    return new BN(decimalString, 10);
+  }
+
+  static bnToDecimalString(bn: BN): string {
+    return bn.toString(10);
   }
 }
 

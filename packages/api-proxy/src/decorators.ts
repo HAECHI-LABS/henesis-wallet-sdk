@@ -4,7 +4,6 @@ import {
   ApiExtraModels,
   ApiHeaders,
   ApiOkResponse,
-  ApiOperation,
   ApiParam,
   ApiParamOptions,
   ApiQuery,
@@ -27,7 +26,6 @@ import {
   InvalidAccessIpException,
   InvalidAccessTokenException,
 } from "./extra-model.dto";
-import { getTypeReferenceAsString } from "@nestjs/swagger/dist/plugin/utils/plugin-utils";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 
 export function PathParams(...paramsOptions: ApiParamOptions[]) {

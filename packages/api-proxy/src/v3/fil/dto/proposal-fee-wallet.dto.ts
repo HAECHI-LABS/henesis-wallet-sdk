@@ -1,7 +1,4 @@
-import {
-  FilHenesisKey,
-  FilProposalFeeWallet,
-} from "@haechi-labs/henesis-wallet-core/lib/fil";
+import { FilProposalFeeWallet } from "@haechi-labs/henesis-wallet-core/lib/fil";
 import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_FILECOIN_PROPOSAL_FEE_WALLET_DTO: ProposalFeeWalletDTO = {

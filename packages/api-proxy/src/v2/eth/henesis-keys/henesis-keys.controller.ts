@@ -1,6 +1,5 @@
 import { Controller, Get, Request } from "@nestjs/common";
 import { HenesisKeysService } from "./henesis-keys.service";
-import { KeyDTO } from "../dto/key.dto";
 import { BalanceDTO, EXAMPLE_ETH_KLAY_BALANCE_DTO } from "../dto/balance.dto";
 import {
   ApiOperation,

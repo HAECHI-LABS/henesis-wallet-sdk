@@ -7,6 +7,7 @@ import {
 import { EthModule } from "./eth/eth.module";
 import { APP_INTERCEPTOR } from "@nestjs/core";
 import { FilModule } from "./fil/fil.module";
+import { KlayModule } from "./klay/klay.module";
 
 const buildSwagger: boolean =
   (process.env.BUILD_SWAGGER_SPEC?.toLowerCase() == "true" &&
@@ -27,6 +28,14 @@ export class ApiV3Module {
             max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
           })
         );
+      } else if (process.env.ENDPOINT == "klaytn") {
+        imports.push(
+          KlayModule,
+          CacheModule.register({
+            ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
+            max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
+          })
+        );
       } else if (process.env.ENDPOINT == "filecoin") {
         imports.push(
           FilModule,
@@ -38,6 +47,7 @@ export class ApiV3Module {
       } else {
         imports.push(
           EthModule,
+          KlayModule,
           FilModule,
           CacheModule.register({
             ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
