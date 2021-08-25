@@ -102,7 +102,15 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
     return walletDatas.map((walletData) => {
-      const { version } = walletData;
+      const { version, blockchain } = walletData;
+      if (blockchain === Blockchain.KLAYTN) {
+        return new EthMasterWallet(
+          this.client,
+          transformMasterWalletData(walletData),
+          this.keychains,
+          this.blockchain
+        );
+      }
       if (isLessThanWalletV4(version)) {
         return new EthMasterWallet(
           this.client,
