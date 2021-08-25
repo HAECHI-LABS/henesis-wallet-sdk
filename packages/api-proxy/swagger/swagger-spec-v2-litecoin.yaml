@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: BITCOIN
-  description: Henesis API Proxy - v2 - bitcoin OpenAPI Documentation
+  title: LITECOIN
+  description: Henesis API Proxy - v2 - litecoin OpenAPI Documentation
   version: '1.0'
   contact: {}
 tags: []
@@ -106,7 +106,7 @@ components:
       properties:
         transaction:
           description: 해당 전송(Transfer)이 포함되는 온체인 트랜잭션의 정보
-          example: &ref_1
+          example:
             id: beb70cf0b90afb6683ece78e0dfb4a140cf498310b833eea8092b5edd271e9c3
             transactionHash: beb70cf0b90afb6683ece78e0dfb4a140cf498310b833eea8092b5edd271e9c3
             blockNumber: '0x1d85f3'
@@ -286,7 +286,7 @@ components:
           example: 0u1a431da7361na9e75648180bbd4fbc
         accountKey:
           description: 지갑을 서명할 때 쓰이는 Account Key 정보
-          example: &ref_7
+          example: &ref_6
             address: undefined
             pub: >-
               0x030b5dm1690572a06c07181cfp29a30dfa057ea66c16e06313nd66404299b22041
@@ -469,9 +469,9 @@ components:
         - message
         - code
 paths:
-  /api/v2/btc/transfers:
+  /api/v2/ltc/transfers:
     get:
-      operationId: bitcoin-TransfersController_getTransfers
+      operationId: litecoin-TransfersController_getTransfers
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -483,13 +483,13 @@ paths:
       summary: 입출금 내역 조회하기
       description: 입출금 내역을 조회합니다.
       parameters:
-        - &ref_2
+        - &ref_1
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_3
+        - &ref_2
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -558,20 +558,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForTransferDTO'
               example:
-                pagination: &ref_16
-                  nextUrl: http://localhost:3000/api/v2/btc/transfers?page=2
-                  previousUrl: http://localhost:3000/api/v2/btc/transfers?page=1
+                pagination: &ref_15
+                  nextUrl: http://localhost:3000/api/v2/ltc/transfers?page=2
+                  previousUrl: http://localhost:3000/api/v2/ltc/transfers?page=1
                   totalCount: 5
                 results:
-                  - &ref_4
-                    transaction: *ref_1
+                  - &ref_3
+                    transaction:
+                      id: >-
+                        beb70cf0b90afb6683ece78e0dfb4a140cf498310b833eea8092b5edd271e9c3
+                      transactionHash: >-
+                        612f7cf11aeec9441a8758781b5549fc720500023f663e118b14ee2b712d216c
+                      blockNumber: '0x1d85f3'
+                      amount: '0x2ee'
+                      feeAmount: '0x2ee'
+                      createdAt: '1620042742913'
+                      updatedAt: '1620042742915'
+                      hex: >-
+                        0x01000000010ef55b0654efc9f632a73e0d545e185914f81eefddcd161d1340f94b5bb6c91e01000000fdfe0000483045022100c6b5167d4d66bf4f712830b31795df3ffc34074a672906069b6e5299c61e12f90220364bb6b5b4ab5ff528aef2d82b08a7cbb582d1b6f135200800afbad08807d65101483045022100f73667aca7a6434e6c86e6d1970ccefe6e052554c45b6df64b86c48bd9428006022024d98a75217ad115985d961def56ab36e8d23dafe487c47ff39b445094574f54014c695221039c12b1681bc9506b4304a5d7f3933e55c0b55e3a90e47a0b94a6d209afb6173021039c3e34050a735c790a0d8ce39c52165dd11af50ee252a6b83dceaddd02b33b9d21039c882ac166fcb0056145105e18982b7c3b9dc5b54e1ac430f65e7c998ccfdb7d53aeffffffff02010000000000000017a91400271eec282b0368c3a2948145f7ae034fcd1d0787c54319000000000017a9147cfdc2bc58a9cad8b1cae530ce784f828c03a9ca8700000000
+                      outputs:
+                        - address: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+                          amount: '0x1'
+                          transactionId: >-
+                            beb70cf0b90afb6683ece78e0dfb4a140cf498310b833eea8092b5edd271e9c3
+                          outputIndex: 0
+                          scriptPubKey: '0xa91400271eec282b0368c3a2948145f7ae034fcd1d0787'
+                          isChange: false
                     walletId: 2d855c98bd183d14f7d9a1805327afff
                     amount: '0x1'
                     status: PENDING
                     id: 7074aaec177f02559e1b1c9e63816359
                     outputIndex: 0
-                    receivedAt: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
-                    sendTo: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
+                    receivedAt: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+                    sendTo: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
                     withdrawalApprovalId: 7074aaec177f02559e1b1c9e63816359
                     type: WITHDRAWAL
                     createdAt: '1620042252520'
@@ -580,7 +599,7 @@ paths:
                     confirmation: '0x8a3b'
                     metadata: metadata
           description: ''
-        '401': &ref_5
+        '401': &ref_4
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -591,22 +610,22 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: &ref_8
+                  value: &ref_7
                     message: expired or invalid access token and signature
                     code: 4001
                 AccessTokenNotProvidedException:
-                  value: &ref_9
+                  value: &ref_8
                     message: access token not provided
                     code: 4001
                 InvalidAccessIpException:
-                  value: &ref_10
+                  value: &ref_9
                     message: ip '106.101.128.133' is not allowed
                     code: 4008
-      tags: &ref_6
+      tags: &ref_5
         - transfers
-  /api/v2/btc/transfers/{transferId}:
+  /api/v2/ltc/transfers/{transferId}:
     get:
-      operationId: bitcoin-TransfersController_getTransfer
+      operationId: litecoin-TransfersController_getTransfer
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -618,8 +637,8 @@ paths:
       summary: 특정 입출금 내역 조회하기
       description: 특정 입출금 내역을 조회합니다.
       parameters:
+        - *ref_1
         - *ref_2
-        - *ref_3
         - name: transferId
           required: true
           in: path
@@ -632,13 +651,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransferDTO'
-              example: *ref_4
+              example: *ref_3
           description: ''
-        '401': *ref_5
-      tags: *ref_6
-  /api/v2/btc/wallets:
+        '401': *ref_4
+      tags: *ref_5
+  /api/v2/ltc/wallets:
     get:
-      operationId: bitcoin-WalletsController_getWallets
+      operationId: litecoin-WalletsController_getWallets
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -650,13 +669,13 @@ paths:
       summary: 전체 지갑 목록 조회하기
       description: 전체 지갑 목록을 조회합니다.
       parameters:
-        - &ref_11
+        - &ref_10
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_12
+        - &ref_11
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -677,20 +696,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
               example:
-                - &ref_13
+                - &ref_12
                   id: cce4f485764767f256155390873668b3
-                  name: bitcoin-wallet
-                  address: 2Mx6o4HZfPyV3QrYNv26jCGMwAPpDeVzq1a
+                  name: litecoin-wallet
+                  address: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
                   encryptionKey: >-
                     b72355635b2f8db7d603a73gd37r2460e28d93ad42df6ba85fff4b18fe374ae3
                   createdAt: '1599116198762'
                   updatedAt: '1599116198962'
                   status: ACTIVE
                   orgId: 0u1a431da7361na9e75648180bbd4fbc
-                  accountKey: *ref_7
+                  accountKey: *ref_6
                   whitelistActivated: false
           description: ''
-        '401': &ref_14
+        '401': &ref_13
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -701,16 +720,16 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_8
+                  value: *ref_7
                 AccessTokenNotProvidedException:
-                  value: *ref_9
+                  value: *ref_8
                 InvalidAccessIpException:
-                  value: *ref_10
-      tags: &ref_15
+                  value: *ref_9
+      tags: &ref_14
         - wallets
-  /api/v2/btc/wallets/{walletId}:
+  /api/v2/ltc/wallets/{walletId}:
     get:
-      operationId: bitcoin-WalletsController_getWallet
+      operationId: litecoin-WalletsController_getWallet
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -722,8 +741,8 @@ paths:
       summary: 지갑 정보 조회하기
       description: 특정 지갑의 상세 정보를 조회합니다.
       parameters:
+        - *ref_10
         - *ref_11
-        - *ref_12
         - name: walletId
           required: true
           in: path
@@ -736,13 +755,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
-              example: *ref_13
+              example: *ref_12
           description: ''
-        '401': *ref_14
-      tags: *ref_15
-  /api/v2/btc/wallets/{walletId}/name:
+        '401': *ref_13
+      tags: *ref_14
+  /api/v2/ltc/wallets/{walletId}/name:
     patch:
-      operationId: bitcoin-WalletsController_changeWalletName
+      operationId: litecoin-WalletsController_changeWalletName
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -754,8 +773,8 @@ paths:
       summary: 지갑 정보 변경하기
       description: 특정 지갑의 이름을 변경합니다.
       parameters:
+        - *ref_10
         - *ref_11
-        - *ref_12
         - name: walletId
           required: true
           in: path
@@ -773,11 +792,11 @@ paths:
           description: ''
         '204':
           description: ''
-        '401': *ref_14
-      tags: *ref_15
-  /api/v2/btc/wallets/{walletId}/balance:
+        '401': *ref_13
+      tags: *ref_14
+  /api/v2/ltc/wallets/{walletId}/balance:
     get:
-      operationId: bitcoin-WalletsController_getWalletBalance
+      operationId: litecoin-WalletsController_getWalletBalance
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -789,8 +808,8 @@ paths:
       summary: 지갑 잔고 조회하기
       description: 특정 지갑의 잔고를 변경합니다.
       parameters:
+        - *ref_10
         - *ref_11
-        - *ref_12
         - name: walletId
           required: true
           in: path
@@ -804,18 +823,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
               example:
-                - coinType: BTC
+                - coinType: LTC
                   amount: '0xDBE16A831'
                   spendableAmount: '0xDBE16A831'
                   aggregatedAmount: '0xDBE16A831'
-                  name: 비트코인
-                  symbol: BTC
+                  name: 라이트코인
+                  symbol: LTC
           description: ''
-        '401': *ref_14
-      tags: *ref_15
-  /api/v2/btc/wallets/{walletId}/deposit-addresses:
+        '401': *ref_13
+      tags: *ref_14
+  /api/v2/ltc/wallets/{walletId}/deposit-addresses:
     post:
-      operationId: bitcoin-WalletsController_createDepositAddress
+      operationId: litecoin-WalletsController_createDepositAddress
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -827,8 +846,8 @@ paths:
       summary: 입금 주소 생성하기
       description: 입금 주소를 생성합니다.
       parameters:
+        - *ref_10
         - *ref_11
-        - *ref_12
         - name: walletId
           required: true
           in: path
@@ -847,18 +866,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-              example: &ref_17
+              example: &ref_16
                 id: 94fd6a94ed199d660acf55e2f2943a7c
                 name: bit
-                address: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
+                address: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
                 pub: >-
                   0x022bf2a47ce5027831a3587ecd9f2d0d1e590a227ea576f61598ee84405e0479c1
                 createdAt: '1620041696849'
           description: ''
-        '401': *ref_14
-      tags: *ref_15
+        '401': *ref_13
+      tags: *ref_14
     get:
-      operationId: bitcoin-WalletsController_getDepositAddresses
+      operationId: litecoin-WalletsController_getDepositAddresses
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -870,8 +889,8 @@ paths:
       summary: 전체 입금 주소 목록 조회하기
       description: 특정 지갑에 속한 모든 입금 주소 목록을 조회합니다.
       parameters:
+        - *ref_10
         - *ref_11
-        - *ref_12
         - name: walletId
           required: true
           in: path
@@ -915,15 +934,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForDepositAddressDTO'
               example:
-                pagination: *ref_16
+                pagination: *ref_15
                 results:
-                  - *ref_17
+                  - *ref_16
           description: ''
-        '401': *ref_14
-      tags: *ref_15
-  /api/v2/btc/wallets/{walletId}/deposit-addresses/{depositAddressId}:
+        '401': *ref_13
+      tags: *ref_14
+  /api/v2/ltc/wallets/{walletId}/deposit-addresses/{depositAddressId}:
     get:
-      operationId: bitcoin-WalletsController_getDepositAddress
+      operationId: litecoin-WalletsController_getDepositAddress
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -935,8 +954,8 @@ paths:
       summary: 입금 주소 정보 조회하기
       description: 특정 입금 주소 정보를 조회합니다.
       parameters:
+        - *ref_10
         - *ref_11
-        - *ref_12
         - name: walletId
           required: true
           in: path
@@ -955,13 +974,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-              example: *ref_17
+              example: *ref_16
           description: ''
-        '401': *ref_14
-      tags: *ref_15
-  /api/v2/btc/wallets/{walletId}/transfer:
+        '401': *ref_13
+      tags: *ref_14
+  /api/v2/ltc/wallets/{walletId}/transfer:
     post:
-      operationId: bitcoin-WalletsController_transfer
+      operationId: litecoin-WalletsController_transfer
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -973,8 +992,8 @@ paths:
       summary: 지갑에서 코인 전송하기
       description: 특정 지갑에서 가상자산을 전송합니다.
       parameters:
+        - *ref_10
         - *ref_11
-        - *ref_12
         - name: walletId
           required: true
           in: path
@@ -993,7 +1012,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransferDTO'
-              example: *ref_4
+              example: *ref_3
           description: ''
         '201':
           description: ''
@@ -1001,5 +1020,5 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransferDTO'
-        '401': *ref_14
-      tags: *ref_15
+        '401': *ref_13
+      tags: *ref_14

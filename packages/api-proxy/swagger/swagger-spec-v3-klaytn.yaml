@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: ETHEREUM
-  description: Henesis API Proxy - v3 - ethereum OpenAPI Documentation
+  title: KLAYTN
+  description: Henesis API Proxy - v3 - klaytn OpenAPI Documentation
   version: '1.0'
   contact: {}
 tags: []
@@ -107,7 +107,7 @@ components:
           items:
             type: array
           description: 코인의 메타 데이터
-          example: &ref_0
+          example: &ref_2
             - ERC20_STANDARD
           type: array
       required:
@@ -509,7 +509,7 @@ components:
           description: 지갑 주소
           example: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
         blockchain:
-          enum:
+          enum: &ref_0
             - ETHEREUM
             - KLAYTN
             - BITCOIN
@@ -528,7 +528,7 @@ components:
           description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
           example: '1612411724023'
         status:
-          enum:
+          enum: &ref_1
             - ACTIVE
             - CREATING
             - FAILED
@@ -716,15 +716,6 @@ components:
         - to
         - data
         - passphrase
-    ReplaceTransactionRequestDTO:
-      type: object
-      properties:
-        gasPrice:
-          type: string
-          description: >-
-            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
-            값으로 설정합니다.
-          example: '8000000000'
     Target:
       type: object
       properties:
@@ -766,138 +757,88 @@ components:
           example: metadata
       required:
         - targets
-    GetManyResponseForDepositAddressDTO:
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DepositAddressDTO'
-        pagination:
-          $ref: '#/components/schemas/PaginationMetadata'
-      required:
-        - results
-    CreateDepositAddressRequestDTO:
-      type: object
-      properties:
-        name:
-          type: string
-          description: 입금 주소 이름
-          example: test-deposit-address
-      required:
-        - name
-    TransferNftRequestDTO:
-      type: object
-      properties:
-        nftId:
-          type: number
-          description: 출금하고자 하는 NFT 컨트랙트의 ID
-          example: 1
-        tokenOnchainId:
-          type: string
-          description: 출금하고자 하는 토큰의 id
-          example: '3'
-        to:
-          type: string
-          description: 출금 목적 주소
-          example: '0xab28d146e860e0b132695c941f706d783a158345'
-        passphrase:
-          type: string
-          description: 지갑의 비밀번호
-          example: passphrase
-        gasPrice:
-          type: string
-          description: >-
-            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
-            값으로 설정합니다.
-          example: '8000000000'
-        gasLimit:
-          type: string
-          description: 트랜잭션에 사용할 gas limit. null일 경우, Henesis가 자동으로 설정합니다.
-          example: '500000'
-        metadata:
-          type: string
-          description: 기타 정보 기록용 메타 데이터 (255자 제한)
-          example: metadata
-      required:
-        - nftId
-        - tokenOnchainId
-        - to
-        - passphrase
-    NftDTO:
+    UserWalletDTO:
       type: object
       properties:
         id:
-          type: number
-          description: NFT 컨트랙트의 id
-          example: 11
+          type: string
+          description: 지갑 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
         name:
           type: string
-          description: NFT 컨트랙트의 이름
-          example: Dave Starbelly
-        symbol:
-          type: string
-          description: NFT 컨트랙트의 심볼
-          example: Dave Starbelly
+          description: 지갑 이름
+          example: ethereum-wallet
         address:
           type: string
-          description: NFT 컨트랙트의 주소
-          example: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+          description: 지갑 주소
+          example: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
+        blockchain:
+          enum: *ref_0
+          type: string
+          description: 메인넷 종류
+          example: ETHEREUM
+        createdAt:
+          type: string
+          description: '지갑 생성 시간 (형식: ms, UNIX time)'
+          example: '1612411568760'
+        updatedAt:
+          type: string
+          description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
+          example: '1612411724023'
+        status:
+          enum: *ref_1
+          type: string
+          description: 지갑 상태
+          example: ACTIVE
+        whitelistActivated:
+          type: boolean
+          description: 출금 주소 화이트리스팅의 활성화 유무
+          example: false
+        version:
+          type: string
+          description: 컨트랙트 버전
+          example: v4
       required:
         - id
         - name
-        - symbol
         - address
-    NftBalanceDTO:
-      type: object
-      properties:
-        nft:
-          description: NFT 컨트랙트
-          example: &ref_24
-            id: 11
-            name: Dave Starbelly
-            symbol: '1'
-            address: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
-          allOf:
-            - $ref: '#/components/schemas/NftDTO'
-        tokenOnchainId:
-          type: string
-          description: 토큰의 ID
-          example: '1'
-        tokenUri:
-          type: string
-          description: 토큰의 URI
-          example: https://opensea-creatures-api.herokuapp.com/api/creature/3
-        tokenMetadata:
-          type: object
-          description: 토큰에 정의된 metadata
-          example: &ref_25
-            description: Friendly OpenSea Creature that enjoys long swims in the ocean.
-            external_url: https://openseacreatures.io/3
-            image: >-
-              https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png
-            name: Dave Starbelly
-            attributes:
-              - trait_type: Base
-                value: Starfish
-              - trait_type: Eyes
-                value: Big
-      required:
-        - nft
-        - tokenOnchainId
-        - tokenUri
-        - tokenMetadata
-    GetManyResponseForNftBalanceDTO:
+        - blockchain
+        - createdAt
+        - updatedAt
+        - status
+    GetManyResponseForUserWalletDTO:
       type: object
       properties:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/NftBalanceDTO'
+            $ref: '#/components/schemas/UserWalletDTO'
         pagination:
           $ref: '#/components/schemas/PaginationMetadata'
       required:
         - results
+    CreateUserWalletRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 지갑 이름
+          example: userWalletName
+        passphrase:
+          type: string
+          description: 지갑 비밀번호
+          example: passphrase
+        gasPrice:
+          type: string
+          description: '트랜잭션에 사용할 gas price (단위: wei, peb)'
+          example: '0x1'
+        salt:
+          type: string
+          description: 지갑 생성에 사용되는 난수
+          example: salt
+      required:
+        - name
+        - passphrase
     SyncMetadataRequestDTO:
       type: object
       properties:
@@ -908,9 +849,9 @@ components:
       required:
         - tokenOnchainId
 paths:
-  /api/v3/ethereum/coins:
+  /api/v3/klaytn/coins:
     get:
-      operationId: ethereum-CoinsController_getCoins
+      operationId: klaytn-CoinsController_getCoins
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -922,13 +863,13 @@ paths:
       summary: 전체 코인 목록 조회하기
       description: Henesis Wallet에서 지원하는 모든 가상자산(토큰, 코인)을 조회합니다.
       parameters:
-        - &ref_1
+        - &ref_3
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_2
+        - &ref_4
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -948,7 +889,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CoinDTO'
               example:
-                - &ref_3
+                - &ref_5
                   id: 11
                   name: ethereum
                   ticker: ETH
@@ -956,9 +897,9 @@ paths:
                   description: 이더리움
                   decimals: 18
                   blockchain: ETHEREUM
-                  attributes: *ref_0
+                  attributes: *ref_2
           description: ''
-        '401': &ref_4
+        '401': &ref_6
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -969,22 +910,22 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: &ref_6
+                  value: &ref_8
                     message: expired or invalid access token and signature
                     code: 4001
                 AccessTokenNotProvidedException:
-                  value: &ref_7
+                  value: &ref_9
                     message: access token not provided
                     code: 4001
                 InvalidAccessIpException:
-                  value: &ref_8
+                  value: &ref_10
                     message: ip '106.101.128.133' is not allowed
                     code: 4008
-      tags: &ref_5
+      tags: &ref_7
         - coins
-  /api/v3/ethereum/coins/{ticker}:
+  /api/v3/klaytn/coins/{ticker}:
     get:
-      operationId: ethereum-CoinsController_getCoin
+      operationId: klaytn-CoinsController_getCoin
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -996,8 +937,8 @@ paths:
       summary: 코인 정보 조회하기
       description: Henesis Wallet에서 지원하는 특정 가상자산(토큰, 코인)을 조회합니다.
       parameters:
-        - *ref_1
-        - *ref_2
+        - *ref_3
+        - *ref_4
         - name: ticker
           required: true
           in: path
@@ -1014,7 +955,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CoinDTO'
-              example: *ref_3
+              example: *ref_5
           description: ''
         '400':
           description: 코인 정보가 없을 때 response 입니다
@@ -1025,11 +966,11 @@ paths:
               example:
                 message: there is no '2' coin at 'ETHEREUM'
                 code: 4000
-        '401': *ref_4
-      tags: *ref_5
-  /api/v3/ethereum/contract-calls:
+        '401': *ref_6
+      tags: *ref_7
+  /api/v3/klaytn/contract-calls:
     get:
-      operationId: ethereum-ContractCallsController_getCallEvents
+      operationId: klaytn-ContractCallsController_getCallEvents
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -1116,7 +1057,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForContractCallsDTO'
               example:
-                pagination: &ref_9
+                pagination: &ref_11
                   nextUrl: http://localhost:3000/api/v3/ethereum/transfers?page=2
                   previousUrl: http://localhost:3000/api/v3/ethereum/transfers?page=1
                   totalCount: 5
@@ -1143,7 +1084,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvalidStatusException'
-              example: &ref_10
+              example: &ref_12
                 message: '''status'' is invalid: not supported event status'
                 code: 4001
         '401':
@@ -1157,16 +1098,16 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
-                AccessTokenNotProvidedException:
-                  value: *ref_7
-                InvalidAccessIpException:
                   value: *ref_8
+                AccessTokenNotProvidedException:
+                  value: *ref_9
+                InvalidAccessIpException:
+                  value: *ref_10
       tags:
         - contract-calls
-  /api/v3/ethereum/transfers:
+  /api/v3/klaytn/transfers:
     get:
-      operationId: ethereum-TransfersController_getTransfers
+      operationId: klaytn-TransfersController_getTransfers
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -1265,7 +1206,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForTransferDTO'
               example:
-                pagination: *ref_9
+                pagination: *ref_11
                 results:
                   - id: 375031
                     from: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
@@ -1292,7 +1233,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvalidStatusException'
-              example: *ref_10
+              example: *ref_12
         '401':
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
@@ -1304,16 +1245,16 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
-                AccessTokenNotProvidedException:
-                  value: *ref_7
-                InvalidAccessIpException:
                   value: *ref_8
+                AccessTokenNotProvidedException:
+                  value: *ref_9
+                InvalidAccessIpException:
+                  value: *ref_10
       tags:
         - transfers
-  /api/v3/ethereum/fee-wallet/balance:
+  /api/v3/klaytn/fee-wallet/balance:
     get:
-      operationId: ethereum-FeeWalletController_getBalance
+      operationId: klaytn-FeeWalletController_getBalance
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -1343,7 +1284,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
-              example: &ref_21
+              example: &ref_23
                 coinId: 11
                 amount: '1000000000000'
                 spendableAmount: '1000000000000'
@@ -1362,26 +1303,26 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
-                AccessTokenNotProvidedException:
-                  value: *ref_7
-                InvalidAccessIpException:
                   value: *ref_8
+                AccessTokenNotProvidedException:
+                  value: *ref_9
+                InvalidAccessIpException:
+                  value: *ref_10
       tags:
         - fee-wallet
-  /api/v3/ethereum/transactions/{transactionId}:
+  /api/v3/klaytn/transactions/{transactionId}:
     get:
-      operationId: ethereum-TransactionsController_getTransaction
+      operationId: klaytn-TransactionsController_getTransaction
       summary: 개별 트랜잭션 조회하기
       description: 내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.
       parameters:
-        - &ref_11
+        - &ref_13
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_12
+        - &ref_14
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -1403,7 +1344,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: &ref_13
+              example: &ref_15
                 id: b549bfaaa74d1c4244ecc655738b1984
                 blockchain: ETHEREUM
                 hash: >-
@@ -1423,7 +1364,7 @@ paths:
               example:
                 message: transaction id '1' does not exists
                 code: 4000
-        '401': &ref_14
+        '401': &ref_16
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -1434,16 +1375,16 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
-                AccessTokenNotProvidedException:
-                  value: *ref_7
-                InvalidAccessIpException:
                   value: *ref_8
-      tags: &ref_15
+                AccessTokenNotProvidedException:
+                  value: *ref_9
+                InvalidAccessIpException:
+                  value: *ref_10
+      tags: &ref_17
         - transactions
-  /api/v3/ethereum/transactions:
+  /api/v3/klaytn/transactions:
     get:
-      operationId: ethereum-TransactionsController_getTransactions
+      operationId: klaytn-TransactionsController_getTransactions
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -1455,8 +1396,8 @@ paths:
       summary: 트랜잭션 목록 조회하기
       description: 트랜잭션 목록을 조회합니다.
       parameters:
-        - *ref_11
-        - *ref_12
+        - *ref_13
+        - *ref_14
         - name: address
           required: false
           in: query
@@ -1528,15 +1469,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForTransactionDTO'
               example:
-                pagination: *ref_9
+                pagination: *ref_11
                 results:
-                  - *ref_13
+                  - *ref_15
           description: ''
-        '401': *ref_14
-      tags: *ref_15
-  /api/v3/ethereum/wallets:
+        '401': *ref_16
+      tags: *ref_17
+  /api/v3/klaytn/wallets:
     get:
-      operationId: ethereum-WalletsController_getWallets
+      operationId: klaytn-WalletsController_getMasterWallets
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -1545,16 +1486,16 @@ paths:
           - java
           - python
           - go
-      summary: 전체 지갑 목록 조회하기
+      summary: 전체 마스터 지갑 목록 조회하기
       description: 모든 지갑의 목록을 조회합니다.
       parameters:
-        - &ref_16
+        - &ref_18
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_17
+        - &ref_19
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -1575,7 +1516,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
               example:
-                - &ref_18
+                - &ref_20
                   id: ae40b1b3dd953e5592c21e58be30d807
                   name: ethereum-wallet
                   address: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
@@ -1595,7 +1536,7 @@ paths:
                   encryptionKey: >-
                     f0880e48251dd2f8574a8c8a4d65311030185d5e451e8a474b89c2b473b5d953
           description: ''
-        '401': &ref_19
+        '401': &ref_21
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -1606,16 +1547,16 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
-                AccessTokenNotProvidedException:
-                  value: *ref_7
-                InvalidAccessIpException:
                   value: *ref_8
-      tags: &ref_20
+                AccessTokenNotProvidedException:
+                  value: *ref_9
+                InvalidAccessIpException:
+                  value: *ref_10
+      tags: &ref_22
         - wallets
-  /api/v3/ethereum/wallets/{walletId}:
+  /api/v3/klaytn/wallets/{masterWalletId}:
     get:
-      operationId: ethereum-WalletsController_getWallet
+      operationId: klaytn-WalletsController_getMasterWallet
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -1624,15 +1565,15 @@ paths:
           - java
           - python
           - go
-      summary: 지갑 정보 조회하기
-      description: 특정 지갑의 정보를 조회합니다.
+      summary: 마스터 지갑 정보 조회하기
+      description: 특정 마스터 지갑의 정보를 조회합니다.
       parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
       responses:
@@ -1641,7 +1582,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
-              example: *ref_18
+              example: *ref_20
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1649,14 +1590,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: &ref_22
+              example: &ref_24
                 message: wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
                 code: 4000
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/balance:
+        '401': *ref_21
+      tags: *ref_22
+  /api/v3/klaytn/wallets/{masterWalletId}/balance:
     get:
-      operationId: ethereum-WalletsController_getBalanceOfWallet
+      operationId: klaytn-WalletsController_getMasterWalletBalance
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -1665,15 +1606,15 @@ paths:
           - java
           - python
           - go
-      summary: 지갑 잔고 조회하기
-      description: 특정 지갑의 잔고를 조회합니다.
+      summary: 마스터 지갑 잔고 조회하기
+      description: 특정 마스터 지갑의 잔고를 조회합니다.
       parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: ticker
@@ -1689,7 +1630,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
               example:
-                - *ref_21
+                - *ref_23
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1697,12 +1638,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/name:
+              example: *ref_24
+        '401': *ref_21
+      tags: *ref_22
+  /api/v3/klaytn/wallets/{masterWalletId}/name:
     patch:
-      operationId: ethereum-WalletsController_changeWalletName
+      operationId: klaytn-WalletsController_changeMasterWalletName
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -1711,15 +1652,15 @@ paths:
           - java
           - python
           - go
-      summary: 지갑 이름 변경하기
-      description: 특정 지갑의 이름을 변경합니다.
+      summary: 마스터 지갑 이름 변경하기
+      description: 특정 마스터 지갑의 이름을 변경합니다.
       parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
       requestBody:
@@ -1743,16 +1684,16 @@ paths:
                   - $ref: '#/components/schemas/NoWalletNameException'
               examples:
                 WalletNotFoundException:
-                  value: *ref_22
+                  value: *ref_24
                 NoWalletNameException:
-                  value:
+                  value: &ref_25
                     message: wallet name should not be empty
                     code: 4000
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/transfer:
+        '401': *ref_21
+      tags: *ref_22
+  /api/v3/klaytn/wallets/{masterWalletId}/transfer:
     post:
-      operationId: ethereum-WalletsController_sendCoin
+      operationId: klaytn-WalletsController_sendMasterWalletCoin
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -1761,15 +1702,15 @@ paths:
           - java
           - python
           - go
-      summary: 지갑에서 코인 전송하기
-      description: 특정 지갑에서 가상자산을 송금합니다.
+      summary: 마스터 지갑에서 코인 전송하기
+      description: 특정 마스터 지갑에서 가상자산을 송금합니다.
       parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
       requestBody:
@@ -1784,7 +1725,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_13
+              example: *ref_15
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1792,12 +1733,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/contract-call:
+              example: *ref_24
+        '401': *ref_21
+      tags: *ref_22
+  /api/v3/klaytn/wallets/{masterWalletId}/contract-call:
     post:
-      operationId: ethereum-WalletsController_callContract
+      operationId: klaytn-WalletsController_sendMasterWalletContractCall
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -1806,15 +1747,15 @@ paths:
           - java
           - python
           - go
-      summary: 지갑에서 스마트 컨트랙트 호출하기
-      description: 특정 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
+      summary: 마스터 지갑에서 스마트 컨트랙트 호출하기
+      description: 특정 마스터 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
       parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
       requestBody:
@@ -1829,7 +1770,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_13
+              example: *ref_15
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1837,12 +1778,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/transactions/{transactionId}/replace:
+              example: *ref_24
+        '401': *ref_21
+      tags: *ref_22
+  /api/v3/klaytn/wallets/{masterWalletId}/flush:
     post:
-      operationId: ethereum-WalletsController_replaceTransaction
+      operationId: klaytn-WalletsController_flush
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -1851,68 +1792,15 @@ paths:
           - java
           - python
           - go
-      summary: 트랜잭션 교체
-      description: 트랜잭션을 교체합니다
+      summary: 사용자 지갑 잔액을 모두 끌어오기
+      description: 여러 사용자 지갑의 특정 코인/토큰 잔액을 모두 상위의 마스터 지갑으로 끌어옵니다.
       parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
-          schema:
-            type: string
-        - name: transactionId
-          required: true
-          in: path
-          description: >-
-            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
-            개념입니다.)
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ReplaceTransactionRequestDTO'
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_13
-          description: ''
-        '400':
-          description: 해당하는 id의 지갑이 없을 때 발생합니다.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/flush:
-    post:
-      operationId: ethereum-WalletsController_flush
-      x-readme:
-        explorer-enabled: false
-        samples-languages:
-          - curl
-          - node
-          - java
-          - python
-          - go
-      summary: 입금 주소 잔액을 모두 끌어오기
-      description: 원화 입금 주소의 특정 코인/토큰 잔액을 모두 상위의 지갑으로 끌어옵니다.
-      parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
-          required: true
-          in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
       requestBody:
@@ -1927,7 +1815,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_13
+              example: *ref_15
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1935,59 +1823,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/transactions/{transactionId}/resend:
-    post:
-      operationId: ethereum-WalletsController_resendTransaction
-      x-readme:
-        explorer-enabled: false
-        samples-languages:
-          - curl
-          - node
-          - java
-          - python
-          - go
-      summary: 트랜잭션 다시 전송하기
-      description: 네트워크 사정 등으로 채굴이 지연됐을때, 블록체인에 트랜잭션을 다시 전송합니다.
-      parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
-          required: true
-          in: path
-          description: 지갑 ID
-          schema:
-            type: string
-        - name: transactionId
-          required: true
-          in: path
-          description: >-
-            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
-            개념입니다.)
-          schema:
-            type: string
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_13
-          description: ''
-        '400':
-          description: 해당하는 id의 지갑이 없을 때 발생합니다.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/deposit-addresses:
+              example: *ref_24
+        '401': *ref_21
+      tags: *ref_22
+  /api/v3/klaytn/wallets/{masterWalletId}/user-wallets:
     get:
-      operationId: ethereum-WalletsController_getDepositAddresses
+      operationId: klaytn-WalletsController_getUserWallets
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -1996,15 +1837,32 @@ paths:
           - java
           - python
           - go
-      summary: 전체 입금 주소 목록 조회하기
-      description: 특정 지갑에 속한 모든 입금 주소 조회합니다.
+      summary: 전체 사용자 지갑 목록 조회하기
+      description: 특정 마스터 지갑에 속한 모든 사용자 지갑 목록을 조회합니다.
       parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: sort
+          required: false
+          in: query
+          description: 결과 정렬 방식
           schema:
             type: string
         - name: name
@@ -2016,47 +1874,21 @@ paths:
         - name: address
           required: false
           in: query
-          description: 입금 주소
+          description: 지갑 주소
           schema:
             type: string
-        - name: size
-          required: false
-          in: query
-          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
-          schema:
-            type: number
-        - name: page
-          required: false
-          in: query
-          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
-          schema:
-            type: number
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetManyResponseForDepositAddressDTO'
-              example: &ref_23
-                id: a1f9e4c33ea9f51974490fd1c30efb3e
-                address: '0x70d4e4abbe12c9c5098df3b31d9ad89c99a01967'
-                name: deposit-address-1
-                blockchain: ETHEREUM
-                createdAt: '1614582860091'
-                updatedAt: '1614582928222'
-                version: v4
+                $ref: '#/components/schemas/GetManyResponseForUserWalletDTO'
+              example: *ref_20
           description: ''
-        '400':
-          description: 해당하는 id의 지갑이 없을 때 발생합니다.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
+        '401': *ref_21
+      tags: *ref_22
     post:
-      operationId: ethereum-WalletsController_createDepositAddress
+      operationId: klaytn-WalletsController_createUserWallet
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -2065,15 +1897,15 @@ paths:
           - java
           - python
           - go
-      summary: 입금 주소 생성하기
-      description: 특정 지갑 하위에 새로운 입금 주소 생성합니다
+      summary: 사용자 지갑 생성하기
+      description: 특정 마스터 지갑 하위에 새로운 사용자 지갑을 생성합니다.
       parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
       requestBody:
@@ -2081,27 +1913,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateDepositAddressRequestDTO'
+              $ref: '#/components/schemas/CreateUserWalletRequestDTO'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DepositAddressDTO'
-              example: *ref_23
+                $ref: '#/components/schemas/UserWalletDTO'
+              example: *ref_20
           description: ''
-        '400':
-          description: 해당하는 id의 지갑이 없을 때 발생합니다.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_22
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}:
+        '401': *ref_21
+      tags: *ref_22
+  /api/v3/klaytn/wallets/{masterWalletId}/user-wallets/{userWalletId}:
     get:
-      operationId: ethereum-WalletsController_getDepositAddress
+      operationId: klaytn-WalletsController_getUserWallet
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -2110,21 +1935,21 @@ paths:
           - java
           - python
           - go
-      summary: 입금 주소 정보 조회하기
-      description: 특정 입금 주소를 조회합니다.
+      summary: 사용자 지갑 정보 조회하기
+      description: 특정 사용자 지갑의 정보를 조회합니다.
       parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
-        - name: depositAddressId
+        - name: userWalletId
           required: true
           in: path
-          description: 입금 주소 ID
+          description: 사용자 지갑 ID
           schema:
             type: string
       responses:
@@ -2132,31 +1957,21 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DepositAddressDTO'
-              example: *ref_23
+                $ref: '#/components/schemas/WalletDTO'
+              example: *ref_20
           description: ''
         '400':
-          description: 다음과 같은 bad request 에러가 발생할 수 있습니다.
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/WalletNotFoundException'
-                  - $ref: '#/components/schemas/DepositAddressNotFoundException'
-              examples:
-                WalletNotFoundException:
-                  value: *ref_22
-                DepositAddressNotFoundException:
-                  value:
-                    message: >-
-                      deposit address 'c27732256a1f8d45df5aec31ba7ef85cd' does
-                      not exist
-                    code: 4000
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}/balance:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_24
+        '401': *ref_21
+      tags: *ref_22
+  /api/v3/klaytn/wallets/{masterWalletId}/user-wallets/{userWalletId}/balance:
     get:
-      operationId: ethereum-WalletsController_getBalanceOfDepositAddress
+      operationId: klaytn-WalletsController_getUserWalletBalance
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -2165,21 +1980,21 @@ paths:
           - java
           - python
           - go
-      summary: 입금 주소 잔고 조회하기
-      description: 특정 입금 주소의 잔액을 조회합니다.
+      summary: 사용자 지갑 잔고 조회하기
+      description: 특정 사용자 지갑의 잔고를 조회합니다.
       parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
-        - name: depositAddressId
+        - name: userWalletId
           required: true
           in: path
-          description: 입금 주소 ID
+          description: 사용자 지갑 ID
           schema:
             type: string
         - name: ticker
@@ -2195,13 +2010,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
               example:
-                - *ref_21
+                - *ref_23
           description: ''
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/nft/transfer:
-    post:
-      operationId: ethereum-WalletsController_transferNft
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_24
+        '401': *ref_21
+      tags: *ref_22
+  /api/v3/klaytn/wallets/{masterWalletId}/user-wallets/{userWalletId}/name:
+    patch:
+      operationId: klaytn-WalletsController_changeUserWalletName
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -2210,46 +2032,103 @@ paths:
           - java
           - python
           - go
-      summary: NFT 출금하기
-      description: 특정 지갑에서 NFT 토큰을 출금합니다.
+      summary: 사용자 지갑 이름 변경하기
+      description: 특정 사용자 지갑의 이름을 변경합니다.
       parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
-        - name: ticker
-          required: false
-          in: query
-          description: 코인의 기호
-          schema: {}
-        - name: depositAddressId
+        - name: userWalletId
           required: true
           in: path
-          description: 입금 주소 ID
-          schema: {}
+          description: 사용자 지갑 ID
+          schema:
+            type: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TransferNftRequestDTO'
+              $ref: '#/components/schemas/ChangeWalletNameRequestDTO'
+      responses:
+        '200':
+          description: ''
+        '204':
+          description: ''
+        '400':
+          description: 다음과 같은 bad request 에러가 발생할 수 있습니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/WalletNotFoundException'
+                  - $ref: '#/components/schemas/NoWalletNameException'
+              examples:
+                WalletNotFoundException:
+                  value: *ref_24
+                NoWalletNameException:
+                  value: *ref_25
+        '401': *ref_21
+      tags: *ref_22
+  /api/v3/klaytn/wallets/{masterWalletId}/user-wallets/{userWalletId}/transfer:
+    post:
+      operationId: klaytn-WalletsController_sendUserWalletCoin
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑에서 코인 전송하기
+      description: 특정 사용자 지갑에서 가상자산을 송금합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendCoinRequestDTO'
       responses:
         '201':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_13
+              example: *ref_15
           description: ''
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/wallets/{walletId}/nft/balance:
-    get:
-      operationId: ethereum-WalletsController_getNftBalance
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_24
+        '401': *ref_21
+      tags: *ref_22
+  /api/v3/klaytn/wallets/{masterWalletId}/user-wallets/{userWalletId}/contract-call:
+    post:
+      operationId: klaytn-WalletsController_sendUserWalletContractCall
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -2258,66 +2137,49 @@ paths:
           - java
           - python
           - go
-      summary: NFT 잔고 조회하기
-      description: 특정 지갑의 NFT 잔고를 조회합니다.
+      summary: 사용자 지갑에서 스마트 컨트랙트 호출하기
+      description: 특정 사용자 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
       parameters:
-        - *ref_16
-        - *ref_17
-        - name: walletId
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
-        - name: size
-          required: true
-          in: query
-          schema:
-            type: number
-        - name: page
-          required: true
-          in: query
-          schema:
-            type: number
-        - name: tokenOnchainId
-          required: true
-          in: query
-          schema:
-            type: string
-        - name: tokenName
-          required: true
-          in: query
-          schema:
-            type: string
-        - name: ticker
-          required: false
-          in: query
-          description: 코인의 기호
-          schema: {}
-        - name: depositAddressId
+        - name: userWalletId
           required: true
           in: path
-          description: 입금 주소 ID
-          schema: {}
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTransactionRequestDTO'
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetManyResponseForNftBalanceDTO'
-              example:
-                pagination: *ref_9
-                results:
-                  - nft: *ref_24
-                    tokenOnchainId: '1'
-                    tokenUri: https://opensea-creatures-api.herokuapp.com/api/creature/3
-                    tokenMetadata: *ref_25
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_15
           description: ''
-        '401': *ref_19
-      tags: *ref_20
-  /api/v3/ethereum/nfts:
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_24
+        '401': *ref_21
+      tags: *ref_22
+  /api/v3/klaytn/nfts:
     get:
-      operationId: ethereum-NftsController_getNfts
+      operationId: klaytn-NftsController_getNfts
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -2349,7 +2211,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NftDTO'
-              example: *ref_24
+              example:
+                id: 11
+                name: Dave Starbelly
+                symbol: '1'
+                address: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
           description: ''
         '401': &ref_28
           description: 인증이 실패했을 때 발생하는 에러입니다.
@@ -2362,16 +2228,16 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
-                AccessTokenNotProvidedException:
-                  value: *ref_7
-                InvalidAccessIpException:
                   value: *ref_8
+                AccessTokenNotProvidedException:
+                  value: *ref_9
+                InvalidAccessIpException:
+                  value: *ref_10
       tags: &ref_29
         - nfts
-  /api/v3/ethereum/nfts/{nftId}/sync-metadata:
+  /api/v3/klaytn/nfts/{nftId}/sync-metadata:
     post:
-      operationId: ethereum-NftsController_syncMetadata
+      operationId: klaytn-NftsController_syncMetadata
       x-readme:
         explorer-enabled: false
         samples-languages:

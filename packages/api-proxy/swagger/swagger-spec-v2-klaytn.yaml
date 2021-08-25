@@ -335,6 +335,7 @@ components:
             - ETHEREUM
             - KLAYTN
             - BITCOIN
+            - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
           type: string
@@ -493,6 +494,7 @@ components:
             - ETHEREUM
             - KLAYTN
             - BITCOIN
+            - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
           type: string
@@ -579,6 +581,7 @@ components:
             - ETHEREUM
             - KLAYTN
             - BITCOIN
+            - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
           type: string
@@ -613,41 +616,34 @@ components:
           type: string
           description: 트랜잭션을 보낼 스마트 컨트랙트 주소
           example: '0x2c27695429903b1e36299ce1eb89a3c1c34d115d'
-          default: '0x2c27695429903b1e36299ce1eb89a3c1c34d115d'
         value:
           type: string
           description: 트랜잭션에 담을 암호화폐의 양
           example: '0x1'
-          default: '0x1'
         data:
           type: string
           description: 트랜잭션에 담을 데이터
           example: data
-          default: data
         passphrase:
           type: string
           description: 마스터 지갑의 비밀번호
           example: passphrase
-          default: passphrase
         gasPrice:
           type: string
           description: |-
             트랜잭션에 사용할 gas price (단위: wei)
             null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.
           example: '0x1'
-          default: '0x1'
         gasLimit:
           type: string
           description: |-
             트랜잭션에 사용할 gas limit
             null일 경우, Henesis가 자동으로 설정합니다.
           example: '0x1'
-          default: '0x1'
         metadata:
           type: string
           description: 기타 정보 기록용 메타 데이터 (255자 제한)
           example: metadata
-          default: metadata
       required:
         - contractAddress
         - value
@@ -660,7 +656,6 @@ components:
           type: string
           description: 마스터 지갑의 새로운 이름
           example: masterWalletName
-          default: masterWalletName
       required:
         - name
     SendMasterWalletCoinRequestDTO:
@@ -670,43 +665,36 @@ components:
           type: string
           description: 암호화폐의 기호 (symbol)
           example: ETH
-          default: ETH
         to:
           type: string
           description: 암호화폐를 받을 지갑 주소
           example: '0x2c27695429903b1e36299ce1eb89a3c1c34d115d'
-          default: '0x2c27695429903b1e36299ce1eb89a3c1c34d115d'
         amount:
           type: string
           description: |-
             암호화폐의 양 (단위: wei, peb)
             (16진법, 맨 앞에 반드시 '0x' 붙여야 함)
           example: '0xDBE16A831'
-          default: '0xDBE16A831'
         passphrase:
           type: string
           description: 마스터 지갑의 비밀번호
           example: passphrase
-          default: passphrase
         gasPrice:
           type: string
           description: |-
             트랜잭션에 사용할 gas price (단위: wei, peb)
             null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.
           example: '0x1'
-          default: '0x1'
         gasLimit:
           type: string
           description: |-
             트랜잭션에 사용할 gas limit
             null일 경우, Henesis가 자동으로 설정합니다.
           example: '0x1'
-          default: '0x1'
         metadata:
           type: string
           description: 기타 정보 기록용 메타 데이터 (255자 제한)
           example: metadata
-          default: metadata
       required:
         - ticker
         - to
@@ -719,12 +707,10 @@ components:
           type: string
           description: 마스터 지갑의 비밀번호
           example: passphrase
-          default: passphrase
         requests:
           type: object
           description: 전송할 트랜잭션 요청들
           example: ContractCallRequest or TransferRequest
-          default: ContractCallRequest or TransferRequest
       required:
         - passphrase
         - requests
@@ -735,11 +721,9 @@ components:
           type: string
           description: 옮기고자 하는 코인/토큰의 기호 (symbol)
           example: ETH
-          default: ETH
         userWalletIds:
           description: 옮기고자 하는 사용자 지갑 ID 목록 (최대 50개)
           example: '[ "70d1205b97eb651413d34d14ec5cb285" ]'
-          default: '[ "70d1205b97eb651413d34d14ec5cb285" ]'
           type: array
           items:
             type: string
@@ -747,26 +731,22 @@ components:
           type: string
           description: 마스터 지갑의 비밀번호
           example: passphrase
-          default: passphrase
         gasPrice:
           type: string
           description: |-
             트랜잭션에 사용할 gas price (단위: wei, peb)
             null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.
           example: '0x1'
-          default: '0x1'
         gasLimit:
           type: string
           description: |-
             트랜잭션에 사용할 gas limit
             null일 경우, Henesis가 자동으로 설정합니다.
           example: '0x1'
-          default: '0x1'
         metadata:
           type: string
           description: 기타 정보 기록용 메타 데이터 (255자 제한)
           example: metadata
-          default: metadata
       required:
         - ticker
         - userWalletIds
@@ -789,27 +769,21 @@ components:
           type: string
           description: 지갑 이름
           example: userWalletName
-          default: userWalletName
         passphrase:
           type: string
           description: 지갑 비밀번호
           example: passphrase
-          default: passphrase
         gasPrice:
           type: string
           description: '트랜잭션에 사용할 gas price (단위: wei, peb)'
           example: '0x1'
-          default: '0x1'
         salt:
           type: string
-          description: salt
+          description: 지갑 생성에 사용되는 난수
           example: salt
-          default: salt
       required:
         - name
         - passphrase
-        - gasPrice
-        - salt
     SendUserWalletContractCallRequestDTO:
       type: object
       properties:
@@ -817,41 +791,34 @@ components:
           type: string
           description: 트랜잭션을 보낼 스마트 컨트랙트 주소
           example: '0x2c27695429903b1e36299ce1eb89a3c1c34d115d'
-          default: '0x2c27695429903b1e36299ce1eb89a3c1c34d115d'
         value:
           type: string
           description: 트랜잭션에 담을 암호화폐의 양
           example: '0x1'
-          default: '0x1'
         data:
           type: string
           description: 트랜잭션에 담을 데이터
           example: data
-          default: data
         passphrase:
           type: string
           description: 지갑의 비밀번호
           example: passphrase
-          default: passphrase
         gasPrice:
           type: string
           description: |-
             트랜잭션에 사용할 gas price (단위: wei, peb)
             null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.
           example: '0x1'
-          default: '0x1'
         gasLimit:
           type: string
           description: |-
             트랜잭션에 사용할 gas limit
             null일 경우, Henesis가 자동으로 설정합니다.
           example: '0x1'
-          default: '0x1'
         metadata:
           type: string
           description: 기타 정보 기록용 메타 데이터 (255자 제한)
           example: metadata
-          default: metadata
       required:
         - contractAddress
         - value
@@ -864,7 +831,6 @@ components:
           type: string
           description: 사용자 지갑의 새로운 이름
           example: userWalletName
-          default: userWalletName
       required:
         - name
     SendUserWalletCoinRequestDTO:
@@ -874,43 +840,36 @@ components:
           type: string
           description: 암호화폐의 기호 (symbol)
           example: ETH
-          default: ETH
         to:
           type: string
           description: 암호화폐를 받을 지갑 주소
           example: '0x2c27695429903b1e36299ce1eb89a3c1c34d115d'
-          default: '0x2c27695429903b1e36299ce1eb89a3c1c34d115d'
         amount:
           type: string
           description: |-
             암호화폐의 양 (단위: wei, peb)
             (16진법, 맨 앞에 반드시 '0x' 붙여야 함)
           example: '0xDBE16A831'
-          default: '0xDBE16A831'
         passphrase:
           type: string
           description: 마스터 지갑의 비밀번호
           example: passphrase
-          default: passphrase
         gasPrice:
           type: string
           description: |-
             트랜잭션에 사용할 gas price (단위: wei, peb)
             null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.
           example: '0x1'
-          default: '0x1'
         gasLimit:
           type: string
           description: |-
             트랜잭션에 사용할 gas limit
             null일 경우, Henesis가 자동으로 설정합니다.
           example: '0x1'
-          default: '0x1'
         metadata:
           type: string
           description: 기타 정보 기록용 메타 데이터 (255자 제한)
           example: metadata
-          default: metadata
       required:
         - ticker
         - to
@@ -921,17 +880,19 @@ components:
       properties:
         gasPrice:
           type: string
-          description: 마스터 지갑의 새로운 이름
-          example: masterWalletName
-          default: masterWalletName
+          description: |-
+            트랜잭션에 사용할 gas price (단위: wei, peb)
+            null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.
+          example: '0x1'
     RetryCreateUserWalletRequestDTO:
       type: object
       properties:
         gasPrice:
           type: string
-          description: 마스터 지갑의 새로운 이름
-          example: masterWalletName
-          default: masterWalletName
+          description: |-
+            트랜잭션에 사용할 gas price (단위: wei, peb)
+            null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.
+          example: '0x1'
     InvalidAccessIpException:
       type: object
       properties:
@@ -1671,7 +1632,7 @@ paths:
           - python
           - go
       summary: 마스터 지갑 조회하기
-      description: 마스터 지갑 목록을 조회합니다.
+      description: 특정 마스터 지갑을 조회합니다.
       parameters:
         - *ref_23
         - *ref_24

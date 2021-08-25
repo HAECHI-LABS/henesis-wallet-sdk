@@ -529,6 +529,7 @@ components:
         name:
           type: string
           description: 지갑의 새로운 이름
+          example: name
       required:
         - name
     TransferRequestDTO:
