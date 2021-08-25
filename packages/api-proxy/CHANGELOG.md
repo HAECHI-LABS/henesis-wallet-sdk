@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.13-alpha.12](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.11...v3.2.13-alpha.12) (2021-08-25)
+
+
+### Features
+
+* klaytn NFT implementation ([#552](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/552)) ([4c94d17](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4c94d1714d02df7e878b540e034dafd600d32d74))
+
+
+
+
+
 ## [3.2.13-alpha.11](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.13-alpha.10...v3.2.13-alpha.11) (2021-08-24)
 
 
