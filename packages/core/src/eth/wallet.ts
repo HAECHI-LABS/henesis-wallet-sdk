@@ -699,7 +699,7 @@ export class EthMasterWallet extends EthLikeWallet {
   ): Promise<EthTransaction> {
     if (isLessThanWalletV4(this.getVersion())) {
       throw new Error(
-        "This wallet is not a compatible version. Please use the v3 APIs."
+        "This wallet is not a compatible version. Please use the v2 APIs."
       );
     }
     const request: FlushRequest = {
