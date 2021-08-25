@@ -19,6 +19,7 @@ import { CreateUserWalletRequestDTO } from "../../../v2/eth/dto/create-user-wall
 import { PaginationDTO } from "../../../v2/eth/dto/pagination.dto";
 import { object } from "../../../utils/object";
 import { changeUrlHost } from "../../../utils/pagination";
+import { isLessThanWalletV4 } from "@haechi-labs/henesis-wallet-core/lib/utils/wallet";
 
 @Injectable()
 export class WalletsService {
@@ -277,11 +278,17 @@ export class WalletsService {
     );
   }
 
-  private static getMasterWalletById(
+  private static async getMasterWalletById(
     sdk: SDK,
     id: string
   ): Promise<EthMasterWallet> {
-    return sdk.klay.wallets.getMasterWallet(id);
+    const masterWallet = await sdk.klay.wallets.getMasterWallet(id);
+    if (isLessThanWalletV4(masterWallet.getVersion())) {
+      throw new Error(
+        "This wallet is not a compatible version. Please use the v2 APIs."
+      );
+    }
+    return masterWallet;
   }
 
   private static async getUserWalletByContext(

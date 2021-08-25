@@ -55,6 +55,7 @@ import {
   getAddressFromCompressedPub,
 } from "./abstractWallet";
 import { Nft } from "./nft";
+import { isLessThanWalletV4 } from "../utils/wallet";
 
 export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;
@@ -696,6 +697,11 @@ export class EthMasterWallet extends EthLikeWallet {
     gasLimit?: BN,
     metadata?: string
   ): Promise<EthTransaction> {
+    if (isLessThanWalletV4(this.getVersion())) {
+      throw new Error(
+        "This wallet is not a compatible version. Please use the v3 APIs."
+      );
+    }
     const request: FlushRequest = {
       targets: flushTargets,
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
@@ -721,6 +727,11 @@ export class EthMasterWallet extends EthLikeWallet {
     gasLimit?: BN,
     metadata?: string
   ): Promise<EthTransaction> {
+    if (!isLessThanWalletV4(this.getVersion())) {
+      throw new Error(
+        "This wallet is not a compatible version. Please use the v3 APIs."
+      );
+    }
     if (userWalletIds.length > 50 || userWalletIds.length == 0) {
       throw new Error(`only 1 ~ 50 accounts can be flushed at a time`);
     }
