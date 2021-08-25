@@ -47,6 +47,7 @@ import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transa
 import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
 import {
   ADDRESS_OPTIONAL,
+  DEPOSIT_ADDRESS_ID_REQUIRED,
   MASTER_WALLET_ID_REQUIRED,
   NAME_OPTIONAL,
   PAGE_OPTIONAL,
@@ -54,6 +55,7 @@ import {
   SORT_OPTIONAL,
   TICKER_OPTIONAL,
   USER_WALLET_ID_REQUIRED,
+  WALLET_ID_REQUIRED,
 } from "../../eth/dto/params";
 import express from "express";
 import {
@@ -72,7 +74,12 @@ import {
   UserWalletDTO,
 } from "../../eth/dto/user-wallet.dto";
 import { CreateUserWalletRequestDTO } from "../../eth/wallets/dto/create-user-wallet-request.dto";
-import { PaginationDTO } from "../../eth/dto/pagination.dto";
+import {
+  EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO,
+  PaginationDTO,
+} from "../../eth/dto/pagination.dto";
+import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
+import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -538,6 +545,66 @@ export class WalletsController {
       masterWalletId,
       userWalletId,
       createTransactionRequest
+    );
+  }
+
+  @Post("/:walletId/nft/transfer")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETHEREUM_TRANSACTION_DTO
+    ),
+    isArray: true,
+  })
+  @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
+  @Queries(TICKER_OPTIONAL)
+  @ApiOperation({
+    summary: "NFT 출금하기",
+    description: "특정 지갑에서 NFT 토큰을 출금합니다.",
+  })
+  @ReadMeExtension()
+  public async transferNft(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Body() transferNftRequest: TransferNftRequestDTO
+  ): Promise<TransactionDTO> {
+    return await this.walletsService.transferNft(
+      request.sdk,
+      walletId,
+      transferNftRequest
+    );
+  }
+
+  @Get("/:walletId/nft/balance")
+  @ApiPaginationResponse(
+    NftBalanceDTO,
+    EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO
+  )
+  @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
+  @Queries(TICKER_OPTIONAL)
+  @ApiOperation({
+    summary: "NFT 잔고 조회하기",
+    description: "특정 지갑의 NFT 잔고를 조회합니다.",
+  })
+  @ReadMeExtension()
+  public async getNftBalance(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Query("size") size: number = 15,
+    @Query("page") page: number = 0,
+    @Query("tokenOnchainId") tokenOnchainId?: string,
+    @Query("tokenName") tokenName?: string
+  ): Promise<PaginationDTO<NftBalanceDTO>> {
+    return await this.walletsService.getNftBalance(
+      request.sdk,
+      walletId,
+      {
+        size,
+        page,
+        tokenOnchainId,
+        tokenName,
+      },
+      request
     );
   }
 }
