@@ -50,7 +50,10 @@ class EthWallets extends wallets_1.Wallets {
         const queryString = url_1.makeQueryString(options);
         const walletDatas = await this.client.get(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
         return walletDatas.map((walletData) => {
-            const { version } = walletData;
+            const { version, blockchain } = walletData;
+            if (blockchain === eth_1.Blockchain.KLAYTN) {
+                return new wallet_1.EthMasterWallet(this.client, wallet_1.transformMasterWalletData(walletData), this.keychains, this.blockchain);
+            }
             if (wallet_2.isLessThanWalletV4(version)) {
                 return new wallet_1.EthMasterWallet(this.client, wallet_1.transformMasterWalletData(walletData), this.keychains, this.blockchain);
             }
