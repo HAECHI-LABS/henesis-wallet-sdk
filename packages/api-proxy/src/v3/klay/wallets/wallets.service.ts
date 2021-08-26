@@ -6,7 +6,6 @@ import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto"
 import { TransactionDTO } from "../../eth/dto/transaction.dto";
 import BN from "bn.js";
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
-import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
 import {
   EthMasterWallet,
   UserWalletPaginationOptions,
@@ -20,6 +19,10 @@ import { PaginationDTO } from "../../../v2/eth/dto/pagination.dto";
 import { object } from "../../../utils/object";
 import { changeUrlHost } from "../../../utils/pagination";
 import { isLessThanWalletV4 } from "@haechi-labs/henesis-wallet-core/lib/utils/wallet";
+import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
+import { NftBalancePaginationOptions } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
+import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
+import { CreateFlushRequestDTO } from "./dto/create-flush-request.dto";
 
 @Injectable()
 export class WalletsService {
@@ -271,8 +274,18 @@ export class WalletsService {
       masterWalletId
     );
 
+    const targets: Array<{ coinId: number; depositAddressId: string }> =
+      request.targets
+        .filter((target) => target.userWalletId)
+        .map((target) => {
+          return {
+            coinId: target.coinId,
+            depositAddressId: target.userWalletId,
+          };
+        });
+
     return masterWallet.flushWithTargets(
-      request.targets as any[],
+      targets,
       request.gasPrice == null ? null : new BN(request.gasPrice),
       request.gasLimit == null ? null : new BN(request.gasLimit)
     );
@@ -303,5 +316,48 @@ export class WalletsService {
 
   private static getCoinByTicker(sdk: SDK, ticker: string): Promise<Coin> {
     return sdk.klay.coins.getCoin(ticker);
+  }
+
+  public async transferNft(
+    sdk: SDK,
+    walletId: string,
+    request: TransferNftRequestDTO
+  ): Promise<TransactionDTO> {
+    const wallet = await sdk.klay.wallets.getWallet(walletId);
+    return TransactionDTO.fromEthTransaction(
+      await wallet.transferNft(
+        request.nftId,
+        request.tokenOnchainId,
+        request.to,
+        request.passphrase,
+        null,
+        request.gasPrice == null ? null : new BN(request.gasPrice),
+        request.gasLimit == null ? null : new BN(request.gasLimit),
+        request.metadata
+      )
+    );
+  }
+
+  public async getNftBalance(
+    sdk: SDK,
+    walletId: string,
+    options: NftBalancePaginationOptions,
+    request: express.Request
+  ): Promise<PaginationDTO<NftBalanceDTO>> {
+    const wallet = await sdk.klay.wallets.getWallet(walletId);
+    const result = await wallet.getNftBalance(options);
+
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
+    return {
+      pagination: result.pagination,
+      results: result.results.map(NftBalanceDTO.fromNftBalance),
+    };
   }
 }
