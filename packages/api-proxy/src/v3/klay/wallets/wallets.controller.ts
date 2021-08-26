@@ -44,7 +44,6 @@ import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
 import { ChangeWalletNameRequestDTO } from "../../eth/wallets/dto/change-wallet-name-request.dto";
 import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto";
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
-import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
 import {
   ADDRESS_OPTIONAL,
   DEPOSIT_ADDRESS_ID_REQUIRED,
@@ -80,6 +79,7 @@ import {
 } from "../../eth/dto/pagination.dto";
 import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
+import { CreateFlushRequestDTO } from "./dto/create-flush-request.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
