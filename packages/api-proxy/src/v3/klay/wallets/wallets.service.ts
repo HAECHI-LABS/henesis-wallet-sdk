@@ -284,8 +284,6 @@ export class WalletsService {
           };
         });
 
-    console.log(targets);
-
     return masterWallet.flushWithTargets(
       targets,
       request.gasPrice == null ? null : new BN(request.gasPrice),
