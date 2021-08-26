@@ -6,7 +6,6 @@ import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto"
 import { TransactionDTO } from "../../eth/dto/transaction.dto";
 import BN from "bn.js";
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
-import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
 import {
   EthMasterWallet,
   UserWalletPaginationOptions,
@@ -23,6 +22,7 @@ import { isLessThanWalletV4 } from "@haechi-labs/henesis-wallet-core/lib/utils/w
 import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
 import { NftBalancePaginationOptions } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
+import { CreateFlushRequestDTO } from "./dto/create-flush-request.dto";
 
 @Injectable()
 export class WalletsService {
@@ -274,8 +274,18 @@ export class WalletsService {
       masterWalletId
     );
 
+    const targets: Array<{ coinId: number; depositAddressId: string }> =
+      request.targets
+        .filter((target) => target.userWalletId)
+        .map((target) => {
+          return {
+            coinId: target.coinId,
+            depositAddressId: target.userWalletId,
+          };
+        });
+
     return masterWallet.flushWithTargets(
-      request.targets as any[],
+      targets,
       request.gasPrice == null ? null : new BN(request.gasPrice),
       request.gasLimit == null ? null : new BN(request.gasLimit)
     );
