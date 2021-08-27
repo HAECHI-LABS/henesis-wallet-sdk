@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: LITECOIN
-  description: Henesis API Proxy - v2 - litecoin OpenAPI Documentation
+  description: Henesis API Proxy - v3 - litecoin OpenAPI Documentation
   version: '1.0'
   contact: {}
 tags: []
@@ -469,7 +469,7 @@ components:
         - message
         - code
 paths:
-  /api/v2/ltc/transfers:
+  /api/v3/litecoin/transfers:
     get:
       operationId: litecoin-TransfersController_getTransfers
       x-readme:
@@ -623,7 +623,7 @@ paths:
                     code: 4008
       tags: &ref_5
         - transfers
-  /api/v2/ltc/transfers/{transferId}:
+  /api/v3/litecoin/transfers/{transferId}:
     get:
       operationId: litecoin-TransfersController_getTransfer
       x-readme:
@@ -655,7 +655,7 @@ paths:
           description: ''
         '401': *ref_4
       tags: *ref_5
-  /api/v2/ltc/wallets:
+  /api/v3/litecoin/wallets:
     get:
       operationId: litecoin-WalletsController_getWallets
       x-readme:
@@ -727,7 +727,7 @@ paths:
                   value: *ref_9
       tags: &ref_14
         - wallets
-  /api/v2/ltc/wallets/{walletId}:
+  /api/v3/litecoin/wallets/{walletId}:
     get:
       operationId: litecoin-WalletsController_getWallet
       x-readme:
@@ -759,7 +759,7 @@ paths:
           description: ''
         '401': *ref_13
       tags: *ref_14
-  /api/v2/ltc/wallets/{walletId}/name:
+  /api/v3/litecoin/wallets/{walletId}/name:
     patch:
       operationId: litecoin-WalletsController_changeWalletName
       x-readme:
@@ -794,7 +794,7 @@ paths:
           description: ''
         '401': *ref_13
       tags: *ref_14
-  /api/v2/ltc/wallets/{walletId}/balance:
+  /api/v3/litecoin/wallets/{walletId}/balance:
     get:
       operationId: litecoin-WalletsController_getWalletBalance
       x-readme:
@@ -832,7 +832,7 @@ paths:
           description: ''
         '401': *ref_13
       tags: *ref_14
-  /api/v2/ltc/wallets/{walletId}/deposit-addresses:
+  /api/v3/litecoin/wallets/{walletId}/deposit-addresses:
     post:
       operationId: litecoin-WalletsController_createDepositAddress
       x-readme:
@@ -940,7 +940,7 @@ paths:
           description: ''
         '401': *ref_13
       tags: *ref_14
-  /api/v2/ltc/wallets/{walletId}/deposit-addresses/{depositAddressId}:
+  /api/v3/litecoin/wallets/{walletId}/deposit-addresses/{depositAddressId}:
     get:
       operationId: litecoin-WalletsController_getDepositAddress
       x-readme:
@@ -978,7 +978,7 @@ paths:
           description: ''
         '401': *ref_13
       tags: *ref_14
-  /api/v2/ltc/wallets/{walletId}/transfer:
+  /api/v3/litecoin/wallets/{walletId}/transfer:
     post:
       operationId: litecoin-WalletsController_transfer
       x-readme:
