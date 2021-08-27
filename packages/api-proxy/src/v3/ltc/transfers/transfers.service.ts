@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { SDK } from "@haechi-labs/henesis-wallet-core";
-import { PaginationDTO } from "../../btc/dto/pagination.dto";
+import { PaginationDTO } from "../../../v2/btc/dto/pagination.dto";
 import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
-import { TransferDTO } from "../../btc/dto/transfer.dto";
+import { TransferDTO } from "../../../v2/btc/dto/transfer.dto";
 import express from "express";
 import { changeUrlHost } from "../../../utils/pagination";
 
