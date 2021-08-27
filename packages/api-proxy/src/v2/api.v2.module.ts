@@ -2,7 +2,6 @@ import { DynamicModule, Module } from "@nestjs/common";
 import { KlayModule } from "./klay/klay.module";
 import { EthModule } from "./eth/eth.module";
 import { BtcModule } from "./btc/btc.module";
-import { LtcModule } from "./ltc/ltc.module";
 
 const buildSwagger: boolean =
   (process.env.BUILD_SWAGGER_SPEC?.toLowerCase() == "true" &&
@@ -20,10 +19,8 @@ export class ApiV2Module {
         imports.push(EthModule);
       } else if (process.env.ENDPOINT == "bitcoin") {
         imports.push(BtcModule);
-      } else if (process.env.ENDPOINT == "litecoin") {
-        imports.push(LtcModule);
       } else {
-        imports.push(KlayModule, EthModule, BtcModule, LtcModule);
+        imports.push(KlayModule, EthModule, BtcModule);
       }
     }
     return {

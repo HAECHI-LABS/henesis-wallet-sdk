@@ -3,13 +3,13 @@ import { TransfersService } from "./transfers.service";
 import {
   EXAMPLE_LITECOIN_TRANSFER_DTO,
   TransferDTO,
-} from "../../btc/dto/transfer.dto";
+} from "../../../v2/btc/dto/transfer.dto";
 import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import {
   EXAMPLE_LITECOIN_PAGINATION_TRANSFER_DTO,
   PaginationDTO,
-} from "../../btc/dto/pagination.dto";
+} from "../../../v2/btc/dto/pagination.dto";
 import {
   ApiPaginationResponse,
   ApiResponseContentGenerator,
@@ -29,8 +29,8 @@ import {
   QUERY_TRANSFERS_UPDATED_AT_GTE_OPTIONAL,
   QUERY_TRANSFERS_UPDATED_AT_LT_OPTIONAL,
   QUERY_TRANSFERS_WALLET_ID_OPTIONAL,
-} from "../../btc/dto/queries";
-import { PARAM_TRANSFER_ID } from "../../btc/dto/params";
+} from "../../../v2/btc/dto/queries";
+import { PARAM_TRANSFER_ID } from "../../../v2/btc/dto/params";
 
 @Controller("transfers")
 @ApiTags("transfers")
