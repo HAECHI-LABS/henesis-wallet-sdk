@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.1...v3.3.2) (2021-08-27)
+
+
+### Bug Fixes
+
+* use v3 for litecoin API proxy APIs ([#559](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/559)) ([d953c95](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d953c95565a278a3f3c836178ca642b9837dc017))
+
+
+
+
+
 ## [3.3.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.0...v3.3.1) (2021-08-26)
 
 
