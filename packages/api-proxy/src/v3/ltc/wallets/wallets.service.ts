@@ -1,17 +1,17 @@
 import { Injectable } from "@nestjs/common";
 import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
-import { WalletDTO } from "../../btc/dto/wallet.dto";
+import { WalletDTO } from "../../../v2/btc/dto/wallet.dto";
 import {
   LtcMasterWallet,
   DepositAddressPaginationOptions,
 } from "@haechi-labs/henesis-wallet-core/lib/ltc/wallet";
-import { BalanceDTO } from "../../btc/dto/balance.dto";
-import { DepositAddressDTO } from "../../btc/dto/deposit-address.dto";
-import { CreateDepositAddressRequestDTO } from "../../btc/dto/create-deposit-address-request.dto";
-import { PaginationDTO } from "../../btc/dto/pagination.dto";
-import { TransferRequestDTO } from "../../btc/dto/transfer-request.dto";
-import { TransferDTO } from "../../btc/dto/transfer.dto";
-import { ChangeWalletNameRequestDTO } from "../../btc/dto/change-wallet-name-request.dto";
+import { BalanceDTO } from "../../../v2/btc/dto/balance.dto";
+import { DepositAddressDTO } from "../../../v2/btc/dto/deposit-address.dto";
+import { CreateDepositAddressRequestDTO } from "../../../v2/btc/dto/create-deposit-address-request.dto";
+import { PaginationDTO } from "../../../v2/btc/dto/pagination.dto";
+import { TransferRequestDTO } from "../../../v2/btc/dto/transfer-request.dto";
+import { TransferDTO } from "../../../v2/btc/dto/transfer.dto";
+import { ChangeWalletNameRequestDTO } from "../../../v2/btc/dto/change-wallet-name-request.dto";
 import { object } from "../../../utils/object";
 import { changeUrlHost } from "../../../utils/pagination";
 import express from "express";

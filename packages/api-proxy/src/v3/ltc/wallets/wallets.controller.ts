@@ -12,19 +12,19 @@ import { WalletsService } from "./wallets.service";
 import {
   EXAMPLE_LITECOIN_WALLET_DTO,
   WalletDTO,
-} from "../../btc/dto/wallet.dto";
+} from "../../../v2/btc/dto/wallet.dto";
 import {
   BalanceDTO,
   EXAMPLE_LITECOIN_BALANCE_DTO,
-} from "../../btc/dto/balance.dto";
+} from "../../../v2/btc/dto/balance.dto";
 import {
   DepositAddressDTO,
   EXAMPLE_LITECOIN_DEPOSIT_ADDRESS_DTO,
-} from "../../btc/dto/deposit-address.dto";
+} from "../../../v2/btc/dto/deposit-address.dto";
 import {
   EXAMPLE_LITECOIN_TRANSFER_DTO,
   TransferDTO,
-} from "../../btc/dto/transfer.dto";
+} from "../../../v2/btc/dto/transfer.dto";
 import {
   ApiCreatedResponse,
   ApiExtraModels,
@@ -34,8 +34,8 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import express from "express";
-import { CreateDepositAddressRequestDTO } from "../../btc/dto/create-deposit-address-request.dto";
-import { TransferRequestDTO } from "../../btc/dto/transfer-request.dto";
+import { CreateDepositAddressRequestDTO } from "../../../v2/btc/dto/create-deposit-address-request.dto";
+import { TransferRequestDTO } from "../../../v2/btc/dto/transfer-request.dto";
 import {
   ApiPaginationResponse,
   ApiResponseContentGenerator,
@@ -48,18 +48,18 @@ import {
 import {
   PARAM_DEPOSIT_ADDRESS_ID,
   PARAM_WALLET_ID,
-} from "../../btc/dto/params";
+} from "../../../v2/btc/dto/params";
 import {
   QUERY_DEPOSIT_ADDRESS_ADDRESS_OPTIONAL,
   QUERY_DEPOSIT_ADDRESS_ID_OPTIONAL,
   QUERY_DEPOSIT_ADDRESS_NAME_OPTIONAL,
   QUERY_WALLET_NAME_OPTIONAL,
-} from "../../btc/dto/queries";
+} from "../../../v2/btc/dto/queries";
 import {
   EXAMPLE_LITECOIN_PAGINATION_DEPOSIT_ADDRESS_DTO,
   PaginationDTO,
-} from "../../btc/dto/pagination.dto";
-import { ChangeWalletNameRequestDTO } from "../../btc/dto/change-wallet-name-request.dto";
+} from "../../../v2/btc/dto/pagination.dto";
+import { ChangeWalletNameRequestDTO } from "../../../v2/btc/dto/change-wallet-name-request.dto";
 import { PAGE_OPTIONAL, SIZE_OPTIONAL } from "../../../v3/eth/dto/params";
 
 @ApiTags("wallets")
