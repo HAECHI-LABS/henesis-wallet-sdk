@@ -23,6 +23,7 @@ export const makePrefixPathByBlockchainType = (blockchain?: BlockchainType) => {
     [BlockchainType.LITECOIN]: "/ltc",
     [BlockchainType.FILECOIN]: "/fil",
     [BlockchainType.BINANCE_SMART_CHAIN]: "/bsc",
+    [BlockchainType.BITCOIN_CASH]: "/bch",
   };
   return blockchainByType[blockchain];
 };
