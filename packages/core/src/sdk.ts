@@ -11,6 +11,7 @@ import { Billings } from "./billings";
 import { Notices } from "./notices";
 import { CoinListings } from "./coinListings";
 import { LtcModule } from "./ltc";
+import { BchModule } from "./bch";
 
 export const enum Env {
   Local,
@@ -48,6 +49,8 @@ export class SDK {
   public readonly btc: BtcModule;
 
   public readonly ltc: LtcModule;
+
+  public readonly bch: BchModule;
 
   private readonly client: Client;
 
@@ -96,6 +99,13 @@ export class SDK {
     this.ltc = new LtcModule({
       env: env,
       client: enhancedBlockchainClient(this.client, BlockchainType.LITECOIN),
+    });
+    this.bch = new BchModule({
+      env: env,
+      client: enhancedBlockchainClient(
+        this.client,
+        BlockchainType.BITCOIN_CASH
+      ),
     });
   }
 }
