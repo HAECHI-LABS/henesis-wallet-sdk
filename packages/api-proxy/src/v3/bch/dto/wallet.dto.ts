@@ -1,8 +1,5 @@
 import { EXAMPLE_KEY_DTO, KeyDTO } from "./key.dto";
-import {
-  BtcActivatingMasterWallet,
-  BtcMasterWallet,
-} from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
+import { BchActivatingMasterWallet } from "@haechi-labs/henesis-wallet-core/lib/bch/wallet";
 import {
   InactiveMasterWallet,
   WalletStatus,
@@ -11,11 +8,12 @@ import {
   ApiModelProperty,
   ApiModelPropertyOptional,
 } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import { BchMasterWallet } from "@haechi-labs/henesis-wallet-core/lib/bch/wallet";
 
 export const EXAMPLE_WALLET_DTO: WalletDTO = {
   id: "cce4f485764767f256155390873668b3",
-  name: "bitcoin-wallet",
-  address: "2Mx6o4HZfPyV3QrYNv26jCGMwAPpDeVzq1a",
+  name: "bitcoincash-wallet",
+  address: "bitcoincash:qz9ew4c9l7rt0rqv6ced08k0wts6vxwuqvvuuv2szl",
   encryptionKey:
     "b72355635b2f8db7d603a73gd37r2460e28d93ad42df6ba85fff4b18fe374ae3",
   createdAt: "1599116198762",
@@ -87,7 +85,7 @@ export class WalletDTO {
   })
   whitelistActivated: boolean;
 
-  static fromMasterWallet(wallet: BtcMasterWallet): WalletDTO {
+  static fromMasterWallet(wallet: BchMasterWallet): WalletDTO {
     return wallet.getData();
   }
 
@@ -106,8 +104,8 @@ export class WalletDTO {
     };
   }
 
-  static fromBTCActivatingMasterWallet(
-    wallet: BtcActivatingMasterWallet
+  static fromActivatingMasterWallet(
+    wallet: BchActivatingMasterWallet
   ): WalletDTO {
     return {
       id: wallet.id,
