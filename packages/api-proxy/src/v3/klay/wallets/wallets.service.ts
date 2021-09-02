@@ -23,6 +23,10 @@ import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
 import { NftBalancePaginationOptions } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
 import { CreateFlushRequestDTO } from "./dto/create-flush-request.dto";
+import {GetNftTransfersOption} from "../../eth/wallets/dto/get-nft-transfers-option.dto";
+import {NftTransferDTO} from "../../eth/dto/nft-transfer.dto";
+import {Pagination} from "@haechi-labs/henesis-wallet-core/lib/types";
+import {EthNftTransferEvent} from "@haechi-labs/henesis-wallet-core/lib/events";
 
 @Injectable()
 export class WalletsService {
@@ -358,6 +362,30 @@ export class WalletsService {
     return {
       pagination: result.pagination,
       results: result.results.map(NftBalanceDTO.fromNftBalance),
+    };
+  }
+
+  public async getNftTransfers(
+    sdk: SDK,
+    options: GetNftTransfersOption,
+    request: express.Request
+  ): Promise<PaginationDTO<NftTransferDTO>> {
+    const result: Pagination<EthNftTransferEvent> =
+      await sdk.klay.events.getNftTransferEvents(
+        object(GetNftTransfersOption.toSDKOption(options))
+      );
+
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
+    return {
+      pagination: result.pagination,
+      results: result.results.map(NftTransferDTO.fromNftTransferEvent),
     };
   }
 }

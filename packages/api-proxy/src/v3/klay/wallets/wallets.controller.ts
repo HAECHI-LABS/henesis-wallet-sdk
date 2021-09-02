@@ -46,21 +46,30 @@ import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto"
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
 import {
   ADDRESS_OPTIONAL,
+  DEPOSIT_ADDRESS_ID_OPTIONAL,
   DEPOSIT_ADDRESS_ID_REQUIRED,
   MASTER_WALLET_ID_REQUIRED,
   NAME_OPTIONAL,
+  NFT_ID_OPTIONAL,
   PAGE_OPTIONAL,
   SIZE_OPTIONAL,
   SORT_OPTIONAL,
+  STATUS_OPTIONAL,
   TICKER_OPTIONAL,
+  TOKEN_NAME_OPTIONAL,
+  TOKEN_ONCHAIN_ID_OPTIONAL,
+  TRANSACTION_HASH_OPTIONAL,
+  TRANSACTION_ID_OPTIONAL,
+  TRANSFER_TYPE_OPTIONAL, UPDATED_AT_GTE_OPTIONAL, UPDATED_AT_LE_OPTIONAL,
   USER_WALLET_ID_REQUIRED,
+  WALLET_ID_OPTIONAL,
   WALLET_ID_REQUIRED,
 } from "../../eth/dto/params";
 import express from "express";
 import {
-  DepositAddressNotFoundException,
+  DepositAddressNotFoundException, EXAMPLE_INVALID_STATUS_EXCEPTION_DTO,
   EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
-  EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
+  EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO, InvalidStatusException,
   NoWalletNameException,
   WalletNotFoundException,
 } from "../../eth/dto/exceptions.dto";
@@ -74,12 +83,14 @@ import {
 } from "../../eth/dto/user-wallet.dto";
 import { CreateUserWalletRequestDTO } from "../../eth/wallets/dto/create-user-wallet-request.dto";
 import {
-  EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO,
+  EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO, EXAMPLE_ETHEREUM_PAGINATION_NFT_TRANSFER_DTO,
   PaginationDTO,
 } from "../../eth/dto/pagination.dto";
 import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
 import { CreateFlushRequestDTO } from "./dto/create-flush-request.dto";
+import {NftTransferDTO} from "../../eth/dto/nft-transfer.dto";
+import {EventStatus, TransferType} from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -603,6 +614,75 @@ export class WalletsController {
         page,
         tokenOnchainId,
         tokenName,
+      },
+      request
+    );
+  }
+
+  @Get("/:masterWalletId/nft/transfers")
+  @Queries(
+    NFT_ID_OPTIONAL,
+    TOKEN_NAME_OPTIONAL,
+    TOKEN_ONCHAIN_ID_OPTIONAL,
+    DEPOSIT_ADDRESS_ID_OPTIONAL,
+    WALLET_ID_OPTIONAL,
+    TRANSACTION_ID_OPTIONAL,
+    TRANSACTION_HASH_OPTIONAL,
+    STATUS_OPTIONAL,
+    TRANSFER_TYPE_OPTIONAL,
+    UPDATED_AT_GTE_OPTIONAL,
+    UPDATED_AT_LE_OPTIONAL,
+    SIZE_OPTIONAL,
+    PAGE_OPTIONAL
+  )
+  @ApiPaginationResponse(
+    NftTransferDTO,
+    EXAMPLE_ETHEREUM_PAGINATION_NFT_TRANSFER_DTO
+  )
+  @ApiBadRequestResponse({
+    description: "올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.",
+    content: ApiResponseContentGenerator(
+      InvalidStatusException,
+      EXAMPLE_INVALID_STATUS_EXCEPTION_DTO
+    ),
+  })
+  @ApiOperation({
+    summary: "전체 NFT 입출금 목록 조회하기",
+    description: "모든 지갑의 NFT 입출금 내역을 조회합니다.",
+  })
+  @ReadMeExtension()
+  public async getNftTransfers(
+    @Request() request: express.Request,
+    @Param("masterWalletId") walletId?: string,
+    @Query("nftId") nftId?: number,
+    @Query("tokenName") tokenName?: string,
+    @Query("tokenOnchainId") tokenOnchainId?: string,
+    @Query("depositAddressId") depositAddressId?: string,
+    @Query("transactionId") transactionId?: string,
+    @Query("transactionHash") transactionHash?: string,
+    @Query("status") status?: EventStatus,
+    @Query("transferType") transferType?: TransferType,
+    @Query("updatedAtGte") updatedAtGte?: string,
+    @Query("updatedAtLt") updatedAtLt?: string,
+    @Query("size") size: number = 15,
+    @Query("page") page: number = 0
+  ): Promise<PaginationDTO<NftTransferDTO>> {
+    return await this.walletsService.getNftTransfers(
+      request.sdk,
+      {
+        nftId,
+        tokenName,
+        tokenOnchainId,
+        depositAddressId,
+        walletId,
+        transactionId,
+        transactionHash,
+        status,
+        transferType,
+        updatedAtGte,
+        updatedAtLt,
+        size,
+        page,
       },
       request
     );

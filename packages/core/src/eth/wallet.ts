@@ -440,6 +440,7 @@ export class EthWallet extends EthLikeWallet {
       ),
       n,
       tokenOnchainId,
+      to,
       otpCode,
       gasPrice,
       gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT,
@@ -451,6 +452,7 @@ export class EthWallet extends EthLikeWallet {
     signedMultiSigPayload: SignedMultiSigPayload,
     nft: Nft,
     tokenOnchainId: string,
+    to: string,
     otpCode?: string,
     gasPrice?: BN,
     gasLimit?: BN,
@@ -459,6 +461,7 @@ export class EthWallet extends EthLikeWallet {
     const request: CreateNftMultiSigTransactionRequest = {
       nftId: nft.getId(),
       tokenOnchainId,
+      toAddress: to,
       signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
         signedMultiSigPayload
       ),
@@ -829,6 +832,7 @@ export class EthMasterWallet extends EthLikeWallet {
       ),
       n,
       tokenOnchainId,
+      to,
       otpCode,
       gasPrice,
       gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT,
@@ -840,6 +844,7 @@ export class EthMasterWallet extends EthLikeWallet {
     signedMultiSigPayload: SignedMultiSigPayload,
     nft: Nft,
     tokenOnchainId: string,
+    to: string,
     otpCode?: string,
     gasPrice?: BN,
     gasLimit?: BN,
@@ -848,6 +853,7 @@ export class EthMasterWallet extends EthLikeWallet {
     const request: CreateNftMultiSigTransactionRequest = {
       nftId: nft.getId(),
       tokenOnchainId,
+      toAddress: to,
       signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
         signedMultiSigPayload
       ),

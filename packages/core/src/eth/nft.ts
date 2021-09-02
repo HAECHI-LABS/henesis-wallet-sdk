@@ -1,4 +1,4 @@
-import { NftDTO } from "../__generate__/eth";
+import { NftDTO, NftTokenDTO } from "../__generate__/eth";
 import { Contract } from "web3-eth-contract";
 import Web3 from "web3";
 import { AbiItem } from "web3-utils";
@@ -8,6 +8,8 @@ import { MultiSigPayload } from "./transactions";
 import { BNConverter } from "../utils/common";
 
 export type NftData = NftDTO;
+
+export type NftTokenData = NftTokenDTO;
 
 export class Nft {
   protected nftData: NftData;

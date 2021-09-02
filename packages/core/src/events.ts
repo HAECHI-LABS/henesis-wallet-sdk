@@ -1,6 +1,7 @@
 import * as BN from "bn.js";
 import { PaginationOptions, Timestamp } from "./types";
-import { TransferType, EventStatus, WalletType } from "./__generate__/eth";
+import { EventStatus, TransferType, WalletType } from "./__generate__/eth";
+import { NftData, NftTokenData } from "./eth/nft";
 
 export interface Event {
   id: number;
@@ -35,7 +36,19 @@ export interface ValueTransferEvent extends Event {
   walletType: WalletType;
 }
 
+export interface NftTransferEvent extends Event {
+  nft: NftData;
+  token: NftTokenData;
+  from: string;
+  to: string;
+  transferType: TransferType;
+  walletName: string;
+  walletType: WalletType;
+}
+
 export type EthValueTransferEvent = ValueTransferEvent;
+
+export type EthNftTransferEvent = NftTransferEvent;
 
 export interface EventPaginationOptions extends PaginationOptions {
   address?: string;
@@ -49,15 +62,30 @@ export interface EventPaginationOptions extends PaginationOptions {
   orgId?: string;
   masterWalletId?: string;
   transactionId?: string;
+}
+
+export interface CallEventPaginationOptions extends EventPaginationOptions {
   symbol?: string;
 }
 
 export interface ValueTransferEventPaginationOptions
   extends EventPaginationOptions {
+  symbol?: string;
   transferType?: TransferType;
 }
 
-export type EthEventPaginationOptions = EventPaginationOptions;
+export interface NftTransferEventPaginationOptions
+  extends EventPaginationOptions {
+  nftId?: number;
+  tokenOnchainId?: string;
+  tokenName?: string;
+  transferType?: TransferType;
+}
+
+export type EthEventPaginationOptions = CallEventPaginationOptions;
 
 export type EthValueTransferEventPaginationOptions =
   ValueTransferEventPaginationOptions;
+
+export type EthNftTransferEventPaginationOptions =
+  NftTransferEventPaginationOptions;
