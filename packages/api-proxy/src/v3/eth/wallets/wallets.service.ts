@@ -25,11 +25,11 @@ import express from "express";
 import { TransferNftRequestDTO } from "./dto/transfer-nft-request.dto";
 import { NftBalanceDTO } from "../dto/nft-balance.dto";
 import { GetDepositAddressOption } from "./dto/get-deposit-addresses-option.dto";
-import {GetNftTransfersOption} from "./dto/get-nft-transfers-option.dto";
-import {NftTransferDTO} from "../dto/nft-transfer.dto";
-import {Pagination} from "@haechi-labs/henesis-wallet-core/lib/types";
-import {EthNftTransferEvent} from "@haechi-labs/henesis-wallet-core/lib/events";
-import {object} from "../../../utils/object";
+import { GetNftTransfersOption } from "./dto/get-nft-transfers-option.dto";
+import { NftTransferDTO } from "../dto/nft-transfer.dto";
+import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
+import { EthNftTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
+import { object } from "../../../utils/object";
 
 @Injectable()
 export class WalletsService {

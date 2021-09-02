@@ -60,16 +60,20 @@ import {
   TOKEN_ONCHAIN_ID_OPTIONAL,
   TRANSACTION_HASH_OPTIONAL,
   TRANSACTION_ID_OPTIONAL,
-  TRANSFER_TYPE_OPTIONAL, UPDATED_AT_GTE_OPTIONAL, UPDATED_AT_LE_OPTIONAL,
+  TRANSFER_TYPE_OPTIONAL,
+  UPDATED_AT_GTE_OPTIONAL,
+  UPDATED_AT_LE_OPTIONAL,
   USER_WALLET_ID_REQUIRED,
   WALLET_ID_OPTIONAL,
   WALLET_ID_REQUIRED,
 } from "../../eth/dto/params";
 import express from "express";
 import {
-  DepositAddressNotFoundException, EXAMPLE_INVALID_STATUS_EXCEPTION_DTO,
+  DepositAddressNotFoundException,
+  EXAMPLE_INVALID_STATUS_EXCEPTION_DTO,
   EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
-  EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO, InvalidStatusException,
+  EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
+  InvalidStatusException,
   NoWalletNameException,
   WalletNotFoundException,
 } from "../../eth/dto/exceptions.dto";
@@ -83,14 +87,18 @@ import {
 } from "../../eth/dto/user-wallet.dto";
 import { CreateUserWalletRequestDTO } from "../../eth/wallets/dto/create-user-wallet-request.dto";
 import {
-  EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO, EXAMPLE_ETHEREUM_PAGINATION_NFT_TRANSFER_DTO,
+  EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO,
+  EXAMPLE_ETHEREUM_PAGINATION_NFT_TRANSFER_DTO,
   PaginationDTO,
 } from "../../eth/dto/pagination.dto";
 import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
 import { CreateFlushRequestDTO } from "./dto/create-flush-request.dto";
-import {NftTransferDTO} from "../../eth/dto/nft-transfer.dto";
-import {EventStatus, TransferType} from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import { NftTransferDTO } from "../../eth/dto/nft-transfer.dto";
+import {
+  EventStatus,
+  TransferType,
+} from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 @Controller("wallets")
 @ApiTags("wallets")

@@ -23,10 +23,10 @@ import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
 import { NftBalancePaginationOptions } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
 import { CreateFlushRequestDTO } from "./dto/create-flush-request.dto";
-import {GetNftTransfersOption} from "../../eth/wallets/dto/get-nft-transfers-option.dto";
-import {NftTransferDTO} from "../../eth/dto/nft-transfer.dto";
-import {Pagination} from "@haechi-labs/henesis-wallet-core/lib/types";
-import {EthNftTransferEvent} from "@haechi-labs/henesis-wallet-core/lib/events";
+import { GetNftTransfersOption } from "../../eth/wallets/dto/get-nft-transfers-option.dto";
+import { NftTransferDTO } from "../../eth/dto/nft-transfer.dto";
+import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
+import { EthNftTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
 
 @Injectable()
 export class WalletsService {
