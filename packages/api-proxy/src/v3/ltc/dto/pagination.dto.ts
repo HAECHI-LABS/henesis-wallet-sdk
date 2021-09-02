@@ -6,8 +6,8 @@ import {
 } from "./deposit-address.dto";
 
 export const EXAMPLE_PAGINATION_METADATA_DTO: PaginationMetadata = {
-  nextUrl: "http://localhost:3000/api/v2/btc/transfers?page=2",
-  previousUrl: "http://localhost:3000/api/v2/btc/transfers?page=1",
+  nextUrl: "http://localhost:3000/api/v2/ltc/transfers?page=2",
+  previousUrl: "http://localhost:3000/api/v2/ltc/transfers?page=1",
   totalCount: 5,
 };
 

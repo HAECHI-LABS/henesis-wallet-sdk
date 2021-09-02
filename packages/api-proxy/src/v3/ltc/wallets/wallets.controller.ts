@@ -10,22 +10,6 @@ import {
 } from "@nestjs/common";
 import { WalletsService } from "./wallets.service";
 import {
-  EXAMPLE_LITECOIN_WALLET_DTO,
-  WalletDTO,
-} from "../../../v2/btc/dto/wallet.dto";
-import {
-  BalanceDTO,
-  EXAMPLE_LITECOIN_BALANCE_DTO,
-} from "../../../v2/btc/dto/balance.dto";
-import {
-  DepositAddressDTO,
-  EXAMPLE_LITECOIN_DEPOSIT_ADDRESS_DTO,
-} from "../../../v2/btc/dto/deposit-address.dto";
-import {
-  EXAMPLE_LITECOIN_TRANSFER_DTO,
-  TransferDTO,
-} from "../../../v2/btc/dto/transfer.dto";
-import {
   ApiCreatedResponse,
   ApiExtraModels,
   ApiNoContentResponse,
@@ -34,8 +18,6 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import express from "express";
-import { CreateDepositAddressRequestDTO } from "../../../v2/btc/dto/create-deposit-address-request.dto";
-import { TransferRequestDTO } from "../../../v2/btc/dto/transfer-request.dto";
 import {
   ApiPaginationResponse,
   ApiResponseContentGenerator,
@@ -45,22 +27,28 @@ import {
   Queries,
   ReadMeExtension,
 } from "../../../decorators";
-import {
-  PARAM_DEPOSIT_ADDRESS_ID,
-  PARAM_WALLET_ID,
-} from "../../../v2/btc/dto/params";
+import { ChangeWalletNameRequestDTO } from "../../../v2/btc/dto/change-wallet-name-request.dto";
+import { PAGE_OPTIONAL, SIZE_OPTIONAL } from "../../../v3/eth/dto/params";
+import { EXAMPLE_WALLET_DTO, WalletDTO } from "../dto/wallet.dto";
+import { BalanceDTO, EXAMPLE_BALANCE_DTO } from "../dto/balance.dto";
 import {
   QUERY_DEPOSIT_ADDRESS_ADDRESS_OPTIONAL,
   QUERY_DEPOSIT_ADDRESS_ID_OPTIONAL,
   QUERY_DEPOSIT_ADDRESS_NAME_OPTIONAL,
   QUERY_WALLET_NAME_OPTIONAL,
-} from "../../../v2/btc/dto/queries";
+} from "../dto/queries";
+import { PARAM_DEPOSIT_ADDRESS_ID, PARAM_WALLET_ID } from "../dto/params";
 import {
-  EXAMPLE_LITECOIN_PAGINATION_DEPOSIT_ADDRESS_DTO,
+  DepositAddressDTO,
+  EXAMPLE_DEPOSIT_ADDRESS_DTO,
+} from "../dto/deposit-address.dto";
+import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
+import {
+  EXAMPLE_PAGINATION_DEPOSIT_ADDRESS_DTO,
   PaginationDTO,
-} from "../../../v2/btc/dto/pagination.dto";
-import { ChangeWalletNameRequestDTO } from "../../../v2/btc/dto/change-wallet-name-request.dto";
-import { PAGE_OPTIONAL, SIZE_OPTIONAL } from "../../../v3/eth/dto/params";
+} from "../dto/pagination.dto";
+import { EXAMPLE_TRANSFER_DTO, TransferDTO } from "../dto/transfer.dto";
+import { TransferRequestDTO } from "../dto/transfer-request.dto";
 
 @ApiTags("wallets")
 @Controller("wallets")
@@ -72,9 +60,7 @@ export class WalletsController {
 
   @Get("/")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(WalletDTO, [
-      EXAMPLE_LITECOIN_WALLET_DTO,
-    ]),
+    content: ApiResponseContentGenerator(WalletDTO, [EXAMPLE_WALLET_DTO]),
     isArray: true,
   })
   @ApiOperation({
@@ -92,10 +78,7 @@ export class WalletsController {
 
   @Get("/:walletId")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(
-      WalletDTO,
-      EXAMPLE_LITECOIN_WALLET_DTO
-    ),
+    content: ApiResponseContentGenerator(WalletDTO, EXAMPLE_WALLET_DTO),
   })
   @ApiOperation({
     summary: "지갑 정보 조회하기",
@@ -133,9 +116,7 @@ export class WalletsController {
 
   @Get("/:walletId/balance")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(BalanceDTO, [
-      EXAMPLE_LITECOIN_BALANCE_DTO,
-    ]),
+    content: ApiResponseContentGenerator(BalanceDTO, [EXAMPLE_BALANCE_DTO]),
     isArray: true,
   })
   @ApiOperation({
@@ -155,7 +136,7 @@ export class WalletsController {
   @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       DepositAddressDTO,
-      EXAMPLE_LITECOIN_DEPOSIT_ADDRESS_DTO
+      EXAMPLE_DEPOSIT_ADDRESS_DTO
     ),
   })
   @ApiOperation({
@@ -192,7 +173,7 @@ export class WalletsController {
   @PathParams(PARAM_WALLET_ID)
   @ApiPaginationResponse(
     DepositAddressDTO,
-    EXAMPLE_LITECOIN_PAGINATION_DEPOSIT_ADDRESS_DTO
+    EXAMPLE_PAGINATION_DEPOSIT_ADDRESS_DTO
   )
   @ReadMeExtension()
   public async getDepositAddresses(
@@ -222,7 +203,7 @@ export class WalletsController {
   @ApiOkResponse({
     content: ApiResponseContentGenerator(
       DepositAddressDTO,
-      EXAMPLE_LITECOIN_DEPOSIT_ADDRESS_DTO
+      EXAMPLE_DEPOSIT_ADDRESS_DTO
     ),
   })
   @ApiOperation({
@@ -245,10 +226,7 @@ export class WalletsController {
 
   @Post("/:walletId/transfer")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(
-      TransferDTO,
-      EXAMPLE_LITECOIN_TRANSFER_DTO
-    ),
+    content: ApiResponseContentGenerator(TransferDTO, EXAMPLE_TRANSFER_DTO),
   })
   @ApiOperation({
     summary: "지갑에서 코인 전송하기",

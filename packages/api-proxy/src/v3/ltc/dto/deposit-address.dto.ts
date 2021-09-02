@@ -1,10 +1,10 @@
-import { DepositAddress } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
+import { DepositAddress } from "@haechi-labs/henesis-wallet-core/lib/ltc/wallet";
 import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_DEPOSIT_ADDRESS_DTO: DepositAddressDTO = {
   id: "94fd6a94ed199d660acf55e2f2943a7c",
-  name: "bit",
-  address: "2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm",
+  name: "lite",
+  address: "QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV",
   pub: "0x022bf2a47ce5027831a3587ecd9f2d0d1e590a227ea576f61598ee84405e0479c1",
   createdAt: "1620041696849",
 };
