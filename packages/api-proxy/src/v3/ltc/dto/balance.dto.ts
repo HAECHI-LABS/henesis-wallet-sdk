@@ -6,12 +6,12 @@ import {
 } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_BALANCE_DTO: BalanceDTO = {
-  coinType: "BTC",
-  amount: "0xDBE16A831",
-  spendableAmount: "0xDBE16A831",
-  aggregatedAmount: "0xDBE16A831",
-  name: "비트코인",
-  symbol: "BTC",
+  coinType: "LTC",
+  amount: "59023730737",
+  spendableAmount: "59023730737",
+  aggregatedAmount: "59023730737",
+  name: "라이트코인",
+  symbol: "LTC",
 };
 
 export class BalanceDTO {
@@ -22,21 +22,21 @@ export class BalanceDTO {
   coinType: string;
 
   @ApiModelProperty({
-    description: "총 잔액 (확정된 잔액) (단위: satoshi) (형식: 16진법)",
+    description: "총 잔액 (확정된 잔액) (단위: litoshi) (형식: 10진법)",
     example: EXAMPLE_BALANCE_DTO.amount,
   })
   amount: string;
 
   @ApiModelPropertyOptional({
     description:
-      "출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액) (단위: satoshi) (형식: 16진법)",
+      "출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액) (단위: litoshi) (형식: 10진법)",
     example: EXAMPLE_BALANCE_DTO.spendableAmount,
   })
   spendableAmount?: string;
 
   @ApiModelPropertyOptional({
     description:
-      "마스터 지갑의 잔액과 하위 입금 주소들의 잔액을 모두 합한 잔액 (= 마스터 지갑 잔액 + 입금 주소 1 잔액 + 입금 주소 2 잔액 + ...) (단위: satoshi) (형식: 16진법)",
+      "마스터 지갑의 잔액과 하위 입금 주소들의 잔액을 모두 합한 잔액 (= 마스터 지갑 잔액 + 입금 주소 1 잔액 + 입금 주소 2 잔액 + ...) (단위: litoshi) (형식: 10진법)",
     example: EXAMPLE_BALANCE_DTO.aggregatedAmount,
   })
   aggregatedAmount?: string;
@@ -56,12 +56,14 @@ export class BalanceDTO {
   static fromBalance(balance: Balance): BalanceDTO {
     return {
       coinType: balance.coinType,
-      amount: balance.amount ? BNConverter.bnToHexString(balance.amount) : null,
+      amount: balance.amount
+        ? BNConverter.bnToDecimalString(balance.amount)
+        : null,
       spendableAmount: balance.spendableAmount
-        ? BNConverter.bnToHexString(balance.spendableAmount)
+        ? BNConverter.bnToDecimalString(balance.spendableAmount)
         : null,
       aggregatedAmount: balance.aggregatedAmount
-        ? BNConverter.bnToHexString(balance.aggregatedAmount)
+        ? BNConverter.bnToDecimalString(balance.aggregatedAmount)
         : null,
       name: balance.name,
       symbol: balance.symbol,
