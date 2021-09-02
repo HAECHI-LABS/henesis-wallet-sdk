@@ -406,6 +406,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     signedMultiSigPayload: SignedMultiSigPayload,
     nft: Nft,
     tokenOnchainId: string,
+    to: string,
     otpCode?: string,
     gasPrice?: BN,
     gasLimit?: BN,
