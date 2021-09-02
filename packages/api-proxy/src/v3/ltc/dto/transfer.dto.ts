@@ -1,10 +1,10 @@
 import { TransactionDto, EXAMPLE_TRANSACTION_DTO } from "./transaction.dto";
-import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/btc/transfers";
+import { Transfer } from "@haechi-labs/henesis-wallet-core/lib/ltc/transfers";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 import {
   TransferStatus,
   TransferType,
-} from "@haechi-labs/henesis-wallet-core/lib/__generate__/btc";
+} from "@haechi-labs/henesis-wallet-core/lib/__generate__/ltc";
 import {
   ApiModelProperty,
   ApiModelPropertyOptional,
@@ -13,18 +13,18 @@ import {
 export const EXAMPLE_TRANSFER_DTO: TransferDTO = {
   transaction: EXAMPLE_TRANSACTION_DTO,
   walletId: "2d855c98bd183d14f7d9a1805327afff",
-  amount: "0x1",
+  amount: "1",
   status: TransferStatus.PENDING,
   id: "7074aaec177f02559e1b1c9e63816359",
   outputIndex: 0,
-  receivedAt: "2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm",
-  sendTo: "2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm",
+  receivedAt: "QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV",
+  sendTo: "QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV",
   withdrawalApprovalId: "7074aaec177f02559e1b1c9e63816359",
   type: TransferType.WITHDRAWAL,
   createdAt: "1620042252520",
   updatedAt: "1620042252520",
-  feeAmount: "0x2ee",
-  confirmation: "0x8a3b",
+  feeAmount: "750",
+  confirmation: "35387",
   metadata: "metadata",
 };
 
@@ -42,7 +42,7 @@ export class TransferDTO {
   walletId: string;
 
   @ApiModelProperty({
-    description: "전송할 암호화폐의 양 (단위: satoshi) (형식: 16진법)",
+    description: "전송할 암호화폐의 양 (단위: litoshi) (형식: 10진법)",
     example: EXAMPLE_TRANSFER_DTO.amount,
   })
   amount: string;
@@ -104,7 +104,7 @@ export class TransferDTO {
   updatedAt: string;
 
   @ApiModelPropertyOptional({
-    description: "사용된 수수료의 양 (단위: satoshi) (형식: 16진법)",
+    description: "사용된 수수료의 양 (단위: litoshi) (형식: 10진법)",
     example: EXAMPLE_TRANSFER_DTO.feeAmount,
   })
   feeAmount?: string;
@@ -126,12 +126,12 @@ export class TransferDTO {
       id: transfer.id,
       walletId: transfer.walletId,
       amount: transfer.amount
-        ? BNConverter.bnToHexString(transfer.amount)
+        ? BNConverter.bnToDecimalString(transfer.amount)
         : null,
       status: transfer.status,
       outputIndex: transfer.outputIndex,
       transaction: transfer.transaction
-        ? TransactionDto.fromBTCTransaction(transfer.transaction)
+        ? TransactionDto.fromTransaction(transfer.transaction)
         : null,
       receivedAt: transfer.receivedAt,
       sendTo: transfer.sendTo,
@@ -140,10 +140,10 @@ export class TransferDTO {
       createdAt: transfer.createdAt,
       updatedAt: transfer.updatedAt,
       feeAmount: transfer.feeAmount
-        ? BNConverter.bnToHexString(transfer.feeAmount)
+        ? BNConverter.bnToDecimalString(transfer.feeAmount)
         : null,
       confirmation: transfer.confirmation
-        ? BNConverter.bnToHexString(transfer.confirmation)
+        ? BNConverter.bnToDecimalString(transfer.confirmation)
         : null,
       metadata: transfer.metadata,
     } as TransferDTO;

@@ -30,7 +30,6 @@ import {
 } from "../../../decorators";
 import { EXAMPLE_ETHEREUM_WALLET_DTO, WalletDTO } from "../dto/wallet.dto";
 import {
-  EXAMPLE_ETHEREUM_PAGINATION_CONTRACT_CALLS_DTO,
   EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO,
   EXAMPLE_ETHEREUM_PAGINATION_NFT_TRANSFER_DTO,
   PaginationDTO,
@@ -84,7 +83,6 @@ import {
   WalletNotFoundException,
 } from "../dto/exceptions.dto";
 import { ReplaceTransactionRequestDTO } from "../transactions/dto/replace-transaction-request.dto";
-import { EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO } from "../../../v2/btc/dto/pagination.dto";
 import { TransferNftRequestDTO } from "./dto/transfer-nft-request.dto";
 import {
   EXAMPLE_ETHEREUM_NFT_BALANCE_DTO,

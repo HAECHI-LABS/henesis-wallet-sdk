@@ -338,6 +338,7 @@ components:
             - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
+            - BITCOIN_CASH
           type: string
           description: 블록체인 플랫폼
           example: ETHEREUM
@@ -497,6 +498,7 @@ components:
             - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
+            - BITCOIN_CASH
           type: string
           description: 블록체인 타입
           example: ETHEREUM
@@ -584,6 +586,7 @@ components:
             - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
+            - BITCOIN_CASH
           type: string
           description: 블록체인 타입
           example: ETHEREUM

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+
+## [3.3.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.2...v3.3.3) (2021-09-02)
+
+
+### Bug Fixes
+
+* fix deposit address id query param bug ([45f1a87](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/45f1a874b64f251612e707c47f3d7a5ed32ec643))
+* separate ltc and btc from api-proxy ([7490906](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/74909061e4a08cb3dd5cf8d76e2a45ad2be39449))
+
+
+
+
+
 ## [3.3.3-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.3-alpha.0...v3.3.3-alpha.1) (2021-09-02)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
