@@ -909,12 +909,6 @@ export interface CreateNftMultiSigTransactionRequest {
     metadata?: string;
     /**
      * 
-     * @type {SignedMultiSigPayloadDTO}
-     * @memberof CreateNftMultiSigTransactionRequest
-     */
-    signedMultiSigPayload: SignedMultiSigPayloadDTO;
-    /**
-     * 
      * @type {number}
      * @memberof CreateNftMultiSigTransactionRequest
      */
@@ -925,6 +919,18 @@ export interface CreateNftMultiSigTransactionRequest {
      * @memberof CreateNftMultiSigTransactionRequest
      */
     tokenOnchainId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateNftMultiSigTransactionRequest
+     */
+    toAddress: string;
+    /**
+     * 
+     * @type {SignedMultiSigPayloadDTO}
+     * @memberof CreateNftMultiSigTransactionRequest
+     */
+    signedMultiSigPayload: SignedMultiSigPayloadDTO;
     /**
      * 
      * @type {string}
@@ -2106,6 +2112,236 @@ export interface NftTokenDTO {
 /**
  * 
  * @export
+ * @interface NftTransferEventDTO
+ */
+export interface NftTransferEventDTO {
+    /**
+     * 
+     * @type {number}
+     * @memberof NftTransferEventDTO
+     */
+    id: number;
+    /**
+     * 
+     * @type {NftDTO}
+     * @memberof NftTransferEventDTO
+     */
+    nft: NftDTO;
+    /**
+     * 
+     * @type {NftTokenDTO}
+     * @memberof NftTransferEventDTO
+     */
+    token: NftTokenDTO;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    from: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    to: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    blockchain: string;
+    /**
+     * 
+     * @type {EventStatus}
+     * @memberof NftTransferEventDTO
+     */
+    status: EventStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    confirmation: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    metadata?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    walletId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    orgId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    masterWalletId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    transactionId?: string;
+    /**
+     * 
+     * @type {TransferType}
+     * @memberof NftTransferEventDTO
+     */
+    transferType: TransferType;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    blockHash?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    transactionHash?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    updatedAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventDTO
+     */
+    walletName?: string;
+    /**
+     * 
+     * @type {WalletType}
+     * @memberof NftTransferEventDTO
+     */
+    walletType?: WalletType;
+}
+/**
+ * 
+ * @export
+ * @interface NftTransferEventSearchCondition
+ */
+export interface NftTransferEventSearchCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    address?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    blockchain?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    status?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    fromAddress?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    toAddress?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    transactionHash?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    updatedAtGte?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    updatedAtLt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    walletId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    orgId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    masterWalletId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    transactionId?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof NftTransferEventSearchCondition
+     */
+    nftId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    tokenName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    tokenOnchainId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NftTransferEventSearchCondition
+     */
+    transferType?: string;
+}
+/**
+ * 
+ * @export
  * @interface NonceDTO
  */
 export interface NonceDTO {
@@ -2260,6 +2496,25 @@ export interface PaginationNftBalanceDTO {
      * @memberof PaginationNftBalanceDTO
      */
     results: Array<NftBalanceDTO>;
+}
+/**
+ * 
+ * @export
+ * @interface PaginationNftTransferEventDTO
+ */
+export interface PaginationNftTransferEventDTO {
+    /**
+     * 
+     * @type {PaginationMeta}
+     * @memberof PaginationNftTransferEventDTO
+     */
+    pagination: PaginationMeta;
+    /**
+     * 
+     * @type {Array<NftTransferEventDTO>}
+     * @memberof PaginationNftTransferEventDTO
+     */
+    results: Array<NftTransferEventDTO>;
 }
 /**
  * 
@@ -9862,6 +10117,53 @@ export const EthEventControllerApiAxiosParamCreator = function (configuration?: 
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {NftTransferEventSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNftTransferEvents1: async (pageable: Pageable, searchCondition: NftTransferEventSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getNftTransferEvents1.');
+            }
+            // verify required parameter 'searchCondition' is not null or undefined
+            if (searchCondition === null || searchCondition === undefined) {
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getNftTransferEvents1.');
+            }
+            const localVarPath = `/api/v2/eth/nft-transfer-events`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (searchCondition !== undefined) {
+                localVarQueryParameter['searchCondition'] = searchCondition;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
          * @param {ValueTransferEventSearchCondition} searchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9932,6 +10234,20 @@ export const EthEventControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {NftTransferEventSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getNftTransferEvents1(pageable: Pageable, searchCondition: NftTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationNftTransferEventDTO>> {
+            const localVarAxiosArgs = await EthEventControllerApiAxiosParamCreator(configuration).getNftTransferEvents1(pageable, searchCondition, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
          * @param {ValueTransferEventSearchCondition} searchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9965,6 +10281,16 @@ export const EthEventControllerApiFactory = function (configuration?: Configurat
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {NftTransferEventSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNftTransferEvents1(pageable: Pageable, searchCondition: NftTransferEventSearchCondition, options?: any): AxiosPromise<PaginationNftTransferEventDTO> {
+            return EthEventControllerApiFp(configuration).getNftTransferEvents1(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
          * @param {ValueTransferEventSearchCondition} searchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9992,6 +10318,18 @@ export class EthEventControllerApi extends BaseAPI {
      */
     public getCallEvents6(pageable: Pageable, specs: object, options?: any) {
         return EthEventControllerApiFp(this.configuration).getCallEvents6(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Pageable} pageable 
+     * @param {NftTransferEventSearchCondition} searchCondition 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthEventControllerApi
+     */
+    public getNftTransferEvents1(pageable: Pageable, searchCondition: NftTransferEventSearchCondition, options?: any) {
+        return EthEventControllerApiFp(this.configuration).getNftTransferEvents1(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -15834,6 +16172,53 @@ export const KlayEventControllerApiAxiosParamCreator = function (configuration?:
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {NftTransferEventSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNftTransferEvents: async (pageable: Pageable, searchCondition: NftTransferEventSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getNftTransferEvents.');
+            }
+            // verify required parameter 'searchCondition' is not null or undefined
+            if (searchCondition === null || searchCondition === undefined) {
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getNftTransferEvents.');
+            }
+            const localVarPath = `/api/v2/klay/nft-transfer-events`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (searchCondition !== undefined) {
+                localVarQueryParameter['searchCondition'] = searchCondition;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
          * @param {ValueTransferEventSearchCondition} searchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15904,6 +16289,20 @@ export const KlayEventControllerApiFp = function(configuration?: Configuration) 
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {NftTransferEventSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getNftTransferEvents(pageable: Pageable, searchCondition: NftTransferEventSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationNftTransferEventDTO>> {
+            const localVarAxiosArgs = await KlayEventControllerApiAxiosParamCreator(configuration).getNftTransferEvents(pageable, searchCondition, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
          * @param {ValueTransferEventSearchCondition} searchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15937,6 +16336,16 @@ export const KlayEventControllerApiFactory = function (configuration?: Configura
         /**
          * 
          * @param {Pageable} pageable 
+         * @param {NftTransferEventSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNftTransferEvents(pageable: Pageable, searchCondition: NftTransferEventSearchCondition, options?: any): AxiosPromise<PaginationNftTransferEventDTO> {
+            return KlayEventControllerApiFp(configuration).getNftTransferEvents(pageable, searchCondition, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Pageable} pageable 
          * @param {ValueTransferEventSearchCondition} searchCondition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15964,6 +16373,18 @@ export class KlayEventControllerApi extends BaseAPI {
      */
     public getCallEvents1(pageable: Pageable, specs: object, options?: any) {
         return KlayEventControllerApiFp(this.configuration).getCallEvents1(pageable, specs, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Pageable} pageable 
+     * @param {NftTransferEventSearchCondition} searchCondition 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayEventControllerApi
+     */
+    public getNftTransferEvents(pageable: Pageable, searchCondition: NftTransferEventSearchCondition, options?: any) {
+        return KlayEventControllerApiFp(this.configuration).getNftTransferEvents(pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
