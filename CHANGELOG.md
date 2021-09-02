@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.3-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.3-alpha.0...v3.3.3-alpha.1) (2021-09-02)
+
+
+### Features
+
+* add isActive props ([681ff82](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/681ff82cec00378d5fcb8dda0ed7f7b2b7eec381))
+
+
+
+
+
 ## [3.3.3-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.2...v3.3.3-alpha.0) (2021-08-31)
 
 
