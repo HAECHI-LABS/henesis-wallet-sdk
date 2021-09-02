@@ -656,7 +656,7 @@ export class WalletsController {
   })
   @ApiOperation({
     summary: "전체 NFT 입출금 목록 조회하기",
-    description: "모든 지갑의 NFT 입출금 내역을 조회합니다.",
+    description: "특정 지갑의 NFT 입출금 내역을 조회합니다.",
   })
   @ReadMeExtension()
   public async getNftTransfers(

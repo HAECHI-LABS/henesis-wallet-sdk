@@ -32,7 +32,7 @@ export const EXAMPLE_ETHEREUM_NFT_TRANSFER_DTO: NftTransferDTO = {
 
 export class NftTransferDTO {
   @ApiModelProperty({
-    description: "코인/토큰 입출금 내역의 ID",
+    description: "NFT 입출금 내역의 ID",
     example: EXAMPLE_ETHEREUM_NFT_TRANSFER_DTO.id,
   })
   id: number;
