@@ -11,7 +11,7 @@ export const EXAMPLE_KEY_DTO: KeyDTO = {
 
 export class KeyDTO {
   @ApiModelPropertyOptional({
-    description: "Key의 주소 (BTC 지갑은 값이 없습니다)",
+    description: "Key의 주소 (LTC 지갑은 값이 없습니다)",
     example: EXAMPLE_KEY_DTO.address,
   })
   address?: string;

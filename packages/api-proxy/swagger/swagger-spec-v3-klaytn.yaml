@@ -201,6 +201,7 @@ components:
             - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
+            - BITCOIN_CASH
           type: string
           description: 메인넷 종류
           example: ETHEREUM
@@ -396,6 +397,7 @@ components:
             - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
+            - BITCOIN_CASH
           type: string
           description: 메인넷 종류
           example: ETHEREUM
@@ -516,6 +518,7 @@ components:
             - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
+            - BITCOIN_CASH
           type: string
           description: 메인넷 종류
           example: ETHEREUM
@@ -609,6 +612,7 @@ components:
             - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
+            - BITCOIN_CASH
           type: string
           description: 메인넷 종류
           example: ETHEREUM

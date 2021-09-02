@@ -1,15 +1,7 @@
 import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import { TransfersService } from "./transfers.service";
-import {
-  EXAMPLE_LITECOIN_TRANSFER_DTO,
-  TransferDTO,
-} from "../../../v2/btc/dto/transfer.dto";
 import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
-import {
-  EXAMPLE_LITECOIN_PAGINATION_TRANSFER_DTO,
-  PaginationDTO,
-} from "../../../v2/btc/dto/pagination.dto";
 import {
   ApiPaginationResponse,
   ApiResponseContentGenerator,
@@ -29,8 +21,13 @@ import {
   QUERY_TRANSFERS_UPDATED_AT_GTE_OPTIONAL,
   QUERY_TRANSFERS_UPDATED_AT_LT_OPTIONAL,
   QUERY_TRANSFERS_WALLET_ID_OPTIONAL,
-} from "../../../v2/btc/dto/queries";
-import { PARAM_TRANSFER_ID } from "../../../v2/btc/dto/params";
+} from "../dto/queries";
+import { PARAM_TRANSFER_ID } from "../dto/params";
+import {
+  EXAMPLE_PAGINATION_TRANSFER_DTO,
+  PaginationDTO,
+} from "../dto/pagination.dto";
+import { EXAMPLE_TRANSFER_DTO, TransferDTO } from "../dto/transfer.dto";
 
 @Controller("transfers")
 @ApiTags("transfers")
@@ -44,7 +41,7 @@ export class TransfersController {
     summary: "입출금 내역 조회하기",
     description: "입출금 내역을 조회합니다.",
   })
-  @ApiPaginationResponse(TransferDTO, EXAMPLE_LITECOIN_PAGINATION_TRANSFER_DTO)
+  @ApiPaginationResponse(TransferDTO, EXAMPLE_PAGINATION_TRANSFER_DTO)
   @Queries(
     QUERY_TRANSFERS_TYPE_OPTIONAL,
     QUERY_TRANSFERS_WALLET_ID_OPTIONAL,
@@ -88,10 +85,7 @@ export class TransfersController {
 
   @Get("/:transferId")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(
-      TransferDTO,
-      EXAMPLE_LITECOIN_TRANSFER_DTO
-    ),
+    content: ApiResponseContentGenerator(TransferDTO, EXAMPLE_TRANSFER_DTO),
   })
   @ApiOperation({
     summary: "특정 입출금 내역 조회하기",
