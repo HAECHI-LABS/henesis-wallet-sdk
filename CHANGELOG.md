@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.3...v3.3.4-alpha.0) (2021-09-03)
+
+
+### Features
+
+* add bch interface ([8352bf5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8352bf5b2e28dc832a0bae4fbc24839a5c873b48))
+* add getNftTransferEvents api ([#566](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/566)) ([7238088](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7238088140be1eaff5dc39a52fe964997ad9c22a))
+* update org isActive -> inactivatedAt ([d8b65e9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d8b65e9b3af9238a8beb26885d06a80ba13491e1))
+
+
+
+## [3.3.3-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.3-alpha.0...v3.3.3-alpha.1) (2021-09-02)
+
+
+### Features
+
+* add isActive props ([681ff82](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/681ff82cec00378d5fcb8dda0ed7f7b2b7eec381))
+
+
+
+## [3.3.3-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.2...v3.3.3-alpha.0) (2021-08-31)
+
+
+### Features
+
+* add bch blockchain type ([78dc6d1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/78dc6d173421537a269179439605c7f678f53a55))
+
+
+
+
+
 ## [3.3.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.2...v3.3.3) (2021-09-02)
 
 
