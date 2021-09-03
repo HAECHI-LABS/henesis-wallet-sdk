@@ -26,6 +26,7 @@ export const transformBlockchainType = (
     LITECOIN: BlockchainType.LITECOIN,
     FILECOIN: BlockchainType.FILECOIN,
     BINANCE_SMART_CHAIN: BlockchainType.BINANCE_SMART_CHAIN,
+    BITCOIN_CASH: BlockchainType.BITCOIN_CASH,
   };
   return byBlockchain[blockchain];
 };

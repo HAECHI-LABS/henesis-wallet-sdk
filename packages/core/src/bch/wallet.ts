@@ -45,7 +45,7 @@ import { ApproveWithdrawal } from "../withdrawalApprovals";
 import {
   createDepositAddressApi,
   getDepositAddressApi,
-} from "../apis/btc/wallet";
+} from "../apis/bch/wallet";
 import {
   convertTransferDTO,
   encodeScriptSignature,
