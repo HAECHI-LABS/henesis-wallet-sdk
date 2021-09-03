@@ -8,7 +8,6 @@ import { BchTransaction, BchTransactionOutput } from "./wallet";
 import { BNConverter } from "../utils/common";
 import { Buffer } from "buffer";
 import CashAddress from "./cashAddress";
-import { add } from "../../lib/eth/eth-core-lib/nat";
 const cashAddress = new CashAddress();
 const typeforce = require("typeforce");
 const bip66 = require("bip66");

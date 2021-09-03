@@ -3,7 +3,7 @@ import { AxiosInstance } from "axios";
 import {
   WalletControllerApiFactory,
   CreateDepositAddressRequest,
-} from "../../__generate__/ltc";
+} from "../../__generate__/bch";
 import { Client } from "../../httpClient";
 
 const walletControllerApi = (client: Client) => {
