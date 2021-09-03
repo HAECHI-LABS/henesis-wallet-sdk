@@ -46,7 +46,11 @@ import {
   createDepositAddressApi,
   getDepositAddressApi,
 } from "../apis/btc/wallet";
-import { convertTransferDTO } from "./utils";
+import {
+  convertTransferDTO,
+  encodeScriptSignature,
+  toLegacyAddress,
+} from "./utils";
 
 export interface BchTransaction
   extends Omit<
@@ -174,7 +178,7 @@ export class BchMasterWallet extends Wallet<BchTransaction> {
     rawTransaction.outputs.forEach((output) => {
       tx.addOutput(
         address.toOutputScript(
-          output.to,
+          toLegacyAddress(output.to),
           this.env === Env.Prod ? networks.bitcoin : networks.testnet
         ),
         new BN(output.amount.slice(2), "hex").toNumber()
@@ -183,19 +187,23 @@ export class BchMasterWallet extends Wallet<BchTransaction> {
 
     const accountSigs = [];
     for (let i = 0; i < rawTransaction.inputs.length; i++) {
-      const sigHash: Buffer = tx.hashForSignature(
+      const sigHash: Buffer = tx.hashForWitnessV0(
         i,
         new Buffer(rawTransaction.inputs[i].redeemScript.slice(2), "hex"),
-        BitcoinTransaction.SIGHASH_ALL
+        rawTransaction.inputs[i].transactionOutput.amount.toNumber(),
+        // this is to use bitcoinjs-lib for bch. bitcoin cash use sigHash 'FORKID' and bitcoinjs-lib cannot translate 'FORKID'. bitcoin cash signing logic use hasType as 65 internally.
+        65
       );
       const hexHash: string = this.keychains.sign(
         this.data.accountKey,
         passphrase,
         sigHash.toString("hex")
       );
-      const accountSig = script.signature
-        .encode(Buffer.from(hexHash, "hex"), BitcoinTransaction.SIGHASH_ALL)
-        .toString("hex");
+      const accountSig = encodeScriptSignature(
+        Buffer.from(hexHash, "hex"),
+        // this is to use bitcoinjs-lib for bch. bitcoin cash use sigHash 'FORKID' and bitcoinjs-lib cannot translate 'FORKID'. bitcoin cash signing logic use hasType as 65 internally.
+        65
+      ).toString("hex");
       accountSigs.push(accountSig);
     }
 
