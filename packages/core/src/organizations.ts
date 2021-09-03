@@ -20,7 +20,7 @@ export interface Organization {
   name: string;
   secret: string;
   whitelistActivated: boolean;
-  isActive: boolean;
+  inactivatedAt: string | null;
   isNftSupported: boolean;
 }
 
