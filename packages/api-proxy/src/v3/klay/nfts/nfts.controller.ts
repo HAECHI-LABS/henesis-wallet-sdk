@@ -40,7 +40,8 @@ import { NftsService } from "./nfts.service";
   WalletDTO,
   BalanceDTO,
   TransactionDTO,
-  DepositAddressDTO
+  DepositAddressDTO,
+  NftNotFoundException
 )
 @AuthErrorResponses()
 @AuthHeaders()

@@ -52,7 +52,8 @@ import { SyncMetadataRequestDTO } from "./dto/sync-metadata-request.dto";
   WalletDTO,
   BalanceDTO,
   TransactionDTO,
-  DepositAddressDTO
+  DepositAddressDTO,
+  NftNotFoundException
 )
 @AuthErrorResponses()
 @AuthHeaders()

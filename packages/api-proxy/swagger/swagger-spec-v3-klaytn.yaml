@@ -201,7 +201,6 @@ components:
             - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
-            - BITCOIN_CASH
           type: string
           description: 메인넷 종류
           example: ETHEREUM
@@ -397,7 +396,6 @@ components:
             - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
-            - BITCOIN_CASH
           type: string
           description: 메인넷 종류
           example: ETHEREUM
@@ -518,7 +516,6 @@ components:
             - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
-            - BITCOIN_CASH
           type: string
           description: 메인넷 종류
           example: ETHEREUM
@@ -612,7 +609,6 @@ components:
             - LITECOIN
             - FILECOIN
             - BINANCE_SMART_CHAIN
-            - BITCOIN_CASH
           type: string
           description: 메인넷 종류
           example: ETHEREUM
@@ -955,6 +951,20 @@ components:
           $ref: '#/components/schemas/PaginationMetadata'
       required:
         - results
+    NftNotFoundException:
+      type: object
+      properties:
+        message:
+          type: string
+          description: API 에러 메시지
+          example: nft '2' does not exist
+        code:
+          type: number
+          description: 헤네시스 API 에러 코드
+          example: 4000
+      required:
+        - message
+        - code
     SyncMetadataRequestDTO:
       type: object
       properties:
