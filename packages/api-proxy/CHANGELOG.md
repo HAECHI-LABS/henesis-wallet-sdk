@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.0...v3.3.4-alpha.1) (2021-09-07)
+
+
+### Bug Fixes
+
+* add open api generate api extra model NftNotFoundException ([e944e8c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e944e8c4b6503cef7f2e9ddbdc3fa0e04a7fc9ce))
+
+
+
+
+
 ## [3.3.4-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.3...v3.3.4-alpha.0) (2021-09-03)
 
 
