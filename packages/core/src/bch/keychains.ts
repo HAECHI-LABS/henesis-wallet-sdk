@@ -1,11 +1,11 @@
 import { Key, Keychains, KeyWithPriv } from "../types";
 import { ECPair } from "bitcoinjs-lib";
-import { networks } from "bitcoinjs-lib";
 import sjcl from "../eth/eth-core-lib/sjcl";
 import crypto from "crypto";
 import { bytesToWord } from "../eth";
 import { BNConverter } from "../utils/common";
 import { Env } from "../sdk";
+import { bitcoinCashMainnet, bitcoinCashTestnet } from "./network";
 
 export class BchKeyChains implements Keychains {
   private env: Env;
@@ -16,7 +16,7 @@ export class BchKeyChains implements Keychains {
 
   create(password: string): KeyWithPriv {
     const ecPair = ECPair.makeRandom({
-      network: Env.Prod ? networks.bitcoin : networks.testnet,
+      network: Env.Prod ? bitcoinCashMainnet : bitcoinCashTestnet,
       compressed: true,
     });
 
@@ -95,7 +95,7 @@ export class BchKeyChains implements Keychains {
       Buffer.from(BNConverter.remove0x(decryptedKey), "hex"),
       {
         compressed: true,
-        network: Env.Prod ? networks.bitcoin : networks.testnet,
+        network: Env.Prod ? bitcoinCashMainnet : bitcoinCashTestnet,
       }
     );
   }

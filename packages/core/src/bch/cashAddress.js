@@ -1,4 +1,10 @@
 // this file ref: https://github.com/christroutner/bch-js/blob/master/src/address.js
+const {
+  bitcoinCashMainnet,
+  bitcoinCashRegTestnet,
+  bitcoinCashTestnet,
+} = require("./network");
+
 const Bitcoin = require("bitcoinjs-lib");
 // cashaddrjs ref: https://github.com/ealmansi/cashaddrjs/blob/master/src/cashaddr.js
 const cashaddr = require("cashaddrjs");
@@ -6,43 +12,13 @@ const cashaddr = require("cashaddrjs");
 const coininfo = {
   bitcoincash: {
     main: {
-      versions: {
-        bip32: {
-          private: 0x0488ade4,
-          public: 0x0488b21e,
-        },
-        bip44: 145,
-        private: 0x80,
-        public: 0x00,
-        scripthash: 0x05,
-        messagePrefix: "\x18BitcoinCash Signed Message:\n",
-      },
+      ...bitcoinCashMainnet,
     },
     test: {
-      versions: {
-        bip32: {
-          private: 0x04358394,
-          public: 0x043587cf,
-        },
-        bip44: 1,
-        private: 0xef,
-        public: 0x6f,
-        scripthash: 0xc4,
-        messagePrefix: "\x18BitcoinCash Signed Message:\n",
-      },
+      ...bitcoinCashTestnet,
     },
     regtest: {
-      versions: {
-        bip32: {
-          private: 0x04358394,
-          public: 0x043587cf,
-        },
-        bip44: 1,
-        private: 0xef,
-        public: 0x6f,
-        scripthash: 0xc4,
-        messagePrefix: "\x18BitcoinCash Signed Message:\n",
-      },
+      ...bitcoinCashRegTestnet,
     },
   },
 };
@@ -93,10 +69,10 @@ class Address {
     let version;
     switch (type) {
       case "P2PKH":
-        version = bitcoincash.versions.public;
+        version = bitcoincash.pubKeyHash;
         break;
       case "P2SH":
-        version = bitcoincash.versions.scripthash;
+        version = bitcoincash.scriptHash;
         break;
       default:
         throw `unsupported address type : ${type}`;
@@ -216,7 +192,6 @@ class Address {
     try {
       return this._encodeAddressFromHash160(address);
     } catch (error) {}
-
     throw new Error(`Unsupported address format : ${address}`);
   }
 
@@ -225,28 +200,28 @@ class Address {
     const info = coininfo.bitcoincash;
 
     switch (version) {
-      case info.main.versions.public:
+      case info.main.pubKeyHash:
         return {
           prefix: "bitcoincash",
           type: "P2PKH",
           hash: hash,
           format: "legacy",
         };
-      case info.main.versions.scripthash:
+      case info.main.scriptHash:
         return {
           prefix: "bitcoincash",
           type: "P2SH",
           hash: hash,
           format: "legacy",
         };
-      case info.test.versions.public:
+      case info.test.pubKeyHash:
         return {
           prefix: "bchtest",
           type: "P2PKH",
           hash: hash,
           format: "legacy",
         };
-      case info.test.versions.scripthash:
+      case info.test.scriptHash:
         return {
           prefix: "bchtest",
           type: "P2SH",

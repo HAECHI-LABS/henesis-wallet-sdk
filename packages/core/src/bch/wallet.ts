@@ -10,7 +10,6 @@ import {
 } from "../types";
 import {
   address,
-  networks,
   script,
   Transaction as BitcoinTransaction,
 } from "bitcoinjs-lib";
@@ -51,6 +50,7 @@ import {
   encodeScriptSignature,
   toLegacyAddress,
 } from "./utils";
+import {bitcoinCashMainnet, bitcoinCashTestnet} from "./network";
 
 export interface BchTransaction
   extends Omit<
@@ -179,7 +179,7 @@ export class BchMasterWallet extends Wallet<BchTransaction> {
       tx.addOutput(
         address.toOutputScript(
           toLegacyAddress(output.to),
-          this.env === Env.Prod ? networks.bitcoin : networks.testnet
+          this.env === Env.Prod ? bitcoinCashMainnet : bitcoinCashTestnet
         ),
         new BN(output.amount.slice(2), "hex").toNumber()
       );

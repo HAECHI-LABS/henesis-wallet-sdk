@@ -8,7 +8,7 @@ import { Env } from "../sdk";
 import { BlockchainType } from "../blockchain";
 import { Base64 } from "js-base64";
 import { BchRecoveryKit } from "./recoveryKit";
-import { address as BitcoinAddress, networks } from "bitcoinjs-lib";
+import { address as BitcoinAddress } from "bitcoinjs-lib";
 import {
   ActivateMasterWalletRequest,
   CreateInactiveMasterWalletRequest,
@@ -17,6 +17,7 @@ import {
 } from "../__generate__/btc";
 import { checkNullAndUndefinedParameter } from "..";
 import { InactiveWallet } from "../wallet";
+import {bitcoinCashMainnet, bitcoinCashTestnet} from "./network";
 
 export class BchWallets extends Wallets<BchMasterWallet> {
   constructor(env: Env, client: Client, keychains: Keychains) {
@@ -67,7 +68,7 @@ export class BchWallets extends Wallets<BchMasterWallet> {
     try {
       BitcoinAddress.toOutputScript(
         address,
-        this.env === Env.Prod ? networks.bitcoin : networks.testnet
+        this.env === Env.Prod ? bitcoinCashMainnet : bitcoinCashTestnet
       );
       return true;
     } catch (e) {
