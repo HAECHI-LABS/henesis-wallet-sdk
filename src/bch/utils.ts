@@ -7,8 +7,8 @@ import { Transfer, TransferInternal } from "./transfers";
 import { BchTransaction, BchTransactionOutput } from "./wallet";
 import { BNConverter } from "../utils/common";
 import { Buffer } from "buffer";
-import CashAddress from "./cashAddress";
-const cashAddress = new CashAddress();
+const Address = require("./cashAddress");
+const cashAddress = new Address();
 const typeforce = require("typeforce");
 const bip66 = require("bip66");
 
