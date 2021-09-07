@@ -1986,6 +1986,12 @@ export interface NftBalanceDTO {
     masterWalletId: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof NftBalanceDTO
+     */
+    isWithdrawalPending: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof NftBalanceDTO
      */
