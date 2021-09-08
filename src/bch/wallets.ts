@@ -118,7 +118,7 @@ export class BchWallets extends Wallets<BchMasterWallet> {
 
     return new BchRecoveryKit(
       name,
-      BlockchainType.BITCOIN,
+      BlockchainType.BITCOIN_CASH,
       masterWalletResponse.henesisKey,
       accountKey,
       backupKey,
@@ -173,7 +173,7 @@ export class BchWallets extends Wallets<BchMasterWallet> {
     return {
       id,
       name: walletName,
-      blockchain: BlockchainType.BITCOIN,
+      blockchain: BlockchainType.BITCOIN_CASH,
       henesisKey: {
         pub: masterWalletResponse.henesisKey.pub,
         keyFile: undefined,
