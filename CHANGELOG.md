@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.1...v3.3.4-alpha.2) (2021-09-08)
+
+
+### Features
+
+* add internal getNftTransferEvents method ([#572](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/572)) ([5b0c56c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5b0c56c5b48f83a3cf3fe4a35b96fb3fa4b16921))
+
+
+
+
+
 ## [3.3.4-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.0...v3.3.4-alpha.1) (2021-09-07)
 
 
