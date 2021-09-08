@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.3...v3.3.4-alpha.4) (2021-09-08)
+
+
+### Features
+
+* update btc -> bch blockchain type ([d4fe040](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d4fe0408881f7eb4116756954dd5332699b1e73a))
+
+
+
+
+
 ## [3.3.4-alpha.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.2...v3.3.4-alpha.3) (2021-09-08)
 
 
