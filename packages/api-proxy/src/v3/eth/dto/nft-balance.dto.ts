@@ -24,6 +24,7 @@ export const EXAMPLE_ETHEREUM_NFT_BALANCE_DTO: NftBalanceDTO = {
       },
     ],
   },
+  isWithdrawalPending: false,
 };
 
 export class NftBalanceDTO {
@@ -51,12 +52,19 @@ export class NftBalanceDTO {
   })
   tokenMetadata: object;
 
+  @ApiModelProperty({
+    description: "출금 중 여부",
+    example: EXAMPLE_ETHEREUM_NFT_BALANCE_DTO.isWithdrawalPending,
+  })
+  isWithdrawalPending: boolean;
+
   static fromNftBalance(nftBalance: NftBalance): NftBalanceDTO {
     return {
       nft: nftBalance.nft,
       tokenOnchainId: nftBalance.token.onchainId,
       tokenUri: nftBalance.token.uri,
       tokenMetadata: nftBalance.token.metadata,
+      isWithdrawalPending: nftBalance.isWithdrawalPending,
     };
   }
 }
