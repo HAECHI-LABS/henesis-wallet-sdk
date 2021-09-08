@@ -50,7 +50,7 @@ import {
   encodeScriptSignature,
   toLegacyAddress,
 } from "./utils";
-import {bitcoinCashMainnet, bitcoinCashTestnet} from "./network";
+import { bitcoinCashMainnet, bitcoinCashTestnet } from "./network";
 
 export interface BchTransaction
   extends Omit<

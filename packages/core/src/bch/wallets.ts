@@ -17,7 +17,7 @@ import {
 } from "../__generate__/btc";
 import { checkNullAndUndefinedParameter } from "..";
 import { InactiveWallet } from "../wallet";
-import {bitcoinCashMainnet, bitcoinCashTestnet} from "./network";
+import { bitcoinCashMainnet, bitcoinCashTestnet } from "./network";
 
 export class BchWallets extends Wallets<BchMasterWallet> {
   constructor(env: Env, client: Client, keychains: Keychains) {
