@@ -146,7 +146,7 @@ export class BchMasterWallet extends Wallet<BchTransaction> {
     keychains: Keychains,
     env: Env
   ) {
-    super(client, keychains, `/wallets/${data.id}`, BlockchainType.BITCOIN);
+    super(client, keychains, `/wallets/${data.id}`, BlockchainType.BITCOIN_CASH);
     this.data = data;
     this.env = env;
   }
@@ -446,7 +446,7 @@ export class BchMasterWallet extends Wallet<BchTransaction> {
     return {
       id,
       name: walletName,
-      blockchain: BlockchainType.BITCOIN,
+      blockchain: BlockchainType.BITCOIN_CASH,
       address,
       status,
       createdAt,
