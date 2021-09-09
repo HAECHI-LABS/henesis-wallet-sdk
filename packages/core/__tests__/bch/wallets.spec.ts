@@ -4,19 +4,19 @@ import { BchWallets } from "../../src/bch/wallets";
 import { BchKeyChains } from "../../src/bch/keychains";
 
 describe('BchWallets', () => {
-    it('should return false when address is not from testnet', async () => {
+    it('should return false when address is not from dev', async () => {
       const wallets = new BchWallets(
-        Env.Test,
+        Env.Dev,
         new HttpClient({
           accessToken: 'accessToken',
           secret: 'secret',
-          url: 'http://localhost:8080/api/v2/btc',
-          env: Env.Local,
+          url: 'http://localhost:8080/api/v2/bch',
+          env: Env.Dev,
         }) as any,
-        new BchKeyChains(Env.Test),
+        new BchKeyChains(Env.Dev),
       );
 
-      expect(wallets.verifyAddress('bchtest:pp7zq5cy7tz6xsteesfydnlrna47zxm4xq')).toEqual(false);
+      expect(wallets.verifyAddress('bchtest:pp7zq5cy7tz6xsteesfydnlrna47zxm4xq')).toEqual(true);
     });
   });
 });
