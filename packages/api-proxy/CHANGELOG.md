@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.4...v3.3.4-alpha.5) (2021-09-09)
+
+
+### Features
+
+* add NftBalance isWithdrawalPending ([#574](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/574)) ([9f7ae1d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9f7ae1d458a6a29d6e20311f3b86e882bd078eb7))
+
+
+
+
+
 ## [3.3.4-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.3...v3.3.4-alpha.4) (2021-09-08)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
