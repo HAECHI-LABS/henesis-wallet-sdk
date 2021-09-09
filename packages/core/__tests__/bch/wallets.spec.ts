@@ -1,9 +1,9 @@
 import { HttpClient } from '../../src/httpClient';
-import { BtcKeyChains } from '../../src/btc/keychains';
 import { Env } from "../../src";
 import { BchWallets } from "../../src/bch/wallets";
+import { BchKeyChains } from "../../src/bch/keychains";
 
-describe.skip('BchWallets', () => {
+describe('BchWallets', () => {
     it('should return false when address is not from testnet', async () => {
       const wallets = new BchWallets(
         Env.Test,
@@ -13,7 +13,7 @@ describe.skip('BchWallets', () => {
           url: 'http://localhost:8080/api/v2/btc',
           env: Env.Local,
         }) as any,
-        new BtcKeyChains(Env.Test),
+        new BchKeyChains(Env.Test),
       );
 
       expect(wallets.verifyAddress('bchtest:pp7zq5cy7tz6xsteesfydnlrna47zxm4xq')).toEqual(false);
