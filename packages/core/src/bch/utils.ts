@@ -63,7 +63,7 @@ export const convertTransferInternalDTO = (
   };
 };
 
-export const toLegacyAddress = (address: string) => {
+export const convertToLegacyAddress = (address: string) => {
   return cashAddress.toLegacyAddress(address);
 };
 

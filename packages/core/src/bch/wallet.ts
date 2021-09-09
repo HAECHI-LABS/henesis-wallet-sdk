@@ -48,7 +48,7 @@ import {
 import {
   convertTransferDTO,
   encodeScriptSignature,
-  toLegacyAddress,
+  convertToLegacyAddress,
 } from "./utils";
 import { bitcoinCashMainnet, bitcoinCashTestnet } from "./network";
 
@@ -183,7 +183,7 @@ export class BchMasterWallet extends Wallet<BchTransaction> {
     rawTransaction.outputs.forEach((output) => {
       tx.addOutput(
         address.toOutputScript(
-          toLegacyAddress(output.to),
+          convertToLegacyAddress(output.to),
           this.env === Env.Prod ? bitcoinCashMainnet : bitcoinCashTestnet
         ),
         new BN(output.amount.slice(2), "hex").toNumber()
