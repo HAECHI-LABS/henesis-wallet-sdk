@@ -324,7 +324,7 @@ export class BchMasterWallet extends Wallet<BchTransaction> {
           String(response.spendableBalance)
         ),
         coinType: "BCH",
-        name: "Bitcoin",
+        name: "Bitcoin Cash",
         decimals: 8,
       },
     ];
