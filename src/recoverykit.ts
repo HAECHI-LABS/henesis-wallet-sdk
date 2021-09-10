@@ -50,15 +50,19 @@ export class RecoveryKit {
       .fontSize(24)
       .fillColor("#060607")
       .text(this.name, 36, 36);
+
+    const blockchain = (this.blockchain as any)
+      .toString()
+      .split("_")
+      .map((str) => this.camelize(str))
+      .join(" ");
     // write wallet description
     docs
       .font("Helvetica")
       .fontSize(10)
       .fillColor("#3A4044")
       .text(
-        `Platform : ${this.env == Env.Test ? "Testnet" : ""} ${this.camelize(
-          this.blockchain as any
-        )}`,
+        `Platform : ${this.env == Env.Test ? "Testnet" : ""} ${blockchain}`,
         36,
         76
       )
