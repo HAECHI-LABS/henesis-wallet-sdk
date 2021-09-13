@@ -203,7 +203,8 @@ export enum Blockchain {
     BITCOIN = 'BITCOIN',
     FILECOIN = 'FILECOIN',
     BINANCESMARTCHAIN = 'BINANCE_SMART_CHAIN',
-    LITECOIN = 'LITECOIN'
+    LITECOIN = 'LITECOIN',
+    BITCOINCASH = 'BITCOIN_CASH'
 }
 
 /**
@@ -4269,12 +4270,12 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
         },
         /**
          * 
-         * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN'} blockchain 
+         * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH'} blockchain 
          * @param {string} address 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoinContract: async (blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN', address: string, options: any = {}): Promise<RequestArgs> => {
+        getCoinContract: async (blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH', address: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'blockchain' is not null or undefined
             if (blockchain === null || blockchain === undefined) {
                 throw new RequiredError('blockchain','Required parameter blockchain was null or undefined when calling getCoinContract.');
@@ -4688,12 +4689,12 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
         },
         /**
          * 
-         * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN'} blockchain 
+         * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH'} blockchain 
          * @param {string} address 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCoinContract(blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN', address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinContractDTO>> {
+        async getCoinContract(blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH', address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinContractDTO>> {
             const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).getCoinContract(blockchain, address, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -4886,12 +4887,12 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
         },
         /**
          * 
-         * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN'} blockchain 
+         * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH'} blockchain 
          * @param {string} address 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoinContract(blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN', address: string, options?: any): AxiosPromise<CoinContractDTO> {
+        getCoinContract(blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH', address: string, options?: any): AxiosPromise<CoinContractDTO> {
             return OrganizationControllerApiFp(configuration).getCoinContract(blockchain, address, options).then((request) => request(axios, basePath));
         },
         /**
@@ -5079,13 +5080,13 @@ export class OrganizationControllerApi extends BaseAPI {
 
     /**
      * 
-     * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN'} blockchain 
+     * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH'} blockchain 
      * @param {string} address 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public getCoinContract(blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN', address: string, options?: any) {
+    public getCoinContract(blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH', address: string, options?: any) {
         return OrganizationControllerApiFp(this.configuration).getCoinContract(blockchain, address, options).then((request) => request(this.axios, this.basePath));
     }
 
