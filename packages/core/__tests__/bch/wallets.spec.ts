@@ -12,7 +12,7 @@ describe('BchWallets', () => {
         new HttpClient({
           accessToken: 'accessToken',
           secret: 'secret',
-          url: 'http://localhost:8080/api/v2/btc',
+          url: 'http://localhost:8080/api/v2/bch',
           env: Env.Local,
         }) as any,
         new BchKeyChains(Env.Local),
@@ -27,7 +27,7 @@ describe('BchWallets', () => {
         new HttpClient({
           accessToken: 'accessToken',
           secret: 'secret',
-          url: 'http://localhost:8080/api/v2/btc',
+          url: 'http://localhost:8080/api/v2/bch',
           env: Env.Local,
         }) as any,
         new BchKeyChains(Env.Local),
