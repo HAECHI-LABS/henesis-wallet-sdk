@@ -2021,6 +2021,12 @@ export interface NftBalanceSearchCondition {
      * @memberof NftBalanceSearchCondition
      */
     tokenName?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof NftBalanceSearchCondition
+     */
+    isWithdrawalPending?: boolean;
 }
 /**
  * 
