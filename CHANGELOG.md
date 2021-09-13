@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4-alpha.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.6...v3.3.4-alpha.7) (2021-09-13)
+
+
+### Bug Fixes
+
+* return type ([cb73d80](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/cb73d80a5f2c76d3e71062b3bfb1839214b8eaf5))
+
+
+
+
+
 ## [3.3.4-alpha.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.5...v3.3.4-alpha.6) (2021-09-13)
 
 
