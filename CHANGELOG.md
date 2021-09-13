@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4-alpha.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.5...v3.3.4-alpha.6) (2021-09-13)
+
+
+### Bug Fixes
+
+* fix coin name typo of Bitcoin Cash in getBalance() method ([#577](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/577)) ([a25ef89](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a25ef89f3652b13026f5f9c213e9d84dc92c14df))
+* recovery kit blockchain name ([84b854b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/84b854bc4926f313d50fe27fd9a718d657652469))
+
+
+### Features
+
+* add address validation utils ([9db8ed2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9db8ed2ed986af3a64000d829d0769ee2613bfd0))
+
+
+
+
+
 ## [3.3.4-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.4...v3.3.4-alpha.5) (2021-09-09)
 
 
