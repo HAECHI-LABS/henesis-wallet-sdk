@@ -116,7 +116,7 @@ class Address {
     const cashAddress = cashaddr.encode(
       prefixString,
       decoded.type,
-      decoded.hash
+      new Uint8Array(decoded.hash)
     );
 
     if (prefix) return cashAddress;
