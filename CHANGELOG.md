@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4-alpha.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.7...v3.3.4-alpha.8) (2021-09-13)
+
+
+### Bug Fixes
+
+* update nft balance condition ([d09a7ce](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d09a7cecdbbeeb52c59333ef5397bfc8f5ca5f68))
+
+
+
+
+
 ## [3.3.4-alpha.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.6...v3.3.4-alpha.7) (2021-09-13)
 
 
