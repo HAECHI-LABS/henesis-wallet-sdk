@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4-alpha.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.8...v3.3.4-alpha.9) (2021-09-13)
+
+
+### Bug Fixes
+
+* cashaddr type ([6dae0f7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6dae0f7723be8a5545c6ea9bb5246688ff4bbb3d))
+
+
+### Features
+
+* add bch address test ([3ed23e1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3ed23e1c9cbd0d35e9a98f9a32fb8f00a811d4b0))
+* add bch testcode ([6189346](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6189346f38fa9103c585fb76ee854f6ca6359df1))
+* if same address, return null ([cf292fe](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/cf292feb5c7df4c9e3462c2f8ededcc9543f0c33))
+
+
+
+
+
 ## [3.3.4-alpha.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.7...v3.3.4-alpha.8) (2021-09-13)
 
 
