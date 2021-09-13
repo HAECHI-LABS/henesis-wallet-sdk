@@ -63,20 +63,38 @@ export const convertTransferInternalDTO = (
   };
 };
 
-export function convertToLegacyAddress(address: string): string {
-  return cashAddress.toLegacyAddress(address);
+export function convertToLegacyAddress(address: string): string | null {
+  try {
+    const legacyAddress = cashAddress.toLegacyAddress(address);
+    return legacyAddress === address ? null : legacyAddress;
+  } catch (error) {
+    return null;
+  }
 }
 
-export function convertToNewAddress(address: string): string {
-  return cashAddress.toCashAddress(address);
+export function convertToNewAddress(address: string): string | null {
+  try {
+    const newAddress = cashAddress.toCashAddress(address);
+    return newAddress === address ? null : newAddress;
+  } catch (error) {
+    return null;
+  }
 }
 
 export function isLegacyAddress(address: string): boolean {
-  return cashAddress.isLegacyAddress(address);
+  try {
+    return cashAddress.isLegacyAddress(address);
+  } catch (error) {
+    return false;
+  }
 }
 
 export function isNewAddress(address: string): boolean {
-  return cashAddress.isCashAddress(address);
+  try {
+    return cashAddress.isCashAddress(address);
+  } catch (error) {
+    return false;
+  }
 }
 
 // ref: https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/src/script_signature.js#L35
