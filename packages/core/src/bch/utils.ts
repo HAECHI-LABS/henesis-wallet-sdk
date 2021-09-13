@@ -71,11 +71,11 @@ export function convertToNewAddress(address: string): string {
   return cashAddress.toCashAddress(address);
 }
 
-export function isLegacyAddress(address: string): string {
+export function isLegacyAddress(address: string): boolean {
   return cashAddress.isLegacyAddress(address);
 }
 
-export function isNewAddress(address: string): string {
+export function isNewAddress(address: string): boolean {
   return cashAddress.isCashAddress(address);
 }
 
