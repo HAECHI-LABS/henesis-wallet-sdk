@@ -63,9 +63,21 @@ export const convertTransferInternalDTO = (
   };
 };
 
-export const convertToLegacyAddress = (address: string) => {
+export function convertToLegacyAddress(address: string): string {
   return cashAddress.toLegacyAddress(address);
-};
+}
+
+export function convertToNewAddress(address: string): string {
+  return cashAddress.toCashAddress(address);
+}
+
+export function isLegacyAddress(address: string): string {
+  return cashAddress.isLegacyAddress(address);
+}
+
+export function isNewAddress(address: string): string {
+  return cashAddress.isCashAddress(address);
+}
 
 // ref: https://github.com/bitcoinjs/bitcoinjs-lib/blob/master/src/script_signature.js#L35
 // this is to use bitcoinjs-lib for bch
