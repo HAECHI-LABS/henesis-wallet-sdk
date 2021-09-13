@@ -18,7 +18,7 @@ import {
 import { checkNullAndUndefinedParameter } from "..";
 import { InactiveWallet } from "../wallet";
 import { bitcoinCashMainnet, bitcoinCashTestnet } from "./network";
-import { convertToLegacyAddress } from "./utils";
+import { convertToLegacyAddress, isNewAddress } from "./utils";
 
 export class BchWallets extends Wallets<BchMasterWallet> {
   constructor(env: Env, client: Client, keychains: Keychains) {
@@ -67,8 +67,12 @@ export class BchWallets extends Wallets<BchMasterWallet> {
   verifyAddress(address: string): boolean {
     checkNullAndUndefinedParameter({ address });
     try {
+      let targetAddress = address;
+      if (isNewAddress(address)) {
+        targetAddress = convertToLegacyAddress(address);
+      }
       BitcoinAddress.toOutputScript(
-        convertToLegacyAddress(address),
+        targetAddress,
         this.env === Env.Prod ? bitcoinCashMainnet : bitcoinCashTestnet
       );
       return true;
