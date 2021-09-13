@@ -43,4 +43,40 @@ describe("bch address.spec.ts", () => {
       expect(isLegacyAddress("wrong address")).toBe(false);
     });
   });
+
+  describe("#convertToLegacyAddress", () => {
+    it("should return legacy address", () => {
+      expect(convertToLegacyAddress(mainnet.newAddress)).toStrictEqual(
+        mainnet.legacyAddress
+      );
+      expect(convertToLegacyAddress(testnet.newAddress)).toStrictEqual(
+        testnet.legacyAddress
+      );
+    });
+    it("should return null for legacy addresses", () => {
+      expect(convertToLegacyAddress(mainnet.legacyAddress)).toBeNull();
+      expect(convertToLegacyAddress(testnet.legacyAddress)).toBeNull();
+    });
+    it("should return null for wrong addresses", () => {
+      expect(convertToLegacyAddress("wrong address")).toBeNull();
+    });
+  });
+
+  describe("#convertToNewAddress", () => {
+    it("should return new address", () => {
+      expect(convertToNewAddress(mainnet.legacyAddress)).toStrictEqual(
+        mainnet.newAddress
+      );
+      expect(convertToNewAddress(testnet.legacyAddress)).toStrictEqual(
+        testnet.newAddress
+      );
+    });
+    it("should return null for new addresses", () => {
+      expect(convertToNewAddress(mainnet.newAddress)).toBeNull();
+      expect(convertToNewAddress(testnet.newAddress)).toBeNull();
+    });
+    it("should return null for wrong addresses", () => {
+      expect(convertToNewAddress("wrong address")).toBeNull();
+    });
+  });
 });
