@@ -19,6 +19,7 @@ import {
   BatchTransactionDTO,
   CreateMultiSigTransactionRequest,
   NftBalanceDTO,
+  NftBalanceSearchCondition,
   PaginationNftBalanceDTO,
   ReplaceTransactionRequest,
   ResendTransactionRequest,
@@ -42,10 +43,9 @@ export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
 };
 
-export interface NftBalancePaginationOptions extends PaginationOptions {
-  tokenOnchainId?: string;
-  tokenName?: string;
-}
+export interface NftBalancePaginationOptions
+  extends PaginationOptions,
+    NftBalanceSearchCondition {}
 
 export interface EthWalletData extends WalletData {
   blockchain: BlockchainType;
