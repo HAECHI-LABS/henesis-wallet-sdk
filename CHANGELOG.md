@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4-alpha.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.9...v3.3.4-alpha.10) (2021-09-13)
+
+
+### Bug Fixes
+
+* bch address validation ([518cb32](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/518cb322d2a5e85cc17bddaf1a316dcbec40e322))
+
+
+
+
+
 ## [3.3.4-alpha.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.8...v3.3.4-alpha.9) (2021-09-13)
 
 
