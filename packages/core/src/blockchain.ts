@@ -26,6 +26,7 @@ export const transformBlockchainType = (
     LITECOIN: BlockchainType.LITECOIN,
     FILECOIN: BlockchainType.FILECOIN,
     BINANCE_SMART_CHAIN: BlockchainType.BINANCE_SMART_CHAIN,
+    BITCOIN_CASH: BlockchainType.BITCOIN_CASH,
   };
   return byBlockchain[blockchain];
 };
@@ -37,4 +38,5 @@ export enum BlockchainType {
   LITECOIN = "LITECOIN",
   FILECOIN = "FILECOIN",
   BINANCE_SMART_CHAIN = "BINANCE_SMART_CHAIN",
+  BITCOIN_CASH = "BITCOIN_CASH",
 }

@@ -4,6 +4,8 @@ import { BNConverter } from "../utils/common";
 import {
   EthCallEvent,
   EthEventPaginationOptions,
+  EthNftTransferEvent,
+  EthNftTransferEventPaginationOptions,
   EthValueTransferEvent,
   EthValueTransferEventPaginationOptions,
 } from "../events";
@@ -15,6 +17,9 @@ import {
   SimplifiedTransactionInternalDTO,
   CallEventInternalDTO,
   PaginationCallEventInternalDTO,
+  PaginationNftTransferEventDTO,
+  NftTransferEventInternalDTO,
+  PaginationNftTransferEventInternalDTO,
 } from "../__generate__/eth";
 import { makeQueryString } from "../utils/url";
 import BN from "bn.js";
@@ -30,6 +35,12 @@ export interface ValueTransferEventInternal
     "amount" | "confirmation" | "transaction"
   > {
   amount: BN;
+  confirmation: BN;
+  transaction: SimplifiedTransactionInternal;
+}
+
+export interface NftTransferEventInternal
+  extends Omit<NftTransferEventInternalDTO, "confirmation" | "transaction"> {
   confirmation: BN;
   transaction: SimplifiedTransactionInternal;
 }
@@ -85,6 +96,25 @@ export class EthEvents {
     };
   }
 
+  async getNftTransferEvents(
+    options?: EthNftTransferEventPaginationOptions
+  ): Promise<Pagination<EthNftTransferEvent>> {
+    const queryString = makeQueryString(options);
+    const data = await this.client.get<
+      NoUndefinedField<PaginationNftTransferEventDTO>
+    >(`/nft-transfer-events${queryString ? `?${queryString}` : ""}`);
+
+    return {
+      pagination: data.pagination,
+      results: data.results.map((e) => {
+        return {
+          ...e,
+          confirmation: BNConverter.hexStringToBN(String(e.confirmation)),
+        };
+      }),
+    };
+  }
+
   async getInternalCallEvents(
     options?: EthEventPaginationOptions
   ): Promise<Pagination<CallEventInternal>> {
@@ -119,6 +149,26 @@ export class EthEvents {
           ...e,
           transaction: this.convertSimplifiedTransaction(e.transaction),
           amount: BNConverter.hexStringToBN(String(e.amount)),
+          confirmation: BNConverter.hexStringToBN(String(e.confirmation)),
+        };
+      }),
+    };
+  }
+
+  async getInternalNftTransferEvents(
+    options?: EthNftTransferEventPaginationOptions
+  ): Promise<Pagination<NftTransferEventInternal>> {
+    const queryString: string = makeQueryString(options);
+    const data = await this.client.get<PaginationNftTransferEventInternalDTO>(
+      `/internal/nft-transfer-events${queryString ? `?${queryString}` : ""}`
+    );
+
+    return {
+      pagination: data.pagination,
+      results: data.results.map((e) => {
+        return {
+          ...e,
+          transaction: this.convertSimplifiedTransaction(e.transaction),
           confirmation: BNConverter.hexStringToBN(String(e.confirmation)),
         };
       }),

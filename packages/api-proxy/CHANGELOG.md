@@ -3,6 +3,113 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.4-alpha.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.9...v3.3.4-alpha.10) (2021-09-13)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.8...v3.3.4-alpha.9) (2021-09-13)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.7...v3.3.4-alpha.8) (2021-09-13)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.6...v3.3.4-alpha.7) (2021-09-13)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.5...v3.3.4-alpha.6) (2021-09-13)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.4...v3.3.4-alpha.5) (2021-09-09)
+
+
+### Features
+
+* add NftBalance isWithdrawalPending ([#574](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/574)) ([9f7ae1d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9f7ae1d458a6a29d6e20311f3b86e882bd078eb7))
+
+
+
+
+
+## [3.3.4-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.3...v3.3.4-alpha.4) (2021-09-08)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.2...v3.3.4-alpha.3) (2021-09-08)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.1...v3.3.4-alpha.2) (2021-09-08)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.0...v3.3.4-alpha.1) (2021-09-07)
+
+
+### Bug Fixes
+
+* add open api generate api extra model NftNotFoundException ([e944e8c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e944e8c4b6503cef7f2e9ddbdc3fa0e04a7fc9ce))
+
+
+
+
+
+## [3.3.4-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.3...v3.3.4-alpha.0) (2021-09-03)
+
+
+### Features
+
+* add bch interface ([8352bf5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8352bf5b2e28dc832a0bae4fbc24839a5c873b48))
+* add getNftTransferEvents api ([#566](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/566)) ([7238088](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7238088140be1eaff5dc39a52fe964997ad9c22a))
+
+
+
+## [3.3.3-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.3-alpha.0...v3.3.3-alpha.1) (2021-09-02)
+
+
+
+## [3.3.3-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.2...v3.3.3-alpha.0) (2021-08-31)
+
+
+
+
+
+
 ## [3.3.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.2...v3.3.3) (2021-09-02)
 
 
@@ -10,6 +117,22 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * fix deposit address id query param bug ([45f1a87](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/45f1a874b64f251612e707c47f3d7a5ed32ec643))
 * separate ltc and btc from api-proxy ([7490906](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/74909061e4a08cb3dd5cf8d76e2a45ad2be39449))
+
+
+
+
+
+## [3.3.3-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.3-alpha.0...v3.3.3-alpha.1) (2021-09-02)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.3-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.2...v3.3.3-alpha.0) (2021-08-31)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
 
 
 

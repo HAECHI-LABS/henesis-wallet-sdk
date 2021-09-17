@@ -17,7 +17,7 @@ const testnet = {
   p2pkhAddress: "mipcBbFg9gMiCh81Kj8tqqdgoZub1ZJRfn",
 };
 
-describe("address.spec.ts", () => {
+describe("ltc address.spec.ts", () => {
   describe("#isNewAddress", () => {
     it("should return true for new addresses", () => {
       expect(isNewAddress(mainnet.newAddress)).toBe(true);

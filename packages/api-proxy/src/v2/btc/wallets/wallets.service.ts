@@ -26,13 +26,11 @@ export class WalletsService {
   ): Promise<Array<WalletDTO>> {
     const options = walletName ? { name: walletName } : {};
     const wallets = await sdk.btc.wallets.getMasterWallets(options);
-    return wallets.map(WalletDTO.fromBTCMasterWallet);
+    return wallets.map(WalletDTO.fromMasterWallet);
   }
 
   public async getWallet(sdk: SDK, walletId: string): Promise<WalletDTO> {
-    return WalletDTO.fromBTCMasterWallet(
-      await this.getWalletById(sdk, walletId)
-    );
+    return WalletDTO.fromMasterWallet(await this.getWalletById(sdk, walletId));
   }
 
   public async changeWalletName(

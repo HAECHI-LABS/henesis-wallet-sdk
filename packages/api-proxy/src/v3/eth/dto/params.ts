@@ -5,6 +5,21 @@ export const TICKER_OPTIONAL: ApiQueryOptions = {
   required: false,
   description: "코인의 기호",
 };
+export const NFT_ID_OPTIONAL: ApiQueryOptions = {
+  name: "nftId",
+  required: false,
+  description: "NFT 컨트랙트의 ID",
+};
+export const TOKEN_NAME_OPTIONAL: ApiQueryOptions = {
+  name: "tokenName",
+  required: false,
+  description: "NFT 토큰의 이름",
+};
+export const TOKEN_ONCHAIN_ID_OPTIONAL: ApiQueryOptions = {
+  name: "tokenOnchainId",
+  required: false,
+  description: "NFT 토큰의 온체인 ID",
+};
 export const DEPOSIT_ADDRESS_ID_OPTIONAL: ApiQueryOptions = {
   name: "depositAddressId",
   required: false,

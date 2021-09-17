@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
 import {
-  LtcMasterWallet,
   DepositAddressPaginationOptions,
+  LtcMasterWallet,
 } from "@haechi-labs/henesis-wallet-core/lib/ltc/wallet";
 import { object } from "../../../utils/object";
 import { changeUrlHost } from "../../../utils/pagination";
