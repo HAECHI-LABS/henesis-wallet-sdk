@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: LITECOIN
-  description: Henesis API Proxy - v3 - litecoin OpenAPI Documentation
+  title: BITCOIN-CASH
+  description: Henesis API Proxy - v3 - bitcoin-cash OpenAPI Documentation
   version: '1.0'
   contact: {}
 tags: []
@@ -15,10 +15,10 @@ components:
         address:
           type: string
           description: 해당 UTXO를 소유한 주소
-          example: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+          example: bitcoincash:qz9ew4c9l7rt0rqv6ced08k0wts6vxwuqvvuuv2szl
         amount:
           type: string
-          description: 'Output에 포함된 암호화폐의 양 (단위: litoshi) (형식: 10진법)'
+          description: 'Output에 포함된 암호화폐의 양 (단위: satoshi) (형식: 10진법)'
           example: '1'
         transactionId:
           type: string
@@ -59,10 +59,10 @@ components:
         blockNumber:
           type: string
           description: '트랜잭션이 담긴 블록 번호 (형식: 10진법) (트랜잭션 상태가 PENDING일 때는 존재하지 않습니다.)'
-          example: '0x1d85f3'
+          example: '1934835'
         amount:
           type: string
-          description: '전송할 암호화폐의 양 (단위: litoshi) (형식: 10진법)'
+          description: '전송할 암호화폐의 양 (단위: satoshi) (형식: 10진법)'
           example: '750'
         feeAmount:
           type: string
@@ -84,7 +84,7 @@ components:
         outputs:
           description: 트랜잭션을 통해 생성된 UTXO의 Output
           example: &ref_0
-            - address: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+            - address: bitcoincash:qz9ew4c9l7rt0rqv6ced08k0wts6vxwuqvvuuv2szl
               amount: '1'
               transactionId: beb70cf0b90afb6683ece78e0dfb4a140cf498310b833eea8092b5edd271e9c3
               outputIndex: 0
@@ -109,7 +109,7 @@ components:
           example: &ref_1
             id: beb70cf0b90afb6683ece78e0dfb4a140cf498310b833eea8092b5edd271e9c3
             transactionHash: 612f7cf11aeec9441a8758781b5549fc720500023f663e118b14ee2b712d216c
-            blockNumber: '0x1d85f3'
+            blockNumber: '1934835'
             amount: '750'
             feeAmount: '750'
             createdAt: '1620042742913'
@@ -125,7 +125,7 @@ components:
           example: 2d855c98bd183d14f7d9a1805327afff
         amount:
           type: string
-          description: '전송할 암호화폐의 양 (단위: litoshi) (형식: 10진법)'
+          description: '전송할 암호화폐의 양 (단위: satoshi) (형식: 10진법)'
           example: '1'
         status:
           enum:
@@ -151,11 +151,11 @@ components:
         receivedAt:
           type: string
           description: 받는 주소
-          example: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+          example: bitcoincash:qz9ew4c9l7rt0rqv6ced08k0wts6vxwuqvvuuv2szl
         sendTo:
           type: string
           description: 보내는 주소
-          example: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+          example: bitcoincash:qz9ew4c9l7rt0rqv6ced08k0wts6vxwuqvvuuv2szl
         withdrawalApprovalId:
           type: string
           description: 출금 한도를 초과할 경우 생성된 출금 요청의 ID
@@ -177,7 +177,7 @@ components:
           example: '1620042252520'
         feeAmount:
           type: string
-          description: '사용된 수수료의 양 (단위: litoshi) (형식: 10진법)'
+          description: '사용된 수수료의 양 (단위: satoshi) (형식: 10진법)'
           example: '750'
         confirmation:
           type: string
@@ -231,7 +231,7 @@ components:
       properties:
         address:
           type: string
-          description: Key의 주소 (LTC 지갑은 값이 없습니다)
+          description: Key의 주소 (BCH 지갑은 값이 없습니다)
           example: undefined
         pub:
           type: string
@@ -254,11 +254,11 @@ components:
         name:
           type: string
           description: 지갑 이름
-          example: litecoin-wallet
+          example: bitcoincash-wallet
         address:
           type: string
           description: 지갑 주소
-          example: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+          example: bitcoincash:qz9ew4c9l7rt0rqv6ced08k0wts6vxwuqvvuuv2szl
         encryptionKey:
           type: string
           description: 지갑 비밀번호를 복구하기 위해, 암호화하는 데에 쓰인 키
@@ -311,29 +311,29 @@ components:
         coinType:
           type: string
           description: 암호화폐 타입
-          example: LTC
+          example: BCH
         amount:
           type: string
-          description: '총 잔액 (확정된 잔액) (단위: litoshi) (형식: 10진법)'
+          description: '총 잔액 (확정된 잔액) (단위: satoshi) (형식: 10진법)'
           example: '59023730737'
         spendableAmount:
           type: string
-          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액) (단위: litoshi) (형식: 10진법)'
+          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액) (단위: satoshi) (형식: 10진법)'
           example: '59023730737'
         aggregatedAmount:
           type: string
           description: >-
             마스터 지갑의 잔액과 하위 입금 주소들의 잔액을 모두 합한 잔액 (= 마스터 지갑 잔액 + 입금 주소 1 잔액 + 입금
-            주소 2 잔액 + ...) (단위: litoshi) (형식: 10진법)
+            주소 2 잔액 + ...) (단위: satoshi) (형식: 10진법)
           example: '59023730737'
         name:
           type: string
           description: 암호화폐 이름
-          example: 라이트코인
+          example: 비트코인캐시
         symbol:
           type: string
           description: 암호화폐 심볼 (ticker)
-          example: LTC
+          example: BCH
       required:
         - coinType
         - amount
@@ -354,7 +354,7 @@ components:
         name:
           type: string
           description: 입금 주소 이름
-          example: ltc-depositAddress
+          example: bch-depositAddress
       required:
         - name
     DepositAddressDTO:
@@ -367,11 +367,11 @@ components:
         name:
           type: string
           description: 입금 주소 이름
-          example: lite
+          example: cash
         address:
           type: string
           description: 입금 주소
-          example: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+          example: bitcoincash:qz9ew4c9l7rt0rqv6ced08k0wts6vxwuqvvuuv2szl
         pub:
           type: string
           description: 입금 주소 공개키
@@ -403,10 +403,10 @@ components:
         to:
           type: string
           description: 받을 주소
-          example: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+          example: bitcoincash:qz9ew4c9l7rt0rqv6ced08k0wts6vxwuqvvuuv2szl
         amount:
           type: string
-          description: '보낼 금액 (단위: litoshi) (10진법)'
+          description: '보낼 금액 (단위: satoshi) (10진법)'
           example: '15'
         passphrase:
           type: string
@@ -414,7 +414,7 @@ components:
           example: passphrase
         feeRate:
           type: string
-          description: '트랜잭션 byte당 지불할 fee 가격 (단위: litoshi) (10진범)'
+          description: '트랜잭션 byte당 지불할 fee 가격 (단위: satoshi) (10진범)'
           example: '219'
         metadata:
           type: string
@@ -467,9 +467,9 @@ components:
         - message
         - code
 paths:
-  /api/v3/litecoin/transfers:
+  /api/v3/bitcoin-cash/transfers:
     get:
-      operationId: litecoin-TransfersController_getTransfers
+      operationId: bitcoin-cash-TransfersController_getTransfers
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -557,8 +557,8 @@ paths:
                 $ref: '#/components/schemas/GetManyResponseForTransferDTO'
               example:
                 pagination: &ref_16
-                  nextUrl: http://localhost:3000/api/v3/ltc/transfers?page=2
-                  previousUrl: http://localhost:3000/api/v3/ltc/transfers?page=1
+                  nextUrl: http://localhost:3000/api/v3/bch/transfers?page=2
+                  previousUrl: http://localhost:3000/api/v3/bch/transfers?page=1
                   totalCount: 5
                 results:
                   - &ref_4
@@ -568,8 +568,8 @@ paths:
                     status: PENDING
                     id: 7074aaec177f02559e1b1c9e63816359
                     outputIndex: 0
-                    receivedAt: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
-                    sendTo: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+                    receivedAt: bitcoincash:qz9ew4c9l7rt0rqv6ced08k0wts6vxwuqvvuuv2szl
+                    sendTo: bitcoincash:qz9ew4c9l7rt0rqv6ced08k0wts6vxwuqvvuuv2szl
                     withdrawalApprovalId: 7074aaec177f02559e1b1c9e63816359
                     type: WITHDRAWAL
                     createdAt: '1620042252520'
@@ -602,9 +602,9 @@ paths:
                     code: 4008
       tags: &ref_6
         - transfers
-  /api/v3/litecoin/transfers/{transferId}:
+  /api/v3/bitcoin-cash/transfers/{transferId}:
     get:
-      operationId: litecoin-TransfersController_getTransfer
+      operationId: bitcoin-cash-TransfersController_getTransfer
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -634,9 +634,9 @@ paths:
           description: ''
         '401': *ref_5
       tags: *ref_6
-  /api/v3/litecoin/wallets:
+  /api/v3/bitcoin-cash/wallets:
     get:
-      operationId: litecoin-WalletsController_getWallets
+      operationId: bitcoin-cash-WalletsController_getWallets
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -677,8 +677,8 @@ paths:
               example:
                 - &ref_13
                   id: cce4f485764767f256155390873668b3
-                  name: litecoin-wallet
-                  address: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+                  name: bitcoincash-wallet
+                  address: bitcoincash:qz9ew4c9l7rt0rqv6ced08k0wts6vxwuqvvuuv2szl
                   encryptionKey: >-
                     b72355635b2f8db7d603a73gd37r2460e28d93ad42df6ba85fff4b18fe374ae3
                   createdAt: '1599116198762'
@@ -706,9 +706,9 @@ paths:
                   value: *ref_10
       tags: &ref_15
         - wallets
-  /api/v3/litecoin/wallets/{walletId}:
+  /api/v3/bitcoin-cash/wallets/{walletId}:
     get:
-      operationId: litecoin-WalletsController_getWallet
+      operationId: bitcoin-cash-WalletsController_getWallet
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -738,9 +738,9 @@ paths:
           description: ''
         '401': *ref_14
       tags: *ref_15
-  /api/v3/litecoin/wallets/{walletId}/name:
+  /api/v3/bitcoin-cash/wallets/{walletId}/name:
     patch:
-      operationId: litecoin-WalletsController_changeWalletName
+      operationId: bitcoin-cash-WalletsController_changeWalletName
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -773,9 +773,9 @@ paths:
           description: ''
         '401': *ref_14
       tags: *ref_15
-  /api/v3/litecoin/wallets/{walletId}/balance:
+  /api/v3/bitcoin-cash/wallets/{walletId}/balance:
     get:
-      operationId: litecoin-WalletsController_getWalletBalance
+      operationId: bitcoin-cash-WalletsController_getWalletBalance
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -802,18 +802,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
               example:
-                - coinType: LTC
+                - coinType: BCH
                   amount: '59023730737'
                   spendableAmount: '59023730737'
                   aggregatedAmount: '59023730737'
-                  name: 라이트코인
-                  symbol: LTC
+                  name: 비트코인캐시
+                  symbol: BCH
           description: ''
         '401': *ref_14
       tags: *ref_15
-  /api/v3/litecoin/wallets/{walletId}/deposit-addresses:
+  /api/v3/bitcoin-cash/wallets/{walletId}/deposit-addresses:
     post:
-      operationId: litecoin-WalletsController_createDepositAddress
+      operationId: bitcoin-cash-WalletsController_createDepositAddress
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -847,8 +847,8 @@ paths:
                 $ref: '#/components/schemas/DepositAddressDTO'
               example: &ref_17
                 id: 94fd6a94ed199d660acf55e2f2943a7c
-                name: lite
-                address: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+                name: cash
+                address: bitcoincash:qz9ew4c9l7rt0rqv6ced08k0wts6vxwuqvvuuv2szl
                 pub: >-
                   0x022bf2a47ce5027831a3587ecd9f2d0d1e590a227ea576f61598ee84405e0479c1
                 createdAt: '1620041696849'
@@ -856,7 +856,7 @@ paths:
         '401': *ref_14
       tags: *ref_15
     get:
-      operationId: litecoin-WalletsController_getDepositAddresses
+      operationId: bitcoin-cash-WalletsController_getDepositAddresses
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -919,9 +919,9 @@ paths:
           description: ''
         '401': *ref_14
       tags: *ref_15
-  /api/v3/litecoin/wallets/{walletId}/deposit-addresses/{depositAddressId}:
+  /api/v3/bitcoin-cash/wallets/{walletId}/deposit-addresses/{depositAddressId}:
     get:
-      operationId: litecoin-WalletsController_getDepositAddress
+      operationId: bitcoin-cash-WalletsController_getDepositAddress
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -957,9 +957,9 @@ paths:
           description: ''
         '401': *ref_14
       tags: *ref_15
-  /api/v3/litecoin/wallets/{walletId}/transfer:
+  /api/v3/bitcoin-cash/wallets/{walletId}/transfer:
     post:
-      operationId: litecoin-WalletsController_transfer
+      operationId: bitcoin-cash-WalletsController_transfer
       x-readme:
         explorer-enabled: false
         samples-languages:
@@ -991,7 +991,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransferDTO'
-              example: *ref_4
+              example: *ref_1
           description: ''
         '201':
           description: ''
