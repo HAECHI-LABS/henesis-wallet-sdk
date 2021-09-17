@@ -1,6 +1,6 @@
 {
   "name": "@haechi-labs/henesis-wallet-api-proxy",
-  "version": "3.3.4-alpha.10",
+  "version": "3.4.0",
   "description": "henesis wallet api proxy",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
@@ -37,7 +37,7 @@
     "preBootstrap:windows": "if exist node_modules rmdir /q /s node_modules"
   },
   "dependencies": {
-    "@haechi-labs/henesis-wallet-core": "^3.3.4-alpha.10",
+    "@haechi-labs/henesis-wallet-core": "^3.4.0",
     "@nestjs/common": "^7.6.15",
     "@nestjs/core": "^7.6.15",
     "@nestjs/platform-express": "^7.6.15",

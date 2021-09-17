@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.10...v3.4.0) (2021-09-17)
+
+
+### Bug Fixes
+
+* add bitcoin-cash endpoint to API proxy ([#583](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/583)) ([1462dbf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1462dbfda36f7eeea54e1ecc84e886bb7eab739d))
+
+
+
+
+
 ## [3.3.4-alpha.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.9...v3.3.4-alpha.10) (2021-09-13)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
