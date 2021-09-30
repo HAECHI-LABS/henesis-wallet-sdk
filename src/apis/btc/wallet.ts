@@ -1,13 +1,14 @@
 import _ from "lodash";
 import { AxiosInstance } from "axios";
 import {
-  WalletControllerApiFactory,
   CreateDepositAddressRequest,
-} from "../../__generate__/btc/api";
+  WalletControllerApiFactory,
+} from "../../__generate__/btc";
 import { Client } from "../../httpClient";
 
 const walletControllerApi = (client: Client) => {
   const apiClient: AxiosInstance = _.get(client, ["apiClient"]);
+  // eslint-disable-next-line new-cap
   return WalletControllerApiFactory(undefined, "", apiClient);
 };
 
@@ -20,7 +21,7 @@ export const createDepositAddressApi = async ({
   walletId: string;
   request: CreateDepositAddressRequest;
 }) => {
-  const response = await walletControllerApi(client).createDepositAddress(
+  const response = await walletControllerApi(client).createDepositAddress2(
     walletId,
     request
   );
@@ -36,7 +37,7 @@ export const getDepositAddressApi = async ({
   walletId: string;
   depositAddressId: string;
 }) => {
-  const response = await walletControllerApi(client).getDepositAddress(
+  const response = await walletControllerApi(client).getDepositAddress2(
     walletId,
     depositAddressId
   );

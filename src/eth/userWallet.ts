@@ -8,13 +8,16 @@ import {
   BalanceDTO,
   ChangeWalletNameRequest,
 } from "../__generate__/eth";
-import _ from "lodash";
 import {
   EthWalletData,
   EthLikeWallet,
   EthMasterWalletData,
+  EthTransaction,
 } from "./abstractWallet";
 import { convertWalletStatus } from "../wallet";
+import { Nft } from "./nft";
+import BN from "bn.js";
+import { SignedMultiSigPayload } from "./transactions";
 
 export const transformUserWalletData = (
   data: UserWalletDTO
@@ -125,5 +128,31 @@ export class EthUserWallet extends EthLikeWallet {
 
   updateAccountKey(key: Key) {
     throw new Error("unimplemented method");
+  }
+
+  // TODO: Implement me! (at the 2nd NFT development step)
+  async transferNft(
+    nft: number | Nft,
+    tokenOnchainId: string,
+    to: string,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    throw new Error("implement me!");
+  }
+  async sendNftTransaction(
+    signedMultiSigPayload: SignedMultiSigPayload,
+    nft: Nft,
+    tokenOnchainId: string,
+    to: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    throw new Error("implement me!");
   }
 }

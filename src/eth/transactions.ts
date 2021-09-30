@@ -1,5 +1,5 @@
 import * as BN from "bn.js";
-import { BlockchainType, transformBlockchainType } from "../blockchain";
+import { BlockchainType } from "../blockchain";
 import { Pagination, PaginationOptions, Timestamp } from "../types";
 import { Client } from "../httpClient";
 import { makeQueryString } from "../utils/url";
