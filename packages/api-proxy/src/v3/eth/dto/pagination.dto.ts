@@ -16,6 +16,7 @@ import {
 } from "./transaction.dto";
 import {
   DepositAddressDTO,
+  EXAMPLE_BINANCE_SMART_CHAIN_DEPOSIT_ADDRESS_DTO,
   EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO,
 } from "./deposit-address.dto";
 import {

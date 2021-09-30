@@ -5,7 +5,7 @@ import {
   PathParams,
   ReadMeExtension,
 } from "../../../decorators";
-import { CoinsService } from "../../eth/coins/coins.service";
+import { CoinsService } from "./coins.service";
 import { Get, Param, Query, Request } from "@nestjs/common";
 import {
   ApiBadRequestResponse,
