@@ -19,6 +19,11 @@ export const EXAMPLE_ETHEREUM_CONTRACT_CALLS_DTO: ContractCallsDTO = {
   blockchain: BlockchainType.ETHEREUM,
 };
 
+export const EXAMPLE_BINANCE_SMART_CHAIN_CALLS_DTO: ContractCallsDTO = {
+  ...EXAMPLE_ETHEREUM_CONTRACT_CALLS_DTO,
+  blockchain: BlockchainType.BINANCE_SMART_CHAIN,
+};
+
 export class ContractCallsDTO {
   @ApiModelProperty({
     description: "스마트 컨트랙트 호출 내역의 ID",
