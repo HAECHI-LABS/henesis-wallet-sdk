@@ -1,31 +1,27 @@
 import { Client } from "./httpClient";
 import { Pagination, PaginationOptions, Secret } from "./types";
-import { Account, AccountWithIps, Role } from "./accounts";
+import { Account, Role } from "./accounts";
 import {
-  OrganizationDTO,
-  OrgAccountDTO,
-  CreateSecretResponse,
-  AccountDTO,
+  ActivateAllowedIpsRequest,
   AllowedIpDTO,
   CreateAllowedIpRequest,
-  PatchAllowedIpLabelRequest,
+  CreateSecretResponse,
   DeleteAllowedIpRequest,
-  ActivateAllowedIpsRequest,
   InactivateAllowedIpsRequest,
+  OrgAccountDTO,
+  OrganizationDTO,
   PaginationAllowedIpDTO,
-  CreateCoinListingRequestRequest,
-  CoinListingRequestDTO,
-  RejectCoinListingRequestRequest,
-  CoinContractDTO,
+  PatchAllowedIpLabelRequest,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
-import { BlockchainType, transformBlockchainType } from "./blockchain";
 
 export interface Organization {
   id: string;
   name: string;
   secret: string;
   whitelistActivated: boolean;
+  inactivatedAt: string | null;
+  isNftSupported: boolean;
 }
 
 export interface AllowedIp {

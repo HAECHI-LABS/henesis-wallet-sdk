@@ -48,6 +48,7 @@ export class CallEventDTO extends EventDTO {
       fromAddress: event.fromAddress,
       toAddress: event.toAddress,
       data: event.data,
+      metadata: event.metadata,
     };
   }
 }

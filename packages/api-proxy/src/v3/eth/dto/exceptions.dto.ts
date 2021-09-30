@@ -39,6 +39,11 @@ export const EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO: WalletNotFoundException = {
   code: 4000,
 };
 
+export const EXAMPLE_NFT_NOT_FOUND_EXCEPTION_DTO: NftNotFoundException = {
+  message: "nft '2' does not exist",
+  code: 4000,
+};
+
 export const EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO: NoWalletNameException = {
   message: "wallet name should not be empty",
   code: 4000,
@@ -144,6 +149,20 @@ export class WalletNotFoundException {
   @ApiModelProperty({
     description: "헤네시스 API 에러 코드",
     example: EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO.code,
+  })
+  code: number;
+}
+
+export class NftNotFoundException {
+  @ApiModelProperty({
+    description: "API 에러 메시지",
+    example: EXAMPLE_NFT_NOT_FOUND_EXCEPTION_DTO.message,
+  })
+  message: string;
+
+  @ApiModelProperty({
+    description: "헤네시스 API 에러 코드",
+    example: EXAMPLE_NFT_NOT_FOUND_EXCEPTION_DTO.code,
   })
   code: number;
 }

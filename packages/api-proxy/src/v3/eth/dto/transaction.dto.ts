@@ -2,7 +2,10 @@ import { Transaction } from "@haechi-labs/henesis-wallet-core";
 import { EthTransaction } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
 import { TransactionStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
-import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import {
+  ApiModelProperty,
+  ApiModelPropertyOptional,
+} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_ETHEREUM_TRANSACTION_DTO: TransactionDTO = {
   id: "b549bfaaa74d1c4244ecc655738b1984",
@@ -40,18 +43,18 @@ export class TransactionDTO {
   })
   blockchain: BlockchainType;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description:
       "트랜잭션 해시 (트랜잭션 상태가 REQUESTED일 때는 존재하지 않습니다)",
     example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.hash,
   })
-  hash: string;
+  hash?: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "트랜잭션 전송 시 발생한 에러",
     example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.error,
   })
-  error: string;
+  error?: string;
 
   @ApiModelProperty({
     description: "트랜잭션 상태",
@@ -59,11 +62,11 @@ export class TransactionDTO {
   })
   status: TransactionStatus;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "트랜잭션 수수료",
     example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.fee,
   })
-  fee: string;
+  fee?: string;
 
   @ApiModelProperty({
     description: "트랜잭션 생성 시간 (형식: ms, UNIX time)",

@@ -1,3 +1,7 @@
+/*
+ * references
+ * - https://github.com/Zondax/filecoin-signing-tools/blob/master/signer-npm/js/src/utils.js
+ */
 const blake = require("blakejs");
 const base32Decode = require("base32-decode");
 const base32Encode = require("base32-encode");
@@ -14,6 +18,13 @@ const {
 const { ProtocolIndicator } = require("./constants");
 
 const CID_PREFIX = Buffer.from([0x01, 0x71, 0xa0, 0xe4, 0x02, 0x20]);
+
+function getCID(message) {
+  const blakeCtx = blake.blake2bInit(32);
+  blake.blake2bUpdate(blakeCtx, message);
+  const hash = Buffer.from(blake.blake2bFinal(blakeCtx));
+  return Buffer.concat([CID_PREFIX, hash]);
+}
 
 function getDigest(message) {
   // digest = blake2-256( prefix + blake2b-256(tx) )
@@ -94,6 +105,10 @@ function tryToPrivateKeyBuffer(privateKey) {
     if (privateKey.slice(-1) === "=") {
       privateKey = Buffer.from(privateKey, "base64");
     } else {
+      if (privateKey.slice(0, 2) === "0x") {
+        privateKey = privateKey.slice(2);
+      }
+      privateKey = privateKey.padStart(64, "0");
       privateKey = Buffer.from(privateKey, "hex");
     }
   }
@@ -103,10 +118,54 @@ function tryToPrivateKeyBuffer(privateKey) {
   return privateKey;
 }
 
+/*
+ * references
+ * - https://github.com/multiformats/js-multibase/blob/master/src/util.js
+ */
+const textDecoder = new TextDecoder();
+/**
+ * @param {ArrayBufferView|ArrayBuffer} bytes
+ * @returns {string}
+ */
+const decodeText = (bytes) => textDecoder.decode(bytes);
+
+const textEncoder = new TextEncoder();
+/**
+ * @param {string} text
+ * @returns {Uint8Array}
+ */
+const encodeText = (text) => textEncoder.encode(text);
+
+/**
+ * Returns a new Uint8Array created by concatenating the passed Arrays
+ *
+ * @param {Array<ArrayLike<number>>} arrs
+ * @param {number} length
+ * @returns {Uint8Array}
+ */
+function concat(arrs, length) {
+  const output = new Uint8Array(length);
+  let offset = 0;
+
+  for (const arr of arrs) {
+    output.set(arr, offset);
+    offset += arr.length;
+  }
+
+  return output;
+}
+
+function encode(buffer) {
+  const data = encodeText(base32Encode(buffer, "RFC4648", { padding: false }));
+  return concat([encodeText("b"), data], encodeText("b").length + data.length);
+}
+
 module.exports = {
+  getCID,
   getDigest,
   getPayloadSecp256K1,
   getChecksum,
   addressAsBytes,
   tryToPrivateKeyBuffer,
+  encode,
 };

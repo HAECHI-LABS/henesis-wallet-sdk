@@ -1,10 +1,10 @@
 name: publish tag
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       version_name:
-        descriptoin: 'Version name to publish to docker hub'
+        description: 'Version name to publish to docker hub'
         required: true
 
 jobs:
@@ -15,11 +15,11 @@ jobs:
       - uses: actions/checkout@v2
         with:
          ref: ${{ github.event.inputs.version_name }}
-        
+
       - uses: docker/build-push-action@v1.1.1
         with:
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
           push: true
-          repository: haechi/api-proxy
+          repository: haechi/henesis-api-proxy
           tags: ${{ github.event.inputs.version_name }}

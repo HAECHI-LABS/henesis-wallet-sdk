@@ -1,15 +1,10 @@
 import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import { TransfersService } from "./transfers.service";
-import { EXAMPLE_BITCOIN_TRANSFER_DTO, TransferDTO } from "../dto/transfer.dto";
-import {
-  ApiHeaders,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from "@nestjs/swagger";
+import { EXAMPLE_TRANSFER_DTO, TransferDTO } from "../dto/transfer.dto";
+import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import express from "express";
 import {
-  EXAMPLE_BITCOIN_PAGINATION_TRANSFER_DTO,
+  EXAMPLE_PAGINATION_TRANSFER_DTO,
   PaginationDTO,
 } from "../dto/pagination.dto";
 import {
@@ -46,7 +41,7 @@ export class TransfersController {
     summary: "입출금 내역 조회하기",
     description: "입출금 내역을 조회합니다.",
   })
-  @ApiPaginationResponse(TransferDTO, EXAMPLE_BITCOIN_PAGINATION_TRANSFER_DTO)
+  @ApiPaginationResponse(TransferDTO, EXAMPLE_PAGINATION_TRANSFER_DTO)
   @Queries(
     QUERY_TRANSFERS_TYPE_OPTIONAL,
     QUERY_TRANSFERS_WALLET_ID_OPTIONAL,
@@ -71,25 +66,26 @@ export class TransfersController {
     @Query("size") size?: string,
     @Query("page") page?: string
   ): Promise<PaginationDTO<TransferDTO>> {
-    return await this.transfersService.getTransfers(request.sdk, {
-      type,
-      walletId,
-      status,
-      address,
-      transactionHash,
-      updatedAtGte,
-      updatedAtLt,
-      size,
-      page,
-    });
+    return await this.transfersService.getTransfers(
+      request.sdk,
+      {
+        type,
+        walletId,
+        status,
+        address,
+        transactionHash,
+        updatedAtGte,
+        updatedAtLt,
+        size,
+        page,
+      },
+      request
+    );
   }
 
   @Get("/:transferId")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(
-      TransferDTO,
-      EXAMPLE_BITCOIN_TRANSFER_DTO
-    ),
+    content: ApiResponseContentGenerator(TransferDTO, EXAMPLE_TRANSFER_DTO),
   })
   @ApiOperation({
     summary: "특정 입출금 내역 조회하기",

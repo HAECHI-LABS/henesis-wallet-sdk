@@ -1,39 +1,33 @@
 import {
-  BalanceDTO,
   FeeHistoryDTO,
   FeeWalletBalanceDTO,
   FeeWalletDTO,
   HenesisKeyDTO,
-  ProposalFeeWalletBalanceDTO,
+  ProposalFeeWalletDTO,
 } from "../__generate__/fil";
-import { Pagination } from "../types";
+import { Balance, Pagination } from "../types";
 import { Client } from "../httpClient";
-import { FilAccountKey, FilTransaction } from "./abstractWallet";
-import BN from "bn.js";
+import { FilTransaction } from "./abstractWallet";
+import { convertBalanceDtoToFilBalance } from "./utils";
 
 export type FilHenesisKey = HenesisKeyDTO;
+
+export type FilProposalFeeWallet = ProposalFeeWalletDTO;
 
 export interface FilFeeWallet
   extends Omit<FeeWalletDTO, "defaultFeeWallet" | "proposalFeeWallets"> {
   defaultFeeWallet: FilHenesisKey;
-  proposalFeeWallets: FilAccountKey[];
+  proposalFeeWallets: FilProposalFeeWallet[];
 }
 
-export interface FilBalance
-  extends Omit<BalanceDTO, "balance" | "spendableBalance"> {
-  balance: BN;
-  spendableBalance: BN;
-}
-
-export interface ProposalFeeWalletBalance
-  extends Omit<ProposalFeeWalletBalanceDTO, "balance"> {
-  balance: FilBalance;
+export interface FilBalanceWithId extends Balance {
+  id: string;
 }
 
 export interface FilFeeWalletBalance
   extends Omit<FeeWalletBalanceDTO, "defaultFeeWallet" | "proposalFeeWallets"> {
-  defaultFeeWallet: FilBalance;
-  proposalFeeWallets: ProposalFeeWalletBalance[];
+  defaultFeeWallet: Balance;
+  proposalFeeWallets: FilBalanceWithId[];
 }
 
 export interface FilFeeHistory extends Omit<FeeHistoryDTO, "transaction"> {
@@ -47,14 +41,25 @@ export class FilFeeWallets {
     this.client = client;
   }
 
-  // TODO: implement me
   async getFeeWallet(): Promise<FilFeeWallet> {
-    return null;
+    return await this.client.get<FeeWalletDTO>(`/fee-wallets/me`);
   }
 
-  // TODO: implement me
   async getFeeWalletBalance(): Promise<FilFeeWalletBalance> {
-    return null;
+    const response = await this.client.get<FeeWalletBalanceDTO>(
+      `/fee-wallets/balance`
+    );
+    return {
+      defaultFeeWallet: convertBalanceDtoToFilBalance(
+        response.defaultFeeWallet
+      ),
+      proposalFeeWallets: response.proposalFeeWallets.map((item) => {
+        return {
+          id: item.id,
+          ...convertBalanceDtoToFilBalance(item),
+        };
+      }),
+    };
   }
 
   // TODO: implement me

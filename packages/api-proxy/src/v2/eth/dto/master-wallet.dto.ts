@@ -1,9 +1,6 @@
 import { EXAMPLE_ETH_KLAY_WALLET_DTO, WalletDTO } from "./wallet.dto";
 import { EXAMPLE_ETH_KLAY_KEY_DTO, KeyDTO } from "./key.dto";
-import {
-  ApiModelProperty,
-  ApiModelPropertyOptional,
-} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO: MasterWalletDTO =
   Object.assign(EXAMPLE_ETH_KLAY_WALLET_DTO, {

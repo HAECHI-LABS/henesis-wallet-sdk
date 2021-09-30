@@ -83,17 +83,20 @@ export class EventsController {
   ): Promise<PaginationDTO<ValueTransferEventDTO>> {
     return await this.eventsService.getValueTransferEvents(
       request.sdk,
-      symbol,
-      walletId,
-      masterWalletId,
-      transactionId,
-      transactionHash,
-      status,
-      transferType,
-      updatedAtGte,
-      updatedAtLt,
-      size,
-      page
+      {
+        symbol,
+        walletId,
+        masterWalletId,
+        transactionId,
+        transactionHash,
+        status,
+        transferType,
+        updatedAtGte,
+        updatedAtLt,
+        size,
+        page,
+      },
+      request
     );
   }
 
@@ -132,15 +135,18 @@ export class EventsController {
   ): Promise<PaginationDTO<CallEventDTO>> {
     return await this.eventsService.getCallEvents(
       request.sdk,
-      walletId,
-      masterWalletId,
-      transactionId,
-      transactionHash,
-      status,
-      updatedAtGte,
-      updatedAtLt,
-      size,
-      page
+      {
+        walletId,
+        masterWalletId,
+        transactionId,
+        transactionHash,
+        status,
+        updatedAtGte,
+        updatedAtLt,
+        size,
+        page,
+      },
+      request
     );
   }
 }

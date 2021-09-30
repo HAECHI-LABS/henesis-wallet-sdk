@@ -1,0 +1,34 @@
+name: dev-test CI with npm
+on:
+  pull_request:
+    branches:
+      - develop
+jobs:
+  dev-test:
+    name: Github Action Build And Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install
+        run: |
+          sudo apt install -y build-essential
+          npm install
+          npm run codegen
+          npm run bootstrap
+      - name: Test
+        run: |
+          bash ./scripts/core.sh
+          bash ./scripts/api-proxy.sh

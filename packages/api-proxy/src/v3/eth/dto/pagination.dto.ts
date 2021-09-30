@@ -14,10 +14,22 @@ import {
   EXAMPLE_ETHEREUM_TRANSACTION_DTO,
   TransactionDTO,
 } from "./transaction.dto";
+import {
+  DepositAddressDTO,
+  EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO,
+} from "./deposit-address.dto";
+import {
+  EXAMPLE_ETHEREUM_NFT_BALANCE_DTO,
+  NftBalanceDTO,
+} from "./nft-balance.dto";
+import {
+  EXAMPLE_ETHEREUM_NFT_TRANSFER_DTO,
+  NftTransferDTO,
+} from "./nft-transfer.dto";
 
 export const EXAMPLE_ETHEREUM_PAGINATION_METADATA: PaginationMetadata = {
-  nextUrl: "http://localhost:3000/api/v2/eth/value-transfer-events?page=2",
-  previousUrl: "http://localhost:3000/api/v2/eth/value-transfer-events?page=1",
+  nextUrl: "http://localhost:3000/api/v3/ethereum/transfers?page=2",
+  previousUrl: "http://localhost:3000/api/v3/ethereum/transfers?page=1",
   totalCount: 5,
 };
 
@@ -36,6 +48,18 @@ export const EXAMPLE_ETHEREUM_PAGINATION_CONTRACT_CALLS_DTO: PaginationDTO<Contr
     results: [EXAMPLE_ETHEREUM_CONTRACT_CALLS_DTO],
   };
 
+export const EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO: PaginationDTO<NftBalanceDTO> =
+  {
+    pagination: EXAMPLE_ETHEREUM_PAGINATION_METADATA,
+    results: [EXAMPLE_ETHEREUM_NFT_BALANCE_DTO],
+  };
+
+export const EXAMPLE_ETHEREUM_PAGINATION_DEPOSIT_ADDRESS_DTO: PaginationDTO<DepositAddressDTO> =
+  {
+    pagination: EXAMPLE_ETHEREUM_PAGINATION_METADATA,
+    results: [EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO],
+  };
+
 export const EXAMPLE_BINANCE_SMART_CHAIN_PAGINATION_CONTRACT_CALLS_DTO: PaginationDTO<ContractCallsDTO> =
   {
     pagination: EXAMPLE_BINANCE_SMART_CHAIN_PAGINATION_METADATA,
@@ -46,6 +70,12 @@ export const EXAMPLE_ETHEREUM_PAGINATION_TRANSFER_DTO: PaginationDTO<TransferDTO
   {
     pagination: EXAMPLE_ETHEREUM_PAGINATION_METADATA,
     results: [EXAMPLE_ETHEREUM_TRANSFER_DTO],
+  };
+
+export const EXAMPLE_ETHEREUM_PAGINATION_NFT_TRANSFER_DTO: PaginationDTO<NftTransferDTO> =
+  {
+    pagination: EXAMPLE_ETHEREUM_PAGINATION_METADATA,
+    results: [EXAMPLE_ETHEREUM_NFT_TRANSFER_DTO],
   };
 
 export const EXAMPLE_BINANCE_SMART_CHAIN_PAGINATION_TRANSFER_DTO: PaginationDTO<TransferDTO> =

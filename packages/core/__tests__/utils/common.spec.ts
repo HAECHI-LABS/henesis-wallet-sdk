@@ -40,6 +40,18 @@ describe("BNConverter", () => {
     });
   });
 
+  describe("#decimalStringToBn()", () => {
+    it("should return BN same with decimal string", () => {
+      expect(BNConverter.decimalStringToBn("1234567890").toString(10)).toEqual("1234567890");
+    });
+  });
+
+  describe("#bnToDecimalString()", () => {
+    it("should return decimal string same with BN", () => {
+      expect(BNConverter.bnToDecimalString(new BN("1234567890", 10))).toEqual("1234567890");
+    });
+  });
+
   describe("#checkNullAndUndefinedParameter", () => {
     it("checkNullAndUndefinedParameter - in BN", () => {
       checkNullAndUndefinedParameter({

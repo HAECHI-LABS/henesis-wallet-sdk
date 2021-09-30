@@ -16,7 +16,20 @@ import {
   UserWalletPaginationOptions,
 } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 import { ReplaceTransactionRequestDTO } from "../transactions/dto/replace-transaction-request.dto";
-import { EthTransaction } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
+import {
+  EthTransaction,
+  NftBalancePaginationOptions,
+} from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
+import { changeUrlHost } from "../../../utils/pagination";
+import express from "express";
+import { TransferNftRequestDTO } from "./dto/transfer-nft-request.dto";
+import { NftBalanceDTO } from "../dto/nft-balance.dto";
+import { GetDepositAddressOption } from "./dto/get-deposit-addresses-option.dto";
+import { GetNftTransfersOption } from "./dto/get-nft-transfers-option.dto";
+import { NftTransferDTO } from "../dto/nft-transfer.dto";
+import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
+import { EthNftTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
+import { object } from "../../../utils/object";
 
 @Injectable()
 export class WalletsService {
@@ -70,7 +83,9 @@ export class WalletsService {
         new BN(request.amount),
         request.passphrase,
         null,
-        request.gasPrice ? new BN(request.gasPrice) : null
+        request.gasPrice == null ? null : new BN(request.gasPrice),
+        request.gasLimit == null ? null : new BN(request.gasLimit),
+        request.metadata
       )
     );
   }
@@ -84,11 +99,13 @@ export class WalletsService {
     return TransactionDTO.fromEthTransaction(
       await wallet.contractCall(
         request.to,
-        new BN(request.value),
+        request.value == null ? new BN("0") : new BN(request.value),
         request.data,
         request.passphrase,
         null,
-        request.gasPrice ? new BN(request.gasPrice) : null
+        request.gasPrice == null ? null : new BN(request.gasPrice),
+        request.gasLimit == null ? null : new BN(request.gasLimit),
+        request.metadata
       )
     );
   }
@@ -103,7 +120,7 @@ export class WalletsService {
     return TransactionDTO.fromEthTransaction(
       await wallet.replaceTransaction(
         transactionId,
-        request.gasPrice ? new BN(request.gasPrice) : null
+        request.gasPrice == null ? null : new BN(request.gasPrice)
       )
     );
   }
@@ -116,19 +133,29 @@ export class WalletsService {
     const wallet: EthWallet = await sdk.eth.wallets.getWallet(walletId);
     return wallet.flush(
       request.targets as any[],
-      request.gasPrice ? new BN(request.gasPrice) : null,
-      request.gasLimit ? new BN(request.gasLimit) : null
+      request.gasPrice == null ? null : new BN(request.gasPrice),
+      request.gasLimit == null ? null : new BN(request.gasLimit)
     );
   }
 
   public async getDepositAddresses(
     sdk: SDK,
     walletId: string,
-    option: GetDepositAddressOption
+    options: GetDepositAddressOption,
+    request: express.Request
   ): Promise<PaginationDTO<DepositAddressDTO>> {
     const wallet = await sdk.eth.wallets.getWallet(walletId);
     const result = await wallet.getDepositAddresses(
-      option as UserWalletPaginationOptions
+      options as UserWalletPaginationOptions
+    );
+
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
     );
     return {
       pagination: result.pagination,
@@ -181,5 +208,72 @@ export class WalletsService {
   ): Promise<EthTransaction> {
     const wallet = await sdk.eth.wallets.getWallet(walletId);
     return await wallet.resendTransaction(transactionId);
+  }
+
+  public async transferNft(
+    sdk: SDK,
+    walletId: string,
+    request: TransferNftRequestDTO
+  ): Promise<TransactionDTO> {
+    const wallet = await sdk.eth.wallets.getWallet(walletId);
+    return TransactionDTO.fromEthTransaction(
+      await wallet.transferNft(
+        request.nftId,
+        request.tokenOnchainId,
+        request.to,
+        request.passphrase,
+        null,
+        request.gasPrice == null ? null : new BN(request.gasPrice),
+        request.gasLimit == null ? null : new BN(request.gasLimit),
+        request.metadata
+      )
+    );
+  }
+
+  public async getNftBalance(
+    sdk: SDK,
+    walletId: string,
+    options: NftBalancePaginationOptions,
+    request: express.Request
+  ): Promise<PaginationDTO<NftBalanceDTO>> {
+    const wallet = await sdk.eth.wallets.getWallet(walletId);
+    const result = await wallet.getNftBalance(options);
+
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
+    return {
+      pagination: result.pagination,
+      results: result.results.map(NftBalanceDTO.fromNftBalance),
+    };
+  }
+
+  public async getNftTransfers(
+    sdk: SDK,
+    options: GetNftTransfersOption,
+    request: express.Request
+  ): Promise<PaginationDTO<NftTransferDTO>> {
+    const result: Pagination<EthNftTransferEvent> =
+      await sdk.eth.events.getNftTransferEvents(
+        object(GetNftTransfersOption.toSDKOption(options))
+      );
+
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
+    return {
+      pagination: result.pagination,
+      results: result.results.map(NftTransferDTO.fromNftTransferEvent),
+    };
   }
 }

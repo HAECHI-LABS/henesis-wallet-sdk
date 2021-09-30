@@ -9,7 +9,7 @@ servers:
   - url: http://localhost:3000
 components:
   schemas:
-    BtcTransactionOutputDTO:
+    TransactionOutputDto:
       type: object
       properties:
         address:
@@ -43,7 +43,7 @@ components:
         - outputIndex
         - scriptPubKey
         - isChange
-    BtcTransactionDTO:
+    TransactionDto:
       type: object
       properties:
         id:
@@ -92,7 +92,7 @@ components:
               isChange: false
           type: array
           items:
-            $ref: '#/components/schemas/BtcTransactionOutputDTO'
+            $ref: '#/components/schemas/TransactionOutputDto'
       required:
         - id
         - transactionHash
@@ -118,7 +118,7 @@ components:
               0x01000000010ef55b0654efc9f632a73e0d545e185914f81eefddcd161d1340f94b5bb6c91e01000000fdfe0000483045022100c6b5167d4d66bf4f712830b31795df3ffc34074a672906069b6e5299c61e12f90220364bb6b5b4ab5ff528aef2d82b08a7cbb582d1b6f135200800afbad08807d65101483045022100f73667aca7a6434e6c86e6d1970ccefe6e052554c45b6df64b86c48bd9428006022024d98a75217ad115985d961def56ab36e8d23dafe487c47ff39b445094574f54014c695221039c12b1681bc9506b4304a5d7f3933e55c0b55e3a90e47a0b94a6d209afb6173021039c3e34050a735c790a0d8ce39c52165dd11af50ee252a6b83dceaddd02b33b9d21039c882ac166fcb0056145105e18982b7c3b9dc5b54e1ac430f65e7c998ccfdb7d53aeffffffff02010000000000000017a91400271eec282b0368c3a2948145f7ae034fcd1d0787c54319000000000017a9147cfdc2bc58a9cad8b1cae530ce784f828c03a9ca8700000000
             outputs: *ref_0
           allOf:
-            - $ref: '#/components/schemas/BtcTransactionDTO'
+            - $ref: '#/components/schemas/TransactionDto'
         walletId:
           type: string
           description: 지갑 ID
@@ -183,8 +183,11 @@ components:
           type: string
           description: 트랜잭션 전파 이후 채굴 된 블록 갯수
           example: '0x8a3b'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
       required:
-        - transaction
         - walletId
         - amount
         - status
@@ -199,11 +202,11 @@ components:
         nextUrl:
           type: string
           description: 다음 pagination url
-          example: http://localhost:3000/api/v2/eth/value-transfer-events?page=2
+          example: http://localhost:3000/api/v3/ethereum/transfers?page=2
         previousUrl:
           type: string
           description: 이전 pagination url
-          example: http://localhost:3000/api/v2/eth/value-transfer-events?page=1
+          example: http://localhost:3000/api/v3/ethereum/transfers?page=1
         totalCount:
           type: number
           description: 총 갯수
@@ -317,6 +320,12 @@ components:
           type: string
           description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액) (단위: satoshi) (형식: 16진법)'
           example: '0xDBE16A831'
+        aggregatedAmount:
+          type: string
+          description: >-
+            마스터 지갑의 잔액과 하위 입금 주소들의 잔액을 모두 합한 잔액 (= 마스터 지갑 잔액 + 입금 주소 1 잔액 + 입금
+            주소 2 잔액 + ...) (단위: satoshi) (형식: 16진법)
+          example: '0xDBE16A831'
         name:
           type: string
           description: 암호화폐 이름
@@ -325,6 +334,11 @@ components:
           type: string
           description: 암호화폐 심볼 (ticker)
           example: BTC
+      required:
+        - coinType
+        - amount
+        - name
+        - symbol
     ChangeWalletNameRequestDTO:
       type: object
       properties:
@@ -332,7 +346,6 @@ components:
           type: string
           description: 변경할 지갑 이름
           example: walletName
-          default: walletName
       required:
         - name
     CreateDepositAddressRequestDTO:
@@ -342,7 +355,6 @@ components:
           type: string
           description: 입금 주소 이름
           example: btc-depositAddress
-          default: btc-depositAddress
       required:
         - name
     DepositAddressDTO:
@@ -372,6 +384,7 @@ components:
         - id
         - name
         - address
+        - pub
         - createdAt
     GetManyResponseForDepositAddressDTO:
       type: object
@@ -390,20 +403,29 @@ components:
         to:
           type: string
           description: 받을 주소
+          example: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
         amount:
           type: string
-          description: 보낼 금액
+          description: '보낼 금액 (단위: satoshi) (16진법, 맨 앞에 반드시 ''0x'' 붙여야 함)'
+          example: '0x12'
         passphrase:
           type: string
           description: 비밀번호
+          example: passphrase
         feeRate:
           type: string
-          description: "트랜잭션 byte당 지불할 fee 가격 (단위: satoshi)\r\n   (16진법, 맨 앞에 반드시 '0x' 붙여야 함) (v2.10.9 이상 지원)"
+          description: >-
+            트랜잭션 byte당 지불할 fee 가격 (단위: satoshi) (16진법, 맨 앞에 반드시 '0x' 붙여야 함)
+            (v2.10.9 이상 지원)
+          example: '0xDB'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
       required:
         - to
         - amount
         - passphrase
-        - feeRate
     InvalidAccessIpException:
       type: object
       properties:
@@ -556,9 +578,10 @@ paths:
                     updatedAt: '1620042252520'
                     feeAmount: '0x2ee'
                     confirmation: '0x8a3b'
+                    metadata: metadata
           description: ''
         '401': &ref_5
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -668,7 +691,7 @@ paths:
                   whitelistActivated: false
           description: ''
         '401': &ref_14
-          description: 아래와 같은 인증 에러가 발생할 수 있습니다.
+          description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
               schema:
@@ -784,6 +807,7 @@ paths:
                 - coinType: BTC
                   amount: '0xDBE16A831'
                   spendableAmount: '0xDBE16A831'
+                  aggregatedAmount: '0xDBE16A831'
                   name: 비트코인
                   symbol: BTC
           description: ''
@@ -872,6 +896,18 @@ paths:
           description: 입금 주소 이름
           schema:
             type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
       responses:
         '200':
           content:

@@ -11,11 +11,12 @@ COPY  package.json /
 COPY  lerna.json /
 COPY  tsconfig.json /
 
-RUN yarn bootstrap
+RUN npm install
+RUN npm run bootstrap
 
 WORKDIR /packages/api-proxy
 
-RUN yarn build
+RUN npm run build
 
 ENTRYPOINT ["node", "lib/main.js"]
 

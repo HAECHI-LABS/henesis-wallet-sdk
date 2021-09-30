@@ -50,15 +50,19 @@ export class RecoveryKit {
       .fontSize(24)
       .fillColor("#060607")
       .text(this.name, 36, 36);
+
+    const blockchain = (this.blockchain as any)
+      .toString()
+      .split("_")
+      .map((str) => this.camelize(str))
+      .join(" ");
     // write wallet description
     docs
       .font("Helvetica")
       .fontSize(10)
       .fillColor("#3A4044")
       .text(
-        `Platform : ${this.env == Env.Test ? "Testnet" : ""} ${this.camelize(
-          this.blockchain as any
-        )}`,
+        `Platform : ${this.env == Env.Test ? "Testnet" : ""} ${blockchain}`,
         36,
         76
       )
@@ -75,6 +79,7 @@ export class RecoveryKit {
         { width: 305 }
       );
     // draw logo
+    // eslint-disable-next-line new-cap
     SVGtoPDF(docs, logo, 468, 36, {
       width: 91,
       preserveAspectRatio: "xMinYMin",
@@ -140,6 +145,7 @@ export class RecoveryKit {
       .text("Data : ", x, docs.y + 12)
       .fillColor("#465365")
       .text(data, x, docs.y + 5, { width: 390, align: "justify" });
+    // eslint-disable-next-line new-cap
     SVGtoPDF(docs, qr, 453, y, {
       width: 105,
       height: 105,

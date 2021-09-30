@@ -9,22 +9,20 @@ import {
   Request,
 } from "@nestjs/common";
 import { WalletsService } from "./wallets.service";
-import { EXAMPLE_BITCOIN_WALLET_DTO, WalletDTO } from "../dto/wallet.dto";
-import { BalanceDTO, EXAMPLE_BITCOIN_BALANCE_DTO } from "../dto/balance.dto";
+import { EXAMPLE_WALLET_DTO, WalletDTO } from "../dto/wallet.dto";
+import { BalanceDTO, EXAMPLE_BALANCE_DTO } from "../dto/balance.dto";
 import {
   DepositAddressDTO,
-  EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO,
+  EXAMPLE_DEPOSIT_ADDRESS_DTO,
 } from "../dto/deposit-address.dto";
-import { EXAMPLE_BITCOIN_TRANSFER_DTO, TransferDTO } from "../dto/transfer.dto";
+import { EXAMPLE_TRANSFER_DTO, TransferDTO } from "../dto/transfer.dto";
 import {
-  ApiBody,
   ApiCreatedResponse,
   ApiExtraModels,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
-  getSchemaPath,
 } from "@nestjs/swagger";
 import express from "express";
 import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
@@ -46,10 +44,11 @@ import {
   QUERY_WALLET_NAME_OPTIONAL,
 } from "../dto/queries";
 import {
-  EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO,
+  EXAMPLE_PAGINATION_DEPOSIT_ADDRESS_DTO,
   PaginationDTO,
 } from "../dto/pagination.dto";
 import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
+import { PAGE_OPTIONAL, SIZE_OPTIONAL } from "../../../v3/eth/dto/params";
 
 @ApiTags("wallets")
 @Controller("wallets")
@@ -61,9 +60,7 @@ export class WalletsController {
 
   @Get("/")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(WalletDTO, [
-      EXAMPLE_BITCOIN_WALLET_DTO,
-    ]),
+    content: ApiResponseContentGenerator(WalletDTO, [EXAMPLE_WALLET_DTO]),
     isArray: true,
   })
   @ApiOperation({
@@ -81,7 +78,7 @@ export class WalletsController {
 
   @Get("/:walletId")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(WalletDTO, EXAMPLE_BITCOIN_WALLET_DTO),
+    content: ApiResponseContentGenerator(WalletDTO, EXAMPLE_WALLET_DTO),
   })
   @ApiOperation({
     summary: "지갑 정보 조회하기",
@@ -119,9 +116,7 @@ export class WalletsController {
 
   @Get("/:walletId/balance")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(BalanceDTO, [
-      EXAMPLE_BITCOIN_BALANCE_DTO,
-    ]),
+    content: ApiResponseContentGenerator(BalanceDTO, [EXAMPLE_BALANCE_DTO]),
     isArray: true,
   })
   @ApiOperation({
@@ -141,7 +136,7 @@ export class WalletsController {
   @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       DepositAddressDTO,
-      EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO
+      EXAMPLE_DEPOSIT_ADDRESS_DTO
     ),
   })
   @ApiOperation({
@@ -171,12 +166,14 @@ export class WalletsController {
   @Queries(
     QUERY_DEPOSIT_ADDRESS_ID_OPTIONAL,
     QUERY_DEPOSIT_ADDRESS_ADDRESS_OPTIONAL,
-    QUERY_DEPOSIT_ADDRESS_NAME_OPTIONAL
+    QUERY_DEPOSIT_ADDRESS_NAME_OPTIONAL,
+    SIZE_OPTIONAL,
+    PAGE_OPTIONAL
   )
   @PathParams(PARAM_WALLET_ID)
   @ApiPaginationResponse(
     DepositAddressDTO,
-    EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO
+    EXAMPLE_PAGINATION_DEPOSIT_ADDRESS_DTO
   )
   @ReadMeExtension()
   public async getDepositAddresses(
@@ -184,14 +181,21 @@ export class WalletsController {
     @Param("walletId") walletId: string,
     @Query("id") id?: string,
     @Query("address") address?: string,
-    @Query("name") name?: string
+    @Query("name") name?: string,
+    @Query("size") size: number = 15,
+    @Query("page") page: number = 0
   ): Promise<PaginationDTO<DepositAddressDTO>> {
     return await this.walletsService.getDepositAddresses(
       request.sdk,
       walletId,
-      id,
-      address,
-      name
+      {
+        id,
+        address,
+        name,
+        size,
+        page,
+      },
+      request
     );
   }
 
@@ -199,7 +203,7 @@ export class WalletsController {
   @ApiOkResponse({
     content: ApiResponseContentGenerator(
       DepositAddressDTO,
-      EXAMPLE_BITCOIN_DEPOSIT_ADDRESS_DTO
+      EXAMPLE_DEPOSIT_ADDRESS_DTO
     ),
   })
   @ApiOperation({
@@ -222,10 +226,7 @@ export class WalletsController {
 
   @Post("/:walletId/transfer")
   @ApiOkResponse({
-    content: ApiResponseContentGenerator(
-      TransferDTO,
-      EXAMPLE_BITCOIN_TRANSFER_DTO
-    ),
+    content: ApiResponseContentGenerator(TransferDTO, EXAMPLE_TRANSFER_DTO),
   })
   @ApiOperation({
     summary: "지갑에서 코인 전송하기",

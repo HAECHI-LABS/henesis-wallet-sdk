@@ -11,10 +11,13 @@ import { PasswordInvalidError } from "../error";
 import crypto from "crypto";
 import { bytesToWord } from "../eth";
 import { FilAccountKey } from "./abstractWallet";
+import { HexConverter } from "../utils/common";
 
 const base32Encode = require("base32-encode");
 const elliptic = require("elliptic");
-const secp256k1 = new elliptic.ec("secp256k1");
+// eslint-disable-next-line new-cap
+const ec = new elliptic.ec("secp256k1");
+const secp256k1 = require("secp256k1");
 const bip32 = require("bip32");
 const bip39 = require("bip39");
 
@@ -23,21 +26,24 @@ export interface FilKeyWithPriv extends KeyWithPriv {
 }
 
 export class FilKeychains implements Keychains {
+  protected readonly env: Env;
+
+  public constructor(env: Env) {
+    this.env = env;
+  }
+
   changePassword(
-    key: FilAccountKey,
+    key: Key,
     password: string,
     newPassword: string
   ): FilKeyWithPriv {
     const seed = this.decrypt(key, password);
     const priv = bip32.fromSeed(Buffer.from(seed, "hex")).privateKey;
-    const ecKey = secp256k1.keyFromPrivate(priv);
+    const ecKey = ec.keyFromPrivate(priv);
     const privateKey = `0x${ecKey.getPrivate("hex")}`;
     const publicKey = `0x${ecKey.getPublic(false, "hex").slice(2)}`;
-    const address = this.getAddress(publicKey);
-    const newKeyFile = this.encryptValueToKeyFile(
-      priv.toString("hex"),
-      newPassword
-    );
+    const address = this.getAddress(ecKey.getPublic(false, "hex"));
+    const newKeyFile = this.encryptValueToKeyFile(seed, newPassword);
 
     return {
       address,
@@ -51,7 +57,7 @@ export class FilKeychains implements Keychains {
   create(password: string): KeyWithPriv {
     const seed = this.generateRandomSeed();
     const privBuffer = bip32.fromSeed(seed).privateKey;
-    const keyPair = secp256k1.keyFromPrivate(privBuffer);
+    const keyPair = ec.keyFromPrivate(privBuffer);
     const privateKey = `0x${keyPair.getPrivate("hex")}`;
     const publicKey = `0x${keyPair.getPublic(false, "hex").slice(2)}`;
     const address = this.getAddress(keyPair.getPublic(false, "hex"));
@@ -72,7 +78,7 @@ export class FilKeychains implements Keychains {
     const seed = this.generateRandomSeed();
     const privBuffer = bip32.fromSeed(seed).privateKey;
     const chainCode = `0x${bip32.fromSeed(seed).chainCode.toString("hex")}`;
-    const keyPair = secp256k1.keyFromPrivate(privBuffer);
+    const keyPair = ec.keyFromPrivate(privBuffer);
     const privateKey = `0x${keyPair.getPrivate("hex")}`;
     const publicKey = `0x${keyPair.getPublic(false, "hex").slice(2)}`;
     const address = this.getAddress(keyPair.getPublic(false, "hex"));
@@ -95,7 +101,7 @@ export class FilKeychains implements Keychains {
     const seed = this.decrypt(key, password);
     const hdKey = bip32.fromSeed(Buffer.from(seed, "hex"));
     const childKey = hdKey.derive(childNumber);
-    const childKeyPair = secp256k1.keyFromPrivate(childKey.privateKey);
+    const childKeyPair = ec.keyFromPrivate(childKey.privateKey);
 
     const privateKey = `0x${childKeyPair.getPrivate("hex")}`;
     const publicKey = `0x${childKeyPair.getPublic(false, "hex").slice(2)}`;
@@ -113,9 +119,36 @@ export class FilKeychains implements Keychains {
     };
   }
 
-  decrypt(key: Key, password: string): string {
+  deriveFromPublicKey(key: FilAccountKey, childNumber: number): Key {
+    const compressedPublicKey = secp256k1.publicKeyConvert(
+      Buffer.from(`04${HexConverter.remove0x(key.pub)}`, "hex"),
+      true
+    );
+    const hdKey = bip32.fromPublicKey(
+      Buffer.from(compressedPublicKey),
+      Buffer.from(HexConverter.remove0x(key.chainCode), "hex")
+    );
+    const childKey = hdKey.derive(childNumber);
+    const childKeyPair = ec.keyFromPublic(childKey.publicKey);
+
+    const publicKey = HexConverter.add0x(
+      childKeyPair.getPublic(false, "hex").slice(2)
+    );
+    const address = this.getAddress(childKeyPair.getPublic(false, "hex"));
+
+    return {
+      address: address,
+      pub: publicKey,
+    };
+  }
+
+  decrypt(key: Key, password: string, fromSeed?: boolean): string {
     try {
-      return sjcl.decrypt(password, key.keyFile);
+      const decryptedKeyFile = sjcl.decrypt(password, key.keyFile);
+      if (fromSeed != null && fromSeed == true) {
+        return this.privateKeyFromSeed(decryptedKeyFile);
+      }
+      return decryptedKeyFile;
     } catch (error) {
       if (error.message.includes("ccm: tag doesn't match")) {
         error.message = `password error - ${error.message}`;
@@ -128,9 +161,15 @@ export class FilKeychains implements Keychains {
     }
   }
 
-  sign(key: Key, password: string, hexPayload: string): string {
-    const privateKey = tryToPrivateKeyBuffer(this.decrypt(key, password));
-
+  sign(
+    key: Key,
+    password: string,
+    hexPayload: string,
+    fromSeed?: boolean
+  ): string {
+    const privateKey = tryToPrivateKeyBuffer(
+      this.decrypt(key, password, fromSeed)
+    );
     const messageDigest = getDigest(Buffer.from(hexPayload, "hex"));
     const signature = secp256k1.ecdsaSign(messageDigest, privateKey);
 
@@ -138,6 +177,12 @@ export class FilKeychains implements Keychains {
       Buffer.from(signature.signature),
       Buffer.from([signature.recid]),
     ]).toString("base64");
+  }
+
+  private privateKeyFromSeed(seed: string): string {
+    const privBuffer = bip32.fromSeed(Buffer.from(seed, "hex")).privateKey;
+    const keyPair = ec.keyFromPrivate(privBuffer);
+    return `0x${keyPair.getPrivate("hex")}`;
   }
 
   private encryptValueToKeyFile(value: string, password: string) {
@@ -160,14 +205,18 @@ export class FilKeychains implements Keychains {
     return sjcl.encrypt(password, value, encryptOptions);
   }
 
+  /*
+   * reference
+   * - https://github.com/Zondax/filecoin-signing-tools/blob/master/signer-npm/js/src/extendedkey.js
+   */
   private getAddress(publicKey: string): string {
-    const buffer = Buffer.from(publicKey);
+    const buffer = Buffer.from(publicKey, "hex");
     const payload = getPayloadSecp256K1(buffer);
     const checksum = getChecksum(
       Buffer.concat([Buffer.from("01", "hex"), payload])
     );
 
-    const prefix = Env.Prod ? "f1" : "t1";
+    const prefix = this.env == Env.Prod ? "f1" : "t1";
     return (
       prefix +
       base32Encode(

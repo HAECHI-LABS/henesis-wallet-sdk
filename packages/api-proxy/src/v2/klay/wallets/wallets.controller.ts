@@ -111,7 +111,7 @@ export class WalletsController {
   })
   @ApiOperation({
     summary: "마스터 지갑 조회하기",
-    description: "마스터 지갑 목록을 조회합니다.",
+    description: "특정 마스터 지갑을 조회합니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID)
   @ReadMeExtension()
@@ -329,8 +329,8 @@ export class WalletsController {
   public async getUserWallets(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
-    @Query("page") page?: string,
-    @Query("size") size?: string,
+    @Query("page") page?: number,
+    @Query("size") size?: number,
     @Query("sort") sort?: string,
     @Query("name") name?: string,
     @Query("address") address?: string
@@ -338,11 +338,14 @@ export class WalletsController {
     return await this.walletsService.getUserWallets(
       request.sdk,
       masterWalletId,
-      page,
-      size,
-      sort,
-      name,
-      address
+      {
+        page,
+        size,
+        sort,
+        name,
+        address,
+      },
+      request
     );
   }
 

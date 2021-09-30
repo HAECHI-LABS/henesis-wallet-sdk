@@ -18,6 +18,7 @@ import { makeQueryString } from "../utils/url";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
 import { HenesisKeys } from "./henesisKeys";
 import {
+  Blockchain,
   CreateInactiveMasterWalletRequest,
   InactiveMasterWalletDTO,
   MasterWalletDTO,
@@ -45,11 +46,6 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
-    if (!isLessThanWalletV4(walletData.version)) {
-      throw new Error(
-        "This wallet is not a compatible version. Please use the v3 APIs."
-      );
-    }
     return new EthMasterWallet(
       this.client,
       transformMasterWalletData(walletData),
@@ -82,7 +78,11 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
     return walletDatas
-      .filter((walletData) => !isLessThanWalletV4(walletData.version))
+      .filter((walletData) => {
+        if (walletData.blockchain === Blockchain.ETHEREUM)
+          return !isLessThanWalletV4(walletData.version);
+        return true;
+      })
       .map((walletData) => {
         return new EthWallet(
           this.client,
@@ -102,7 +102,15 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
     return walletDatas.map((walletData) => {
-      const { version } = walletData;
+      const { version, blockchain } = walletData;
+      if (blockchain === Blockchain.KLAYTN) {
+        return new EthMasterWallet(
+          this.client,
+          transformMasterWalletData(walletData),
+          this.keychains,
+          this.blockchain
+        );
+      }
       if (isLessThanWalletV4(version)) {
         return new EthMasterWallet(
           this.client,
@@ -151,6 +159,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const encryptionKeyBuffer = this.createEncryptionKey(passphrase);
     const henesisKey = await this.henesisKey.getHenesisKey();
 
+    // eslint-disable-next-line new-cap
     const aes = new aesjs.ModeOfOperation.ctr(encryptionKeyBuffer);
     const encryptedPassphrase = aesjs.utils.hex.fromBytes(
       aes.encrypt(aesjs.utils.utf8.toBytes(passphrase))
@@ -175,8 +184,10 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       NoUndefinedField<MasterWalletDTO>
     >(this.baseUrl, {
       name: recoveryKit.getName(),
-      accountKey: recoveryKit.getAccountKey(),
-      backupKey: this.removeKeyFile(recoveryKit.getBackupKey()),
+      accountKey: this.removePrivateKey(recoveryKit.getAccountKey()),
+      backupKey: this.removeKeyFile(
+        this.removePrivateKey(recoveryKit.getBackupKey())
+      ),
       encryptionKey: recoveryKit.getEncryptionKey(),
     });
 

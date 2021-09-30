@@ -1,9 +1,8 @@
 import { Balance } from "@haechi-labs/henesis-wallet-core/lib/types";
-import BN from "bn.js";
 import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_ETHEREUM_BALANCE_DTO: BalanceDTO = {
-  coinId: "11",
+  coinId: 11,
   amount: "1000000000000",
   spendableAmount: "1000000000000",
   name: "ethereum",
@@ -23,7 +22,7 @@ export class BalanceDTO {
     description: "Henesis에서 부여한 Coin의 ID",
     example: EXAMPLE_ETHEREUM_BALANCE_DTO.coinId,
   })
-  coinId: string;
+  coinId: number;
 
   @ApiModelProperty({
     description: "확정된 잔액 (단위: wei, peb)",
@@ -33,7 +32,7 @@ export class BalanceDTO {
 
   @ApiModelProperty({
     description:
-      "출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei, peb)",
+      "출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei)",
     example: EXAMPLE_ETHEREUM_BALANCE_DTO.spendableAmount,
   })
   spendableAmount: string;
@@ -58,7 +57,7 @@ export class BalanceDTO {
 
   static fromBalance(balance: Balance): BalanceDTO {
     return {
-      coinId: balance.coinId.toString(),
+      coinId: balance.coinId,
       amount: balance.amount.toString(10),
       spendableAmount: balance.spendableAmount.toString(10),
       name: balance.name,

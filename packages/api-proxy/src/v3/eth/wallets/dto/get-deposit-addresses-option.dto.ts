@@ -1,4 +1,4 @@
-class GetDepositAddressOption {
+export class GetDepositAddressOption {
   walletId: string;
   name: string;
   address: string;

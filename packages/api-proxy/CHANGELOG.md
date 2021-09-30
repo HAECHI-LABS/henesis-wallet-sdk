@@ -3,6 +3,395 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.10...v3.4.0) (2021-09-17)
+
+
+### Bug Fixes
+
+* add bitcoin-cash endpoint to API proxy ([#583](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/583)) ([1462dbf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1462dbfda36f7eeea54e1ecc84e886bb7eab739d))
+
+
+
+
+
+## [3.3.4-alpha.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.9...v3.3.4-alpha.10) (2021-09-13)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.8...v3.3.4-alpha.9) (2021-09-13)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.7...v3.3.4-alpha.8) (2021-09-13)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.6...v3.3.4-alpha.7) (2021-09-13)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.5...v3.3.4-alpha.6) (2021-09-13)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.4...v3.3.4-alpha.5) (2021-09-09)
+
+
+### Features
+
+* add NftBalance isWithdrawalPending ([#574](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/574)) ([9f7ae1d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9f7ae1d458a6a29d6e20311f3b86e882bd078eb7))
+
+
+
+
+
+## [3.3.4-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.3...v3.3.4-alpha.4) (2021-09-08)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.2...v3.3.4-alpha.3) (2021-09-08)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.1...v3.3.4-alpha.2) (2021-09-08)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.4-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.0...v3.3.4-alpha.1) (2021-09-07)
+
+
+### Bug Fixes
+
+* add open api generate api extra model NftNotFoundException ([e944e8c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e944e8c4b6503cef7f2e9ddbdc3fa0e04a7fc9ce))
+
+
+
+
+
+## [3.3.4-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.3...v3.3.4-alpha.0) (2021-09-03)
+
+
+### Features
+
+* add bch interface ([8352bf5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8352bf5b2e28dc832a0bae4fbc24839a5c873b48))
+* add getNftTransferEvents api ([#566](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/566)) ([7238088](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7238088140be1eaff5dc39a52fe964997ad9c22a))
+
+
+
+## [3.3.3-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.3-alpha.0...v3.3.3-alpha.1) (2021-09-02)
+
+
+
+## [3.3.3-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.2...v3.3.3-alpha.0) (2021-08-31)
+
+
+
+
+
+
+## [3.3.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.2...v3.3.3) (2021-09-02)
+
+
+### Bug Fixes
+
+* fix deposit address id query param bug ([45f1a87](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/45f1a874b64f251612e707c47f3d7a5ed32ec643))
+* separate ltc and btc from api-proxy ([7490906](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/74909061e4a08cb3dd5cf8d76e2a45ad2be39449))
+
+
+
+
+
+## [3.3.3-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.3-alpha.0...v3.3.3-alpha.1) (2021-09-02)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.3-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.2...v3.3.3-alpha.0) (2021-08-31)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.3.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.1...v3.3.2) (2021-08-27)
+
+
+### Bug Fixes
+
+* use v3 for litecoin API proxy APIs ([#559](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/559)) ([d953c95](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d953c95565a278a3f3c836178ca642b9837dc017))
+
+
+
+
+
+## [3.3.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.0...v3.3.1) (2021-08-26)
+
+
+### Bug Fixes
+
+* klaytn V3 flush request ([#557](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/557)) ([89f8faa](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/89f8faa8acaf9582e67b5daa2a45281410778567))
+
+
+### Features
+
+* klaytn NFT ([#556](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/556)) ([f9fe923](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f9fe92303a77bcba2a25f700b26d5b9ead26ebb6))
+
+
+
+
+
+# [3.3.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.12...v3.3.0) (2021-08-25)
+
+
+### Bug Fixes
+
+* change coin api ticker path parameter ([#534](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/534)) ([e1f9912](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e1f9912c82cfaf4f47d881c0fd9c9e3f8ce5771b))
+* change wrong api properties ([#532](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/532)) ([9ab3a51](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9ab3a51995e5a5f256bc281d5513f65bea37af6f))
+
+
+### Features
+
+* add Litecoin APIs for API proxy ([#535](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/535)) ([294b39e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/294b39e077e437fcb9d5d6a02fb4936e9e0f20fb))
+* ethereum NFT API ([#541](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/541)) ([3df0bf4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3df0bf4935c7869188f6e502dfebfeeefc21b1e2))
+* klaytn NFT implementation ([#552](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/552)) ([4c94d17](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4c94d1714d02df7e878b540e034dafd600d32d74))
+* klaytn V3 implementation ([#544](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/544)) ([5c5a5eb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5c5a5ebbcac8dfc89f1cc434f6c154da8c682c39))
+* klaytn V3 interface ([#540](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/540)) ([e333f94](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e333f9411a863269aa1beaf3af554a8e75ba5739))
+* klaytn version error ([#554](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/554)) ([04ad38d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/04ad38da1342c20e96897c6a474283e62c0d5249))
+
+
+
+
+
+## [3.2.12](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.11...v3.2.12) (2021-08-03)
+
+
+### Bug Fixes
+
+* add gas limit option at eth v3 ([d0079a9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d0079a94219d65f7763952835d7624233798e63a))
+* change pagination urls' host ([#527](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/527)) ([e1fe34b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e1fe34b45804f1fdbc9b4b9fe772b70c3fa535d2))
+
+
+
+
+
+## [3.2.11](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.10...v3.2.11) (2021-07-23)
+
+
+### Bug Fixes
+
+* fix proper pagination url ([#523](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/523)) ([#525](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/525)) ([f91c2c1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f91c2c1e698441d37dcc2c16c035e308b3a00020))
+
+
+
+
+
+## [3.2.10](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.9...v3.2.10) (2021-07-23)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.2.9](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.8...v3.2.9) (2021-07-22)
+
+
+### Bug Fixes
+
+* add otp code to transfer of deposit address in filecoin ([a9778e1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a9778e13d42dd49699b9f3b9b42279ac581e28b3))
+
+
+
+
+
+## [3.2.8](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.7...v3.2.8) (2021-07-20)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.2.7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6...v3.2.7) (2021-07-20)
+
+
+### Features
+
+* implement transfer api from deposit address in filecoin ([ec1575a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ec1575a5af55cf28583bd13ade35d9659d8be7fa))
+
+
+
+
+
+## [3.2.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6-alpha.2...v3.2.6) (2021-07-15)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.2.6-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6-alpha.1...v3.2.6-alpha.2) (2021-07-15)
+
+
+### Bug Fixes
+
+* add metadata to trasnfer dto in filecoin ([2890070](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/28900703c5bd73ac2d08c8eb1b6a42a246aaac08))
+
+
+
+
+
+## [3.2.6-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.6-alpha.0...v3.2.6-alpha.1) (2021-07-15)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.2.6-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.5...v3.2.6-alpha.0) (2021-07-15)
+
+
+### Bug Fixes
+
+* add metadata to transfer and api ([5bb1dfc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5bb1dfcab375617df10eaa83d1bf49d4bc91ac15))
+
+
+
+
+
+## [3.2.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.4...v3.2.5) (2021-07-12)
+
+
+### Bug Fixes
+
+* fix api proxy to not use passphrase when creating deposit address in filecoin ([1eb2f3d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/1eb2f3dd8473c582d108acd977262736fce31a91))
+
+
+
+
+
+## [3.2.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.3...v3.2.4) (2021-07-12)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+## [3.2.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.2...v3.2.3) (2021-07-08)
+
+
+### Bug Fixes
+
+* add getPaginationMeta that returns urls for each endpoints ([#508](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/508)) ([1916000](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/191600085a3c729b2314bf52c384c929e46e392b))
+
+
+
+
+
+## [3.2.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.1...v3.2.2) (2021-07-01)
+
+
+### Bug Fixes
+
+* add ? to optional dto, change example dto name ([ef77c1b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ef77c1bb1e146bb99d95d27249f2c53bad45331e))
+* add description of filecoin request body ([d9bcf78](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d9bcf78a51b7b511b3960045aae60089754eab74))
+* add wallet_id to tranasfer and transfer query param ([9a2dbcb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9a2dbcbb901d09a9e1ea5d0bd4354a87e65f8da3))
+* auth error description message ([#503](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/503)) ([3e85e5f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3e85e5f5c4e068e7c3e88b6e03d3e021f06a0517))
+* change wallet => master wallet at fil api ([9460675](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/94606753b00afb58a8fb4829b2de78aeb331ddd9))
+* fix balance and request dto in v3 ethereum api proxy ([8b59cdd](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8b59cdd45be1582b367fcd96178a932aa8b4d2c3))
+* fix eth-v3 endpoint typo, contract-calls => contract-call ([9992fb4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9992fb44005d73581a1f13970882af91d07972c5))
+* fix filecoin flush max length in api proxy ([00da53e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/00da53e28ac7e902d9af9a3f22f439f24ebc7659))
+* fix filecoin open api generate ([32bb464](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/32bb4646dd1210ae596cf090701e4b85be10f969))
+* fix filecoin open api generate module ([34ff597](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/34ff597187e8f8998f6261aa625c1fbdfff6573b))
+* fix swagger and codegen script ([18f706a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/18f706a01e59a021824acea04dac6fec7779637d))
+* fix to set 0 value when value is null at contract call ([b6e6daf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b6e6daf514477b753e5d4583032a3678ee282e21))
+* fix v3 eth input type bug and fix some docs annotation ([b483db1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b483db1be31be71fcb9f79536576beb312bdd9dc))
+
+
+
+
+
+## [3.2.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.2.0...v3.2.1) (2021-06-25)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
+# [3.2.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.1.4...v3.2.0) (2021-06-25)
+
+
+### Bug Fixes
+
+* apply eslint prettier ([244b180](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/244b180c921b49ef5ea86cc58d2821fa079ea20a))
+* fix api proxy not running bug ([6cf1bc3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6cf1bc38633708b677c74fcaf2e2204e6f344253))
+* fix bootstrap and install:reset script bug ([7de414c](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7de414c725ba77dcba7a3522cd8615828bd5e824))
+* fix prettier to use specific version ([fa1ab3b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/fa1ab3be5b9a1a5b5ad859a6f74c1f0e89fd081d))
+* fix wallet balance bug in filecoin ([b76f132](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b76f132497bb44314d99bee58d73cbe707ca99a1))
+* use v3 API's URL in the pagination example ([9cbd30f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9cbd30fccb3b66bf6114424d2fa2eb1c16f5b005))
+
+
+### Features
+
+* add metadata ([#483](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/483)) ([7731e46](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7731e46a4279c37de821104df6907ed58703587c))
+* add metadata ([#486](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/486)) ([41fb8a4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/41fb8a4a6a16e68d96bd5413cd097e4b60066a5d))
+* implement fee wallet controller of filecoin api proxy ([134e901](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/134e901146753bb3965fca6adf102e29a7293e2f))
+* implement getting flush to sdk and api proxy ([15c0364](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/15c03649fd1fa3d7345839769bd18601ee8650c7))
+* implement transfers controller of filecoin api proxy ([f0d13a0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f0d13a0d2a33e00dc884270e5333f0826d51e3bc))
+* implement wallets controller of filecoin api proxy ([4551518](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4551518ef1a35a8435939a968d918245f0f01f80))
+
+
+
+
+
+## [3.1.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.1.3...v3.1.4) (2021-06-21)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
+
+
+
+
+
 ## [3.1.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.1.2...v3.1.3) (2021-06-01)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy

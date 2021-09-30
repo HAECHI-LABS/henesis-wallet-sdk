@@ -15,23 +15,14 @@ import {
   Pagination,
   PaginationOptions,
 } from "../types";
-import {
-  formatMultiSigPayload,
-  MultiSigPayload,
-  SignedMultiSigPayload,
-} from "./transactions";
+import { MultiSigPayload, SignedMultiSigPayload } from "./transactions";
 import { Client } from "../httpClient";
-import BatchRequest from "./batch";
 import walletAbi from "../contracts/Wallet.json";
 import { BNConverter, checkNullAndUndefinedParameter } from "../utils/common";
-import { WalletData, Wallet } from "../wallet";
 import { makeQueryString } from "../utils/url";
-import { Coins } from "./coins";
 import {
   TransactionDTO,
-  BatchTransactionDTO,
   UserWalletDTO,
-  BalanceDTO,
   MasterWalletBalanceDTO,
   PaginationUserWalletDTO,
   MasterWalletDTO,
@@ -39,24 +30,18 @@ import {
   RejectWithdrawalApprovalRequest,
   CreateUserWalletRequest,
   SignedMultiSigPayloadDTO,
-  CreateMultiSigTransactionRequest,
   ChangeWalletNameRequest,
-  ReplaceTransactionRequest,
   ActivateMasterWalletRequest,
   KeyDTO,
-  ResendTransactionRequest,
   FlushRequest,
   PaginationFlushTransactionDTO,
-  TransactionStatus,
   FlushQuerySearchCondition,
   FlushTransactionValueTransferEventDTO,
-  FlushTransactionValueTransferEventDTOStatus,
   FlushTransactionDTO,
+  CreateNftMultiSigTransactionRequest,
 } from "../__generate__/eth";
-import _, { result } from "lodash";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { Coin } from "./coin";
-import { randomBytes } from "crypto";
 import {
   EthDepositAddress,
   transformDepositAddressData,
@@ -69,6 +54,8 @@ import {
   convertSignedMultiSigPayloadToDTO,
   getAddressFromCompressedPub,
 } from "./abstractWallet";
+import { Nft } from "./nft";
+import { isLessThanWalletV4 } from "../utils/wallet";
 
 export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;
@@ -124,69 +111,6 @@ export class EthWallet extends EthLikeWallet {
     this.walletContract = new new Web3().eth.Contract(walletAbi as AbiItem[]);
   }
 
-  resendTransaction(transactionId: string, gasPrice?: BN) {
-    return super.resendTransaction(transactionId, gasPrice);
-  }
-
-  contractCall(
-    contractAddress: string,
-    value: BN,
-    data: string,
-    passphrase: string,
-    otpCode?: string,
-    gasPrice?: BN
-  ): Promise<EthTransaction> {
-    return super.contractCall(
-      contractAddress,
-      value,
-      data,
-      passphrase,
-      otpCode,
-      gasPrice
-    );
-  }
-
-  transfer(
-    coin: string | Coin,
-    to: string,
-    amount: BN,
-    passphrase: string,
-    otpCode?: string,
-    gasPrice?: BN
-  ): Promise<EthTransaction> {
-    return super.transfer(coin, to, amount, passphrase, otpCode, gasPrice);
-  }
-
-  sendTransaction(
-    signedMultiSigPayload: SignedMultiSigPayload,
-    walletId: string,
-    otpCode?: string,
-    gasPrice?: BN
-  ): Promise<EthTransaction> {
-    return super.sendTransaction(
-      signedMultiSigPayload,
-      walletId,
-      otpCode,
-      gasPrice
-    );
-  }
-
-  sendBatchTransaction(
-    blockchain: BlockchainType,
-    signedMultiSigPayloads: SignedMultiSigPayload[],
-    walletId: string,
-    otpCode?: string,
-    gasPrice?: BN
-  ): Promise<EthTransaction[]> {
-    return super.sendBatchTransaction(
-      blockchain,
-      signedMultiSigPayloads,
-      walletId,
-      otpCode,
-      gasPrice
-    );
-  }
-
   getEncryptionKey(): string {
     return this.data.encryptionKey;
   }
@@ -233,7 +157,7 @@ export class EthWallet extends EthLikeWallet {
     return {
       id,
       name: walletName,
-      blockchain: transformBlockchainType(masterWallet.blockchain),
+      blockchain: transformBlockchainType(blockchain),
       address,
       status,
       createdAt,
@@ -391,12 +315,14 @@ export class EthWallet extends EthLikeWallet {
   async flush(
     flushTargets: Array<{ coinId: number; depositAddressId: string }>,
     gasPrice?: BN,
-    gasLimit?: BN
+    gasLimit?: BN,
+    metadata?: string
   ): Promise<EthTransaction> {
     const request: FlushRequest = {
       targets: flushTargets,
       gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
       gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
+      metadata,
     };
     const response = await this.client.post<TransactionDTO>(
       `${this.baseUrl}/flush`,
@@ -492,6 +418,67 @@ export class EthWallet extends EthLikeWallet {
       request
     );
   }
+
+  async transferNft(
+    nft: number | Nft,
+    tokenOnchainId: string,
+    to: string,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const n = typeof nft === "number" ? await this.nfts.getNft(nft) : nft;
+    return this.sendNftTransaction(
+      await this.buildTransferNftPayload(
+        n,
+        tokenOnchainId,
+        this,
+        to,
+        passphrase
+      ),
+      n,
+      tokenOnchainId,
+      to,
+      otpCode,
+      gasPrice,
+      gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT,
+      metadata
+    );
+  }
+
+  async sendNftTransaction(
+    signedMultiSigPayload: SignedMultiSigPayload,
+    nft: Nft,
+    tokenOnchainId: string,
+    to: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const request: CreateNftMultiSigTransactionRequest = {
+      nftId: nft.getId(),
+      tokenOnchainId,
+      toAddress: to,
+      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
+        signedMultiSigPayload
+      ),
+      gasPrice: BNConverter.bnToHexStringOrElseNull(gasPrice),
+      gasLimit: BNConverter.bnToHexStringOrElseNull(gasLimit),
+      otpCode,
+      metadata,
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `/wallets/${this.getId()}/nft/transactions`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
+  }
 }
 
 export class EthMasterWallet extends EthLikeWallet {
@@ -543,7 +530,6 @@ export class EthMasterWallet extends EthLikeWallet {
     const {
       id,
       name: walletName,
-      blockchain,
       address,
       status,
       createdAt,
@@ -708,14 +694,47 @@ export class EthMasterWallet extends EthLikeWallet {
     this.data.name = masterWalletData.name;
   }
 
+  async flushWithTargets(
+    flushTargets: Array<{ coinId: number; depositAddressId: string }>,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    if (isLessThanWalletV4(this.getVersion())) {
+      throw new Error(
+        "This wallet is not a compatible version. Please use the v2 APIs."
+      );
+    }
+    const request: FlushRequest = {
+      targets: flushTargets,
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
+      metadata,
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `${this.baseUrl}/flush`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
+  }
+
   async flush(
     coin: string | Coin,
     userWalletIds: string[],
     passphrase: string,
     otpCode?: string,
     gasPrice?: BN,
-    gasLimit?: BN
+    gasLimit?: BN,
+    metadata?: string
   ): Promise<EthTransaction> {
+    if (!isLessThanWalletV4(this.getVersion())) {
+      throw new Error(
+        "This wallet is not a compatible version. Please use the v3 APIs."
+      );
+    }
     if (userWalletIds.length > 50 || userWalletIds.length == 0) {
       throw new Error(`only 1 ~ 50 accounts can be flushed at a time`);
     }
@@ -748,7 +767,8 @@ export class EthMasterWallet extends EthLikeWallet {
       this.getId(),
       otpCode,
       gasPrice,
-      gasLimit || this.DEFAULT_CONTRACT_CALL_GAS_LIMIT
+      gasLimit || this.DEFAULT_CONTRACT_CALL_GAS_LIMIT,
+      metadata
     );
   }
 
@@ -789,5 +809,66 @@ export class EthMasterWallet extends EthLikeWallet {
       `${this.withdrawalApprovalUrl}/${params.id}/reject`,
       request
     );
+  }
+
+  async transferNft(
+    nft: number | Nft,
+    tokenOnchainId: string,
+    to: string,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const n = typeof nft === "number" ? await this.nfts.getNft(nft) : nft;
+    return this.sendNftTransaction(
+      await this.buildTransferNftPayload(
+        n,
+        tokenOnchainId,
+        this,
+        to,
+        passphrase
+      ),
+      n,
+      tokenOnchainId,
+      to,
+      otpCode,
+      gasPrice,
+      gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT,
+      metadata
+    );
+  }
+
+  async sendNftTransaction(
+    signedMultiSigPayload: SignedMultiSigPayload,
+    nft: Nft,
+    tokenOnchainId: string,
+    to: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const request: CreateNftMultiSigTransactionRequest = {
+      nftId: nft.getId(),
+      tokenOnchainId,
+      toAddress: to,
+      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
+        signedMultiSigPayload
+      ),
+      gasPrice: BNConverter.bnToHexStringOrElseNull(gasPrice),
+      gasLimit: BNConverter.bnToHexStringOrElseNull(gasLimit),
+      otpCode,
+      metadata,
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `/wallets/${this.getId()}/nft/transactions`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
   }
 }

@@ -1,34 +1,40 @@
 import { BNConverter, MultiSigPayload } from "@haechi-labs/henesis-wallet-core";
+import {
+  ApiModelProperty,
+  ApiModelPropertyOptional,
+} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export class MultiSigPayloadDTO {
-  /**
-   * 지갑이 속한 팀(Org)의 ID
-   * @example ETH
-   */
+  @ApiModelProperty({
+    description: "지갑의 주소",
+    example: "0x2c27695429903b1e36299ce1eb89a3c1c34d115d",
+  })
   walletAddress: string;
 
-  /**
-   * 지갑이 속한 팀(Org)의 ID
-   * @example ETH
-   */
+  @ApiModelProperty({
+    description: "전송받을 주소",
+    example: "0x2c27695429903b1e36299ce1eb89a3c1c34d115d",
+  })
   toAddress: string;
 
-  /**
-   * 지갑이 속한 팀(Org)의 ID
-   * @example ETH
-   */
-  value: string;
+  @ApiModelPropertyOptional({
+    description:
+      "전송할 금액(단위: wei, peb)\n" +
+      "(16진법, 맨 앞에 반드시 '0x' 붙여야 함)",
+    example: "0x1",
+  })
+  value?: string;
 
-  /**
-   * 지갑이 속한 팀(Org)의 ID
-   * @example ETH
-   */
-  walletNonce: string;
+  @ApiModelPropertyOptional({
+    description: "multi-sig 서명에 추가로 사용되는 지갑의 난수값",
+    example: "0x0",
+  })
+  walletNonce?: string;
 
-  /**
-   * 지갑이 속한 팀(Org)의 ID
-   * @example ETH
-   */
+  @ApiModelProperty({
+    description: "multi-sig를 통해 실행할 data",
+    example: "hexData",
+  })
   hexData: string;
 
   static fromMultiSigPayload(payload: MultiSigPayload): MultiSigPayloadDTO {

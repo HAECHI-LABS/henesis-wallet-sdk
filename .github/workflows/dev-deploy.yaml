@@ -1,0 +1,61 @@
+name: dev-deploy CI with npm
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  dev-deploy:
+    name: Github Action Build And Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14]
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.HAECHI_GITHUB_PAT }}
+          submodules: recursive
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install build-essential
+        run: sudo apt install -y build-essential
+      - name: Get the version
+        id: get_version
+        run: echo "::set-output name=sha_short::$(git rev-parse --short=8 HEAD)"
+      - name: Run CD module scripts
+        env:
+          DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          GITHUB_USERNAME: ${{ secrets.HAECHI_GITHUB_USERNAME }}
+          GITHUB_PAT: ${{ secrets.HAECHI_GITHUB_PAT }}
+          COMMIT: ${{ steps.get_version.outputs.sha_short }}
+        run: |
+          ./tools/cd/pkg/deploy_for_dev.sh \
+              --dockerhub-username $DOCKER_HUB_USER \
+              --dockerhub-password $DOCKER_HUB_PASSWORD \
+              --github-username $GITHUB_USERNAME \
+              --github-pat $GITHUB_PAT \
+              --version $COMMIT \
+              --docker-image-name "haechi/henesis-api-proxy" \
+              --service-name "henesis-api-proxy"
+      - name: Notification Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: Dev henesis api proxy
+          fields: repo,commit,message,author
+          mention: here
+          if_mention: failure,cancelled
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()

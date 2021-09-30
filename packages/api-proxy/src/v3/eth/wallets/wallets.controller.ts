@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  HttpStatus,
   Param,
   Patch,
   Post,
@@ -17,10 +16,7 @@ import {
   ApiNoContentResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiResponse,
   ApiTags,
-  ApiUnauthorizedResponse,
-  getSchemaPath,
 } from "@nestjs/swagger";
 import {
   ApiPaginationResponse,
@@ -33,7 +29,11 @@ import {
   ReadMeExtension,
 } from "../../../decorators";
 import { EXAMPLE_ETHEREUM_WALLET_DTO, WalletDTO } from "../dto/wallet.dto";
-import { PaginationDTO } from "../dto/pagination.dto";
+import {
+  EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO,
+  EXAMPLE_ETHEREUM_PAGINATION_NFT_TRANSFER_DTO,
+  PaginationDTO,
+} from "../dto/pagination.dto";
 import { BalanceDTO, EXAMPLE_ETHEREUM_BALANCE_DTO } from "../dto/balance.dto";
 import {
   EXAMPLE_ETHEREUM_TRANSACTION_DTO,
@@ -49,28 +49,50 @@ import { CreateTransactionRequestDTO } from "./dto/create-transaction-reqeust.dt
 import { CreateFlushRequestDTO } from "./dto/create-flush-request.dto";
 import { CreateDepositAddressRequestDTO } from "./dto/create-deposit-address-request.dto";
 import {
+  DEPOSIT_ADDRESS_ID_OPTIONAL,
   DEPOSIT_ADDRESS_ID_REQUIRED,
   DEPOSIT_ADDRESS_OPTIONAL,
   NAME_OPTIONAL,
+  NFT_ID_OPTIONAL,
   PAGE_OPTIONAL,
   SIZE_OPTIONAL,
+  STATUS_OPTIONAL,
   TICKER_OPTIONAL,
+  TOKEN_NAME_OPTIONAL,
+  TOKEN_ONCHAIN_ID_OPTIONAL,
+  TRANSACTION_HASH_OPTIONAL,
+  TRANSACTION_ID_OPTIONAL,
   TRANSACTION_ID_REQUIRED,
+  TRANSFER_TYPE_OPTIONAL,
+  UPDATED_AT_GTE_OPTIONAL,
+  UPDATED_AT_LE_OPTIONAL,
+  WALLET_ID_OPTIONAL,
   WALLET_ID_REQUIRED,
 } from "../dto/params";
 import express from "express";
 import {
   DepositAddressNotFoundException,
   EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO,
+  EXAMPLE_INVALID_STATUS_EXCEPTION_DTO,
   EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
   EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO,
   EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
+  InvalidStatusException,
   NoWalletNameException,
   TransactionIdNotFoundException,
   WalletNotFoundException,
 } from "../dto/exceptions.dto";
 import { ReplaceTransactionRequestDTO } from "../transactions/dto/replace-transaction-request.dto";
-import { EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO } from "../../../v2/btc/dto/pagination.dto";
+import { TransferNftRequestDTO } from "./dto/transfer-nft-request.dto";
+import {
+  EXAMPLE_ETHEREUM_NFT_BALANCE_DTO,
+  NftBalanceDTO,
+} from "../dto/nft-balance.dto";
+import { NftTransferDTO } from "../dto/nft-transfer.dto";
+import {
+  EventStatus,
+  TransferType,
+} from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -234,7 +256,7 @@ export class WalletsController {
     );
   }
 
-  @Post("/:walletId/contract-calls")
+  @Post("/:walletId/contract-call")
   @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
@@ -384,7 +406,7 @@ export class WalletsController {
   )
   @ApiPaginationResponse(
     DepositAddressDTO,
-    EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO
+    EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO
   )
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
@@ -415,7 +437,8 @@ export class WalletsController {
         address,
         size,
         page,
-      }
+      },
+      request
     );
   }
 
@@ -514,6 +537,135 @@ export class WalletsController {
       walletId,
       depositAddressId,
       ticker
+    );
+  }
+
+  @Post("/:walletId/nft/transfer")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETHEREUM_TRANSACTION_DTO
+    ),
+    isArray: true,
+  })
+  @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
+  @Queries(TICKER_OPTIONAL)
+  @ApiOperation({
+    summary: "NFT 출금하기",
+    description: "특정 지갑에서 NFT 토큰을 출금합니다.",
+  })
+  @ReadMeExtension()
+  public async transferNft(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Body() transferNftRequest: TransferNftRequestDTO
+  ): Promise<TransactionDTO> {
+    return await this.walletsService.transferNft(
+      request.sdk,
+      walletId,
+      transferNftRequest
+    );
+  }
+
+  @Get("/:walletId/nft/balance")
+  @ApiPaginationResponse(
+    NftBalanceDTO,
+    EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO
+  )
+  @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
+  @Queries(TICKER_OPTIONAL)
+  @ApiOperation({
+    summary: "NFT 잔고 조회하기",
+    description: "특정 지갑의 NFT 잔고를 조회합니다.",
+  })
+  @ReadMeExtension()
+  public async getNftBalance(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Query("size") size: number = 15,
+    @Query("page") page: number = 0,
+    @Query("tokenOnchainId") tokenOnchainId?: string,
+    @Query("tokenName") tokenName?: string
+  ): Promise<PaginationDTO<NftBalanceDTO>> {
+    return await this.walletsService.getNftBalance(
+      request.sdk,
+      walletId,
+      {
+        size,
+        page,
+        tokenOnchainId,
+        tokenName,
+      },
+      request
+    );
+  }
+
+  @Get("/:walletId/nft/transfers")
+  @Queries(
+    NFT_ID_OPTIONAL,
+    TOKEN_NAME_OPTIONAL,
+    TOKEN_ONCHAIN_ID_OPTIONAL,
+    DEPOSIT_ADDRESS_ID_OPTIONAL,
+    WALLET_ID_OPTIONAL,
+    TRANSACTION_ID_OPTIONAL,
+    TRANSACTION_HASH_OPTIONAL,
+    STATUS_OPTIONAL,
+    TRANSFER_TYPE_OPTIONAL,
+    UPDATED_AT_GTE_OPTIONAL,
+    UPDATED_AT_LE_OPTIONAL,
+    SIZE_OPTIONAL,
+    PAGE_OPTIONAL
+  )
+  @ApiPaginationResponse(
+    NftTransferDTO,
+    EXAMPLE_ETHEREUM_PAGINATION_NFT_TRANSFER_DTO
+  )
+  @ApiBadRequestResponse({
+    description: "올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.",
+    content: ApiResponseContentGenerator(
+      InvalidStatusException,
+      EXAMPLE_INVALID_STATUS_EXCEPTION_DTO
+    ),
+  })
+  @ApiOperation({
+    summary: "전체 NFT 입출금 목록 조회하기",
+    description: "특정 지갑의 NFT 입출금 내역을 조회합니다.",
+  })
+  @ReadMeExtension()
+  public async getNftTransfers(
+    @Request() request: express.Request,
+    @Param("walletId") walletId?: string,
+    @Query("nftId") nftId?: number,
+    @Query("tokenName") tokenName?: string,
+    @Query("tokenOnchainId") tokenOnchainId?: string,
+    @Query("depositAddressId") depositAddressId?: string,
+    @Query("transactionId") transactionId?: string,
+    @Query("transactionHash") transactionHash?: string,
+    @Query("status") status?: EventStatus,
+    @Query("transferType") transferType?: TransferType,
+    @Query("updatedAtGte") updatedAtGte?: string,
+    @Query("updatedAtLt") updatedAtLt?: string,
+    @Query("size") size: number = 15,
+    @Query("page") page: number = 0
+  ): Promise<PaginationDTO<NftTransferDTO>> {
+    return await this.walletsService.getNftTransfers(
+      request.sdk,
+      {
+        nftId,
+        tokenName,
+        tokenOnchainId,
+        depositAddressId,
+        walletId,
+        transactionId,
+        transactionHash,
+        status,
+        transferType,
+        updatedAtGte,
+        updatedAtLt,
+        size,
+        page,
+      },
+      request
     );
   }
 }

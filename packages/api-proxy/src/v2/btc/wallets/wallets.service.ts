@@ -1,7 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { BNConverter, SDK } from "@haechi-labs/henesis-wallet-core";
 import { WalletDTO } from "../dto/wallet.dto";
-import { BtcMasterWallet } from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
+import {
+  BtcMasterWallet,
+  DepositAddressPaginationOptions,
+} from "@haechi-labs/henesis-wallet-core/lib/btc/wallet";
 import { BalanceDTO } from "../dto/balance.dto";
 import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import { CreateDepositAddressRequestDTO } from "../dto/create-deposit-address-request.dto";
@@ -9,6 +12,9 @@ import { PaginationDTO } from "../dto/pagination.dto";
 import { TransferRequestDTO } from "../dto/transfer-request.dto";
 import { TransferDTO } from "../dto/transfer.dto";
 import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
+import { object } from "../../../utils/object";
+import { changeUrlHost } from "../../../utils/pagination";
+import express from "express";
 
 @Injectable()
 export class WalletsService {
@@ -20,13 +26,11 @@ export class WalletsService {
   ): Promise<Array<WalletDTO>> {
     const options = walletName ? { name: walletName } : {};
     const wallets = await sdk.btc.wallets.getMasterWallets(options);
-    return wallets.map(WalletDTO.fromBTCMasterWallet);
+    return wallets.map(WalletDTO.fromMasterWallet);
   }
 
   public async getWallet(sdk: SDK, walletId: string): Promise<WalletDTO> {
-    return WalletDTO.fromBTCMasterWallet(
-      await this.getWalletById(sdk, walletId)
-    );
+    return WalletDTO.fromMasterWallet(await this.getWalletById(sdk, walletId));
   }
 
   public async changeWalletName(
@@ -64,19 +68,22 @@ export class WalletsService {
   public async getDepositAddresses(
     sdk: SDK,
     walletId: string,
-    id?: string,
-    address?: string,
-    name?: string
+    options: DepositAddressPaginationOptions,
+    request: express.Request
   ): Promise<PaginationDTO<DepositAddressDTO>> {
     const wallet = await this.getWalletById(sdk, walletId);
-    const options: { id?: string; address?: string; name?: string } = {};
-    if (id) options.id = id;
-    if (address) options.address = address;
-    if (name) options.name = name;
+    const result = await wallet.getDepositAddresses(object(options));
 
-    const result = await wallet.getDepositAddresses(options);
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
     return {
-      pagination: result.pagination as any,
+      pagination: result.pagination,
       results: result.results.map(DepositAddressDTO.fromDepositAddress),
     };
   }
@@ -106,7 +113,8 @@ export class WalletsService {
       null,
       transferRequestDTO.feeRate
         ? BNConverter.hexStringToBN(transferRequestDTO.feeRate)
-        : undefined
+        : undefined,
+      transferRequestDTO.metadata
     );
 
     return TransferDTO.fromTransfer(transfer);

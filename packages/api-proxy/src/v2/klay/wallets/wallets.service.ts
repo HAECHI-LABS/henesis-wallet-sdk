@@ -6,7 +6,6 @@ import {
   SignedMultiSigPayload,
 } from "@haechi-labs/henesis-wallet-core";
 import { MasterWalletDTO } from "../../eth/dto/master-wallet.dto";
-import { Key } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { SendMasterWalletContractCallRequestDTO } from "../../eth/dto/send-master-wallet-contract-call-request.dto";
 import { TransactionDTO } from "../../eth/dto/transaction.dto";
 import { ChangeMasterWalletNameRequestDTO } from "../../eth/dto/change-master-wallet-name-request.dto";
@@ -26,13 +25,20 @@ import { ChangeUserWalletNameRequestDTO } from "../../eth/dto/change-user-wallet
 import { SendUserWalletCoinRequestDTO } from "../../eth/dto/send-user-wallet-coin-request.dto";
 import { RetryCreateMasterWalletRequestDTO } from "../../eth/dto/retry-create-master-wallet-request.dto";
 import { RetryCreateUserWalletRequestDTO } from "../../eth/dto/retry-create-user-wallet-request.dto";
-import { EthMasterWallet } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
+import {
+  EthMasterWallet,
+  UserWalletPaginationOptions,
+} from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 import BN from "bn.js";
 import {
   EthUserWallet,
   EthUserWalletData,
 } from "@haechi-labs/henesis-wallet-core/lib/eth/userWallet";
 import { EthMasterWalletData } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
+import { object } from "../../../utils/object";
+import { changeUrlHost } from "../../../utils/pagination";
+import express from "express";
+import { isLessThanWalletV4 } from "@haechi-labs/henesis-wallet-core/lib/utils/wallet";
 
 @Injectable()
 export class WalletsService {
@@ -54,7 +60,11 @@ export class WalletsService {
     sdk: SDK,
     masterWalletId: string
   ): Promise<MasterWalletDTO> {
-    return (await sdk.klay.wallets.getMasterWallet(masterWalletId)).getData();
+    const masterWallet = await WalletsService.getMasterWalletById(
+      sdk,
+      masterWalletId
+    );
+    return masterWallet.getData();
   }
 
   public async sendMasterWalletContractCall(
@@ -140,7 +150,8 @@ export class WalletsService {
         : undefined,
       sendMasterWalletCoinRequestDTO.gasLimit
         ? BNConverter.hexStringToBN(sendMasterWalletCoinRequestDTO.gasLimit)
-        : undefined
+        : undefined,
+      sendMasterWalletCoinRequestDTO.metadata
     );
   }
 
@@ -211,7 +222,8 @@ export class WalletsService {
         : undefined,
       flushRequestDTO.gasLimit
         ? BNConverter.hexStringToBN(flushRequestDTO.gasLimit)
-        : undefined
+        : undefined,
+      flushRequestDTO.metadata
     );
   }
 
@@ -232,25 +244,23 @@ export class WalletsService {
   public async getUserWallets(
     sdk: SDK,
     masterWalletId: string,
-    page?: string,
-    size?: string,
-    sort?: string,
-    name?: string,
-    address?: string
+    options: UserWalletPaginationOptions,
+    request: express.Request
   ): Promise<PaginationDTO<UserWalletDTO>> {
     const masterWallet = await WalletsService.getMasterWalletById(
       sdk,
       masterWalletId
     );
+    const userWallets = await masterWallet.getUserWallets(object(options));
 
-    const userWallets = await masterWallet.getUserWallets({
-      page: +page,
-      size: +size,
-      sort: sort as string,
-      name: name as string,
-      address: address as string,
-    });
-
+    userWallets.pagination.nextUrl = changeUrlHost(
+      userWallets.pagination.nextUrl,
+      request
+    );
+    userWallets.pagination.previousUrl = changeUrlHost(
+      userWallets.pagination.previousUrl,
+      request
+    );
     return {
       pagination: userWallets.pagination,
       results: userWallets.results.map((c) => c.getData()),
@@ -308,7 +318,8 @@ export class WalletsService {
         ? BNConverter.hexStringToBN(
             sendUserWalletContractCallRequestDTO.gasLimit
           )
-        : undefined
+        : undefined,
+      sendUserWalletContractCallRequestDTO.metadata
     );
   }
 
@@ -373,7 +384,8 @@ export class WalletsService {
         : undefined,
       sendUserWalletCoinRequestDTO.gasLimit
         ? BNConverter.hexStringToBN(sendUserWalletCoinRequestDTO.gasLimit)
-        : undefined
+        : undefined,
+      sendUserWalletCoinRequestDTO.metadata
     );
   }
 
@@ -407,11 +419,17 @@ export class WalletsService {
     );
   }
 
-  private static getMasterWalletById(
+  private static async getMasterWalletById(
     sdk: SDK,
     id: string
   ): Promise<EthMasterWallet> {
-    return sdk.klay.wallets.getMasterWallet(id);
+    const masterWallet = await sdk.klay.wallets.getMasterWallet(id);
+    if (!isLessThanWalletV4(masterWallet.getVersion())) {
+      throw new Error(
+        "This wallet is not a compatible version. Please use the v3 APIs."
+      );
+    }
+    return masterWallet;
   }
 
   private static getCoinByTicker(sdk: SDK, ticker: string): Promise<Coin> {

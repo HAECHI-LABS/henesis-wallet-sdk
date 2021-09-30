@@ -1,4 +1,4 @@
-import { EXAMPLE_BITCOIN_KEY_DTO, KeyDTO } from "./key.dto";
+import { EXAMPLE_KEY_DTO, KeyDTO } from "./key.dto";
 import {
   BtcActivatingMasterWallet,
   BtcMasterWallet,
@@ -7,9 +7,12 @@ import {
   InactiveMasterWallet,
   WalletStatus,
 } from "@haechi-labs/henesis-wallet-core/lib/wallet";
-import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import {
+  ApiModelProperty,
+  ApiModelPropertyOptional,
+} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
-export const EXAMPLE_BITCOIN_WALLET_DTO: WalletDTO = {
+export const EXAMPLE_WALLET_DTO: WalletDTO = {
   id: "cce4f485764767f256155390873668b3",
   name: "bitcoin-wallet",
   address: "2Mx6o4HZfPyV3QrYNv26jCGMwAPpDeVzq1a",
@@ -19,72 +22,72 @@ export const EXAMPLE_BITCOIN_WALLET_DTO: WalletDTO = {
   updatedAt: "1599116198962",
   status: WalletStatus.ACTIVE,
   orgId: "0u1a431da7361na9e75648180bbd4fbc",
-  accountKey: EXAMPLE_BITCOIN_KEY_DTO,
+  accountKey: EXAMPLE_KEY_DTO,
   whitelistActivated: false,
 };
 
 export class WalletDTO {
   @ApiModelProperty({
     description: "지갑 ID",
-    example: EXAMPLE_BITCOIN_WALLET_DTO.id,
+    example: EXAMPLE_WALLET_DTO.id,
   })
   id: string;
 
   @ApiModelProperty({
     description: "지갑 이름",
-    example: EXAMPLE_BITCOIN_WALLET_DTO.name,
+    example: EXAMPLE_WALLET_DTO.name,
   })
   name: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "지갑 주소",
-    example: EXAMPLE_BITCOIN_WALLET_DTO.address,
+    example: EXAMPLE_WALLET_DTO.address,
   })
   address?: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "지갑 비밀번호를 복구하기 위해, 암호화하는 데에 쓰인 키",
-    example: EXAMPLE_BITCOIN_WALLET_DTO.encryptionKey,
+    example: EXAMPLE_WALLET_DTO.encryptionKey,
   })
   encryptionKey?: string;
 
   @ApiModelProperty({
     description: "지갑 생성 시간",
-    example: EXAMPLE_BITCOIN_WALLET_DTO.createdAt,
+    example: EXAMPLE_WALLET_DTO.createdAt,
   })
   createdAt: string;
 
   @ApiModelProperty({
     description: "지갑 변경 시간",
-    example: EXAMPLE_BITCOIN_WALLET_DTO.updatedAt,
+    example: EXAMPLE_WALLET_DTO.updatedAt,
   })
   updatedAt: string;
 
   @ApiModelProperty({
     description: "지갑 상태",
-    example: EXAMPLE_BITCOIN_WALLET_DTO.status,
+    example: EXAMPLE_WALLET_DTO.status,
   })
   status: WalletStatus;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "지갑이 속한 팀(Org)의 ID",
-    example: EXAMPLE_BITCOIN_WALLET_DTO.orgId,
+    example: EXAMPLE_WALLET_DTO.orgId,
   })
   orgId?: string;
 
-  @ApiModelProperty({
+  @ApiModelPropertyOptional({
     description: "지갑을 서명할 때 쓰이는 Account Key 정보",
-    example: EXAMPLE_BITCOIN_WALLET_DTO.accountKey,
+    example: EXAMPLE_WALLET_DTO.accountKey,
   })
   accountKey?: KeyDTO;
 
   @ApiModelProperty({
     description: "출금 주소 화이트리스팅의 활성화 유무",
-    example: EXAMPLE_BITCOIN_WALLET_DTO.whitelistActivated,
+    example: EXAMPLE_WALLET_DTO.whitelistActivated,
   })
   whitelistActivated: boolean;
 
-  static fromBTCMasterWallet(wallet: BtcMasterWallet): WalletDTO {
+  static fromMasterWallet(wallet: BtcMasterWallet): WalletDTO {
     return wallet.getData();
   }
 

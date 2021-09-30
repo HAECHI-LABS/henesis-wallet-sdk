@@ -4,7 +4,6 @@ import {
   ApiExtraModels,
   ApiHeaders,
   ApiOkResponse,
-  ApiOperation,
   ApiParam,
   ApiParamOptions,
   ApiQuery,
@@ -27,7 +26,6 @@ import {
   InvalidAccessIpException,
   InvalidAccessTokenException,
 } from "./extra-model.dto";
-import { getTypeReferenceAsString } from "@nestjs/swagger/dist/plugin/utils/plugin-utils";
 import { ContentObject } from "@nestjs/swagger/dist/interfaces/open-api-spec.interface";
 
 export function PathParams(...paramsOptions: ApiParamOptions[]) {
@@ -72,7 +70,7 @@ export function ReadMeExtension() {
 export function AuthErrorResponses() {
   return applyDecorators(
     ApiUnauthorizedResponse({
-      description: "아래와 같은 인증 에러가 발생할 수 있습니다.",
+      description: "인증이 실패했을 때 발생하는 에러입니다.",
       content: ApiResponseContentsGenerator([
         {
           model: InvalidAccessTokenException,

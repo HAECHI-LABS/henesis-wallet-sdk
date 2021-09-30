@@ -6,6 +6,10 @@ import {
 } from "@nestjs/common";
 import { EthModule } from "./eth/eth.module";
 import { APP_INTERCEPTOR } from "@nestjs/core";
+import { FilModule } from "./fil/fil.module";
+import { KlayModule } from "./klay/klay.module";
+import { LtcModule } from "./ltc/ltc.module";
+import { BchModule } from "./bch/bch.module";
 import { BscModule } from "./bsc/bsc.module";
 
 const buildSwagger: boolean =
@@ -19,19 +23,67 @@ export class ApiV3Module {
     const imports = [];
     const providers = [];
     if (buildSwagger) {
-      const cacheModule = CacheModule.register({
-        ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
-        max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
-      });
-
-      if (process.env.ENCPOINT == "ethereum") {
-        imports.push(EthModule);
+      if (process.env.ENDPOINT == "ethereum") {
+        imports.push(
+          EthModule,
+          CacheModule.register({
+            ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
+            max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
+          })
+        );
+      } else if (process.env.ENDPOINT == "klaytn") {
+        imports.push(
+          KlayModule,
+          CacheModule.register({
+            ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
+            max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
+          })
+        );
+      } else if (process.env.ENDPOINT == "filecoin") {
+        imports.push(
+          FilModule,
+          CacheModule.register({
+            ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
+            max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
+          })
+        );
+      } else if (process.env.ENDPOINT == "litecoin") {
+        imports.push(
+          LtcModule,
+          CacheModule.register({
+            ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
+            max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
+          })
+        );
+      } else if (process.env.ENDPOINT == "bitcoin-cash") {
+        imports.push(
+          BchModule,
+          CacheModule.register({
+            ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
+            max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
+          })
+        );
       } else if (process.env.ENDPOINT == "binance-smart-chain") {
-        imports.push(BscModule);
+        imports.push(
+          BscModule,
+          CacheModule.register({
+            ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
+            max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
+          })
+        );
       } else {
-        imports.push(EthModule, BscModule);
+        imports.push(
+          EthModule,
+          KlayModule,
+          FilModule,
+          LtcModule,
+          BchModule,
+          CacheModule.register({
+            ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
+            max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
+          })
+        );
       }
-      imports.push(cacheModule);
 
       providers.push({
         provide: APP_INTERCEPTOR,

@@ -154,6 +154,18 @@ export interface ApproveCoinListingRequestRequest {
      * @type {string}
      * @memberof ApproveCoinListingRequestRequest
      */
+    description?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ApproveCoinListingRequestRequest
+     */
+    attributes?: Array<ApproveCoinListingRequestRequestAttributesEnum>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApproveCoinListingRequestRequest
+     */
     chargeKrw?: string;
     /**
      * 
@@ -168,6 +180,18 @@ export interface ApproveCoinListingRequestRequest {
      */
     coinListingDate?: string;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ApproveCoinListingRequestRequestAttributesEnum {
+    STANDARD = 'ERC20_STANDARD',
+    NONSTANDARDRETURNTYPE = 'ERC20_NON_STANDARD_RETURN_TYPE',
+    REBASE = 'ERC20_REBASE',
+    PAUSABLE = 'ERC20_PAUSABLE'
+}
+
 /**
  * 
  * @export
@@ -178,7 +202,9 @@ export enum Blockchain {
     KLAYTN = 'KLAYTN',
     BITCOIN = 'BITCOIN',
     FILECOIN = 'FILECOIN',
-    BINANCESMARTCHAIN = 'BINANCE_SMART_CHAIN'
+    BINANCESMARTCHAIN = 'BINANCE_SMART_CHAIN',
+    LITECOIN = 'LITECOIN',
+    BITCOINCASH = 'BITCOIN_CASH'
 }
 
 /**
@@ -372,6 +398,12 @@ export interface CoinListingRequestDTO {
      * @memberof CoinListingRequestDTO
      */
     cause: Cause;
+    /**
+     * 
+     * @type {string}
+     * @memberof CoinListingRequestDTO
+     */
+    message?: string;
     /**
      * 
      * @type {Blockchain}
@@ -717,6 +749,18 @@ export interface IdentityDTO {
      * @memberof IdentityDTO
      */
     accessToken: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IdentityDTO
+     */
+    isOrganizationActive: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IdentityDTO
+     */
+    isNftSupported: boolean;
 }
 /**
  * 
@@ -1081,10 +1125,22 @@ export interface OrganizationDTO {
     secret: string;
     /**
      * 
+     * @type {string}
+     * @memberof OrganizationDTO
+     */
+    inactivatedAt: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof OrganizationDTO
      */
     whitelistActivated: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrganizationDTO
+     */
+    isNftSupported: boolean;
 }
 /**
  * 
@@ -1762,7 +1818,7 @@ export const AccountControllerApiAxiosParamCreator = function (configuration?: C
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccount1: async (options: any = {}): Promise<RequestArgs> => {
+        getAccount: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v2/accounts/me`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -2163,8 +2219,8 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAccount1(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>> {
-            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).getAccount1(options);
+        async getAccount(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>> {
+            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).getAccount(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2323,8 +2379,8 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccount1(options?: any): AxiosPromise<AccountDTO> {
-            return AccountControllerApiFp(configuration).getAccount1(options).then((request) => request(axios, basePath));
+        getAccount(options?: any): AxiosPromise<AccountDTO> {
+            return AccountControllerApiFp(configuration).getAccount(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2457,8 +2513,8 @@ export class AccountControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AccountControllerApi
      */
-    public getAccount1(options?: any) {
-        return AccountControllerApiFp(this.configuration).getAccount1(options).then((request) => request(this.axios, this.basePath));
+    public getAccount(options?: any) {
+        return AccountControllerApiFp(this.configuration).getAccount(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3089,16 +3145,46 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
         /**
          * 
          * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        activateOrganization: async (organizationId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            if (organizationId === null || organizationId === undefined) {
+                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling activateOrganization.');
+            }
+            const localVarPath = `/api/v2/operation/organizations/{organizationId}/activate`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} requestId 
          * @param {ApproveCoinListingRequestRequest} approveCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        approveCoinListingRequest: async (organizationId: string, requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling approveCoinListingRequest.');
-            }
+        approveCoinListingRequest: async (requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'requestId' is not null or undefined
             if (requestId === null || requestId === undefined) {
                 throw new RequiredError('requestId','Required parameter requestId was null or undefined when calling approveCoinListingRequest.');
@@ -3107,8 +3193,7 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
             if (approveCoinListingRequestRequest === null || approveCoinListingRequestRequest === undefined) {
                 throw new RequiredError('approveCoinListingRequestRequest','Required parameter approveCoinListingRequestRequest was null or undefined when calling approveCoinListingRequest.');
             }
-            const localVarPath = `/api/v2/operation/organizations/{organizationId}/coin-listing-requests/{requestId}/approve`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+            const localVarPath = `/api/v2/operation/coin-listing-requests/{requestId}/approve`
                 .replace(`{${"requestId"}}`, encodeURIComponent(String(requestId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -3142,10 +3227,10 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccount: async (accountId: string, options: any = {}): Promise<RequestArgs> => {
+        getAccount1: async (accountId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             if (accountId === null || accountId === undefined) {
-                throw new RequiredError('accountId','Required parameter accountId was null or undefined when calling getAccount.');
+                throw new RequiredError('accountId','Required parameter accountId was null or undefined when calling getAccount1.');
             }
             const localVarPath = `/api/v2/operation/accounts/{accountId}`
                 .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
@@ -3246,6 +3331,41 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
+         * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinListingRequest: async (requestId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'requestId' is not null or undefined
+            if (requestId === null || requestId === undefined) {
+                throw new RequiredError('requestId','Required parameter requestId was null or undefined when calling getCoinListingRequest.');
+            }
+            const localVarPath = `/api/v2/operation/coin-listing-requests/{requestId}`
+                .replace(`{${"requestId"}}`, encodeURIComponent(String(requestId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3311,16 +3431,46 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
         /**
          * 
          * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        inactivateOrganization: async (organizationId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'organizationId' is not null or undefined
+            if (organizationId === null || organizationId === undefined) {
+                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling inactivateOrganization.');
+            }
+            const localVarPath = `/api/v2/operation/organizations/{organizationId}/inactivate`
+                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} requestId 
          * @param {RejectCoinListingRequestRequest} rejectCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rejectCoinListingRequest: async (organizationId: string, requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'organizationId' is not null or undefined
-            if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling rejectCoinListingRequest.');
-            }
+        rejectCoinListingRequest: async (requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'requestId' is not null or undefined
             if (requestId === null || requestId === undefined) {
                 throw new RequiredError('requestId','Required parameter requestId was null or undefined when calling rejectCoinListingRequest.');
@@ -3329,8 +3479,7 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
             if (rejectCoinListingRequestRequest === null || rejectCoinListingRequestRequest === undefined) {
                 throw new RequiredError('rejectCoinListingRequestRequest','Required parameter rejectCoinListingRequestRequest was null or undefined when calling rejectCoinListingRequest.');
             }
-            const localVarPath = `/api/v2/operation/organizations/{organizationId}/coin-listing-requests/{requestId}/reject`
-                .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)))
+            const localVarPath = `/api/v2/operation/coin-listing-requests/{requestId}/reject`
                 .replace(`{${"requestId"}}`, encodeURIComponent(String(requestId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -3370,13 +3519,25 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
         /**
          * 
          * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async activateOrganization(organizationId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).activateOrganization(organizationId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} requestId 
          * @param {ApproveCoinListingRequestRequest} approveCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async approveCoinListingRequest(organizationId: string, requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).approveCoinListingRequest(organizationId, requestId, approveCoinListingRequestRequest, options);
+        async approveCoinListingRequest(requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3388,8 +3549,8 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAccount(accountId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getAccount(accountId, options);
+        async getAccount1(accountId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getAccount1(accountId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3423,6 +3584,19 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCoinListingRequest(requestId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinListingRequestDTO>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getCoinListingRequest(requestId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3449,13 +3623,25 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
         /**
          * 
          * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async inactivateOrganization(organizationId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).inactivateOrganization(organizationId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} requestId 
          * @param {RejectCoinListingRequestRequest} rejectCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async rejectCoinListingRequest(organizationId: string, requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).rejectCoinListingRequest(organizationId, requestId, rejectCoinListingRequestRequest, options);
+        async rejectCoinListingRequest(requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).rejectCoinListingRequest(requestId, rejectCoinListingRequestRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3473,13 +3659,21 @@ export const OperationControllerApiFactory = function (configuration?: Configura
         /**
          * 
          * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        activateOrganization(organizationId: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).activateOrganization(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} requestId 
          * @param {ApproveCoinListingRequestRequest} approveCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        approveCoinListingRequest(organizationId: string, requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): AxiosPromise<void> {
-            return OperationControllerApiFp(configuration).approveCoinListingRequest(organizationId, requestId, approveCoinListingRequestRequest, options).then((request) => request(axios, basePath));
+        approveCoinListingRequest(requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3487,8 +3681,8 @@ export const OperationControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccount(accountId: string, options?: any): AxiosPromise<AccountDTO> {
-            return OperationControllerApiFp(configuration).getAccount(accountId, options).then((request) => request(axios, basePath));
+        getAccount1(accountId: string, options?: any): AxiosPromise<AccountDTO> {
+            return OperationControllerApiFp(configuration).getAccount1(accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3510,6 +3704,15 @@ export const OperationControllerApiFactory = function (configuration?: Configura
         },
         /**
          * 
+         * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinListingRequest(requestId: string, options?: any): AxiosPromise<CoinListingRequestDTO> {
+            return OperationControllerApiFp(configuration).getCoinListingRequest(requestId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3528,13 +3731,21 @@ export const OperationControllerApiFactory = function (configuration?: Configura
         /**
          * 
          * @param {string} organizationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        inactivateOrganization(organizationId: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).inactivateOrganization(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} requestId 
          * @param {RejectCoinListingRequestRequest} rejectCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rejectCoinListingRequest(organizationId: string, requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any): AxiosPromise<void> {
-            return OperationControllerApiFp(configuration).rejectCoinListingRequest(organizationId, requestId, rejectCoinListingRequestRequest, options).then((request) => request(axios, basePath));
+        rejectCoinListingRequest(requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).rejectCoinListingRequest(requestId, rejectCoinListingRequestRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3549,14 +3760,24 @@ export class OperationControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} organizationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public activateOrganization(organizationId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).activateOrganization(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} requestId 
      * @param {ApproveCoinListingRequestRequest} approveCoinListingRequestRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OperationControllerApi
      */
-    public approveCoinListingRequest(organizationId: string, requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any) {
-        return OperationControllerApiFp(this.configuration).approveCoinListingRequest(organizationId, requestId, approveCoinListingRequestRequest, options).then((request) => request(this.axios, this.basePath));
+    public approveCoinListingRequest(requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any) {
+        return OperationControllerApiFp(this.configuration).approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3566,8 +3787,8 @@ export class OperationControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OperationControllerApi
      */
-    public getAccount(accountId: string, options?: any) {
-        return OperationControllerApiFp(this.configuration).getAccount(accountId, options).then((request) => request(this.axios, this.basePath));
+    public getAccount1(accountId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).getAccount1(accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3594,6 +3815,17 @@ export class OperationControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {string} requestId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public getCoinListingRequest(requestId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).getCoinListingRequest(requestId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} organizationId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3616,14 +3848,24 @@ export class OperationControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} organizationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public inactivateOrganization(organizationId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).inactivateOrganization(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} requestId 
      * @param {RejectCoinListingRequestRequest} rejectCoinListingRequestRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OperationControllerApi
      */
-    public rejectCoinListingRequest(organizationId: string, requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any) {
-        return OperationControllerApiFp(this.configuration).rejectCoinListingRequest(organizationId, requestId, rejectCoinListingRequestRequest, options).then((request) => request(this.axios, this.basePath));
+    public rejectCoinListingRequest(requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any) {
+        return OperationControllerApiFp(this.configuration).rejectCoinListingRequest(requestId, rejectCoinListingRequestRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -4028,12 +4270,12 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
         },
         /**
          * 
-         * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN'} blockchain 
+         * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH'} blockchain 
          * @param {string} address 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoinContract: async (blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN', address: string, options: any = {}): Promise<RequestArgs> => {
+        getCoinContract: async (blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH', address: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'blockchain' is not null or undefined
             if (blockchain === null || blockchain === undefined) {
                 throw new RequiredError('blockchain','Required parameter blockchain was null or undefined when calling getCoinContract.');
@@ -4447,12 +4689,12 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
         },
         /**
          * 
-         * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN'} blockchain 
+         * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH'} blockchain 
          * @param {string} address 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCoinContract(blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN', address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinContractDTO>> {
+        async getCoinContract(blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH', address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinContractDTO>> {
             const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).getCoinContract(blockchain, address, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -4645,12 +4887,12 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
         },
         /**
          * 
-         * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN'} blockchain 
+         * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH'} blockchain 
          * @param {string} address 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoinContract(blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN', address: string, options?: any): AxiosPromise<CoinContractDTO> {
+        getCoinContract(blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH', address: string, options?: any): AxiosPromise<CoinContractDTO> {
             return OrganizationControllerApiFp(configuration).getCoinContract(blockchain, address, options).then((request) => request(axios, basePath));
         },
         /**
@@ -4838,13 +5080,13 @@ export class OrganizationControllerApi extends BaseAPI {
 
     /**
      * 
-     * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN'} blockchain 
+     * @param {'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH'} blockchain 
      * @param {string} address 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public getCoinContract(blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN', address: string, options?: any) {
+    public getCoinContract(blockchain: 'ETHEREUM' | 'KLAYTN' | 'BITCOIN' | 'FILECOIN' | 'BINANCE_SMART_CHAIN' | 'LITECOIN' | 'BITCOIN_CASH', address: string, options?: any) {
         return OrganizationControllerApiFp(this.configuration).getCoinContract(blockchain, address, options).then((request) => request(this.axios, this.basePath));
     }
 

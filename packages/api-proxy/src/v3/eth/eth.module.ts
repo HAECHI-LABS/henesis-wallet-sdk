@@ -11,6 +11,8 @@ import { TransfersController } from "./transfers/transfers.controller";
 import { TransfersService } from "./transfers/transfers.service";
 import { ContractCallsController } from "./contract-calls/contract-calls.controller";
 import { ContractCallsService } from "./contract-calls/contract-calls.service";
+import { NftsService } from "./nfts/nfts.service";
+import { NftsController } from "./nfts/nfts.controller";
 
 @Module({
   controllers: [
@@ -20,6 +22,7 @@ import { ContractCallsService } from "./contract-calls/contract-calls.service";
     FeeWalletController,
     TransactionsController,
     WalletsController,
+    NftsController,
   ],
   providers: [
     CoinsService,
@@ -28,6 +31,7 @@ import { ContractCallsService } from "./contract-calls/contract-calls.service";
     FeeWalletService,
     TransactionsService,
     WalletsService,
+    NftsService,
   ],
 })
 export class EthModule {}

@@ -1,7 +1,10 @@
 import { EthCallEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
 import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 import { BlockchainType } from "@haechi-labs/henesis-wallet-core/lib/blockchain";
-import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import {
+  ApiModelProperty,
+  ApiModelPropertyOptional,
+} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const EXAMPLE_ETHEREUM_CONTRACT_CALLS_DTO: ContractCallsDTO = {
   id: "375031",
@@ -17,6 +20,7 @@ export const EXAMPLE_ETHEREUM_CONTRACT_CALLS_DTO: ContractCallsDTO = {
   createdAt: "1612411568760",
   updatedAt: "1612411724023",
   blockchain: BlockchainType.ETHEREUM,
+  metadata: "metadata",
 };
 
 export const EXAMPLE_BINANCE_SMART_CHAIN_CALLS_DTO: ContractCallsDTO = {
@@ -98,6 +102,12 @@ export class ContractCallsDTO {
   })
   blockchain: BlockchainType;
 
+  @ApiModelPropertyOptional({
+    description: "기타 정보 기록용 메타 데이터 (255자 제한)",
+    example: EXAMPLE_ETHEREUM_CONTRACT_CALLS_DTO.metadata,
+  })
+  metadata?: string;
+
   public static fromCallEvent(event: EthCallEvent): ContractCallsDTO {
     return {
       id: event.id.toString(),
@@ -112,6 +122,7 @@ export class ContractCallsDTO {
       createdAt: event.createdAt,
       updatedAt: event.updatedAt,
       blockchain: BlockchainType.ETHEREUM,
+      metadata: event.metadata,
     };
   }
 }

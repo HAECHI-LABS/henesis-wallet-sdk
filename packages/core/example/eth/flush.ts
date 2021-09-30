@@ -1,7 +1,6 @@
 /// <reference path="../../src/typings/index.d.ts" />
 import { SDK, Env } from "../../src";
 import "dotenv/config";
-import { Pagination } from "../../src/types";
 
 async function main() {
   const sdk = new SDK({
