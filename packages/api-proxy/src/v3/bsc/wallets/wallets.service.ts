@@ -17,6 +17,7 @@ import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-reques
 import { PaginationDTO } from "../../eth/dto/pagination.dto";
 import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
 import { CreateDepositAddressRequestDTO } from "../../eth/wallets/dto/create-deposit-address-request.dto";
+import { GetDepositAddressOption } from "../../eth/wallets/dto/get-deposit-addresses-option.dto";
 
 @Injectable()
 export class WalletsService {

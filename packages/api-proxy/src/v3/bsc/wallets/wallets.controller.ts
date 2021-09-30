@@ -71,7 +71,6 @@ import {
 import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto";
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
 import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
-import { EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO } from "../../../v2/btc/dto/pagination.dto";
 import { CreateDepositAddressRequestDTO } from "../../eth/wallets/dto/create-deposit-address-request.dto";
 
 @Controller("wallets")
@@ -386,7 +385,7 @@ export class WalletsController {
   )
   @ApiPaginationResponse(
     DepositAddressDTO,
-    EXAMPLE_BITCOIN_PAGINATION_DEPOSIT_ADDRESS_DTO
+    EXAMPLE_BINANCE_SMART_CHAIN_DEPOSIT_ADDRESS_DTO
   )
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
