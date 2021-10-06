@@ -5,7 +5,10 @@ import {
   EthWallet,
   UserWalletPaginationOptions,
 } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
-import { EthTransaction } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
+import {
+  EthTransaction,
+  NftBalancePaginationOptions,
+} from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import { WalletDTO } from "../../eth/dto/wallet.dto";
 import { BalanceDTO } from "../../eth/dto/balance.dto";
 import { ChangeWalletNameRequestDTO } from "../../eth/wallets/dto/change-wallet-name-request.dto";
@@ -18,6 +21,15 @@ import { PaginationDTO } from "../../eth/dto/pagination.dto";
 import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
 import { CreateDepositAddressRequestDTO } from "../../eth/wallets/dto/create-deposit-address-request.dto";
 import { GetDepositAddressOption } from "../../eth/wallets/dto/get-deposit-addresses-option.dto";
+import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
+import express from "express";
+import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
+import { changeUrlHost } from "../../../utils/pagination";
+import { GetNftTransfersOption } from "../../eth/wallets/dto/get-nft-transfers-option.dto";
+import { NftTransferDTO } from "../../eth/dto/nft-transfer.dto";
+import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
+import { EthNftTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
+import { object } from "../../../utils/object";
 
 @Injectable()
 export class WalletsService {
@@ -182,5 +194,72 @@ export class WalletsService {
   ): Promise<EthTransaction> {
     const wallet = await sdk.bsc.wallets.getWallet(walletId);
     return await wallet.resendTransaction(transactionId);
+  }
+
+  public async transferNft(
+    sdk: SDK,
+    walletId: string,
+    request: TransferNftRequestDTO
+  ): Promise<TransactionDTO> {
+    const wallet = await sdk.bsc.wallets.getWallet(walletId);
+    return TransactionDTO.fromEthTransaction(
+      await wallet.transferNft(
+        request.nftId,
+        request.tokenOnchainId,
+        request.to,
+        request.passphrase,
+        null,
+        request.gasPrice == null ? null : new BN(request.gasPrice),
+        request.gasLimit == null ? null : new BN(request.gasLimit),
+        request.metadata
+      )
+    );
+  }
+
+  public async getNftBalance(
+    sdk: SDK,
+    walletId: string,
+    options: NftBalancePaginationOptions,
+    request: express.Request
+  ): Promise<PaginationDTO<NftBalanceDTO>> {
+    const wallet = await sdk.bsc.wallets.getWallet(walletId);
+    const result = await wallet.getNftBalance(options);
+
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
+    return {
+      pagination: result.pagination,
+      results: result.results.map(NftBalanceDTO.fromNftBalance),
+    };
+  }
+
+  public async getNftTransfers(
+    sdk: SDK,
+    options: GetNftTransfersOption,
+    request: express.Request
+  ): Promise<PaginationDTO<NftTransferDTO>> {
+    const result: Pagination<EthNftTransferEvent> =
+      await sdk.bsc.events.getNftTransferEvents(
+        object(GetNftTransfersOption.toSDKOption(options))
+      );
+
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
+    return {
+      pagination: result.pagination,
+      results: result.results.map(NftTransferDTO.fromNftTransferEvent),
+    };
   }
 }

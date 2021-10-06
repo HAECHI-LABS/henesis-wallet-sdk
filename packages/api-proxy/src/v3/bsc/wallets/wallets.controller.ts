@@ -32,7 +32,12 @@ import {
   EXAMPLE_BINANCE_SMART_CHAIN_WALLET_DTO,
   WalletDTO,
 } from "../../eth/dto/wallet.dto";
-import { PaginationDTO } from "../../eth/dto/pagination.dto";
+import {
+  EXAMPLE_BINANCE_SMART_CHAIN_PAGINATION_NFT_TRANSFER_DTO,
+  EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO,
+  EXAMPLE_ETHEREUM_PAGINATION_NFT_TRANSFER_DTO,
+  PaginationDTO,
+} from "../../eth/dto/pagination.dto";
 import {
   BalanceDTO,
   EXAMPLE_BINANCE_SMART_CHAIN_BALANCE_DTO,
@@ -48,22 +53,38 @@ import {
 import express from "express";
 import { ReplaceTransactionRequestDTO } from "../../eth/transactions/dto/replace-transaction-request.dto";
 import {
+  DEPOSIT_ADDRESS_ID_OPTIONAL,
   DEPOSIT_ADDRESS_ID_REQUIRED,
   DEPOSIT_ADDRESS_OPTIONAL,
+  MASTER_WALLET_ID_REQUIRED,
   NAME_OPTIONAL,
+  NFT_ID_OPTIONAL,
   PAGE_OPTIONAL,
   SIZE_OPTIONAL,
+  STATUS_OPTIONAL,
   TICKER_OPTIONAL,
+  TOKEN_NAME_OPTIONAL,
+  TOKEN_ONCHAIN_ID_OPTIONAL,
+  TRANSACTION_HASH_OPTIONAL,
+  TRANSACTION_ID_OPTIONAL,
   TRANSACTION_ID_REQUIRED,
+  TRANSFER_TYPE_OPTIONAL,
+  UPDATED_AT_GTE_OPTIONAL,
+  UPDATED_AT_LE_OPTIONAL,
+  USER_WALLET_ID_OPTIONAL,
+  USER_WALLET_ID_REQUIRED,
+  WALLET_ID_OPTIONAL,
   WALLET_ID_REQUIRED,
 } from "../../eth/dto/params";
 import { ChangeWalletNameRequestDTO } from "../../eth/wallets/dto/change-wallet-name-request.dto";
 import {
   DepositAddressNotFoundException,
   EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO,
+  EXAMPLE_INVALID_STATUS_EXCEPTION_DTO,
   EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
   EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO,
   EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
+  InvalidStatusException,
   NoWalletNameException,
   TransactionIdNotFoundException,
   WalletNotFoundException,
@@ -72,6 +93,13 @@ import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto"
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
 import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
 import { CreateDepositAddressRequestDTO } from "../../eth/wallets/dto/create-deposit-address-request.dto";
+import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
+import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
+import { NftTransferDTO } from "../../eth/dto/nft-transfer.dto";
+import {
+  EventStatus,
+  TransferType,
+} from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -515,6 +543,135 @@ export class WalletsController {
       walletId,
       depositAddressId,
       ticker
+    );
+  }
+
+  @Post("/:masterWalletId/nft/transfer")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO
+    ),
+    isArray: true,
+  })
+  @PathParams(MASTER_WALLET_ID_REQUIRED)
+  @Queries(TICKER_OPTIONAL)
+  @ApiOperation({
+    summary: "NFT 출금하기",
+    description: "특정 지갑에서 NFT 토큰을 출금합니다.",
+  })
+  @ReadMeExtension()
+  public async transferNft(
+    @Request() request: express.Request,
+    @Param("masterWalletId") walletId: string,
+    @Body() transferNftRequest: TransferNftRequestDTO
+  ): Promise<TransactionDTO> {
+    return await this.walletsService.transferNft(
+      request.sdk,
+      walletId,
+      transferNftRequest
+    );
+  }
+
+  @Get("/:masterWalletId/nft/balance")
+  @ApiPaginationResponse(
+    NftBalanceDTO,
+    EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO
+  )
+  @PathParams(WALLET_ID_REQUIRED)
+  @Queries(TICKER_OPTIONAL)
+  @ApiOperation({
+    summary: "NFT 잔고 조회하기",
+    description: "특정 지갑의 NFT 잔고를 조회합니다.",
+  })
+  @ReadMeExtension()
+  public async getNftBalance(
+    @Request() request: express.Request,
+    @Param("masterWalletId") walletId: string,
+    @Query("size") size: number = 15,
+    @Query("page") page: number = 0,
+    @Query("tokenOnchainId") tokenOnchainId?: string,
+    @Query("tokenName") tokenName?: string
+  ): Promise<PaginationDTO<NftBalanceDTO>> {
+    return await this.walletsService.getNftBalance(
+      request.sdk,
+      walletId,
+      {
+        size,
+        page,
+        tokenOnchainId,
+        tokenName,
+      },
+      request
+    );
+  }
+
+  @Get("/:masterWalletId/nft/transfers")
+  @Queries(
+    NFT_ID_OPTIONAL,
+    TOKEN_NAME_OPTIONAL,
+    TOKEN_ONCHAIN_ID_OPTIONAL,
+    USER_WALLET_ID_OPTIONAL,
+    WALLET_ID_OPTIONAL,
+    TRANSACTION_ID_OPTIONAL,
+    TRANSACTION_HASH_OPTIONAL,
+    STATUS_OPTIONAL,
+    TRANSFER_TYPE_OPTIONAL,
+    UPDATED_AT_GTE_OPTIONAL,
+    UPDATED_AT_LE_OPTIONAL,
+    SIZE_OPTIONAL,
+    PAGE_OPTIONAL
+  )
+  @ApiPaginationResponse(
+    NftTransferDTO,
+    EXAMPLE_BINANCE_SMART_CHAIN_PAGINATION_NFT_TRANSFER_DTO
+  )
+  @ApiBadRequestResponse({
+    description: "올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.",
+    content: ApiResponseContentGenerator(
+      InvalidStatusException,
+      EXAMPLE_INVALID_STATUS_EXCEPTION_DTO
+    ),
+  })
+  @ApiOperation({
+    summary: "전체 NFT 입출금 목록 조회하기",
+    description: "특정 지갑의 NFT 입출금 내역을 조회합니다.",
+  })
+  @ReadMeExtension()
+  public async getNftTransfers(
+    @Request() request: express.Request,
+    @Param("masterWalletId") walletId?: string,
+    @Query("nftId") nftId?: number,
+    @Query("tokenName") tokenName?: string,
+    @Query("tokenOnchainId") tokenOnchainId?: string,
+    @Query("userWalletId") depositAddressId?: string,
+    @Query("transactionId") transactionId?: string,
+    @Query("transactionHash") transactionHash?: string,
+    @Query("status") status?: EventStatus,
+    @Query("transferType") transferType?: TransferType,
+    @Query("updatedAtGte") updatedAtGte?: string,
+    @Query("updatedAtLt") updatedAtLt?: string,
+    @Query("size") size: number = 15,
+    @Query("page") page: number = 0
+  ): Promise<PaginationDTO<NftTransferDTO>> {
+    return await this.walletsService.getNftTransfers(
+      request.sdk,
+      {
+        nftId,
+        tokenName,
+        tokenOnchainId,
+        depositAddressId,
+        walletId,
+        transactionId,
+        transactionHash,
+        status,
+        transferType,
+        updatedAtGte,
+        updatedAtLt,
+        size,
+        page,
+      },
+      request
     );
   }
 }

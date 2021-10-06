@@ -50,6 +50,11 @@ export const MASTER_WALLET_ID_REQUIRED: ApiParamOptions = {
   required: true,
   description: "마스터 지갑 ID",
 };
+export const USER_WALLET_ID_OPTIONAL: ApiParamOptions = {
+  name: "userWalletId",
+  required: false,
+  description: "사용자 지갑 ID",
+};
 export const USER_WALLET_ID_REQUIRED: ApiParamOptions = {
   name: "userWalletId",
   required: true,
