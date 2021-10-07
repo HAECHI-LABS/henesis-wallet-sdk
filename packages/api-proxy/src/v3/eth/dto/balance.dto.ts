@@ -32,7 +32,7 @@ export class BalanceDTO {
 
   @ApiModelProperty({
     description:
-      "출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei)",
+      "출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei, peb, jager)",
     example: EXAMPLE_ETHEREUM_BALANCE_DTO.spendableAmount,
   })
   spendableAmount: string;
