@@ -2,6 +2,7 @@ import { EventDTO, EXAMPLE_ETH_KLAY_EVENT_DTO } from "./event.dto";
 import { EthValueTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
 import { BNConverter } from "@haechi-labs/henesis-wallet-core";
 import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import { EXAMPLE_ETHEREUM_TRANSFER_DTO } from "../../../v3/eth/dto/transfer.dto";
 
 export const EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO: ValueTransferEventDTO =
   Object.assign(EXAMPLE_ETH_KLAY_EVENT_DTO, {
@@ -13,6 +14,9 @@ export const EXAMPLE_ETH_KLAY_VALUE_TRANSFER_EVENT_DTO: ValueTransferEventDTO =
     transferType: "WITHDRAWAL",
     walletName: "bit",
     walletType: "MASTER_WALLET",
+    hopTransactionId: "6f831cf03c3ff08c87c578d7568edc15",
+    hopTransactionHash:
+      "0x60603c815f0ba0ad6b7f2ae398bd7cb9fe71347f984e32453fe4fe53f255dfd3",
   });
 
 export class ValueTransferEventDTO extends EventDTO {
@@ -64,6 +68,19 @@ export class ValueTransferEventDTO extends EventDTO {
   })
   walletType: string;
 
+  @ApiModelProperty({
+    description:
+      "홉 트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른 개념입니다.)",
+    example: EXAMPLE_ETHEREUM_TRANSFER_DTO.hopTransactionId,
+  })
+  hopTransactionId: string;
+
+  @ApiModelProperty({
+    description: "홉 트랜잭션 해시",
+    example: EXAMPLE_ETHEREUM_TRANSFER_DTO.hopTransactionHash,
+  })
+  hopTransactionHash: string;
+
   static fromETHValueTransferEvent(
     event: EthValueTransferEvent
   ): ValueTransferEventDTO {
@@ -89,6 +106,8 @@ export class ValueTransferEventDTO extends EventDTO {
       walletName: event.walletName,
       walletType: event.walletType,
       metadata: event.metadata,
+      hopTransactionId: event.hopTransactionId,
+      hopTransactionHash: event.hopTransactionHash,
     };
   }
 }
