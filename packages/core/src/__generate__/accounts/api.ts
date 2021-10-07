@@ -1818,7 +1818,7 @@ export const AccountControllerApiAxiosParamCreator = function (configuration?: C
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccount: async (options: any = {}): Promise<RequestArgs> => {
+        getAccount1: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v2/accounts/me`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -2219,8 +2219,8 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAccount(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>> {
-            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).getAccount(options);
+        async getAccount1(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>> {
+            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).getAccount1(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2379,8 +2379,8 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccount(options?: any): AxiosPromise<AccountDTO> {
-            return AccountControllerApiFp(configuration).getAccount(options).then((request) => request(axios, basePath));
+        getAccount1(options?: any): AxiosPromise<AccountDTO> {
+            return AccountControllerApiFp(configuration).getAccount1(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2513,8 +2513,8 @@ export class AccountControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AccountControllerApi
      */
-    public getAccount(options?: any) {
-        return AccountControllerApiFp(this.configuration).getAccount(options).then((request) => request(this.axios, this.basePath));
+    public getAccount1(options?: any) {
+        return AccountControllerApiFp(this.configuration).getAccount1(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3227,10 +3227,10 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccount1: async (accountId: string, options: any = {}): Promise<RequestArgs> => {
+        getAccount: async (accountId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'accountId' is not null or undefined
             if (accountId === null || accountId === undefined) {
-                throw new RequiredError('accountId','Required parameter accountId was null or undefined when calling getAccount1.');
+                throw new RequiredError('accountId','Required parameter accountId was null or undefined when calling getAccount.');
             }
             const localVarPath = `/api/v2/operation/accounts/{accountId}`
                 .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
@@ -3549,8 +3549,8 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAccount1(accountId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getAccount1(accountId, options);
+        async getAccount(accountId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountDTO>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getAccount(accountId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3681,8 +3681,8 @@ export const OperationControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAccount1(accountId: string, options?: any): AxiosPromise<AccountDTO> {
-            return OperationControllerApiFp(configuration).getAccount1(accountId, options).then((request) => request(axios, basePath));
+        getAccount(accountId: string, options?: any): AxiosPromise<AccountDTO> {
+            return OperationControllerApiFp(configuration).getAccount(accountId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3787,8 +3787,8 @@ export class OperationControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OperationControllerApi
      */
-    public getAccount1(accountId: string, options?: any) {
-        return OperationControllerApiFp(this.configuration).getAccount1(accountId, options).then((request) => request(this.axios, this.basePath));
+    public getAccount(accountId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).getAccount(accountId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
