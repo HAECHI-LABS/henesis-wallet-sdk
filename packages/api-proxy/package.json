@@ -38,7 +38,7 @@
     "preBootstrap:windows": "if exist node_modules rmdir /q /s node_modules"
   },
   "dependencies": {
-    "@haechi-labs/henesis-wallet-core": "haechi-labs/henesis-wallet-sdk#borre\/bsc-root-core",
+    "@haechi-labs/henesis-wallet-core": "3.4.0",
     "@nestjs/common": "^7.6.15",
     "@nestjs/core": "^7.6.15",
     "@nestjs/platform-express": "^7.6.15",

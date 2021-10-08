@@ -55,7 +55,7 @@ import {
   getAddressFromCompressedPub,
 } from "./abstractWallet";
 import { Nft } from "./nft";
-import { isLessThanWalletV4 } from "../utils/wallet";
+import { canUseFlush, canUseFlushWithTargets } from "../utils/wallet";
 
 export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;
@@ -700,7 +700,12 @@ export class EthMasterWallet extends EthLikeWallet {
     gasLimit?: BN,
     metadata?: string
   ): Promise<EthTransaction> {
-    if (isLessThanWalletV4(this.getVersion())) {
+    if (
+      !canUseFlushWithTargets(
+        this.getData().blockchain,
+        this.getVersionNumber()
+      )
+    ) {
       throw new Error(
         "This wallet is not a compatible version. Please use the v2 APIs."
       );
@@ -730,7 +735,7 @@ export class EthMasterWallet extends EthLikeWallet {
     gasLimit?: BN,
     metadata?: string
   ): Promise<EthTransaction> {
-    if (!isLessThanWalletV4(this.getVersion())) {
+    if (!canUseFlush(this.getData().blockchain, this.getVersionNumber())) {
       throw new Error(
         "This wallet is not a compatible version. Please use the v3 APIs."
       );

@@ -38,7 +38,7 @@ import { EthMasterWalletData } from "@haechi-labs/henesis-wallet-core/lib/eth/ab
 import { object } from "../../../utils/object";
 import { changeUrlHost } from "../../../utils/pagination";
 import express from "express";
-import { isLessThanWalletV4 } from "@haechi-labs/henesis-wallet-core/lib/utils/wallet";
+import { canUseUserWallet } from "@haechi-labs/henesis-wallet-core/lib/utils/wallet";
 
 @Injectable()
 export class WalletsService {
@@ -424,7 +424,12 @@ export class WalletsService {
     id: string
   ): Promise<EthMasterWallet> {
     const masterWallet = await sdk.klay.wallets.getMasterWallet(id);
-    if (!isLessThanWalletV4(masterWallet.getVersion())) {
+    if (
+      canUseUserWallet(
+        masterWallet.getData().blockchain,
+        masterWallet.getVersionNumber()
+      )
+    ) {
       throw new Error(
         "This wallet is not a compatible version. Please use the v3 APIs."
       );

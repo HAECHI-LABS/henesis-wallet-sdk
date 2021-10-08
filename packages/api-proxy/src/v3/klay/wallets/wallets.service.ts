@@ -18,7 +18,7 @@ import { CreateUserWalletRequestDTO } from "../../../v2/eth/dto/create-user-wall
 import { PaginationDTO } from "../../../v2/eth/dto/pagination.dto";
 import { object } from "../../../utils/object";
 import { changeUrlHost } from "../../../utils/pagination";
-import { isLessThanWalletV4 } from "@haechi-labs/henesis-wallet-core/lib/utils/wallet";
+import { canUseUserWallet } from "@haechi-labs/henesis-wallet-core/lib/utils/wallet";
 import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
 import { NftBalancePaginationOptions } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
@@ -300,7 +300,12 @@ export class WalletsService {
     id: string
   ): Promise<EthMasterWallet> {
     const masterWallet = await sdk.klay.wallets.getMasterWallet(id);
-    if (isLessThanWalletV4(masterWallet.getVersion())) {
+    if (
+      canUseUserWallet(
+        masterWallet.getData().blockchain,
+        masterWallet.getVersion()
+      )
+    ) {
       throw new Error(
         "This wallet is not a compatible version. Please use the v2 APIs."
       );
