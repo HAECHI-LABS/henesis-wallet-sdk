@@ -76,6 +76,19 @@ export class WalletsService {
     request: SendCoinRequestDTO
   ): Promise<TransactionDTO> {
     const wallet: EthWallet = await sdk.eth.wallets.getWallet(walletId);
+    if (request.isHopTransaction) {
+      const res = await wallet.hopTransfer(
+        request.ticker,
+        request.to,
+        new BN(request.amount),
+        request.passphrase,
+        null,
+        request.gasPrice == null ? null : new BN(request.gasPrice),
+        request.gasLimit == null ? null : new BN(request.gasLimit),
+        request.metadata
+      );
+      return TransactionDTO.fromEthTransaction(res);
+    }
     return TransactionDTO.fromEthTransaction(
       await wallet.transfer(
         request.ticker,

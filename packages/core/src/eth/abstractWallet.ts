@@ -1,5 +1,9 @@
 import BN from "bn.js";
-import { BlockchainType, transformBlockchainType } from "../blockchain";
+import {
+  BlockchainType,
+  transformBlockchainType,
+  BlockchainCoinSymbol,
+} from "../blockchain";
 import { Key, Keychains, Pagination, PaginationOptions } from "../types";
 import {
   formatMultiSigPayload,
@@ -17,6 +21,7 @@ import { Wallet, WalletData } from "../wallet";
 import { Coins } from "./coins";
 import {
   BatchTransactionDTO,
+  CreateHopTransactionRequest,
   CreateMultiSigTransactionRequest,
   NftBalanceDTO,
   NftBalanceSearchCondition,
@@ -38,6 +43,7 @@ import {
   EthDepositAddress,
   transformDepositAddressData,
 } from "./depositAddress";
+import { HenesisKeys } from "./henesisKeys";
 
 export type EthTransaction = Omit<TransactionDTO, "blockchain"> & {
   blockchain: BlockchainType;
@@ -94,6 +100,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
 
   protected readonly coins: Coins;
   protected readonly nfts: Nfts;
+  protected readonly henesisKey: HenesisKeys;
 
   protected constructor(
     client: Client,
@@ -106,6 +113,7 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     this.data = data;
     this.coins = new Coins(this.client);
     this.nfts = new Nfts(this.client);
+    this.henesisKey = new HenesisKeys(this.client);
   }
 
   getChain(): BlockchainType {
@@ -211,6 +219,37 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     return this.signPayload(multiSigPayload, passphrase);
   }
 
+  async hopTransfer(
+    coin: string | Coin,
+    to: string,
+    amount: BN,
+    passphrase: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const c = typeof coin === "string" ? await this.coins.getCoin(coin) : coin;
+    if (
+      BlockchainCoinSymbol[this.blockchain].toUpperCase() !==
+      c.getCoinData().symbol.toUpperCase()
+    ) {
+      throw new Error(
+        "hop transfer support only platform coin (e.g. ETH, KLAY)"
+      );
+    }
+    const henesisKeyAddress = (await this.henesisKey.getHenesisKey()).address;
+    return this.sendHopTransaction(
+      await this.buildTransferPayload(c, henesisKeyAddress, amount, passphrase),
+      this.getId(),
+      to,
+      otpCode,
+      gasPrice,
+      gasLimit || this.getGasLimitByTicker(c),
+      metadata
+    );
+  }
+
   async transfer(
     coin: string | Coin,
     to: string,
@@ -273,6 +312,36 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
           otpCode
         )
     );
+  }
+
+  async sendHopTransaction(
+    signedMultiSigPayload: SignedMultiSigPayload,
+    walletId: string,
+    toAddress: string,
+    otpCode?: string,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const request: CreateHopTransactionRequest = {
+      walletId,
+      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
+        signedMultiSigPayload
+      ),
+      toAddress: toAddress,
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
+      otpCode,
+      metadata,
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `/wallets/hop-transfer`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
   }
 
   async sendTransaction(

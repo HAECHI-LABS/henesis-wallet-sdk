@@ -187,6 +187,19 @@ export class WalletsService {
       masterWalletId
     );
 
+    if (request.isHopTransaction) {
+      return await masterWallet.hopTransfer(
+        await WalletsService.getCoinByTicker(sdk, request.ticker),
+        request.to,
+        new BN(request.amount),
+        request.passphrase,
+        null,
+        request.gasPrice ? new BN(request.gasPrice) : undefined,
+        request.gasLimit ? new BN(request.gasLimit) : undefined,
+        request.metadata
+      );
+    }
+
     return await masterWallet.transfer(
       await WalletsService.getCoinByTicker(sdk, request.ticker),
       request.to,
@@ -210,6 +223,19 @@ export class WalletsService {
       masterWalletId,
       userWalletId
     );
+
+    if (request.isHopTransaction) {
+      return await userWallet.hopTransfer(
+        await WalletsService.getCoinByTicker(sdk, request.ticker),
+        request.to,
+        new BN(request.amount),
+        request.passphrase,
+        null,
+        request.gasPrice ? new BN(request.gasPrice) : undefined,
+        request.gasLimit ? new BN(request.gasLimit) : undefined,
+        request.metadata
+      );
+    }
 
     return await userWallet.transfer(
       await WalletsService.getCoinByTicker(sdk, request.ticker),

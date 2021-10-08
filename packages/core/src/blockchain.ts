@@ -40,3 +40,13 @@ export enum BlockchainType {
   BINANCE_SMART_CHAIN = "BINANCE_SMART_CHAIN",
   BITCOIN_CASH = "BITCOIN_CASH",
 }
+
+export enum BlockchainCoinSymbol {
+  ETHEREUM = "ETH",
+  KLAYTN = "KLAY",
+  BITCOIN = "BTC",
+  LITECOIN = "LTC",
+  FILECOIN = "FIL",
+  BINANCE_SMART_CHAIN = "BNB",
+  BITCOIN_CASH = "BCH",
+}
