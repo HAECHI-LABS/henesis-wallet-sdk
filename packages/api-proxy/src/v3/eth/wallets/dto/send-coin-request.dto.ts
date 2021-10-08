@@ -55,7 +55,7 @@ export class SendCoinRequestDTO {
 
   @ApiModelPropertyOptional({
     description:
-      "입금자가 컨트랙트를 통한 입금을 원치 않는 경우, 컨트랙트가 아닌 EOA로 출금을 합니다.",
+      "컨트랙트를 통한 입금을 원치 않는 경우, 컨트랙트가 아닌 EOA로 출금을 진행 합니다.",
     example: EXAMPLE_ETHEREUM_SEND_COIN_REQUEST_DTO.isHopTransaction,
   })
   isHopTransaction?: boolean;

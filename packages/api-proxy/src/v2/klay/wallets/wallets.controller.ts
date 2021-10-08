@@ -59,7 +59,7 @@ import {
   EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO,
   MasterWalletDTO,
 } from "../../eth/dto/master-wallet.dto";
-import { WalletsService } from "../../eth/wallets/wallets.service";
+import { WalletsService } from "../../klay/wallets/wallets.service";
 import {
   EXAMPLE_ETH_KLAY_TRANSACTION_DTO,
   TransactionDTO,
