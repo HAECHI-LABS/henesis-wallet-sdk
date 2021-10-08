@@ -253,6 +253,31 @@ export class WalletsService {
     };
   }
 
+  public async getDepositAddressNftBalance(
+    sdk: SDK,
+    walletId: string,
+    depositAddressId: string,
+    options: NftBalancePaginationOptions,
+    request: express.Request
+  ): Promise<PaginationDTO<NftBalanceDTO>> {
+    const wallet = await sdk.eth.wallets.getWallet(walletId);
+    const depositAddress = await wallet.getDepositAddress(depositAddressId);
+    const result = await depositAddress.getNftBalance(options);
+
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
+    return {
+      pagination: result.pagination,
+      results: result.results.map(NftBalanceDTO.fromNftBalance),
+    };
+  }
+
   public async getNftTransfers(
     sdk: SDK,
     options: GetNftTransfersOption,

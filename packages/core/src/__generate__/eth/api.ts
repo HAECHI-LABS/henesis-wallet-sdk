@@ -7802,6 +7802,65 @@ export const BscWalletControllerApiAxiosParamCreator = function (configuration?:
         /**
          * 
          * @param {string} walletId 
+         * @param {string} userWalletId 
+         * @param {Pageable} pageable 
+         * @param {NftBalanceSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletNftBalance: async (walletId: string, userWalletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletNftBalance.');
+            }
+            // verify required parameter 'userWalletId' is not null or undefined
+            if (userWalletId === null || userWalletId === undefined) {
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletNftBalance.');
+            }
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getUserWalletNftBalance.');
+            }
+            // verify required parameter 'searchCondition' is not null or undefined
+            if (searchCondition === null || searchCondition === undefined) {
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getUserWalletNftBalance.');
+            }
+            const localVarPath = `/api/v2/bnb/wallets/{walletId}/user-wallets/{userWalletId}/nft/balance`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
+                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (searchCondition !== undefined) {
+                localVarQueryParameter['searchCondition'] = searchCondition;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} walletId 
          * @param {Pageable} pageable 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8406,6 +8465,56 @@ export const BscWalletControllerApiAxiosParamCreator = function (configuration?:
         /**
          * 
          * @param {string} walletId 
+         * @param {string} userWalletId 
+         * @param {CreateNftMultiSigTransactionRequest} createNftMultiSigTransactionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendUserWalletNftTransaction: async (walletId: string, userWalletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling sendUserWalletNftTransaction.');
+            }
+            // verify required parameter 'userWalletId' is not null or undefined
+            if (userWalletId === null || userWalletId === undefined) {
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling sendUserWalletNftTransaction.');
+            }
+            // verify required parameter 'createNftMultiSigTransactionRequest' is not null or undefined
+            if (createNftMultiSigTransactionRequest === null || createNftMultiSigTransactionRequest === undefined) {
+                throw new RequiredError('createNftMultiSigTransactionRequest','Required parameter createNftMultiSigTransactionRequest was null or undefined when calling sendUserWalletNftTransaction.');
+            }
+            const localVarPath = `/api/v2/bnb/wallets/{walletId}/user-wallets/{userWalletId}/nft/transactions`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
+                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createNftMultiSigTransactionRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createNftMultiSigTransactionRequest !== undefined ? createNftMultiSigTransactionRequest : {}) : (createNftMultiSigTransactionRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} walletId 
          * @param {ValidateIsAllowedAddressRequest} validateIsAllowedAddressRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8753,6 +8862,22 @@ export const BscWalletControllerApiFp = function(configuration?: Configuration) 
         /**
          * 
          * @param {string} walletId 
+         * @param {string} userWalletId 
+         * @param {Pageable} pageable 
+         * @param {NftBalanceSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUserWalletNftBalance(walletId: string, userWalletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationNftBalanceDTO>> {
+            const localVarAxiosArgs = await BscWalletControllerApiAxiosParamCreator(configuration).getUserWalletNftBalance(walletId, userWalletId, pageable, searchCondition, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} walletId 
          * @param {Pageable} pageable 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -8939,6 +9064,21 @@ export const BscWalletControllerApiFp = function(configuration?: Configuration) 
          */
         async sendTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
             const localVarAxiosArgs = await BscWalletControllerApiAxiosParamCreator(configuration).sendTransaction1(createMultiSigTransactionRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} walletId 
+         * @param {string} userWalletId 
+         * @param {CreateNftMultiSigTransactionRequest} createNftMultiSigTransactionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sendUserWalletNftTransaction(walletId: string, userWalletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
+            const localVarAxiosArgs = await BscWalletControllerApiAxiosParamCreator(configuration).sendUserWalletNftTransaction(walletId, userWalletId, createNftMultiSigTransactionRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -9180,6 +9320,18 @@ export const BscWalletControllerApiFactory = function (configuration?: Configura
         /**
          * 
          * @param {string} walletId 
+         * @param {string} userWalletId 
+         * @param {Pageable} pageable 
+         * @param {NftBalanceSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletNftBalance(walletId: string, userWalletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any): AxiosPromise<PaginationNftBalanceDTO> {
+            return BscWalletControllerApiFp(configuration).getUserWalletNftBalance(walletId, userWalletId, pageable, searchCondition, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} walletId 
          * @param {Pageable} pageable 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9314,6 +9466,17 @@ export const BscWalletControllerApiFactory = function (configuration?: Configura
          */
         sendTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO> {
             return BscWalletControllerApiFp(configuration).sendTransaction1(createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} walletId 
+         * @param {string} userWalletId 
+         * @param {CreateNftMultiSigTransactionRequest} createNftMultiSigTransactionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendUserWalletNftTransaction(walletId: string, userWalletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO> {
+            return BscWalletControllerApiFp(configuration).sendUserWalletNftTransaction(walletId, userWalletId, createNftMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -9590,6 +9753,20 @@ export class BscWalletControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} walletId 
+     * @param {string} userWalletId 
+     * @param {Pageable} pageable 
+     * @param {NftBalanceSearchCondition} searchCondition 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BscWalletControllerApi
+     */
+    public getUserWalletNftBalance(walletId: string, userWalletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any) {
+        return BscWalletControllerApiFp(this.configuration).getUserWalletNftBalance(walletId, userWalletId, pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} walletId 
      * @param {Pageable} pageable 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -9751,6 +9928,19 @@ export class BscWalletControllerApi extends BaseAPI {
      */
     public sendTransaction1(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) {
         return BscWalletControllerApiFp(this.configuration).sendTransaction1(createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} walletId 
+     * @param {string} userWalletId 
+     * @param {CreateNftMultiSigTransactionRequest} createNftMultiSigTransactionRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BscWalletControllerApi
+     */
+    public sendUserWalletNftTransaction(walletId: string, userWalletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any) {
+        return BscWalletControllerApiFp(this.configuration).sendUserWalletNftTransaction(walletId, userWalletId, createNftMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -13875,6 +14065,65 @@ export const EthWalletControllerApiAxiosParamCreator = function (configuration?:
          * 
          * @param {string} walletId 
          * @param {string} userWalletId 
+         * @param {Pageable} pageable 
+         * @param {NftBalanceSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletNftBalance1: async (walletId: string, userWalletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletNftBalance1.');
+            }
+            // verify required parameter 'userWalletId' is not null or undefined
+            if (userWalletId === null || userWalletId === undefined) {
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletNftBalance1.');
+            }
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getUserWalletNftBalance1.');
+            }
+            // verify required parameter 'searchCondition' is not null or undefined
+            if (searchCondition === null || searchCondition === undefined) {
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getUserWalletNftBalance1.');
+            }
+            const localVarPath = `/api/v2/eth/wallets/{walletId}/user-wallets/{userWalletId}/nft/balance`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
+                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (searchCondition !== undefined) {
+                localVarQueryParameter['searchCondition'] = searchCondition;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} walletId 
+         * @param {string} userWalletId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -14880,6 +15129,22 @@ export const EthWalletControllerApiFp = function(configuration?: Configuration) 
          * 
          * @param {string} walletId 
          * @param {string} userWalletId 
+         * @param {Pageable} pageable 
+         * @param {NftBalanceSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUserWalletNftBalance1(walletId: string, userWalletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationNftBalanceDTO>> {
+            const localVarAxiosArgs = await EthWalletControllerApiAxiosParamCreator(configuration).getUserWalletNftBalance1(walletId, userWalletId, pageable, searchCondition, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} walletId 
+         * @param {string} userWalletId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15330,6 +15595,18 @@ export const EthWalletControllerApiFactory = function (configuration?: Configura
          * 
          * @param {string} walletId 
          * @param {string} userWalletId 
+         * @param {Pageable} pageable 
+         * @param {NftBalanceSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletNftBalance1(walletId: string, userWalletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any): AxiosPromise<PaginationNftBalanceDTO> {
+            return EthWalletControllerApiFp(configuration).getUserWalletNftBalance1(walletId, userWalletId, pageable, searchCondition, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} walletId 
+         * @param {string} userWalletId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15755,6 +16032,20 @@ export class EthWalletControllerApi extends BaseAPI {
      */
     public getUserWalletBalance2(walletId: string, userWalletId: string, symbol?: string, options?: any) {
         return EthWalletControllerApiFp(this.configuration).getUserWalletBalance2(walletId, userWalletId, symbol, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} walletId 
+     * @param {string} userWalletId 
+     * @param {Pageable} pageable 
+     * @param {NftBalanceSearchCondition} searchCondition 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthWalletControllerApi
+     */
+    public getUserWalletNftBalance1(walletId: string, userWalletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any) {
+        return EthWalletControllerApiFp(this.configuration).getUserWalletNftBalance1(walletId, userWalletId, pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -19990,6 +20281,65 @@ export const KlayWalletControllerApiAxiosParamCreator = function (configuration?
          * 
          * @param {string} walletId 
          * @param {string} userWalletId 
+         * @param {Pageable} pageable 
+         * @param {NftBalanceSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletNftBalance2: async (walletId: string, userWalletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling getUserWalletNftBalance2.');
+            }
+            // verify required parameter 'userWalletId' is not null or undefined
+            if (userWalletId === null || userWalletId === undefined) {
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling getUserWalletNftBalance2.');
+            }
+            // verify required parameter 'pageable' is not null or undefined
+            if (pageable === null || pageable === undefined) {
+                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getUserWalletNftBalance2.');
+            }
+            // verify required parameter 'searchCondition' is not null or undefined
+            if (searchCondition === null || searchCondition === undefined) {
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getUserWalletNftBalance2.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}/nft/balance`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
+                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (pageable !== undefined) {
+                localVarQueryParameter['pageable'] = pageable;
+            }
+
+            if (searchCondition !== undefined) {
+                localVarQueryParameter['searchCondition'] = searchCondition;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} walletId 
+         * @param {string} userWalletId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -20596,6 +20946,56 @@ export const KlayWalletControllerApiAxiosParamCreator = function (configuration?
         /**
          * 
          * @param {string} walletId 
+         * @param {string} userWalletId 
+         * @param {CreateNftMultiSigTransactionRequest} createNftMultiSigTransactionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendUserWalletNftTransaction1: async (walletId: string, userWalletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'walletId' is not null or undefined
+            if (walletId === null || walletId === undefined) {
+                throw new RequiredError('walletId','Required parameter walletId was null or undefined when calling sendUserWalletNftTransaction1.');
+            }
+            // verify required parameter 'userWalletId' is not null or undefined
+            if (userWalletId === null || userWalletId === undefined) {
+                throw new RequiredError('userWalletId','Required parameter userWalletId was null or undefined when calling sendUserWalletNftTransaction1.');
+            }
+            // verify required parameter 'createNftMultiSigTransactionRequest' is not null or undefined
+            if (createNftMultiSigTransactionRequest === null || createNftMultiSigTransactionRequest === undefined) {
+                throw new RequiredError('createNftMultiSigTransactionRequest','Required parameter createNftMultiSigTransactionRequest was null or undefined when calling sendUserWalletNftTransaction1.');
+            }
+            const localVarPath = `/api/v2/klay/wallets/{walletId}/user-wallets/{userWalletId}/nft/transactions`
+                .replace(`{${"walletId"}}`, encodeURIComponent(String(walletId)))
+                .replace(`{${"userWalletId"}}`, encodeURIComponent(String(userWalletId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createNftMultiSigTransactionRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createNftMultiSigTransactionRequest !== undefined ? createNftMultiSigTransactionRequest : {}) : (createNftMultiSigTransactionRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} walletId 
          * @param {ValidateIsAllowedAddressRequest} validateIsAllowedAddressRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -20928,6 +21328,22 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          * 
          * @param {string} walletId 
          * @param {string} userWalletId 
+         * @param {Pageable} pageable 
+         * @param {NftBalanceSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUserWalletNftBalance2(walletId: string, userWalletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationNftBalanceDTO>> {
+            const localVarAxiosArgs = await KlayWalletControllerApiAxiosParamCreator(configuration).getUserWalletNftBalance2(walletId, userWalletId, pageable, searchCondition, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} walletId 
+         * @param {string} userWalletId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -21114,6 +21530,21 @@ export const KlayWalletControllerApiFp = function(configuration?: Configuration)
          */
         async sendTransaction3(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
             const localVarAxiosArgs = await KlayWalletControllerApiAxiosParamCreator(configuration).sendTransaction3(createMultiSigTransactionRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} walletId 
+         * @param {string} userWalletId 
+         * @param {CreateNftMultiSigTransactionRequest} createNftMultiSigTransactionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sendUserWalletNftTransaction1(walletId: string, userWalletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TransactionDTO>> {
+            const localVarAxiosArgs = await KlayWalletControllerApiAxiosParamCreator(configuration).sendUserWalletNftTransaction1(walletId, userWalletId, createNftMultiSigTransactionRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -21344,6 +21775,18 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          * 
          * @param {string} walletId 
          * @param {string} userWalletId 
+         * @param {Pageable} pageable 
+         * @param {NftBalanceSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWalletNftBalance2(walletId: string, userWalletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any): AxiosPromise<PaginationNftBalanceDTO> {
+            return KlayWalletControllerApiFp(configuration).getUserWalletNftBalance2(walletId, userWalletId, pageable, searchCondition, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} walletId 
+         * @param {string} userWalletId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -21478,6 +21921,17 @@ export const KlayWalletControllerApiFactory = function (configuration?: Configur
          */
         sendTransaction3(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO> {
             return KlayWalletControllerApiFp(configuration).sendTransaction3(createMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} walletId 
+         * @param {string} userWalletId 
+         * @param {CreateNftMultiSigTransactionRequest} createNftMultiSigTransactionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendUserWalletNftTransaction1(walletId: string, userWalletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any): AxiosPromise<TransactionDTO> {
+            return KlayWalletControllerApiFp(configuration).sendUserWalletNftTransaction1(walletId, userWalletId, createNftMultiSigTransactionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -21741,6 +22195,20 @@ export class KlayWalletControllerApi extends BaseAPI {
      * 
      * @param {string} walletId 
      * @param {string} userWalletId 
+     * @param {Pageable} pageable 
+     * @param {NftBalanceSearchCondition} searchCondition 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public getUserWalletNftBalance2(walletId: string, userWalletId: string, pageable: Pageable, searchCondition: NftBalanceSearchCondition, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).getUserWalletNftBalance2(walletId, userWalletId, pageable, searchCondition, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} walletId 
+     * @param {string} userWalletId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KlayWalletControllerApi
@@ -21902,6 +22370,19 @@ export class KlayWalletControllerApi extends BaseAPI {
      */
     public sendTransaction3(createMultiSigTransactionRequest: CreateMultiSigTransactionRequest, options?: any) {
         return KlayWalletControllerApiFp(this.configuration).sendTransaction3(createMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} walletId 
+     * @param {string} userWalletId 
+     * @param {CreateNftMultiSigTransactionRequest} createNftMultiSigTransactionRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayWalletControllerApi
+     */
+    public sendUserWalletNftTransaction1(walletId: string, userWalletId: string, createNftMultiSigTransactionRequest: CreateNftMultiSigTransactionRequest, options?: any) {
+        return KlayWalletControllerApiFp(this.configuration).sendUserWalletNftTransaction1(walletId, userWalletId, createNftMultiSigTransactionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
