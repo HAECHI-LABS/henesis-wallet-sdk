@@ -128,29 +128,43 @@ export class WalletsService {
   public async sendMasterWalletCoin(
     sdk: SDK,
     masterWalletId: string,
-    sendMasterWalletCoinRequestDTO: SendMasterWalletCoinRequestDTO
+    requestDTO: SendMasterWalletCoinRequestDTO
   ): Promise<TransactionDTO> {
     const masterWallet = await WalletsService.getMasterWalletById(
       sdk,
       masterWalletId
     );
 
+    if (requestDTO.isHopTransaction) {
+      return await masterWallet.hopTransfer(
+        await WalletsService.getCoinByTicker(sdk, requestDTO.ticker),
+        requestDTO.to,
+        BNConverter.hexStringToBN(requestDTO.amount),
+        requestDTO.passphrase,
+        null,
+        requestDTO.gasPrice
+          ? BNConverter.hexStringToBN(requestDTO.gasPrice)
+          : undefined,
+        requestDTO.gasLimit
+          ? BNConverter.hexStringToBN(requestDTO.gasLimit)
+          : undefined,
+        requestDTO.metadata
+      );
+    }
+
     return await masterWallet.transfer(
-      await WalletsService.getCoinByTicker(
-        sdk,
-        sendMasterWalletCoinRequestDTO.ticker
-      ),
-      sendMasterWalletCoinRequestDTO.to,
-      BNConverter.hexStringToBN(sendMasterWalletCoinRequestDTO.amount),
-      sendMasterWalletCoinRequestDTO.passphrase,
+      await WalletsService.getCoinByTicker(sdk, requestDTO.ticker),
+      requestDTO.to,
+      BNConverter.hexStringToBN(requestDTO.amount),
+      requestDTO.passphrase,
       null,
-      sendMasterWalletCoinRequestDTO.gasPrice
-        ? BNConverter.hexStringToBN(sendMasterWalletCoinRequestDTO.gasPrice)
+      requestDTO.gasPrice
+        ? BNConverter.hexStringToBN(requestDTO.gasPrice)
         : undefined,
-      sendMasterWalletCoinRequestDTO.gasLimit
-        ? BNConverter.hexStringToBN(sendMasterWalletCoinRequestDTO.gasLimit)
+      requestDTO.gasLimit
+        ? BNConverter.hexStringToBN(requestDTO.gasLimit)
         : undefined,
-      sendMasterWalletCoinRequestDTO.metadata
+      requestDTO.metadata
     );
   }
 
@@ -361,7 +375,7 @@ export class WalletsService {
     sdk: SDK,
     masterWalletId: string,
     userWalletId: string,
-    sendUserWalletCoinRequestDTO: SendUserWalletCoinRequestDTO
+    requestDTO: SendUserWalletCoinRequestDTO
   ): Promise<TransactionDTO> {
     const userWallet = await WalletsService.getUserWalletByContext(
       sdk,
@@ -369,22 +383,36 @@ export class WalletsService {
       userWalletId
     );
 
+    if (requestDTO.isHopTransaction) {
+      return await userWallet.hopTransfer(
+        await WalletsService.getCoinByTicker(sdk, requestDTO.ticker),
+        requestDTO.to,
+        BNConverter.hexStringToBN(requestDTO.amount),
+        requestDTO.passphrase,
+        null,
+        requestDTO.gasPrice
+          ? BNConverter.hexStringToBN(requestDTO.gasPrice)
+          : undefined,
+        requestDTO.gasLimit
+          ? BNConverter.hexStringToBN(requestDTO.gasLimit)
+          : undefined,
+        requestDTO.metadata
+      );
+    }
+
     return await userWallet.transfer(
-      await WalletsService.getCoinByTicker(
-        sdk,
-        sendUserWalletCoinRequestDTO.ticker
-      ),
-      sendUserWalletCoinRequestDTO.to,
-      BNConverter.hexStringToBN(sendUserWalletCoinRequestDTO.amount),
-      sendUserWalletCoinRequestDTO.passphrase,
+      await WalletsService.getCoinByTicker(sdk, requestDTO.ticker),
+      requestDTO.to,
+      BNConverter.hexStringToBN(requestDTO.amount),
+      requestDTO.passphrase,
       null,
-      sendUserWalletCoinRequestDTO.gasPrice
-        ? BNConverter.hexStringToBN(sendUserWalletCoinRequestDTO.gasPrice)
+      requestDTO.gasPrice
+        ? BNConverter.hexStringToBN(requestDTO.gasPrice)
         : undefined,
-      sendUserWalletCoinRequestDTO.gasLimit
-        ? BNConverter.hexStringToBN(sendUserWalletCoinRequestDTO.gasLimit)
+      requestDTO.gasLimit
+        ? BNConverter.hexStringToBN(requestDTO.gasLimit)
         : undefined,
-      sendUserWalletCoinRequestDTO.metadata
+      requestDTO.metadata
     );
   }
 

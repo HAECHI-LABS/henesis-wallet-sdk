@@ -14,6 +14,7 @@ export const EXAMPLE_ETHEREUM_TRANSACTION_DTO: TransactionDTO = {
   error: "null",
   status: TransactionStatus.CONFIRMED,
   fee: "10000000",
+  hopAddress: "0x1AA2705a26452cC22430F31A5c85974bBEDDe5a5",
   createdAt: "1614582928222",
   updatedAt: "1612411724023",
 };
@@ -80,6 +81,12 @@ export class TransactionDTO {
   fee?: string;
 
   @ApiModelProperty({
+    description: "홉 주소",
+    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.hopAddress,
+  })
+  hopAddress?: string;
+
+  @ApiModelProperty({
     description: "트랜잭션 생성 시간 (형식: ms, UNIX time)",
     example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.createdAt,
   })
@@ -99,6 +106,7 @@ export class TransactionDTO {
       error: transaction.error,
       status: transaction.status,
       fee: transaction.fee, // todo: fix sdk! unify fee's type (string/BN)
+      hopAddress: transaction.hopAddress,
       createdAt: transaction.createdAt,
       updatedAt: transaction.updatedAt,
     };
@@ -112,6 +120,7 @@ export class TransactionDTO {
       error: transaction.error,
       status: transaction.status,
       fee: transaction.fee.toString(10), // todo: fix sdk! unify fee's type (string/BN)
+      hopAddress: transaction.hopAddress,
       createdAt: transaction.createdAt,
       updatedAt: transaction.updatedAt,
     };

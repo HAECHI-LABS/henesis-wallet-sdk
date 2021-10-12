@@ -76,6 +76,19 @@ export class WalletsService {
     request: SendCoinRequestDTO
   ): Promise<TransactionDTO> {
     const wallet: EthWallet = await sdk.eth.wallets.getWallet(walletId);
+    if (request.isHopTransaction) {
+      const res = await wallet.hopTransfer(
+        request.ticker,
+        request.to,
+        new BN(request.amount),
+        request.passphrase,
+        null,
+        request.gasPrice == null ? null : new BN(request.gasPrice),
+        request.gasLimit == null ? null : new BN(request.gasLimit),
+        request.metadata
+      );
+      return TransactionDTO.fromEthTransaction(res);
+    }
     return TransactionDTO.fromEthTransaction(
       await wallet.transfer(
         request.ticker,
@@ -238,6 +251,31 @@ export class WalletsService {
   ): Promise<PaginationDTO<NftBalanceDTO>> {
     const wallet = await sdk.eth.wallets.getWallet(walletId);
     const result = await wallet.getNftBalance(options);
+
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
+    return {
+      pagination: result.pagination,
+      results: result.results.map(NftBalanceDTO.fromNftBalance),
+    };
+  }
+
+  public async getDepositAddressNftBalance(
+    sdk: SDK,
+    walletId: string,
+    depositAddressId: string,
+    options: NftBalancePaginationOptions,
+    request: express.Request
+  ): Promise<PaginationDTO<NftBalanceDTO>> {
+    const wallet = await sdk.eth.wallets.getWallet(walletId);
+    const depositAddress = await wallet.getDepositAddress(depositAddressId);
+    const result = await depositAddress.getNftBalance(options);
 
     result.pagination.nextUrl = changeUrlHost(
       result.pagination.nextUrl,

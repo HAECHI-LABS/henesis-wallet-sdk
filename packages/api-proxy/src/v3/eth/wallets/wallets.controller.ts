@@ -572,7 +572,7 @@ export class WalletsController {
     NftBalanceDTO,
     EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO
   )
-  @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
+  @PathParams(WALLET_ID_REQUIRED)
   @Queries(TICKER_OPTIONAL)
   @ApiOperation({
     summary: "NFT 잔고 조회하기",
@@ -590,6 +590,41 @@ export class WalletsController {
     return await this.walletsService.getNftBalance(
       request.sdk,
       walletId,
+      {
+        size,
+        page,
+        tokenOnchainId,
+        tokenName,
+      },
+      request
+    );
+  }
+
+  @Get("/:walletId/deposit-addresses/:depositAddressId/nft/balance")
+  @ApiPaginationResponse(
+    NftBalanceDTO,
+    EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO
+  )
+  @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
+  @Queries(TICKER_OPTIONAL)
+  @ApiOperation({
+    summary: "입금 주소 NFT 잔고 조회하기",
+    description: "특정 입금 주소의 NFT 잔고를 조회합니다.",
+  })
+  @ReadMeExtension()
+  public async getNftBalanceOfDepositAddress(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Param("depositAddressId") depositAddressId: string,
+    @Query("size") size: number = 15,
+    @Query("page") page: number = 0,
+    @Query("tokenOnchainId") tokenOnchainId?: string,
+    @Query("tokenName") tokenName?: string
+  ): Promise<PaginationDTO<NftBalanceDTO>> {
+    return await this.walletsService.getDepositAddressNftBalance(
+      request.sdk,
+      walletId,
+      depositAddressId,
       {
         size,
         page,

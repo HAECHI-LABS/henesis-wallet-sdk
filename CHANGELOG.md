@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.4.0...v3.4.1) (2021-10-01)
+
+
+### Features
+
+* add BLS address type on addressAdBytes method ([#588](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/588)) ([9a9570e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9a9570e111e587a9c00d2c385d0a209d113e6555))
+
+
+
+
+
 # [3.4.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.3.4-alpha.10...v3.4.0) (2021-09-17)
 
 

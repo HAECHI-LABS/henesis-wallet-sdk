@@ -8,6 +8,7 @@ import {
   ApiModelProperty,
   ApiModelPropertyOptional,
 } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
+import { EXAMPLE_ETHEREUM_TRANSACTION_DTO } from "../../../v3/eth/dto/transaction.dto";
 
 const EXAMPLE_ETH_KLAY_MULTI_SIG_PAYLOAD_DTO: MultiSigPayloadDTO = {
   walletAddress: "0x4ef3ba60c8710f45371835cddafabf33daa83e1d",
@@ -45,6 +46,7 @@ export const EXAMPLE_ETH_KLAY_TRANSACTION_DTO: TransactionDTO = {
   estimatedFee: "0x8ac02d65cc00",
   signedMultiSigPayload: EXAMPLE_ETH_KLAY_SIGNED_MULTI_SIG_PAYLOAD_DTO,
   rawTransaction: EXAMPLE_ETH_KLAY_RAW_TRANSACTION_DTO,
+  hopAddress: "0x1AA2705a26452cC22430F31A5c85974bBEDDe5a5",
   createdAt: "1614582928222",
   updatedAt: "1612411724023",
 };
@@ -145,6 +147,12 @@ export class TransactionDTO {
   rawTransaction?: RawTransactionDTO;
 
   @ApiModelProperty({
+    description: "홉 주소",
+    example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.hopAddress,
+  })
+  hopAddress?: string;
+
+  @ApiModelProperty({
     description: "트랜잭션 생성 시간 (형식: ms, UNIX time)",
     example: EXAMPLE_ETH_KLAY_TRANSACTION_DTO.createdAt,
   })
@@ -209,6 +217,7 @@ export class TransactionDTO {
             data: transaction.rawTransaction.data,
           }
         : null,
+      hopAddress: transaction.hopAddress,
     };
   }
 }
