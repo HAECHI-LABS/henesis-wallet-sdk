@@ -55,7 +55,7 @@ import {
   getAddressFromCompressedPub,
 } from "./abstractWallet";
 import { Nft } from "./nft";
-import { isLessThanWalletV4 } from "../utils/wallet";
+import { parseVersion } from "../utils/wallet";
 
 export interface UserWalletPaginationOptions extends PaginationOptions {
   name?: string;
@@ -494,6 +494,24 @@ export class EthMasterWallet extends EthLikeWallet {
     this.walletContract = new new Web3().eth.Contract(walletAbi as AbiItem[]);
   }
 
+  canUseFlush(): boolean {
+    const version = this.getVersionNumber();
+    switch (this.blockchain) {
+      case BlockchainType.ETHEREUM:
+        return version <= 3;
+      case BlockchainType.KLAYTN:
+        return version <= 3;
+      case BlockchainType.BINANCE_SMART_CHAIN:
+        return false;
+      default:
+        throw new Error("not supported blockchain " + this.blockchain);
+    }
+  }
+
+  canUseFlushWithTargets(): boolean {
+    return !this.canUseFlush();
+  }
+
   getEncryptionKey(): string {
     return this.data.encryptionKey;
   }
@@ -700,7 +718,7 @@ export class EthMasterWallet extends EthLikeWallet {
     gasLimit?: BN,
     metadata?: string
   ): Promise<EthTransaction> {
-    if (isLessThanWalletV4(this.getVersion())) {
+    if (!this.canUseFlushWithTargets()) {
       throw new Error(
         "This wallet is not a compatible version. Please use the v2 APIs."
       );
@@ -730,7 +748,7 @@ export class EthMasterWallet extends EthLikeWallet {
     gasLimit?: BN,
     metadata?: string
   ): Promise<EthTransaction> {
-    if (!isLessThanWalletV4(this.getVersion())) {
+    if (!this.canUseFlush()) {
       throw new Error(
         "This wallet is not a compatible version. Please use the v3 APIs."
       );

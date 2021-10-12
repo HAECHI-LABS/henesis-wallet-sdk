@@ -23,8 +23,8 @@ import {
   InactiveMasterWalletDTO,
   MasterWalletDTO,
 } from "../__generate__/eth";
-import { InactiveWallet, InactiveMasterWallet } from "../wallet";
-import { isLessThanWalletV4 } from "../utils/wallet";
+import { InactiveMasterWallet, InactiveWallet } from "../wallet";
+import { parseVersion } from "../utils/wallet";
 
 export class EthWallets extends Wallets<EthMasterWallet> {
   private readonly henesisKey: HenesisKeys;
@@ -42,10 +42,31 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     this.blockchain = blockchain;
   }
 
+  canUseDepositAddress(versionStr: string): boolean {
+    const version = parseVersion(versionStr);
+    switch (this.blockchain) {
+      case BlockchainType.ETHEREUM:
+        return version >= 4;
+      case BlockchainType.KLAYTN:
+        return false;
+      case BlockchainType.BINANCE_SMART_CHAIN:
+        return false;
+      default:
+        throw new Error("not supported blockchain " + this.blockchain);
+    }
+  }
+
+  canUseUserWallet(versionStr: string): boolean {
+    return !this.canUseDepositAddress(versionStr);
+  }
+
   async getMasterWallet(id: string): Promise<EthMasterWallet> {
     const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
+    if (!this.canUseUserWallet(walletData.version)) {
+      throw new Error("This wallet is not a compatible version.");
+    }
     return new EthMasterWallet(
       this.client,
       transformMasterWalletData(walletData),
@@ -58,7 +79,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     const walletData = await this.client.get<NoUndefinedField<MasterWalletDTO>>(
       `${this.baseUrl}/${id}`
     );
-    if (isLessThanWalletV4(walletData.version)) {
+    if (!this.canUseDepositAddress(walletData.version)) {
       throw new Error(
         "This wallet is not a compatible version. Please use the v2 APIs."
       );
@@ -79,9 +100,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
 
     return walletDatas
       .filter((walletData) => {
-        if (walletData.blockchain === Blockchain.ETHEREUM)
-          return !isLessThanWalletV4(walletData.version);
-        return true;
+        return this.canUseDepositAddress(walletData.version);
       })
       .map((walletData) => {
         return new EthWallet(
@@ -111,7 +130,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
           this.blockchain
         );
       }
-      if (isLessThanWalletV4(version)) {
+      if (this.canUseUserWallet(version)) {
         return new EthMasterWallet(
           this.client,
           transformMasterWalletData(walletData),
@@ -137,7 +156,7 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     >(`${this.baseUrl}${queryString ? `?${queryString}` : ""}`);
 
     return walletDatas
-      .filter((walletData) => isLessThanWalletV4(walletData.version))
+      .filter((walletData) => this.canUseUserWallet(walletData.version))
       .map(
         (walletData) =>
           new EthMasterWallet(
