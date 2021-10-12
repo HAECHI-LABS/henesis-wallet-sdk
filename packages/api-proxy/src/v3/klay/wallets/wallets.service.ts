@@ -368,6 +368,28 @@ export class WalletsService {
     );
   }
 
+  public async transferUserWalletNft(
+    sdk: SDK,
+    walletId: string,
+    userWalletId: string,
+    request: TransferNftRequestDTO
+  ): Promise<TransactionDTO> {
+    const wallet = await sdk.klay.wallets.getMasterWallet(walletId);
+    const userWallet = await wallet.getUserWallet(userWalletId);
+    return TransactionDTO.fromEthTransaction(
+      await userWallet.transferNft(
+        request.nftId,
+        request.tokenOnchainId,
+        request.to,
+        request.passphrase,
+        null,
+        request.gasPrice == null ? null : new BN(request.gasPrice),
+        request.gasLimit == null ? null : new BN(request.gasLimit),
+        request.metadata
+      )
+    );
+  }
+
   public async getNftBalance(
     sdk: SDK,
     walletId: string,
@@ -376,6 +398,31 @@ export class WalletsService {
   ): Promise<PaginationDTO<NftBalanceDTO>> {
     const wallet = await sdk.klay.wallets.getWallet(walletId);
     const result = await wallet.getNftBalance(options);
+
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
+    return {
+      pagination: result.pagination,
+      results: result.results.map(NftBalanceDTO.fromNftBalance),
+    };
+  }
+
+  public async getUserWalletNftBalance(
+    sdk: SDK,
+    masterWalletId: string,
+    userWalletId: string,
+    options: NftBalancePaginationOptions,
+    request: express.Request
+  ): Promise<PaginationDTO<NftBalanceDTO>> {
+    const masterWallet = await sdk.klay.wallets.getMasterWallet(masterWalletId);
+    const userWallet = await masterWallet.getUserWallet(userWalletId);
+    const result = await userWallet.getNftBalance(options);
 
     result.pagination.nextUrl = changeUrlHost(
       result.pagination.nextUrl,
