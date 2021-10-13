@@ -7,7 +7,10 @@ import { SendCoinRequestDTO } from "./dto/send-coin-request.dto";
 import { TransactionDTO } from "../dto/transaction.dto";
 import BN from "bn.js";
 import { CreateTransactionRequestDTO } from "./dto/create-transaction-reqeust.dto";
-import { CreateFlushRequestDTO } from "./dto/create-flush-request.dto";
+import {
+  CreateFlushRequestDTO,
+  CreateNftFlushRequestDTO,
+} from "./dto/create-flush-request.dto";
 import { PaginationDTO } from "../dto/pagination.dto";
 import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import { CreateDepositAddressRequestDTO } from "./dto/create-deposit-address-request.dto";
@@ -145,6 +148,19 @@ export class WalletsService {
   ) {
     const wallet: EthWallet = await sdk.eth.wallets.getWallet(walletId);
     return wallet.flush(
+      request.targets as any[],
+      request.gasPrice == null ? null : new BN(request.gasPrice),
+      request.gasLimit == null ? null : new BN(request.gasLimit)
+    );
+  }
+
+  public async nftFlush(
+    sdk: SDK,
+    walletId: string,
+    request: CreateNftFlushRequestDTO
+  ) {
+    const wallet: EthWallet = await sdk.eth.wallets.getWallet(walletId);
+    return wallet.nftFlush(
       request.targets as any[],
       request.gasPrice == null ? null : new BN(request.gasPrice),
       request.gasLimit == null ? null : new BN(request.gasLimit)

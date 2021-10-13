@@ -46,7 +46,10 @@ import {
 import { ChangeWalletNameRequestDTO } from "./dto/change-wallet-name-request.dto";
 import { SendCoinRequestDTO } from "./dto/send-coin-request.dto";
 import { CreateTransactionRequestDTO } from "./dto/create-transaction-reqeust.dto";
-import { CreateFlushRequestDTO } from "./dto/create-flush-request.dto";
+import {
+  CreateFlushRequestDTO,
+  CreateNftFlushRequestDTO,
+} from "./dto/create-flush-request.dto";
 import { CreateDepositAddressRequestDTO } from "./dto/create-deposit-address-request.dto";
 import {
   DEPOSIT_ADDRESS_ID_OPTIONAL,
@@ -564,6 +567,40 @@ export class WalletsController {
       request.sdk,
       walletId,
       transferNftRequest
+    );
+  }
+
+  @Post("/:walletId/nft/flush")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETHEREUM_TRANSACTION_DTO
+    ),
+  })
+  @PathParams(WALLET_ID_REQUIRED)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    ),
+  })
+  @ApiOperation({
+    summary: "입금 주소 NFT 모두 끌어오기",
+    description: "입금 주소의 특정 NFT를 모두 상위의 지갑으로 끌어옵니다.",
+  })
+  @ReadMeExtension()
+  public async nftFlush(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Body() createNftFlushRequestDTO: CreateNftFlushRequestDTO
+  ): Promise<TransactionDTO> {
+    return TransactionDTO.fromEthTransaction(
+      await this.walletsService.nftFlush(
+        request.sdk,
+        walletId,
+        createNftFlushRequestDTO
+      )
     );
   }
 

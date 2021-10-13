@@ -8,6 +8,7 @@ import BN from "bn.js";
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
 import {
   EthMasterWallet,
+  EthWallet,
   UserWalletPaginationOptions,
 } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 import express from "express";
@@ -21,11 +22,14 @@ import { changeUrlHost } from "../../../utils/pagination";
 import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
 import { NftBalancePaginationOptions } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
-import { CreateFlushRequestDTO } from "./dto/create-flush-request.dto";
 import { GetNftTransfersOption } from "../../eth/wallets/dto/get-nft-transfers-option.dto";
 import { NftTransferDTO } from "../../eth/dto/nft-transfer.dto";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { EthNftTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
+import {
+  CreateFlushRequestDTO,
+  CreateNftFlushRequestDTO,
+} from "./dto/create-flush-request.dto";
 
 @Injectable()
 export class WalletsService {
@@ -358,6 +362,30 @@ export class WalletsService {
         request.gasLimit == null ? null : new BN(request.gasLimit),
         request.metadata
       )
+    );
+  }
+
+  public async nftFlush(
+    sdk: SDK,
+    walletId: string,
+    request: CreateNftFlushRequestDTO
+  ) {
+    const masterWallet: EthMasterWallet =
+      await sdk.klay.wallets.getMasterWallet(walletId);
+    const targets: Array<{ nftId: number; depositAddressId: string }> =
+      request.targets
+        .filter((target) => target.userWalletId)
+        .map((target) => {
+          return {
+            nftId: target.nftId,
+            depositAddressId: target.userWalletId,
+          };
+        });
+
+    return masterWallet.nftFlush(
+      targets,
+      request.gasPrice == null ? null : new BN(request.gasPrice),
+      request.gasLimit == null ? null : new BN(request.gasLimit)
     );
   }
 
