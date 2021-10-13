@@ -47,7 +47,6 @@ import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transa
 import {
   ADDRESS_OPTIONAL,
   DEPOSIT_ADDRESS_ID_OPTIONAL,
-  DEPOSIT_ADDRESS_ID_REQUIRED,
   MASTER_WALLET_ID_REQUIRED,
   NAME_OPTIONAL,
   NFT_ID_OPTIONAL,
@@ -603,7 +602,6 @@ export class WalletsController {
     isArray: true,
   })
   @PathParams(MASTER_WALLET_ID_REQUIRED, USER_WALLET_ID_REQUIRED)
-  @Queries(TICKER_OPTIONAL)
   @ApiOperation({
     summary: "사용자 지갑 NFT 출금하기",
     description: "특정 사용자 지갑에서 NFT 토큰을 출금합니다.",
