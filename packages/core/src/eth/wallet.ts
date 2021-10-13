@@ -39,6 +39,7 @@ import {
   FlushTransactionValueTransferEventDTO,
   FlushTransactionDTO,
   CreateNftMultiSigTransactionRequest,
+  NftFlushRequest,
 } from "../__generate__/eth";
 import { ApproveWithdrawal } from "../withdrawalApprovals";
 import { Coin } from "./coin";
@@ -479,6 +480,28 @@ export class EthWallet extends EthLikeWallet {
       blockchain: transformBlockchainType(response.blockchain),
     };
   }
+
+  async nftFlush(
+    nftFlushTargets: Array<{ nftId: number; depositAddressId: string }>,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const request: NftFlushRequest = {
+      targets: nftFlushTargets,
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
+      metadata,
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `${this.baseUrl}/nft/flush`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
+  }
 }
 
 export class EthMasterWallet extends EthLikeWallet {
@@ -710,6 +733,28 @@ export class EthMasterWallet extends EthLikeWallet {
       request
     );
     this.data.name = masterWalletData.name;
+  }
+
+  async nftFlush(
+    nftFlushTargets: Array<{ nftId: number; depositAddressId: string }>,
+    gasPrice?: BN,
+    gasLimit?: BN,
+    metadata?: string
+  ): Promise<EthTransaction> {
+    const request: NftFlushRequest = {
+      targets: nftFlushTargets,
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      gasLimit: gasLimit ? BNConverter.bnToHexString(gasLimit) : undefined,
+      metadata,
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `${this.baseUrl}/nft/flush`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
   }
 
   async flushWithTargets(
