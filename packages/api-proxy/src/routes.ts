@@ -9,6 +9,7 @@ import { LtcModule as LtcV3Module } from "./v3/ltc/ltc.module";
 import { BchModule as BchV3Module } from "./v3/bch/bch.module";
 import { FilModule as FilV3Module } from "./v3/fil/fil.module";
 import { KlayModule as KlayV3Module } from "./v3/klay/klay.module";
+import { BscModule } from "./v3/bsc/bsc.module";
 
 export const routes: Routes = [
   {
@@ -20,6 +21,7 @@ export const routes: Routes = [
       { path: "/filecoin", module: FilV3Module },
       { path: "/litecoin", module: LtcV3Module },
       { path: "/bitcoin-cash", module: BchV3Module },
+      { path: "/binance-smart-chain", module: BscModule },
     ],
   },
   {

@@ -38,6 +38,7 @@ import {
 } from "../../eth/dto/balance.dto";
 import {
   EXAMPLE_ETHEREUM_TRANSACTION_DTO,
+  EXAMPLE_KLAYTN_TRANSACTION_DTO,
   TransactionDTO,
 } from "../../eth/dto/transaction.dto";
 import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
@@ -46,7 +47,6 @@ import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto"
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
 import {
   ADDRESS_OPTIONAL,
-  DEPOSIT_ADDRESS_ID_OPTIONAL,
   MASTER_WALLET_ID_REQUIRED,
   NAME_OPTIONAL,
   NFT_ID_OPTIONAL,
@@ -62,9 +62,9 @@ import {
   TRANSFER_TYPE_OPTIONAL,
   UPDATED_AT_GTE_OPTIONAL,
   UPDATED_AT_LE_OPTIONAL,
+  USER_WALLET_ID_OPTIONAL,
   USER_WALLET_ID_REQUIRED,
   WALLET_ID_OPTIONAL,
-  WALLET_ID_REQUIRED,
 } from "../../eth/dto/params";
 import express from "express";
 import {
@@ -87,7 +87,7 @@ import {
 import { CreateUserWalletRequestDTO } from "../../eth/wallets/dto/create-user-wallet-request.dto";
 import {
   EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO,
-  EXAMPLE_ETHEREUM_PAGINATION_NFT_TRANSFER_DTO,
+  EXAMPLE_KLAYTN_PAGINATION_NFT_TRANSFER_DTO,
   PaginationDTO,
 } from "../../eth/dto/pagination.dto";
 import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
@@ -566,15 +566,15 @@ export class WalletsController {
     );
   }
 
-  @Post("/:walletId/nft/transfer")
+  @Post("/:masterWalletId/nft/transfer")
   @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
-      EXAMPLE_ETHEREUM_TRANSACTION_DTO
+      EXAMPLE_KLAYTN_TRANSACTION_DTO
     ),
     isArray: true,
   })
-  @PathParams(WALLET_ID_REQUIRED)
+  @PathParams(MASTER_WALLET_ID_REQUIRED)
   @Queries(TICKER_OPTIONAL)
   @ApiOperation({
     summary: "마스터 지갑 NFT 출금하기",
@@ -583,7 +583,7 @@ export class WalletsController {
   @ReadMeExtension()
   public async transferNft(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string,
+    @Param("masterWalletId") walletId: string,
     @Body() transferNftRequest: TransferNftRequestDTO
   ): Promise<TransactionDTO> {
     return await this.walletsService.transferNft(
@@ -621,12 +621,12 @@ export class WalletsController {
     );
   }
 
-  @Get("/:walletId/nft/balance")
+  @Get("/:masterWalletId/nft/balance")
   @ApiPaginationResponse(
     NftBalanceDTO,
     EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO
   )
-  @PathParams(WALLET_ID_REQUIRED)
+  @PathParams(MASTER_WALLET_ID_REQUIRED)
   @Queries(TICKER_OPTIONAL)
   @ApiOperation({
     summary: "NFT 잔고 조회하기",
@@ -635,7 +635,7 @@ export class WalletsController {
   @ReadMeExtension()
   public async getNftBalance(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string,
+    @Param("masterWalletId") walletId: string,
     @Query("size") size: number = 15,
     @Query("page") page: number = 0,
     @Query("tokenOnchainId") tokenOnchainId?: string,
@@ -694,7 +694,7 @@ export class WalletsController {
     NFT_ID_OPTIONAL,
     TOKEN_NAME_OPTIONAL,
     TOKEN_ONCHAIN_ID_OPTIONAL,
-    DEPOSIT_ADDRESS_ID_OPTIONAL,
+    USER_WALLET_ID_OPTIONAL,
     WALLET_ID_OPTIONAL,
     TRANSACTION_ID_OPTIONAL,
     TRANSACTION_HASH_OPTIONAL,
@@ -707,7 +707,7 @@ export class WalletsController {
   )
   @ApiPaginationResponse(
     NftTransferDTO,
-    EXAMPLE_ETHEREUM_PAGINATION_NFT_TRANSFER_DTO
+    EXAMPLE_KLAYTN_PAGINATION_NFT_TRANSFER_DTO
   )
   @ApiBadRequestResponse({
     description: "올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.",
@@ -727,7 +727,7 @@ export class WalletsController {
     @Query("nftId") nftId?: number,
     @Query("tokenName") tokenName?: string,
     @Query("tokenOnchainId") tokenOnchainId?: string,
-    @Query("depositAddressId") depositAddressId?: string,
+    @Query("userWalletId") depositAddressId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
     @Query("status") status?: EventStatus,

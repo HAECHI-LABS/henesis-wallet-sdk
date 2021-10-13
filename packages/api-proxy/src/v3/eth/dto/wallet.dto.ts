@@ -18,6 +18,12 @@ export const EXAMPLE_ETHEREUM_WALLET_DTO: WalletDTO = {
   version: "v4",
 };
 
+export const EXAMPLE_BINANCE_SMART_CHAIN_WALLET_DTO: WalletDTO = {
+  ...EXAMPLE_ETHEREUM_WALLET_DTO,
+  name: "binance-smart-chain-wallet",
+  blockchain: BlockchainType.BINANCE_SMART_CHAIN,
+};
+
 export class WalletDTO {
   @ApiModelProperty({
     description: "지갑 ID",

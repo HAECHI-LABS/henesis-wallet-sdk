@@ -39,3 +39,10 @@ MAINNET="" # specify v2 mainnet (ethereum,klaytn, bitcoin)
 ## Swagger
 
 You can see swagger files in `packages/api-proxy/swagger`. If you want to make a new swagger file based on your code, run `npm run build:spec`.
+
+## How to format/lint
+
+```bash
+npm run eslint
+npm run prettier
+```

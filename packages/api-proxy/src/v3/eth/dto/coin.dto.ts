@@ -14,6 +14,17 @@ export const EXAMPLE_ETHEREUM_COIN_DTO: CoinDTO = {
   attributes: [CoinDTOAttributesEnum.STANDARD],
 };
 
+export const EXAMPLE_BINANCE_SMART_CHAIN_COIN_DTO: CoinDTO = {
+  id: 11,
+  name: "BinanceCoin",
+  ticker: "BNB",
+  address: "0xdd00383e5a51166bba3e96d84c14a36d72e6c128",
+  description: "바이낸스 코인",
+  decimals: 18,
+  blockchain: Blockchain.BINANCESMARTCHAIN,
+  attributes: [CoinDTOAttributesEnum.STANDARD],
+};
+
 export class CoinDTO {
   @ApiModelProperty({
     description: "Henesis에서 부여한 Coin의 ID",

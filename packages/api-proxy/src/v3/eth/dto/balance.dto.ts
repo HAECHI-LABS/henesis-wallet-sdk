@@ -10,6 +10,13 @@ export const EXAMPLE_ETHEREUM_BALANCE_DTO: BalanceDTO = {
   decimals: 18,
 };
 
+export const EXAMPLE_BINANCE_SMART_CHAIN_BALANCE_DTO: BalanceDTO = {
+  ...EXAMPLE_ETHEREUM_BALANCE_DTO,
+  name: "binance coin",
+  ticker: "BNB",
+  decimals: 18,
+};
+
 export class BalanceDTO {
   @ApiModelProperty({
     description: "Henesis에서 부여한 Coin의 ID",
@@ -25,7 +32,7 @@ export class BalanceDTO {
 
   @ApiModelProperty({
     description:
-      "출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei)",
+      "출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei, peb, jager)",
     example: EXAMPLE_ETHEREUM_BALANCE_DTO.spendableAmount,
   })
   spendableAmount: string;
