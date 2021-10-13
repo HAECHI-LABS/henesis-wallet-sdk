@@ -16,7 +16,7 @@ import {
 } from "../../eth/dto/pagination.dto";
 import { ApiBadRequestResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import {
-  DEPOSIT_ADDRESS_ID_OPTIONAL,
+  MASTER_WALLET_ID_OPTIONAL,
   PAGE_OPTIONAL,
   SIZE_OPTIONAL,
   STATUS_OPTIONAL,
@@ -26,7 +26,7 @@ import {
   TRANSFER_TYPE_OPTIONAL,
   UPDATED_AT_GTE_OPTIONAL,
   UPDATED_AT_LE_OPTIONAL,
-  WALLET_ID_OPTIONAL,
+  USER_WALLET_ID_OPTIONAL,
 } from "../../eth/dto/params";
 import {
   EventStatus,
@@ -47,8 +47,8 @@ export class TransfersController {
   @Get("/")
   @Queries(
     TICKER_OPTIONAL,
-    DEPOSIT_ADDRESS_ID_OPTIONAL,
-    WALLET_ID_OPTIONAL,
+    USER_WALLET_ID_OPTIONAL,
+    MASTER_WALLET_ID_OPTIONAL,
     TRANSACTION_ID_OPTIONAL,
     TRANSACTION_HASH_OPTIONAL,
     STATUS_OPTIONAL,
@@ -77,8 +77,8 @@ export class TransfersController {
   public async getTransfers(
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,
-    @Query("depositAddressId") depositAddressId?: string,
-    @Query("walletId") walletId?: string,
+    @Query("userWalletId") depositAddressId?: string,
+    @Query("masterWalletId") walletId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
     @Query("status") status?: EventStatus,
