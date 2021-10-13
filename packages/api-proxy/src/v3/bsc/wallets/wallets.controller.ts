@@ -43,56 +43,44 @@ import {
 } from "../../eth/dto/balance.dto";
 import {
   EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO,
-  EXAMPLE_ETHEREUM_TRANSACTION_DTO,
-  EXAMPLE_KLAYTN_TRANSACTION_DTO,
   TransactionDTO,
 } from "../../eth/dto/transaction.dto";
-import {
-  DepositAddressDTO,
-  EXAMPLE_BINANCE_SMART_CHAIN_DEPOSIT_ADDRESS_DTO,
-} from "../../eth/dto/deposit-address.dto";
+import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
 import express from "express";
-import { ReplaceTransactionRequestDTO } from "../../eth/transactions/dto/replace-transaction-request.dto";
 import {
-  DEPOSIT_ADDRESS_ID_REQUIRED,
-  DEPOSIT_ADDRESS_OPTIONAL,
+  ADDRESS_OPTIONAL,
   MASTER_WALLET_ID_REQUIRED,
   NAME_OPTIONAL,
   NFT_ID_OPTIONAL,
   PAGE_OPTIONAL,
   SIZE_OPTIONAL,
+  SORT_OPTIONAL,
   STATUS_OPTIONAL,
   TICKER_OPTIONAL,
   TOKEN_NAME_OPTIONAL,
   TOKEN_ONCHAIN_ID_OPTIONAL,
   TRANSACTION_HASH_OPTIONAL,
   TRANSACTION_ID_OPTIONAL,
-  TRANSACTION_ID_REQUIRED,
   TRANSFER_TYPE_OPTIONAL,
   UPDATED_AT_GTE_OPTIONAL,
   UPDATED_AT_LE_OPTIONAL,
   USER_WALLET_ID_OPTIONAL,
   USER_WALLET_ID_REQUIRED,
   WALLET_ID_OPTIONAL,
-  WALLET_ID_REQUIRED,
 } from "../../eth/dto/params";
 import { ChangeWalletNameRequestDTO } from "../../eth/wallets/dto/change-wallet-name-request.dto";
 import {
   DepositAddressNotFoundException,
-  EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO,
   EXAMPLE_INVALID_STATUS_EXCEPTION_DTO,
   EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
-  EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO,
   EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
   InvalidStatusException,
   NoWalletNameException,
-  TransactionIdNotFoundException,
   WalletNotFoundException,
 } from "../../eth/dto/exceptions.dto";
 import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto";
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
-import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
-import { CreateDepositAddressRequestDTO } from "../../eth/wallets/dto/create-deposit-address-request.dto";
+import { CreateFlushRequestDTO } from "../../klay/wallets/dto/create-flush-request.dto";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
 import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
 import { NftTransferDTO } from "../../eth/dto/nft-transfer.dto";
@@ -100,6 +88,15 @@ import {
   EventStatus,
   TransferType,
 } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import {
+  EXAMPLE_ETHEREUM_USER_WALLET_DTO,
+  UserWalletDTO,
+} from "../../eth/dto/user-wallet.dto";
+import {
+  EXAMPLE_ETHEREUM_MASTER_WALLET_DTO,
+  MasterWalletDTO,
+} from "../../eth/dto/master-wallet.dto";
+import { CreateUserWalletRequestDTO } from "../../eth/wallets/dto/create-user-wallet-request.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -121,31 +118,31 @@ export class WalletsController {
   @Get("/")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(WalletDTO, [
-      EXAMPLE_BINANCE_SMART_CHAIN_WALLET_DTO,
+      EXAMPLE_ETHEREUM_MASTER_WALLET_DTO,
     ]),
     isArray: true,
   })
   @Queries(NAME_OPTIONAL)
   @ApiOperation({
-    summary: "전체 지갑 목록 조회하기",
+    summary: "전체 마스터 지갑 목록 조회하기",
     description: "모든 지갑의 목록을 조회합니다.",
   })
   @ReadMeExtension()
-  public async getWallets(
+  public async getMasterWallets(
     @Request() request: express.Request,
     @Query("name") name?: string
-  ): Promise<WalletDTO[]> {
-    return await this.walletsService.getWallets(request.sdk, name);
+  ): Promise<MasterWalletDTO[]> {
+    return await this.walletsService.getMasterWallets(request.sdk, name);
   }
 
-  @Get("/:walletId")
+  @Get("/:masterWalletId")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(
       WalletDTO,
-      EXAMPLE_BINANCE_SMART_CHAIN_WALLET_DTO
+      EXAMPLE_ETHEREUM_MASTER_WALLET_DTO
     ),
   })
-  @PathParams(WALLET_ID_REQUIRED)
+  @PathParams(MASTER_WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
     content: ApiResponseContentGenerator(
@@ -154,25 +151,28 @@ export class WalletsController {
     ),
   })
   @ApiOperation({
-    summary: "지갑 정보 조회하기",
-    description: "특정 지갑의 정보를 조회합니다.",
+    summary: "마스터 지갑 정보 조회하기",
+    description: "특정 마스터 지갑의 정보를 조회합니다.",
   })
   @ReadMeExtension()
-  public async getWallet(
+  public async getMasterWallet(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string
+    @Param("masterWalletId") masterWalletId: string
   ): Promise<WalletDTO> {
-    return await this.walletsService.getWallet(request.sdk, walletId);
+    return await this.walletsService.getMasterWallet(
+      request.sdk,
+      masterWalletId
+    );
   }
 
-  @Get("/:walletId/balance")
+  @Get("/:masterWalletId/balance")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(BalanceDTO, [
       EXAMPLE_BINANCE_SMART_CHAIN_BALANCE_DTO,
     ]),
     isArray: true,
   })
-  @PathParams(WALLET_ID_REQUIRED)
+  @PathParams(MASTER_WALLET_ID_REQUIRED)
   @Queries(TICKER_OPTIONAL)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
@@ -182,24 +182,24 @@ export class WalletsController {
     ),
   })
   @ApiOperation({
-    summary: "지갑 잔고 조회하기",
-    description: "특정 지갑의 잔고를 조회합니다.",
+    summary: "마스터 지갑 잔고 조회하기",
+    description: "특정 마스터 지갑의 잔고를 조회합니다.",
   })
   @ReadMeExtension()
-  public async getBalanceOfWallet(
+  public async getMasterWalletBalance(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string,
+    @Param("masterWalletId") masterWalletId: string,
     @Query("ticker") ticker: string
   ): Promise<BalanceDTO[]> {
-    return await this.walletsService.getBalanceOfWallet(
+    return await this.walletsService.getMasterWalletBalance(
       request.sdk,
-      walletId,
+      masterWalletId,
       ticker
     );
   }
 
-  @Patch("/:walletId/name")
-  @PathParams(WALLET_ID_REQUIRED)
+  @Patch("/:masterWalletId/name")
+  @PathParams(MASTER_WALLET_ID_REQUIRED)
   @ApiNoContentResponse()
   @ApiBadRequestResponse({
     description: "다음과 같은 bad request 에러가 발생할 수 있습니다.",
@@ -215,30 +215,30 @@ export class WalletsController {
     ]),
   })
   @ApiOperation({
-    summary: "지갑 이름 변경하기",
-    description: "특정 지갑의 이름을 변경합니다.",
+    summary: "마스터 지갑 이름 변경하기",
+    description: "특정 마스터 지갑의 이름을 변경합니다.",
   })
   @ReadMeExtension()
-  public async changeWalletName(
+  public async changeMasterWalletName(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string,
+    @Param("masterWalletId") masterWalletId: string,
     @Body() changeWalletName: ChangeWalletNameRequestDTO
   ) {
-    await this.walletsService.changeWalletName(
+    await this.walletsService.changeMasterWalletName(
       request.sdk,
-      walletId,
+      masterWalletId,
       changeWalletName
     );
   }
 
-  @Post("/:walletId/transfer")
+  @Post("/:masterWalletId/transfer")
   @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
       EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO
     ),
   })
-  @PathParams(WALLET_ID_REQUIRED)
+  @PathParams(MASTER_WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
     content: ApiResponseContentGenerator(
@@ -247,30 +247,30 @@ export class WalletsController {
     ),
   })
   @ApiOperation({
-    summary: "지갑에서 코인 전송하기",
-    description: "특정 지갑에서 가상자산을 송금합니다.",
+    summary: "마스터 지갑에서 코인 전송하기",
+    description: "특정 마스터 지갑에서 가상자산을 송금합니다.",
   })
   @ReadMeExtension()
-  public async sendCoin(
+  public async sendMasterWalletCoin(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string,
+    @Param("masterWalletId") masterWalletId: string,
     @Body() sendCoinRequest: SendCoinRequestDTO
   ): Promise<TransactionDTO> {
-    return await this.walletsService.sendCoin(
+    return await this.walletsService.sendMasterWalletCoin(
       request.sdk,
-      walletId,
+      masterWalletId,
       sendCoinRequest
     );
   }
 
-  @Post("/:walletId/contract-calls")
+  @Post("/:masterWalletId/contract-call")
   @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
       EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO
     ),
   })
-  @PathParams(WALLET_ID_REQUIRED)
+  @PathParams(MASTER_WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
     content: ApiResponseContentGenerator(
@@ -279,72 +279,31 @@ export class WalletsController {
     ),
   })
   @ApiOperation({
-    summary: "지갑에서 스마트 컨트랙트 호출하기",
+    summary: "마스터 지갑에서 스마트 컨트랙트 호출하기",
     description:
-      "특정 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
+      "특정 마스터 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
   })
   @ReadMeExtension()
-  public async callContract(
+  public async sendMasterWalletContractCall(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string,
+    @Param("masterWalletId") masterWalletId: string,
     @Body() createTransactionRequest: CreateTransactionRequestDTO
   ): Promise<TransactionDTO> {
-    return await this.walletsService.callContract(
+    return await this.walletsService.sendMasterWalletContractCall(
       request.sdk,
-      walletId,
+      masterWalletId,
       createTransactionRequest
     );
   }
 
-  @Post("/:walletId/transactions/:transactionId/replace")
+  @Post("/:masterWalletId/flush")
   @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
       EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO
     ),
   })
-  @PathParams(WALLET_ID_REQUIRED, TRANSACTION_ID_REQUIRED)
-  @ApiBadRequestResponse({
-    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    content: ApiResponseContentGenerator(
-      WalletNotFoundException,
-      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
-    ),
-  })
-  @ApiBadRequestResponse({
-    description: "transaction id가 없을 때 발생합니다",
-    content: ApiResponseContentGenerator(
-      TransactionIdNotFoundException,
-      EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO
-    ),
-  })
-  @ApiOperation({
-    summary: "트랜잭션 교체",
-    description: "트랜잭션을 교체합니다",
-  })
-  @ReadMeExtension()
-  public async replaceTransaction(
-    @Request() request: express.Request,
-    @Param("walletId") walletId: string,
-    @Param("transactionId") transactionId: string,
-    @Body() replaceTransactionRequest: ReplaceTransactionRequestDTO
-  ): Promise<TransactionDTO> {
-    return await this.walletsService.replaceTransaction(
-      request.sdk,
-      walletId,
-      transactionId,
-      replaceTransactionRequest
-    );
-  }
-
-  @Post("/:walletId/flush")
-  @ApiCreatedResponse({
-    content: ApiResponseContentGenerator(
-      TransactionDTO,
-      EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO
-    ),
-  })
-  @PathParams(WALLET_ID_REQUIRED)
+  @PathParams(MASTER_WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
     content: ApiResponseContentGenerator(
@@ -353,109 +312,70 @@ export class WalletsController {
     ),
   })
   @ApiOperation({
-    summary: "입금 주소 잔액을 모두 끌어오기",
+    summary: "사용자 지갑 잔액을 모두 끌어오기",
     description:
-      "원화 입금 주소의 특정 코인/토큰 잔액을 모두 상위의 지갑으로 끌어옵니다.",
+      "여러 사용자 지갑의 특정 코인/토큰 잔액을 모두 상위의 마스터 지갑으로 끌어옵니다.",
   })
   @ReadMeExtension()
   public async flush(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string,
+    @Param("masterWalletId") masterWalletId: string,
     @Body() createFlushRequest: CreateFlushRequestDTO
   ): Promise<TransactionDTO> {
     return TransactionDTO.fromEthTransaction(
-      await this.walletsService.flush(request.sdk, walletId, createFlushRequest)
-    );
-  }
-
-  @Post("/:walletId/transactions/:transactionId/resend")
-  @ApiCreatedResponse({
-    content: ApiResponseContentGenerator(
-      TransactionDTO,
-      EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO
-    ),
-  })
-  @PathParams(WALLET_ID_REQUIRED, TRANSACTION_ID_REQUIRED)
-  @ApiBadRequestResponse({
-    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    content: ApiResponseContentGenerator(
-      WalletNotFoundException,
-      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
-    ),
-  })
-  @ApiOperation({
-    summary: "트랜잭션 다시 전송하기",
-    description:
-      "네트워크 사정 등으로 채굴이 지연됐을때, 블록체인에 트랜잭션을 다시 전송합니다.",
-  })
-  @ReadMeExtension()
-  async resendTransaction(
-    @Request() request: express.Request,
-    @Param("walletId") walletId: string,
-    @Param("transactionId") transactionId: string
-  ): Promise<TransactionDTO> {
-    return TransactionDTO.fromEthTransaction(
-      await this.walletsService.resendTransaction(
+      await this.walletsService.flush(
         request.sdk,
-        walletId,
-        transactionId
+        masterWalletId,
+        createFlushRequest
       )
     );
   }
 
-  @Get("/:walletId/deposit-addresses")
-  @PathParams(WALLET_ID_REQUIRED)
+  @Get("/:masterWalletId/user-wallets")
+  @ApiPaginationResponse(UserWalletDTO, EXAMPLE_ETHEREUM_USER_WALLET_DTO)
   @Queries(
     NAME_OPTIONAL,
-    DEPOSIT_ADDRESS_OPTIONAL,
     SIZE_OPTIONAL,
-    PAGE_OPTIONAL
+    PAGE_OPTIONAL,
+    SORT_OPTIONAL,
+    ADDRESS_OPTIONAL
   )
-  @ApiPaginationResponse(
-    DepositAddressDTO,
-    EXAMPLE_BINANCE_SMART_CHAIN_DEPOSIT_ADDRESS_DTO
-  )
-  @ApiBadRequestResponse({
-    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
-    content: ApiResponseContentGenerator(
-      WalletNotFoundException,
-      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
-    ),
-  })
   @ApiOperation({
-    summary: "전체 입금 주소 목록 조회하기",
-    description: "특정 지갑에 속한 모든 입금 주소 조회합니다.",
+    summary: "전체 사용자 지갑 목록 조회하기",
+    description: "특정 마스터 지갑에 속한 모든 사용자 지갑 목록을 조회합니다.",
   })
   @ReadMeExtension()
-  public async getDepositAddresses(
+  public async getUserWallets(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string,
+    @Param("masterWalletId") masterWalletId: string,
+    @Query("page") page?: number,
+    @Query("size") size?: number,
+    @Query("sort") sort?: string,
     @Query("name") name?: string,
-    @Query("address") address?: string,
-    @Query("size") size: number = 15,
-    @Query("page") page: number = 0
-  ): Promise<PaginationDTO<DepositAddressDTO>> {
-    return await this.walletsService.getDepositAddresses(
+    @Query("address") address?: string
+  ): Promise<PaginationDTO<UserWalletDTO>> {
+    return await this.walletsService.getUserWallets(
       request.sdk,
-      walletId,
+      masterWalletId,
       {
-        walletId,
+        page,
+        size,
+        sort,
         name,
         address,
-        size,
-        page,
-      }
+      },
+      request
     );
   }
 
-  @Post("/:walletId/deposit-addresses")
-  @ApiCreatedResponse({
+  @Get("/:masterWalletId/user-wallets/:userWalletId")
+  @ApiOkResponse({
     content: ApiResponseContentGenerator(
-      DepositAddressDTO,
-      EXAMPLE_BINANCE_SMART_CHAIN_DEPOSIT_ADDRESS_DTO
+      WalletDTO,
+      EXAMPLE_BINANCE_SMART_CHAIN_WALLET_DTO
     ),
   })
-  @PathParams(WALLET_ID_REQUIRED)
+  @PathParams(MASTER_WALLET_ID_REQUIRED, USER_WALLET_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 지갑이 없을 때 발생합니다.",
     content: ApiResponseContentGenerator(
@@ -464,30 +384,86 @@ export class WalletsController {
     ),
   })
   @ApiOperation({
-    summary: "입금 주소 생성하기",
-    description: "특정 지갑 하위에 새로운 입금 주소 생성합니다",
+    summary: "사용자 지갑 정보 조회하기",
+    description: "특정 사용자 지갑의 정보를 조회합니다.",
   })
   @ReadMeExtension()
-  public async createDepositAddress(
+  public async getUserWallet(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string,
-    @Body() createDepositAddress: CreateDepositAddressRequestDTO
-  ): Promise<DepositAddressDTO> {
-    return await this.walletsService.createDepositAddress(
+    @Param("masterWalletId") masterWalletId: string,
+    @Param("userWalletId") userWalletId: string
+  ): Promise<UserWalletDTO> {
+    return await this.walletsService.getUserWallet(
       request.sdk,
-      walletId,
-      createDepositAddress
+      masterWalletId,
+      userWalletId
     );
   }
 
-  @Get("/:walletId/deposit-addresses/:depositAddressId")
-  @ApiOkResponse({
+  @Post("/:masterWalletId/user-wallets")
+  @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
-      DepositAddressDTO,
-      EXAMPLE_BINANCE_SMART_CHAIN_DEPOSIT_ADDRESS_DTO
+      UserWalletDTO,
+      EXAMPLE_ETHEREUM_USER_WALLET_DTO
+    ),
+    isArray: false,
+  })
+  @PathParams(MASTER_WALLET_ID_REQUIRED)
+  @ApiOperation({
+    summary: "사용자 지갑 생성하기",
+    description: "특정 마스터 지갑 하위에 새로운 사용자 지갑을 생성합니다.",
+  })
+  @ReadMeExtension()
+  public async createUserWallet(
+    @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
+    @Body() createUserWalletRequestDTO: CreateUserWalletRequestDTO
+  ): Promise<UserWalletDTO> {
+    return await this.walletsService.createUserWallet(
+      request.sdk,
+      masterWalletId,
+      createUserWalletRequestDTO
+    );
+  }
+
+  @Get("/:masterWalletId/user-wallets/:userWalletId/balance")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(BalanceDTO, [
+      EXAMPLE_BINANCE_SMART_CHAIN_BALANCE_DTO,
+    ]),
+    isArray: true,
+  })
+  @PathParams(MASTER_WALLET_ID_REQUIRED, USER_WALLET_ID_REQUIRED)
+  @Queries(TICKER_OPTIONAL)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
     ),
   })
-  @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
+  @ApiOperation({
+    summary: "사용자 지갑 잔고 조회하기",
+    description: "특정 사용자 지갑의 잔고를 조회합니다.",
+  })
+  @ReadMeExtension()
+  public async getUserWalletBalance(
+    @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
+    @Param("userWalletId") userWalletId: string,
+    @Query("ticker") ticker: string
+  ): Promise<BalanceDTO[]> {
+    return await this.walletsService.getUserWalletBalance(
+      request.sdk,
+      masterWalletId,
+      userWalletId,
+      ticker
+    );
+  }
+
+  @Patch("/:masterWalletId/user-wallets/:userWalletId/name")
+  @PathParams(MASTER_WALLET_ID_REQUIRED, USER_WALLET_ID_REQUIRED)
+  @ApiNoContentResponse()
   @ApiBadRequestResponse({
     description: "다음과 같은 bad request 에러가 발생할 수 있습니다.",
     content: ApiResponseContentsGenerator([
@@ -496,53 +472,96 @@ export class WalletsController {
         example: EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
       },
       {
-        model: DepositAddressNotFoundException,
-        example: EXAMPLE_DEPOSIT_ADDRESS_NOT_FOUND_EXCEPTION_DTO,
+        model: NoWalletNameException,
+        example: EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
       },
     ]),
   })
   @ApiOperation({
-    summary: "입금 주소 정보 조회하기",
-    description: "특정 입금 주소를 조회합니다.",
+    summary: "사용자 지갑 이름 변경하기",
+    description: "특정 사용자 지갑의 이름을 변경합니다.",
   })
   @ReadMeExtension()
-  public async getDepositAddress(
+  public async changeUserWalletName(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string,
-    @Param("depositAddressId") depositAddressId: string
-  ): Promise<DepositAddressDTO> {
-    return await this.walletsService.getDepositAddress(
+    @Param("masterWalletId") masterWalletId: string,
+    @Param("userWalletId") userWalletId: string,
+    @Body() changeWalletName: ChangeWalletNameRequestDTO
+  ) {
+    await this.walletsService.changeUserWalletName(
       request.sdk,
-      walletId,
-      depositAddressId
+      masterWalletId,
+      userWalletId,
+      changeWalletName
     );
   }
 
-  @Get("/:walletId/deposit-addresses/:depositAddressId/balance")
-  @ApiOkResponse({
-    content: ApiResponseContentGenerator(BalanceDTO, [
-      EXAMPLE_BINANCE_SMART_CHAIN_BALANCE_DTO,
-    ]),
-    isArray: true,
+  @Post("/:masterWalletId/user-wallets/:userWalletId/transfer")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO
+    ),
   })
-  @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
-  @Queries(TICKER_OPTIONAL)
+  @PathParams(MASTER_WALLET_ID_REQUIRED, USER_WALLET_ID_REQUIRED)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    ),
+  })
   @ApiOperation({
-    summary: "입금 주소 잔고 조회하기",
-    description: "특정 입금 주소의 잔액을 조회합니다.",
+    summary: "사용자 지갑에서 코인 전송하기",
+    description: "특정 사용자 지갑에서 가상자산을 송금합니다.",
   })
   @ReadMeExtension()
-  public async getBalanceOfDepositAddress(
+  public async sendUserWalletCoin(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string,
-    @Param("depositAddressId") depositAddressId: string,
-    @Query("ticker") ticker?: string
-  ): Promise<BalanceDTO[]> {
-    return await this.walletsService.getBalanceOfDepositAddress(
+    @Param("masterWalletId") masterWalletId: string,
+    @Param("userWalletId") userWalletId: string,
+    @Body() sendCoinRequest: SendCoinRequestDTO
+  ): Promise<TransactionDTO> {
+    return await this.walletsService.sendUserWalletCoin(
       request.sdk,
-      walletId,
-      depositAddressId,
-      ticker
+      masterWalletId,
+      userWalletId,
+      sendCoinRequest
+    );
+  }
+
+  @Post("/:masterWalletId/user-wallets/:userWalletId/contract-call")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO
+    ),
+  })
+  @PathParams(MASTER_WALLET_ID_REQUIRED, USER_WALLET_ID_REQUIRED)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    ),
+  })
+  @ApiOperation({
+    summary: "사용자 지갑에서 스마트 컨트랙트 호출하기",
+    description:
+      "특정 사용자 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
+  })
+  @ReadMeExtension()
+  public async sendUserWalletContractCall(
+    @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
+    @Param("userWalletId") userWalletId: string,
+    @Body() createTransactionRequest: CreateTransactionRequestDTO
+  ): Promise<TransactionDTO> {
+    return await this.walletsService.sendUserWalletContractCall(
+      request.sdk,
+      masterWalletId,
+      userWalletId,
+      createTransactionRequest
     );
   }
 
@@ -582,7 +601,6 @@ export class WalletsController {
     isArray: true,
   })
   @PathParams(MASTER_WALLET_ID_REQUIRED, USER_WALLET_ID_REQUIRED)
-  @Queries(TICKER_OPTIONAL)
   @ApiOperation({
     summary: "사용자 지갑 NFT 출금하기",
     description: "특정 사용자 지갑에서 NFT 토큰을 출금합니다.",

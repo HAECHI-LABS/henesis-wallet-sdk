@@ -1,199 +1,344 @@
 import { Injectable } from "@nestjs/common";
-import { SDK } from "@haechi-labs/henesis-wallet-core";
-import BN from "bn.js";
+import { Coin, SDK } from "@haechi-labs/henesis-wallet-core";
+import { MasterWalletDTO } from "../../eth/dto/master-wallet.dto";
+import { UserWalletDTO } from "../../eth/dto/user-wallet.dto";
 import {
-  EthWallet,
+  EthMasterWallet,
   UserWalletPaginationOptions,
 } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
-import {
-  EthTransaction,
-  NftBalancePaginationOptions,
-} from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
-import { WalletDTO } from "../../eth/dto/wallet.dto";
+import express from "express";
+import { PaginationDTO } from "../../../v2/eth/dto/pagination.dto";
+import { object } from "../../../utils/object";
+import { changeUrlHost } from "../../../utils/pagination";
+import { CreateUserWalletRequestDTO } from "../../../v2/eth/dto/create-user-wallet-request.dto";
+import BN from "bn.js";
 import { BalanceDTO } from "../../eth/dto/balance.dto";
 import { ChangeWalletNameRequestDTO } from "../../eth/wallets/dto/change-wallet-name-request.dto";
 import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto";
 import { TransactionDTO } from "../../eth/dto/transaction.dto";
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
-import { ReplaceTransactionRequestDTO } from "../../eth/transactions/dto/replace-transaction-request.dto";
-import { CreateFlushRequestDTO } from "../../eth/wallets/dto/create-flush-request.dto";
-import { PaginationDTO } from "../../eth/dto/pagination.dto";
-import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
-import { CreateDepositAddressRequestDTO } from "../../eth/wallets/dto/create-deposit-address-request.dto";
-import { GetDepositAddressOption } from "../../eth/wallets/dto/get-deposit-addresses-option.dto";
+import { CreateFlushRequestDTO } from "../../klay/wallets/dto/create-flush-request.dto";
+import { EthUserWallet } from "@haechi-labs/henesis-wallet-core/lib/eth/userWallet";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
-import express from "express";
+import { NftBalancePaginationOptions } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
-import { changeUrlHost } from "../../../utils/pagination";
 import { GetNftTransfersOption } from "../../eth/wallets/dto/get-nft-transfers-option.dto";
 import { NftTransferDTO } from "../../eth/dto/nft-transfer.dto";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { EthNftTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
-import { object } from "../../../utils/object";
 
 @Injectable()
 export class WalletsService {
-  public async getWallets(sdk: SDK, name?: string): Promise<WalletDTO[]> {
+  public async getMasterWallets(
+    sdk: SDK,
+    name?: string
+  ): Promise<MasterWalletDTO[]> {
     const options = {};
     if (name != null) {
       options["name"] = name;
     }
-    return (await sdk.bsc.wallets.getWallets(options)).map(
-      WalletDTO.fromEthWallet
+    return (await sdk.bsc.wallets.getMasterWallets(options)).map((c) =>
+      c.getData()
     );
   }
 
-  public async getWallet(sdk: SDK, walletId: string): Promise<WalletDTO> {
-    return WalletDTO.fromEthWallet(await sdk.bsc.wallets.getWallet(walletId));
+  public async getMasterWallet(
+    sdk: SDK,
+    masterWalletId: string
+  ): Promise<MasterWalletDTO> {
+    return (await sdk.bsc.wallets.getMasterWallet(masterWalletId)).getData();
   }
 
-  public async getBalanceOfWallet(
+  public async getUserWallet(
     sdk: SDK,
-    walletId: string,
-    ticker?: string
+    masterWalletId: string,
+    userWalletId: string
+  ): Promise<UserWalletDTO> {
+    return (
+      await WalletsService.getUserWalletByContext(
+        sdk,
+        masterWalletId,
+        userWalletId
+      )
+    ).getData();
+  }
+
+  public async getUserWallets(
+    sdk: SDK,
+    masterWalletId: string,
+    options: UserWalletPaginationOptions,
+    request: express.Request
+  ): Promise<PaginationDTO<UserWalletDTO>> {
+    const masterWallet = await WalletsService.getMasterWalletById(
+      sdk,
+      masterWalletId
+    );
+    const userWallets = await masterWallet.getUserWallets(object(options));
+
+    userWallets.pagination.nextUrl = changeUrlHost(
+      userWallets.pagination.nextUrl,
+      request
+    );
+    userWallets.pagination.previousUrl = changeUrlHost(
+      userWallets.pagination.previousUrl,
+      request
+    );
+    return {
+      pagination: userWallets.pagination,
+      results: userWallets.results.map((c) => c.getData()),
+    };
+  }
+
+  public async createUserWallet(
+    sdk: SDK,
+    masterWalletId: string,
+    createUserWalletRequestDTO: CreateUserWalletRequestDTO
+  ): Promise<UserWalletDTO> {
+    const masterWallet = await WalletsService.getMasterWalletById(
+      sdk,
+      masterWalletId
+    );
+
+    return (
+      await masterWallet.createUserWallet(
+        createUserWalletRequestDTO.name,
+        createUserWalletRequestDTO.passphrase,
+        createUserWalletRequestDTO.gasPrice
+          ? new BN(createUserWalletRequestDTO.gasPrice)
+          : undefined,
+        createUserWalletRequestDTO.salt
+          ? new BN(createUserWalletRequestDTO.salt)
+          : undefined
+      )
+    ).getData();
+  }
+
+  public async getMasterWalletBalance(
+    sdk: SDK,
+    masterWalletId: string,
+    symbol?: string
   ): Promise<BalanceDTO[]> {
-    const wallet: EthWallet = await sdk.bsc.wallets.getWallet(walletId);
-    return (await wallet.getBalance())
-      .map(BalanceDTO.fromBalance)
-      .filter((balance) => {
-        if (ticker === undefined) return true;
-        return balance.ticker.toUpperCase() == ticker.toUpperCase();
-      });
+    const masterWallet = await WalletsService.getMasterWalletById(
+      sdk,
+      masterWalletId
+    );
+    const balances = await masterWallet.getBalance(
+      false,
+      symbol ? String(symbol) : null
+    );
+    return balances.map(BalanceDTO.fromBalance);
   }
 
-  public async changeWalletName(
+  public async getUserWalletBalance(
     sdk: SDK,
-    walletId: string,
+    masterWalletId: string,
+    userWalletId: string,
+    symbol?: string
+  ): Promise<BalanceDTO[]> {
+    const userWallet = await WalletsService.getUserWalletByContext(
+      sdk,
+      masterWalletId,
+      userWalletId
+    );
+
+    const balances = await userWallet.getBalance(
+      false,
+      symbol ? String(symbol) : null
+    );
+    return balances.map(BalanceDTO.fromBalance);
+  }
+
+  public async changeMasterWalletName(
+    sdk: SDK,
+    masterWalletId: string,
     request: ChangeWalletNameRequestDTO
   ) {
-    const wallet: EthWallet = await sdk.bsc.wallets.getWallet(walletId);
-    await wallet.changeName(request.name);
+    const masterWallet = await WalletsService.getMasterWalletById(
+      sdk,
+      masterWalletId
+    );
+
+    return await masterWallet.changeName(request.name);
   }
 
-  public async sendCoin(
+  public async changeUserWalletName(
     sdk: SDK,
-    walletId: string,
+    masterWalletId: string,
+    userWalletId: string,
+    request: ChangeWalletNameRequestDTO
+  ) {
+    const userWallet = await WalletsService.getUserWalletByContext(
+      sdk,
+      masterWalletId,
+      userWalletId
+    );
+
+    return await userWallet.changeName(request.name);
+  }
+
+  public async sendMasterWalletCoin(
+    sdk: SDK,
+    masterWalletId: string,
     request: SendCoinRequestDTO
   ): Promise<TransactionDTO> {
-    const wallet: EthWallet = await sdk.bsc.wallets.getWallet(walletId);
-    return TransactionDTO.fromEthTransaction(
-      await wallet.transfer(
-        request.ticker,
+    const masterWallet = await WalletsService.getMasterWalletById(
+      sdk,
+      masterWalletId
+    );
+
+    if (request.isHopTransaction) {
+      return await masterWallet.hopTransfer(
+        await WalletsService.getCoinByTicker(sdk, request.ticker),
         request.to,
         new BN(request.amount),
         request.passphrase,
         null,
-        request.gasPrice ? new BN(request.gasPrice) : null
-      )
+        request.gasPrice ? new BN(request.gasPrice) : undefined,
+        request.gasLimit ? new BN(request.gasLimit) : undefined,
+        request.metadata
+      );
+    }
+
+    return await masterWallet.transfer(
+      await WalletsService.getCoinByTicker(sdk, request.ticker),
+      request.to,
+      new BN(request.amount),
+      request.passphrase,
+      null,
+      request.gasPrice ? new BN(request.gasPrice) : undefined,
+      request.gasLimit ? new BN(request.gasLimit) : undefined,
+      request.metadata
     );
   }
 
-  public async callContract(
+  public async sendUserWalletCoin(
     sdk: SDK,
-    walletId: string,
-    request: CreateTransactionRequestDTO
+    masterWalletId: string,
+    userWalletId: string,
+    request: SendCoinRequestDTO
   ): Promise<TransactionDTO> {
-    const wallet: EthWallet = await sdk.bsc.wallets.getWallet(walletId);
-    return TransactionDTO.fromEthTransaction(
-      await wallet.contractCall(
+    const userWallet = await WalletsService.getUserWalletByContext(
+      sdk,
+      masterWalletId,
+      userWalletId
+    );
+
+    if (request.isHopTransaction) {
+      return await userWallet.hopTransfer(
+        await WalletsService.getCoinByTicker(sdk, request.ticker),
         request.to,
-        new BN(request.value),
-        request.data,
+        new BN(request.amount),
         request.passphrase,
         null,
-        request.gasPrice ? new BN(request.gasPrice) : null
-      )
+        request.gasPrice ? new BN(request.gasPrice) : undefined,
+        request.gasLimit ? new BN(request.gasLimit) : undefined,
+        request.metadata
+      );
+    }
+
+    return await userWallet.transfer(
+      await WalletsService.getCoinByTicker(sdk, request.ticker),
+      request.to,
+      new BN(request.amount),
+      request.passphrase,
+      null,
+      request.gasPrice ? new BN(request.gasPrice) : undefined,
+      request.gasLimit ? new BN(request.gasLimit) : undefined,
+      request.metadata
     );
   }
 
-  public async replaceTransaction(
+  public async sendMasterWalletContractCall(
     sdk: SDK,
-    walletId: string,
-    transactionId: string,
-    request: ReplaceTransactionRequestDTO
+    masterWalletId: string,
+    request: CreateTransactionRequestDTO
   ): Promise<TransactionDTO> {
-    const wallet: EthWallet = await sdk.bsc.wallets.getWallet(walletId);
-    return TransactionDTO.fromEthTransaction(
-      await wallet.replaceTransaction(
-        transactionId,
-        request.gasPrice ? new BN(request.gasPrice) : null
-      )
+    const masterWallet = await WalletsService.getMasterWalletById(
+      sdk,
+      masterWalletId
+    );
+
+    return await masterWallet.contractCall(
+      request.to,
+      new BN(request.value),
+      request.data,
+      request.passphrase,
+      null,
+      request.gasPrice ? new BN(request.gasPrice) : undefined,
+      request.gasLimit ? new BN(request.gasLimit) : undefined
+    );
+  }
+
+  public async sendUserWalletContractCall(
+    sdk: SDK,
+    masterWalletId: string,
+    userWalletId: string,
+    request: CreateTransactionRequestDTO
+  ): Promise<TransactionDTO> {
+    const userWallet = await WalletsService.getUserWalletByContext(
+      sdk,
+      masterWalletId,
+      userWalletId
+    );
+
+    return await userWallet.contractCall(
+      request.to,
+      new BN(request.value),
+      request.data,
+      request.passphrase,
+      null,
+      request.gasPrice ? new BN(request.gasPrice) : undefined,
+      request.gasLimit ? new BN(request.gasLimit) : undefined,
+      request.metadata
     );
   }
 
   public async flush(
     sdk: SDK,
-    walletId: string,
+    masterWalletId: string,
     request: CreateFlushRequestDTO
   ) {
-    const wallet: EthWallet = await sdk.bsc.wallets.getWallet(walletId);
-    return wallet.flush(
-      request.targets as any[],
-      request.gasPrice ? new BN(request.gasPrice) : null,
-      request.gasLimit ? new BN(request.gasLimit) : null
+    const masterWallet = await WalletsService.getMasterWalletById(
+      sdk,
+      masterWalletId
+    );
+
+    const targets: Array<{ coinId: number; depositAddressId: string }> =
+      request.targets
+        .filter((target) => target.userWalletId)
+        .map((target) => {
+          return {
+            coinId: target.coinId,
+            depositAddressId: target.userWalletId,
+          };
+        });
+
+    return masterWallet.flushWithTargets(
+      targets,
+      request.gasPrice == null ? null : new BN(request.gasPrice),
+      request.gasLimit == null ? null : new BN(request.gasLimit)
     );
   }
 
-  public async getDepositAddresses(
+  private static async getMasterWalletById(
     sdk: SDK,
-    walletId: string,
-    option: GetDepositAddressOption
-  ): Promise<PaginationDTO<DepositAddressDTO>> {
-    const wallet = await sdk.bsc.wallets.getWallet(walletId);
-    const result = await wallet.getDepositAddresses(
-      option as UserWalletPaginationOptions
-    );
-    return {
-      pagination: result.pagination,
-      results: result.results.map(DepositAddressDTO.fromEthDepositAddress),
-    };
+    id: string
+  ): Promise<EthMasterWallet> {
+    return await sdk.bsc.wallets.getMasterWallet(id);
   }
 
-  public async getDepositAddress(
+  private static async getUserWalletByContext(
     sdk: SDK,
-    walletId: string,
-    depositAddressId: string
-  ): Promise<DepositAddressDTO> {
-    const wallet = await sdk.bsc.wallets.getWallet(walletId);
-    return DepositAddressDTO.fromEthDepositAddress(
-      await wallet.getDepositAddress(depositAddressId)
-    );
+    masterWalletId: string,
+    userWalletId: string
+  ): Promise<EthUserWallet> {
+    return (
+      await WalletsService.getMasterWalletById(sdk, masterWalletId)
+    ).getUserWallet(userWalletId);
   }
 
-  public async getBalanceOfDepositAddress(
-    sdk: SDK,
-    walletId: string,
-    depositAddressId: string,
-    ticker: string
-  ): Promise<BalanceDTO[]> {
-    const wallet = await sdk.bsc.wallets.getWallet(walletId);
-    const depositAddress = await wallet.getDepositAddress(depositAddressId);
-    return (await depositAddress.getBalance(false))
-      .map(BalanceDTO.fromBalance)
-      .filter((balance) => {
-        if (ticker === undefined) return true;
-        return balance.ticker.toUpperCase() == ticker.toUpperCase();
-      });
-  }
-
-  public async createDepositAddress(
-    sdk: SDK,
-    walletId: string,
-    request: CreateDepositAddressRequestDTO
-  ): Promise<DepositAddressDTO> {
-    const wallet = await sdk.bsc.wallets.getWallet(walletId);
-    return DepositAddressDTO.fromEthDepositAddress(
-      await wallet.createDepositAddress(request.name)
-    );
-  }
-
-  async resendTransaction(
-    sdk: SDK,
-    walletId: string,
-    transactionId: string
-  ): Promise<EthTransaction> {
-    const wallet = await sdk.bsc.wallets.getWallet(walletId);
-    return await wallet.resendTransaction(transactionId);
+  private static getCoinByTicker(sdk: SDK, ticker: string): Promise<Coin> {
+    return sdk.bsc.coins.getCoin(ticker);
   }
 
   public async transferNft(

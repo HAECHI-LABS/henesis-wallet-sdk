@@ -12,12 +12,6 @@ export const EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO: DepositAddressDTO = {
   version: "v4",
 };
 
-export const EXAMPLE_BINANCE_SMART_CHAIN_DEPOSIT_ADDRESS_DTO: DepositAddressDTO =
-  {
-    ...EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO,
-    blockchain: BlockchainType.BINANCE_SMART_CHAIN,
-  };
-
 export class DepositAddressDTO {
   @ApiModelProperty({
     description: "입금 주소 ID",

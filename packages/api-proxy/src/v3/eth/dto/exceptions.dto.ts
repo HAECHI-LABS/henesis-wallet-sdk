@@ -39,6 +39,12 @@ export const EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO: WalletNotFoundException = {
   code: 4000,
 };
 
+export const EXAMPLE_MASTER_WALLET_NOT_FOUND_EXCEPTION_DTO: WalletNotFoundException =
+  {
+    message: "master wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist",
+    code: 4000,
+  };
+
 export const EXAMPLE_NFT_NOT_FOUND_EXCEPTION_DTO: NftNotFoundException = {
   message: "nft '2' does not exist",
   code: 4000,
