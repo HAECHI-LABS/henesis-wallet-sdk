@@ -37,3 +37,8 @@ baseUrls.set(Env.Test, "https://stagint.test.wallet.henesis.io/api/v2");
 ...
 ```
 
+## Use local modified core SDK in the API Proxy
+
+Running `npm run lerna:bootstrap` makes copy of core SDK to the API Proxy's node_modules directory.
+
+For more information, read [this](https://lerna.js.org/#command-bootstrap).

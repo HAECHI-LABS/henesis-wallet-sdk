@@ -34,6 +34,8 @@ export interface ValueTransferEvent extends Event {
   transferType: TransferType;
   walletName: string;
   walletType: WalletType;
+  hopTransactionId: string;
+  hopTransactionHash: string;
 }
 
 export interface NftTransferEvent extends Event {

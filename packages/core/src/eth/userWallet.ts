@@ -7,12 +7,15 @@ import {
   UserWalletDTO,
   BalanceDTO,
   ChangeWalletNameRequest,
+  CreateNftMultiSigTransactionRequest,
+  TransactionDTO,
 } from "../__generate__/eth";
 import {
   EthWalletData,
   EthLikeWallet,
   EthMasterWalletData,
   EthTransaction,
+  convertSignedMultiSigPayloadToDTO,
 } from "./abstractWallet";
 import { convertWalletStatus } from "../wallet";
 import { Nft } from "./nft";
@@ -130,7 +133,6 @@ export class EthUserWallet extends EthLikeWallet {
     throw new Error("unimplemented method");
   }
 
-  // TODO: Implement me! (at the 2nd NFT development step)
   async transferNft(
     nft: number | Nft,
     tokenOnchainId: string,
@@ -141,7 +143,23 @@ export class EthUserWallet extends EthLikeWallet {
     gasLimit?: BN,
     metadata?: string
   ): Promise<EthTransaction> {
-    throw new Error("implement me!");
+    const n = typeof nft === "number" ? await this.nfts.getNft(nft) : nft;
+    return this.sendNftTransaction(
+      await this.buildTransferNftPayload(
+        n,
+        tokenOnchainId,
+        this,
+        to,
+        passphrase
+      ),
+      n,
+      tokenOnchainId,
+      to,
+      otpCode,
+      gasPrice,
+      gasLimit || this.DEFAULT_NFT_TRANSFER_GAS_LIMIT,
+      metadata
+    );
   }
   async sendNftTransaction(
     signedMultiSigPayload: SignedMultiSigPayload,
@@ -153,6 +171,25 @@ export class EthUserWallet extends EthLikeWallet {
     gasLimit?: BN,
     metadata?: string
   ): Promise<EthTransaction> {
-    throw new Error("implement me!");
+    const request: CreateNftMultiSigTransactionRequest = {
+      nftId: nft.getId(),
+      tokenOnchainId,
+      toAddress: to,
+      signedMultiSigPayload: convertSignedMultiSigPayloadToDTO(
+        signedMultiSigPayload
+      ),
+      gasPrice: BNConverter.bnToHexStringOrElseNull(gasPrice),
+      gasLimit: BNConverter.bnToHexStringOrElseNull(gasLimit),
+      otpCode,
+      metadata,
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `${this.baseUrl}/nft/transactions`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
+    };
   }
 }

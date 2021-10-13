@@ -34,6 +34,7 @@ export interface Transaction {
   isFeeDelegated: boolean;
   fee?: BN;
   estimatedFee?: BN;
+  hopAddress?: string;
   createdAt: string;
   updatedAt: string;
 }

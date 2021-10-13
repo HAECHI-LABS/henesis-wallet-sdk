@@ -23,6 +23,9 @@ export const EXAMPLE_ETHEREUM_TRANSFER_DTO: TransferDTO = {
   transactionId: "8c87c578d7568edc156f831cf03c3ff0",
   transactionHash:
     "0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f",
+  hopTransactionId: "6f831cf03c3ff08c87c578d7568edc15",
+  hopTransactionHash:
+    "0x60603c815f0ba0ad6b7f2ae398bd7cb9fe71347f984e32453fe4fe53f255dfd3",
   createdAt: "1612411568760",
   updatedAt: "1612411724023",
   name: "ETH 실비 정산",
@@ -115,6 +118,19 @@ export class TransferDTO {
   transactionHash: string;
 
   @ApiModelProperty({
+    description:
+      "홉 트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른 개념입니다.)",
+    example: EXAMPLE_ETHEREUM_TRANSFER_DTO.hopTransactionId,
+  })
+  hopTransactionId: string;
+
+  @ApiModelProperty({
+    description: "홉 트랜잭션 해시",
+    example: EXAMPLE_ETHEREUM_TRANSFER_DTO.hopTransactionHash,
+  })
+  hopTransactionHash: string;
+
+  @ApiModelProperty({
     description: "트랜잭션 생성 시간 (형식: ms, UNIX time)",
     example: EXAMPLE_ETHEREUM_TRANSFER_DTO.createdAt,
   })
@@ -155,6 +171,8 @@ export class TransferDTO {
       transactionId: event.transactionId,
       transactionHash: event.transactionHash,
       createdAt: event.createdAt,
+      hopTransactionId: event.hopTransactionId,
+      hopTransactionHash: event.hopTransactionHash,
       updatedAt: event.updatedAt,
       name: event.walletName,
       metadata: event.metadata,
