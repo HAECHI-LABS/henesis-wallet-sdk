@@ -550,7 +550,7 @@ export class WalletsController {
   @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
-      EXAMPLE_KLAYTN_TRANSACTION_DTO
+      EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO
     ),
     isArray: true,
   })
@@ -577,7 +577,7 @@ export class WalletsController {
   @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
-      EXAMPLE_ETHEREUM_TRANSACTION_DTO
+      EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO
     ),
     isArray: true,
   })
