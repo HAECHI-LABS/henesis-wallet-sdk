@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.2-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.4.2-alpha.0...v3.4.2-alpha.1) (2021-10-14)
+
+
+### Bug Fixes
+
+* add transferBnb abi ([#602](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/602)) ([9e314ad](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9e314addf65ed83601ef8e74438cf2a62b2a396d))
+
+
+### Features
+
+* flush nft ([53df6c1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/53df6c1e3efb16429fce201421ae915534cb5d2b))
+
+
+
+
+
 ## [3.4.2-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.4.1...v3.4.2-alpha.0) (2021-10-14)
 
 
