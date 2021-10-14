@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.2-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.4.1...v3.4.2-alpha.0) (2021-10-14)
+
+
+### Features
+
+* add hop transaction interface ([ebf6b20](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ebf6b207f7980aedfb742a9868ef47f483029c52))
+* implements hop transfer ([6aa887e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6aa887e6759cabbe8ec387fcd0c91fb1ca673192))
+* support NFT balance, transfer of DepositAddress/UserWallet in ETH/KLAY ([#593](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/593)) ([a63d40d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a63d40dd3ea83c79805f140fce8a90ce4b43cb3f))
+
+
+
+
+
 ## [3.4.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.4.0...v3.4.1) (2021-10-01)
 
 
