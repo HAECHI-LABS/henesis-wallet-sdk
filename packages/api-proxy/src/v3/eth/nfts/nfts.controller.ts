@@ -1,15 +1,6 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Query,
-  Request,
-} from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Request } from "@nestjs/common";
 import {
   ApiBadRequestResponse,
-  ApiCreatedResponse,
   ApiExtraModels,
   ApiNoContentResponse,
   ApiOkResponse,
@@ -19,25 +10,22 @@ import {
 import {
   DepositAddressNotFoundException,
   EXAMPLE_NFT_NOT_FOUND_EXCEPTION_DTO,
-  EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
   NftNotFoundException,
   NoWalletNameException,
   WalletNotFoundException,
 } from "../dto/exceptions.dto";
-import { EXAMPLE_ETHEREUM_WALLET_DTO, WalletDTO } from "../dto/wallet.dto";
-import { BalanceDTO, EXAMPLE_ETHEREUM_BALANCE_DTO } from "../dto/balance.dto";
+import { WalletDTO } from "../dto/wallet.dto";
+import { BalanceDTO } from "../dto/balance.dto";
 import { TransactionDTO } from "../dto/transaction.dto";
 import { DepositAddressDTO } from "../dto/deposit-address.dto";
 import {
-  ApiPaginationResponse,
   ApiResponseContentGenerator,
   AuthErrorResponses,
   AuthHeaders,
   PathParams,
-  Queries,
   ReadMeExtension,
 } from "../../../decorators";
-import { NAME_OPTIONAL, WALLET_ID_REQUIRED } from "../dto/params";
+import { NFT_ID_REQUIRED } from "../dto/params";
 import express from "express";
 import { NftsService } from "./nfts.service";
 import { EXAMPLE_ETHEREUM_NFT_DTO, NftDTO } from "../dto/nft.dto";
@@ -77,7 +65,7 @@ export class NftsController {
 
   @Post("/:nftId/sync-metadata")
   @ApiNoContentResponse()
-  @PathParams(WALLET_ID_REQUIRED)
+  @PathParams(NFT_ID_REQUIRED)
   @ApiBadRequestResponse({
     description: "해당하는 id의 NFT 컨트랙트가 없을 때 발생합니다.",
     content: ApiResponseContentGenerator(

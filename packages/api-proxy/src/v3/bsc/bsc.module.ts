@@ -11,6 +11,8 @@ import { TransfersService } from "./transfers/transfers.service";
 import { FeeWalletService } from "./feewallet/fee-wallet.service";
 import { TransactionsService } from "./transactions/transactions.service";
 import { WalletsService } from "./wallets/wallets.service";
+import { NftsController } from "./nfts/nfts.controller";
+import { NftsService } from "./nfts/nfts.service";
 
 @Module({
   controllers: [
@@ -20,6 +22,7 @@ import { WalletsService } from "./wallets/wallets.service";
     FeeWalletController,
     TransactionsController,
     WalletsController,
+    NftsController,
   ],
   providers: [
     CoinsService,
@@ -28,6 +31,7 @@ import { WalletsService } from "./wallets/wallets.service";
     FeeWalletService,
     TransactionsService,
     WalletsService,
+    NftsService,
   ],
 })
 export class BscModule {}

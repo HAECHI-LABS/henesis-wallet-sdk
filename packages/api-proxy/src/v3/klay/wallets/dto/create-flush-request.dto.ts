@@ -75,7 +75,7 @@ class NftTarget {
 
   @ApiModelProperty({
     description: "사용자 지갑 ID",
-    example: EXAMPLE_ETHEREUM_FLUSH_TARGET_DTO.depositAddressId,
+    example: EXAMPLE_KLAYTN_FLUSH_TARGET_DTO.userWalletId,
   })
   userWalletId: string;
 }
