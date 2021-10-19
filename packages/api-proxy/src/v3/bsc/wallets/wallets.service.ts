@@ -346,7 +346,7 @@ export class WalletsService {
     walletId: string,
     request: TransferNftRequestDTO
   ): Promise<TransactionDTO> {
-    const wallet = await sdk.bsc.wallets.getWallet(walletId);
+    const wallet = await sdk.bsc.wallets.getMasterWallet(walletId);
     return TransactionDTO.fromEthTransaction(
       await wallet.transferNft(
         request.nftId,
