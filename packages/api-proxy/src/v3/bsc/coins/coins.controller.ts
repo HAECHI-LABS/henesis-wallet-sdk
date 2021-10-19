@@ -6,11 +6,13 @@ import {
   ReadMeExtension,
 } from "../../../decorators";
 import { CoinsService } from "./coins.service";
-import { Get, Param, Query, Request } from "@nestjs/common";
+import { Controller, Get, Param, Query, Request } from "@nestjs/common";
 import {
   ApiBadRequestResponse,
+  ApiExtraModels,
   ApiOkResponse,
   ApiOperation,
+  ApiTags,
 } from "@nestjs/swagger";
 import {
   CoinDTO,
@@ -19,10 +21,22 @@ import {
 import express from "express";
 import { COIN_REQUIRED } from "../../eth/dto/params";
 import {
+  AccessTokenNotProvidedException,
   EXAMPLE_NO_COIN_EXCEPTION_DTO,
+  InvalidAccessIpException,
+  InvalidAccessTokenException,
   NoCoinException,
 } from "../../eth/dto/exceptions.dto";
 
+@Controller("coins")
+@ApiTags("coins")
+@ApiExtraModels(
+  InvalidAccessIpException,
+  InvalidAccessTokenException,
+  AccessTokenNotProvidedException,
+  NoCoinException,
+  CoinDTO
+)
 @AuthErrorResponses()
 @AuthHeaders()
 export class CoinsController {

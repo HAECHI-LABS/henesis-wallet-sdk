@@ -78,6 +78,7 @@ export class ApiV3Module {
           FilModule,
           LtcModule,
           BchModule,
+          BscModule,
           CacheModule.register({
             ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
             max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache

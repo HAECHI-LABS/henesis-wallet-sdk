@@ -43,6 +43,7 @@ import {
 } from "../../eth/dto/balance.dto";
 import {
   EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO,
+  EXAMPLE_ETHEREUM_TRANSACTION_DTO,
   TransactionDTO,
 } from "../../eth/dto/transaction.dto";
 import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
@@ -67,6 +68,7 @@ import {
   USER_WALLET_ID_OPTIONAL,
   USER_WALLET_ID_REQUIRED,
   WALLET_ID_OPTIONAL,
+  WALLET_ID_REQUIRED,
 } from "../../eth/dto/params";
 import { ChangeWalletNameRequestDTO } from "../../eth/wallets/dto/change-wallet-name-request.dto";
 import {
@@ -80,7 +82,10 @@ import {
 } from "../../eth/dto/exceptions.dto";
 import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto";
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
-import { CreateFlushRequestDTO } from "../../klay/wallets/dto/create-flush-request.dto";
+import {
+  CreateFlushRequestDTO,
+  CreateNftFlushRequestDTO,
+} from "../../klay/wallets/dto/create-flush-request.dto";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
 import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
 import { NftTransferDTO } from "../../eth/dto/nft-transfer.dto";
@@ -589,6 +594,40 @@ export class WalletsController {
       request.sdk,
       walletId,
       transferNftRequest
+    );
+  }
+
+  @Post("/:walletId/nft/flush")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO
+    ),
+  })
+  @PathParams(MASTER_WALLET_ID_REQUIRED)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    ),
+  })
+  @ApiOperation({
+    summary: "사용자 지갑 NFT 모두 끌어오기",
+    description: "사용자 지갑의 특정 NFT를 모두 상위의 지갑으로 끌어옵니다.",
+  })
+  @ReadMeExtension()
+  public async nftFlush(
+    @Request() request: express.Request,
+    @Param("walletId") walletId: string,
+    @Body() createNftFlushRequestDTO: CreateNftFlushRequestDTO
+  ): Promise<TransactionDTO> {
+    return TransactionDTO.fromEthTransaction(
+      await this.walletsService.nftFlush(
+        request.sdk,
+        walletId,
+        createNftFlushRequestDTO
+      )
     );
   }
 

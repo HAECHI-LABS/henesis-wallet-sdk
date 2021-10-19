@@ -10,6 +10,11 @@ export const NFT_ID_OPTIONAL: ApiQueryOptions = {
   required: false,
   description: "NFT 컨트랙트의 ID",
 };
+export const NFT_ID_REQUIRED: ApiParamOptions = {
+  name: "nftId",
+  required: true,
+  description: "NFT 컨트랙트의 ID",
+};
 export const TOKEN_NAME_OPTIONAL: ApiQueryOptions = {
   name: "tokenName",
   required: false,
