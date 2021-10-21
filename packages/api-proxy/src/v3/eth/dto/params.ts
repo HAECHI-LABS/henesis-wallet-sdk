@@ -134,6 +134,11 @@ export const COIN_REQUIRED: ApiParamOptions = {
   required: true,
   description: "Henesis에서 부여한 Coin의 ID",
 };
+export const TICKER_REQUIRED: ApiParamOptions = {
+  name: "ticker",
+  required: true,
+  description: "코인의 기호",
+};
 export const TRANSFER_TYPE_OPTIONAL: ApiParamOptions = {
   name: "transferType",
   required: false,

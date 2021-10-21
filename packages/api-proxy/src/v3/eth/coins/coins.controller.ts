@@ -16,7 +16,7 @@ import {
   PathParams,
   ReadMeExtension,
 } from "../../../decorators";
-import { COIN_REQUIRED } from "../dto/params";
+import { TICKER_REQUIRED } from "../dto/params";
 import {
   AccessTokenNotProvidedException,
   EXAMPLE_NO_COIN_EXCEPTION_DTO,
@@ -61,7 +61,7 @@ export class CoinsController {
   @ApiOkResponse({
     content: ApiResponseContentGenerator(CoinDTO, EXAMPLE_ETHEREUM_COIN_DTO),
   })
-  @PathParams(COIN_REQUIRED)
+  @PathParams(TICKER_REQUIRED)
   @ApiBadRequestResponse({
     description: "코인 정보가 없을 때 response 입니다",
     content: ApiResponseContentGenerator(
