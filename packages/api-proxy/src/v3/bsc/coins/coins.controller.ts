@@ -40,7 +40,7 @@ import {
 @AuthErrorResponses()
 @AuthHeaders()
 export class CoinsController {
-  public constructor(private readonly coinService: CoinsService) {}
+  public constructor(private readonly coinsService: CoinsService) {}
 
   @Get()
   @ApiOkResponse({
@@ -59,10 +59,10 @@ export class CoinsController {
     @Request() request: express.Request,
     @Query("flag") flag?: boolean
   ): Promise<CoinDTO[]> {
-    return await this.coinService.getCoins(request.sdk, flag);
+    return await this.coinsService.getCoins(request.sdk, flag);
   }
 
-  @Get("/:coinId")
+  @Get("/:ticker")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(
       CoinDTO,
@@ -85,8 +85,8 @@ export class CoinsController {
   @ReadMeExtension()
   public async getCoin(
     @Request() request: express.Request,
-    @Param("coinId") coinId: string
+    @Param("ticker") ticker: string
   ): Promise<CoinDTO> {
-    return await this.coinService.getCoin(coinId, request.sdk);
+    return await this.coinsService.getCoin(request.sdk, ticker);
   }
 }
