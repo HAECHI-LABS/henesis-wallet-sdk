@@ -19,7 +19,7 @@ import {
   EXAMPLE_BINANCE_SMART_CHAIN_COIN_DTO,
 } from "../../eth/dto/coin.dto";
 import express from "express";
-import { COIN_REQUIRED } from "../../eth/dto/params";
+import { TICKER_REQUIRED } from "../../eth/dto/params";
 import {
   AccessTokenNotProvidedException,
   EXAMPLE_NO_COIN_EXCEPTION_DTO,
@@ -69,7 +69,7 @@ export class CoinsController {
       EXAMPLE_BINANCE_SMART_CHAIN_COIN_DTO
     ),
   })
-  @PathParams(COIN_REQUIRED)
+  @PathParams(TICKER_REQUIRED)
   @ApiBadRequestResponse({
     description: "코인 정보가 없을 때 response 입니다",
     content: ApiResponseContentGenerator(
