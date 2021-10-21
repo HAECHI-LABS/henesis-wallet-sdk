@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.4.2-alpha.1...v3.5.0) (2021-10-21)
+
+
+### Bug Fixes
+
+* fix BSC API proxy interface ([#606](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/606)) ([6d3b3e5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6d3b3e5fe5d566ad1dba68a63dbffabeb4ceb209))
+* fix BSC NFT transfer bug ([#605](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/605)) ([afca085](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/afca085c2f0f118b2f868fb54b570b3f881dbde8))
+* fix Klaytn transfers API interface ([#607](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/607)) ([7d5494a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7d5494a410d295faf8fb4483181b13bd866194a0))
+
+
+### Features
+
+* support BSC NFT flush ([#604](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/604)) ([16b0578](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/16b05787857732bf4ebc41b49adf3c0127ebc513))
+
+
+
+
+
 ## [3.4.2-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.4.2-alpha.0...v3.4.2-alpha.1) (2021-10-14)
 
 
