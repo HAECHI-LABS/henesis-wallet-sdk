@@ -6,7 +6,7 @@ import { SyncMetadataRequestDTO } from "../../eth/nfts/dto/sync-metadata-request
 @Injectable()
 export class NftsService {
   async getNfts(sdk: SDK): Promise<NftDTO[]> {
-    return (await sdk.klay.nfts.getAllNfts()).map((nft) => NftDTO.fromNft(nft));
+    return (await sdk.bsc.nfts.getAllNfts()).map((nft) => NftDTO.fromNft(nft));
   }
 
   async syncMetadata(
@@ -14,6 +14,6 @@ export class NftsService {
     nftId: number,
     request: SyncMetadataRequestDTO
   ): Promise<void> {
-    await sdk.klay.nfts.syncMetadata(nftId, request.tokenOnchainId);
+    await sdk.bsc.nfts.syncMetadata(nftId, request.tokenOnchainId);
   }
 }

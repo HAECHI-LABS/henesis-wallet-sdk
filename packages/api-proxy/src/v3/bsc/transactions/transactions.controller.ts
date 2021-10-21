@@ -119,17 +119,21 @@ export class TransactionsController {
     @Query("types") types?: TransactionType[],
     @Query("keyId") keyId?: string
   ): Promise<PaginationDTO<TransactionDTO>> {
-    return await this.transactionsService.getTransactions(request.sdk, {
-      address,
-      toAddress,
-      fromAddress,
-      transactionHash,
-      start,
-      end,
-      status,
-      statuses,
-      types,
-      keyId,
-    });
+    return await this.transactionsService.getTransactions(
+      request.sdk,
+      {
+        address,
+        toAddress,
+        fromAddress,
+        transactionHash,
+        start,
+        end,
+        status,
+        statuses,
+        types,
+        keyId,
+      },
+      request
+    );
   }
 }

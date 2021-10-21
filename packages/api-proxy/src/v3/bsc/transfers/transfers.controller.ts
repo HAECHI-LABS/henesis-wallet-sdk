@@ -88,18 +88,22 @@ export class TransfersController {
     @Query("size") size: number = 15,
     @Query("page") page: number = 0
   ): Promise<PaginationDTO<TransferDTO>> {
-    return await this.transfersService.getTransfers(request.sdk, {
-      ticker,
-      depositAddressId,
-      walletId,
-      transactionId,
-      transactionHash,
-      status,
-      transferType,
-      updatedAtGte,
-      updatedAtLt,
-      size,
-      page,
-    });
+    return await this.transfersService.getTransfers(
+      request.sdk,
+      {
+        ticker,
+        depositAddressId,
+        walletId,
+        transactionId,
+        transactionHash,
+        status,
+        transferType,
+        updatedAtGte,
+        updatedAtLt,
+        size,
+        page,
+      },
+      request
+    );
   }
 }

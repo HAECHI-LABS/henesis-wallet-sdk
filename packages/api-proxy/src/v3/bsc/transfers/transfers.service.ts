@@ -6,19 +6,31 @@ import { EthValueTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/even
 import { object } from "../../../utils/object";
 import { GetTransfersOption } from "../../eth/transfers/dto/get-transfers-option.dto";
 import { PaginationDTO } from "../../eth/dto/pagination.dto";
+import { changeUrlHost } from "../../../utils/pagination";
+import express from "express";
 
 @Injectable()
 export class TransfersService {
   public async getTransfers(
     sdk: SDK,
-    option: GetTransfersOption
+    options: GetTransfersOption,
+    request: express.Request
   ): Promise<PaginationDTO<TransferDTO>> {
     const result: Pagination<EthValueTransferEvent> =
       await sdk.bsc.events.getValueTransferEvents(
-        object(GetTransfersOption.toSDKOption(option))
+        object(GetTransfersOption.toSDKOption(options))
       );
+
+    result.pagination.nextUrl = changeUrlHost(
+      result.pagination.nextUrl,
+      request
+    );
+    result.pagination.previousUrl = changeUrlHost(
+      result.pagination.previousUrl,
+      request
+    );
     return {
-      pagination: result.pagination as any,
+      pagination: result.pagination,
       results: result.results.map(TransferDTO.fromValueTransferEvent),
     };
   }
