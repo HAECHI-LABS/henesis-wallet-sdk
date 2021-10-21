@@ -322,6 +322,16 @@ components:
           type: string
           description: 트랜잭션 해시
           example: '0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f'
+        hopTransactionId:
+          type: string
+          description: >-
+            홉 트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          example: 6f831cf03c3ff08c87c578d7568edc15
+        hopTransactionHash:
+          type: string
+          description: 홉 트랜잭션 해시
+          example: '0x60603c815f0ba0ad6b7f2ae398bd7cb9fe71347f984e32453fe4fe53f255dfd3'
         createdAt:
           type: string
           description: '트랜잭션 생성 시간 (형식: ms, UNIX time)'
@@ -352,6 +362,8 @@ components:
         - transferType
         - transactionId
         - transactionHash
+        - hopTransactionId
+        - hopTransactionHash
         - createdAt
         - updatedAt
         - name
@@ -428,6 +440,10 @@ components:
           type: string
           description: 트랜잭션 수수료
           example: '10000000'
+        hopAddress:
+          type: string
+          description: 홉 주소
+          example: '0x1AA2705a26452cC22430F31A5c85974bBEDDe5a5'
         createdAt:
           type: string
           description: '트랜잭션 생성 시간 (형식: ms, UNIX time)'
@@ -568,7 +584,7 @@ components:
           example: '1000000000000'
         spendableAmount:
           type: string
-          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei)'
+          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei, peb, jager)'
           example: '1000000000000'
         name:
           type: string
@@ -674,6 +690,10 @@ components:
           type: string
           description: 트랜잭션에 사용할 gas limit. null일 경우, Henesis가 자동으로 설정합니다.
           example: '500000'
+        isHopTransaction:
+          type: boolean
+          description: 컨트랙트를 통한 입금을 원치 않는 경우, 컨트랙트가 아닌 EOA로 출금을 진행 합니다.
+          example: false
         metadata:
           type: string
           description: 기타 정보 기록용 메타 데이터 (255자 제한)
@@ -748,8 +768,8 @@ components:
         gasPrice:
           type: string
           description: >-
-            트랜잭션에 사용할 gas price 입니다. (단위: peb) null일 경우, Henesis가 자동으로 5분 안에 채굴될
-            수 있는 값으로 설정합니다.
+            트랜잭션에 사용할 gas price 입니다. (단위: peb, jager) null일 경우, Henesis가 자동으로 5분
+            안에 채굴될 수 있는 값으로 설정합니다.
           example: '8000000000'
         gasLimit:
           type: string
@@ -865,8 +885,8 @@ components:
         gasPrice:
           type: string
           description: >-
-            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
-            값으로 설정합니다.
+            트랜잭션에 사용할 gas price (단위: wei, peb, jager) null일 경우, Henesis가 자동으로 5분
+            안에 채굴될 수 있는 값으로 설정합니다.
           example: '8000000000'
         gasLimit:
           type: string
@@ -881,6 +901,47 @@ components:
         - tokenOnchainId
         - to
         - passphrase
+    NftTarget:
+      type: object
+      properties:
+        nftId:
+          type: number
+          description: 집금하고자 하는 NFT 컨트랙트의 ID
+          example: 11
+        userWalletId:
+          type: string
+          description: 사용자 지갑 ID
+          example: c2bd6506cb56a6baaff32653ac77ef49
+      required:
+        - nftId
+        - userWalletId
+    CreateNftFlushRequestDTO:
+      type: object
+      properties:
+        targets:
+          description: 집금할 대상의 목록
+          example:
+            - coinId: 11
+              depositAddressId: c2bd6506cb56a6baaff32653ac77ef49
+          type: array
+          items:
+            $ref: '#/components/schemas/NftTarget'
+        gasPrice:
+          type: string
+          description: >-
+            트랜잭션에 사용할 gas price 입니다. (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될
+            수 있는 값으로 설정합니다.
+          example: '8000000000'
+        gasLimit:
+          type: string
+          description: 트랜잭션에 사용할 gas limit 입니다. null일 경우, Henesis가 자동으로 설정합니다.
+          example: '10000000000'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+      required:
+        - targets
     NftDTO:
       type: object
       properties:
@@ -928,7 +989,7 @@ components:
         tokenMetadata:
           type: object
           description: 토큰에 정의된 metadata
-          example: &ref_28
+          example: &ref_29
             description: Friendly OpenSea Creature that enjoys long swims in the ocean.
             external_url: https://openseacreatures.io/3
             image: >-
@@ -1052,7 +1113,7 @@ components:
             - $ref: '#/components/schemas/NftDTO'
         token:
           description: NFT 토큰 정보
-          example: &ref_29
+          example: &ref_31
             name: Haechi 1st NFT
             onchainId: '1'
             uri: https://opensea-creatures-api.herokuapp.com/api/creature/3
@@ -1239,13 +1300,9 @@ paths:
         - name: ticker
           required: true
           in: path
+          description: 코인의 기호
           schema:
             type: string
-        - name: coinId
-          required: true
-          in: path
-          description: Henesis에서 부여한 Coin의 ID
-          schema: {}
       responses:
         '200':
           content:
@@ -1435,15 +1492,25 @@ paths:
           schema:
             type: string
         - name: depositAddressId
-          required: false
+          required: true
           in: query
-          description: 입금 주소 ID
           schema:
             type: string
         - name: walletId
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: userWalletId
           required: false
           in: query
-          description: 지갑 ID
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+        - name: masterWalletId
+          required: false
+          in: query
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: transactionId
@@ -1519,6 +1586,9 @@ paths:
                     transactionId: 8c87c578d7568edc156f831cf03c3ff0
                     transactionHash: >-
                       0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f
+                    hopTransactionId: 6f831cf03c3ff08c87c578d7568edc15
+                    hopTransactionHash: >-
+                      0x60603c815f0ba0ad6b7f2ae398bd7cb9fe71347f984e32453fe4fe53f255dfd3
                     createdAt: '1612411568760'
                     updatedAt: '1612411724023'
                     name: ETH 실비 정산
@@ -1649,6 +1719,7 @@ paths:
                 error: 'null'
                 status: CONFIRMED
                 fee: '10000000'
+                hopAddress: '0x1AA2705a26452cC22430F31A5c85974bBEDDe5a5'
                 createdAt: '1614582928222'
                 updatedAt: '1612411724023'
           description: ''
@@ -2474,7 +2545,7 @@ paths:
               example: *ref_26
         '401': *ref_23
       tags: *ref_24
-  /api/v3/klaytn/wallets/{walletId}/nft/transfer:
+  /api/v3/klaytn/wallets/{masterWalletId}/nft/transfer:
     post:
       operationId: klaytn-WalletsController_transferNft
       x-readme:
@@ -2485,15 +2556,15 @@ paths:
           - java
           - python
           - go
-      summary: NFT 출금하기
-      description: 특정 지갑에서 NFT 토큰을 출금합니다.
+      summary: 마스터 지갑 NFT 출금하기
+      description: 특정 마스터 지갑에서 NFT 토큰을 출금합니다.
       parameters:
         - *ref_20
         - *ref_21
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: ticker
@@ -2501,11 +2572,108 @@ paths:
           in: query
           description: 코인의 기호
           schema: {}
-        - name: depositAddressId
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferNftRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: &ref_28
+                id: b549bfaaa74d1c4244ecc655738b1984
+                blockchain: KLAYTN
+                hash: >-
+                  0x8a1ef722a2884d53a86874c8ba19bcf267bb0b8a81da00c14ddc6457cf1eaf96
+                error: 'null'
+                status: CONFIRMED
+                fee: '10000000'
+                createdAt: '1614582928222'
+                updatedAt: '1612411724023'
+          description: ''
+        '401': *ref_23
+      tags: *ref_24
+  /api/v3/klaytn/wallets/{walletId}/nft/flush:
+    post:
+      operationId: klaytn-WalletsController_nftFlush
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 NFT 모두 끌어오기
+      description: 사용자 지갑의 특정 NFT를 모두 상위의 지갑으로 끌어옵니다.
+      parameters:
+        - *ref_20
+        - *ref_21
+        - name: walletId
           required: true
           in: path
-          description: 입금 주소 ID
+          schema:
+            type: string
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
           schema: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNftFlushRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_28
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_26
+        '401': *ref_23
+      tags: *ref_24
+  /api/v3/klaytn/wallets/{masterWalletId}/user-wallets/{userWalletId}/nft/transfer:
+    post:
+      operationId: klaytn-WalletsController_transferUserWalletNft
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 NFT 출금하기
+      description: 특정 사용자 지갑에서 NFT 토큰을 출금합니다.
+      parameters:
+        - *ref_20
+        - *ref_21
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 사용자 지갑 ID
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -2522,7 +2690,7 @@ paths:
           description: ''
         '401': *ref_23
       tags: *ref_24
-  /api/v3/klaytn/wallets/{walletId}/nft/balance:
+  /api/v3/klaytn/wallets/{masterWalletId}/nft/balance:
     get:
       operationId: klaytn-WalletsController_getNftBalance
       x-readme:
@@ -2538,10 +2706,10 @@ paths:
       parameters:
         - *ref_20
         - *ref_21
-        - name: walletId
+        - name: masterWalletId
           required: true
           in: path
-          description: 지갑 ID
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: size
@@ -2569,10 +2737,75 @@ paths:
           in: query
           description: 코인의 기호
           schema: {}
-        - name: depositAddressId
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForNftBalanceDTO'
+              example: &ref_30
+                pagination: *ref_13
+                results:
+                  - nft: *ref_2
+                    tokenOnchainId: '1'
+                    tokenUri: https://opensea-creatures-api.herokuapp.com/api/creature/3
+                    tokenMetadata: *ref_29
+                    isWithdrawalPending: false
+          description: ''
+        '401': *ref_23
+      tags: *ref_24
+  /api/v3/klaytn/wallets/{masterWalletId}/user-wallets/{userWalletId}/nft/balance:
+    get:
+      operationId: klaytn-WalletsController_getUserWalletNftBalance
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 NFT 잔고 조회하기
+      description: 특정 사용자 지갑의 NFT 잔고를 조회합니다.
+      parameters:
+        - *ref_20
+        - *ref_21
+        - name: masterWalletId
           required: true
           in: path
-          description: 입금 주소 ID
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+        - name: size
+          required: true
+          in: query
+          schema:
+            type: number
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+        - name: tokenOnchainId
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: tokenName
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: ticker
+          required: false
+          in: query
+          description: 코인의 기호
           schema: {}
       responses:
         '200':
@@ -2580,14 +2813,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForNftBalanceDTO'
-              example:
-                pagination: *ref_13
-                results:
-                  - nft: *ref_2
-                    tokenOnchainId: '1'
-                    tokenUri: https://opensea-creatures-api.herokuapp.com/api/creature/3
-                    tokenMetadata: *ref_28
-                    isWithdrawalPending: false
+              example: *ref_30
           description: ''
         '401': *ref_23
       tags: *ref_24
@@ -2630,10 +2856,10 @@ paths:
           description: NFT 토큰의 온체인 ID
           schema:
             type: string
-        - name: depositAddressId
+        - name: userWalletId
           required: false
           in: query
-          description: 입금 주소 ID
+          description: 사용자 지갑 ID
           schema:
             type: string
         - name: transactionId
@@ -2708,14 +2934,14 @@ paths:
                     walletId: ae40b1b3dd953e5592c21e58be30d807
                     depositAddressId: ae40b1b3dd953e5592c21e58be30d807
                     nft: *ref_2
-                    token: *ref_29
+                    token: *ref_31
                     transferType: WITHDRAWAL
                     transactionId: 8c87c578d7568edc156f831cf03c3ff0
                     transactionHash: >-
                       0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f
                     createdAt: '1612411568760'
                     updatedAt: '1612411724023'
-                    name: ETH 실비 정산
+                    name: KLAY 실비 정산
                     metadata: metadata
           description: ''
         '400':
@@ -2741,13 +2967,13 @@ paths:
       summary: 전체 NFT 컨트랙트 목록 조회하기
       description: 모든 NFT 컨트랙트를 조회합니다.
       parameters:
-        - &ref_30
+        - &ref_32
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_31
+        - &ref_33
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -2763,7 +2989,7 @@ paths:
                 $ref: '#/components/schemas/NftDTO'
               example: *ref_2
           description: ''
-        '401': &ref_32
+        '401': &ref_34
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -2779,7 +3005,7 @@ paths:
                   value: *ref_11
                 InvalidAccessIpException:
                   value: *ref_12
-      tags: &ref_33
+      tags: &ref_35
         - nfts
   /api/v3/klaytn/nfts/{nftId}/sync-metadata:
     post:
@@ -2795,18 +3021,14 @@ paths:
       summary: NFT metadata 동기화 요청하기
       description: NFT 컨트랙트의 metadata 동기화를 요청합니다.
       parameters:
-        - *ref_30
-        - *ref_31
+        - *ref_32
+        - *ref_33
         - name: nftId
           required: true
           in: path
+          description: NFT 컨트랙트의 ID
           schema:
             type: string
-        - name: walletId
-          required: true
-          in: path
-          description: 지갑 ID
-          schema: {}
       requestBody:
         required: true
         content:
@@ -2827,5 +3049,5 @@ paths:
               example:
                 message: nft '2' does not exist
                 code: 4000
-        '401': *ref_32
-      tags: *ref_33
+        '401': *ref_34
+      tags: *ref_35

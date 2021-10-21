@@ -151,6 +151,16 @@ components:
           type: string
           description: 해당 내역의 지갑 종류
           example: MASTER_WALLET
+        hopTransactionId:
+          type: string
+          description: >-
+            홉 트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          example: 6f831cf03c3ff08c87c578d7568edc15
+        hopTransactionHash:
+          type: string
+          description: 홉 트랜잭션 해시
+          example: '0x60603c815f0ba0ad6b7f2ae398bd7cb9fe71347f984e32453fe4fe53f255dfd3'
       required:
         - id
         - createdAt
@@ -166,6 +176,8 @@ components:
         - transferType
         - walletName
         - walletType
+        - hopTransactionId
+        - hopTransactionHash
     CallEventDTO:
       type: object
       properties:
@@ -406,6 +418,10 @@ components:
             to: '0x4ef3ba60c8710f45371835cddafabf33daa83e1d'
             value: '0x1'
             data: '0x4ef3ba60c8710f45371835cddafabf33daa83e1d'
+        hopAddress:
+          type: string
+          description: 홉 주소
+          example: '0x1AA2705a26452cC22430F31A5c85974bBEDDe5a5'
         createdAt:
           type: string
           description: '트랜잭션 생성 시간 (형식: ms, UNIX time)'
@@ -682,6 +698,10 @@ components:
           type: string
           description: 마스터 지갑의 비밀번호
           example: passphrase
+        isHopTransaction:
+          type: boolean
+          description: 컨트랙트를 통한 입금을 원치 않는 경우, 컨트랙트가 아닌 EOA로 출금을 진행 합니다.
+          example: 'true'
         gasPrice:
           type: string
           description: |-
@@ -857,6 +877,10 @@ components:
           type: string
           description: 마스터 지갑의 비밀번호
           example: passphrase
+        isHopTransaction:
+          type: boolean
+          description: 컨트랙트를 통한 입금을 원치 않는 경우, 컨트랙트가 아닌 EOA로 출금을 진행 합니다.
+          example: 'true'
         gasPrice:
           type: string
           description: |-
@@ -1177,6 +1201,9 @@ paths:
                     transferType: WITHDRAWAL
                     walletName: bit
                     walletType: MASTER_WALLET
+                    hopTransactionId: 6f831cf03c3ff08c87c578d7568edc15
+                    hopTransactionHash: >-
+                      0x60603c815f0ba0ad6b7f2ae398bd7cb9fe71347f984e32453fe4fe53f255dfd3
                     fromAddress: '0x4c49f0ead605aca868364769c9a4ef24930810b5'
                     toAddress: '0xe3d9325576bf491c2f35e92b020b7b990557f545'
                     data: '0x6eea436c'
@@ -1479,6 +1506,7 @@ paths:
                     estimatedFee: '0x8ac02d65cc00'
                     signedMultiSigPayload: *ref_15
                     rawTransaction: *ref_16
+                    hopAddress: '0x1AA2705a26452cC22430F31A5c85974bBEDDe5a5'
                     createdAt: '1614582928222'
                     updatedAt: '1612411724023'
           description: ''
