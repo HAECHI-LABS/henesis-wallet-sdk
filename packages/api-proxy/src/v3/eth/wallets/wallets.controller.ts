@@ -87,10 +87,7 @@ import {
 } from "../dto/exceptions.dto";
 import { ReplaceTransactionRequestDTO } from "../transactions/dto/replace-transaction-request.dto";
 import { TransferNftRequestDTO } from "./dto/transfer-nft-request.dto";
-import {
-  EXAMPLE_ETHEREUM_NFT_BALANCE_DTO,
-  NftBalanceDTO,
-} from "../dto/nft-balance.dto";
+import { NftBalanceDTO } from "../dto/nft-balance.dto";
 import { NftTransferDTO } from "../dto/nft-transfer.dto";
 import {
   EventStatus,
@@ -315,7 +312,7 @@ export class WalletsController {
     ),
   })
   @ApiOperation({
-    summary: "트랜잭션 교체",
+    summary: "트랜잭션 교체하기",
     description: "트랜잭션을 교체합니다",
   })
   @ReadMeExtension()

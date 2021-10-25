@@ -1,16 +1,15 @@
 import { Injectable } from "@nestjs/common";
-import { Coin, SDK } from "@haechi-labs/henesis-wallet-core";
+import { BNConverter, Coin, SDK } from "@haechi-labs/henesis-wallet-core";
 import { MasterWalletDTO } from "../../eth/dto/master-wallet.dto";
 import { UserWalletDTO } from "../../eth/dto/user-wallet.dto";
 import {
   EthMasterWallet,
+  EthWallet,
   UserWalletPaginationOptions,
 } from "@haechi-labs/henesis-wallet-core/lib/eth/wallet";
 import express from "express";
-import { PaginationDTO } from "../../../v2/eth/dto/pagination.dto";
 import { object } from "../../../utils/object";
 import { changeUrlHost } from "../../../utils/pagination";
-import { CreateUserWalletRequestDTO } from "../../../v2/eth/dto/create-user-wallet-request.dto";
 import BN from "bn.js";
 import { BalanceDTO } from "../../eth/dto/balance.dto";
 import { ChangeWalletNameRequestDTO } from "../../eth/wallets/dto/change-wallet-name-request.dto";
@@ -29,6 +28,10 @@ import { GetNftTransfersOption } from "../../eth/wallets/dto/get-nft-transfers-o
 import { NftTransferDTO } from "../../eth/dto/nft-transfer.dto";
 import { Pagination } from "@haechi-labs/henesis-wallet-core/lib/types";
 import { EthNftTransferEvent } from "@haechi-labs/henesis-wallet-core/lib/events";
+import { ReplaceTransactionRequestDTO } from "../../eth/transactions/dto/replace-transaction-request.dto";
+import { PaginationDTO } from "../../eth/dto/pagination.dto";
+import { CreateUserWalletRequestDTO } from "../../eth/wallets/dto/create-user-wallet-request.dto";
+import { RetryCreateUserWalletRequestDTO } from "../../eth/dto/retry-create-user-wallet-request.dto";
 
 @Injectable()
 export class WalletsService {
@@ -111,6 +114,26 @@ export class WalletsService {
           : undefined,
         createUserWalletRequestDTO.salt
           ? new BN(createUserWalletRequestDTO.salt)
+          : undefined
+      )
+    ).getData();
+  }
+
+  public async retryCreateUserWallet(
+    sdk: SDK,
+    masterWalletId: string,
+    userWalletId: string,
+    retryCreateUserWalletRequestDTO: RetryCreateUserWalletRequestDTO
+  ): Promise<UserWalletDTO> {
+    const masterWallet = await WalletsService.getMasterWalletById(
+      sdk,
+      masterWalletId
+    );
+    return (
+      await masterWallet.retryCreateUserWallet(
+        userWalletId,
+        retryCreateUserWalletRequestDTO.gasPrice
+          ? BNConverter.hexStringToBN(retryCreateUserWalletRequestDTO.gasPrice)
           : undefined
       )
     ).getData();
@@ -214,6 +237,24 @@ export class WalletsService {
     );
   }
 
+  public async replaceMasterWalletTransaction(
+    sdk: SDK,
+    masterWalletId: string,
+    transactionId: string,
+    request: ReplaceTransactionRequestDTO
+  ): Promise<TransactionDTO> {
+    const masterWallet = await WalletsService.getMasterWalletById(
+      sdk,
+      masterWalletId
+    );
+    return TransactionDTO.fromEthTransaction(
+      await masterWallet.replaceTransaction(
+        transactionId,
+        request.gasPrice == null ? null : new BN(request.gasPrice)
+      )
+    );
+  }
+
   public async sendUserWalletCoin(
     sdk: SDK,
     masterWalletId: string,
@@ -248,6 +289,26 @@ export class WalletsService {
       request.gasPrice ? new BN(request.gasPrice) : undefined,
       request.gasLimit ? new BN(request.gasLimit) : undefined,
       request.metadata
+    );
+  }
+
+  public async replaceUserWalletTransaction(
+    sdk: SDK,
+    masterWalletId: string,
+    userWalletId: string,
+    transactionId: string,
+    request: ReplaceTransactionRequestDTO
+  ): Promise<TransactionDTO> {
+    const userWallet = await WalletsService.getUserWalletByContext(
+      sdk,
+      masterWalletId,
+      userWalletId
+    );
+    return TransactionDTO.fromEthTransaction(
+      await userWallet.replaceTransaction(
+        transactionId,
+        request.gasPrice == null ? null : new BN(request.gasPrice)
+      )
     );
   }
 
@@ -346,10 +407,10 @@ export class WalletsService {
 
   public async transferNft(
     sdk: SDK,
-    walletId: string,
+    masterWalletId: string,
     request: TransferNftRequestDTO
   ): Promise<TransactionDTO> {
-    const wallet = await sdk.bsc.wallets.getMasterWallet(walletId);
+    const wallet = await sdk.bsc.wallets.getMasterWallet(masterWalletId);
     return TransactionDTO.fromEthTransaction(
       await wallet.transferNft(
         request.nftId,
@@ -366,11 +427,11 @@ export class WalletsService {
 
   public async nftFlush(
     sdk: SDK,
-    walletId: string,
+    masterWalletId: string,
     request: CreateNftFlushRequestDTO
   ) {
     const masterWallet: EthMasterWallet = await sdk.bsc.wallets.getMasterWallet(
-      walletId
+      masterWalletId
     );
     const targets: Array<{ nftId: number; depositAddressId: string }> =
       request.targets
@@ -391,11 +452,11 @@ export class WalletsService {
 
   public async transferUserWalletNft(
     sdk: SDK,
-    walletId: string,
+    masterWalletId: string,
     userWalletId: string,
     request: TransferNftRequestDTO
   ): Promise<TransactionDTO> {
-    const wallet = await sdk.bsc.wallets.getMasterWallet(walletId);
+    const wallet = await sdk.bsc.wallets.getMasterWallet(masterWalletId);
     const userWallet = await wallet.getUserWallet(userWalletId);
     return TransactionDTO.fromEthTransaction(
       await userWallet.transferNft(
@@ -413,12 +474,12 @@ export class WalletsService {
 
   public async getNftBalance(
     sdk: SDK,
-    walletId: string,
+    masterWalletId: string,
     options: NftBalancePaginationOptions,
     request: express.Request
   ): Promise<PaginationDTO<NftBalanceDTO>> {
-    const wallet = await sdk.bsc.wallets.getWallet(walletId);
-    const result = await wallet.getNftBalance(options);
+    const masterWallet = await sdk.bsc.wallets.getMasterWallet(masterWalletId);
+    const result = await masterWallet.getNftBalance(options);
 
     result.pagination.nextUrl = changeUrlHost(
       result.pagination.nextUrl,

@@ -38,6 +38,7 @@ import { EthMasterWalletData } from "@haechi-labs/henesis-wallet-core/lib/eth/ab
 import { object } from "../../../utils/object";
 import { changeUrlHost } from "../../../utils/pagination";
 import express from "express";
+import { ReplaceTransactionRequestDTO } from "../../../v3/eth/transactions/dto/replace-transaction-request.dto";
 
 @Injectable()
 export class WalletsService {
@@ -162,6 +163,22 @@ export class WalletsService {
         ? BNConverter.hexStringToBN(requestDTO.gasLimit)
         : undefined,
       requestDTO.metadata
+    );
+  }
+
+  public async replaceMasterWalletTransaction(
+    sdk: SDK,
+    masterWalletId: string,
+    transactionId: string,
+    request: ReplaceTransactionRequestDTO
+  ): Promise<TransactionDTO> {
+    const masterWallet = await WalletsService.getMasterWalletById(
+      sdk,
+      masterWalletId
+    );
+    return await masterWallet.replaceTransaction(
+      transactionId,
+      request.gasPrice == null ? null : new BN(request.gasPrice)
     );
   }
 
@@ -330,6 +347,24 @@ export class WalletsService {
           )
         : undefined,
       sendUserWalletContractCallRequestDTO.metadata
+    );
+  }
+
+  public async replaceUserWalletTransaction(
+    sdk: SDK,
+    masterWalletId: string,
+    userWalletId: string,
+    transactionId: string,
+    request: ReplaceTransactionRequestDTO
+  ): Promise<TransactionDTO> {
+    const userWallet = await WalletsService.getUserWalletByContext(
+      sdk,
+      masterWalletId,
+      userWalletId
+    );
+    return await userWallet.replaceTransaction(
+      transactionId,
+      request.gasPrice == null ? null : new BN(request.gasPrice)
     );
   }
 
