@@ -53,7 +53,11 @@ import {
   QUERY_WALLETS_SIZE_OPTIONAL,
   QUERY_WALLETS_SORT_OPTIONAL,
 } from "../dto/queries";
-import { PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID } from "../dto/params";
+import {
+  PARAM_MASTER_WALLET_ID,
+  PARAM_TRANSACTION_ID,
+  PARAM_USER_WALLET_ID,
+} from "../dto/params";
 import { FlushRequestDTO } from "../dto/flush-request.dto";
 import {
   EXAMPLE_ETH_KLAY_PAGINATION_USER_WALLET_DTO,
@@ -66,6 +70,7 @@ import { SendUserWalletCoinRequestDTO } from "../dto/send-user-wallet-coin-reque
 import { RetryCreateMasterWalletRequestDTO } from "../dto/retry-create-master-wallet-request.dto";
 import { RetryCreateUserWalletRequestDTO } from "../dto/retry-create-user-wallet-request.dto";
 import { WalletsService } from "./wallets.service";
+import { ReplaceTransactionRequestDTO } from "../dto/replace-transaction-request.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -518,7 +523,7 @@ export class WalletsController {
     description:
       "특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.\n" +
       "\n" +
-      "만약 사용자 지갑 생성 트랜잭션이 장시간 채굴 대기중(Pending)이어서 gasPrice를 높여 재시도하고 싶다면, '마스터 지갑에서 발생한 트랜잭션 교체하기' API를 사용하세요.",
+      "만약 사용자 지갑 생성 트랜잭션이 장시간 채굴 대기중(Pending)이어서 gasPrice를 높여 재시도하고 싶다면, '트랜잭션 교체하기' API를 사용하세요.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
   @ReadMeExtension()
@@ -533,6 +538,60 @@ export class WalletsController {
       masterWalletId,
       userWalletId,
       retryCreateUserWalletRequestDTO
+    );
+  }
+
+  @Post("/:masterWalletId/transactions/:transactionId/replace")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETH_KLAY_TRANSACTION_DTO
+    ),
+  })
+  @ApiOperation({
+    summary: "트랜잭션 교체하기",
+    description: "마스터 지갑에서 발생한 트랜잭션을 교체합니다",
+  })
+  @PathParams(PARAM_MASTER_WALLET_ID, PARAM_TRANSACTION_ID)
+  @ReadMeExtension()
+  public async replaceMasterWalletTransaction(
+    @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
+    @Param("transactionId") transactionId: string,
+    @Body() replaceTransactionRequest: ReplaceTransactionRequestDTO
+  ): Promise<TransactionDTO> {
+    return await this.walletsService.replaceMasterWalletTransaction(
+      request.sdk,
+      masterWalletId,
+      transactionId,
+      replaceTransactionRequest
+    );
+  }
+
+  @Post(
+    "/:masterWalletId/userWallet/:userWalletId/transactions/:transactionId/replace"
+  )
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_ETH_KLAY_TRANSACTION_DTO
+    ),
+  })
+  @PathParams(PARAM_MASTER_WALLET_ID, PARAM_TRANSACTION_ID)
+  @ReadMeExtension()
+  public async replaceTransaction(
+    @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
+    @Param("userWalletId") userWalletId: string,
+    @Param("transactionId") transactionId: string,
+    @Body() replaceTransactionRequest: ReplaceTransactionRequestDTO
+  ): Promise<TransactionDTO> {
+    return await this.walletsService.replaceUserWalletTransaction(
+      request.sdk,
+      masterWalletId,
+      userWalletId,
+      transactionId,
+      replaceTransactionRequest
     );
   }
 }

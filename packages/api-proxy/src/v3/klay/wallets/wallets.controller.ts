@@ -65,7 +65,6 @@ import {
   USER_WALLET_ID_OPTIONAL,
   USER_WALLET_ID_REQUIRED,
   WALLET_ID_OPTIONAL,
-  WALLET_ID_REQUIRED,
 } from "../../eth/dto/params";
 import express from "express";
 import {
@@ -102,6 +101,11 @@ import {
   EventStatus,
   TransferType,
 } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
+import {
+  PARAM_MASTER_WALLET_ID,
+  PARAM_USER_WALLET_ID,
+} from "../../../v2/eth/dto/params";
+import { RetryCreateUserWalletRequestDTO } from "../../eth/dto/retry-create-user-wallet-request.dto";
 
 @Controller("wallets")
 @ApiTags("wallets")
@@ -431,6 +435,35 @@ export class WalletsController {
     );
   }
 
+  @Post("/:masterWalletId/user-wallets/:userWalletId/recreate")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_KLAYTN_TRANSACTION_DTO
+    ),
+    isArray: false,
+  })
+  @ApiOperation({
+    summary: "사용자 지갑 생성 실패시 재시도하기",
+    description:
+      "특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.",
+  })
+  @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
+  @ReadMeExtension()
+  public async retryCreateUserWallet(
+    @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
+    @Param("userWalletId") userWalletId: string,
+    @Body() retryCreateUserWalletRequestDTO: RetryCreateUserWalletRequestDTO
+  ): Promise<UserWalletDTO> {
+    return await this.walletsService.retryCreateUserWallet(
+      request.sdk,
+      masterWalletId,
+      userWalletId,
+      retryCreateUserWalletRequestDTO
+    );
+  }
+
   @Get("/:masterWalletId/user-wallets/:userWalletId/balance")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(BalanceDTO, [
@@ -597,7 +630,7 @@ export class WalletsController {
     );
   }
 
-  @Post("/:walletId/nft/flush")
+  @Post("/:masterWalletId/nft/flush")
   @ApiCreatedResponse({
     content: ApiResponseContentGenerator(
       TransactionDTO,
@@ -619,13 +652,13 @@ export class WalletsController {
   @ReadMeExtension()
   public async nftFlush(
     @Request() request: express.Request,
-    @Param("walletId") walletId: string,
+    @Param("masterWalletId") masterWalletId: string,
     @Body() createNftFlushRequestDTO: CreateNftFlushRequestDTO
   ): Promise<TransactionDTO> {
     return TransactionDTO.fromEthTransaction(
       await this.walletsService.nftFlush(
         request.sdk,
-        walletId,
+        masterWalletId,
         createNftFlushRequestDTO
       )
     );
@@ -673,7 +706,7 @@ export class WalletsController {
   @ReadMeExtension()
   public async getNftBalance(
     @Request() request: express.Request,
-    @Param("masterWalletId") walletId: string,
+    @Param("masterWalletId") masterWalletId: string,
     @Query("size") size: number = 15,
     @Query("page") page: number = 0,
     @Query("tokenOnchainId") tokenOnchainId?: string,
@@ -681,7 +714,7 @@ export class WalletsController {
   ): Promise<PaginationDTO<NftBalanceDTO>> {
     return await this.walletsService.getNftBalance(
       request.sdk,
-      walletId,
+      masterWalletId,
       {
         size,
         page,

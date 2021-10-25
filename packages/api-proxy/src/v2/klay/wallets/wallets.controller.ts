@@ -9,6 +9,7 @@ import {
   Request,
 } from "@nestjs/common";
 import {
+  ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiExtraModels,
   ApiNoContentResponse,
@@ -40,6 +41,7 @@ import {
 } from "../../eth/dto/queries";
 import {
   PARAM_MASTER_WALLET_ID,
+  PARAM_TRANSACTION_ID,
   PARAM_USER_WALLET_ID,
 } from "../../eth/dto/params";
 import { SendMasterWalletCoinRequestDTO } from "../../eth/dto/send-master-wallet-coin-request.dto";
@@ -522,9 +524,7 @@ export class WalletsController {
   @ApiOperation({
     summary: "사용자 지갑 생성 실패시 재시도하기",
     description:
-      "특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.\n" +
-      "\n" +
-      "만약 사용자 지갑 생성 트랜잭션이 장시간 채굴 대기중(Pending)이어서 gasPrice를 높여 재시도하고 싶다면, '마스터 지갑에서 발생한 트랜잭션 교체하기' API를 사용하세요.",
+      "특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.",
   })
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
   @ReadMeExtension()
