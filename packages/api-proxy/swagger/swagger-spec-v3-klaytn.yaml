@@ -863,6 +863,15 @@ components:
       required:
         - name
         - passphrase
+    RetryCreateUserWalletRequestDTO:
+      type: object
+      properties:
+        gasPrice:
+          type: string
+          description: |-
+            트랜잭션에 사용할 gas price (단위: wei, peb)
+            null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.
+          example: '0x1'
     TransferNftRequestDTO:
       type: object
       properties:
@@ -2337,6 +2346,59 @@ paths:
               example: *ref_26
         '401': *ref_23
       tags: *ref_24
+  /api/v3/klaytn/wallets/{masterWalletId}/user-wallets/{userWalletId}/recreate:
+    post:
+      operationId: klaytn-WalletsController_retryCreateUserWallet
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 생성 실패시 재시도하기
+      description: 특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.
+      parameters:
+        - *ref_20
+        - *ref_21
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 유저 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetryCreateUserWalletRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: &ref_28
+                id: b549bfaaa74d1c4244ecc655738b1984
+                blockchain: KLAYTN
+                hash: >-
+                  0x8a1ef722a2884d53a86874c8ba19bcf267bb0b8a81da00c14ddc6457cf1eaf96
+                error: 'null'
+                status: CONFIRMED
+                fee: '10000000'
+                createdAt: '1614582928222'
+                updatedAt: '1612411724023'
+          description: ''
+        '401': *ref_23
+      tags: *ref_24
   /api/v3/klaytn/wallets/{masterWalletId}/user-wallets/{userWalletId}/balance:
     get:
       operationId: klaytn-WalletsController_getUserWalletBalance
@@ -2584,20 +2646,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: &ref_28
-                id: b549bfaaa74d1c4244ecc655738b1984
-                blockchain: KLAYTN
-                hash: >-
-                  0x8a1ef722a2884d53a86874c8ba19bcf267bb0b8a81da00c14ddc6457cf1eaf96
-                error: 'null'
-                status: CONFIRMED
-                fee: '10000000'
-                createdAt: '1614582928222'
-                updatedAt: '1612411724023'
+              example: *ref_28
           description: ''
         '401': *ref_23
       tags: *ref_24
-  /api/v3/klaytn/wallets/{walletId}/nft/flush:
+  /api/v3/klaytn/wallets/{masterWalletId}/nft/flush:
     post:
       operationId: klaytn-WalletsController_nftFlush
       x-readme:
@@ -2613,16 +2666,12 @@ paths:
       parameters:
         - *ref_20
         - *ref_21
-        - name: walletId
-          required: true
-          in: path
-          schema:
-            type: string
         - name: masterWalletId
           required: true
           in: path
           description: 마스터 지갑 ID
-          schema: {}
+          schema:
+            type: string
       requestBody:
         required: true
         content:

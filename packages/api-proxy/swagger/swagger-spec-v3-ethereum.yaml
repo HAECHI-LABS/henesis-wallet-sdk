@@ -2095,7 +2095,7 @@ paths:
           - java
           - python
           - go
-      summary: 트랜잭션 교체
+      summary: 트랜잭션 교체하기
       description: 트랜잭션을 교체합니다
       parameters:
         - *ref_19
