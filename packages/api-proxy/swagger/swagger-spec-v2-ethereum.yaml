@@ -920,6 +920,15 @@ components:
             트랜잭션에 사용할 gas price (단위: wei, peb)
             null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.
           example: '0x1'
+    ReplaceTransactionRequestDTO:
+      type: object
+      properties:
+        gasPrice:
+          type: string
+          description: >-
+            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
+            값으로 설정합니다.
+          example: '8000000000'
     InvalidAccessIpException:
       type: object
       properties:
@@ -2276,8 +2285,8 @@ paths:
         특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.
 
 
-        만약 사용자 지갑 생성 트랜잭션이 장시간 채굴 대기중(Pending)이어서 gasPrice를 높여 재시도하고 싶다면, '마스터
-        지갑에서 발생한 트랜잭션 교체하기' API를 사용하세요.
+        만약 사용자 지갑 생성 트랜잭션이 장시간 채굴 대기중(Pending)이어서 gasPrice를 높여 재시도하고 싶다면, '트랜잭션
+        교체하기' API를 사용하세요.
       parameters:
         - *ref_23
         - *ref_24
@@ -2299,6 +2308,97 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/RetryCreateUserWalletRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_19
+          description: ''
+        '401': *ref_26
+      tags: *ref_27
+  /api/v2/eth/wallets/{masterWalletId}/transactions/{transactionId}/replace:
+    post:
+      operationId: ethereum-WalletsController_replaceMasterWalletTransaction
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 트랜잭션 교체하기
+      description: 마스터 지갑에서 발생한 트랜잭션을 교체합니다
+      parameters:
+        - *ref_23
+        - *ref_24
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: transactionId
+          required: true
+          in: path
+          description: 트랜잭션 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceTransactionRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_19
+          description: ''
+        '401': *ref_26
+      tags: *ref_27
+  /api/v2/eth/wallets/{masterWalletId}/userWallet/{userWalletId}/transactions/{transactionId}/replace:
+    post:
+      operationId: ethereum-WalletsController_replaceTransaction
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      parameters:
+        - *ref_23
+        - *ref_24
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: transactionId
+          required: true
+          in: path
+          description: 트랜잭션 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceTransactionRequestDTO'
       responses:
         '201':
           content:

@@ -740,6 +740,15 @@ components:
         - to
         - data
         - passphrase
+    ReplaceTransactionRequestDTO:
+      type: object
+      properties:
+        gasPrice:
+          type: string
+          description: >-
+            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
+            값으로 설정합니다.
+          example: '8000000000'
     Target:
       type: object
       properties:
@@ -863,6 +872,15 @@ components:
       required:
         - name
         - passphrase
+    RetryCreateUserWalletRequestDTO:
+      type: object
+      properties:
+        gasPrice:
+          type: string
+          description: |-
+            트랜잭션에 사용할 gas price (단위: wei, peb)
+            null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.
+          example: '0x1'
     TransferNftRequestDTO:
       type: object
       properties:
@@ -989,7 +1007,7 @@ components:
         tokenMetadata:
           type: object
           description: 토큰에 정의된 metadata
-          example: &ref_27
+          example: &ref_28
             description: Friendly OpenSea Creature that enjoys long swims in the ocean.
             external_url: https://openseacreatures.io/3
             image: >-
@@ -1113,7 +1131,7 @@ components:
             - $ref: '#/components/schemas/NftDTO'
         token:
           description: NFT 토큰 정보
-          example: &ref_30
+          example: &ref_31
             name: Haechi 1st NFT
             onchainId: '1'
             uri: https://opensea-creatures-api.herokuapp.com/api/creature/3
@@ -2141,6 +2159,73 @@ paths:
               example: *ref_25
         '401': *ref_22
       tags: *ref_23
+  /api/v3/binance-smart-chain/wallets/{masterWalletId}/transactions/{transactionId}/replace:
+    post:
+      operationId: binance-smart-chain-WalletsController_replaceMasterWalletTransaction
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 트랜잭션 교체
+      description: 마스터 지갑에서 발생한 트랜잭션을 교체합니다
+      parameters:
+        - *ref_19
+        - *ref_20
+        - name: masterWalletId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: transactionId
+          required: true
+          in: path
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          schema:
+            type: string
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceTransactionRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: &ref_27
+                id: b549bfaaa74d1c4244ecc655738b1984
+                blockchain: ETHEREUM
+                hash: >-
+                  0x8a1ef722a2884d53a86874c8ba19bcf267bb0b8a81da00c14ddc6457cf1eaf96
+                error: 'null'
+                status: CONFIRMED
+                fee: '10000000'
+                hopAddress: '0x1AA2705a26452cC22430F31A5c85974bBEDDe5a5'
+                createdAt: '1614582928222'
+                updatedAt: '1612411724023'
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_25
+        '401': *ref_22
+      tags: *ref_23
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/flush:
     post:
       operationId: binance-smart-chain-WalletsController_flush
@@ -2336,6 +2421,59 @@ paths:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
               example: *ref_25
+        '401': *ref_22
+      tags: *ref_23
+  /api/v3/binance-smart-chain/wallets/{masterWalletId}/user-wallets/{userWalletId}/recreate:
+    post:
+      operationId: binance-smart-chain-WalletsController_retryCreateUserWallet
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 생성 실패시 재시도하기
+      description: 특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.
+      parameters:
+        - *ref_19
+        - *ref_20
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 유저 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetryCreateUserWalletRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example:
+                id: b549bfaaa74d1c4244ecc655738b1984
+                blockchain: KLAYTN
+                hash: >-
+                  0x8a1ef722a2884d53a86874c8ba19bcf267bb0b8a81da00c14ddc6457cf1eaf96
+                error: 'null'
+                status: CONFIRMED
+                fee: '10000000'
+                createdAt: '1614582928222'
+                updatedAt: '1612411724023'
+          description: ''
         '401': *ref_22
       tags: *ref_23
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/user-wallets/{userWalletId}/balance:
@@ -2589,7 +2727,69 @@ paths:
           description: ''
         '401': *ref_22
       tags: *ref_23
-  /api/v3/binance-smart-chain/wallets/{walletId}/nft/flush:
+  /api/v3/binance-smart-chain/wallets/{masterWalletId}/userWallet/{userWalletId}/transactions/{transactionId}/replace:
+    post:
+      operationId: binance-smart-chain-WalletsController_replaceTransaction
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 트랜잭션 교체하기
+      description: 유저 지갑에서 발생한 트랜잭션을 교체합니다
+      parameters:
+        - *ref_19
+        - *ref_20
+        - name: masterWalletId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: transactionId
+          required: true
+          in: path
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          schema:
+            type: string
+        - name: walletId
+          required: true
+          in: path
+          description: 지갑 ID
+          schema: {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplaceTransactionRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_27
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_25
+        '401': *ref_22
+      tags: *ref_23
+  /api/v3/binance-smart-chain/wallets/{masterWalletId}/nft/flush:
     post:
       operationId: binance-smart-chain-WalletsController_nftFlush
       x-readme:
@@ -2605,16 +2805,12 @@ paths:
       parameters:
         - *ref_19
         - *ref_20
-        - name: walletId
-          required: true
-          in: path
-          schema:
-            type: string
         - name: masterWalletId
           required: true
           in: path
           description: 마스터 지갑 ID
-          schema: {}
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -2735,8 +2931,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForNftBalanceDTO'
-              example: &ref_28
-                pagination: &ref_29
+              example: &ref_29
+                pagination: &ref_30
                   nextUrl: http://localhost:3000/api/v3/ethereum/transfers?page=2
                   previousUrl: http://localhost:3000/api/v3/ethereum/transfers?page=1
                   totalCount: 5
@@ -2744,7 +2940,7 @@ paths:
                   - nft: *ref_2
                     tokenOnchainId: '1'
                     tokenUri: https://opensea-creatures-api.herokuapp.com/api/creature/3
-                    tokenMetadata: *ref_27
+                    tokenMetadata: *ref_28
                     isWithdrawalPending: false
           description: ''
         '401': *ref_22
@@ -2808,7 +3004,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForNftBalanceDTO'
-              example: *ref_28
+              example: *ref_29
           description: ''
         '401': *ref_22
       tags: *ref_23
@@ -2919,7 +3115,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForNftTransferDTO'
               example:
-                pagination: *ref_29
+                pagination: *ref_30
                 results:
                   - id: 375031
                     from: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
@@ -2929,7 +3125,7 @@ paths:
                     walletId: ae40b1b3dd953e5592c21e58be30d807
                     depositAddressId: ae40b1b3dd953e5592c21e58be30d807
                     nft: *ref_2
-                    token: *ref_30
+                    token: *ref_31
                     transferType: WITHDRAWAL
                     transactionId: 8c87c578d7568edc156f831cf03c3ff0
                     transactionHash: >-
@@ -2962,13 +3158,13 @@ paths:
       summary: 전체 NFT 컨트랙트 목록 조회하기
       description: 모든 NFT 컨트랙트를 조회합니다.
       parameters:
-        - &ref_31
+        - &ref_32
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_32
+        - &ref_33
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -2984,7 +3180,7 @@ paths:
                 $ref: '#/components/schemas/NftDTO'
               example: *ref_2
           description: ''
-        '401': &ref_33
+        '401': &ref_34
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -3000,7 +3196,7 @@ paths:
                   value: *ref_10
                 InvalidAccessIpException:
                   value: *ref_11
-      tags: &ref_34
+      tags: &ref_35
         - nfts
   /api/v3/binance-smart-chain/nfts/{nftId}/sync-metadata:
     post:
@@ -3016,8 +3212,8 @@ paths:
       summary: NFT metadata 동기화 요청하기
       description: NFT 컨트랙트의 metadata 동기화를 요청합니다.
       parameters:
-        - *ref_31
         - *ref_32
+        - *ref_33
         - name: nftId
           required: true
           in: path
@@ -3044,5 +3240,5 @@ paths:
               example:
                 message: nft '2' does not exist
                 code: 4000
-        '401': *ref_33
-      tags: *ref_34
+        '401': *ref_34
+      tags: *ref_35
