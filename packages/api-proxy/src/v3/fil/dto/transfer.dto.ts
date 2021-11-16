@@ -17,11 +17,13 @@ export const EXAMPLE_FILECOIN_TRANSFER_DTO: TransferDTO = {
   from: "t1tian42omo3lnk6lh7mw6k3d4muelbfvvlmhufni",
   to: "t2faaemofs4z3qnnpeawbrawyot43iuekkg52tjai",
   amount: "1000000000",
+  feeAmount: "1000000000",
   status: TransferStatus.CONFIRMED,
   masterWalletId: "ae40b1b3dd953e5592c21e58be30d807",
   walletId: "3dd953e5592c21e58be30d807ae40b1b",
   type: TransferType.WITHDRAWAL,
   transaction: EXAMPLE_FILECOIN_TRANSACTION_DTO,
+  proposalTransaction: EXAMPLE_FILECOIN_TRANSACTION_DTO,
   createdAt: "1612411568760",
   updatedAt: "1612411724023",
   metadata: "metadata",
@@ -53,6 +55,12 @@ export class TransferDTO {
   amount: string;
 
   @ApiModelProperty({
+    description: "총 수수료 양 (단위: attoFIL)",
+    example: EXAMPLE_FILECOIN_TRANSFER_DTO.feeAmount,
+  })
+  feeAmount: string;
+
+  @ApiModelProperty({
     description: "출금 상태",
     example: EXAMPLE_FILECOIN_TRANSFER_DTO.status,
   })
@@ -75,6 +83,12 @@ export class TransferDTO {
     example: EXAMPLE_FILECOIN_TRANSFER_DTO.type,
   })
   type: TransferType;
+
+  @ApiModelProperty({
+    description: "입출금 트랜잭션",
+    example: EXAMPLE_FILECOIN_TRANSFER_DTO.proposalTransaction,
+  })
+  proposalTransaction: TransactionDTO;
 
   @ApiModelProperty({
     description: "입출금 트랜잭션",
@@ -106,6 +120,13 @@ export class TransferDTO {
       from: transfer.fromAddress,
       to: transfer.toAddress,
       amount: transfer.amount.toString(10),
+      feeAmount: transfer.transaction.feeAmount
+        ? transfer.proposalTransaction && transfer.proposalTransaction.feeAmount
+          ? transfer.transaction.feeAmount
+              .add(transfer.proposalTransaction.feeAmount)
+              .toString(10)
+          : transfer.transaction.feeAmount.toString(10)
+        : null,
       status: transfer.status,
       masterWalletId: transfer.masterWalletId,
       walletId: transfer.walletId,
@@ -113,7 +134,19 @@ export class TransferDTO {
       transaction: {
         id: transfer.transaction.id,
         hash: transfer.transaction.hash,
+        feeAmount: transfer.transaction.feeAmount
+          ? transfer.transaction.feeAmount.toString(10)
+          : null,
       },
+      proposalTransaction: transfer.proposalTransaction
+        ? {
+            id: transfer.proposalTransaction.id,
+            hash: transfer.proposalTransaction.hash,
+            feeAmount: transfer.proposalTransaction.feeAmount
+              ? transfer.proposalTransaction.feeAmount.toString(10)
+              : null,
+          }
+        : null,
       createdAt: transfer.createdAt,
       updatedAt: transfer.updatedAt,
       metadata: transfer.metadata,
