@@ -3,6 +3,7 @@ import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-prop
 export const EXAMPLE_FILECOIN_TRANSACTION_DTO: TransactionDTO = {
   id: "c3a43bbf3d33e94fdc1adfc2d17a63b3",
   hash: "bafy2bzaced4hk2ufk3xwcmxuiuikudoh6dcxgjfoforubsbn7tu5rfyc3446e",
+  feeAmount: "314076729208",
 };
 
 export class TransactionDTO {
@@ -17,4 +18,10 @@ export class TransactionDTO {
     example: EXAMPLE_FILECOIN_TRANSACTION_DTO.hash,
   })
   hash: string;
+
+  @ApiModelProperty({
+    description: "수수료",
+    example: EXAMPLE_FILECOIN_TRANSACTION_DTO.feeAmount,
+  })
+  feeAmount: string;
 }
