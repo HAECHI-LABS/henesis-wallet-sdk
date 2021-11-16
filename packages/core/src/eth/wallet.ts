@@ -765,7 +765,7 @@ export class EthMasterWallet extends EthLikeWallet {
   ): Promise<EthTransaction> {
     if (!this.canUseFlushWithTargets()) {
       throw new Error(
-        "This wallet is not a compatible version. Please use the v2 APIs."
+        "This wallet is not a compatible version. Please use 'flush' method, not 'flushWithTargets'."
       );
     }
     const request: FlushRequest = {
@@ -795,7 +795,7 @@ export class EthMasterWallet extends EthLikeWallet {
   ): Promise<EthTransaction> {
     if (!this.canUseFlush()) {
       throw new Error(
-        "This wallet is not a compatible version. Please use the v3 APIs."
+        "This wallet is not a compatible version. Please use 'flushWithTargets' method, not 'flush'."
       );
     }
     if (userWalletIds.length > 50 || userWalletIds.length == 0) {
