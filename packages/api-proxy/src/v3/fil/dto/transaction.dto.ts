@@ -20,8 +20,8 @@ export class TransactionDTO {
   hash: string;
 
   @ApiModelProperty({
-    description: "수수료",
+    description: "수수료 양 (단위: attoFIL)",
     example: EXAMPLE_FILECOIN_TRANSACTION_DTO.feeAmount,
   })
-  feeAmount: string;
+  feeAmount?: string;
 }

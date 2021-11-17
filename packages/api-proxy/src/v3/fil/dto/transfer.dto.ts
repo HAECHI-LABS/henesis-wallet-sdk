@@ -58,7 +58,7 @@ export class TransferDTO {
     description: "총 수수료 양 (단위: attoFIL)",
     example: EXAMPLE_FILECOIN_TRANSFER_DTO.feeAmount,
   })
-  feeAmount: string;
+  feeAmount?: string;
 
   @ApiModelProperty({
     description: "출금 상태",
@@ -85,13 +85,13 @@ export class TransferDTO {
   type: TransferType;
 
   @ApiModelProperty({
-    description: "입출금 트랜잭션",
+    description: "입출금 요청 트랜잭션",
     example: EXAMPLE_FILECOIN_TRANSFER_DTO.proposalTransaction,
   })
-  proposalTransaction: TransactionDTO;
+  proposalTransaction?: TransactionDTO;
 
   @ApiModelProperty({
-    description: "입출금 트랜잭션",
+    description: "입출금 승인 트랜잭션",
     example: EXAMPLE_FILECOIN_TRANSFER_DTO.transaction,
   })
   transaction: TransactionDTO;
