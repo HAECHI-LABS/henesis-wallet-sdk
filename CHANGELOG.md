@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.5.0...v3.5.1) (2021-11-17)
+
+
+### Features
+
+* add missed interface - replace, recreate ([91c71d5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/91c71d54baf866aaa32fa5e6d6c16de3161b009d))
+
+
+
+
+
 # [3.5.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.4.2-alpha.1...v3.5.0) (2021-10-21)
 
 
