@@ -16,7 +16,6 @@ import {
 } from "../../../decorators";
 
 @Controller("henesis-keys")
-@ApiTags("henesis-keys")
 @AuthErrorResponses()
 @AuthHeaders()
 @ApiExtraModels(BalanceDTO)
@@ -35,6 +34,7 @@ export class HenesisKeysController {
     summary: "수수료 지갑 잔액 조회하기",
     description: "수수료 지갑의 잔액을 조회합니다.",
   })
+  @ApiTags("henesis-keys")
   @ReadMeExtension()
   public async getHenesisKeyBalance(
     @Request() request: express.Request

@@ -46,7 +46,6 @@ import {
 } from "../dto/params";
 
 @Controller("transfers")
-@ApiTags("transfers")
 @AuthErrorResponses()
 @ApiExtraModels(InvalidStatusException)
 @AuthHeaders()
@@ -79,6 +78,7 @@ export class TransfersController {
     summary: "전체 입출금 목록 조회하기",
     description: "모든 지갑의 가상자산 입출금 내역을 조회합니다.",
   })
+  @ApiTags("transfers")
   public async getTransfers(
     @Request() request: express.Request,
     @Query("walletId") walletId?: string,

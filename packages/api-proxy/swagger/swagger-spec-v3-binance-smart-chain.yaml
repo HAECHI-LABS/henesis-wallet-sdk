@@ -652,6 +652,98 @@ components:
         - createdAt
         - updatedAt
         - version
+    KeyDTO:
+      type: object
+      properties:
+        address:
+          type: string
+          description: ''
+          example: '0x4ef3ba60c8710f45371835cddafabf33daa83e1d'
+        pub:
+          type: string
+          description: pub
+          example: >-
+            0x31bd93d049fefed19b640c8069046c223126505754b9a57f5df43a89b104d92c8d4be4f51a6b5bb08a3ec6c2ff022e8ff018bad52ee05fa81b4eeae16a0e2db1
+        feeDelegationEnabled:
+          type: boolean
+          description: feeDelegationEnabled
+          example: false
+        keyFile:
+          type: string
+          description: keyFile
+          example: '1'
+        keyId:
+          type: string
+          description: keyId
+          example: 52e779750bb1330d2f23439c6da821ee
+      required:
+        - pub
+    MasterWalletDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 지갑 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
+        name:
+          type: string
+          description: 지갑 이름
+          example: ethereum-wallet
+        address:
+          type: string
+          description: 지갑 주소
+          example: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
+        blockchain:
+          enum: *ref_0
+          type: string
+          description: 메인넷 종류
+          example: ETHEREUM
+        createdAt:
+          type: string
+          description: '지갑 생성 시간 (형식: ms, UNIX time)'
+          example: '1612411568760'
+        updatedAt:
+          type: string
+          description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
+          example: '1612411724023'
+        status:
+          enum: *ref_1
+          type: string
+          description: 지갑 상태
+          example: ACTIVE
+        whitelistActivated:
+          type: boolean
+          description: 출금 주소 화이트리스팅의 활성화 유무
+          example: false
+        version:
+          type: string
+          description: 컨트랙트 버전
+          example: v4
+        accountKey:
+          description: KEY
+          example: &ref_18
+            address: '0x4ef3ba60c8710f45371835cddafabf33daa83e1d'
+            pub: >-
+              0x31bd93d049fefed19b640c8069046c223126505754b9a57f5df43a89b104d92c8d4be4f51a6b5bb08a3ec6c2ff022e8ff018bad52ee05fa81b4eeae16a0e2db1
+            feeDelegationEnabled: false
+            keyFile: '1'
+            keyId: 52e779750bb1330d2f23439c6da821ee
+          allOf:
+            - $ref: '#/components/schemas/KeyDTO'
+        encryptionKey:
+          type: string
+          description: 마스터 지갑 비밀번호를 복구하기 위해 암호화하는 데 쓰인 키
+          example: f0880e48251dd2f8574a8c8a4d65311030185d5e451e8a474b89c2b473b5d953
+      required:
+        - id
+        - name
+        - address
+        - blockchain
+        - createdAt
+        - updatedAt
+        - status
+        - accountKey
+        - encryptionKey
     ChangeWalletNameRequestDTO:
       type: object
       properties:
@@ -1007,7 +1099,7 @@ components:
         tokenMetadata:
           type: object
           description: 토큰에 정의된 metadata
-          example: &ref_28
+          example: &ref_24
             description: Friendly OpenSea Creature that enjoys long swims in the ocean.
             external_url: https://openseacreatures.io/3
             image: >-
@@ -1131,7 +1223,7 @@ components:
             - $ref: '#/components/schemas/NftDTO'
         token:
           description: NFT 토큰 정보
-          example: &ref_31
+          example: &ref_27
             name: Haechi 1st NFT
             onchainId: '1'
             uri: https://opensea-creatures-api.herokuapp.com/api/creature/3
@@ -1263,20 +1355,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CoinDTO'
-              example:
-                - &ref_6
-                  id: 11
-                  name: BinanceCoin
-                  ticker: BNB
-                  address: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
-                  description: 바이낸스 코인
-                  decimals: 18
-                  blockchain: BINANCE_SMART_CHAIN
-                  attributes:
-                    - ERC20_STANDARD
+                type: array
+                items:
+                  $ref: '#/components/schemas/CoinDTO'
           description: ''
-        '401': &ref_7
+        '401': &ref_6
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -1287,18 +1370,18 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: &ref_9
+                  value: &ref_7
                     message: expired or invalid access token and signature
                     code: 4001
                 AccessTokenNotProvidedException:
-                  value: &ref_10
+                  value: &ref_8
                     message: access token not provided
                     code: 4001
                 InvalidAccessIpException:
-                  value: &ref_11
+                  value: &ref_9
                     message: ip '106.101.128.133' is not allowed
                     code: 4008
-      tags: &ref_8
+      tags:
         - coins
   /api/v3/binance-smart-chain/coins/{ticker}:
     get:
@@ -1328,7 +1411,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CoinDTO'
-              example: *ref_6
+              example:
+                id: 11
+                name: BinanceCoin
+                ticker: BNB
+                address: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+                description: 바이낸스 코인
+                decimals: 18
+                blockchain: BINANCE_SMART_CHAIN
+                attributes:
+                  - ERC20_STANDARD
           description: ''
         '400':
           description: 코인 정보가 없을 때 response 입니다
@@ -1339,8 +1431,9 @@ paths:
               example:
                 message: there is no '2' coin at 'ETHEREUM'
                 code: 4000
-        '401': *ref_7
-      tags: *ref_8
+        '401': *ref_6
+      tags:
+        - coins
   /api/v3/binance-smart-chain/contract-calls:
     get:
       operationId: binance-smart-chain-ContractCallsController_getCallEvents
@@ -1430,7 +1523,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForContractCallsDTO'
               example:
-                pagination: &ref_12
+                pagination: &ref_10
                   nextUrl: >-
                     http://localhost:3000/api/v3/binance-smart-chain/value-transfer-events?page=2
                   previousUrl: >-
@@ -1459,7 +1552,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvalidStatusException'
-              example: &ref_13
+              example: &ref_11
                 message: '''status'' is invalid: not supported event status'
                 code: 4001
         '401':
@@ -1473,11 +1566,11 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_9
+                  value: *ref_7
                 AccessTokenNotProvidedException:
-                  value: *ref_10
+                  value: *ref_8
                 InvalidAccessIpException:
-                  value: *ref_11
+                  value: *ref_9
       tags:
         - contract-calls
   /api/v3/binance-smart-chain/transfers:
@@ -1581,7 +1674,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForTransferDTO'
               example:
-                pagination: *ref_12
+                pagination: *ref_10
                 results:
                   - id: 375031
                     from: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
@@ -1611,7 +1704,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvalidStatusException'
-              example: *ref_13
+              example: *ref_11
         '401':
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
@@ -1623,11 +1716,11 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_9
+                  value: *ref_7
                 AccessTokenNotProvidedException:
-                  value: *ref_10
+                  value: *ref_8
                 InvalidAccessIpException:
-                  value: *ref_11
+                  value: *ref_9
       tags:
         - transfers
   /api/v3/binance-smart-chain/fee-wallet/balance:
@@ -1662,7 +1755,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
-              example: &ref_25
+              example:
                 coinId: 11
                 amount: '1000000000000'
                 spendableAmount: '1000000000000'
@@ -1681,11 +1774,11 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_9
+                  value: *ref_7
                 AccessTokenNotProvidedException:
-                  value: *ref_10
+                  value: *ref_8
                 InvalidAccessIpException:
-                  value: *ref_11
+                  value: *ref_9
       tags:
         - fee-wallet
   /api/v3/binance-smart-chain/transactions/{transactionId}:
@@ -1694,13 +1787,13 @@ paths:
       summary: 개별 트랜잭션 조회하기
       description: 내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.
       parameters:
-        - &ref_14
+        - &ref_12
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_15
+        - &ref_13
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -1722,7 +1815,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: &ref_16
+              example: &ref_14
                 id: b549bfaaa74d1c4244ecc655738b1984
                 blockchain: BINANCE_SMART_CHAIN
                 hash: >-
@@ -1742,7 +1835,7 @@ paths:
               example:
                 message: transaction id '1' does not exists
                 code: 4000
-        '401': &ref_17
+        '401': &ref_15
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -1753,12 +1846,12 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_9
+                  value: *ref_7
                 AccessTokenNotProvidedException:
-                  value: *ref_10
+                  value: *ref_8
                 InvalidAccessIpException:
-                  value: *ref_11
-      tags: &ref_18
+                  value: *ref_9
+      tags:
         - transactions
   /api/v3/binance-smart-chain/transactions:
     get:
@@ -1774,8 +1867,8 @@ paths:
       summary: 트랜잭션 목록 조회하기
       description: 트랜잭션 목록을 조회합니다.
       parameters:
-        - *ref_14
-        - *ref_15
+        - *ref_12
+        - *ref_13
         - name: address
           required: false
           in: query
@@ -1847,12 +1940,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForTransactionDTO'
               example:
-                pagination: *ref_12
+                pagination: *ref_10
                 results:
-                  - *ref_16
+                  - *ref_14
           description: ''
-        '401': *ref_17
-      tags: *ref_18
+        '401': *ref_15
+      tags:
+        - transactions
   /api/v3/binance-smart-chain/wallets:
     get:
       operationId: binance-smart-chain-WalletsController_getMasterWallets
@@ -1867,13 +1961,13 @@ paths:
       summary: 전체 마스터 지갑 목록 조회하기
       description: 모든 지갑의 목록을 조회합니다.
       parameters:
-        - &ref_19
+        - &ref_16
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_20
+        - &ref_17
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -1892,29 +1986,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletDTO'
-              example:
-                - &ref_21
-                  id: ae40b1b3dd953e5592c21e58be30d807
-                  name: ethereum-wallet
-                  address: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
-                  blockchain: ETHEREUM
-                  createdAt: '1612411568760'
-                  updatedAt: '1612411724023'
-                  status: ACTIVE
-                  whitelistActivated: false
-                  version: v4
-                  accountKey:
-                    address: '0x4ef3ba60c8710f45371835cddafabf33daa83e1d'
-                    pub: >-
-                      0x31bd93d049fefed19b640c8069046c223126505754b9a57f5df43a89b104d92c8d4be4f51a6b5bb08a3ec6c2ff022e8ff018bad52ee05fa81b4eeae16a0e2db1
-                    feeDelegationEnabled: false
-                    keyFile: '1'
-                    keyId: 52e779750bb1330d2f23439c6da821ee
-                  encryptionKey: >-
-                    f0880e48251dd2f8574a8c8a4d65311030185d5e451e8a474b89c2b473b5d953
+                type: array
+                items:
+                  $ref: '#/components/schemas/MasterWalletDTO'
           description: ''
-        '401': &ref_22
+        '401': &ref_19
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -1925,12 +2001,12 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_9
+                  value: *ref_7
                 AccessTokenNotProvidedException:
-                  value: *ref_10
+                  value: *ref_8
                 InvalidAccessIpException:
-                  value: *ref_11
-      tags: &ref_23
+                  value: *ref_9
+      tags:
         - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}:
     get:
@@ -1946,8 +2022,8 @@ paths:
       summary: 마스터 지갑 정보 조회하기
       description: 특정 마스터 지갑의 정보를 조회합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -1960,7 +2036,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
-              example: *ref_21
+              example: &ref_21
+                id: ae40b1b3dd953e5592c21e58be30d807
+                name: ethereum-wallet
+                address: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
+                blockchain: ETHEREUM
+                createdAt: '1612411568760'
+                updatedAt: '1612411724023'
+                status: ACTIVE
+                whitelistActivated: false
+                version: v4
+                accountKey: *ref_18
+                encryptionKey: >-
+                  f0880e48251dd2f8574a8c8a4d65311030185d5e451e8a474b89c2b473b5d953
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1968,11 +2056,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: &ref_24
+              example: &ref_20
                 message: wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
                 code: 4000
-        '401': *ref_22
-      tags: *ref_23
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/balance:
     get:
       operationId: binance-smart-chain-WalletsController_getMasterWalletBalance
@@ -1987,8 +2076,8 @@ paths:
       summary: 마스터 지갑 잔고 조회하기
       description: 특정 마스터 지갑의 잔고를 조회합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2006,15 +2095,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BalanceDTO'
-              example:
-                - coinId: 11
-                  amount: '1000000000000'
-                  spendableAmount: '1000000000000'
-                  aggregatedAmount: '100000000000000'
-                  name: binance coin
-                  ticker: BNB
-                  decimals: 18
+                type: array
+                items:
+                  $ref: '#/components/schemas/BalanceDTO'
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2022,9 +2105,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_24
-        '401': *ref_22
-      tags: *ref_23
+              example: *ref_20
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/name:
     patch:
       operationId: binance-smart-chain-WalletsController_changeMasterWalletName
@@ -2039,8 +2123,8 @@ paths:
       summary: 마스터 지갑 이름 변경하기
       description: 특정 마스터 지갑의 이름을 변경합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2068,13 +2152,14 @@ paths:
                   - $ref: '#/components/schemas/NoWalletNameException'
               examples:
                 WalletNotFoundException:
-                  value: *ref_24
+                  value: *ref_20
                 NoWalletNameException:
-                  value: &ref_26
+                  value: &ref_22
                     message: wallet name should not be empty
                     code: 4000
-        '401': *ref_22
-      tags: *ref_23
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/transfer:
     post:
       operationId: binance-smart-chain-WalletsController_sendMasterWalletCoin
@@ -2089,8 +2174,8 @@ paths:
       summary: 마스터 지갑에서 코인 전송하기
       description: 특정 마스터 지갑에서 가상자산을 송금합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2109,7 +2194,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_16
+              example: *ref_14
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2117,9 +2202,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_24
-        '401': *ref_22
-      tags: *ref_23
+              example: *ref_20
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/contract-call:
     post:
       operationId: binance-smart-chain-WalletsController_sendMasterWalletContractCall
@@ -2134,8 +2220,8 @@ paths:
       summary: 마스터 지갑에서 스마트 컨트랙트 호출하기
       description: 특정 마스터 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2154,7 +2240,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_16
+              example: *ref_14
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2162,9 +2248,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_24
-        '401': *ref_22
-      tags: *ref_23
+              example: *ref_20
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/transactions/{transactionId}/replace:
     post:
       operationId: binance-smart-chain-WalletsController_replaceMasterWalletTransaction
@@ -2179,11 +2266,12 @@ paths:
       summary: 트랜잭션 교체
       description: 마스터 지갑에서 발생한 트랜잭션을 교체합니다
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: transactionId
@@ -2194,11 +2282,6 @@ paths:
             개념입니다.)
           schema:
             type: string
-        - name: walletId
-          required: true
-          in: path
-          description: 지갑 ID
-          schema: {}
       requestBody:
         required: true
         content:
@@ -2211,7 +2294,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: &ref_27
+              example: &ref_23
                 id: b549bfaaa74d1c4244ecc655738b1984
                 blockchain: ETHEREUM
                 hash: >-
@@ -2229,9 +2312,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_24
-        '401': *ref_22
-      tags: *ref_23
+              example: *ref_20
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/flush:
     post:
       operationId: binance-smart-chain-WalletsController_flush
@@ -2246,8 +2330,8 @@ paths:
       summary: 사용자 지갑 잔액을 모두 끌어오기
       description: 여러 사용자 지갑의 특정 코인/토큰 잔액을 모두 상위의 마스터 지갑으로 끌어옵니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2266,7 +2350,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_16
+              example: *ref_14
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2274,9 +2358,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_24
-        '401': *ref_22
-      tags: *ref_23
+              example: *ref_20
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/user-wallets:
     get:
       operationId: binance-smart-chain-WalletsController_getUserWallets
@@ -2291,8 +2376,8 @@ paths:
       summary: 전체 사용자 지갑 목록 조회하기
       description: 특정 마스터 지갑에 속한 모든 사용자 지갑 목록을 조회합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2336,8 +2421,9 @@ paths:
                 $ref: '#/components/schemas/GetManyResponseForUserWalletDTO'
               example: *ref_21
           description: ''
-        '401': *ref_22
-      tags: *ref_23
+        '401': *ref_19
+      tags:
+        - wallets
     post:
       operationId: binance-smart-chain-WalletsController_createUserWallet
       x-readme:
@@ -2351,8 +2437,8 @@ paths:
       summary: 사용자 지갑 생성하기
       description: 특정 마스터 지갑 하위에 새로운 사용자 지갑을 생성합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2373,8 +2459,9 @@ paths:
                 $ref: '#/components/schemas/UserWalletDTO'
               example: *ref_21
           description: ''
-        '401': *ref_22
-      tags: *ref_23
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/user-wallets/{userWalletId}:
     get:
       operationId: binance-smart-chain-WalletsController_getUserWallet
@@ -2389,8 +2476,8 @@ paths:
       summary: 사용자 지갑 정보 조회하기
       description: 특정 사용자 지갑의 정보를 조회합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2426,9 +2513,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_24
-        '401': *ref_22
-      tags: *ref_23
+              example: *ref_20
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/user-wallets/{userWalletId}/recreate:
     post:
       operationId: binance-smart-chain-WalletsController_retryCreateUserWallet
@@ -2443,8 +2531,8 @@ paths:
       summary: 사용자 지갑 생성 실패시 재시도하기
       description: 특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2480,8 +2568,9 @@ paths:
                 createdAt: '1614582928222'
                 updatedAt: '1612411724023'
           description: ''
-        '401': *ref_22
-      tags: *ref_23
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/user-wallets/{userWalletId}/balance:
     get:
       operationId: binance-smart-chain-WalletsController_getUserWalletBalance
@@ -2496,8 +2585,8 @@ paths:
       summary: 사용자 지갑 잔고 조회하기
       description: 특정 사용자 지갑의 잔고를 조회합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2521,9 +2610,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BalanceDTO'
-              example:
-                - *ref_25
+                type: array
+                items:
+                  $ref: '#/components/schemas/BalanceDTO'
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2531,9 +2620,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_24
-        '401': *ref_22
-      tags: *ref_23
+              example: *ref_20
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/user-wallets/{userWalletId}/name:
     patch:
       operationId: binance-smart-chain-WalletsController_changeUserWalletName
@@ -2548,8 +2638,8 @@ paths:
       summary: 사용자 지갑 이름 변경하기
       description: 특정 사용자 지갑의 이름을 변경합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2583,11 +2673,12 @@ paths:
                   - $ref: '#/components/schemas/NoWalletNameException'
               examples:
                 WalletNotFoundException:
-                  value: *ref_24
+                  value: *ref_20
                 NoWalletNameException:
-                  value: *ref_26
-        '401': *ref_22
-      tags: *ref_23
+                  value: *ref_22
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/user-wallets/{userWalletId}/transfer:
     post:
       operationId: binance-smart-chain-WalletsController_sendUserWalletCoin
@@ -2602,8 +2693,8 @@ paths:
       summary: 사용자 지갑에서 코인 전송하기
       description: 특정 사용자 지갑에서 가상자산을 송금합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2628,7 +2719,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_16
+              example: *ref_14
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2636,9 +2727,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_24
-        '401': *ref_22
-      tags: *ref_23
+              example: *ref_20
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/user-wallets/{userWalletId}/contract-call:
     post:
       operationId: binance-smart-chain-WalletsController_sendUserWalletContractCall
@@ -2653,8 +2745,8 @@ paths:
       summary: 사용자 지갑에서 스마트 컨트랙트 호출하기
       description: 특정 사용자 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2679,7 +2771,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_16
+              example: *ref_14
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2687,9 +2779,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_24
-        '401': *ref_22
-      tags: *ref_23
+              example: *ref_20
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/nft/transfer:
     post:
       operationId: binance-smart-chain-WalletsController_transferNft
@@ -2704,19 +2797,14 @@ paths:
       summary: 마스터 지갑 NFT 출금하기
       description: 특정 마스터 지갑에서 NFT 토큰을 출금합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
           description: 마스터 지갑 ID
           schema:
             type: string
-        - name: ticker
-          required: false
-          in: query
-          description: 코인의 기호
-          schema: {}
       requestBody:
         required: true
         content:
@@ -2729,10 +2817,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_16
+              example: *ref_14
           description: ''
-        '401': *ref_22
-      tags: *ref_23
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/userWallet/{userWalletId}/transactions/{transactionId}/replace:
     post:
       operationId: binance-smart-chain-WalletsController_replaceTransaction
@@ -2747,16 +2836,18 @@ paths:
       summary: 트랜잭션 교체하기
       description: 유저 지갑에서 발생한 트랜잭션을 교체합니다
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: userWalletId
           required: true
           in: path
+          description: 사용자 지갑 ID
           schema:
             type: string
         - name: transactionId
@@ -2767,11 +2858,6 @@ paths:
             개념입니다.)
           schema:
             type: string
-        - name: walletId
-          required: true
-          in: path
-          description: 지갑 ID
-          schema: {}
       requestBody:
         required: true
         content:
@@ -2784,7 +2870,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_27
+              example: *ref_23
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2792,9 +2878,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_24
-        '401': *ref_22
-      tags: *ref_23
+              example: *ref_20
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/nft/flush:
     post:
       operationId: binance-smart-chain-WalletsController_nftFlush
@@ -2809,8 +2896,8 @@ paths:
       summary: 사용자 지갑 NFT 모두 끌어오기
       description: 사용자 지갑의 특정 NFT를 모두 상위의 지갑으로 끌어옵니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2829,7 +2916,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_16
+              example: *ref_14
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2837,9 +2924,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_24
-        '401': *ref_22
-      tags: *ref_23
+              example: *ref_20
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/user-wallets/{userWalletId}/nft/transfer:
     post:
       operationId: binance-smart-chain-WalletsController_transferUserWalletNft
@@ -2854,8 +2942,8 @@ paths:
       summary: 사용자 지갑 NFT 출금하기
       description: 특정 사용자 지갑에서 NFT 토큰을 출금합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2880,10 +2968,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_16
+              example: *ref_14
           description: ''
-        '401': *ref_22
-      tags: *ref_23
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/nft/balance:
     get:
       operationId: binance-smart-chain-WalletsController_getNftBalance
@@ -2898,8 +2987,8 @@ paths:
       summary: NFT 잔고 조회하기
       description: 특정 지갑의 NFT 잔고를 조회합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2926,19 +3015,14 @@ paths:
           in: query
           schema:
             type: string
-        - name: ticker
-          required: false
-          in: query
-          description: 코인의 기호
-          schema: {}
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForNftBalanceDTO'
-              example: &ref_29
-                pagination: &ref_30
+              example: &ref_25
+                pagination: &ref_26
                   nextUrl: http://localhost:3000/api/v3/ethereum/transfers?page=2
                   previousUrl: http://localhost:3000/api/v3/ethereum/transfers?page=1
                   totalCount: 5
@@ -2946,11 +3030,12 @@ paths:
                   - nft: *ref_2
                     tokenOnchainId: '1'
                     tokenUri: https://opensea-creatures-api.herokuapp.com/api/creature/3
-                    tokenMetadata: *ref_28
+                    tokenMetadata: *ref_24
                     isWithdrawalPending: false
           description: ''
-        '401': *ref_22
-      tags: *ref_23
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/user-wallets/{userWalletId}/nft/balance:
     get:
       operationId: binance-smart-chain-WalletsController_getUserWalletNftBalance
@@ -2965,8 +3050,8 @@ paths:
       summary: 사용자 지갑 NFT 잔고 조회하기
       description: 특정 사용자 지갑의 NFT 잔고를 조회합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
           in: path
@@ -2999,21 +3084,17 @@ paths:
           in: query
           schema:
             type: string
-        - name: ticker
-          required: false
-          in: query
-          description: 코인의 기호
-          schema: {}
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForNftBalanceDTO'
-              example: *ref_29
+              example: *ref_25
           description: ''
-        '401': *ref_22
-      tags: *ref_23
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/wallets/{masterWalletId}/nft/transfers:
     get:
       operationId: binance-smart-chain-WalletsController_getNftTransfers
@@ -3028,11 +3109,12 @@ paths:
       summary: 전체 NFT 입출금 목록 조회하기
       description: 특정 지갑의 NFT 입출금 내역을 조회합니다.
       parameters:
-        - *ref_19
-        - *ref_20
+        - *ref_16
+        - *ref_17
         - name: masterWalletId
           required: true
-          in: path
+          in: query
+          description: 마스터 지갑 ID
           schema:
             type: string
         - name: nftId
@@ -3109,11 +3191,6 @@ paths:
           description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
           schema:
             type: number
-        - name: walletId
-          required: false
-          in: query
-          description: 지갑 ID
-          schema: {}
       responses:
         '200':
           content:
@@ -3121,7 +3198,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForNftTransferDTO'
               example:
-                pagination: *ref_30
+                pagination: *ref_26
                 results:
                   - id: 375031
                     from: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
@@ -3131,7 +3208,7 @@ paths:
                     walletId: ae40b1b3dd953e5592c21e58be30d807
                     depositAddressId: ae40b1b3dd953e5592c21e58be30d807
                     nft: *ref_2
-                    token: *ref_31
+                    token: *ref_27
                     transferType: WITHDRAWAL
                     transactionId: 8c87c578d7568edc156f831cf03c3ff0
                     transactionHash: >-
@@ -3147,9 +3224,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvalidStatusException'
-              example: *ref_13
-        '401': *ref_22
-      tags: *ref_23
+              example: *ref_11
+        '401': *ref_19
+      tags:
+        - wallets
   /api/v3/binance-smart-chain/nfts:
     get:
       operationId: binance-smart-chain-NftsController_getNfts
@@ -3164,13 +3242,13 @@ paths:
       summary: 전체 NFT 컨트랙트 목록 조회하기
       description: 모든 NFT 컨트랙트를 조회합니다.
       parameters:
-        - &ref_32
+        - &ref_28
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_33
+        - &ref_29
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -3183,10 +3261,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NftDTO'
-              example: *ref_2
+                type: array
+                items:
+                  $ref: '#/components/schemas/NftDTO'
           description: ''
-        '401': &ref_34
+        '401': &ref_30
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -3197,12 +3276,12 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_9
+                  value: *ref_7
                 AccessTokenNotProvidedException:
-                  value: *ref_10
+                  value: *ref_8
                 InvalidAccessIpException:
-                  value: *ref_11
-      tags: &ref_35
+                  value: *ref_9
+      tags:
         - nfts
   /api/v3/binance-smart-chain/nfts/{nftId}/sync-metadata:
     post:
@@ -3218,8 +3297,8 @@ paths:
       summary: NFT metadata 동기화 요청하기
       description: NFT 컨트랙트의 metadata 동기화를 요청합니다.
       parameters:
-        - *ref_32
-        - *ref_33
+        - *ref_28
+        - *ref_29
         - name: nftId
           required: true
           in: path
@@ -3246,5 +3325,6 @@ paths:
               example:
                 message: nft '2' does not exist
                 code: 4000
-        '401': *ref_34
-      tags: *ref_35
+        '401': *ref_30
+      tags:
+        - nfts

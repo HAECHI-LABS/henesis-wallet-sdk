@@ -32,7 +32,6 @@ import { EXAMPLE_ETHEREUM_NFT_DTO, NftDTO } from "../dto/nft.dto";
 import { SyncMetadataRequestDTO } from "./dto/sync-metadata-request.dto";
 
 @Controller("nfts")
-@ApiTags("nfts")
 @ApiExtraModels(
   WalletNotFoundException,
   NoWalletNameException,
@@ -52,6 +51,7 @@ export class NftsController {
   @Get("/")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(NftDTO, EXAMPLE_ETHEREUM_NFT_DTO),
+    type: NftDTO,
     isArray: true,
   })
   @ApiOperation({
@@ -77,6 +77,7 @@ export class NftsController {
     summary: "NFT metadata 동기화 요청하기",
     description: "NFT 컨트랙트의 metadata 동기화를 요청합니다.",
   })
+  @ApiTags("nfts")
   @ReadMeExtension()
   public async syncMetadata(
     @Request() request: express.Request,
