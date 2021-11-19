@@ -286,7 +286,7 @@ components:
           example: 0u1a431da7361na9e75648180bbd4fbc
         accountKey:
           description: 지갑을 서명할 때 쓰이는 Account Key 정보
-          example: &ref_7
+          example: &ref_11
             address: undefined
             pub: >-
               0x030b5dm1690572a06c07181cfp29a30dfa057ea66c16e06313nd66404299b22041
@@ -556,7 +556,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForTransferDTO'
               example:
-                pagination: &ref_16
+                pagination: &ref_13
                   nextUrl: http://localhost:3000/api/v3/ltc/transfers?page=2
                   previousUrl: http://localhost:3000/api/v3/ltc/transfers?page=1
                   totalCount: 5
@@ -589,18 +589,18 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: &ref_8
+                  value: &ref_6
                     message: expired or invalid access token and signature
                     code: 4001
                 AccessTokenNotProvidedException:
-                  value: &ref_9
+                  value: &ref_7
                     message: access token not provided
                     code: 4001
                 InvalidAccessIpException:
-                  value: &ref_10
+                  value: &ref_8
                     message: ip '106.101.128.133' is not allowed
                     code: 4008
-      tags: &ref_6
+      tags:
         - transfers
   /api/v3/litecoin/transfers/{transferId}:
     get:
@@ -633,7 +633,8 @@ paths:
               example: *ref_4
           description: ''
         '401': *ref_5
-      tags: *ref_6
+      tags:
+        - transfers
   /api/v3/litecoin/wallets:
     get:
       operationId: litecoin-WalletsController_getWallets
@@ -648,13 +649,13 @@ paths:
       summary: 전체 지갑 목록 조회하기
       description: 전체 지갑 목록을 조회합니다.
       parameters:
-        - &ref_11
+        - &ref_9
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_12
+        - &ref_10
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -673,22 +674,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WalletDTO'
-              example:
-                - &ref_13
-                  id: cce4f485764767f256155390873668b3
-                  name: litecoin-wallet
-                  address: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
-                  encryptionKey: >-
-                    b72355635b2f8db7d603a73gd37r2460e28d93ad42df6ba85fff4b18fe374ae3
-                  createdAt: '1599116198762'
-                  updatedAt: '1599116198962'
-                  status: ACTIVE
-                  orgId: 0u1a431da7361na9e75648180bbd4fbc
-                  accountKey: *ref_7
-                  whitelistActivated: false
+                type: array
+                items:
+                  $ref: '#/components/schemas/WalletDTO'
           description: ''
-        '401': &ref_14
+        '401': &ref_12
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -699,12 +689,12 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_8
+                  value: *ref_6
                 AccessTokenNotProvidedException:
-                  value: *ref_9
+                  value: *ref_7
                 InvalidAccessIpException:
-                  value: *ref_10
-      tags: &ref_15
+                  value: *ref_8
+      tags:
         - wallets
   /api/v3/litecoin/wallets/{walletId}:
     get:
@@ -720,8 +710,8 @@ paths:
       summary: 지갑 정보 조회하기
       description: 특정 지갑의 상세 정보를 조회합니다.
       parameters:
-        - *ref_11
-        - *ref_12
+        - *ref_9
+        - *ref_10
         - name: walletId
           required: true
           in: path
@@ -734,10 +724,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletDTO'
-              example: *ref_13
+              example:
+                id: cce4f485764767f256155390873668b3
+                name: litecoin-wallet
+                address: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
+                encryptionKey: >-
+                  b72355635b2f8db7d603a73gd37r2460e28d93ad42df6ba85fff4b18fe374ae3
+                createdAt: '1599116198762'
+                updatedAt: '1599116198962'
+                status: ACTIVE
+                orgId: 0u1a431da7361na9e75648180bbd4fbc
+                accountKey: *ref_11
+                whitelistActivated: false
           description: ''
-        '401': *ref_14
-      tags: *ref_15
+        '401': *ref_12
+      tags:
+        - wallets
   /api/v3/litecoin/wallets/{walletId}/name:
     patch:
       operationId: litecoin-WalletsController_changeWalletName
@@ -752,8 +754,8 @@ paths:
       summary: 지갑 정보 변경하기
       description: 특정 지갑의 이름을 변경합니다.
       parameters:
-        - *ref_11
-        - *ref_12
+        - *ref_9
+        - *ref_10
         - name: walletId
           required: true
           in: path
@@ -771,8 +773,9 @@ paths:
           description: ''
         '204':
           description: ''
-        '401': *ref_14
-      tags: *ref_15
+        '401': *ref_12
+      tags:
+        - wallets
   /api/v3/litecoin/wallets/{walletId}/balance:
     get:
       operationId: litecoin-WalletsController_getWalletBalance
@@ -787,8 +790,8 @@ paths:
       summary: 지갑 잔고 조회하기
       description: 특정 지갑의 잔고를 변경합니다.
       parameters:
-        - *ref_11
-        - *ref_12
+        - *ref_9
+        - *ref_10
         - name: walletId
           required: true
           in: path
@@ -800,17 +803,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BalanceDTO'
-              example:
-                - coinType: LTC
-                  amount: '59023730737'
-                  spendableAmount: '59023730737'
-                  aggregatedAmount: '59023730737'
-                  name: 라이트코인
-                  symbol: LTC
+                type: array
+                items:
+                  $ref: '#/components/schemas/BalanceDTO'
           description: ''
-        '401': *ref_14
-      tags: *ref_15
+        '401': *ref_12
+      tags:
+        - wallets
   /api/v3/litecoin/wallets/{walletId}/deposit-addresses:
     post:
       operationId: litecoin-WalletsController_createDepositAddress
@@ -825,8 +824,8 @@ paths:
       summary: 입금 주소 생성하기
       description: 입금 주소를 생성합니다.
       parameters:
-        - *ref_11
-        - *ref_12
+        - *ref_9
+        - *ref_10
         - name: walletId
           required: true
           in: path
@@ -845,7 +844,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-              example: &ref_17
+              example: &ref_14
                 id: 94fd6a94ed199d660acf55e2f2943a7c
                 name: lite
                 address: QS9mDWR42bcNK5CiWe2nU5PAM6vMzdi6fV
@@ -853,8 +852,9 @@ paths:
                   0x022bf2a47ce5027831a3587ecd9f2d0d1e590a227ea576f61598ee84405e0479c1
                 createdAt: '1620041696849'
           description: ''
-        '401': *ref_14
-      tags: *ref_15
+        '401': *ref_12
+      tags:
+        - wallets
     get:
       operationId: litecoin-WalletsController_getDepositAddresses
       x-readme:
@@ -868,8 +868,8 @@ paths:
       summary: 전체 입금 주소 목록 조회하기
       description: 특정 지갑에 속한 모든 입금 주소 목록을 조회합니다.
       parameters:
-        - *ref_11
-        - *ref_12
+        - *ref_9
+        - *ref_10
         - name: walletId
           required: true
           in: path
@@ -913,12 +913,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForDepositAddressDTO'
               example:
-                pagination: *ref_16
+                pagination: *ref_13
                 results:
-                  - *ref_17
+                  - *ref_14
           description: ''
-        '401': *ref_14
-      tags: *ref_15
+        '401': *ref_12
+      tags:
+        - wallets
   /api/v3/litecoin/wallets/{walletId}/deposit-addresses/{depositAddressId}:
     get:
       operationId: litecoin-WalletsController_getDepositAddress
@@ -933,8 +934,8 @@ paths:
       summary: 입금 주소 정보 조회하기
       description: 특정 입금 주소 정보를 조회합니다.
       parameters:
-        - *ref_11
-        - *ref_12
+        - *ref_9
+        - *ref_10
         - name: walletId
           required: true
           in: path
@@ -953,10 +954,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-              example: *ref_17
+              example: *ref_14
           description: ''
-        '401': *ref_14
-      tags: *ref_15
+        '401': *ref_12
+      tags:
+        - wallets
   /api/v3/litecoin/wallets/{walletId}/transfer:
     post:
       operationId: litecoin-WalletsController_transfer
@@ -971,8 +973,8 @@ paths:
       summary: 지갑에서 코인 전송하기
       description: 특정 지갑에서 가상자산을 전송합니다.
       parameters:
-        - *ref_11
-        - *ref_12
+        - *ref_9
+        - *ref_10
         - name: walletId
           required: true
           in: path
@@ -999,5 +1001,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransferDTO'
-        '401': *ref_14
-      tags: *ref_15
+        '401': *ref_12
+      tags:
+        - wallets

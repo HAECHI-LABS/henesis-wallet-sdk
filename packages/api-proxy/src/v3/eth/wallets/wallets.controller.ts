@@ -99,7 +99,6 @@ import {
 } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 @Controller("wallets")
-@ApiTags("wallets")
 @ApiExtraModels(
   WalletNotFoundException,
   NoWalletNameException,
@@ -120,6 +119,7 @@ export class WalletsController {
     content: ApiResponseContentGenerator(WalletDTO, [
       EXAMPLE_ETHEREUM_WALLET_DTO,
     ]),
+    type: WalletDTO,
     isArray: true,
   })
   @Queries(NAME_OPTIONAL)
@@ -127,6 +127,7 @@ export class WalletsController {
     summary: "전체 지갑 목록 조회하기",
     description: "모든 지갑의 목록을 조회합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async getWallets(
     @Request() request: express.Request,
@@ -154,6 +155,7 @@ export class WalletsController {
     summary: "지갑 정보 조회하기",
     description: "특정 지갑의 정보를 조회합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async getWallet(
     @Request() request: express.Request,
@@ -167,6 +169,7 @@ export class WalletsController {
     content: ApiResponseContentGenerator(BalanceDTO, [
       EXAMPLE_ETHEREUM_MASTER_WALLET_BALANCE_DTO,
     ]),
+    type: BalanceDTO,
     isArray: true,
   })
   @PathParams(WALLET_ID_REQUIRED)
@@ -182,6 +185,7 @@ export class WalletsController {
     summary: "지갑 잔고 조회하기",
     description: "특정 지갑의 잔고를 조회합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async getBalanceOfWallet(
     @Request() request: express.Request,
@@ -215,6 +219,7 @@ export class WalletsController {
     summary: "지갑 이름 변경하기",
     description: "특정 지갑의 이름을 변경합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async changeWalletName(
     @Request() request: express.Request,
@@ -247,6 +252,7 @@ export class WalletsController {
     summary: "지갑에서 코인 전송하기",
     description: "특정 지갑에서 가상자산을 송금합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async sendCoin(
     @Request() request: express.Request,
@@ -280,6 +286,7 @@ export class WalletsController {
     description:
       "특정 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async callContract(
     @Request() request: express.Request,
@@ -319,6 +326,7 @@ export class WalletsController {
     summary: "트랜잭션 교체하기",
     description: "트랜잭션을 교체합니다",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async replaceTransaction(
     @Request() request: express.Request,
@@ -354,6 +362,7 @@ export class WalletsController {
     description:
       "원화 입금 주소의 특정 코인/토큰 잔액을 모두 상위의 지갑으로 끌어옵니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async flush(
     @Request() request: express.Request,
@@ -385,6 +394,7 @@ export class WalletsController {
     description:
       "네트워크 사정 등으로 채굴이 지연됐을때, 블록체인에 트랜잭션을 다시 전송합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   async resendTransaction(
     @Request() request: express.Request,
@@ -423,6 +433,7 @@ export class WalletsController {
     summary: "전체 입금 주소 목록 조회하기",
     description: "특정 지갑에 속한 모든 입금 주소 조회합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async getDepositAddresses(
     @Request() request: express.Request,
@@ -465,6 +476,7 @@ export class WalletsController {
     summary: "입금 주소 생성하기",
     description: "특정 지갑 하위에 새로운 입금 주소 생성합니다",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async createDepositAddress(
     @Request() request: express.Request,
@@ -503,6 +515,7 @@ export class WalletsController {
     summary: "입금 주소 정보 조회하기",
     description: "특정 입금 주소를 조회합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async getDepositAddress(
     @Request() request: express.Request,
@@ -521,6 +534,7 @@ export class WalletsController {
     content: ApiResponseContentGenerator(BalanceDTO, [
       EXAMPLE_ETHEREUM_BALANCE_DTO,
     ]),
+    type: BalanceDTO,
     isArray: true,
   })
   @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
@@ -529,6 +543,7 @@ export class WalletsController {
     summary: "입금 주소 잔고 조회하기",
     description: "특정 입금 주소의 잔액을 조회합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async getBalanceOfDepositAddress(
     @Request() request: express.Request,
@@ -552,12 +567,12 @@ export class WalletsController {
     ),
     isArray: true,
   })
-  @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
-  @Queries(TICKER_OPTIONAL)
+  @PathParams(WALLET_ID_REQUIRED)
   @ApiOperation({
     summary: "NFT 출금하기",
     description: "특정 지갑에서 NFT 토큰을 출금합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async transferNft(
     @Request() request: express.Request,
@@ -590,6 +605,7 @@ export class WalletsController {
     summary: "입금 주소 NFT 모두 끌어오기",
     description: "입금 주소의 특정 NFT를 모두 상위의 지갑으로 끌어옵니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async nftFlush(
     @Request() request: express.Request,
@@ -611,11 +627,11 @@ export class WalletsController {
     EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO
   )
   @PathParams(WALLET_ID_REQUIRED)
-  @Queries(TICKER_OPTIONAL)
   @ApiOperation({
     summary: "NFT 잔고 조회하기",
     description: "특정 지갑의 NFT 잔고를 조회합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async getNftBalance(
     @Request() request: express.Request,
@@ -644,11 +660,11 @@ export class WalletsController {
     EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO
   )
   @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
-  @Queries(TICKER_OPTIONAL)
   @ApiOperation({
     summary: "입금 주소 NFT 잔고 조회하기",
     description: "특정 입금 주소의 NFT 잔고를 조회합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async getNftBalanceOfDepositAddress(
     @Request() request: express.Request,
@@ -704,6 +720,7 @@ export class WalletsController {
     summary: "전체 NFT 입출금 목록 조회하기",
     description: "특정 지갑의 NFT 입출금 내역을 조회합니다.",
   })
+  @ApiTags("wallets")
   @ReadMeExtension()
   public async getNftTransfers(
     @Request() request: express.Request,

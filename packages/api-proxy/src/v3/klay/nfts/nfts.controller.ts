@@ -32,7 +32,6 @@ import { SyncMetadataRequestDTO } from "../../eth/nfts/dto/sync-metadata-request
 import { NftsService } from "./nfts.service";
 
 @Controller("nfts")
-@ApiTags("nfts")
 @ApiExtraModels(
   WalletNotFoundException,
   NoWalletNameException,
@@ -52,12 +51,14 @@ export class NftsController {
   @Get("/")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(NftDTO, EXAMPLE_ETHEREUM_NFT_DTO),
+    type: NftDTO,
     isArray: true,
   })
   @ApiOperation({
     summary: "전체 NFT 컨트랙트 목록 조회하기",
     description: "모든 NFT 컨트랙트를 조회합니다.",
   })
+  @ApiTags("nfts")
   @ReadMeExtension()
   public async getNfts(@Request() request: express.Request): Promise<NftDTO[]> {
     return await this.nftsService.getNfts(request.sdk);
@@ -77,6 +78,7 @@ export class NftsController {
     summary: "NFT metadata 동기화 요청하기",
     description: "NFT 컨트랙트의 metadata 동기화를 요청합니다.",
   })
+  @ApiTags("nfts")
   @ReadMeExtension()
   public async syncMetadata(
     @Request() request: express.Request,

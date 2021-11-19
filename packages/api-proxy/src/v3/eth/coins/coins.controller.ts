@@ -26,7 +26,6 @@ import {
 } from "../dto/exceptions.dto";
 
 @Controller("coins")
-@ApiTags("coins")
 @ApiExtraModels(
   InvalidAccessIpException,
   InvalidAccessTokenException,
@@ -42,6 +41,7 @@ export class CoinsController {
   @Get()
   @ApiOkResponse({
     content: ApiResponseContentGenerator(CoinDTO, [EXAMPLE_ETHEREUM_COIN_DTO]),
+    type: CoinDTO,
     isArray: true,
   })
   @ApiOperation({
@@ -49,6 +49,7 @@ export class CoinsController {
     description:
       "Henesis Wallet에서 지원하는 모든 가상자산(토큰, 코인)을 조회합니다.",
   })
+  @ApiTags("coins")
   @ReadMeExtension()
   public async getCoins(
     @Request() request: express.Request,
@@ -74,6 +75,7 @@ export class CoinsController {
     description:
       "Henesis Wallet에서 지원하는 특정 가상자산(토큰, 코인)을 조회합니다.",
   })
+  @ApiTags("coins")
   @ReadMeExtension()
   public async getCoin(
     @Request() request: express.Request,

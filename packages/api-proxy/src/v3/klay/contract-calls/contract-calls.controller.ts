@@ -41,7 +41,6 @@ import {
 import { EventStatus } from "@haechi-labs/henesis-wallet-core/lib/__generate__/eth";
 
 @Controller("/contract-calls")
-@ApiTags("contract-calls")
 @ApiExtraModels(
   InvalidAccessIpException,
   InvalidAccessTokenException,
@@ -81,6 +80,7 @@ export class ContractCallsController {
     summary: "스마트 컨트랙트 호출 내역 조회하기",
     description: "내가 발생시킨 스마트 컨트랙트 호출 내역을 조회합니다.",
   })
+  @ApiTags("contract-calls")
   @ReadMeExtension()
   public async getCallEvents(
     @Request() request: express.Request,

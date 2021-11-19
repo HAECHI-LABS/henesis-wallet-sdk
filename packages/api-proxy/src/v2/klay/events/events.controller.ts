@@ -36,7 +36,6 @@ import { ValueTransferEventDTO } from "../../eth/dto/value-transfer-event.dto";
 import { CallEventDTO } from "../../eth/dto/call-event.dto";
 
 @Controller("events")
-@ApiTags("events")
 @AuthErrorResponses()
 @AuthHeaders()
 @ApiExtraModels(ValueTransferEventDTO, CallEventDTO)
@@ -48,6 +47,7 @@ export class EventsController {
     summary: "코인/토큰 입출금 내역 조회하기",
     description: "모든 지갑의 가상자산 입출금 내역을 조회합니다.",
   })
+  @ApiTags("events")
   @Queries(
     QUERY_EVENT_SYMBOL_OPTIONAL,
     QUERY_EVENT_WALLET_ID_OPTIONAL,
@@ -105,6 +105,7 @@ export class EventsController {
     summary: "스마트 컨트랙트 호출 내역 조회하기",
     description: "내가 발생시킨 스마트 컨트랙트 호출 내역을 조회합니다.",
   })
+  @ApiTags("events")
   @Queries(
     QUERY_EVENT_WALLET_ID_OPTIONAL,
     QUERY_EVENT_MASTER_WALLET_ID_OPTIONAL,

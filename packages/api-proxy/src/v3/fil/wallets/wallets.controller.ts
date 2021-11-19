@@ -82,7 +82,6 @@ import {
 import { DepositAddressTransferRequestDTO } from "./dto/deposit-address-transfer-request.dto";
 
 @Controller("wallets")
-@ApiTags("wallets")
 @ApiExtraModels(
   MasterWalletNotFoundException,
   NoMasterWalletNameException,
@@ -107,6 +106,7 @@ export class WalletsController {
     content: ApiResponseContentGenerator(MasterWalletDto, [
       EXAMPLE_FILECOIN_MASTER_WALLET_DTO,
     ]),
+    type: MasterWalletDto,
     isArray: true,
   })
   @Queries(MASTER_WALLET_NAME_OPTIONAL)
@@ -114,6 +114,7 @@ export class WalletsController {
     summary: "전체 마스터 지갑 목록 조회하기",
     description: "모든 마스터 지갑의 목록을 조회합니다.",
   })
+  @ApiTags("wallets")
   public async getMasterWallets(
     @Request() request: express.Request,
     @Query("name") name?: string
@@ -140,6 +141,7 @@ export class WalletsController {
     summary: "마스터 지갑 정보 조회하기",
     description: "특정 마스터 지갑의 정보를 조회합니다.",
   })
+  @ApiTags("wallets")
   public async getMasterWallet(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string
@@ -155,6 +157,7 @@ export class WalletsController {
     content: ApiResponseContentGenerator(MasterWalletBalanceDto, [
       EXAMPLE_FILECOIN_MASTER_WALLET_BALANCE_DTO,
     ]),
+    type: MasterWalletBalanceDto,
     isArray: true,
   })
   @PathParams(MASTER_WALLET_ID_REQUIRED)
@@ -169,6 +172,7 @@ export class WalletsController {
     summary: "마스터 지갑 잔고 조회하기",
     description: "특정 마스터 지갑의 잔고를 조회합니다.",
   })
+  @ApiTags("wallets")
   public async getMasterWalletBalances(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string
@@ -199,6 +203,7 @@ export class WalletsController {
     summary: "마스터 지갑 이름 변경하기",
     description: "특정 마스터 지갑의 이름을 변경합니다.",
   })
+  @ApiTags("wallets")
   public async changeMasterWalletName(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -230,6 +235,7 @@ export class WalletsController {
     summary: "마스터 지갑에서 코인 전송하기",
     description: "특정 마스터 지갑에서 가상자산을 송금합니다.",
   })
+  @ApiTags("wallets")
   public async transfer(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -261,6 +267,7 @@ export class WalletsController {
     summary: "입금 주소 잔액을 모두 끌어오기",
     description: "입금 주소의 코인 잔액을 모두 상위의 지갑으로 끌어옵니다.",
   })
+  @ApiTags("wallets")
   public async flush(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -296,6 +303,7 @@ export class WalletsController {
     summary: "전체 입금 주소 목록 조회하기",
     description: "특정 마스터 지갑에 속한 모든 입금 주소 조회합니다.",
   })
+  @ApiTags("wallets")
   public async getDepositAddresses(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -336,6 +344,7 @@ export class WalletsController {
     summary: "입금 주소 생성하기",
     description: "특정 마스터 지갑 하위에 새로운 입금 주소 생성합니다",
   })
+  @ApiTags("wallets")
   public async createDepositAddress(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -373,6 +382,7 @@ export class WalletsController {
     summary: "입금 주소 정보 조회하기",
     description: "특정 입금 주소를 조회합니다.",
   })
+  @ApiTags("wallets")
   public async getDepositAddress(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -390,6 +400,7 @@ export class WalletsController {
     content: ApiResponseContentGenerator(BalanceDTO, [
       EXAMPLE_FILECOIN_BALANCE_DTO,
     ]),
+    type: BalanceDTO,
     isArray: true,
   })
   @PathParams(MASTER_WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
@@ -397,6 +408,7 @@ export class WalletsController {
     summary: "입금 주소 잔고 조회하기",
     description: "특정 입금 주소의 잔액을 조회합니다.",
   })
+  @ApiTags("wallets")
   public async getDepositAddressBalance(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -428,6 +440,7 @@ export class WalletsController {
     summary: "입금 주소에서 코인 전송하기",
     description: "특정 입금 주소에서 가상자산을 송금합니다.",
   })
+  @ApiTags("wallets")
   public async transferFromDepositAddress(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -457,6 +470,7 @@ export class WalletsController {
     summary: "전체 집금 목록 조회하기",
     description: "특정 마스터 지갑에서 발생한 전체 집금 목록을 조회합니다.",
   })
+  @ApiTags("wallets")
   public async getFlushes(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
@@ -494,6 +508,7 @@ export class WalletsController {
     summary: "특정 집금 조회하기",
     description: "특정 마스터 지갑에서 발생한 특정 집금 내역을 조회합니다.",
   })
+  @ApiTags("wallets")
   public async getFlush(
     @Request() request: express.Request,
     @Param("masterWalletId") masterWalletId: string,
