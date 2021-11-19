@@ -50,7 +50,6 @@ import {
 import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
 import { PAGE_OPTIONAL, SIZE_OPTIONAL } from "../../../v3/eth/dto/params";
 
-@ApiTags("wallets")
 @Controller("wallets")
 @ApiExtraModels(WalletDTO, BalanceDTO)
 @AuthErrorResponses()
@@ -61,12 +60,14 @@ export class WalletsController {
   @Get("/")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(WalletDTO, [EXAMPLE_WALLET_DTO]),
+    type: WalletDTO,
     isArray: true,
   })
   @ApiOperation({
     summary: "전체 지갑 목록 조회하기",
     description: "전체 지갑 목록을 조회합니다.",
   })
+  @ApiTags("wallets")
   @Queries(QUERY_WALLET_NAME_OPTIONAL)
   @ReadMeExtension()
   public async getWallets(
@@ -84,6 +85,7 @@ export class WalletsController {
     summary: "지갑 정보 조회하기",
     description: "특정 지갑의 상세 정보를 조회합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_WALLET_ID)
   @ReadMeExtension()
   public async getWallet(
@@ -98,6 +100,7 @@ export class WalletsController {
     summary: "지갑 정보 변경하기",
     description: "특정 지갑의 이름을 변경합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_WALLET_ID)
   @ApiNoContentResponse()
   @ReadMeExtension()
@@ -117,12 +120,14 @@ export class WalletsController {
   @Get("/:walletId/balance")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(BalanceDTO, [EXAMPLE_BALANCE_DTO]),
+    type: BalanceDTO,
     isArray: true,
   })
   @ApiOperation({
     summary: "지갑 잔고 조회하기",
     description: "특정 지갑의 잔고를 변경합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_WALLET_ID)
   @ReadMeExtension()
   public async getWalletBalance(
@@ -143,6 +148,7 @@ export class WalletsController {
     summary: "입금 주소 생성하기",
     description: "입금 주소를 생성합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_WALLET_ID)
   @ReadMeExtension()
   async createDepositAddress(
@@ -163,6 +169,7 @@ export class WalletsController {
     summary: "전체 입금 주소 목록 조회하기",
     description: "특정 지갑에 속한 모든 입금 주소 목록을 조회합니다.",
   })
+  @ApiTags("wallets")
   @Queries(
     QUERY_DEPOSIT_ADDRESS_ID_OPTIONAL,
     QUERY_DEPOSIT_ADDRESS_ADDRESS_OPTIONAL,
@@ -210,6 +217,7 @@ export class WalletsController {
     summary: "입금 주소 정보 조회하기",
     description: "특정 입금 주소 정보를 조회합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_WALLET_ID, PARAM_DEPOSIT_ADDRESS_ID)
   @ReadMeExtension()
   public async getDepositAddress(
@@ -232,6 +240,7 @@ export class WalletsController {
     summary: "지갑에서 코인 전송하기",
     description: "특정 지갑에서 가상자산을 전송합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_WALLET_ID)
   @ReadMeExtension()
   public async transfer(

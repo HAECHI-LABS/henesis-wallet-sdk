@@ -47,7 +47,6 @@ import {
 } from "../dto/pagination.dto";
 
 @Controller("transactions")
-@ApiTags("transactions")
 @ApiExtraModels(TransactionIdNotFoundException)
 @AuthErrorResponses()
 @AuthHeaders()
@@ -73,6 +72,7 @@ export class TransactionsController {
     summary: "개별 트랜잭션 조회하기",
     description: "내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.",
   })
+  @ApiTags("transactions")
   public async getTransaction(
     @Param("transactionId") transactionId: string,
     @Request() request: express.Request
@@ -105,6 +105,7 @@ export class TransactionsController {
     summary: "트랜잭션 목록 조회하기",
     description: "트랜잭션 목록을 조회합니다.",
   })
+  @ApiTags("transactions")
   @ReadMeExtension()
   public async getTransactions(
     @Request() request: express.Request,

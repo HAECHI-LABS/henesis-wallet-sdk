@@ -30,7 +30,6 @@ import {
 import { PARAM_TRANSFER_ID } from "../dto/params";
 
 @Controller("transfers")
-@ApiTags("transfers")
 @AuthErrorResponses()
 @AuthHeaders()
 export class TransfersController {
@@ -41,6 +40,7 @@ export class TransfersController {
     summary: "입출금 내역 조회하기",
     description: "입출금 내역을 조회합니다.",
   })
+  @ApiTags("transfers")
   @ApiPaginationResponse(TransferDTO, EXAMPLE_PAGINATION_TRANSFER_DTO)
   @Queries(
     QUERY_TRANSFERS_TYPE_OPTIONAL,
@@ -91,6 +91,7 @@ export class TransfersController {
     summary: "특정 입출금 내역 조회하기",
     description: "특정 입출금 내역을 조회합니다.",
   })
+  @ApiTags("transfers")
   @PathParams(PARAM_TRANSFER_ID)
   @ReadMeExtension()
   public async getTransfer(

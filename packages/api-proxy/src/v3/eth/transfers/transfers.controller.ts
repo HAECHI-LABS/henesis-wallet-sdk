@@ -38,7 +38,6 @@ import {
 } from "../dto/exceptions.dto";
 
 @Controller("transfers")
-@ApiTags("transfers")
 @AuthErrorResponses()
 @AuthHeaders()
 export class TransfersController {
@@ -70,6 +69,7 @@ export class TransfersController {
     summary: "전체 입출금 목록 조회하기",
     description: "모든 지갑의 가상자산 입출금 내역을 조회합니다.",
   })
+  @ApiTags("transfers")
   @ReadMeExtension()
   public async getTransfers(
     @Request() request: express.Request,

@@ -21,7 +21,6 @@ import { CoinDTO, EXAMPLE_ETH_KLAY_COIN_DTO } from "../../eth/dto/coin.dto";
 import { NoCoinException } from "../../eth/dto/exceptions.dto";
 
 @Controller("coins")
-@ApiTags("coins")
 @AuthErrorResponses()
 @AuthHeaders()
 @ApiExtraModels(NoCoinException, CoinDTO)
@@ -31,6 +30,7 @@ export class CoinsController {
   @Get("/")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(CoinDTO, [EXAMPLE_ETH_KLAY_COIN_DTO]),
+    type: CoinDTO,
     isArray: true,
   })
   @ApiOperation({
@@ -38,6 +38,7 @@ export class CoinsController {
     description:
       "Henesis Wallet에서 지원하는 모든 가상자산(토큰, 코인)을 조회합니다.",
   })
+  @ApiTags("coins")
   @Queries(QUERY_COIN_FLAG_OPTIONAL)
   @ReadMeExtension()
   public async getCoins(
@@ -57,6 +58,7 @@ export class CoinsController {
     description:
       "Henesis Wallet에서 지원하는 특정 가상자산(토큰, 코인)을 조회합니다.",
   })
+  @ApiTags("coins")
   @PathParams(PARAM_COIN_TICKER)
   @ReadMeExtension()
   public async getCoin(

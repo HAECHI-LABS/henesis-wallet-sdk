@@ -73,7 +73,6 @@ import { WalletsService } from "./wallets.service";
 import { ReplaceTransactionRequestDTO } from "../dto/replace-transaction-request.dto";
 
 @Controller("wallets")
-@ApiTags("wallets")
 @AuthErrorResponses()
 @AuthHeaders()
 @ApiExtraModels(MasterWalletDTO, UserWalletDTO, TransactionDTO, BalanceDTO)
@@ -85,12 +84,14 @@ export class WalletsController {
     content: ApiResponseContentGenerator(MasterWalletDTO, [
       EXAMPLE_ETH_KLAY_MASTER_WALLET_DTO,
     ]),
+    type: MasterWalletDTO,
     isArray: true,
   })
   @ApiOperation({
     summary: "전체 마스터 지갑 목록 조회하기",
     description: "모든 마스터 지갑 목록을 조회합니다.",
   })
+  @ApiTags("wallets")
   @Queries(QUERY_WALLET_NAME_OPTIONAL)
   @ReadMeExtension()
   public async getMasterWallets(
@@ -112,6 +113,7 @@ export class WalletsController {
     summary: "마스터 지갑 조회하기",
     description: "마스터 지갑 목록을 조회합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID)
   @ReadMeExtension()
   public async getMasterWallet(
@@ -137,6 +139,7 @@ export class WalletsController {
     description:
       "특정 마스터 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID)
   @ReadMeExtension()
   public async sendMasterWalletContractCall(
@@ -157,6 +160,7 @@ export class WalletsController {
     summary: "마스터 지갑 이름 변경하기",
     description: "특정 마스터 지갑의 이름을 변경합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID)
   @ApiNoContentResponse()
   @ReadMeExtension()
@@ -177,12 +181,14 @@ export class WalletsController {
     content: ApiResponseContentGenerator(BalanceDTO, [
       EXAMPLE_ETH_KLAY_BALANCE_DTO,
     ]),
+    type: BalanceDTO,
     isArray: true,
   })
   @ApiOperation({
     summary: "마스터 지갑 잔고 조회하기",
     description: "특정 마스터 지갑의 잔액을 조회합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID)
   @Queries(QUERY_FLAG_OPTIONAL, QUERY_SYMBOL_OPTIONAL)
   @ReadMeExtension()
@@ -212,6 +218,7 @@ export class WalletsController {
     summary: "마스터 지갑에서 코인/토큰 전송하기",
     description: "특정 마스터 지갑에서 가상자산을 송금합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID)
   @ReadMeExtension()
   public async sendMasterWalletCoin(
@@ -231,6 +238,7 @@ export class WalletsController {
     content: ApiResponseContentGenerator(TransactionDTO, [
       EXAMPLE_ETH_KLAY_TRANSACTION_DTO,
     ]),
+    type: TransactionDTO,
     isArray: true,
   })
   @ApiOperation({
@@ -239,6 +247,7 @@ export class WalletsController {
       "특정 마스터 지갑에서 여러 트랜잭션을 모아 한꺼번에 발생니다.\n" +
       "최대 10개까지 보낼 수 있습니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID)
   @ReadMeExtension()
   public async sendMasterWalletBatchTransactions(
@@ -267,6 +276,7 @@ export class WalletsController {
     description:
       "여러 사용자 지갑의 특정 코인/토큰 잔액을 모두 상위의 마스터 지갑으로 끌어옵니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID)
   @ReadMeExtension()
   public async flush(
@@ -293,6 +303,7 @@ export class WalletsController {
     summary: "사용자 지갑 정보 조회하기",
     description: "특정 사용자 지갑을 조회합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
   @ReadMeExtension()
   public async getUserWallet(
@@ -312,6 +323,7 @@ export class WalletsController {
     summary: "전체 사용자 지갑 목록 조회하기",
     description: "특정 마스터 지갑에 속한 모든 사용자 지갑 목록을 조회합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID)
   @Queries(
     QUERY_WALLETS_PAGE_OPTIONAL,
@@ -360,6 +372,7 @@ export class WalletsController {
     summary: "사용자 지갑 생성하기",
     description: "특정 마스터 지갑 하위에 새로운 사용자 지갑을 생성합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID)
   @ReadMeExtension()
   public async createUserWallet(
@@ -387,6 +400,7 @@ export class WalletsController {
     description:
       "사용자 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
   @ReadMeExtension()
   public async sendUserWalletContractCall(
@@ -409,6 +423,7 @@ export class WalletsController {
     summary: "사용자 지갑 이름 변경하기",
     description: "특정 사용자 지갑의 이름을 변경합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
   @ApiNoContentResponse()
   @ReadMeExtension()
@@ -431,12 +446,14 @@ export class WalletsController {
     content: ApiResponseContentGenerator(BalanceDTO, [
       EXAMPLE_ETH_KLAY_BALANCE_DTO,
     ]),
+    type: BalanceDTO,
     isArray: true,
   })
   @ApiOperation({
     summary: "사용자 지갑 잔고 조회하기",
     description: "특정 사용자 지갑의 잔액을 조회합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
   @Queries(QUERY_FLAG_OPTIONAL, QUERY_SYMBOL_OPTIONAL)
   @ReadMeExtension()
@@ -468,6 +485,7 @@ export class WalletsController {
     summary: "사용자 지갑에서 코인/토큰 전송하기",
     description: "특정 사용자 지갑에서 가상자산을 전송합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
   @ReadMeExtension()
   public async sendUserWalletCoin(
@@ -496,6 +514,7 @@ export class WalletsController {
     summary: "마스터 지갑 재생성하기",
     description: "마스터 지갑을 재생성합니다.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID)
   @ReadMeExtension()
   public async retryCreateMasterWallet(
@@ -522,9 +541,9 @@ export class WalletsController {
     summary: "사용자 지갑 생성 실패시 재시도하기",
     description:
       "특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.\n" +
-      "\n" +
       "만약 사용자 지갑 생성 트랜잭션이 장시간 채굴 대기중(Pending)이어서 gasPrice를 높여 재시도하고 싶다면, '트랜잭션 교체하기' API를 사용하세요.",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_USER_WALLET_ID)
   @ReadMeExtension()
   public async retryCreateUserWallet(
@@ -552,6 +571,7 @@ export class WalletsController {
     summary: "트랜잭션 교체하기",
     description: "마스터 지갑에서 발생한 트랜잭션을 교체합니다",
   })
+  @ApiTags("wallets")
   @PathParams(PARAM_MASTER_WALLET_ID, PARAM_TRANSACTION_ID)
   @ReadMeExtension()
   public async replaceMasterWalletTransaction(

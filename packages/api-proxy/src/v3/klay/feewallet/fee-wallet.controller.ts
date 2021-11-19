@@ -24,7 +24,6 @@ import {
 } from "../../../decorators";
 
 @Controller("fee-wallet")
-@ApiTags("fee-wallet")
 @ApiExtraModels(
   InvalidAccessIpException,
   InvalidAccessTokenException,
@@ -46,6 +45,7 @@ export class FeeWalletController {
     summary: "수수료 지갑 잔고 조회하기",
     description: "수수료 지갑의 잔액을 조회합니다.",
   })
+  @ApiTags("fee-wallet")
   @ReadMeExtension()
   public async getBalance(
     @Request() request: express.Request

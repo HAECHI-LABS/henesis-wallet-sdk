@@ -56,7 +56,7 @@ components:
           example: 9
         attributes:
           description: 암호화폐의 메타 데이터
-          example: &ref_0
+          example: &ref_2
             - ERC20_STANDARD
             - ERC20_REBASE
           type: array
@@ -400,7 +400,7 @@ components:
         signedMultiSigPayload:
           type: object
           description: Account Key로 서명한 트랜잭션 Payload
-          example: &ref_15
+          example: &ref_12
             signature: sig
             multiSigPayload:
               walletAddress: '0x4ef3ba60c8710f45371835cddafabf33daa83e1d'
@@ -411,7 +411,7 @@ components:
         rawTransaction:
           type: object
           description: 블록체인에 전파된 트랜잭션
-          example: &ref_16
+          example: &ref_13
             nonce: '1'
             gasPrice: '0x1'
             gasLimit: '0x1'
@@ -534,7 +534,7 @@ components:
           example: null
         accountKey:
           description: KEY
-          example: &ref_22
+          example: &ref_20
             address: '0x4ef3ba60c8710f45371835cddafabf33daa83e1d'
             pub: >-
               0x31bd93d049fefed19b640c8069046c223126505754b9a57f5df43a89b104d92c8d4be4f51a6b5bb08a3ec6c2ff022e8ff018bad52ee05fa81b4eeae16a0e2db1
@@ -977,13 +977,13 @@ paths:
       summary: 전체 코인/토큰 목록 조회하기
       description: Henesis Wallet에서 지원하는 모든 가상자산(토큰, 코인)을 조회합니다.
       parameters:
-        - &ref_1
+        - &ref_0
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_2
+        - &ref_1
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -1002,19 +1002,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CoinDTO'
-              example:
-                - &ref_3
-                  id: 576
-                  name: Ampleforth
-                  symbol: AMPL
-                  address: '0x35b1dc534959fa547047a3dcdf1eb1eebd704561'
-                  desc: AMPL
-                  blockchain: ETHEREUM
-                  decimals: 9
-                  attributes: *ref_0
+                type: array
+                items:
+                  $ref: '#/components/schemas/CoinDTO'
           description: ''
-        '401': &ref_4
+        '401': &ref_3
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -1025,18 +1017,18 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: &ref_6
+                  value: &ref_4
                     message: expired or invalid access token and signature
                     code: 4001
                 AccessTokenNotProvidedException:
-                  value: &ref_7
+                  value: &ref_5
                     message: access token not provided
                     code: 4001
                 InvalidAccessIpException:
-                  value: &ref_8
+                  value: &ref_6
                     message: ip '106.101.128.133' is not allowed
                     code: 4008
-      tags: &ref_5
+      tags:
         - coins
   /api/v2/klay/coins/{ticker}:
     get:
@@ -1052,8 +1044,8 @@ paths:
       summary: 코인/토큰 정보 조회하기
       description: Henesis Wallet에서 지원하는 특정 가상자산(토큰, 코인)을 조회합니다.
       parameters:
+        - *ref_0
         - *ref_1
-        - *ref_2
         - name: ticker
           required: true
           in: path
@@ -1066,10 +1058,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CoinDTO'
-              example: *ref_3
+              example:
+                id: 576
+                name: Ampleforth
+                symbol: AMPL
+                address: '0x35b1dc534959fa547047a3dcdf1eb1eebd704561'
+                desc: AMPL
+                blockchain: ETHEREUM
+                decimals: 9
+                attributes: *ref_2
           description: ''
-        '401': *ref_4
-      tags: *ref_5
+        '401': *ref_3
+      tags:
+        - coins
   /api/v2/klay/events/value-transfer-events:
     get:
       operationId: klaytn-EventsController_getValueTransferEvents
@@ -1084,13 +1085,13 @@ paths:
       summary: 코인/토큰 입출금 내역 조회하기
       description: 모든 지갑의 가상자산 입출금 내역을 조회합니다.
       parameters:
-        - &ref_9
+        - &ref_7
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_10
+        - &ref_8
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -1183,12 +1184,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForValueTransferEventDTO'
               example:
-                pagination: &ref_11
+                pagination: &ref_9
                   nextUrl: http://localhost:3000/api/v2/eth/transfers?page=2
                   previousUrl: http://localhost:3000/api/v2/eth/transfers?page=1
                   totalCount: 5
                 results:
-                  - &ref_12
+                  - &ref_10
                     id: 100393
                     createdAt: '1620056478365'
                     updatedAt: '1620056481504'
@@ -1216,7 +1217,7 @@ paths:
                     toAddress: '0xe3d9325576bf491c2f35e92b020b7b990557f545'
                     data: '0x6eea436c'
           description: ''
-        '401': &ref_13
+        '401': &ref_11
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -1227,12 +1228,12 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
+                  value: *ref_4
                 AccessTokenNotProvidedException:
-                  value: *ref_7
+                  value: *ref_5
                 InvalidAccessIpException:
-                  value: *ref_8
-      tags: &ref_14
+                  value: *ref_6
+      tags:
         - events
   /api/v2/klay/events/call-events:
     get:
@@ -1248,8 +1249,8 @@ paths:
       summary: 스마트 컨트랙트 호출 내역 조회하기
       description: 내가 발생시킨 스마트 컨트랙트 호출 내역을 조회합니다.
       parameters:
-        - *ref_9
-        - *ref_10
+        - *ref_7
+        - *ref_8
         - name: walletId
           required: false
           in: query
@@ -1323,12 +1324,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForCallEventDTO'
               example:
-                pagination: *ref_11
+                pagination: *ref_9
                 results:
-                  - *ref_12
+                  - *ref_10
           description: ''
-        '401': *ref_13
-      tags: *ref_14
+        '401': *ref_11
+      tags:
+        - events
   /api/v2/klay/henesis-keys/balance:
     get:
       operationId: klaytn-HenesisKeysController_getHenesisKeyBalance
@@ -1361,7 +1363,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
-              example: &ref_28
+              example:
                 coinId: 2
                 coinType: ETHEREUM
                 amount: '0x6e59a23fd4698039'
@@ -1382,11 +1384,11 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
+                  value: *ref_4
                 AccessTokenNotProvidedException:
-                  value: *ref_7
+                  value: *ref_5
                 InvalidAccessIpException:
-                  value: *ref_8
+                  value: *ref_6
       tags:
         - henesis-keys
   /api/v2/klay/transactions:
@@ -1403,13 +1405,13 @@ paths:
       summary: 모든 트랜잭션 정보 조회하기
       description: 내가 발생시킨 모든 트랜잭션의 정보를 조회합니다.
       parameters:
-        - &ref_17
+        - &ref_14
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_18
+        - &ref_15
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -1506,9 +1508,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForTransactionDTO'
               example:
-                pagination: *ref_11
+                pagination: *ref_9
                 results:
-                  - &ref_19
+                  - &ref_16
                     id: 2def027e99e906f8b912c691def10861
                     blockchain: ETHEREUM
                     sender: '0x4ef3ba60c8710f45371835cddafabf33daa83e1d'
@@ -1520,13 +1522,13 @@ paths:
                     isFeeDelegated: false
                     fee: '0x896da43e8000'
                     estimatedFee: '0x8ac02d65cc00'
-                    signedMultiSigPayload: *ref_15
-                    rawTransaction: *ref_16
+                    signedMultiSigPayload: *ref_12
+                    rawTransaction: *ref_13
                     hopAddress: '0x1AA2705a26452cC22430F31A5c85974bBEDDe5a5'
                     createdAt: '1614582928222'
                     updatedAt: '1612411724023'
           description: ''
-        '401': &ref_20
+        '401': &ref_17
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -1537,12 +1539,12 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
+                  value: *ref_4
                 AccessTokenNotProvidedException:
-                  value: *ref_7
+                  value: *ref_5
                 InvalidAccessIpException:
-                  value: *ref_8
-      tags: &ref_21
+                  value: *ref_6
+      tags:
         - transactions
   /api/v2/klay/transactions/{transactionId}:
     get:
@@ -1558,8 +1560,8 @@ paths:
       summary: 특정 트랜잭션 정보 조회하기
       description: 내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.
       parameters:
-        - *ref_17
-        - *ref_18
+        - *ref_14
+        - *ref_15
         - name: transactionId
           required: true
           in: path
@@ -1572,10 +1574,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_19
+              example: *ref_16
           description: ''
-        '401': *ref_20
-      tags: *ref_21
+        '401': *ref_17
+      tags:
+        - transactions
   /api/v2/klay/wallets:
     get:
       operationId: klaytn-WalletsController_getMasterWallets
@@ -1590,13 +1593,13 @@ paths:
       summary: 전체 마스터 지갑 목록 조회하기
       description: 모든 마스터 지갑 목록을 조회합니다.
       parameters:
-        - &ref_23
+        - &ref_18
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_24
+        - &ref_19
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -1615,25 +1618,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MasterWalletDTO'
-              example:
-                - &ref_25
-                  id: 407a31c97902faf2b5b2cd4b1fa1cfcd
-                  name: bit
-                  address: '0x2c27695429903b1e36299ce1eb89a3c1c34d115d'
-                  createdAt: '1615793637580'
-                  updatedAt: '1615793656270'
-                  status: ACTIVE
-                  blockchain: ETHEREUM
-                  version: v3
-                  transactionId: 183365bc7837eceb5c9292e5be1655b7
-                  error: null
-                  accountKey: *ref_22
-                  encryptionKey: >-
-                    f0880e48251dd2f8574a8c8a4d65311030185d5e451e8a474b89c2b473b5d953
-                  whitelistActivated: false
+                type: array
+                items:
+                  $ref: '#/components/schemas/MasterWalletDTO'
           description: ''
-        '401': &ref_26
+        '401': &ref_21
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -1644,12 +1633,12 @@ paths:
                   - $ref: '#/components/schemas/InvalidAccessIpException'
               examples:
                 InvalidAccessTokenException:
-                  value: *ref_6
+                  value: *ref_4
                 AccessTokenNotProvidedException:
-                  value: *ref_7
+                  value: *ref_5
                 InvalidAccessIpException:
-                  value: *ref_8
-      tags: &ref_27
+                  value: *ref_6
+      tags:
         - wallets
   /api/v2/klay/wallets/{masterWalletId}:
     get:
@@ -1665,8 +1654,8 @@ paths:
       summary: 마스터 지갑 조회하기
       description: 특정 마스터 지갑을 조회합니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -1679,10 +1668,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MasterWalletDTO'
-              example: *ref_25
+              example: &ref_22
+                id: 407a31c97902faf2b5b2cd4b1fa1cfcd
+                name: bit
+                address: '0x2c27695429903b1e36299ce1eb89a3c1c34d115d'
+                createdAt: '1615793637580'
+                updatedAt: '1615793656270'
+                status: ACTIVE
+                blockchain: ETHEREUM
+                version: v3
+                transactionId: 183365bc7837eceb5c9292e5be1655b7
+                error: null
+                accountKey: *ref_20
+                encryptionKey: >-
+                  f0880e48251dd2f8574a8c8a4d65311030185d5e451e8a474b89c2b473b5d953
+                whitelistActivated: false
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/contract-call:
     post:
       operationId: klaytn-WalletsController_sendMasterWalletContractCall
@@ -1697,8 +1701,8 @@ paths:
       summary: 마스터 지갑에서 스마트 컨트랙트 호출하기
       description: 특정 마스터 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -1717,10 +1721,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_19
+              example: *ref_16
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/name:
     patch:
       operationId: klaytn-WalletsController_changeMasterWalletName
@@ -1735,8 +1740,8 @@ paths:
       summary: 마스터 지갑 이름 변경하기
       description: 특정 마스터 지갑의 이름을 변경합니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -1754,8 +1759,9 @@ paths:
           description: ''
         '204':
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/balance:
     get:
       operationId: klaytn-WalletsController_getMasterWalletBalance
@@ -1770,8 +1776,8 @@ paths:
       summary: 마스터 지갑 잔고 조회하기
       description: 특정 마스터 지갑의 잔액을 조회합니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -1795,12 +1801,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BalanceDTO'
-              example:
-                - *ref_28
+                type: array
+                items:
+                  $ref: '#/components/schemas/BalanceDTO'
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/transfer:
     post:
       operationId: klaytn-WalletsController_sendMasterWalletCoin
@@ -1815,8 +1822,8 @@ paths:
       summary: 마스터 지갑에서 코인/토큰 전송하기
       description: 특정 마스터 지갑에서 가상자산을 송금합니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -1835,10 +1842,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_19
+              example: *ref_16
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/batch-transactions:
     post:
       operationId: klaytn-WalletsController_sendMasterWalletBatchTransactions
@@ -1855,8 +1863,8 @@ paths:
         특정 마스터 지갑에서 여러 트랜잭션을 모아 한꺼번에 발생니다.
         최대 10개까지 보낼 수 있습니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -1874,12 +1882,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TransactionDTO'
-              example:
-                - *ref_19
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionDTO'
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/flush:
     post:
       operationId: klaytn-WalletsController_flush
@@ -1894,8 +1903,8 @@ paths:
       summary: 사용자 지갑 잔액을 모두 끌어오기
       description: 여러 사용자 지갑의 특정 코인/토큰 잔액을 모두 상위의 마스터 지갑으로 끌어옵니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -1914,10 +1923,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_19
+              example: *ref_16
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/user-wallets/{userWalletId}:
     get:
       operationId: klaytn-WalletsController_getUserWallet
@@ -1932,8 +1942,8 @@ paths:
       summary: 사용자 지갑 정보 조회하기
       description: 특정 사용자 지갑을 조회합니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -1952,10 +1962,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserWalletDTO'
-              example: *ref_25
+              example: *ref_22
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/user-wallets:
     get:
       operationId: klaytn-WalletsController_getUserWallets
@@ -1970,8 +1981,8 @@ paths:
       summary: 전체 사용자 지갑 목록 조회하기
       description: 특정 마스터 지갑에 속한 모든 사용자 지갑 목록을 조회합니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -2015,12 +2026,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForUserWalletDTO'
               example:
-                pagination: *ref_11
+                pagination: *ref_9
                 results:
-                  - *ref_25
+                  - *ref_22
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
     post:
       operationId: klaytn-WalletsController_createUserWallet
       x-readme:
@@ -2034,8 +2046,8 @@ paths:
       summary: 사용자 지갑 생성하기
       description: 특정 마스터 지갑 하위에 새로운 사용자 지갑을 생성합니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -2054,10 +2066,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserWalletDTO'
-              example: *ref_25
+              example: *ref_22
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/user-wallets/{userWalletId}/contract-call:
     post:
       operationId: klaytn-WalletsController_sendUserWalletContractCall
@@ -2072,8 +2085,8 @@ paths:
       summary: 사용자 지갑에서 스마트 컨트랙트 호출하기
       description: 사용자 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -2098,10 +2111,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_19
+              example: *ref_16
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/user-wallets/{userWalletId}/name:
     patch:
       operationId: klaytn-WalletsController_changeUserWalletName
@@ -2116,8 +2130,8 @@ paths:
       summary: 사용자 지갑 이름 변경하기
       description: 특정 사용자 지갑의 이름을 변경합니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -2141,8 +2155,9 @@ paths:
           description: ''
         '204':
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/user-wallets/{userWalletId}/balance:
     get:
       operationId: klaytn-WalletsController_getUserWalletBalance
@@ -2157,8 +2172,8 @@ paths:
       summary: 사용자 지갑 잔고 조회하기
       description: 특정 사용자 지갑의 잔액을 조회합니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -2188,12 +2203,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BalanceDTO'
-              example:
-                - *ref_28
+                type: array
+                items:
+                  $ref: '#/components/schemas/BalanceDTO'
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/user-wallets/{userWalletId}/transfer:
     post:
       operationId: klaytn-WalletsController_sendUserWalletCoin
@@ -2208,8 +2224,8 @@ paths:
       summary: 사용자 지갑에서 코인/토큰 전송하기
       description: 특정 사용자 지갑에서 가상자산을 전송합니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -2234,10 +2250,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_19
+              example: *ref_16
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/recreate:
     post:
       operationId: klaytn-WalletsController_retryCreateMasterWallet
@@ -2252,8 +2269,8 @@ paths:
       summary: 마스터 지갑 재생성하기
       description: 마스터 지갑을 재생성합니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -2272,10 +2289,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MasterWalletDTO'
-              example: *ref_25
+              example: *ref_22
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets
   /api/v2/klay/wallets/{masterWalletId}/user-wallets/{userWalletId}/recreate:
     post:
       operationId: klaytn-WalletsController_retryCreateUserWallet
@@ -2290,8 +2308,8 @@ paths:
       summary: 사용자 지갑 생성 실패시 재시도하기
       description: 특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.
       parameters:
-        - *ref_23
-        - *ref_24
+        - *ref_18
+        - *ref_19
         - name: masterWalletId
           required: true
           in: path
@@ -2316,7 +2334,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionDTO'
-              example: *ref_19
+              example: *ref_16
           description: ''
-        '401': *ref_26
-      tags: *ref_27
+        '401': *ref_21
+      tags:
+        - wallets

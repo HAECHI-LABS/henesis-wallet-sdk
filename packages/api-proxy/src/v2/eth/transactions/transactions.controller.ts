@@ -45,7 +45,6 @@ import {
 } from "../dto/queries";
 
 @Controller("transactions")
-@ApiTags("transactions")
 @AuthErrorResponses()
 @AuthHeaders()
 @ApiExtraModels(TransactionDTO)
@@ -57,6 +56,7 @@ export class TransactionsController {
     summary: "모든 트랜잭션 정보 조회하기",
     description: "내가 발생시킨 모든 트랜잭션의 정보를 조회합니다.",
   })
+  @ApiTags("transactions")
   @Queries(
     QUERY_TRANSACTIONS_ADDRESS_OPTIONAL,
     QUERY_TRANSACTIONS_TO_ADDRESS_OPTIONAL,
@@ -124,6 +124,7 @@ export class TransactionsController {
     summary: "특정 트랜잭션 정보 조회하기",
     description: "내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.",
   })
+  @ApiTags("transactions")
   @PathParams(PARAM_TRANSACTION_ID)
   @ReadMeExtension()
   public async getTransaction(
