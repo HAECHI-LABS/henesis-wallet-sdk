@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { BNConverter, Coin, SDK } from "@haechi-labs/henesis-wallet-core";
-import { BalanceDTO } from "../../eth/dto/balance.dto";
+import { BalanceDTO, MasterWalletBalanceDTO } from "../../eth/dto/balance.dto";
 import { ChangeWalletNameRequestDTO } from "../../eth/wallets/dto/change-wallet-name-request.dto";
 import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto";
 import { TransactionDTO } from "../../eth/dto/transaction.dto";
@@ -152,7 +152,7 @@ export class WalletsService {
       false,
       symbol ? String(symbol) : null
     );
-    return balances.map(BalanceDTO.fromBalance);
+    return balances.map(MasterWalletBalanceDTO.fromBalance);
   }
 
   public async getUserWalletBalance(
