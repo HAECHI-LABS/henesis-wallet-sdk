@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { SDK } from "@haechi-labs/henesis-wallet-core";
 import { WalletDTO } from "../dto/wallet.dto";
-import { BalanceDTO } from "../dto/balance.dto";
+import { BalanceDTO, MasterWalletBalanceDTO } from "../dto/balance.dto";
 import { ChangeWalletNameRequestDTO } from "./dto/change-wallet-name-request.dto";
 import { SendCoinRequestDTO } from "./dto/send-coin-request.dto";
 import { TransactionDTO } from "../dto/transaction.dto";
@@ -57,7 +57,7 @@ export class WalletsService {
   ): Promise<BalanceDTO[]> {
     const wallet: EthWallet = await sdk.eth.wallets.getWallet(walletId);
     return (await wallet.getBalance())
-      .map(BalanceDTO.fromBalance)
+      .map(MasterWalletBalanceDTO.fromBalance)
       .filter((balance) => {
         if (ticker === undefined) return true;
         return balance.ticker.toUpperCase() == ticker.toUpperCase();

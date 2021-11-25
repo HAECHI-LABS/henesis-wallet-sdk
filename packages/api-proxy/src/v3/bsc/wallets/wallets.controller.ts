@@ -40,6 +40,7 @@ import {
 import {
   BalanceDTO,
   EXAMPLE_BINANCE_SMART_CHAIN_BALANCE_DTO,
+  EXAMPLE_BINANCE_SMART_CHAIN_MASTER_WALLET_BALANCE_DTO,
 } from "../../eth/dto/balance.dto";
 import {
   EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO,
@@ -183,7 +184,7 @@ export class WalletsController {
   @Get("/:masterWalletId/balance")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(BalanceDTO, [
-      EXAMPLE_BINANCE_SMART_CHAIN_BALANCE_DTO,
+      EXAMPLE_BINANCE_SMART_CHAIN_MASTER_WALLET_BALANCE_DTO,
     ]),
     isArray: true,
   })

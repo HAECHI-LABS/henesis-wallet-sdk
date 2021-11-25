@@ -34,7 +34,11 @@ import {
   EXAMPLE_ETHEREUM_PAGINATION_NFT_TRANSFER_DTO,
   PaginationDTO,
 } from "../dto/pagination.dto";
-import { BalanceDTO, EXAMPLE_ETHEREUM_BALANCE_DTO } from "../dto/balance.dto";
+import {
+  BalanceDTO,
+  EXAMPLE_ETHEREUM_BALANCE_DTO,
+  EXAMPLE_ETHEREUM_MASTER_WALLET_BALANCE_DTO,
+} from "../dto/balance.dto";
 import {
   EXAMPLE_ETHEREUM_TRANSACTION_DTO,
   TransactionDTO,
@@ -161,7 +165,7 @@ export class WalletsController {
   @Get("/:walletId/balance")
   @ApiOkResponse({
     content: ApiResponseContentGenerator(BalanceDTO, [
-      EXAMPLE_ETHEREUM_BALANCE_DTO,
+      EXAMPLE_ETHEREUM_MASTER_WALLET_BALANCE_DTO,
     ]),
     isArray: true,
   })

@@ -10,12 +10,31 @@ export const EXAMPLE_ETHEREUM_BALANCE_DTO: BalanceDTO = {
   decimals: 18,
 };
 
+export const EXAMPLE_ETHEREUM_MASTER_WALLET_BALANCE_DTO: MasterWalletBalanceDTO =
+  {
+    coinId: 11,
+    amount: "1000000000000",
+    spendableAmount: "1000000000000",
+    aggregatedAmount: "100000000000000",
+    name: "ethereum",
+    ticker: "ETH",
+    decimals: 18,
+  };
+
 export const EXAMPLE_BINANCE_SMART_CHAIN_BALANCE_DTO: BalanceDTO = {
   ...EXAMPLE_ETHEREUM_BALANCE_DTO,
   name: "binance coin",
   ticker: "BNB",
   decimals: 18,
 };
+
+export const EXAMPLE_BINANCE_SMART_CHAIN_MASTER_WALLET_BALANCE_DTO: BalanceDTO =
+  {
+    ...EXAMPLE_ETHEREUM_MASTER_WALLET_BALANCE_DTO,
+    name: "binance coin",
+    ticker: "BNB",
+    decimals: 18,
+  };
 
 export class BalanceDTO {
   @ApiModelProperty({
@@ -60,6 +79,27 @@ export class BalanceDTO {
       coinId: balance.coinId,
       amount: balance.amount.toString(10),
       spendableAmount: balance.spendableAmount.toString(10),
+      name: balance.name,
+      ticker: balance.symbol,
+      decimals: balance.decimals,
+    };
+  }
+}
+
+export class MasterWalletBalanceDTO extends BalanceDTO {
+  @ApiModelProperty({
+    description:
+      "지갑 및 하위의 입금주소 혹은 사용자 지갑의 총 합산 잔액 (단위: wei, peb, jager)",
+    example: EXAMPLE_ETHEREUM_MASTER_WALLET_BALANCE_DTO.aggregatedAmount,
+  })
+  aggregatedAmount: string;
+
+  static fromBalance(balance: Balance): MasterWalletBalanceDTO {
+    return {
+      coinId: balance.coinId,
+      amount: balance.amount.toString(10),
+      spendableAmount: balance.spendableAmount.toString(10),
+      aggregatedAmount: balance.aggregatedAmount.toString(10),
       name: balance.name,
       ticker: balance.symbol,
       decimals: balance.decimals,
