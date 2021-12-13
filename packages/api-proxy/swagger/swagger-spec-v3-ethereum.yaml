@@ -1586,7 +1586,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
-              example: &ref_24
+              example: &ref_26
                 coinId: 11
                 amount: '1000000000000'
                 spendableAmount: '1000000000000'
@@ -1893,7 +1893,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: &ref_25
+              example: &ref_24
                 message: wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
                 code: 4000
         '401': *ref_22
@@ -1933,7 +1933,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
               example:
-                - *ref_24
+                - coinId: 11
+                  amount: '1000000000000'
+                  spendableAmount: '1000000000000'
+                  aggregatedAmount: '100000000000000'
+                  name: ethereum
+                  ticker: ETH
+                  decimals: 18
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -1941,7 +1947,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_25
+              example: *ref_24
         '401': *ref_22
       tags: *ref_23
   /api/v3/ethereum/wallets/{walletId}/name:
@@ -1987,7 +1993,7 @@ paths:
                   - $ref: '#/components/schemas/NoWalletNameException'
               examples:
                 WalletNotFoundException:
-                  value: *ref_25
+                  value: *ref_24
                 NoWalletNameException:
                   value:
                     message: wallet name should not be empty
@@ -2036,7 +2042,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_25
+              example: *ref_24
         '401': *ref_22
       tags: *ref_23
   /api/v3/ethereum/wallets/{walletId}/contract-call:
@@ -2081,7 +2087,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_25
+              example: *ref_24
         '401': *ref_22
       tags: *ref_23
   /api/v3/ethereum/wallets/{walletId}/transactions/{transactionId}/replace:
@@ -2134,7 +2140,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_25
+              example: *ref_24
         '401': *ref_22
       tags: *ref_23
   /api/v3/ethereum/wallets/{walletId}/flush:
@@ -2179,7 +2185,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_25
+              example: *ref_24
         '401': *ref_22
       tags: *ref_23
   /api/v3/ethereum/wallets/{walletId}/transactions/{transactionId}/resend:
@@ -2226,7 +2232,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_25
+              example: *ref_24
         '401': *ref_22
       tags: *ref_23
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses:
@@ -2281,7 +2287,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForDepositAddressDTO'
-              example: &ref_26
+              example: &ref_25
                 id: a1f9e4c33ea9f51974490fd1c30efb3e
                 address: '0x70d4e4abbe12c9c5098df3b31d9ad89c99a01967'
                 name: deposit-address-1
@@ -2296,7 +2302,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_25
+              example: *ref_24
         '401': *ref_22
       tags: *ref_23
     post:
@@ -2332,7 +2338,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-              example: *ref_26
+              example: *ref_25
           description: ''
         '400':
           description: 해당하는 id의 지갑이 없을 때 발생합니다.
@@ -2340,7 +2346,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_25
+              example: *ref_24
         '401': *ref_22
       tags: *ref_23
   /api/v3/ethereum/wallets/{walletId}/deposit-addresses/{depositAddressId}:
@@ -2377,7 +2383,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositAddressDTO'
-              example: *ref_26
+              example: *ref_25
           description: ''
         '400':
           description: 다음과 같은 bad request 에러가 발생할 수 있습니다.
@@ -2389,7 +2395,7 @@ paths:
                   - $ref: '#/components/schemas/DepositAddressNotFoundException'
               examples:
                 WalletNotFoundException:
-                  value: *ref_25
+                  value: *ref_24
                 DepositAddressNotFoundException:
                   value:
                     message: >-
@@ -2439,7 +2445,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BalanceDTO'
               example:
-                - *ref_24
+                - *ref_26
           description: ''
         '401': *ref_22
       tags: *ref_23
@@ -2533,7 +2539,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WalletNotFoundException'
-              example: *ref_25
+              example: *ref_24
         '401': *ref_22
       tags: *ref_23
   /api/v3/ethereum/wallets/{walletId}/nft/balance:

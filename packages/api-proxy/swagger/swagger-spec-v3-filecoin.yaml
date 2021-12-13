@@ -210,6 +210,10 @@ components:
           type: string
           description: 트랜잭션 해시
           example: bafy2bzaced4hk2ufk3xwcmxuiuikudoh6dcxgjfoforubsbn7tu5rfyc3446e
+        feeAmount:
+          type: string
+          description: '수수료 양 (단위: attoFIL)'
+          example: '314076729208'
       required:
         - id
         - hash
@@ -231,6 +235,10 @@ components:
         amount:
           type: string
           description: '암호화폐(FIL)의 양 (단위: attoFIL)'
+          example: '1000000000'
+        feeAmount:
+          type: string
+          description: '총 수수료 양 (단위: attoFIL)'
           example: '1000000000'
         status:
           enum:
@@ -258,11 +266,17 @@ components:
           type: string
           description: 입출금 타입
           example: WITHDRAWAL
-        transaction:
-          description: 입출금 트랜잭션
+        proposalTransaction:
+          description: 입출금 요청 트랜잭션
           example: &ref_0
             id: c3a43bbf3d33e94fdc1adfc2d17a63b3
             hash: bafy2bzaced4hk2ufk3xwcmxuiuikudoh6dcxgjfoforubsbn7tu5rfyc3446e
+            feeAmount: '314076729208'
+          allOf:
+            - $ref: '#/components/schemas/TransactionDTO'
+        transaction:
+          description: 입출금 승인 트랜잭션
+          example: *ref_0
           allOf:
             - $ref: '#/components/schemas/TransactionDTO'
         createdAt:
@@ -448,11 +462,13 @@ components:
               from: t1tian42omo3lnk6lh7mw6k3d4muelbfvvlmhufni
               to: t2faaemofs4z3qnnpeawbrawyot43iuekkg52tjai
               amount: '1000000000'
+              feeAmount: '1000000000'
               status: CONFIRMED
               masterWalletId: ae40b1b3dd953e5592c21e58be30d807
               walletId: 3dd953e5592c21e58be30d807ae40b1b
               type: WITHDRAWAL
               transaction: *ref_0
+              proposalTransaction: *ref_0
               createdAt: '1612411568760'
               updatedAt: '1612411724023'
               metadata: metadata
