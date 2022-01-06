@@ -627,6 +627,12 @@ export class WalletsController {
     EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO
   )
   @PathParams(WALLET_ID_REQUIRED)
+  @Queries(
+    SIZE_OPTIONAL,
+    PAGE_OPTIONAL,
+    TOKEN_ONCHAIN_ID_OPTIONAL,
+    TOKEN_NAME_OPTIONAL
+  )
   @ApiOperation({
     summary: "NFT 잔고 조회하기",
     description: "특정 지갑의 NFT 잔고를 조회합니다.",
@@ -660,6 +666,12 @@ export class WalletsController {
     EXAMPLE_ETHEREUM_PAGINATION_NFT_BALANCE_DTO
   )
   @PathParams(WALLET_ID_REQUIRED, DEPOSIT_ADDRESS_ID_REQUIRED)
+  @Queries(
+    SIZE_OPTIONAL,
+    PAGE_OPTIONAL,
+    TOKEN_ONCHAIN_ID_OPTIONAL,
+    TOKEN_NAME_OPTIONAL
+  )
   @ApiOperation({
     summary: "입금 주소 NFT 잔고 조회하기",
     description: "특정 입금 주소의 NFT 잔고를 조회합니다.",
