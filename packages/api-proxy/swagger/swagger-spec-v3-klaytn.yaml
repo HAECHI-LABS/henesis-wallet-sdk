@@ -1593,16 +1593,6 @@ paths:
           description: 코인의 기호
           schema:
             type: string
-        - name: depositAddressId
-          required: true
-          in: query
-          schema:
-            type: string
-        - name: walletId
-          required: true
-          in: query
-          schema:
-            type: string
         - name: userWalletId
           required: false
           in: query
@@ -2983,7 +2973,7 @@ paths:
         - *ref_17
         - *ref_18
         - name: masterWalletId
-          required: true
+          required: false
           in: query
           description: 마스터 지갑 ID
           schema:
