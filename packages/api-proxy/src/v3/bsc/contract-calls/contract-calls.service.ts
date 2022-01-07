@@ -25,6 +25,7 @@ export class ContractCallsService {
       symbol: options.ticker,
       updatedAtGte: options.updatedAtGte,
       updatedAtLt: options.updatedAtLt,
+      transactionId: options.transactionId,
       transactionHash: options.transactionHash,
       status: options.status,
       size: options.size,

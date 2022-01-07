@@ -48,6 +48,7 @@ import { SendCoinRequestDTO } from "../../eth/wallets/dto/send-coin-request.dto"
 import { CreateTransactionRequestDTO } from "../../eth/wallets/dto/create-transaction-reqeust.dto";
 import {
   ADDRESS_OPTIONAL,
+  MASTER_WALLET_ID_OPTIONAL,
   MASTER_WALLET_ID_REQUIRED,
   NAME_OPTIONAL,
   NFT_ID_OPTIONAL,
@@ -798,7 +799,7 @@ export class WalletsController {
     TOKEN_NAME_OPTIONAL,
     TOKEN_ONCHAIN_ID_OPTIONAL,
     USER_WALLET_ID_OPTIONAL,
-    MASTER_WALLET_ID_REQUIRED,
+    MASTER_WALLET_ID_OPTIONAL,
     TRANSACTION_ID_OPTIONAL,
     TRANSACTION_HASH_OPTIONAL,
     STATUS_OPTIONAL,

@@ -75,9 +75,9 @@ export class TransfersController {
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,
     // deprecated parameter. use userWalletId
-    @Query("depositAddressId") depositAddressId?: string,
+    depositAddressId?: string,
     // deprecated parameter. use masterWalletId
-    @Query("walletId") walletId?: string,
+    walletId?: string,
     @Query("userWalletId") userWalletId?: string,
     @Query("masterWalletId") masterWalletId?: string,
     @Query("transactionId") transactionId?: string,
