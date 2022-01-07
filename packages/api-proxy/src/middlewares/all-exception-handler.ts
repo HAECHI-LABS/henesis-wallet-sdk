@@ -48,8 +48,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
         .status(ERROR_CODE_STATUS[exception.response.data.error.code])
         .json(exception.response.data.error as AxiosError<HenesisErrorPayload>);
     } catch (e) {
+      console.error(exception);
       response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-        message: exception.toString(),
+        message: `api proxy internal exception: ${exception.toString()}`,
         code: 5000,
       });
     }
