@@ -17,7 +17,7 @@ import { UserWalletDTO } from "../../eth/dto/user-wallet.dto";
 import { EthUserWallet } from "@haechi-labs/henesis-wallet-core/lib/eth/userWallet";
 import { object } from "../../../utils/object";
 import { changeUrlHost } from "../../../utils/pagination";
-import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
+import { NftBalanceDTO } from "../dto/nft-balance.dto";
 import { NftBalancePaginationOptions } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
 import { GetNftTransfersOption } from "../../eth/wallets/dto/get-nft-transfers-option.dto";
@@ -410,7 +410,7 @@ export class WalletsService {
     walletId: string,
     request: TransferNftRequestDTO
   ): Promise<TransactionDTO> {
-    const wallet = await sdk.klay.wallets.getWallet(walletId);
+    const wallet = await sdk.klay.wallets.getMasterWallet(walletId);
     return TransactionDTO.fromEthTransaction(
       await wallet.transferNft(
         request.nftId,
