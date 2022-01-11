@@ -59,6 +59,7 @@ import {
   DEPOSIT_ADDRESS_ID_OPTIONAL,
   DEPOSIT_ADDRESS_ID_REQUIRED,
   DEPOSIT_ADDRESS_OPTIONAL,
+  MASTER_WALLET_ID_REQUIRED,
   NAME_OPTIONAL,
   NFT_ID_OPTIONAL,
   PAGE_OPTIONAL,
@@ -702,12 +703,12 @@ export class WalletsController {
   }
 
   @Get("/:walletId/nft/transfers")
+  @PathParams(WALLET_ID_REQUIRED)
   @Queries(
     NFT_ID_OPTIONAL,
     TOKEN_NAME_OPTIONAL,
     TOKEN_ONCHAIN_ID_OPTIONAL,
     DEPOSIT_ADDRESS_ID_OPTIONAL,
-    WALLET_ID_OPTIONAL,
     TRANSACTION_ID_OPTIONAL,
     TRANSACTION_HASH_OPTIONAL,
     STATUS_OPTIONAL,
@@ -736,7 +737,7 @@ export class WalletsController {
   @ReadMeExtension()
   public async getNftTransfers(
     @Request() request: express.Request,
-    @Param("walletId") walletId?: string,
+    @Param("walletId") walletId: string,
     @Query("nftId") nftId?: number,
     @Query("tokenName") tokenName?: string,
     @Query("tokenOnchainId") tokenOnchainId?: string,

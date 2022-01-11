@@ -100,6 +100,7 @@ components:
             - FILECOIN
             - BINANCE_SMART_CHAIN
             - LITECOIN
+            - BITCOIN_CASH
           type: string
           description: 코인이 발행된 메인넷
           example: ETHEREUM
@@ -1090,7 +1091,7 @@ components:
         tokenMetadata:
           type: object
           description: 토큰에 정의된 metadata
-          example: &ref_25
+          example:
             description: Friendly OpenSea Creature that enjoys long swims in the ocean.
             external_url: https://openseacreatures.io/3
             image: >-
@@ -1101,6 +1102,14 @@ components:
                 value: Starfish
               - trait_type: Eyes
                 value: Big
+        masterWalletId:
+          type: string
+          description: 마스터 지갑 id
+          example: 532d994e923817013aff23c6dc1ae766
+        userWalletId:
+          type: string
+          description: 유저 지갑 id
+          example: 4daf51ef18e3a1ce1148b33a6a1b1589
         isWithdrawalPending:
           type: boolean
           description: 출금 중 여부
@@ -1110,6 +1119,8 @@ components:
         - tokenOnchainId
         - tokenUri
         - tokenMetadata
+        - masterWalletId
+        - userWalletId
         - isWithdrawalPending
     GetManyResponseForNftBalanceDTO:
       type: object
@@ -1214,7 +1225,7 @@ components:
             - $ref: '#/components/schemas/NftDTO'
         token:
           description: NFT 토큰 정보
-          example: &ref_27
+          example: &ref_26
             name: Haechi 1st NFT
             onchainId: '1'
             uri: https://opensea-creatures-api.herokuapp.com/api/creature/3
@@ -2881,13 +2892,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForNftBalanceDTO'
-              example: &ref_26
+              example: &ref_25
                 pagination: *ref_11
                 results:
                   - nft: *ref_2
                     tokenOnchainId: '1'
                     tokenUri: https://opensea-creatures-api.herokuapp.com/api/creature/3
-                    tokenMetadata: *ref_25
+                    tokenMetadata:
+                      description: >-
+                        Friendly OpenSea Creature that enjoys long swims in the
+                        ocean.
+                      external_url: https://openseacreatures.io/3
+                      image: >-
+                        https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png
+                      name: Dave Starbelly
+                      attributes:
+                        - trait_type: Base
+                          value: Starfish
+                        - trait_type: Eyes
+                          value: Big
+                    walletId: 532d994e923817013aff23c6dc1ae766
+                    depositAddressId: 4daf51ef18e3a1ce1148b33a6a1b1589
                     isWithdrawalPending: false
           description: ''
         '401': *ref_20
@@ -2951,7 +2976,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetManyResponseForNftBalanceDTO'
-              example: *ref_26
+              example: *ref_25
           description: ''
         '401': *ref_20
       tags:
@@ -2973,8 +2998,8 @@ paths:
         - *ref_17
         - *ref_18
         - name: masterWalletId
-          required: false
-          in: query
+          required: true
+          in: path
           description: 마스터 지갑 ID
           schema:
             type: string
@@ -3069,7 +3094,7 @@ paths:
                     walletId: ae40b1b3dd953e5592c21e58be30d807
                     depositAddressId: ae40b1b3dd953e5592c21e58be30d807
                     nft: *ref_2
-                    token: *ref_27
+                    token: *ref_26
                     transferType: WITHDRAWAL
                     transactionId: 8c87c578d7568edc156f831cf03c3ff0
                     transactionHash: >-
@@ -3103,13 +3128,13 @@ paths:
       summary: 전체 NFT 컨트랙트 목록 조회하기
       description: 모든 NFT 컨트랙트를 조회합니다.
       parameters:
-        - &ref_28
+        - &ref_27
           name: X-Henesis-Secret
           in: header
           description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
           schema:
             type: string
-        - &ref_29
+        - &ref_28
           name: Authorization
           in: header
           description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
@@ -3126,7 +3151,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/NftDTO'
           description: ''
-        '401': &ref_30
+        '401': &ref_29
           description: 인증이 실패했을 때 발생하는 에러입니다.
           content:
             application/json:
@@ -3144,6 +3169,37 @@ paths:
                   value: *ref_10
       tags:
         - nfts
+  /api/v3/klaytn/nfts/{nftId}:
+    get:
+      operationId: klaytn-NftsController_getNft
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: NFT 컨트랙트 조회하기
+      description: NFT 컨트랙트를 조회합니다.
+      parameters:
+        - *ref_27
+        - *ref_28
+        - name: nftId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NftDTO'
+          description: ''
+        '401': *ref_29
+      tags:
+        - nfts
   /api/v3/klaytn/nfts/{nftId}/sync-metadata:
     post:
       operationId: klaytn-NftsController_syncMetadata
@@ -3158,8 +3214,8 @@ paths:
       summary: NFT metadata 동기화 요청하기
       description: NFT 컨트랙트의 metadata 동기화를 요청합니다.
       parameters:
+        - *ref_27
         - *ref_28
-        - *ref_29
         - name: nftId
           required: true
           in: path
@@ -3186,6 +3242,6 @@ paths:
               example:
                 message: nft '2' does not exist
                 code: 4000
-        '401': *ref_30
+        '401': *ref_29
       tags:
         - nfts
