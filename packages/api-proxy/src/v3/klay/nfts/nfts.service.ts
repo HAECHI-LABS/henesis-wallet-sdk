@@ -9,6 +9,10 @@ export class NftsService {
     return (await sdk.klay.nfts.getAllNfts()).map((nft) => NftDTO.fromNft(nft));
   }
 
+  async getNft(sdk: SDK, nftId: number): Promise<NftDTO> {
+    return NftDTO.fromNft(await sdk.klay.nfts.getNft(nftId));
+  }
+
   async syncMetadata(
     sdk: SDK,
     nftId: number,
