@@ -2123,7 +2123,7 @@ export const AdminControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExternalWithdrawalsSet1(searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SummarizedDailyExternalWithdrawalsDTO>> {
+        async getExternalWithdrawalsSet1(searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>>> {
             const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawalsSet1(searchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -2193,7 +2193,7 @@ export const AdminControllerApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExternalWithdrawalsSet1(searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<SummarizedDailyExternalWithdrawalsDTO> {
+        getExternalWithdrawalsSet1(searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>> {
             return AdminControllerApiFp(configuration).getExternalWithdrawalsSet1(searchCondition, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2563,7 +2563,7 @@ export const BchAdminControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExternalWithdrawalsSet2(searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SummarizedDailyExternalWithdrawalsDTO>> {
+        async getExternalWithdrawalsSet2(searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>>> {
             const localVarAxiosArgs = await BchAdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawalsSet2(searchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -2633,7 +2633,7 @@ export const BchAdminControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExternalWithdrawalsSet2(searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<SummarizedDailyExternalWithdrawalsDTO> {
+        getExternalWithdrawalsSet2(searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>> {
             return BchAdminControllerApiFp(configuration).getExternalWithdrawalsSet2(searchCondition, options).then((request) => request(axios, basePath));
         },
         /**
@@ -5768,7 +5768,7 @@ export const LtcAdminControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExternalWithdrawalsSet(searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SummarizedDailyExternalWithdrawalsDTO>> {
+        async getExternalWithdrawalsSet(searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>>> {
             const localVarAxiosArgs = await LtcAdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawalsSet(searchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -5838,7 +5838,7 @@ export const LtcAdminControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExternalWithdrawalsSet(searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<SummarizedDailyExternalWithdrawalsDTO> {
+        getExternalWithdrawalsSet(searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>> {
             return LtcAdminControllerApiFp(configuration).getExternalWithdrawalsSet(searchCondition, options).then((request) => request(axios, basePath));
         },
         /**
