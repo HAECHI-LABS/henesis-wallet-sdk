@@ -179,6 +179,13 @@ export const enhancedBlockchainClient = (
   blockchain: BlockchainType
 ): Client => {
   const prefixPath = makePrefixPathByBlockchainType(blockchain);
+  return enhancedPrefixClient(client, prefixPath);
+};
+
+export const enhancedPrefixClient = (
+  client: Client,
+  prefixPath: string
+): Client => {
   return {
     ...client,
     get<T = any>(url: string): Promise<T> {

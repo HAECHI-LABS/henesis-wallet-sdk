@@ -1,6 +1,11 @@
 import { Accounts } from "./accounts";
 import { Organizations } from "./organizations";
-import { Client, enhancedBlockchainClient, HttpClient } from "./httpClient";
+import {
+  Client,
+  enhancedBlockchainClient,
+  enhancedPrefixClient,
+  HttpClient,
+} from "./httpClient";
 import { BscModule, EthModule, KlayModule } from "./eth";
 import { FilModule } from "./fil";
 import { baseUrls } from "./utils/url";
@@ -76,7 +81,7 @@ export class SDK {
     this.withdrawalApproval = new WithdrawalApprovals(this.client);
     this.accounts = new Accounts(this.client);
     this.notices = new Notices(this.client);
-    this.billings = new Billings(this.client);
+    this.billings = new Billings(enhancedPrefixClient(this.client, "billings"));
     this.organizations = new Organizations(this.client);
     this.coinListings = new CoinListings(this.client);
     this.klay = new KlayModule({
