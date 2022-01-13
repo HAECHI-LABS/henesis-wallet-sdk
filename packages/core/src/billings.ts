@@ -39,15 +39,20 @@ export class Billings {
       client: this.client,
       invoiceId,
     });
+    const summarizedBlockchainNetworkFeeBilling =
+      response.summarizedBlockchainNetworkFeeBilling
+        ? {
+            ...response.summarizedBlockchainNetworkFeeBilling,
+            blockchains:
+              response.summarizedBlockchainNetworkFeeBilling?.blockchains?.map?.(
+                (blockchain) => transformBlockchainType(blockchain)
+              ),
+          }
+        : undefined;
+
     return {
       ...response,
-      summarizedBlockchainNetworkFeeBilling: {
-        ...response.summarizedBlockchainNetworkFeeBilling,
-        blockchains:
-          response.summarizedBlockchainNetworkFeeBilling?.blockchains?.map?.(
-            (blockchain) => transformBlockchainType(blockchain)
-          ),
-      },
+      summarizedBlockchainNetworkFeeBilling,
     };
   }
 
