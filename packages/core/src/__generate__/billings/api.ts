@@ -159,6 +159,25 @@ export enum CoinType {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+export enum ContractType {
+    A = 'TYPE_A',
+    B = 'TYPE_B',
+    C = 'TYPE_C',
+    E = 'TYPE_E',
+    I = 'TYPE_I',
+    D = 'TYPE_D',
+    F = 'TYPE_F',
+    J = 'TYPE_J',
+    G = 'TYPE_G',
+    H = 'TYPE_H',
+    L = 'TYPE_L'
+}
+
+/**
+ * 
+ * @export
  * @interface CreateErc20GasUsageRequest
  */
 export interface CreateErc20GasUsageRequest {
@@ -715,10 +734,10 @@ export interface SummarizedOrganizationDto {
     orgName: string;
     /**
      * 
-     * @type {string}
+     * @type {ContractType}
      * @memberof SummarizedOrganizationDto
      */
-    contractType: string;
+    contractType: ContractType;
     /**
      * 
      * @type {string}
