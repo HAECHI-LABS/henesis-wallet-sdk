@@ -5,11 +5,13 @@ import {
 } from "./__generate__/eth";
 import { Blockchain as LTCBlockchain } from "./__generate__/ltc";
 import { Blockchain as AccountsBlockchain } from "./__generate__/accounts";
+import { Blockchain as BillingsBlockchain } from "./__generate__/billings";
 
 export const transformBlockchainType = (
   blockchain:
     | EthBlockchain
     | AccountsBlockchain
+    | BillingsBlockchain
     | UserWalletDTOBlockchainEnum
     | Blockchain
     // FIXME: should we use this LTCBlockchain?
