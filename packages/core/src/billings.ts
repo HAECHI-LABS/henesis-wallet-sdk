@@ -25,10 +25,9 @@ export class Billings {
   }
 
   async getSummarizedInvoice(request: {
-    orgId: string;
     invoiceId: string;
   }): Promise<SummarizedInvoice> {
-    const { orgId, invoiceId } = request;
+    const { invoiceId } = request;
     const response = await getSummarizedInvoice({
       client: this.client,
       invoiceId,
