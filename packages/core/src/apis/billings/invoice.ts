@@ -4,7 +4,7 @@ import { InvoiceControllerApiFactory } from "../../__generate__/billings";
 import { Client } from "../../httpClient";
 
 const invoiceControllerApi = (client: Client) => {
-  const apiClient: AxiosInstance = _.get(client, ["apiClient"]);
+  const apiClient: AxiosInstance = _.get(client, ["billingApiClient"]);
   // eslint-disable-next-line new-cap
   return InvoiceControllerApiFactory(undefined, "", apiClient);
 };
