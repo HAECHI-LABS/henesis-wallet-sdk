@@ -9,8 +9,7 @@ async function main() {
     url: process.env.URL,
     env: Env.Local,
   });
-
-  const response = await sdk.billings.getSummarizedInvoice({
+  const response = await sdk.billings.getDetailedInvoice({
     invoiceId: "e6434245cfc39eb69e622ea85cbfab8c",
   });
   console.log(response);
