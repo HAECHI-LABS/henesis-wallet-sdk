@@ -36,10 +36,9 @@ export class Billings {
   }
 
   async getDetailedInvoice(request: {
-    orgId: string;
     invoiceId: string;
   }): Promise<DetailedInvoice> {
-    const { orgId, invoiceId } = request;
+    const { invoiceId } = request;
     const response = await getDetailedInvoice({
       client: this.client,
       invoiceId,
