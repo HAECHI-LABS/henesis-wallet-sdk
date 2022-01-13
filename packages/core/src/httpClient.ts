@@ -39,6 +39,8 @@ export class HttpClient {
 
   private readonly apiClient: AxiosInstance;
 
+  private readonly billingApiClient: AxiosInstance;
+
   private readonly accessToken: string;
 
   private readonly secret: string;
@@ -51,7 +53,8 @@ export class HttpClient {
     this.accessToken = options.accessToken;
     this.env = options.env;
     this.client = this.makeSDKClient();
-    this.apiClient = this.makeApiClient();
+    this.apiClient = this.makeApiClient("");
+    this.billingApiClient = this.makeApiClient("/billings");
     return new AxiosMethodProxy(this, this.client) as any;
   }
 
@@ -81,9 +84,10 @@ export class HttpClient {
     return client;
   }
 
-  private makeApiClient(): AxiosInstance {
+  private makeApiClient(prefixPath: string): AxiosInstance {
     const client = this.makeClient();
-    client.defaults.baseURL = removePrefixApi(client.defaults.baseURL);
+    client.defaults.baseURL =
+      removePrefixApi(client.defaults.baseURL) + prefixPath;
     client.interceptors.request.use((config) => {
       if (config.data) {
         const dataObj = JSON.parse(config.data);
