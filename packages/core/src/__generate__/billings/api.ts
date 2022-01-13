@@ -22,19 +22,6 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
- * @interface AggregatedBillingDto
- */
-export interface AggregatedBillingDto {
-    /**
-     * 
-     * @type {Array<BillingPerPlanDto>}
-     * @memberof AggregatedBillingDto
-     */
-    billings: Array<BillingPerPlanDto>;
-}
-/**
- * 
- * @export
  * @interface BasePlanDto
  */
 export interface BasePlanDto {
@@ -108,59 +95,67 @@ export interface BasePlanDto {
 /**
  * 
  * @export
- * @interface BillingDto
+ * @enum {string}
  */
-export interface BillingDto {
+export enum Blockchain {
+    ETHEREUM = 'ETHEREUM',
+    KLAYTN = 'KLAYTN',
+    BITCOIN = 'BITCOIN',
+    FILECOIN = 'FILECOIN',
+    BINANCESMARTCHAIN = 'BINANCE_SMART_CHAIN',
+    LITECOIN = 'LITECOIN',
+    BITCOINCASH = 'BITCOIN_CASH'
+}
+
+/**
+ * 
+ * @export
+ * @interface ChangeBillingPlanStatusRequest
+ */
+export interface ChangeBillingPlanStatusRequest {
     /**
      * 
-     * @type {string}
-     * @memberof BillingDto
+     * @type {Plan}
+     * @memberof ChangeBillingPlanStatusRequest
      */
-    plan: string;
+    plan: Plan;
     /**
      * 
-     * @type {string}
-     * @memberof BillingDto
+     * @type {Array<string>}
+     * @memberof ChangeBillingPlanStatusRequest
      */
-    blockchain: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof BillingDto
-     */
-    usageFee: number;
-    /**
-     * 
-     * @type {Array<MonthlyBillingDto>}
-     * @memberof BillingDto
-     */
-    monthlyBillings?: Array<MonthlyBillingDto>;
+    blockchains: Array<string>;
 }
 /**
  * 
  * @export
- * @interface BillingPerPlanDto
+ * @interface ChangeBillingPlanStatusResponse
  */
-export interface BillingPerPlanDto {
+export interface ChangeBillingPlanStatusResponse {
     /**
      * 
      * @type {string}
-     * @memberof BillingPerPlanDto
+     * @memberof ChangeBillingPlanStatusResponse
      */
-    plan: string;
+    planId: string;
     /**
      * 
-     * @type {Array<BillingDto>}
-     * @memberof BillingPerPlanDto
+     * @type {Array<SummarizedBiliingPlanDto>}
+     * @memberof ChangeBillingPlanStatusResponse
      */
-    billings: Array<BillingDto>;
-    /**
-     * 
-     * @type {number}
-     * @memberof BillingPerPlanDto
-     */
-    totalUsageFee: number;
+    summarizedBillingPlans: Array<SummarizedBiliingPlanDto>;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum CoinType {
+    NATIVE = 'NATIVE',
+    TOKEN = 'TOKEN',
+    NFT = 'NFT'
+}
+
 /**
  * 
  * @export
@@ -214,25 +209,6 @@ export interface CreateTermInvoiceResponse {
 /**
  * 
  * @export
- * @interface DailyBillingDto
- */
-export interface DailyBillingDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof DailyBillingDto
-     */
-    date: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DailyBillingDto
-     */
-    dailyUsageFee: number;
-}
-/**
- * 
- * @export
  * @interface DetailedInvoiceDto
  */
 export interface DetailedInvoiceDto {
@@ -244,40 +220,10 @@ export interface DetailedInvoiceDto {
     invoiceId: string;
     /**
      * 
-     * @type {Array<UsageFeeMonthlyBillingDto>}
+     * @type {Array<MonthlyDetailedInvoiceDto>}
      * @memberof DetailedInvoiceDto
      */
-    monthlyBlockchainNetworkFeeBillings?: Array<UsageFeeMonthlyBillingDto>;
-    /**
-     * 
-     * @type {Array<UsageFeeMonthlyBillingDto>}
-     * @memberof DetailedInvoiceDto
-     */
-    monthlyNftUsageFeeBillings?: Array<UsageFeeMonthlyBillingDto>;
-    /**
-     * 
-     * @type {Array<TokenFeeMonthlyBillingDto>}
-     * @memberof DetailedInvoiceDto
-     */
-    monthlyFungibleTokenFeeBillings?: Array<TokenFeeMonthlyBillingDto>;
-    /**
-     * 
-     * @type {Array<TokenFeeMonthlyBillingDto>}
-     * @memberof DetailedInvoiceDto
-     */
-    monthlyNonFungibleTokenFeeBillings?: Array<TokenFeeMonthlyBillingDto>;
-    /**
-     * 
-     * @type {Array<WithdrawalFeeMonthlyBillingDto>}
-     * @memberof DetailedInvoiceDto
-     */
-    monthlyWithdrawalFeeBillings?: Array<WithdrawalFeeMonthlyBillingDto>;
-    /**
-     * 
-     * @type {Array<GasSavingFeeMonthlyBillingDto>}
-     * @memberof DetailedInvoiceDto
-     */
-    monthlyGasSavingFeeDailyBillings?: Array<GasSavingFeeMonthlyBillingDto>;
+    monthlyDetailedInvoice?: Array<MonthlyDetailedInvoiceDto>;
 }
 /**
  * 
@@ -376,33 +322,62 @@ export interface GasSavingFeeMonthlyBillingDto {
 /**
  * 
  * @export
- * @interface MonthlyBillingDto
+ * @enum {string}
  */
-export interface MonthlyBillingDto {
+export enum InvoiceType {
+    TERMINVOICE = 'TERM_INVOICE',
+    TERMWITHDRAWALFEEINVOICE = 'TERM_WITHDRAWAL_FEE_INVOICE',
+    ADDITIONALUSAGEFEEINVOICE = 'ADDITIONAL_USAGE_FEE_INVOICE'
+}
+
+/**
+ * 
+ * @export
+ * @interface MonthlyDetailedInvoiceDto
+ */
+export interface MonthlyDetailedInvoiceDto {
     /**
      * 
      * @type {string}
-     * @memberof MonthlyBillingDto
+     * @memberof MonthlyDetailedInvoiceDto
      */
-    from: string;
+    billingMonth: string;
     /**
      * 
-     * @type {string}
-     * @memberof MonthlyBillingDto
+     * @type {Array<UsageFeeMonthlyBillingDto>}
+     * @memberof MonthlyDetailedInvoiceDto
      */
-    until: string;
+    monthlyBlockchainNetworkFeeBillings?: Array<UsageFeeMonthlyBillingDto>;
     /**
      * 
-     * @type {number}
-     * @memberof MonthlyBillingDto
+     * @type {Array<UsageFeeMonthlyBillingDto>}
+     * @memberof MonthlyDetailedInvoiceDto
      */
-    totalUsageFee: number;
+    monthlyNftUsageFeeBillings?: Array<UsageFeeMonthlyBillingDto>;
     /**
      * 
-     * @type {Array<DailyBillingDto>}
-     * @memberof MonthlyBillingDto
+     * @type {Array<TokenFeeMonthlyBillingDto>}
+     * @memberof MonthlyDetailedInvoiceDto
      */
-    dailyBillings?: Array<DailyBillingDto>;
+    monthlyFungibleTokenFeeBillings?: Array<TokenFeeMonthlyBillingDto>;
+    /**
+     * 
+     * @type {Array<TokenFeeMonthlyBillingDto>}
+     * @memberof MonthlyDetailedInvoiceDto
+     */
+    monthlyNonFungibleTokenFeeBillings?: Array<TokenFeeMonthlyBillingDto>;
+    /**
+     * 
+     * @type {Array<WithdrawalFeeMonthlyBillingDto>}
+     * @memberof MonthlyDetailedInvoiceDto
+     */
+    monthlyWithdrawalFeeBillings?: Array<WithdrawalFeeMonthlyBillingDto>;
+    /**
+     * 
+     * @type {Array<GasSavingFeeMonthlyBillingDto>}
+     * @memberof MonthlyDetailedInvoiceDto
+     */
+    monthlyGasSavingFeeDailyBillings?: Array<GasSavingFeeMonthlyBillingDto>;
 }
 /**
  * 
@@ -428,6 +403,18 @@ export interface OrganizationDto {
      * @memberof OrganizationDto
      */
     language: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationDto
+     */
+    contractType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrganizationDto
+     */
+    coinSource: string;
     /**
      * 
      * @type {string}
@@ -475,6 +462,20 @@ export interface PatchErc20GasUsageRequest {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+export enum Plan {
+    BLOCKCHAINNETWORKFEEBILLINGPLAN = 'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN',
+    NFTUSAGEFEEBILLINGPLAN = 'NFT_USAGE_FEE_BILLING_PLAN',
+    FUNGIBLETOKENFEEBILLINGPLAN = 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN',
+    NONFUNGIBLETOKENFEEBILLINGPLAN = 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN',
+    WITHDRAWALFEEBILLINGPLAN = 'WITHDRAWAL_FEE_BILLING_PLAN',
+    GASSAVINGFEEBILLINGPLAN = 'GAS_SAVING_FEE_BILLING_PLAN'
+}
+
+/**
+ * 
+ * @export
  * @interface SaveBillingOrganizationRequest
  */
 export interface SaveBillingOrganizationRequest {
@@ -512,15 +513,34 @@ export interface SaveBillingOrganizationRequest {
 /**
  * 
  * @export
+ * @interface SummarizedBiliingPlanDto
+ */
+export interface SummarizedBiliingPlanDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof SummarizedBiliingPlanDto
+     */
+    billingPlanId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SummarizedBiliingPlanDto
+     */
+    billingPlanName: string;
+}
+/**
+ * 
+ * @export
  * @interface SummarizedBlockchainNetworkFeeBillingDto
  */
 export interface SummarizedBlockchainNetworkFeeBillingDto {
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<Blockchain>}
      * @memberof SummarizedBlockchainNetworkFeeBillingDto
      */
-    blockchains: Array<string>;
+    blockchains: Array<Blockchain>;
     /**
      * 
      * @type {number}
@@ -579,10 +599,10 @@ export interface SummarizedInvoiceDto {
     invoiceId: string;
     /**
      * 
-     * @type {string}
+     * @type {InvoiceType}
      * @memberof SummarizedInvoiceDto
      */
-    invoiceType: string;
+    invoiceType: InvoiceType;
     /**
      * 
      * @type {string}
@@ -670,10 +690,10 @@ export interface SummarizedInvoiceDto {
 export interface SummarizedNftUsageFeeBillingDto {
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<Blockchain>}
      * @memberof SummarizedNftUsageFeeBillingDto
      */
-    blockchains: Array<string>;
+    blockchains: Array<Blockchain>;
     /**
      * 
      * @type {number}
@@ -830,10 +850,10 @@ export interface SummarizedWithdrawalFeeBillingDto {
 export interface TokenFeeMonthlyBillingDto {
     /**
      * 
-     * @type {string}
+     * @type {Blockchain}
      * @memberof TokenFeeMonthlyBillingDto
      */
-    blockchain: string;
+    blockchain: Blockchain;
     /**
      * 
      * @type {boolean}
@@ -854,10 +874,10 @@ export interface TokenFeeMonthlyBillingDto {
     coinId: number;
     /**
      * 
-     * @type {string}
+     * @type {CoinType}
      * @memberof TokenFeeMonthlyBillingDto
      */
-    tokenType: string;
+    tokenType: CoinType;
     /**
      * 
      * @type {string}
@@ -903,10 +923,10 @@ export interface TokenFeeMonthlyBillingDto {
 export interface UsageFeeMonthlyBillingDto {
     /**
      * 
-     * @type {string}
+     * @type {Blockchain}
      * @memberof UsageFeeMonthlyBillingDto
      */
-    blockchain: string;
+    blockchain: Blockchain;
     /**
      * 
      * @type {string}
@@ -952,10 +972,10 @@ export interface WithdrawalFeeDailyBillingDto {
     date: string;
     /**
      * 
-     * @type {string}
+     * @type {Blockchain}
      * @memberof WithdrawalFeeDailyBillingDto
      */
-    blockchain: string;
+    blockchain: Blockchain;
     /**
      * 
      * @type {string}
@@ -989,10 +1009,10 @@ export interface WithdrawalFeeDailyBillingDto {
 export interface WithdrawalFeeMonthlyBillingDto {
     /**
      * 
-     * @type {string}
+     * @type {Blockchain}
      * @memberof WithdrawalFeeMonthlyBillingDto
      */
-    blockchain: string;
+    blockchain: Blockchain;
     /**
      * 
      * @type {string}
@@ -1012,138 +1032,6 @@ export interface WithdrawalFeeMonthlyBillingDto {
      */
     withdrawalFeeDailyBillings: Array<WithdrawalFeeDailyBillingDto>;
 }
-
-/**
- * BillingControllerApi - axios parameter creator
- * @export
- */
-export const BillingControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {string} orgId 
-         * @param {string} searchStartDate 
-         * @param {string} [searchEndDate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBillings: async (orgId: string, searchStartDate: string, searchEndDate?: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orgId' is not null or undefined
-            if (orgId === null || orgId === undefined) {
-                throw new RequiredError('orgId','Required parameter orgId was null or undefined when calling getBillings.');
-            }
-            // verify required parameter 'searchStartDate' is not null or undefined
-            if (searchStartDate === null || searchStartDate === undefined) {
-                throw new RequiredError('searchStartDate','Required parameter searchStartDate was null or undefined when calling getBillings.');
-            }
-            const localVarPath = `/api/v1/billings`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (orgId !== undefined) {
-                localVarQueryParameter['org_id'] = orgId;
-            }
-
-            if (searchStartDate !== undefined) {
-                localVarQueryParameter['search_start_date'] = (searchStartDate as any instanceof Date) ?
-                    (searchStartDate as any).toISOString().substr(0,10) :
-                    searchStartDate;
-            }
-
-            if (searchEndDate !== undefined) {
-                localVarQueryParameter['search_end_date'] = (searchEndDate as any instanceof Date) ?
-                    (searchEndDate as any).toISOString().substr(0,10) :
-                    searchEndDate;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * BillingControllerApi - functional programming interface
- * @export
- */
-export const BillingControllerApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {string} orgId 
-         * @param {string} searchStartDate 
-         * @param {string} [searchEndDate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getBillings(orgId: string, searchStartDate: string, searchEndDate?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AggregatedBillingDto>> {
-            const localVarAxiosArgs = await BillingControllerApiAxiosParamCreator(configuration).getBillings(orgId, searchStartDate, searchEndDate, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-    }
-};
-
-/**
- * BillingControllerApi - factory interface
- * @export
- */
-export const BillingControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    return {
-        /**
-         * 
-         * @param {string} orgId 
-         * @param {string} searchStartDate 
-         * @param {string} [searchEndDate] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBillings(orgId: string, searchStartDate: string, searchEndDate?: string, options?: any): AxiosPromise<AggregatedBillingDto> {
-            return BillingControllerApiFp(configuration).getBillings(orgId, searchStartDate, searchEndDate, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * BillingControllerApi - object-oriented interface
- * @export
- * @class BillingControllerApi
- * @extends {BaseAPI}
- */
-export class BillingControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} orgId 
-     * @param {string} searchStartDate 
-     * @param {string} [searchEndDate] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BillingControllerApi
-     */
-    public getBillings(orgId: string, searchStartDate: string, searchEndDate?: string, options?: any) {
-        return BillingControllerApiFp(this.configuration).getBillings(orgId, searchStartDate, searchEndDate, options).then((request) => request(this.axios, this.basePath));
-    }
-
-}
-
 
 /**
  * InvoiceControllerApi - axios parameter creator
@@ -1407,6 +1295,246 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
         /**
          * 
          * @param {string} orgId 
+         * @param {ChangeBillingPlanStatusRequest} changeBillingPlanStatusRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        activateBillingPlans: async (orgId: string, changeBillingPlanStatusRequest: ChangeBillingPlanStatusRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            if (orgId === null || orgId === undefined) {
+                throw new RequiredError('orgId','Required parameter orgId was null or undefined when calling activateBillingPlans.');
+            }
+            // verify required parameter 'changeBillingPlanStatusRequest' is not null or undefined
+            if (changeBillingPlanStatusRequest === null || changeBillingPlanStatusRequest === undefined) {
+                throw new RequiredError('changeBillingPlanStatusRequest','Required parameter changeBillingPlanStatusRequest was null or undefined when calling activateBillingPlans.');
+            }
+            const localVarPath = `/api/v1/organizations/{orgId}/activate-billings`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof changeBillingPlanStatusRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(changeBillingPlanStatusRequest !== undefined ? changeBillingPlanStatusRequest : {}) : (changeBillingPlanStatusRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {ChangeBillingPlanStatusRequest} changeBillingPlanStatusRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deactivateBillingPlans: async (orgId: string, changeBillingPlanStatusRequest: ChangeBillingPlanStatusRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            if (orgId === null || orgId === undefined) {
+                throw new RequiredError('orgId','Required parameter orgId was null or undefined when calling deactivateBillingPlans.');
+            }
+            // verify required parameter 'changeBillingPlanStatusRequest' is not null or undefined
+            if (changeBillingPlanStatusRequest === null || changeBillingPlanStatusRequest === undefined) {
+                throw new RequiredError('changeBillingPlanStatusRequest','Required parameter changeBillingPlanStatusRequest was null or undefined when calling deactivateBillingPlans.');
+            }
+            const localVarPath = `/api/v1/organizations/{orgId}/deactivate-billings`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof changeBillingPlanStatusRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(changeBillingPlanStatusRequest !== undefined ? changeBillingPlanStatusRequest : {}) : (changeBillingPlanStatusRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN'} plan 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getActiveBlockchains: async (orgId: string, plan: 'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN', options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            if (orgId === null || orgId === undefined) {
+                throw new RequiredError('orgId','Required parameter orgId was null or undefined when calling getActiveBlockchains.');
+            }
+            // verify required parameter 'plan' is not null or undefined
+            if (plan === null || plan === undefined) {
+                throw new RequiredError('plan','Required parameter plan was null or undefined when calling getActiveBlockchains.');
+            }
+            const localVarPath = `/api/v1/organizations/{orgId}/active-blockchains`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (plan !== undefined) {
+                localVarQueryParameter['plan'] = plan;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN'} plan 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInactiveBlockchains: async (orgId: string, plan: 'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN', options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            if (orgId === null || orgId === undefined) {
+                throw new RequiredError('orgId','Required parameter orgId was null or undefined when calling getInactiveBlockchains.');
+            }
+            // verify required parameter 'plan' is not null or undefined
+            if (plan === null || plan === undefined) {
+                throw new RequiredError('plan','Required parameter plan was null or undefined when calling getInactiveBlockchains.');
+            }
+            const localVarPath = `/api/v1/organizations/{orgId}/inactive-blockchains`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (plan !== undefined) {
+                localVarQueryParameter['plan'] = plan;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganization: async (orgId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            if (orgId === null || orgId === undefined) {
+                throw new RequiredError('orgId','Required parameter orgId was null or undefined when calling getOrganization.');
+            }
+            const localVarPath = `/api/v1/organizations/{orgId}`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizations: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/organizations`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
          * @param {SaveBillingOrganizationRequest} saveBillingOrganizationRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1460,6 +1588,87 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
         /**
          * 
          * @param {string} orgId 
+         * @param {ChangeBillingPlanStatusRequest} changeBillingPlanStatusRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async activateBillingPlans(orgId: string, changeBillingPlanStatusRequest: ChangeBillingPlanStatusRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChangeBillingPlanStatusResponse>> {
+            const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).activateBillingPlans(orgId, changeBillingPlanStatusRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {ChangeBillingPlanStatusRequest} changeBillingPlanStatusRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deactivateBillingPlans(orgId: string, changeBillingPlanStatusRequest: ChangeBillingPlanStatusRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChangeBillingPlanStatusResponse>> {
+            const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).deactivateBillingPlans(orgId, changeBillingPlanStatusRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN'} plan 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getActiveBlockchains(orgId: string, plan: 'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN', options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).getActiveBlockchains(orgId, plan, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN'} plan 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getInactiveBlockchains(orgId: string, plan: 'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN', options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).getInactiveBlockchains(orgId, plan, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganization(orgId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationDto>> {
+            const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).getOrganization(orgId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrganizations(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrganizationDto>>> {
+            const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).getOrganizations(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
          * @param {SaveBillingOrganizationRequest} saveBillingOrganizationRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1483,6 +1692,63 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
         /**
          * 
          * @param {string} orgId 
+         * @param {ChangeBillingPlanStatusRequest} changeBillingPlanStatusRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        activateBillingPlans(orgId: string, changeBillingPlanStatusRequest: ChangeBillingPlanStatusRequest, options?: any): AxiosPromise<ChangeBillingPlanStatusResponse> {
+            return OrganizationControllerApiFp(configuration).activateBillingPlans(orgId, changeBillingPlanStatusRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {ChangeBillingPlanStatusRequest} changeBillingPlanStatusRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deactivateBillingPlans(orgId: string, changeBillingPlanStatusRequest: ChangeBillingPlanStatusRequest, options?: any): AxiosPromise<ChangeBillingPlanStatusResponse> {
+            return OrganizationControllerApiFp(configuration).deactivateBillingPlans(orgId, changeBillingPlanStatusRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN'} plan 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getActiveBlockchains(orgId: string, plan: 'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN', options?: any): AxiosPromise<Array<string>> {
+            return OrganizationControllerApiFp(configuration).getActiveBlockchains(orgId, plan, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN'} plan 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInactiveBlockchains(orgId: string, plan: 'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN', options?: any): AxiosPromise<Array<string>> {
+            return OrganizationControllerApiFp(configuration).getInactiveBlockchains(orgId, plan, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganization(orgId: string, options?: any): AxiosPromise<OrganizationDto> {
+            return OrganizationControllerApiFp(configuration).getOrganization(orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrganizations(options?: any): AxiosPromise<Array<OrganizationDto>> {
+            return OrganizationControllerApiFp(configuration).getOrganizations(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} orgId 
          * @param {SaveBillingOrganizationRequest} saveBillingOrganizationRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1500,6 +1766,75 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
  * @extends {BaseAPI}
  */
 export class OrganizationControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} orgId 
+     * @param {ChangeBillingPlanStatusRequest} changeBillingPlanStatusRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public activateBillingPlans(orgId: string, changeBillingPlanStatusRequest: ChangeBillingPlanStatusRequest, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).activateBillingPlans(orgId, changeBillingPlanStatusRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} orgId 
+     * @param {ChangeBillingPlanStatusRequest} changeBillingPlanStatusRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public deactivateBillingPlans(orgId: string, changeBillingPlanStatusRequest: ChangeBillingPlanStatusRequest, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).deactivateBillingPlans(orgId, changeBillingPlanStatusRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} orgId 
+     * @param {'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN'} plan 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public getActiveBlockchains(orgId: string, plan: 'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN', options?: any) {
+        return OrganizationControllerApiFp(this.configuration).getActiveBlockchains(orgId, plan, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} orgId 
+     * @param {'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN'} plan 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public getInactiveBlockchains(orgId: string, plan: 'BLOCKCHAIN_NETWORK_FEE_BILLING_PLAN' | 'NFT_USAGE_FEE_BILLING_PLAN' | 'FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'NON_FUNGIBLE_TOKEN_FEE_BILLING_PLAN' | 'WITHDRAWAL_FEE_BILLING_PLAN' | 'GAS_SAVING_FEE_BILLING_PLAN', options?: any) {
+        return OrganizationControllerApiFp(this.configuration).getInactiveBlockchains(orgId, plan, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} orgId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public getOrganization(orgId: string, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).getOrganization(orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public getOrganizations(options?: any) {
+        return OrganizationControllerApiFp(this.configuration).getOrganizations(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {string} orgId 
