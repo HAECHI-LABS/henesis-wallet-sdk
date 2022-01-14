@@ -383,8 +383,8 @@ export enum InvoiceType {
  * @enum {string}
  */
 export enum Language {
-    KOREAN = 'KOREAN',
-    ENGLISH = 'ENGLISH'
+    KO = 'KO',
+    EN = 'EN'
 }
 
 /**
