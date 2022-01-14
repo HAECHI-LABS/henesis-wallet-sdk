@@ -228,9 +228,31 @@ export interface CreateTermInvoiceResponse {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+export enum Currency {
+    USD = 'USD',
+    KRW = 'KRW'
+}
+
+/**
+ * 
+ * @export
  * @interface DetailedInvoiceDto
  */
 export interface DetailedInvoiceDto {
+    /**
+     * 
+     * @type {Language}
+     * @memberof DetailedInvoiceDto
+     */
+    language: Language;
+    /**
+     * 
+     * @type {Currency}
+     * @memberof DetailedInvoiceDto
+     */
+    currency: Currency;
     /**
      * 
      * @type {string}
@@ -333,6 +355,12 @@ export interface GasSavingFeeMonthlyBillingDto {
     billingMonth: string;
     /**
      * 
+     * @type {Source}
+     * @memberof GasSavingFeeMonthlyBillingDto
+     */
+    coinSource: Source;
+    /**
+     * 
      * @type {Array<GasSavingFeeDailyBillingDto>}
      * @memberof GasSavingFeeMonthlyBillingDto
      */
@@ -347,6 +375,16 @@ export enum InvoiceType {
     TERMINVOICE = 'TERM_INVOICE',
     TERMWITHDRAWALFEEINVOICE = 'TERM_WITHDRAWAL_FEE_INVOICE',
     ADDITIONALUSAGEFEEINVOICE = 'ADDITIONAL_USAGE_FEE_INVOICE'
+}
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum Language {
+    KOREAN = 'KOREAN',
+    ENGLISH = 'ENGLISH'
 }
 
 /**
@@ -532,6 +570,16 @@ export interface SaveBillingOrganizationRequest {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+export enum Source {
+    GECKO = 'COIN_GECKO',
+    MARKETCAP = 'COIN_MARKET_CAP'
+}
+
+/**
+ * 
+ * @export
  * @interface SummarizedBiliingPlanDto
  */
 export interface SummarizedBiliingPlanDto {
@@ -610,6 +658,18 @@ export interface SummarizedGasSavingFeeBillingDto {
  * @interface SummarizedInvoiceDto
  */
 export interface SummarizedInvoiceDto {
+    /**
+     * 
+     * @type {Language}
+     * @memberof SummarizedInvoiceDto
+     */
+    language: Language;
+    /**
+     * 
+     * @type {Currency}
+     * @memberof SummarizedInvoiceDto
+     */
+    currency: Currency;
     /**
      * 
      * @type {string}
@@ -1034,10 +1094,10 @@ export interface WithdrawalFeeMonthlyBillingDto {
     blockchain: Blockchain;
     /**
      * 
-     * @type {string}
+     * @type {Source}
      * @memberof WithdrawalFeeMonthlyBillingDto
      */
-    coinSource: string;
+    coinSource: Source;
     /**
      * 
      * @type {string}
