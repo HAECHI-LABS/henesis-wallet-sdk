@@ -32,6 +32,10 @@ export interface Client {
   patch<T = any>(url: string, data?: any): Promise<T>;
 }
 
+export const isSuccessStatus = (status: number) => {
+  return status >= 200 && status < 300;
+};
+
 export class HttpClient {
   private readonly baseUrl: string;
 
@@ -109,7 +113,7 @@ export class HttpClient {
             error.response.data
           );
         }
-        return error;
+        return Promise.reject(error);
       }
     );
     return client;
@@ -120,7 +124,7 @@ export class HttpClient {
       baseURL: this.baseUrl,
       timeout: 30000,
       validateStatus(status) {
-        return status >= 200 && status < 300; // default
+        return isSuccessStatus(status); // default
       },
     });
 
@@ -156,14 +160,18 @@ export class HttpClient {
       client.interceptors.response.use(
         (response) => {
           const apiLogging = makeAPILogging(response);
-          console.log(chalk.green(`Status : ${apiLogging.response.status}`));
+          console.log(
+            chalk.green(`Response Status : ${apiLogging.response.status}`)
+          );
           console.log(syntaxHighlight(apiLogging));
           return response;
         },
         (error) => {
           if (error.response) {
             const apiLogging = makeAPILogging(error.response);
-            console.log(chalk.red(`Status : ${apiLogging.response.status}`));
+            console.log(
+              chalk.red(`Error Status : ${apiLogging.response.status}`)
+            );
             console.log(syntaxHighlight(apiLogging));
           }
           return Promise.reject(error);
