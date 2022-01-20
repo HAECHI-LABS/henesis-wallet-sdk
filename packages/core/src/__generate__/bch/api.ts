@@ -568,61 +568,6 @@ export interface EstimatedFeeDTO {
 /**
  * 
  * @export
- * @interface ExternalWithdrawalSearchCondition
- */
-export interface ExternalWithdrawalSearchCondition {
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalWithdrawalSearchCondition
-     */
-    status?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalWithdrawalSearchCondition
-     */
-    blockchain?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalWithdrawalSearchCondition
-     */
-    updatedAtGte?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalWithdrawalSearchCondition
-     */
-    updatedAtLt?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalWithdrawalSearchCondition
-     */
-    createdAtGte?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalWithdrawalSearchCondition
-     */
-    createdAtLt?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalWithdrawalSearchCondition
-     */
-    orgId?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExternalWithdrawalSearchCondition
-     */
-    walletId?: string;
-}
-/**
- * 
- * @export
  * @interface InactivateAllowedAddressesRequest
  */
 export interface InactivateAllowedAddressesRequest {
@@ -1904,91 +1849,6 @@ export const AdminControllerApiAxiosParamCreator = function (configuration?: Con
         /**
          * 
          * @param {Pageable} pageable 
-         * @param {ExternalWithdrawalSearchCondition} condition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExternalWithdrawals1: async (pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'pageable' is not null or undefined
-            if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getExternalWithdrawals1.');
-            }
-            // verify required parameter 'condition' is not null or undefined
-            if (condition === null || condition === undefined) {
-                throw new RequiredError('condition','Required parameter condition was null or undefined when calling getExternalWithdrawals1.');
-            }
-            const localVarPath = `/api/v2/btc/admin/billings/external-withdrawals`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (pageable !== undefined) {
-                localVarQueryParameter['pageable'] = pageable;
-            }
-
-            if (condition !== undefined) {
-                localVarQueryParameter['condition'] = condition;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {ExternalWithdrawalSearchCondition} searchCondition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExternalWithdrawalsSet1: async (searchCondition: ExternalWithdrawalSearchCondition, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'searchCondition' is not null or undefined
-            if (searchCondition === null || searchCondition === undefined) {
-                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getExternalWithdrawalsSet1.');
-            }
-            const localVarPath = `/api/v2/btc/admin/billings/summarized-external-withdrawals`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (searchCondition !== undefined) {
-                localVarQueryParameter['searchCondition'] = searchCondition;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {Pageable} pageable 
          * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2018,6 +1878,44 @@ export const AdminControllerApiAxiosParamCreator = function (configuration?: Con
 
             if (condition !== undefined) {
                 localVarQueryParameter['condition'] = condition;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {TransferSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSummarizedDailyExternalWithdrawals1: async (searchCondition: TransferSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'searchCondition' is not null or undefined
+            if (searchCondition === null || searchCondition === undefined) {
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getSummarizedDailyExternalWithdrawals1.');
+            }
+            const localVarPath = `/api/v2/btc/admin/billings/summarized-external-withdrawals`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (searchCondition !== undefined) {
+                localVarQueryParameter['searchCondition'] = searchCondition;
             }
 
 
@@ -2106,39 +2004,25 @@ export const AdminControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {Pageable} pageable 
-         * @param {ExternalWithdrawalSearchCondition} condition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getExternalWithdrawals1(pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationSimplifiedTransferDTO>> {
-            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawals1(pageable, condition, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {ExternalWithdrawalSearchCondition} searchCondition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getExternalWithdrawalsSet1(searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>>> {
-            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawalsSet1(searchCondition, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {Pageable} pageable 
          * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getMasterWallets3(pageable: Pageable, condition: WalletSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
             const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getMasterWallets3(pageable, condition, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {TransferSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSummarizedDailyExternalWithdrawals1(searchCondition: TransferSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>>> {
+            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getSummarizedDailyExternalWithdrawals1(searchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2180,31 +2064,21 @@ export const AdminControllerApiFactory = function (configuration?: Configuration
         /**
          * 
          * @param {Pageable} pageable 
-         * @param {ExternalWithdrawalSearchCondition} condition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExternalWithdrawals1(pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<PaginationSimplifiedTransferDTO> {
-            return AdminControllerApiFp(configuration).getExternalWithdrawals1(pageable, condition, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ExternalWithdrawalSearchCondition} searchCondition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExternalWithdrawalsSet1(searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>> {
-            return AdminControllerApiFp(configuration).getExternalWithdrawalsSet1(searchCondition, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {Pageable} pageable 
          * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getMasterWallets3(pageable: Pageable, condition: WalletSearchCondition, options?: any): AxiosPromise<PaginationWalletDTO> {
             return AdminControllerApiFp(configuration).getMasterWallets3(pageable, condition, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {TransferSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSummarizedDailyExternalWithdrawals1(searchCondition: TransferSearchCondition, options?: any): AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>> {
+            return AdminControllerApiFp(configuration).getSummarizedDailyExternalWithdrawals1(searchCondition, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2241,29 +2115,6 @@ export class AdminControllerApi extends BaseAPI {
     /**
      * 
      * @param {Pageable} pageable 
-     * @param {ExternalWithdrawalSearchCondition} condition 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AdminControllerApi
-     */
-    public getExternalWithdrawals1(pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options?: any) {
-        return AdminControllerApiFp(this.configuration).getExternalWithdrawals1(pageable, condition, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ExternalWithdrawalSearchCondition} searchCondition 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AdminControllerApi
-     */
-    public getExternalWithdrawalsSet1(searchCondition: ExternalWithdrawalSearchCondition, options?: any) {
-        return AdminControllerApiFp(this.configuration).getExternalWithdrawalsSet1(searchCondition, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {Pageable} pageable 
      * @param {WalletSearchCondition} condition 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2271,6 +2122,17 @@ export class AdminControllerApi extends BaseAPI {
      */
     public getMasterWallets3(pageable: Pageable, condition: WalletSearchCondition, options?: any) {
         return AdminControllerApiFp(this.configuration).getMasterWallets3(pageable, condition, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {TransferSearchCondition} searchCondition 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminControllerApi
+     */
+    public getSummarizedDailyExternalWithdrawals1(searchCondition: TransferSearchCondition, options?: any) {
+        return AdminControllerApiFp(this.configuration).getSummarizedDailyExternalWithdrawals1(searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2344,91 +2206,6 @@ export const BchAdminControllerApiAxiosParamCreator = function (configuration?: 
         /**
          * 
          * @param {Pageable} pageable 
-         * @param {ExternalWithdrawalSearchCondition} condition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExternalWithdrawals2: async (pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'pageable' is not null or undefined
-            if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getExternalWithdrawals2.');
-            }
-            // verify required parameter 'condition' is not null or undefined
-            if (condition === null || condition === undefined) {
-                throw new RequiredError('condition','Required parameter condition was null or undefined when calling getExternalWithdrawals2.');
-            }
-            const localVarPath = `/api/v2/bch/admin/billings/external-withdrawals`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (pageable !== undefined) {
-                localVarQueryParameter['pageable'] = pageable;
-            }
-
-            if (condition !== undefined) {
-                localVarQueryParameter['condition'] = condition;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {ExternalWithdrawalSearchCondition} searchCondition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExternalWithdrawalsSet2: async (searchCondition: ExternalWithdrawalSearchCondition, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'searchCondition' is not null or undefined
-            if (searchCondition === null || searchCondition === undefined) {
-                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getExternalWithdrawalsSet2.');
-            }
-            const localVarPath = `/api/v2/bch/admin/billings/summarized-external-withdrawals`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (searchCondition !== undefined) {
-                localVarQueryParameter['searchCondition'] = searchCondition;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {Pageable} pageable 
          * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2458,6 +2235,44 @@ export const BchAdminControllerApiAxiosParamCreator = function (configuration?: 
 
             if (condition !== undefined) {
                 localVarQueryParameter['condition'] = condition;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {TransferSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSummarizedDailyExternalWithdrawals2: async (searchCondition: TransferSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'searchCondition' is not null or undefined
+            if (searchCondition === null || searchCondition === undefined) {
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getSummarizedDailyExternalWithdrawals2.');
+            }
+            const localVarPath = `/api/v2/bch/admin/billings/summarized-external-withdrawals`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (searchCondition !== undefined) {
+                localVarQueryParameter['searchCondition'] = searchCondition;
             }
 
 
@@ -2546,39 +2361,25 @@ export const BchAdminControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {Pageable} pageable 
-         * @param {ExternalWithdrawalSearchCondition} condition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getExternalWithdrawals2(pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationSimplifiedTransferDTO>> {
-            const localVarAxiosArgs = await BchAdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawals2(pageable, condition, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {ExternalWithdrawalSearchCondition} searchCondition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getExternalWithdrawalsSet2(searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>>> {
-            const localVarAxiosArgs = await BchAdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawalsSet2(searchCondition, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {Pageable} pageable 
          * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getMasterWallets5(pageable: Pageable, condition: WalletSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
             const localVarAxiosArgs = await BchAdminControllerApiAxiosParamCreator(configuration).getMasterWallets5(pageable, condition, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {TransferSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSummarizedDailyExternalWithdrawals2(searchCondition: TransferSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>>> {
+            const localVarAxiosArgs = await BchAdminControllerApiAxiosParamCreator(configuration).getSummarizedDailyExternalWithdrawals2(searchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2620,31 +2421,21 @@ export const BchAdminControllerApiFactory = function (configuration?: Configurat
         /**
          * 
          * @param {Pageable} pageable 
-         * @param {ExternalWithdrawalSearchCondition} condition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExternalWithdrawals2(pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<PaginationSimplifiedTransferDTO> {
-            return BchAdminControllerApiFp(configuration).getExternalWithdrawals2(pageable, condition, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ExternalWithdrawalSearchCondition} searchCondition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExternalWithdrawalsSet2(searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>> {
-            return BchAdminControllerApiFp(configuration).getExternalWithdrawalsSet2(searchCondition, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {Pageable} pageable 
          * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getMasterWallets5(pageable: Pageable, condition: WalletSearchCondition, options?: any): AxiosPromise<PaginationWalletDTO> {
             return BchAdminControllerApiFp(configuration).getMasterWallets5(pageable, condition, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {TransferSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSummarizedDailyExternalWithdrawals2(searchCondition: TransferSearchCondition, options?: any): AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>> {
+            return BchAdminControllerApiFp(configuration).getSummarizedDailyExternalWithdrawals2(searchCondition, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2681,29 +2472,6 @@ export class BchAdminControllerApi extends BaseAPI {
     /**
      * 
      * @param {Pageable} pageable 
-     * @param {ExternalWithdrawalSearchCondition} condition 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BchAdminControllerApi
-     */
-    public getExternalWithdrawals2(pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options?: any) {
-        return BchAdminControllerApiFp(this.configuration).getExternalWithdrawals2(pageable, condition, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ExternalWithdrawalSearchCondition} searchCondition 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BchAdminControllerApi
-     */
-    public getExternalWithdrawalsSet2(searchCondition: ExternalWithdrawalSearchCondition, options?: any) {
-        return BchAdminControllerApiFp(this.configuration).getExternalWithdrawalsSet2(searchCondition, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {Pageable} pageable 
      * @param {WalletSearchCondition} condition 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2711,6 +2479,17 @@ export class BchAdminControllerApi extends BaseAPI {
      */
     public getMasterWallets5(pageable: Pageable, condition: WalletSearchCondition, options?: any) {
         return BchAdminControllerApiFp(this.configuration).getMasterWallets5(pageable, condition, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {TransferSearchCondition} searchCondition 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BchAdminControllerApi
+     */
+    public getSummarizedDailyExternalWithdrawals2(searchCondition: TransferSearchCondition, options?: any) {
+        return BchAdminControllerApiFp(this.configuration).getSummarizedDailyExternalWithdrawals2(searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5549,91 +5328,6 @@ export const LtcAdminControllerApiAxiosParamCreator = function (configuration?: 
         /**
          * 
          * @param {Pageable} pageable 
-         * @param {ExternalWithdrawalSearchCondition} condition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExternalWithdrawals: async (pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'pageable' is not null or undefined
-            if (pageable === null || pageable === undefined) {
-                throw new RequiredError('pageable','Required parameter pageable was null or undefined when calling getExternalWithdrawals.');
-            }
-            // verify required parameter 'condition' is not null or undefined
-            if (condition === null || condition === undefined) {
-                throw new RequiredError('condition','Required parameter condition was null or undefined when calling getExternalWithdrawals.');
-            }
-            const localVarPath = `/api/v2/ltc/admin/billings/external-withdrawals`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (pageable !== undefined) {
-                localVarQueryParameter['pageable'] = pageable;
-            }
-
-            if (condition !== undefined) {
-                localVarQueryParameter['condition'] = condition;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {ExternalWithdrawalSearchCondition} searchCondition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExternalWithdrawalsSet: async (searchCondition: ExternalWithdrawalSearchCondition, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'searchCondition' is not null or undefined
-            if (searchCondition === null || searchCondition === undefined) {
-                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getExternalWithdrawalsSet.');
-            }
-            const localVarPath = `/api/v2/ltc/admin/billings/summarized-external-withdrawals`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (searchCondition !== undefined) {
-                localVarQueryParameter['searchCondition'] = searchCondition;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {Pageable} pageable 
          * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5663,6 +5357,44 @@ export const LtcAdminControllerApiAxiosParamCreator = function (configuration?: 
 
             if (condition !== undefined) {
                 localVarQueryParameter['condition'] = condition;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {TransferSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSummarizedDailyExternalWithdrawals: async (searchCondition: TransferSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'searchCondition' is not null or undefined
+            if (searchCondition === null || searchCondition === undefined) {
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getSummarizedDailyExternalWithdrawals.');
+            }
+            const localVarPath = `/api/v2/ltc/admin/billings/summarized-external-withdrawals`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (searchCondition !== undefined) {
+                localVarQueryParameter['searchCondition'] = searchCondition;
             }
 
 
@@ -5751,39 +5483,25 @@ export const LtcAdminControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {Pageable} pageable 
-         * @param {ExternalWithdrawalSearchCondition} condition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getExternalWithdrawals(pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationSimplifiedTransferDTO>> {
-            const localVarAxiosArgs = await LtcAdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawals(pageable, condition, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {ExternalWithdrawalSearchCondition} searchCondition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getExternalWithdrawalsSet(searchCondition: ExternalWithdrawalSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>>> {
-            const localVarAxiosArgs = await LtcAdminControllerApiAxiosParamCreator(configuration).getExternalWithdrawalsSet(searchCondition, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {Pageable} pageable 
          * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getMasterWallets1(pageable: Pageable, condition: WalletSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginationWalletDTO>> {
             const localVarAxiosArgs = await LtcAdminControllerApiAxiosParamCreator(configuration).getMasterWallets1(pageable, condition, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {TransferSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSummarizedDailyExternalWithdrawals(searchCondition: TransferSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>>> {
+            const localVarAxiosArgs = await LtcAdminControllerApiAxiosParamCreator(configuration).getSummarizedDailyExternalWithdrawals(searchCondition, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -5825,31 +5543,21 @@ export const LtcAdminControllerApiFactory = function (configuration?: Configurat
         /**
          * 
          * @param {Pageable} pageable 
-         * @param {ExternalWithdrawalSearchCondition} condition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExternalWithdrawals(pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<PaginationSimplifiedTransferDTO> {
-            return LtcAdminControllerApiFp(configuration).getExternalWithdrawals(pageable, condition, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ExternalWithdrawalSearchCondition} searchCondition 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExternalWithdrawalsSet(searchCondition: ExternalWithdrawalSearchCondition, options?: any): AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>> {
-            return LtcAdminControllerApiFp(configuration).getExternalWithdrawalsSet(searchCondition, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {Pageable} pageable 
          * @param {WalletSearchCondition} condition 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getMasterWallets1(pageable: Pageable, condition: WalletSearchCondition, options?: any): AxiosPromise<PaginationWalletDTO> {
             return LtcAdminControllerApiFp(configuration).getMasterWallets1(pageable, condition, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {TransferSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSummarizedDailyExternalWithdrawals(searchCondition: TransferSearchCondition, options?: any): AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>> {
+            return LtcAdminControllerApiFp(configuration).getSummarizedDailyExternalWithdrawals(searchCondition, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5886,29 +5594,6 @@ export class LtcAdminControllerApi extends BaseAPI {
     /**
      * 
      * @param {Pageable} pageable 
-     * @param {ExternalWithdrawalSearchCondition} condition 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LtcAdminControllerApi
-     */
-    public getExternalWithdrawals(pageable: Pageable, condition: ExternalWithdrawalSearchCondition, options?: any) {
-        return LtcAdminControllerApiFp(this.configuration).getExternalWithdrawals(pageable, condition, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ExternalWithdrawalSearchCondition} searchCondition 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LtcAdminControllerApi
-     */
-    public getExternalWithdrawalsSet(searchCondition: ExternalWithdrawalSearchCondition, options?: any) {
-        return LtcAdminControllerApiFp(this.configuration).getExternalWithdrawalsSet(searchCondition, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {Pageable} pageable 
      * @param {WalletSearchCondition} condition 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5916,6 +5601,17 @@ export class LtcAdminControllerApi extends BaseAPI {
      */
     public getMasterWallets1(pageable: Pageable, condition: WalletSearchCondition, options?: any) {
         return LtcAdminControllerApiFp(this.configuration).getMasterWallets1(pageable, condition, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {TransferSearchCondition} searchCondition 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LtcAdminControllerApi
+     */
+    public getSummarizedDailyExternalWithdrawals(searchCondition: TransferSearchCondition, options?: any) {
+        return LtcAdminControllerApiFp(this.configuration).getSummarizedDailyExternalWithdrawals(searchCondition, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
