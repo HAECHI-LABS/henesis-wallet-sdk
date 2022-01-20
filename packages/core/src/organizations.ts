@@ -12,16 +12,19 @@ import {
   OrganizationDTO,
   PaginationAllowedIpDTO,
   PatchAllowedIpLabelRequest,
+  RequestActivationRequest,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
+import { BlockchainType } from "./blockchain";
 
 export interface Organization {
   id: string;
   name: string;
   secret: string;
-  whitelistActivated: boolean;
   inactivatedAt: string | null;
-  isNftSupported: boolean;
+  whitelistActivated: boolean;
+  activeBlockchain: Array<BlockchainType>;
+  activeNft: Array<BlockchainType>;
 }
 
 export interface AllowedIp {
@@ -46,7 +49,16 @@ export class Organizations {
   }
 
   async getOrganization(): Promise<Organization> {
-    return this.client.get<OrganizationDTO>(`${this.baseUrl}/me`);
+    return this.client.get<OrganizationDTO>(`${this.baseUrl}/me`) as any; // TODO
+  }
+
+  async requestActivationOrganization(
+    requestActivationRequest: RequestActivationRequest
+  ): Promise<void> {
+    this.client.post(
+      `${this.baseUrl}/request-activation`,
+      requestActivationRequest
+    );
   }
 
   getAccounts(): Promise<OrganizationAccount[]> {
