@@ -616,16 +616,28 @@ export enum Source {
 export interface SummarizedBiliingPlanDto {
     /**
      * 
+     * @type {Blockchain}
+     * @memberof SummarizedBiliingPlanDto
+     */
+    blockchain: Blockchain;
+    /**
+     * 
+     * @type {Plan}
+     * @memberof SummarizedBiliingPlanDto
+     */
+    plan: Plan;
+    /**
+     * 
      * @type {string}
      * @memberof SummarizedBiliingPlanDto
      */
     billingPlanId: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof SummarizedBiliingPlanDto
      */
-    billingPlanName: string;
+    usageFeePerPeriod: number;
 }
 /**
  * 
