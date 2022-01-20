@@ -1455,6 +1455,43 @@ export interface Sort {
 /**
  * 
  * @export
+ * @interface SummarizedDailyExternalWithdrawalsDTO
+ */
+export interface SummarizedDailyExternalWithdrawalsDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof SummarizedDailyExternalWithdrawalsDTO
+     */
+    date: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SummarizedDailyExternalWithdrawalsDTO
+     */
+    blockchain: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SummarizedDailyExternalWithdrawalsDTO
+     */
+    orgId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SummarizedDailyExternalWithdrawalsDTO
+     */
+    transactionCount: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SummarizedDailyExternalWithdrawalsDTO
+     */
+    withdrawalAmount: string;
+}
+/**
+ * 
+ * @export
  * @interface TransactionDTO
  */
 export interface TransactionDTO {
@@ -1833,6 +1870,12 @@ export interface TransferSearchCondition {
      * @memberof TransferSearchCondition
      */
     updatedAtLt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TransferSearchCondition
+     */
+    createdAtLt?: string;
 }
 /**
  * 
@@ -1868,6 +1911,114 @@ export enum WalletStatus {
     ACTIVE = 'ACTIVE',
     CREATING = 'CREATING',
     FAILED = 'FAILED'
+}
+
+
+/**
+ * AdminControllerApi - axios parameter creator
+ * @export
+ */
+export const AdminControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {TransferSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSummarizedDailyExternalWithdrawals: async (searchCondition: TransferSearchCondition, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'searchCondition' is not null or undefined
+            if (searchCondition === null || searchCondition === undefined) {
+                throw new RequiredError('searchCondition','Required parameter searchCondition was null or undefined when calling getSummarizedDailyExternalWithdrawals.');
+            }
+            const localVarPath = `/api/v2/fil/admin/billings/summarized-external-withdrawals`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (searchCondition !== undefined) {
+                localVarQueryParameter['searchCondition'] = searchCondition;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdminControllerApi - functional programming interface
+ * @export
+ */
+export const AdminControllerApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {TransferSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSummarizedDailyExternalWithdrawals(searchCondition: TransferSearchCondition, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>>> {
+            const localVarAxiosArgs = await AdminControllerApiAxiosParamCreator(configuration).getSummarizedDailyExternalWithdrawals(searchCondition, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    }
+};
+
+/**
+ * AdminControllerApi - factory interface
+ * @export
+ */
+export const AdminControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    return {
+        /**
+         * 
+         * @param {TransferSearchCondition} searchCondition 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSummarizedDailyExternalWithdrawals(searchCondition: TransferSearchCondition, options?: any): AxiosPromise<Array<SummarizedDailyExternalWithdrawalsDTO>> {
+            return AdminControllerApiFp(configuration).getSummarizedDailyExternalWithdrawals(searchCondition, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AdminControllerApi - object-oriented interface
+ * @export
+ * @class AdminControllerApi
+ * @extends {BaseAPI}
+ */
+export class AdminControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {TransferSearchCondition} searchCondition 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminControllerApi
+     */
+    public getSummarizedDailyExternalWithdrawals(searchCondition: TransferSearchCondition, options?: any) {
+        return AdminControllerApiFp(this.configuration).getSummarizedDailyExternalWithdrawals(searchCondition, options).then((request) => request(this.axios, this.basePath));
+    }
+
 }
 
 

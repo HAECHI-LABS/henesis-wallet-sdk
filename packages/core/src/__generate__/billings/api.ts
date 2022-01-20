@@ -48,7 +48,7 @@ export interface BasePlanDto {
      * @type {number}
      * @memberof BasePlanDto
      */
-    blockchainNetworkFeePerPeriod?: number;
+    blockchainNetworkFeePerPeriod: number;
     /**
      * 
      * @type {number}
@@ -91,6 +91,18 @@ export interface BasePlanDto {
      * @memberof BasePlanDto
      */
     gasSavingFeeRate?: number;
+    /**
+     * 
+     * @type {Array<Blockchain>}
+     * @memberof BasePlanDto
+     */
+    blockchainNetworkFeeBlockchains?: Array<Blockchain>;
+    /**
+     * 
+     * @type {Array<Blockchain>}
+     * @memberof BasePlanDto
+     */
+    nftUsageFeeBlockchains?: Array<Blockchain>;
 }
 /**
  * 
@@ -110,6 +122,19 @@ export enum Blockchain {
 /**
  * 
  * @export
+ * @interface BlockchainDto
+ */
+export interface BlockchainDto {
+    /**
+     * 
+     * @type {Blockchain}
+     * @memberof BlockchainDto
+     */
+    blockchain: Blockchain;
+}
+/**
+ * 
+ * @export
  * @interface ChangeBillingPlanStatusRequest
  */
 export interface ChangeBillingPlanStatusRequest {
@@ -121,10 +146,10 @@ export interface ChangeBillingPlanStatusRequest {
     plan: Plan;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<BlockchainDto>}
      * @memberof ChangeBillingPlanStatusRequest
      */
-    blockchains: Array<string>;
+    blockchains: Array<BlockchainDto>;
 }
 /**
  * 
@@ -183,10 +208,10 @@ export enum ContractType {
 export interface CreateErc20GasUsageRequest {
     /**
      * 
-     * @type {string}
+     * @type {Blockchain}
      * @memberof CreateErc20GasUsageRequest
      */
-    blockchain: string;
+    blockchain: Blockchain;
     /**
      * 
      * @type {string}
@@ -450,28 +475,28 @@ export interface OrganizationDto {
     name: string;
     /**
      * 
-     * @type {string}
+     * @type {Currency}
      * @memberof OrganizationDto
      */
-    currency: string;
+    currency: Currency;
     /**
      * 
-     * @type {string}
+     * @type {Language}
      * @memberof OrganizationDto
      */
-    language: string;
+    language: Language;
     /**
      * 
-     * @type {string}
+     * @type {ContractType}
      * @memberof OrganizationDto
      */
-    contractType: string;
+    contractType: ContractType;
     /**
      * 
-     * @type {string}
+     * @type {Source}
      * @memberof OrganizationDto
      */
-    coinSource: string;
+    coinSource: Source;
     /**
      * 
      * @type {string}
@@ -493,10 +518,10 @@ export interface OrganizationDto {
 export interface PatchErc20GasUsageRequest {
     /**
      * 
-     * @type {string}
+     * @type {Blockchain}
      * @memberof PatchErc20GasUsageRequest
      */
-    blockchain: string;
+    blockchain: Blockchain;
     /**
      * 
      * @type {string}
@@ -538,28 +563,34 @@ export enum Plan {
 export interface SaveBillingOrganizationRequest {
     /**
      * 
-     * @type {string}
+     * @type {Currency}
      * @memberof SaveBillingOrganizationRequest
      */
-    currency: string;
+    currency: Currency;
+    /**
+     * 
+     * @type {Language}
+     * @memberof SaveBillingOrganizationRequest
+     */
+    language: Language;
     /**
      * 
      * @type {string}
      * @memberof SaveBillingOrganizationRequest
      */
-    language: string;
+    orgName: string;
     /**
      * 
-     * @type {string}
+     * @type {Source}
      * @memberof SaveBillingOrganizationRequest
      */
-    coinSource: string;
+    coinSource: Source;
     /**
      * 
-     * @type {string}
+     * @type {ContractType}
      * @memberof SaveBillingOrganizationRequest
      */
-    contractType: string;
+    contractType: ContractType;
     /**
      * 
      * @type {BasePlanDto}
@@ -672,6 +703,12 @@ export interface SummarizedInvoiceDto {
     currency: Currency;
     /**
      * 
+     * @type {OrganizationDto}
+     * @memberof SummarizedInvoiceDto
+     */
+    organization: OrganizationDto;
+    /**
+     * 
      * @type {string}
      * @memberof SummarizedInvoiceDto
      */
@@ -726,12 +763,6 @@ export interface SummarizedInvoiceDto {
     paymentDueDate: string;
     /**
      * 
-     * @type {SummarizedOrganizationDto}
-     * @memberof SummarizedInvoiceDto
-     */
-    summarizedOrganization?: SummarizedOrganizationDto;
-    /**
-     * 
      * @type {SummarizedBlockchainNetworkFeeBillingDto}
      * @memberof SummarizedInvoiceDto
      */
@@ -779,91 +810,6 @@ export interface SummarizedNftUsageFeeBillingDto {
      * @memberof SummarizedNftUsageFeeBillingDto
      */
     totalNftUsageFee: number;
-}
-/**
- * 
- * @export
- * @interface SummarizedOrganizationDto
- */
-export interface SummarizedOrganizationDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof SummarizedOrganizationDto
-     */
-    orgName: string;
-    /**
-     * 
-     * @type {ContractType}
-     * @memberof SummarizedOrganizationDto
-     */
-    contractType: ContractType;
-    /**
-     * 
-     * @type {string}
-     * @memberof SummarizedOrganizationDto
-     */
-    termFrom: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SummarizedOrganizationDto
-     */
-    termUntil: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof SummarizedOrganizationDto
-     */
-    unitPeriod: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SummarizedOrganizationDto
-     */
-    blockchainNetworkFeePerPeriod: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SummarizedOrganizationDto
-     */
-    nftUsageFeePerPeriod: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SummarizedOrganizationDto
-     */
-    fungibleTokenFeePerMonth: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SummarizedOrganizationDto
-     */
-    freeFungibleTokenCount: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SummarizedOrganizationDto
-     */
-    nonFungibleTokenFeePerMonth: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SummarizedOrganizationDto
-     */
-    freeNonFungibleTokenCount: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SummarizedOrganizationDto
-     */
-    withdrawalFeeRate: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SummarizedOrganizationDto
-     */
-    gasSavingFeeRate: number;
 }
 /**
  * 
