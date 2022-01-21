@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import { Client } from "./httpClient";
 import { Pagination, PaginationOptions, Secret } from "./types";
 import { Account, Role } from "./accounts";
@@ -50,7 +52,18 @@ export class Organizations {
   }
 
   async getOrganization(): Promise<Organization> {
-    return this.client.get<OrganizationDTO>(`${this.baseUrl}/me`) as any; // TODO
+    const response = await this.client.get<OrganizationDTO>(
+      `${this.baseUrl}/me`
+    );
+    return {
+      ...response,
+      activeBlockchain: _.map(response.activeBlockchain, (blockchain) =>
+        transformBlockchainType(blockchain)
+      ),
+      activeNft: _.map(response.activeNft, (blockchain) =>
+        transformBlockchainType(blockchain)
+      ),
+    };
   }
 
   async requestActivationOrganization(params: {
