@@ -3,6 +3,7 @@ import { Pagination, PaginationOptions, Secret } from "./types";
 import { Account, Role } from "./accounts";
 import {
   ActivateAllowedIpsRequest,
+  Activation,
   AllowedIpDTO,
   CreateAllowedIpRequest,
   CreateSecretResponse,
@@ -15,7 +16,7 @@ import {
   RequestActivationRequest,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
-import { BlockchainType } from "./blockchain";
+import { BlockchainType, transformBlockchainType } from "./blockchain";
 
 export interface Organization {
   id: string;
@@ -52,13 +53,16 @@ export class Organizations {
     return this.client.get<OrganizationDTO>(`${this.baseUrl}/me`) as any; // TODO
   }
 
-  async requestActivationOrganization(
-    requestActivationRequest: RequestActivationRequest
-  ): Promise<void> {
-    this.client.post(
-      `${this.baseUrl}/request-activation`,
-      requestActivationRequest
-    );
+  async requestActivationOrganization(params: {
+    activationType: Activation;
+    blockchain: BlockchainType;
+  }): Promise<void> {
+    const { activationType, blockchain } = params;
+    const request: RequestActivationRequest = {
+      activationType,
+      blockchain: blockchain as any,
+    };
+    this.client.post(`${this.baseUrl}/request-activation`, request);
   }
 
   getAccounts(): Promise<OrganizationAccount[]> {
