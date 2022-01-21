@@ -22,6 +22,37 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @interface ActiveBlockchainDto
+ */
+export interface ActiveBlockchainDto {
+    /**
+     * 
+     * @type {Plan}
+     * @memberof ActiveBlockchainDto
+     */
+    plan: Plan;
+    /**
+     * 
+     * @type {Blockchain}
+     * @memberof ActiveBlockchainDto
+     */
+    blockchain: Blockchain;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActiveBlockchainDto
+     */
+    activatedDate: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ActiveBlockchainDto
+     */
+    usageFeePerPeriod: number;
+}
+/**
+ * 
+ * @export
  * @interface BasePlanDto
  */
 export interface BasePlanDto {
@@ -93,16 +124,16 @@ export interface BasePlanDto {
     gasSavingFeeRate?: number;
     /**
      * 
-     * @type {Array<Blockchain>}
+     * @type {Array<ActiveBlockchainDto>}
      * @memberof BasePlanDto
      */
-    blockchainNetworkFeeBlockchains?: Array<Blockchain>;
+    blockchainNetworkFeeBlockchains?: Array<ActiveBlockchainDto>;
     /**
      * 
-     * @type {Array<Blockchain>}
+     * @type {Array<ActiveBlockchainDto>}
      * @memberof BasePlanDto
      */
-    nftUsageFeeBlockchains?: Array<Blockchain>;
+    nftUsageFeeBlockchains?: Array<ActiveBlockchainDto>;
 }
 /**
  * 
