@@ -6,6 +6,7 @@ import { Account, Role } from "./accounts";
 import {
   ActivateAllowedIpsRequest,
   Activation,
+  ActivationRequestDTO,
   AllowedIpDTO,
   CreateAllowedIpRequest,
   CreateSecretResponse,
@@ -29,6 +30,8 @@ export interface Organization {
   activeBlockchain: Array<BlockchainType>;
   activeNft: Array<BlockchainType>;
 }
+
+export interface ActivationRequest extends ActivationRequestDTO {}
 
 export interface AllowedIp {
   id: string;
@@ -76,6 +79,13 @@ export class Organizations {
       blockchain: blockchain as any,
     };
     this.client.post(`${this.baseUrl}/request-activation`, request);
+  }
+
+  async getRequestActivationOrganizations(): Promise<ActivationRequest[]> {
+    const response = await this.client.get<Array<ActivationRequestDTO>>(
+      `${this.baseUrl}/activation-requests`
+    );
+    return response;
   }
 
   getAccounts(): Promise<OrganizationAccount[]> {
