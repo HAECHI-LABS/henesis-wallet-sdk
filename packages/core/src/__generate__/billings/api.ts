@@ -425,6 +425,98 @@ export interface GasSavingFeeMonthlyBillingDto {
 /**
  * 
  * @export
+ * @interface GetInvoicePdfResponse
+ */
+export interface GetInvoicePdfResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof GetInvoicePdfResponse
+     */
+    pdfLink: string;
+}
+/**
+ * 
+ * @export
+ * @interface InvoiceDto
+ */
+export interface InvoiceDto {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof InvoiceDto
+     */
+    paid?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceDto
+     */
+    orgId: string;
+    /**
+     * 
+     * @type {InvoiceType}
+     * @memberof InvoiceDto
+     */
+    invoiceType: InvoiceType;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceDto
+     */
+    billingMonth: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceDto
+     */
+    billingDate: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceDto
+     */
+    paymentDueDate: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceDto
+     */
+    usageFrom: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceDto
+     */
+    usageUntil: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceDto
+     */
+    nonUsageFeeBillingFrom: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceDto
+     */
+    nonUsageFeeBillingUntil?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceDto
+     */
+    pdfLink?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof InvoiceDto
+     */
+    isPaid: boolean;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 export enum InvoiceType {
@@ -1192,6 +1284,76 @@ export const InvoiceControllerApiAxiosParamCreator = function (configuration?: C
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getInvoicePdf: async (invoiceId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'invoiceId' is not null or undefined
+            if (invoiceId === null || invoiceId === undefined) {
+                throw new RequiredError('invoiceId','Required parameter invoiceId was null or undefined when calling getInvoicePdf.');
+            }
+            const localVarPath = `/api/v1/invoices/{invoiceId}/download`
+                .replace(`{${"invoiceId"}}`, encodeURIComponent(String(invoiceId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInvoices: async (orgId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            if (orgId === null || orgId === undefined) {
+                throw new RequiredError('orgId','Required parameter orgId was null or undefined when calling getInvoices.');
+            }
+            const localVarPath = `/api/v1/invoices/organizations/{orgId}`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getSummarizedInvoice: async (invoiceId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'invoiceId' is not null or undefined
             if (invoiceId === null || invoiceId === undefined) {
@@ -1263,6 +1425,32 @@ export const InvoiceControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async getInvoicePdf(invoiceId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetInvoicePdfResponse>> {
+            const localVarAxiosArgs = await InvoiceControllerApiAxiosParamCreator(configuration).getInvoicePdf(invoiceId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getInvoices(orgId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InvoiceDto>>> {
+            const localVarAxiosArgs = await InvoiceControllerApiAxiosParamCreator(configuration).getInvoices(orgId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async getSummarizedInvoice(invoiceId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SummarizedInvoiceDto>> {
             const localVarAxiosArgs = await InvoiceControllerApiAxiosParamCreator(configuration).getSummarizedInvoice(invoiceId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
@@ -1304,6 +1492,24 @@ export const InvoiceControllerApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getInvoicePdf(invoiceId: string, options?: any): AxiosPromise<GetInvoicePdfResponse> {
+            return InvoiceControllerApiFp(configuration).getInvoicePdf(invoiceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInvoices(orgId: string, options?: any): AxiosPromise<Array<InvoiceDto>> {
+            return InvoiceControllerApiFp(configuration).getInvoices(orgId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} invoiceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getSummarizedInvoice(invoiceId: string, options?: any): AxiosPromise<SummarizedInvoiceDto> {
             return InvoiceControllerApiFp(configuration).getSummarizedInvoice(invoiceId, options).then((request) => request(axios, basePath));
         },
@@ -1338,6 +1544,28 @@ export class InvoiceControllerApi extends BaseAPI {
      */
     public getDetailedInvoice(invoiceId: string, options?: any) {
         return InvoiceControllerApiFp(this.configuration).getDetailedInvoice(invoiceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} invoiceId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InvoiceControllerApi
+     */
+    public getInvoicePdf(invoiceId: string, options?: any) {
+        return InvoiceControllerApiFp(this.configuration).getInvoicePdf(invoiceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} orgId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof InvoiceControllerApi
+     */
+    public getInvoices(orgId: string, options?: any) {
+        return InvoiceControllerApiFp(this.configuration).getInvoices(orgId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
