@@ -109,6 +109,69 @@ export interface ActivateAllowedIpsRequest {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+export enum Activation {
+    BLOCKCHAINNETWORK = 'BLOCKCHAIN_NETWORK',
+    NFTTRANSFER = 'NFT_TRANSFER'
+}
+
+/**
+ * 
+ * @export
+ * @interface ActivationRequestDTO
+ */
+export interface ActivationRequestDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivationRequestDTO
+     */
+    id: string;
+    /**
+     * 
+     * @type {ActivationRequestStatus}
+     * @memberof ActivationRequestDTO
+     */
+    status: ActivationRequestStatus;
+    /**
+     * 
+     * @type {Activation}
+     * @memberof ActivationRequestDTO
+     */
+    activationType: Activation;
+    /**
+     * 
+     * @type {Blockchain}
+     * @memberof ActivationRequestDTO
+     */
+    blockchain: Blockchain;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivationRequestDTO
+     */
+    createdAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivationRequestDTO
+     */
+    updatedAt: string;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum ActivationRequestStatus {
+    INSPECTING = 'INSPECTING',
+    APPROVED = 'APPROVED'
+}
+
+/**
+ * 
+ * @export
  * @interface AllowedIpDTO
  */
 export interface AllowedIpDTO {
@@ -745,6 +808,12 @@ export interface IdentityDTO {
     otpKey: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof IdentityDTO
+     */
+    otpReset?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof IdentityDTO
      */
@@ -757,10 +826,16 @@ export interface IdentityDTO {
     isOrganizationActive: boolean;
     /**
      * 
-     * @type {boolean}
+     * @type {Array<Blockchain>}
      * @memberof IdentityDTO
      */
-    isNftSupported: boolean;
+    activeBlockchain: Array<Blockchain>;
+    /**
+     * 
+     * @type {Array<Blockchain>}
+     * @memberof IdentityDTO
+     */
+    activeNft: Array<Blockchain>;
 }
 /**
  * 
@@ -1055,6 +1130,12 @@ export interface OTPDTO {
      * @memberof OTPDTO
      */
     url: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OTPDTO
+     */
+    reset: boolean;
 }
 /**
  * 
@@ -1137,10 +1218,16 @@ export interface OrganizationDTO {
     whitelistActivated: boolean;
     /**
      * 
-     * @type {boolean}
+     * @type {Array<Blockchain>}
      * @memberof OrganizationDTO
      */
-    isNftSupported: boolean;
+    activeBlockchain: Array<Blockchain>;
+    /**
+     * 
+     * @type {Array<Blockchain>}
+     * @memberof OrganizationDTO
+     */
+    activeNft: Array<Blockchain>;
 }
 /**
  * 
@@ -1330,6 +1417,44 @@ export interface RejectCoinListingRequestRequest {
      * @memberof RejectCoinListingRequestRequest
      */
     message?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RequestActivationRequest
+ */
+export interface RequestActivationRequest {
+    /**
+     * 
+     * @type {Activation}
+     * @memberof RequestActivationRequest
+     */
+    activationType: Activation;
+    /**
+     * 
+     * @type {Blockchain}
+     * @memberof RequestActivationRequest
+     */
+    blockchain: Blockchain;
+}
+/**
+ * 
+ * @export
+ * @interface ResetOtpRequest
+ */
+export interface ResetOtpRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ResetOtpRequest
+     */
+    targetAccountId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResetOtpRequest
+     */
+    otpCode?: string;
 }
 /**
  * 
@@ -1882,6 +2007,44 @@ export const AccountControllerApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
+         * @param {ResetOtpRequest} resetOtpRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resetOtp: async (resetOtpRequest: ResetOtpRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'resetOtpRequest' is not null or undefined
+            if (resetOtpRequest === null || resetOtpRequest === undefined) {
+                throw new RequiredError('resetOtpRequest','Required parameter resetOtpRequest was null or undefined when calling resetOtp.');
+            }
+            const localVarPath = `/api/v2/accounts/reset-otp`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof resetOtpRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(resetOtpRequest !== undefined ? resetOtpRequest : {}) : (resetOtpRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {SignUpRequest} signUpRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1958,44 +2121,6 @@ export const AccountControllerApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateOTPInitialize: async (updateOTPInitializeRequest: UpdateOTPInitializeRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'updateOTPInitializeRequest' is not null or undefined
-            if (updateOTPInitializeRequest === null || updateOTPInitializeRequest === undefined) {
-                throw new RequiredError('updateOTPInitializeRequest','Required parameter updateOTPInitializeRequest was null or undefined when calling updateOTPInitialize.');
-            }
-            const localVarPath = `/api/v2/accounts/otp-initialize`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof updateOTPInitializeRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateOTPInitializeRequest !== undefined ? updateOTPInitializeRequest : {}) : (updateOTPInitializeRequest || "");
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {UpdateOrganizationRequest} updateOrganizationRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2026,6 +2151,44 @@ export const AccountControllerApiAxiosParamCreator = function (configuration?: C
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof updateOrganizationRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateOrganizationRequest !== undefined ? updateOrganizationRequest : {}) : (updateOrganizationRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateOtpInitialize: async (updateOTPInitializeRequest: UpdateOTPInitializeRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'updateOTPInitializeRequest' is not null or undefined
+            if (updateOTPInitializeRequest === null || updateOTPInitializeRequest === undefined) {
+                throw new RequiredError('updateOTPInitializeRequest','Required parameter updateOTPInitializeRequest was null or undefined when calling updateOtpInitialize.');
+            }
+            const localVarPath = `/api/v2/accounts/otp-initialize`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof updateOTPInitializeRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateOTPInitializeRequest !== undefined ? updateOTPInitializeRequest : {}) : (updateOTPInitializeRequest || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2241,6 +2404,19 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {ResetOtpRequest} resetOtpRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async resetOtp(resetOtpRequest: ResetOtpRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).resetOtp(resetOtpRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {SignUpRequest} signUpRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2267,12 +2443,12 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
+         * @param {UpdateOrganizationRequest} updateOrganizationRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateOTPInitialize(updateOTPInitializeRequest: UpdateOTPInitializeRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).updateOTPInitialize(updateOTPInitializeRequest, options);
+        async updateOrganization(updateOrganizationRequest: UpdateOrganizationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).updateOrganization(updateOrganizationRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2280,12 +2456,12 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {UpdateOrganizationRequest} updateOrganizationRequest 
+         * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateOrganization(updateOrganizationRequest: UpdateOrganizationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).updateOrganization(updateOrganizationRequest, options);
+        async updateOtpInitialize(updateOTPInitializeRequest: UpdateOTPInitializeRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).updateOtpInitialize(updateOTPInitializeRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2393,6 +2569,15 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {ResetOtpRequest} resetOtpRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resetOtp(resetOtpRequest: ResetOtpRequest, options?: any): AxiosPromise<void> {
+            return AccountControllerApiFp(configuration).resetOtp(resetOtpRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {SignUpRequest} signUpRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2411,21 +2596,21 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
         },
         /**
          * 
-         * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateOTPInitialize(updateOTPInitializeRequest: UpdateOTPInitializeRequest, options?: any): AxiosPromise<void> {
-            return AccountControllerApiFp(configuration).updateOTPInitialize(updateOTPInitializeRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @param {UpdateOrganizationRequest} updateOrganizationRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         updateOrganization(updateOrganizationRequest: UpdateOrganizationRequest, options?: any): AxiosPromise<void> {
             return AccountControllerApiFp(configuration).updateOrganization(updateOrganizationRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateOtpInitialize(updateOTPInitializeRequest: UpdateOTPInitializeRequest, options?: any): AxiosPromise<void> {
+            return AccountControllerApiFp(configuration).updateOtpInitialize(updateOTPInitializeRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2530,6 +2715,17 @@ export class AccountControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {ResetOtpRequest} resetOtpRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountControllerApi
+     */
+    public resetOtp(resetOtpRequest: ResetOtpRequest, options?: any) {
+        return AccountControllerApiFp(this.configuration).resetOtp(resetOtpRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {SignUpRequest} signUpRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2552,17 +2748,6 @@ export class AccountControllerApi extends BaseAPI {
 
     /**
      * 
-     * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountControllerApi
-     */
-    public updateOTPInitialize(updateOTPInitializeRequest: UpdateOTPInitializeRequest, options?: any) {
-        return AccountControllerApiFp(this.configuration).updateOTPInitialize(updateOTPInitializeRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @param {UpdateOrganizationRequest} updateOrganizationRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2570,6 +2755,17 @@ export class AccountControllerApi extends BaseAPI {
      */
     public updateOrganization(updateOrganizationRequest: UpdateOrganizationRequest, options?: any) {
         return AccountControllerApiFp(this.configuration).updateOrganization(updateOrganizationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountControllerApi
+     */
+    public updateOtpInitialize(updateOTPInitializeRequest: UpdateOTPInitializeRequest, options?: any) {
+        return AccountControllerApiFp(this.configuration).updateOtpInitialize(updateOTPInitializeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3180,6 +3376,41 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
         /**
          * 
          * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveActivationRequest: async (requestId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'requestId' is not null or undefined
+            if (requestId === null || requestId === undefined) {
+                throw new RequiredError('requestId','Required parameter requestId was null or undefined when calling approveActivationRequest.');
+            }
+            const localVarPath = `/api/v2/operation/activation-requests/{requestId}/approve`
+                .replace(`{${"requestId"}}`, encodeURIComponent(String(requestId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} requestId 
          * @param {ApproveCoinListingRequestRequest} approveCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3215,6 +3446,41 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof approveCoinListingRequestRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.data =  needsSerialization ? JSON.stringify(approveCoinListingRequestRequest !== undefined ? approveCoinListingRequestRequest : {}) : (approveCoinListingRequestRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteActivationRequest: async (requestId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'requestId' is not null or undefined
+            if (requestId === null || requestId === undefined) {
+                throw new RequiredError('requestId','Required parameter requestId was null or undefined when calling deleteActivationRequest.');
+            }
+            const localVarPath = `/api/v2/operation/activation-requests/{requestId}`
+                .replace(`{${"requestId"}}`, encodeURIComponent(String(requestId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -3532,12 +3798,38 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
         /**
          * 
          * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async approveActivationRequest(requestId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).approveActivationRequest(requestId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} requestId 
          * @param {ApproveCoinListingRequestRequest} approveCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async approveCoinListingRequest(requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteActivationRequest(requestId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).deleteActivationRequest(requestId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3668,12 +3960,30 @@ export const OperationControllerApiFactory = function (configuration?: Configura
         /**
          * 
          * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        approveActivationRequest(requestId: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).approveActivationRequest(requestId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} requestId 
          * @param {ApproveCoinListingRequestRequest} approveCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         approveCoinListingRequest(requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any): AxiosPromise<void> {
             return OperationControllerApiFp(configuration).approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} requestId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteActivationRequest(requestId: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).deleteActivationRequest(requestId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3771,6 +4081,17 @@ export class OperationControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} requestId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public approveActivationRequest(requestId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).approveActivationRequest(requestId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} requestId 
      * @param {ApproveCoinListingRequestRequest} approveCoinListingRequestRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3778,6 +4099,17 @@ export class OperationControllerApi extends BaseAPI {
      */
     public approveCoinListingRequest(requestId: string, approveCoinListingRequestRequest: ApproveCoinListingRequestRequest, options?: any) {
         return OperationControllerApiFp(this.configuration).approveCoinListingRequest(requestId, approveCoinListingRequestRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} requestId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public deleteActivationRequest(requestId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).deleteActivationRequest(requestId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3944,6 +4276,44 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {RequestActivationRequest} requestActivationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createActivationRequest: async (requestActivationRequest: RequestActivationRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'requestActivationRequest' is not null or undefined
+            if (requestActivationRequest === null || requestActivationRequest === undefined) {
+                throw new RequiredError('requestActivationRequest','Required parameter requestActivationRequest was null or undefined when calling createActivationRequest.');
+            }
+            const localVarPath = `/api/v2/organizations/activation-requests`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof requestActivationRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(requestActivationRequest !== undefined ? requestActivationRequest : {}) : (requestActivationRequest || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -4144,6 +4514,35 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
          */
         getAccountByOrganizationId: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v2/organizations/accounts`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getActivationRequests: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v2/organizations/activation-requests`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -4537,6 +4936,50 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {CreateOrganizationRequest} createOrganizationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchOrganization: async (orgId: string, createOrganizationRequest: CreateOrganizationRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            if (orgId === null || orgId === undefined) {
+                throw new RequiredError('orgId','Required parameter orgId was null or undefined when calling patchOrganization.');
+            }
+            // verify required parameter 'createOrganizationRequest' is not null or undefined
+            if (createOrganizationRequest === null || createOrganizationRequest === undefined) {
+                throw new RequiredError('createOrganizationRequest','Required parameter createOrganizationRequest was null or undefined when calling patchOrganization.');
+            }
+            const localVarPath = `/api/v2/organizations/{orgId}`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createOrganizationRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createOrganizationRequest !== undefined ? createOrganizationRequest : {}) : (createOrganizationRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4567,6 +5010,19 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          */
         async cancelCoinListingRequest(requestId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).cancelCoinListingRequest(requestId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {RequestActivationRequest} requestActivationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createActivationRequest(requestActivationRequest: RequestActivationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ActivationRequestDTO>> {
+            const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).createActivationRequest(requestActivationRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -4644,6 +5100,18 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
          */
         async getAccountByOrganizationId(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OrgAccountDTO>>> {
             const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).getAccountByOrganizationId(options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getActivationRequests(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ActivationRequestDTO>>> {
+            const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).getActivationRequests(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -4779,6 +5247,20 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {CreateOrganizationRequest} createOrganizationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchOrganization(orgId: string, createOrganizationRequest: CreateOrganizationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrganizationDTO>> {
+            const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).patchOrganization(orgId, createOrganizationRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -4805,6 +5287,15 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          */
         cancelCoinListingRequest(requestId: string, options?: any): AxiosPromise<void> {
             return OrganizationControllerApiFp(configuration).cancelCoinListingRequest(requestId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {RequestActivationRequest} requestActivationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createActivationRequest(requestActivationRequest: RequestActivationRequest, options?: any): AxiosPromise<ActivationRequestDTO> {
+            return OrganizationControllerApiFp(configuration).createActivationRequest(requestActivationRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4858,6 +5349,14 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          */
         getAccountByOrganizationId(options?: any): AxiosPromise<Array<OrgAccountDTO>> {
             return OrganizationControllerApiFp(configuration).getAccountByOrganizationId(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getActivationRequests(options?: any): AxiosPromise<Array<ActivationRequestDTO>> {
+            return OrganizationControllerApiFp(configuration).getActivationRequests(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4949,6 +5448,16 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
         patchAllowedIpLabel(allowedIpId: string, patchAllowedIpLabelRequest: PatchAllowedIpLabelRequest, options?: any): AxiosPromise<AllowedIpDTO> {
             return OrganizationControllerApiFp(configuration).patchAllowedIpLabel(allowedIpId, patchAllowedIpLabelRequest, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {CreateOrganizationRequest} createOrganizationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchOrganization(orgId: string, createOrganizationRequest: CreateOrganizationRequest, options?: any): AxiosPromise<OrganizationDTO> {
+            return OrganizationControllerApiFp(configuration).patchOrganization(orgId, createOrganizationRequest, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -4979,6 +5488,17 @@ export class OrganizationControllerApi extends BaseAPI {
      */
     public cancelCoinListingRequest(requestId: string, options?: any) {
         return OrganizationControllerApiFp(this.configuration).cancelCoinListingRequest(requestId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {RequestActivationRequest} requestActivationRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public createActivationRequest(requestActivationRequest: RequestActivationRequest, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).createActivationRequest(requestActivationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5044,6 +5564,16 @@ export class OrganizationControllerApi extends BaseAPI {
      */
     public getAccountByOrganizationId(options?: any) {
         return OrganizationControllerApiFp(this.configuration).getAccountByOrganizationId(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public getActivationRequests(options?: any) {
+        return OrganizationControllerApiFp(this.configuration).getActivationRequests(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5154,6 +5684,18 @@ export class OrganizationControllerApi extends BaseAPI {
      */
     public patchAllowedIpLabel(allowedIpId: string, patchAllowedIpLabelRequest: PatchAllowedIpLabelRequest, options?: any) {
         return OrganizationControllerApiFp(this.configuration).patchAllowedIpLabel(allowedIpId, patchAllowedIpLabelRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} orgId 
+     * @param {CreateOrganizationRequest} createOrganizationRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public patchOrganization(orgId: string, createOrganizationRequest: CreateOrganizationRequest, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).patchOrganization(orgId, createOrganizationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

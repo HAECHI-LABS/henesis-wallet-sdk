@@ -14,6 +14,7 @@ import {
   PatchAllowedIpLabelRequest,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
+import { BlockchainType, transformBlockchainType } from "./blockchain";
 
 export interface Organization {
   id: string;
@@ -21,7 +22,8 @@ export interface Organization {
   secret: string;
   whitelistActivated: boolean;
   inactivatedAt: string | null;
-  isNftSupported: boolean;
+  activeBlockchain: BlockchainType[];
+  activeNft: BlockchainType[];
 }
 
 export interface AllowedIp {
@@ -46,7 +48,16 @@ export class Organizations {
   }
 
   async getOrganization(): Promise<Organization> {
-    return this.client.get<OrganizationDTO>(`${this.baseUrl}/me`);
+    const response = await this.client.get<OrganizationDTO>(
+      `${this.baseUrl}/me`
+    );
+    return {
+      ...response,
+      activeBlockchain: response.activeBlockchain.map((b) =>
+        transformBlockchainType(b)
+      ),
+      activeNft: response.activeNft.map((b) => transformBlockchainType(b)),
+    };
   }
 
   getAccounts(): Promise<OrganizationAccount[]> {
