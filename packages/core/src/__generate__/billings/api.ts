@@ -981,6 +981,12 @@ export interface SummarizedWithdrawalFeeBillingDto {
      * @type {number}
      * @memberof SummarizedWithdrawalFeeBillingDto
      */
+    usageFee: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SummarizedWithdrawalFeeBillingDto
+     */
     totalWithdrawalAmount: number;
     /**
      * 
