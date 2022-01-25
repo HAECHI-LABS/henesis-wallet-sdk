@@ -811,7 +811,7 @@ export interface IdentityDTO {
      * @type {boolean}
      * @memberof IdentityDTO
      */
-    otpReset?: boolean;
+    otpInitialized?: boolean;
     /**
      * 
      * @type {string}
@@ -849,6 +849,25 @@ export interface InactivateAllowedIpsRequest {
      * @memberof InactivateAllowedIpsRequest
      */
     otpCode: string;
+}
+/**
+ * 
+ * @export
+ * @interface InitializeOtpRequest
+ */
+export interface InitializeOtpRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InitializeOtpRequest
+     */
+    targetAccountId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InitializeOtpRequest
+     */
+    otpCode?: string;
 }
 /**
  * 
@@ -1135,7 +1154,7 @@ export interface OTPDTO {
      * @type {boolean}
      * @memberof OTPDTO
      */
-    reset: boolean;
+    initialized: boolean;
 }
 /**
  * 
@@ -1440,25 +1459,6 @@ export interface RequestActivationRequest {
 /**
  * 
  * @export
- * @interface ResetOtpRequest
- */
-export interface ResetOtpRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof ResetOtpRequest
-     */
-    targetAccountId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ResetOtpRequest
-     */
-    otpCode?: string;
-}
-/**
- * 
- * @export
  * @enum {string}
  */
 export enum Role {
@@ -1630,19 +1630,6 @@ export interface UpdateNoticeRequest {
      * @memberof UpdateNoticeRequest
      */
     title: string;
-}
-/**
- * 
- * @export
- * @interface UpdateOTPInitializeRequest
- */
-export interface UpdateOTPInitializeRequest {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateOTPInitializeRequest
-     */
-    initialize: boolean;
 }
 /**
  * 
@@ -1969,6 +1956,44 @@ export const AccountControllerApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
+         * @param {InitializeOtpRequest} initializeOtpRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        initializeOtp: async (initializeOtpRequest: InitializeOtpRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'initializeOtpRequest' is not null or undefined
+            if (initializeOtpRequest === null || initializeOtpRequest === undefined) {
+                throw new RequiredError('initializeOtpRequest','Required parameter initializeOtpRequest was null or undefined when calling initializeOtp.');
+            }
+            const localVarPath = `/api/v2/accounts/initialize-otp`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof initializeOtpRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(initializeOtpRequest !== undefined ? initializeOtpRequest : {}) : (initializeOtpRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {InlineObject} inlineObject 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1999,44 +2024,6 @@ export const AccountControllerApiAxiosParamCreator = function (configuration?: C
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof inlineObject !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.data =  needsSerialization ? JSON.stringify(inlineObject !== undefined ? inlineObject : {}) : (inlineObject || "");
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {ResetOtpRequest} resetOtpRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        resetOtp: async (resetOtpRequest: ResetOtpRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'resetOtpRequest' is not null or undefined
-            if (resetOtpRequest === null || resetOtpRequest === undefined) {
-                throw new RequiredError('resetOtpRequest','Required parameter resetOtpRequest was null or undefined when calling resetOtp.');
-            }
-            const localVarPath = `/api/v2/accounts/reset-otp`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof resetOtpRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(resetOtpRequest !== undefined ? resetOtpRequest : {}) : (resetOtpRequest || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2151,44 +2138,6 @@ export const AccountControllerApiAxiosParamCreator = function (configuration?: C
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             const needsSerialization = (typeof updateOrganizationRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateOrganizationRequest !== undefined ? updateOrganizationRequest : {}) : (updateOrganizationRequest || "");
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateOtpInitialize: async (updateOTPInitializeRequest: UpdateOTPInitializeRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'updateOTPInitializeRequest' is not null or undefined
-            if (updateOTPInitializeRequest === null || updateOTPInitializeRequest === undefined) {
-                throw new RequiredError('updateOTPInitializeRequest','Required parameter updateOTPInitializeRequest was null or undefined when calling updateOtpInitialize.');
-            }
-            const localVarPath = `/api/v2/accounts/otp-initialize`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof updateOTPInitializeRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(updateOTPInitializeRequest !== undefined ? updateOTPInitializeRequest : {}) : (updateOTPInitializeRequest || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -2391,12 +2340,12 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {InlineObject} inlineObject 
+         * @param {InitializeOtpRequest} initializeOtpRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async login(inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LoginResponse>> {
-            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).login(inlineObject, options);
+        async initializeOtp(initializeOtpRequest: InitializeOtpRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).initializeOtp(initializeOtpRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2404,12 +2353,12 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {ResetOtpRequest} resetOtpRequest 
+         * @param {InlineObject} inlineObject 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async resetOtp(resetOtpRequest: ResetOtpRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).resetOtp(resetOtpRequest, options);
+        async login(inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LoginResponse>> {
+            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).login(inlineObject, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2449,19 +2398,6 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
          */
         async updateOrganization(updateOrganizationRequest: UpdateOrganizationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).updateOrganization(updateOrganizationRequest, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateOtpInitialize(updateOTPInitializeRequest: UpdateOTPInitializeRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).updateOtpInitialize(updateOTPInitializeRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -2560,21 +2496,21 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {InitializeOtpRequest} initializeOtpRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        initializeOtp(initializeOtpRequest: InitializeOtpRequest, options?: any): AxiosPromise<void> {
+            return AccountControllerApiFp(configuration).initializeOtp(initializeOtpRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {InlineObject} inlineObject 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         login(inlineObject: InlineObject, options?: any): AxiosPromise<LoginResponse> {
             return AccountControllerApiFp(configuration).login(inlineObject, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ResetOtpRequest} resetOtpRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        resetOtp(resetOtpRequest: ResetOtpRequest, options?: any): AxiosPromise<void> {
-            return AccountControllerApiFp(configuration).resetOtp(resetOtpRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2602,15 +2538,6 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
          */
         updateOrganization(updateOrganizationRequest: UpdateOrganizationRequest, options?: any): AxiosPromise<void> {
             return AccountControllerApiFp(configuration).updateOrganization(updateOrganizationRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateOtpInitialize(updateOTPInitializeRequest: UpdateOTPInitializeRequest, options?: any): AxiosPromise<void> {
-            return AccountControllerApiFp(configuration).updateOtpInitialize(updateOTPInitializeRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2704,6 +2631,17 @@ export class AccountControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {InitializeOtpRequest} initializeOtpRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountControllerApi
+     */
+    public initializeOtp(initializeOtpRequest: InitializeOtpRequest, options?: any) {
+        return AccountControllerApiFp(this.configuration).initializeOtp(initializeOtpRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {InlineObject} inlineObject 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2711,17 +2649,6 @@ export class AccountControllerApi extends BaseAPI {
      */
     public login(inlineObject: InlineObject, options?: any) {
         return AccountControllerApiFp(this.configuration).login(inlineObject, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ResetOtpRequest} resetOtpRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountControllerApi
-     */
-    public resetOtp(resetOtpRequest: ResetOtpRequest, options?: any) {
-        return AccountControllerApiFp(this.configuration).resetOtp(resetOtpRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2755,17 +2682,6 @@ export class AccountControllerApi extends BaseAPI {
      */
     public updateOrganization(updateOrganizationRequest: UpdateOrganizationRequest, options?: any) {
         return AccountControllerApiFp(this.configuration).updateOrganization(updateOrganizationRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {UpdateOTPInitializeRequest} updateOTPInitializeRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AccountControllerApi
-     */
-    public updateOtpInitialize(updateOTPInitializeRequest: UpdateOTPInitializeRequest, options?: any) {
-        return AccountControllerApiFp(this.configuration).updateOtpInitialize(updateOTPInitializeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

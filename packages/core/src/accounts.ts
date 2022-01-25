@@ -29,7 +29,7 @@ export interface AccountLogin extends LoginResponse {}
 export interface OTP {
   key: string;
   url: string;
-  reset: boolean;
+  initialized: boolean;
 }
 
 export import Role = Role;
@@ -61,8 +61,11 @@ export class Accounts {
     });
   }
 
-  async resetOtp(targetAccountId: string, otpCode?: string): Promise<void> {
-    await this.client.post(`${this.baseUrl}/reset-otp`, {
+  async initializeOtp(
+    targetAccountId: string,
+    otpCode?: string
+  ): Promise<void> {
+    await this.client.post(`${this.baseUrl}/initialize-otp`, {
       targetAccountId: targetAccountId,
       otpCode: otpCode,
     });
