@@ -78,7 +78,7 @@ export class Organizations {
       activationType,
       blockchain: blockchain as any,
     };
-    this.client.post(`${this.baseUrl}/request-activation`, request);
+    this.client.post(`${this.baseUrl}/activation-requests`, request);
   }
 
   async getRequestActivationOrganizations(): Promise<ActivationRequest[]> {
