@@ -196,10 +196,10 @@ export interface ChangeBillingPlanStatusResponse {
     planId: string;
     /**
      * 
-     * @type {Array<SummarizedBiliingPlanDto>}
+     * @type {Array<SummarizedBillingPlanDto>}
      * @memberof ChangeBillingPlanStatusResponse
      */
-    summarizedBillingPlans: Array<SummarizedBiliingPlanDto>;
+    summarizedBillingPlans: Array<SummarizedBillingPlanDto>;
 }
 /**
  * 
@@ -261,25 +261,6 @@ export interface CreateErc20GasUsageRequest {
      * @memberof CreateErc20GasUsageRequest
      */
     transferFrom: string;
-}
-/**
- * 
- * @export
- * @interface CreateTermInvoiceResponse
- */
-export interface CreateTermInvoiceResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateTermInvoiceResponse
-     */
-    invoiceId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateTermInvoiceResponse
-     */
-    withdrawalFeeInvoiceId?: string;
 }
 /**
  * 
@@ -447,6 +428,12 @@ export interface InvoiceDto {
      * @memberof InvoiceDto
      */
     paid?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceDto
+     */
+    invoiceId: string;
     /**
      * 
      * @type {string}
@@ -734,33 +721,39 @@ export enum Source {
 /**
  * 
  * @export
- * @interface SummarizedBiliingPlanDto
+ * @interface SummarizedBillingPlanDto
  */
-export interface SummarizedBiliingPlanDto {
+export interface SummarizedBillingPlanDto {
     /**
      * 
      * @type {Blockchain}
-     * @memberof SummarizedBiliingPlanDto
+     * @memberof SummarizedBillingPlanDto
      */
     blockchain: Blockchain;
     /**
      * 
      * @type {Plan}
-     * @memberof SummarizedBiliingPlanDto
+     * @memberof SummarizedBillingPlanDto
      */
     plan: Plan;
     /**
      * 
      * @type {string}
-     * @memberof SummarizedBiliingPlanDto
+     * @memberof SummarizedBillingPlanDto
      */
     billingPlanId: string;
     /**
      * 
      * @type {number}
-     * @memberof SummarizedBiliingPlanDto
+     * @memberof SummarizedBillingPlanDto
      */
-    usageFeePerPeriod: number;
+    usageFeePerPeriod?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SummarizedBillingPlanDto
+     */
+    feeRate?: number;
 }
 /**
  * 
@@ -1201,50 +1194,6 @@ export const InvoiceControllerApiAxiosParamCreator = function (configuration?: C
     return {
         /**
          * 
-         * @param {string} orgId 
-         * @param {string} date 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createTermInvoice: async (orgId: string, date: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'orgId' is not null or undefined
-            if (orgId === null || orgId === undefined) {
-                throw new RequiredError('orgId','Required parameter orgId was null or undefined when calling createTermInvoice.');
-            }
-            // verify required parameter 'date' is not null or undefined
-            if (date === null || date === undefined) {
-                throw new RequiredError('date','Required parameter date was null or undefined when calling createTermInvoice.');
-            }
-            const localVarPath = `/api/v1/invoices/organizations/{orgId}/create-term-invoice`
-                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (date !== undefined) {
-                localVarQueryParameter['date'] = date;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {string} invoiceId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1394,20 +1343,6 @@ export const InvoiceControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {string} orgId 
-         * @param {string} date 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createTermInvoice(orgId: string, date: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateTermInvoiceResponse>> {
-            const localVarAxiosArgs = await InvoiceControllerApiAxiosParamCreator(configuration).createTermInvoice(orgId, date, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
          * @param {string} invoiceId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1469,16 +1404,6 @@ export const InvoiceControllerApiFactory = function (configuration?: Configurati
     return {
         /**
          * 
-         * @param {string} orgId 
-         * @param {string} date 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createTermInvoice(orgId: string, date: string, options?: any): AxiosPromise<CreateTermInvoiceResponse> {
-            return InvoiceControllerApiFp(configuration).createTermInvoice(orgId, date, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @param {string} invoiceId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1523,18 +1448,6 @@ export const InvoiceControllerApiFactory = function (configuration?: Configurati
  * @extends {BaseAPI}
  */
 export class InvoiceControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} orgId 
-     * @param {string} date 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof InvoiceControllerApi
-     */
-    public createTermInvoice(orgId: string, date: string, options?: any) {
-        return InvoiceControllerApiFp(this.configuration).createTermInvoice(orgId, date, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @param {string} invoiceId 
