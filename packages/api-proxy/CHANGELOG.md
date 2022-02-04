@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.1](https://main/HAECHI-LABS/henesis-wallet-sdk/compare/v3.7.0...v3.8.1) (2022-02-04)
+
+
+### Bug Fixes
+
+* fix transfers query bug ([d23defd](https://main/HAECHI-LABS/henesis-wallet-sdk/commits/d23defd4f2356e8dae8d9faa1f3d59c96ca67ef0))
+
+
+
+
+
 # [3.8.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.7.0...v3.8.0) (2021-11-25)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
