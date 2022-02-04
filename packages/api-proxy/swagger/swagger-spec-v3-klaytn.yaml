@@ -1666,6 +1666,16 @@ paths:
           description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
           schema:
             type: number
+        - name: walletId
+          required: false
+          in: query
+          description: (Deprecated) 마스터 지갑 ID와 동일합니다.
+          schema: {}
+        - name: depositAddressId
+          required: true
+          in: query
+          description: (Deprecated) 사용자 지갑 ID와 동일합니다.
+          schema: {}
       responses:
         '200':
           content:
