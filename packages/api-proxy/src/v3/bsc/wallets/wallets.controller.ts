@@ -52,6 +52,7 @@ import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
 import express from "express";
 import {
   ADDRESS_OPTIONAL,
+  MASTER_WALLET_ID_OPTIONAL,
   MASTER_WALLET_ID_REQUIRED,
   NAME_OPTIONAL,
   NFT_ID_OPTIONAL,
