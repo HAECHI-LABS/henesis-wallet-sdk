@@ -412,6 +412,28 @@ export class EthWallets extends Wallets<EthMasterWallet> {
     };
   }
 
+  async createVersionedMasterWalletWithKit(
+    recoveryKit: RecoveryKit,
+    version: string
+  ): Promise<EthWallet> {
+    const walletData = await this.client.post<
+      NoUndefinedField<MasterWalletDTO>
+    >(`/admin/master-wallets`, {
+      name: recoveryKit.getName(),
+      accountKey: recoveryKit.getAccountKey(),
+      backupKey: this.removeKeyFile(recoveryKit.getBackupKey()),
+      encryptionKey: recoveryKit.getEncryptionKey(),
+      version: version,
+    });
+
+    return new EthWallet(
+      this.client,
+      transformMasterWalletData(walletData),
+      this.keychains,
+      this.blockchain
+    );
+  }
+
   async createVersionedMasterWallet(
     name: string,
     passphrase: string,
