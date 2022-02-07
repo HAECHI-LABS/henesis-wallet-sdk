@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.2-alpha.1](https://github.com/haechi-labs/henesis-wallet-sdk/compare/v3.8.2-alpha.0...v3.8.2-alpha.1) (2022-02-07)
+
+
+### Bug Fixes
+
+* add a method creating versioned wallet with recovery kit ([#640](https://github.com/haechi-labs/henesis-wallet-sdk/issues/640)) ([07bdf36](https://github.com/haechi-labs/henesis-wallet-sdk/commit/07bdf364991fe5bd2dc7e9a39064e1e17a63918e))
+
+
+
+
+
 ## [3.8.2-alpha.0](https://github.com/haechi-labs/henesis-wallet-sdk/compare/v3.8.1...v3.8.2-alpha.0) (2022-02-07)
 
 
