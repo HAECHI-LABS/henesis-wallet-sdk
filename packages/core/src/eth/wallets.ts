@@ -7,8 +7,8 @@ import { Keychains } from "../types";
 import { BlockchainType, transformBlockchainType } from "../blockchain";
 import { RecoveryKit } from "../recoverykit";
 import {
-  EthWallet,
   EthMasterWallet,
+  EthWallet,
   transformMasterWalletData,
 } from "./wallet";
 import { Wallets, WalletSearchOptions } from "../wallets";
@@ -410,5 +410,35 @@ export class EthWallets extends Wallets<EthMasterWallet> {
       createdAt,
       updatedAt,
     };
+  }
+
+  async createVersionedMasterWallet(
+    name: string,
+    passphrase: string,
+    version: string,
+    gasPrice?: BN
+  ): Promise<EthMasterWallet> {
+    checkNullAndUndefinedParameter({ name, passphrase });
+    const accountKey = this.keychains.create(passphrase);
+    const backupKey = this.keychains.create(passphrase);
+    const encryptionKeyBuffer: Buffer = this.createEncryptionKey(passphrase);
+    const walletData = await this.client.post<
+      NoUndefinedField<MasterWalletDTO>
+    >(`/admin/master-wallets`, {
+      name,
+      blockchain: this.blockchain,
+      accountKey: this.removePrivateKey(accountKey),
+      backupKey: this.removeKeyFile(this.removePrivateKey(backupKey)),
+      encryptionKey: aesjs.utils.hex.fromBytes(encryptionKeyBuffer),
+      gasPrice: gasPrice ? BNConverter.bnToHexString(gasPrice) : undefined,
+      version: version,
+    });
+
+    return new EthMasterWallet(
+      this.client,
+      transformMasterWalletData(walletData),
+      this.keychains,
+      this.blockchain
+    );
   }
 }
