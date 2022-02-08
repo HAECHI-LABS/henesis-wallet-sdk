@@ -193,7 +193,7 @@ export interface ChangeBillingPlanStatusResponse {
      * @type {string}
      * @memberof ChangeBillingPlanStatusResponse
      */
-    planId: string;
+    date: string;
     /**
      * 
      * @type {Array<SummarizedBillingPlanDto>}
@@ -1004,6 +1004,38 @@ export interface SummarizedWithdrawalFeeBillingDto {
 /**
  * 
  * @export
+ * @interface TerminateOrganizationRequest
+ */
+export interface TerminateOrganizationRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerminateOrganizationRequest
+     */
+    terminateDate: string;
+}
+/**
+ * 
+ * @export
+ * @interface TerminateOrganizationResponse
+ */
+export interface TerminateOrganizationResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerminateOrganizationResponse
+     */
+    orgName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerminateOrganizationResponse
+     */
+    terminateDate: string;
+}
+/**
+ * 
+ * @export
  * @interface TokenFeeMonthlyBillingDto
  */
 export interface TokenFeeMonthlyBillingDto {
@@ -1627,6 +1659,44 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        runExpiredBasePlanJob: async (date: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'date' is not null or undefined
+            if (date === null || date === undefined) {
+                throw new RequiredError('date','Required parameter date was null or undefined when calling runExpiredBasePlanJob.');
+            }
+            const localVarPath = `/api/v1/operations/expired-base-plan-job`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (date !== undefined) {
+                localVarQueryParameter['date'] = date;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} date 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         runGasSavingBehaviorJob: async (date: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'date' is not null or undefined
             if (date === null || date === undefined) {
@@ -1751,6 +1821,19 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async runExpiredBasePlanJob(date: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runExpiredBasePlanJob(date, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} date 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async runGasSavingBehaviorJob(date: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runGasSavingBehaviorJob(date, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
@@ -1813,6 +1896,15 @@ export const OperationControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        runExpiredBasePlanJob(date: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).runExpiredBasePlanJob(date, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} date 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         runGasSavingBehaviorJob(date: string, options?: any): AxiosPromise<void> {
             return OperationControllerApiFp(configuration).runGasSavingBehaviorJob(date, options).then((request) => request(axios, basePath));
         },
@@ -1866,6 +1958,17 @@ export class OperationControllerApi extends BaseAPI {
      */
     public runDailyJob(date: string, options?: any) {
         return OperationControllerApiFp(this.configuration).runDailyJob(date, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} date 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public runExpiredBasePlanJob(date: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).runExpiredBasePlanJob(date, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2183,6 +2286,50 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {TerminateOrganizationRequest} terminateOrganizationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        terminateOrganization: async (orgId: string, terminateOrganizationRequest: TerminateOrganizationRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            if (orgId === null || orgId === undefined) {
+                throw new RequiredError('orgId','Required parameter orgId was null or undefined when calling terminateOrganization.');
+            }
+            // verify required parameter 'terminateOrganizationRequest' is not null or undefined
+            if (terminateOrganizationRequest === null || terminateOrganizationRequest === undefined) {
+                throw new RequiredError('terminateOrganizationRequest','Required parameter terminateOrganizationRequest was null or undefined when calling terminateOrganization.');
+            }
+            const localVarPath = `/api/v1/organizations/{orgId}/terminate`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof terminateOrganizationRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(terminateOrganizationRequest !== undefined ? terminateOrganizationRequest : {}) : (terminateOrganizationRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2287,6 +2434,20 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {TerminateOrganizationRequest} terminateOrganizationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async terminateOrganization(orgId: string, terminateOrganizationRequest: TerminateOrganizationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerminateOrganizationResponse>> {
+            const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).terminateOrganization(orgId, terminateOrganizationRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -2362,6 +2523,16 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          */
         saveBillingOrganization(orgId: string, saveBillingOrganizationRequest: SaveBillingOrganizationRequest, options?: any): AxiosPromise<OrganizationDto> {
             return OrganizationControllerApiFp(configuration).saveBillingOrganization(orgId, saveBillingOrganizationRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {TerminateOrganizationRequest} terminateOrganizationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        terminateOrganization(orgId: string, terminateOrganizationRequest: TerminateOrganizationRequest, options?: any): AxiosPromise<TerminateOrganizationResponse> {
+            return OrganizationControllerApiFp(configuration).terminateOrganization(orgId, terminateOrganizationRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2452,6 +2623,18 @@ export class OrganizationControllerApi extends BaseAPI {
      */
     public saveBillingOrganization(orgId: string, saveBillingOrganizationRequest: SaveBillingOrganizationRequest, options?: any) {
         return OrganizationControllerApiFp(this.configuration).saveBillingOrganization(orgId, saveBillingOrganizationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} orgId 
+     * @param {TerminateOrganizationRequest} terminateOrganizationRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public terminateOrganization(orgId: string, terminateOrganizationRequest: TerminateOrganizationRequest, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).terminateOrganization(orgId, terminateOrganizationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
