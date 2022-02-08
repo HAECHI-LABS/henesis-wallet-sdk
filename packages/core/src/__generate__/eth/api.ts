@@ -1097,6 +1097,49 @@ export interface CreateUserWalletRequest {
 /**
  * 
  * @export
+ * @interface CreateVersionedMasterWalletRequest
+ */
+export interface CreateVersionedMasterWalletRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVersionedMasterWalletRequest
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVersionedMasterWalletRequest
+     */
+    version: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVersionedMasterWalletRequest
+     */
+    encryptionKey: string;
+    /**
+     * 
+     * @type {KeyDTO}
+     * @memberof CreateVersionedMasterWalletRequest
+     */
+    accountKey: KeyDTO;
+    /**
+     * 
+     * @type {KeyDTO}
+     * @memberof CreateVersionedMasterWalletRequest
+     */
+    backupKey: KeyDTO;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVersionedMasterWalletRequest
+     */
+    gasPrice?: string;
+}
+/**
+ * 
+ * @export
  * @interface CreateWithdrawalPolicyRequest
  */
 export interface CreateWithdrawalPolicyRequest {
@@ -4376,6 +4419,44 @@ export const BscAdminControllerApiAxiosParamCreator = function (configuration?: 
     return {
         /**
          * 
+         * @param {CreateVersionedMasterWalletRequest} createVersionedMasterWalletRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVersionedMasterWallet2: async (createVersionedMasterWalletRequest: CreateVersionedMasterWalletRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createVersionedMasterWalletRequest' is not null or undefined
+            if (createVersionedMasterWalletRequest === null || createVersionedMasterWalletRequest === undefined) {
+                throw new RequiredError('createVersionedMasterWalletRequest','Required parameter createVersionedMasterWalletRequest was null or undefined when calling createVersionedMasterWallet2.');
+            }
+            const localVarPath = `/api/v2/bnb/admin/master-wallets`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createVersionedMasterWalletRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createVersionedMasterWalletRequest !== undefined ? createVersionedMasterWalletRequest : {}) : (createVersionedMasterWalletRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4650,6 +4731,19 @@ export const BscAdminControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {CreateVersionedMasterWalletRequest} createVersionedMasterWalletRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createVersionedMasterWallet2(createVersionedMasterWalletRequest: CreateVersionedMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>> {
+            const localVarAxiosArgs = await BscAdminControllerApiAxiosParamCreator(configuration).createVersionedMasterWallet2(createVersionedMasterWalletRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4750,6 +4844,15 @@ export const BscAdminControllerApiFactory = function (configuration?: Configurat
     return {
         /**
          * 
+         * @param {CreateVersionedMasterWalletRequest} createVersionedMasterWalletRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVersionedMasterWallet2(createVersionedMasterWalletRequest: CreateVersionedMasterWalletRequest, options?: any): AxiosPromise<MasterWalletDTO> {
+            return BscAdminControllerApiFp(configuration).createVersionedMasterWallet2(createVersionedMasterWalletRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4821,6 +4924,17 @@ export const BscAdminControllerApiFactory = function (configuration?: Configurat
  * @extends {BaseAPI}
  */
 export class BscAdminControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateVersionedMasterWalletRequest} createVersionedMasterWalletRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BscAdminControllerApi
+     */
+    public createVersionedMasterWallet2(createVersionedMasterWalletRequest: CreateVersionedMasterWalletRequest, options?: any) {
+        return BscAdminControllerApiFp(this.configuration).createVersionedMasterWallet2(createVersionedMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {*} [options] Override http request option.
@@ -10566,6 +10680,44 @@ export const EthAdminControllerApiAxiosParamCreator = function (configuration?: 
     return {
         /**
          * 
+         * @param {CreateVersionedMasterWalletRequest} createVersionedMasterWalletRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVersionedMasterWallet1: async (createVersionedMasterWalletRequest: CreateVersionedMasterWalletRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createVersionedMasterWalletRequest' is not null or undefined
+            if (createVersionedMasterWalletRequest === null || createVersionedMasterWalletRequest === undefined) {
+                throw new RequiredError('createVersionedMasterWalletRequest','Required parameter createVersionedMasterWalletRequest was null or undefined when calling createVersionedMasterWallet1.');
+            }
+            const localVarPath = `/api/v2/eth/admin/master-wallets`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createVersionedMasterWalletRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createVersionedMasterWalletRequest !== undefined ? createVersionedMasterWalletRequest : {}) : (createVersionedMasterWalletRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -10880,6 +11032,19 @@ export const EthAdminControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {CreateVersionedMasterWalletRequest} createVersionedMasterWalletRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createVersionedMasterWallet1(createVersionedMasterWalletRequest: CreateVersionedMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>> {
+            const localVarAxiosArgs = await EthAdminControllerApiAxiosParamCreator(configuration).createVersionedMasterWallet1(createVersionedMasterWalletRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -10993,6 +11158,15 @@ export const EthAdminControllerApiFactory = function (configuration?: Configurat
     return {
         /**
          * 
+         * @param {CreateVersionedMasterWalletRequest} createVersionedMasterWalletRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVersionedMasterWallet1(createVersionedMasterWalletRequest: CreateVersionedMasterWalletRequest, options?: any): AxiosPromise<MasterWalletDTO> {
+            return EthAdminControllerApiFp(configuration).createVersionedMasterWallet1(createVersionedMasterWalletRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -11073,6 +11247,17 @@ export const EthAdminControllerApiFactory = function (configuration?: Configurat
  * @extends {BaseAPI}
  */
 export class EthAdminControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateVersionedMasterWalletRequest} createVersionedMasterWalletRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthAdminControllerApi
+     */
+    public createVersionedMasterWallet1(createVersionedMasterWalletRequest: CreateVersionedMasterWalletRequest, options?: any) {
+        return EthAdminControllerApiFp(this.configuration).createVersionedMasterWallet1(createVersionedMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {*} [options] Override http request option.
@@ -17149,6 +17334,44 @@ export const KlayAdminControllerApiAxiosParamCreator = function (configuration?:
     return {
         /**
          * 
+         * @param {CreateVersionedMasterWalletRequest} createVersionedMasterWalletRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVersionedMasterWallet: async (createVersionedMasterWalletRequest: CreateVersionedMasterWalletRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createVersionedMasterWalletRequest' is not null or undefined
+            if (createVersionedMasterWalletRequest === null || createVersionedMasterWalletRequest === undefined) {
+                throw new RequiredError('createVersionedMasterWalletRequest','Required parameter createVersionedMasterWalletRequest was null or undefined when calling createVersionedMasterWallet.');
+            }
+            const localVarPath = `/api/v2/klay/admin/master-wallets`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof createVersionedMasterWalletRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(createVersionedMasterWalletRequest !== undefined ? createVersionedMasterWalletRequest : {}) : (createVersionedMasterWalletRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -17423,6 +17646,19 @@ export const KlayAdminControllerApiFp = function(configuration?: Configuration) 
     return {
         /**
          * 
+         * @param {CreateVersionedMasterWalletRequest} createVersionedMasterWalletRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createVersionedMasterWallet(createVersionedMasterWalletRequest: CreateVersionedMasterWalletRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterWalletDTO>> {
+            const localVarAxiosArgs = await KlayAdminControllerApiAxiosParamCreator(configuration).createVersionedMasterWallet(createVersionedMasterWalletRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -17523,6 +17759,15 @@ export const KlayAdminControllerApiFactory = function (configuration?: Configura
     return {
         /**
          * 
+         * @param {CreateVersionedMasterWalletRequest} createVersionedMasterWalletRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVersionedMasterWallet(createVersionedMasterWalletRequest: CreateVersionedMasterWalletRequest, options?: any): AxiosPromise<MasterWalletDTO> {
+            return KlayAdminControllerApiFp(configuration).createVersionedMasterWallet(createVersionedMasterWalletRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -17594,6 +17839,17 @@ export const KlayAdminControllerApiFactory = function (configuration?: Configura
  * @extends {BaseAPI}
  */
 export class KlayAdminControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {CreateVersionedMasterWalletRequest} createVersionedMasterWalletRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayAdminControllerApi
+     */
+    public createVersionedMasterWallet(createVersionedMasterWalletRequest: CreateVersionedMasterWalletRequest, options?: any) {
+        return KlayAdminControllerApiFp(this.configuration).createVersionedMasterWallet(createVersionedMasterWalletRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {*} [options] Override http request option.
