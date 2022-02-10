@@ -64,6 +64,25 @@ export class NftsController {
     return await this.nftsService.getNfts(request.sdk);
   }
 
+  @Get("/:nftId")
+  @ApiOkResponse({
+    content: ApiResponseContentGenerator(NftDTO, EXAMPLE_ETHEREUM_NFT_DTO),
+    type: NftDTO,
+    isArray: false,
+  })
+  @ApiOperation({
+    summary: "NFT 컨트랙트 조회하기",
+    description: "NFT 컨트랙트를 조회합니다.",
+  })
+  @ApiTags("nfts")
+  @ReadMeExtension()
+  public async getNft(
+    @Request() request: express.Request,
+    @Param("nftId") nftId: number
+  ): Promise<NftDTO> {
+    return await this.nftsService.getNft(request.sdk, nftId);
+  }
+
   @Post("/:nftId/sync-metadata")
   @ApiNoContentResponse()
   @PathParams(NFT_ID_REQUIRED)

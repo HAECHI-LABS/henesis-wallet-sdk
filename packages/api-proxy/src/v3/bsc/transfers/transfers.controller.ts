@@ -14,7 +14,12 @@ import {
   EXAMPLE_BINANCE_SMART_CHAIN_PAGINATION_TRANSFER_DTO,
   PaginationDTO,
 } from "../../eth/dto/pagination.dto";
-import { ApiBadRequestResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+  ApiBadRequestResponse,
+  ApiOperation,
+  ApiQueryOptions,
+  ApiTags,
+} from "@nestjs/swagger";
 import {
   MASTER_WALLET_ID_OPTIONAL,
   PAGE_OPTIONAL,
@@ -47,7 +52,13 @@ export class TransfersController {
   @Queries(
     TICKER_OPTIONAL,
     USER_WALLET_ID_OPTIONAL,
-    MASTER_WALLET_ID_OPTIONAL,
+    // 2022/02/04 only the binance is fixed
+    {
+      name: "masterWalletId",
+      required: false,
+      description:
+        "마스터 지갑 ID (해당 마스터 지갑을 포함하여 하위의 사용자 지갑 입출금 내역도 함께 조회합니다.)",
+    } as ApiQueryOptions,
     TRANSACTION_ID_OPTIONAL,
     TRANSACTION_HASH_OPTIONAL,
     STATUS_OPTIONAL,

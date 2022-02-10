@@ -1,5 +1,5 @@
 import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
-import { EXAMPLE_ETHEREUM_NFT_DTO, NftDTO } from "./nft.dto";
+import { EXAMPLE_ETHEREUM_NFT_DTO, NftDTO } from "../../eth/dto/nft.dto";
 import { NftBalance } from "@haechi-labs/henesis-wallet-core/lib/eth/abstractWallet";
 
 export const EXAMPLE_ETHEREUM_NFT_BALANCE_DTO: NftBalanceDTO = {
@@ -24,8 +24,8 @@ export const EXAMPLE_ETHEREUM_NFT_BALANCE_DTO: NftBalanceDTO = {
       },
     ],
   },
-  walletId: "532d994e923817013aff23c6dc1ae766",
-  depositAddressId: "4daf51ef18e3a1ce1148b33a6a1b1589",
+  masterWalletId: "532d994e923817013aff23c6dc1ae766",
+  userWalletId: "4daf51ef18e3a1ce1148b33a6a1b1589",
   isWithdrawalPending: false,
 };
 
@@ -55,16 +55,16 @@ export class NftBalanceDTO {
   tokenMetadata: object;
 
   @ApiModelProperty({
-    description: "지갑 id",
-    example: EXAMPLE_ETHEREUM_NFT_BALANCE_DTO.walletId,
+    description: "마스터 지갑 id",
+    example: EXAMPLE_ETHEREUM_NFT_BALANCE_DTO.masterWalletId,
   })
-  walletId: string;
+  masterWalletId: string;
 
   @ApiModelProperty({
-    description: "입금주소 id",
-    example: EXAMPLE_ETHEREUM_NFT_BALANCE_DTO.depositAddressId,
+    description: "유저 지갑 id",
+    example: EXAMPLE_ETHEREUM_NFT_BALANCE_DTO.userWalletId,
   })
-  depositAddressId: string;
+  userWalletId: string;
 
   @ApiModelProperty({
     description: "출금 중 여부",
@@ -78,8 +78,8 @@ export class NftBalanceDTO {
       tokenOnchainId: nftBalance.token.onchainId,
       tokenUri: nftBalance.token.uri,
       tokenMetadata: nftBalance.token.metadata,
-      walletId: nftBalance.masterWalletId,
-      depositAddressId:
+      masterWalletId: nftBalance.masterWalletId,
+      userWalletId:
         nftBalance.masterWalletId != nftBalance.walletId
           ? nftBalance.walletId
           : null,

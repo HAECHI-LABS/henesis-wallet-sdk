@@ -18,7 +18,7 @@ export class TransfersService {
   ): Promise<PaginationDTO<TransferDTO>> {
     const result: Pagination<EthValueTransferEvent> =
       await sdk.bsc.events.getValueTransferEvents(
-        object(GetTransfersOption.toSDKOption(options))
+        object(GetTransfersOption.toBscSDKOption(options))
       );
 
     result.pagination.nextUrl = changeUrlHost(

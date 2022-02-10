@@ -1,6 +1,6 @@
 {
   "name": "@haechi-labs/henesis-wallet-core",
-  "version": "3.8.0",
+  "version": "3.8.2-alpha.1",
   "description": "henesis wallet sdk core module",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",

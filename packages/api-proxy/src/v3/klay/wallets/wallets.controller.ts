@@ -92,7 +92,7 @@ import {
   EXAMPLE_KLAYTN_PAGINATION_NFT_TRANSFER_DTO,
   PaginationDTO,
 } from "../../eth/dto/pagination.dto";
-import { NftBalanceDTO } from "../../eth/dto/nft-balance.dto";
+import { NftBalanceDTO } from "../dto/nft-balance.dto";
 import { TransferNftRequestDTO } from "../../eth/wallets/dto/transfer-nft-request.dto";
 import {
   CreateFlushRequestDTO,
@@ -794,12 +794,12 @@ export class WalletsController {
   }
 
   @Get("/:masterWalletId/nft/transfers")
+  @PathParams(MASTER_WALLET_ID_REQUIRED)
   @Queries(
     NFT_ID_OPTIONAL,
     TOKEN_NAME_OPTIONAL,
     TOKEN_ONCHAIN_ID_OPTIONAL,
     USER_WALLET_ID_OPTIONAL,
-    MASTER_WALLET_ID_OPTIONAL,
     TRANSACTION_ID_OPTIONAL,
     TRANSACTION_HASH_OPTIONAL,
     STATUS_OPTIONAL,
@@ -828,7 +828,7 @@ export class WalletsController {
   @ReadMeExtension()
   public async getNftTransfers(
     @Request() request: express.Request,
-    @Param("masterWalletId") walletId?: string,
+    @Param("masterWalletId") walletId: string,
     @Query("nftId") nftId?: number,
     @Query("tokenName") tokenName?: string,
     @Query("tokenOnchainId") tokenOnchainId?: string,

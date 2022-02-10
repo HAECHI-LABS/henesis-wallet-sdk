@@ -100,6 +100,7 @@ components:
             - FILECOIN
             - BINANCE_SMART_CHAIN
             - LITECOIN
+            - BITCOIN_CASH
           type: string
           description: 코인이 발행된 메인넷
           example: ETHEREUM
@@ -945,6 +946,14 @@ components:
                 value: Starfish
               - trait_type: Eyes
                 value: Big
+        walletId:
+          type: string
+          description: 지갑 id
+          example: 532d994e923817013aff23c6dc1ae766
+        depositAddressId:
+          type: string
+          description: 입금주소 id
+          example: 4daf51ef18e3a1ce1148b33a6a1b1589
         isWithdrawalPending:
           type: boolean
           description: 출금 중 여부
@@ -954,6 +963,8 @@ components:
         - tokenOnchainId
         - tokenUri
         - tokenMetadata
+        - walletId
+        - depositAddressId
         - isWithdrawalPending
     GetManyResponseForNftBalanceDTO:
       type: object
@@ -2601,6 +2612,8 @@ paths:
                     tokenOnchainId: '1'
                     tokenUri: https://opensea-creatures-api.herokuapp.com/api/creature/3
                     tokenMetadata: *ref_21
+                    walletId: 532d994e923817013aff23c6dc1ae766
+                    depositAddressId: 4daf51ef18e3a1ce1148b33a6a1b1589
                     isWithdrawalPending: false
           description: ''
         '401': *ref_18
@@ -2686,8 +2699,8 @@ paths:
         - *ref_16
         - *ref_17
         - name: walletId
-          required: false
-          in: query
+          required: true
+          in: path
           description: 지갑 ID
           schema:
             type: string
