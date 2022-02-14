@@ -749,6 +749,25 @@ export interface DeleteAllowedIpRequest {
 /**
  * 
  * @export
+ * @interface DeleteLoginIpsRequest
+ */
+export interface DeleteLoginIpsRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DeleteLoginIpsRequest
+     */
+    targetIds?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof DeleteLoginIpsRequest
+     */
+    otpCode?: string;
+}
+/**
+ * 
+ * @export
  * @interface ErrorBody
  */
 export interface ErrorBody {
@@ -999,7 +1018,8 @@ export interface LoginIpDTO {
  */
 export enum LoginIpStatus {
     REQUESTED = 'REQUESTED',
-    VERIFIED = 'VERIFIED'
+    VERIFIED = 'VERIFIED',
+    DELETED = 'DELETED'
 }
 
 /**
@@ -2028,6 +2048,50 @@ export const AccountControllerApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
+         * @param {string} accountId 
+         * @param {DeleteLoginIpsRequest} deleteLoginIpsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteLoginIps: async (accountId: string, deleteLoginIpsRequest: DeleteLoginIpsRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'accountId' is not null or undefined
+            if (accountId === null || accountId === undefined) {
+                throw new RequiredError('accountId','Required parameter accountId was null or undefined when calling deleteLoginIps.');
+            }
+            // verify required parameter 'deleteLoginIpsRequest' is not null or undefined
+            if (deleteLoginIpsRequest === null || deleteLoginIpsRequest === undefined) {
+                throw new RequiredError('deleteLoginIpsRequest','Required parameter deleteLoginIpsRequest was null or undefined when calling deleteLoginIps.');
+            }
+            const localVarPath = `/api/v2/accounts/{accountId}/login-ips`
+                .replace(`{${"accountId"}}`, encodeURIComponent(String(accountId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof deleteLoginIpsRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(deleteLoginIpsRequest !== undefined ? deleteLoginIpsRequest : {}) : (deleteLoginIpsRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2460,6 +2524,20 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} accountId 
+         * @param {DeleteLoginIpsRequest} deleteLoginIpsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteLoginIps(accountId: string, deleteLoginIpsRequest: DeleteLoginIpsRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).deleteLoginIps(accountId, deleteLoginIpsRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2634,6 +2712,16 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {string} accountId 
+         * @param {DeleteLoginIpsRequest} deleteLoginIpsRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteLoginIps(accountId: string, deleteLoginIpsRequest: DeleteLoginIpsRequest, options?: any): AxiosPromise<void> {
+            return AccountControllerApiFp(configuration).deleteLoginIps(accountId, deleteLoginIpsRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2773,6 +2861,18 @@ export class AccountControllerApi extends BaseAPI {
      */
     public deleteAccount(accountId: string, deleteAccountRequest: DeleteAccountRequest, options?: any) {
         return AccountControllerApiFp(this.configuration).deleteAccount(accountId, deleteAccountRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} accountId 
+     * @param {DeleteLoginIpsRequest} deleteLoginIpsRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountControllerApi
+     */
+    public deleteLoginIps(accountId: string, deleteLoginIpsRequest: DeleteLoginIpsRequest, options?: any) {
+        return AccountControllerApiFp(this.configuration).deleteLoginIps(accountId, deleteLoginIpsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
