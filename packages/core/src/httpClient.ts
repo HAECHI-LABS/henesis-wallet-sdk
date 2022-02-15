@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import hmacSHA256 from "crypto-js/hmac-sha256";
 import Base64 from "crypto-js/enc-base64";
 
@@ -36,6 +36,8 @@ export const isSuccessStatus = (status: number) => {
   return status >= 200 && status < 300;
 };
 
+const TIMEOUT_MILLISECONDS = 30000;
+
 export class HttpClient {
   private readonly baseUrl: string;
 
@@ -56,14 +58,16 @@ export class HttpClient {
     this.secret = options.secret;
     this.accessToken = options.accessToken;
     this.env = options.env;
-    this.client = this.makeSDKClient();
-    this.apiClient = this.makeApiClient("");
-    this.billingApiClient = this.makeApiClient("/billings");
+    this.client = this.makeSDKClient({
+      timeout: TIMEOUT_MILLISECONDS,
+    });
+    this.apiClient = this.makeApiClient("", { timeout: TIMEOUT_MILLISECONDS });
+    this.billingApiClient = this.makeApiClient("/billings", {});
     return new AxiosMethodProxy(this, this.client) as any;
   }
 
-  private makeSDKClient(): AxiosInstance {
-    const client = this.makeClient();
+  private makeSDKClient(config: AxiosRequestConfig): AxiosInstance {
+    const client = this.makeClient(config);
     client.interceptors.request.use((config) => {
       config.data = ObjectConverter.toSnakeCase(config.data);
       return config;
@@ -88,8 +92,11 @@ export class HttpClient {
     return client;
   }
 
-  private makeApiClient(prefixPath: string): AxiosInstance {
-    const client = this.makeClient();
+  private makeApiClient(
+    prefixPath: string,
+    config: AxiosRequestConfig
+  ): AxiosInstance {
+    const client = this.makeClient(config);
     client.defaults.baseURL =
       removePrefixApi(client.defaults.baseURL) + prefixPath;
     client.interceptors.request.use((config) => {
@@ -119,10 +126,10 @@ export class HttpClient {
     return client;
   }
 
-  private makeClient(): AxiosInstance {
+  private makeClient(config: AxiosRequestConfig): AxiosInstance {
     const client = axios.create({
+      ...config,
       baseURL: this.baseUrl,
-      timeout: 30000,
       validateStatus(status) {
         return isSuccessStatus(status); // default
       },
