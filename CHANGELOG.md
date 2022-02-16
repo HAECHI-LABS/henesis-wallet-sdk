@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.2-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.1...v3.8.2-alpha.2) (2022-02-16)
+
+
+### Bug Fixes
+
+* update timeout setting ([6ff5286](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6ff528680c1a43b9ee99a71eb0c4a571b8c0bde9))
+
+
+### Features
+
+* delete account ([632dfd4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/632dfd43f7336e8bcc65753c632327f01e25fc18))
+* delete login ips ([3b49238](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3b49238d3d38419c4e20d7ff54f9073e44729aba))
+
+
+
+
+
 ## [3.8.2-alpha.1](https://github.com/haechi-labs/henesis-wallet-sdk/compare/v3.8.2-alpha.0...v3.8.2-alpha.1) (2022-02-07)
 
 
