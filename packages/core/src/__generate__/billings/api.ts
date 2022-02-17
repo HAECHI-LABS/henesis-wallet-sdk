@@ -383,6 +383,12 @@ export interface GasSavingFeeDailyBillingDto {
      * @memberof GasSavingFeeDailyBillingDto
      */
     gasSavingFee: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GasSavingFeeDailyBillingDto
+     */
+    exchangeRate?: number;
 }
 /**
  * 
@@ -1191,6 +1197,12 @@ export interface WithdrawalFeeDailyBillingDto {
      * @memberof WithdrawalFeeDailyBillingDto
      */
     withdrawalFee: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WithdrawalFeeDailyBillingDto
+     */
+    exchangeRate?: number;
 }
 /**
  * 
