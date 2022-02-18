@@ -17,24 +17,6 @@ export class GetTransfersOption {
   size: number;
   page: number;
 
-  static toBscSDKOption(
-    option: GetTransfersOption
-  ): EthValueTransferEventPaginationOptions {
-    return {
-      transactionHash: option.transactionHash,
-      updatedAtGte: option.updatedAtGte,
-      updatedAtLt: option.updatedAtLt,
-      status: option.status,
-      transferType: option.transferType,
-      walletId: option.depositAddressId,
-      masterWalletId: option.walletId,
-      transactionId: option.transactionId,
-      symbol: option.ticker,
-      size: option.size,
-      page: option.page,
-    } as EthValueTransferEventPaginationOptions;
-  }
-
   static toSDKOption(
     option: GetTransfersOption
   ): EthValueTransferEventPaginationOptions {
@@ -44,7 +26,7 @@ export class GetTransfersOption {
       updatedAtLt: option.updatedAtLt,
       status: option.status,
       transferType: option.transferType,
-      walletId: option.depositAddressId || option.walletId,
+      walletId: option.depositAddressId,
       masterWalletId: option.walletId,
       transactionId: option.transactionId,
       symbol: option.ticker,
