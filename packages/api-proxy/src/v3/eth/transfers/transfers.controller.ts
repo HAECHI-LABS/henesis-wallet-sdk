@@ -74,6 +74,7 @@ export class TransfersController {
   public async getTransfers(
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,
+    // deprecated
     @Query("depositAddressId") depositAddressId?: string,
     @Query("walletId") walletId?: string,
     @Query("masterWalletId") masterWalletId?: string,
