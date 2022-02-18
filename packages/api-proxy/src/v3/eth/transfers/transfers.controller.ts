@@ -76,6 +76,7 @@ export class TransfersController {
     @Query("ticker") ticker?: string,
     @Query("depositAddressId") depositAddressId?: string,
     @Query("walletId") walletId?: string,
+    @Query("masterWalletId") masterWalletId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
     @Query("status") status?: EventStatus,
@@ -85,12 +86,15 @@ export class TransfersController {
     @Query("size") size: number = 15,
     @Query("page") page: number = 0
   ): Promise<PaginationDTO<TransferDTO>> {
+    if (depositAddressId != null) {
+      walletId = depositAddressId;
+    }
     return await this.transfersService.getTransfers(
       request.sdk,
       {
         ticker,
-        depositAddressId,
         walletId,
+        masterWalletId,
         transactionId,
         transactionHash,
         status,

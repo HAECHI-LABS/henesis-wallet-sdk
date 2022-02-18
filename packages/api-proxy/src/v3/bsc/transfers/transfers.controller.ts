@@ -88,8 +88,10 @@ export class TransfersController {
   public async getTransfers(
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,
-    @Query("userWalletId") depositAddressId?: string,
-    @Query("masterWalletId") walletId?: string,
+    // deprecated
+    @Query("userWalletId") userWalletId?: string,
+    @Query("masterWalletId") masterWalletId?: string,
+    @Query("walletId") walletId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
     @Query("status") status?: EventStatus,
@@ -99,12 +101,15 @@ export class TransfersController {
     @Query("size") size: number = 15,
     @Query("page") page: number = 0
   ): Promise<PaginationDTO<TransferDTO>> {
+    if (walletId == null && userWalletId != null) {
+      walletId = userWalletId;
+    }
     return await this.transfersService.getTransfers(
       request.sdk,
       {
         ticker,
-        depositAddressId,
         walletId,
+        masterWalletId,
         transactionId,
         transactionHash,
         status,

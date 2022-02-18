@@ -90,11 +90,11 @@ export class TransfersController {
   public async getTransfers(
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,
-    // deprecated parameter. use userWalletId
+    // deprecated parameter.
     depositAddressId?: string,
-    // deprecated parameter. use masterWalletId
-    walletId?: string,
-    @Query("userWalletId") userWalletId?: string,
+    // deprecated parameter.
+    userWalletId?: string,
+    @Query("walletId") walletId?: string,
     @Query("masterWalletId") masterWalletId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
@@ -106,16 +106,16 @@ export class TransfersController {
     @Query("page") page: number = 0
   ): Promise<PaginationDTO<TransferDTO>> {
     if (userWalletId != null) {
-      depositAddressId = userWalletId;
+      walletId = userWalletId;
     }
-    if (masterWalletId != null) {
-      walletId = masterWalletId;
+    if (depositAddressId != null) {
+      walletId = depositAddressId;
     }
     return await this.transfersService.getTransfers(
       request.sdk,
       {
         ticker,
-        depositAddressId,
+        masterWalletId,
         walletId,
         transactionId,
         transactionHash,
