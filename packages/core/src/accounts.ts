@@ -71,6 +71,16 @@ export class Accounts {
     });
   }
 
+  async initializePassword(
+    targetAccountId: string,
+    otpCode: string
+  ): Promise<void> {
+    await this.client.post(`${this.baseUrl}/initialize-password`, {
+      targetAccountId: targetAccountId,
+      otpCode: otpCode,
+    });
+  }
+
   async signup(params: SignUpRequest): Promise<SignUpResponse> {
     return await this.client.post<SignUpResponse>(
       `${this.baseUrl}/signup`,
