@@ -515,7 +515,9 @@ export interface InvoiceDto {
 export enum InvoiceType {
     TERMINVOICE = 'TERM_INVOICE',
     TERMWITHDRAWALFEEINVOICE = 'TERM_WITHDRAWAL_FEE_INVOICE',
-    ADDITIONALUSAGEFEEINVOICE = 'ADDITIONAL_USAGE_FEE_INVOICE'
+    BLOCKCHAINADDITIONALUSAGEFEEINVOICE = 'BLOCKCHAIN_ADDITIONAL_USAGE_FEE_INVOICE',
+    NFTNETWORKADDITIONALUSAGEFEEINVOICE = 'NFT_NETWORK_ADDITIONAL_USAGE_FEE_INVOICE',
+    TOKENADDITIONALUSAGEFEEINVOICE = 'TOKEN_ADDITIONAL_USAGE_FEE_INVOICE'
 }
 
 /**
@@ -847,6 +849,12 @@ export interface SummarizedInvoiceDto {
      * @memberof SummarizedInvoiceDto
      */
     invoiceId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SummarizedInvoiceDto
+     */
+    invoiceName?: string;
     /**
      * 
      * @type {InvoiceType}

@@ -846,6 +846,12 @@ export interface IdentityDTO {
     accountId: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof IdentityDTO
+     */
+    isDeletedAccount: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof IdentityDTO
      */
