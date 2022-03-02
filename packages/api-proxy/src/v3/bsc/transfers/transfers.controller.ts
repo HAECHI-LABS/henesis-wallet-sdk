@@ -101,7 +101,7 @@ export class TransfersController {
     @Query("size") size: number = 15,
     @Query("page") page: number = 0
   ): Promise<PaginationDTO<TransferDTO>> {
-    if (walletId == null && userWalletId != null) {
+    if (userWalletId != null) {
       walletId = userWalletId;
     }
     return await this.transfersService.getTransfers(

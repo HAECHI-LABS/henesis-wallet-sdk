@@ -90,10 +90,10 @@ export class TransfersController {
   public async getTransfers(
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,
-    // deprecated parameter.
-    depositAddressId?: string,
-    // deprecated parameter.
-    userWalletId?: string,
+    // deprecated
+    @Query("depositAddressId") depositAddressId?: string,
+    // deprecated
+    @Query("userWalletId") userWalletId?: string,
     @Query("walletId") walletId?: string,
     @Query("masterWalletId") masterWalletId?: string,
     @Query("transactionId") transactionId?: string,
