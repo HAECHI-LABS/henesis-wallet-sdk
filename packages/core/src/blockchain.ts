@@ -41,6 +41,7 @@ export enum BlockchainType {
   FILECOIN = "FILECOIN",
   BINANCE_SMART_CHAIN = "BINANCE_SMART_CHAIN",
   BITCOIN_CASH = "BITCOIN_CASH",
+  POLYGON = "POLYGON"
 }
 
 export enum BlockchainCoinSymbol {
