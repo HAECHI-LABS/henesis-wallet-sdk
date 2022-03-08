@@ -1432,6 +1432,12 @@ export interface FlushRequest {
     metadata?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof FlushRequest
+     */
+    depositAddressIdExist?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof FlushRequest
      */
