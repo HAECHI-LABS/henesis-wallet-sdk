@@ -846,6 +846,12 @@ export interface IdentityDTO {
     accountId: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof IdentityDTO
+     */
+    isDeletedAccount: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof IdentityDTO
      */
@@ -886,6 +892,12 @@ export interface IdentityDTO {
      * @memberof IdentityDTO
      */
     otpInitialized?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof IdentityDTO
+     */
+    passwordInitialized?: boolean;
     /**
      * 
      * @type {string}
@@ -940,6 +952,25 @@ export interface InitializeOtpRequest {
      * 
      * @type {string}
      * @memberof InitializeOtpRequest
+     */
+    otpCode?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InitializePasswordRequest
+ */
+export interface InitializePasswordRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof InitializePasswordRequest
+     */
+    targetAccountId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InitializePasswordRequest
      */
     otpCode?: string;
 }
@@ -2188,6 +2219,44 @@ export const AccountControllerApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
+         * @param {InitializePasswordRequest} initializePasswordRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        initializePassword: async (initializePasswordRequest: InitializePasswordRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'initializePasswordRequest' is not null or undefined
+            if (initializePasswordRequest === null || initializePasswordRequest === undefined) {
+                throw new RequiredError('initializePasswordRequest','Required parameter initializePasswordRequest was null or undefined when calling initializePassword.');
+            }
+            const localVarPath = `/api/v2/accounts/initialize-password`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof initializePasswordRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(initializePasswordRequest !== undefined ? initializePasswordRequest : {}) : (initializePasswordRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {InlineObject} inlineObject 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2575,6 +2644,19 @@ export const AccountControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {InitializePasswordRequest} initializePasswordRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async initializePassword(initializePasswordRequest: InitializePasswordRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await AccountControllerApiAxiosParamCreator(configuration).initializePassword(initializePasswordRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {InlineObject} inlineObject 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2747,6 +2829,15 @@ export const AccountControllerApiFactory = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {InitializePasswordRequest} initializePasswordRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        initializePassword(initializePasswordRequest: InitializePasswordRequest, options?: any): AxiosPromise<void> {
+            return AccountControllerApiFp(configuration).initializePassword(initializePasswordRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {InlineObject} inlineObject 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2904,6 +2995,17 @@ export class AccountControllerApi extends BaseAPI {
      */
     public initializeOtp(initializeOtpRequest: InitializeOtpRequest, options?: any) {
         return AccountControllerApiFp(this.configuration).initializeOtp(initializeOtpRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {InitializePasswordRequest} initializePasswordRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AccountControllerApi
+     */
+    public initializePassword(initializePasswordRequest: InitializePasswordRequest, options?: any) {
+        return AccountControllerApiFp(this.configuration).initializePassword(initializePasswordRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
