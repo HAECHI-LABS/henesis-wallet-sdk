@@ -81,6 +81,12 @@ export class Accounts {
     });
   }
 
+  async unlockInitializePassword(targetAccountId: string): Promise<void> {
+    await this.client.post(`${this.baseUrl}/unlock-initialize-password`, {
+      targetAccountId: targetAccountId,
+    });
+  }
+
   async signup(params: SignUpRequest): Promise<SignUpResponse> {
     return await this.client.post<SignUpResponse>(
       `${this.baseUrl}/signup`,
