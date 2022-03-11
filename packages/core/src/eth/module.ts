@@ -62,3 +62,5 @@ export class EthModule {
 export class KlayModule extends EthModule {}
 
 export class BscModule extends EthModule {}
+
+export class PolygonModule extends EthModule {}
