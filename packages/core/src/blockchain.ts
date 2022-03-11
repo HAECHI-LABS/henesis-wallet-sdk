@@ -29,6 +29,7 @@ export const transformBlockchainType = (
     FILECOIN: BlockchainType.FILECOIN,
     BINANCE_SMART_CHAIN: BlockchainType.BINANCE_SMART_CHAIN,
     BITCOIN_CASH: BlockchainType.BITCOIN_CASH,
+    POLYGON: BlockchainType.POLYGON,
   };
   return byBlockchain[blockchain];
 };
@@ -41,6 +42,7 @@ export enum BlockchainType {
   FILECOIN = "FILECOIN",
   BINANCE_SMART_CHAIN = "BINANCE_SMART_CHAIN",
   BITCOIN_CASH = "BITCOIN_CASH",
+  POLYGON = "POLYGON",
 }
 
 export enum BlockchainCoinSymbol {
@@ -51,4 +53,5 @@ export enum BlockchainCoinSymbol {
   FILECOIN = "FIL",
   BINANCE_SMART_CHAIN = "BNB",
   BITCOIN_CASH = "BCH",
+  POLYGON = "MATIC",
 }
