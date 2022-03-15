@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.2-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.3...v3.8.2-alpha.4) (2022-03-15)
+
+
+### Features
+
+* add polygon to api proxy ([#654](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/654)) ([2edd0ab](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2edd0ab2cf9bd07bc88298a606f9e4e1801b0ac3))
+
+
+
+
+
 ## [3.8.2-alpha.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.2...v3.8.2-alpha.3) (2022-02-18)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
