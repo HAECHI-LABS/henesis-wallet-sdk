@@ -34,4 +34,4 @@ import { NftsService } from "./nfts/nfts.service";
     NftsService,
   ],
 })
-export class MaticModule {}
+export class PolygonModule {}
