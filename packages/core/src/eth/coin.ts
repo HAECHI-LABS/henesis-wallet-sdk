@@ -223,7 +223,7 @@ export class Matic extends Coin {
   }
 
   getName(): string {
-    return "matic";
+    return "polygon";
   }
 
   async buildTransferMultiSigPayload(
