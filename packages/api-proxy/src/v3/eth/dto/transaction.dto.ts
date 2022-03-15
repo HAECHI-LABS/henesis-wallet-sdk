@@ -41,6 +41,17 @@ export const EXAMPLE_BINANCE_SMART_CHAIN_TRANSACTION_DTO: TransactionDTO = {
   updatedAt: "1612411724023",
 };
 
+export const EXAMPLE_POLYGON_TRANSACTION_DTO: TransactionDTO = {
+  id: "b549bfaaa74d1c4244ecc655738b1984",
+  blockchain: BlockchainType.POLYGON,
+  hash: "0x8a1ef722a2884d53a86874c8ba19bcf267bb0b8a81da00c14ddc6457cf1eaf96",
+  error: "null",
+  status: TransactionStatus.CONFIRMED,
+  fee: "10000000",
+  createdAt: "1614582928222",
+  updatedAt: "1612411724023",
+};
+
 export class TransactionDTO {
   @ApiModelProperty({
     description:
