@@ -70,6 +70,26 @@ export const EXAMPLE_BINANCE_SMART_CHAIN_NFT_TRANSFER_DTO: NftTransferDTO = {
   metadata: "metadata",
 };
 
+export const EXAMPLE_POLYGON_NFT_TRANSFER_DTO: NftTransferDTO = {
+  id: 375031,
+  from: "0x1f10ecbd971eab345ea19e96dc237b1fbd63de96",
+  to: "0xdd00383e5a51166bba3e96d84c14a36d72e6c128",
+  status: EventStatus.CONFIRMED,
+  orgId: "31cafc79bd437e1b8e7b8209e399d3f3",
+  walletId: "ae40b1b3dd953e5592c21e58be30d807",
+  depositAddressId: "ae40b1b3dd953e5592c21e58be30d807",
+  nft: EXAMPLE_ETHEREUM_NFT_DTO,
+  token: EXAMPLE_ETHEREUM_NFT_TOKEN_DTO,
+  transferType: TransferType.WITHDRAWAL,
+  transactionId: "8c87c578d7568edc156f831cf03c3ff0",
+  transactionHash:
+    "0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f",
+  createdAt: "1612411568760",
+  updatedAt: "1612411724023",
+  name: "POLYGON 실비 정산",
+  metadata: "metadata",
+};
+
 export class NftTransferDTO {
   @ApiModelProperty({
     description: "NFT 입출금 내역의 ID",

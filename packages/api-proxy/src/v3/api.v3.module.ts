@@ -11,6 +11,7 @@ import { KlayModule } from "./klay/klay.module";
 import { LtcModule } from "./ltc/ltc.module";
 import { BchModule } from "./bch/bch.module";
 import { BscModule } from "./bsc/bsc.module";
+import { PolygonModule } from "./polygon/polygon.module";
 
 const buildSwagger: boolean =
   (process.env.BUILD_SWAGGER_SPEC?.toLowerCase() == "true" &&
@@ -71,6 +72,14 @@ export class ApiV3Module {
             max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
           })
         );
+      } else if (process.env.ENDPOINT == "polygon") {
+        imports.push(
+          PolygonModule,
+          CacheModule.register({
+            ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
+            max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache
+          })
+        );
       } else {
         imports.push(
           EthModule,
@@ -79,6 +88,7 @@ export class ApiV3Module {
           LtcModule,
           BchModule,
           BscModule,
+          PolygonModule,
           CacheModule.register({
             ttl: process.env.CACHE_TTL ? Number(process.env.CACHE_TTL) : 10, // seconds
             max: process.env.CACHE_MAX ? Number(process.env.CACHE_MAX) : 100, // maximum number of items in cache

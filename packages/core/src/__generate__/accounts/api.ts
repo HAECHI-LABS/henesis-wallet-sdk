@@ -1208,6 +1208,25 @@ export enum NotificationPayloadDtoLanguageEnum {
 /**
  * 
  * @export
+ * @interface NotifyAccessTokenExpirationRequest
+ */
+export interface NotifyAccessTokenExpirationRequest {
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof NotifyAccessTokenExpirationRequest
+     */
+    remainingExpirationDays?: Array<number>;
+    /**
+     * 
+     * @type {number}
+     * @memberof NotifyAccessTokenExpirationRequest
+     */
+    expirationCheckMinuteRange?: number;
+}
+/**
+ * 
+ * @export
  * @interface NotifyRequest
  */
 export interface NotifyRequest {
@@ -4091,6 +4110,44 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
+         * @param {NotifyAccessTokenExpirationRequest} notifyAccessTokenExpirationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyAccessTokenExpiration: async (notifyAccessTokenExpirationRequest: NotifyAccessTokenExpirationRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'notifyAccessTokenExpirationRequest' is not null or undefined
+            if (notifyAccessTokenExpirationRequest === null || notifyAccessTokenExpirationRequest === undefined) {
+                throw new RequiredError('notifyAccessTokenExpirationRequest','Required parameter notifyAccessTokenExpirationRequest was null or undefined when calling notifyAccessTokenExpiration.');
+            }
+            const localVarPath = `/api/v2/operation/notify-access-token-expiration`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof notifyAccessTokenExpirationRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(notifyAccessTokenExpirationRequest !== undefined ? notifyAccessTokenExpirationRequest : {}) : (notifyAccessTokenExpirationRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} requestId 
          * @param {RejectCoinListingRequestRequest} rejectCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
@@ -4313,6 +4370,19 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @param {NotifyAccessTokenExpirationRequest} notifyAccessTokenExpirationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async notifyAccessTokenExpiration(notifyAccessTokenExpirationRequest: NotifyAccessTokenExpirationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).notifyAccessTokenExpiration(notifyAccessTokenExpirationRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} requestId 
          * @param {RejectCoinListingRequestRequest} rejectCoinListingRequestRequest 
          * @param {*} [options] Override http request option.
@@ -4450,6 +4520,15 @@ export const OperationControllerApiFactory = function (configuration?: Configura
          */
         inactivateOrganization(organizationId: string, options?: any): AxiosPromise<void> {
             return OperationControllerApiFp(configuration).inactivateOrganization(organizationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {NotifyAccessTokenExpirationRequest} notifyAccessTokenExpirationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        notifyAccessTokenExpiration(notifyAccessTokenExpirationRequest: NotifyAccessTokenExpirationRequest, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).notifyAccessTokenExpiration(notifyAccessTokenExpirationRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4612,6 +4691,17 @@ export class OperationControllerApi extends BaseAPI {
      */
     public inactivateOrganization(organizationId: string, options?: any) {
         return OperationControllerApiFp(this.configuration).inactivateOrganization(organizationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {NotifyAccessTokenExpirationRequest} notifyAccessTokenExpirationRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public notifyAccessTokenExpiration(notifyAccessTokenExpirationRequest: NotifyAccessTokenExpirationRequest, options?: any) {
+        return OperationControllerApiFp(this.configuration).notifyAccessTokenExpiration(notifyAccessTokenExpirationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
