@@ -54,16 +54,6 @@ export class TransfersController {
     TICKER_OPTIONAL,
     USER_WALLET_ID_OPTIONAL,
     MASTER_WALLET_ID_OPTIONAL,
-    {
-      name: "walletId",
-      required: false,
-      description: "(Deprecated) 마스터 지갑 ID와 동일합니다.",
-    } as ApiQueryOptions,
-    {
-      name: "depositAddressId",
-      required: true,
-      description: "(Deprecated) 사용자 지갑 ID와 동일합니다.",
-    } as ApiQueryOptions,
     TRANSACTION_ID_OPTIONAL,
     TRANSACTION_HASH_OPTIONAL,
     STATUS_OPTIONAL,
@@ -90,10 +80,6 @@ export class TransfersController {
   public async getTransfers(
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,
-    // deprecated parameter. use userWalletId
-    depositAddressId?: string,
-    // deprecated parameter. use masterWalletId
-    walletId?: string,
     @Query("userWalletId") userWalletId?: string,
     @Query("masterWalletId") masterWalletId?: string,
     @Query("transactionId") transactionId?: string,
@@ -105,12 +91,8 @@ export class TransfersController {
     @Query("size") size: number = 15,
     @Query("page") page: number = 0
   ): Promise<PaginationDTO<TransferDTO>> {
-    if (userWalletId != null) {
-      depositAddressId = userWalletId;
-    }
-    if (masterWalletId != null) {
-      walletId = masterWalletId;
-    }
+    const depositAddressId = userWalletId;
+    const walletId = masterWalletId;
     return await this.transfersService.getTransfers(
       request.sdk,
       {
