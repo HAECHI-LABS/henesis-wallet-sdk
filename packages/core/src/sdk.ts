@@ -6,7 +6,7 @@ import {
   enhancedPrefixClient,
   HttpClient,
 } from "./httpClient";
-import { BscModule, EthModule, KlayModule } from "./eth";
+import { BscModule, EthModule, KlayModule, PolygonModule } from "./eth";
 import { FilModule } from "./fil";
 import { baseUrls } from "./utils/url";
 import { BtcModule } from "./btc";
@@ -50,6 +50,8 @@ export class SDK {
   public readonly klay: KlayModule;
 
   public readonly bsc: BscModule;
+
+  public readonly polygon: PolygonModule;
 
   public readonly fil: FilModule;
 
@@ -101,6 +103,11 @@ export class SDK {
         BlockchainType.BINANCE_SMART_CHAIN
       ),
       blockchain: BlockchainType.BINANCE_SMART_CHAIN,
+    });
+    this.polygon = new PolygonModule({
+      env: env,
+      client: enhancedBlockchainClient(this.client, BlockchainType.POLYGON),
+      blockchain: BlockchainType.POLYGON,
     });
     this.fil = new FilModule({
       env: env,

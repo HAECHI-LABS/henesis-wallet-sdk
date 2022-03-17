@@ -216,3 +216,33 @@ export class BscBnb extends Coin {
     throw new Error("BSC is not using this method");
   }
 }
+
+export class Matic extends Coin {
+  constructor(coinData: CoinData) {
+    super(coinData);
+  }
+
+  getName(): string {
+    return "matic";
+  }
+
+  async buildTransferMultiSigPayload(
+    wallet: EthLikeWallet,
+    to: string,
+    amount: BN
+  ): Promise<MultiSigPayload> {
+    return {
+      ...(await this.buildTransferMultiSigPayloadTemplate(wallet)),
+      hexData: this.walletContract.methods
+        .transferMatic(to, amount)
+        .encodeABI(),
+      toAddress: wallet.getAddress(),
+    };
+  }
+
+  buildFlushData(wallet: EthLikeWallet, targetAddresses: string[]): string {
+    // This function is used by v3 eth/klay.
+    // Henesis wallet supports MATIC from the version v4.
+    throw new Error("MATIC is not using this method");
+  }
+}

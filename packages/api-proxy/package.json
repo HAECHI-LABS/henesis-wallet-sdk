@@ -1,6 +1,6 @@
 {
   "name": "@haechi-labs/henesis-wallet-api-proxy",
-  "version": "3.8.2-alpha.3",
+  "version": "3.8.2-alpha.5",
   "description": "henesis wallet api proxy",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
@@ -28,6 +28,7 @@
     "build:spec:v3-klay": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v3 ENDPOINT=klaytn nest start",
     "build:spec:v3-fil": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v3 ENDPOINT=filecoin nest start",
     "build:spec:v3-bsc": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v3 ENDPOINT=binance-smart-chain nest start",
+    "build:spec:v3-polygon": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v3 ENDPOINT=polygon nest start",
     "build:spec:version": "cross-env BUILD_SWAGGER_SPEC=true ENDPOINT=version nest start",
     "build:windows": "npm run preBuild:windows && mkdir lib && tsc",
     "eslint": "../../node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src",
@@ -38,7 +39,7 @@
     "preBootstrap:windows": "if exist node_modules rmdir /q /s node_modules"
   },
   "dependencies": {
-    "@haechi-labs/henesis-wallet-core": "^3.8.2-alpha.3",
+    "@haechi-labs/henesis-wallet-core": "^3.8.2-alpha.4",
     "@nestjs/common": "^7.6.15",
     "@nestjs/core": "^7.6.15",
     "@nestjs/platform-express": "^7.6.15",

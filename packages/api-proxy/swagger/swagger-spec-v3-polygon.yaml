@@ -1,0 +1,3250 @@
+openapi: 3.0.0
+info:
+  title: POLYGON
+  description: Henesis API Proxy - v3 - polygon OpenAPI Documentation
+  version: '1.0'
+  contact: {}
+tags: []
+servers:
+  - url: http://localhost:3000
+components:
+  schemas:
+    InvalidAccessIpException:
+      type: object
+      properties:
+        message:
+          type: string
+          description: API 에러 메시지
+          example: ip '106.101.128.133' is not allowed
+        code:
+          type: number
+          description: 헤네시스 API 에러 코드
+          example: 4008
+      required:
+        - message
+        - code
+    InvalidAccessTokenException:
+      type: object
+      properties:
+        message:
+          type: string
+          description: API 에러 메시지
+          example: expired or invalid access token and signature
+        code:
+          type: number
+          description: 헤네시스 API 에러 코드
+          example: 4001
+      required:
+        - message
+        - code
+    AccessTokenNotProvidedException:
+      type: object
+      properties:
+        message:
+          type: string
+          description: API 에러 메시지
+          example: access token not provided
+        code:
+          type: number
+          description: 헤네시스 API 에러 코드
+          example: 4001
+      required:
+        - message
+        - code
+    NoCoinException:
+      type: object
+      properties:
+        message:
+          type: string
+          description: API 에러 메시지
+          example: there is no '2' coin at 'ETHEREUM'
+        code:
+          type: number
+          description: 헤네시스 API 에러 코드
+          example: 4000
+      required:
+        - message
+        - code
+    CoinDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Henesis에서 부여한 Coin의 ID
+          example: 11
+        name:
+          type: string
+          description: 코인 이름
+          example: ethereum
+        ticker:
+          type: string
+          description: 코인의 기호
+          example: ETH
+        address:
+          type: string
+          description: 코인 컨트랙트 주소
+          example: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+        description:
+          type: string
+          description: 코인 설명
+          example: 이더리움
+        decimals:
+          type: number
+          description: 코인의 소수점 자릿수
+          example: 18
+        blockchain:
+          enum:
+            - ETHEREUM
+            - KLAYTN
+            - BITCOIN
+            - FILECOIN
+            - BINANCE_SMART_CHAIN
+            - LITECOIN
+            - BITCOIN_CASH
+            - POLYGON
+          type: string
+          description: 코인이 발행된 메인넷
+          example: ETHEREUM
+        attributes:
+          items:
+            type: array
+          description: 코인의 메타 데이터
+          example: &ref_7
+            - ERC20_STANDARD
+          type: array
+      required:
+        - id
+        - name
+        - ticker
+        - address
+        - description
+        - decimals
+        - blockchain
+        - attributes
+    InvalidStatusException:
+      type: object
+      properties:
+        message:
+          type: string
+          description: API 에러 메시지
+          example: '''status'' is invalid: not supported event status'
+        code:
+          type: number
+          description: 헤네시스 API 에러 코드
+          example: 4001
+      required:
+        - message
+        - code
+    ContractCallsDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 스마트 컨트랙트 호출 내역의 ID
+          example: '375031'
+        data:
+          type: string
+          description: 컨트랙트 호출시 사용된 data
+          example: >-
+            0xa9059cbb0000000000000000000000001f10ecbd971eab345ea19e96dc237b1fbd63de9600000000000000000000000000000000000000000000000000000000000f4240
+        status:
+          enum:
+            - PENDING_APPROVAL
+            - REJECTED
+            - REQUESTED
+            - PENDING
+            - FAILED
+            - REVERTED
+            - REPLACED
+            - MINED
+            - CONFIRMED
+          type: string
+          description: 트랜잭션 상태
+          example: CONFIRMED
+        walletId:
+          type: string
+          description: 지갑 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
+        orgId:
+          type: string
+          description: 지갑이 속한 팀(Organization)의 ID
+          example: 31cafc79bd437e1b8e7b8209e399d3f3
+        transactionId:
+          type: string
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          example: 8c87c578d7568edc156f831cf03c3ff0
+        toAddress:
+          type: string
+          description: 호출한 스마트 컨트랙트 주소
+          example: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+        fromAddress:
+          type: string
+          description: 호출한 지갑의 주소
+          example: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
+        transactionHash:
+          type: string
+          description: 트랜잭션 해시
+          example: '0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f'
+        createdAt:
+          type: string
+          description: '트랜잭션 생성 시간 (형식: ms, UNIX time)'
+          example: '1612411568760'
+        updatedAt:
+          type: string
+          description: '트랜잭션 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)'
+          example: '1612411724023'
+        blockchain:
+          enum:
+            - ETHEREUM
+            - KLAYTN
+            - BITCOIN
+            - LITECOIN
+            - FILECOIN
+            - BINANCE_SMART_CHAIN
+            - BITCOIN_CASH
+            - POLYGON
+          type: string
+          description: 메인넷 종류
+          example: ETHEREUM
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+      required:
+        - id
+        - data
+        - status
+        - walletId
+        - orgId
+        - transactionId
+        - toAddress
+        - fromAddress
+        - transactionHash
+        - createdAt
+        - updatedAt
+        - blockchain
+    PaginationMetadata:
+      type: object
+      properties:
+        nextUrl:
+          type: string
+          description: 다음 pagination url
+          example: http://localhost:3000/api/v3/ethereum/transfers?page=2
+        previousUrl:
+          type: string
+          description: 이전 pagination url
+          example: http://localhost:3000/api/v3/ethereum/transfers?page=1
+        totalCount:
+          type: number
+          description: 총 갯수
+          example: 5
+      required:
+        - nextUrl
+        - previousUrl
+        - totalCount
+    GetManyResponseForContractCallsDTO:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractCallsDTO'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - results
+    TransferDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: 코인/토큰 입출금 내역의 ID
+          example: 375031
+        from:
+          type: string
+          description: 출금 주소
+          example: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
+        to:
+          type: string
+          description: 입금 주소
+          example: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+        amount:
+          type: string
+          description: 암호화폐의 양
+          example: '1000000000'
+        status:
+          enum:
+            - PENDING_APPROVAL
+            - REJECTED
+            - REQUESTED
+            - PENDING
+            - FAILED
+            - REVERTED
+            - REPLACED
+            - MINED
+            - CONFIRMED
+          type: string
+          description: 트랜잭션 상태
+          example: CONFIRMED
+        orgId:
+          type: string
+          description: 지갑이 속한 팀(Organization)의 ID
+          example: 31cafc79bd437e1b8e7b8209e399d3f3
+        decimals:
+          type: number
+          description: 암호화폐의 소수점 자릿수
+          example: 18
+        walletId:
+          type: string
+          description: 입출금 지갑 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
+        depositAddressId:
+          type: string
+          description: 입금 주소 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
+        ticker:
+          type: string
+          description: 암호화폐의 기호
+          example: USDT
+        transferType:
+          enum:
+            - WITHDRAWAL
+            - DEPOSIT
+          type: string
+          description: 입출금 타입
+          example: WITHDRAWAL
+        transactionId:
+          type: string
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          example: 8c87c578d7568edc156f831cf03c3ff0
+        transactionHash:
+          type: string
+          description: 트랜잭션 해시
+          example: '0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f'
+        hopTransactionId:
+          type: string
+          description: >-
+            홉 트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          example: 6f831cf03c3ff08c87c578d7568edc15
+        hopTransactionHash:
+          type: string
+          description: 홉 트랜잭션 해시
+          example: '0x60603c815f0ba0ad6b7f2ae398bd7cb9fe71347f984e32453fe4fe53f255dfd3'
+        createdAt:
+          type: string
+          description: '트랜잭션 생성 시간 (형식: ms, UNIX time)'
+          example: '1612411568760'
+        updatedAt:
+          type: string
+          description: '트랜잭션 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)'
+          example: '1612411724023'
+        name:
+          type: string
+          description: 해당 내역의 지갑 또는 입금 주소의 이름
+          example: ETH 실비 정산
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+      required:
+        - id
+        - from
+        - to
+        - amount
+        - status
+        - orgId
+        - decimals
+        - walletId
+        - depositAddressId
+        - ticker
+        - transferType
+        - transactionId
+        - transactionHash
+        - hopTransactionId
+        - hopTransactionHash
+        - createdAt
+        - updatedAt
+        - name
+    GetManyResponseForTransferDTO:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferDTO'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - results
+    TransactionIdNotFoundException:
+      type: object
+      properties:
+        message:
+          type: string
+          description: API 에러 메시지
+          example: transaction id '1' does not exists
+        code:
+          type: number
+          description: 헤네시스 API 에러 코드
+          example: 4000
+      required:
+        - message
+        - code
+    TransactionDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다, 블록체인에서 부여하는 트랜잭션 해시와
+            다른 개념입니다)
+          example: b549bfaaa74d1c4244ecc655738b1984
+        blockchain:
+          enum:
+            - ETHEREUM
+            - KLAYTN
+            - BITCOIN
+            - LITECOIN
+            - FILECOIN
+            - BINANCE_SMART_CHAIN
+            - BITCOIN_CASH
+            - POLYGON
+          type: string
+          description: 메인넷 종류
+          example: ETHEREUM
+        hash:
+          type: string
+          description: 트랜잭션 해시 (트랜잭션 상태가 REQUESTED일 때는 존재하지 않습니다)
+          example: '0x8a1ef722a2884d53a86874c8ba19bcf267bb0b8a81da00c14ddc6457cf1eaf96'
+        error:
+          type: string
+          description: 트랜잭션 전송 시 발생한 에러
+          example: 'null'
+        status:
+          enum:
+            - PENDING_APPROVAL
+            - REJECTED
+            - REQUESTED
+            - PENDING
+            - FAILED
+            - MINED
+            - REVERTED
+            - INTERNAL_REVERTED
+            - CONFIRMED
+            - REPLACED
+          type: string
+          description: 트랜잭션 상태
+          example: CONFIRMED
+        fee:
+          type: string
+          description: 트랜잭션 수수료
+          example: '10000000'
+        hopAddress:
+          type: string
+          description: 홉 주소
+          example: '0x1AA2705a26452cC22430F31A5c85974bBEDDe5a5'
+        createdAt:
+          type: string
+          description: '트랜잭션 생성 시간 (형식: ms, UNIX time)'
+          example: '1614582928222'
+        updatedAt:
+          type: string
+          description: '트랜잭션 상태가 변한 시간 (형식: ms, UNIX time)'
+          example: '1612411724023'
+      required:
+        - id
+        - blockchain
+        - status
+        - createdAt
+        - updatedAt
+    GetManyResponseForTransactionDTO:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionDTO'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - results
+    WalletNotFoundException:
+      type: object
+      properties:
+        message:
+          type: string
+          description: API 에러 메시지
+          example: wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
+        code:
+          type: number
+          description: 헤네시스 API 에러 코드
+          example: 4000
+      required:
+        - message
+        - code
+    NoWalletNameException:
+      type: object
+      properties:
+        message:
+          type: string
+          description: API 에러 메시지
+          example: wallet name should not be empty
+        code:
+          type: number
+          description: 헤네시스 API 에러 코드
+          example: 4000
+      required:
+        - message
+        - code
+    DepositAddressNotFoundException:
+      type: object
+      properties:
+        message:
+          type: string
+          description: API 에러 메시지
+          example: deposit address 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
+        code:
+          type: number
+          description: 헤네시스 API 에러 코드
+          example: 4000
+      required:
+        - message
+        - code
+    WalletDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 지갑 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
+        name:
+          type: string
+          description: 지갑 이름
+          example: ethereum-wallet
+        address:
+          type: string
+          description: 지갑 주소
+          example: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
+        blockchain:
+          enum: &ref_0
+            - ETHEREUM
+            - KLAYTN
+            - BITCOIN
+            - LITECOIN
+            - FILECOIN
+            - BINANCE_SMART_CHAIN
+            - BITCOIN_CASH
+            - POLYGON
+          type: string
+          description: 메인넷 종류
+          example: ETHEREUM
+        createdAt:
+          type: string
+          description: '지갑 생성 시간 (형식: ms, UNIX time)'
+          example: '1612411568760'
+        updatedAt:
+          type: string
+          description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
+          example: '1612411724023'
+        status:
+          enum: &ref_1
+            - ACTIVE
+            - CREATING
+            - FAILED
+            - INACTIVE
+          type: string
+          description: 지갑 상태
+          example: ACTIVE
+        whitelistActivated:
+          type: boolean
+          description: 출금 주소 화이트리스팅의 활성화 유무
+          example: false
+        version:
+          type: string
+          description: 컨트랙트 버전
+          example: v4
+      required:
+        - id
+        - name
+        - address
+        - blockchain
+        - createdAt
+        - updatedAt
+        - status
+    BalanceDTO:
+      type: object
+      properties:
+        coinId:
+          type: number
+          description: Henesis에서 부여한 Coin의 ID
+          example: 11
+        amount:
+          type: string
+          description: '확정된 잔액 (단위: wei, peb)'
+          example: '1000000000000'
+        spendableAmount:
+          type: string
+          description: '출금 가능한 잔액 (= 총 잔액 - 확정되지 않은 출금 요청액)(단위: wei, peb, jager)'
+          example: '1000000000000'
+        name:
+          type: string
+          description: 코인 이름
+          example: ethereum
+        ticker:
+          type: string
+          description: 코인의 기호
+          example: ETH
+        decimals:
+          type: number
+          description: 코인의 소수점 자릿수
+          example: 18
+      required:
+        - coinId
+        - amount
+        - spendableAmount
+        - name
+        - ticker
+        - decimals
+    DepositAddressDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 입금 주소 ID
+          example: a1f9e4c33ea9f51974490fd1c30efb3e
+        address:
+          type: string
+          description: 입금 주소
+          example: '0x70d4e4abbe12c9c5098df3b31d9ad89c99a01967'
+        name:
+          type: string
+          description: 입금 주소 이름
+          example: deposit-address-1
+        blockchain:
+          enum:
+            - ETHEREUM
+            - KLAYTN
+            - BITCOIN
+            - LITECOIN
+            - FILECOIN
+            - BINANCE_SMART_CHAIN
+            - BITCOIN_CASH
+            - POLYGON
+          type: string
+          description: 메인넷 종류
+          example: ETHEREUM
+        createdAt:
+          type: string
+          description: '지갑 생성 시간 (단위: ms, UNIX time)'
+          example: '1614582860091'
+        updatedAt:
+          type: string
+          description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
+          example: '1614582928222'
+        version:
+          type: string
+          description: 입금 주소 버전
+          example: v4
+      required:
+        - id
+        - address
+        - name
+        - blockchain
+        - createdAt
+        - updatedAt
+        - version
+    KeyDTO:
+      type: object
+      properties:
+        address:
+          type: string
+          description: ''
+          example: '0x4ef3ba60c8710f45371835cddafabf33daa83e1d'
+        pub:
+          type: string
+          description: pub
+          example: >-
+            0x31bd93d049fefed19b640c8069046c223126505754b9a57f5df43a89b104d92c8d4be4f51a6b5bb08a3ec6c2ff022e8ff018bad52ee05fa81b4eeae16a0e2db1
+        feeDelegationEnabled:
+          type: boolean
+          description: feeDelegationEnabled
+          example: false
+        keyFile:
+          type: string
+          description: keyFile
+          example: '1'
+        keyId:
+          type: string
+          description: keyId
+          example: 52e779750bb1330d2f23439c6da821ee
+      required:
+        - pub
+    MasterWalletDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 지갑 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
+        name:
+          type: string
+          description: 지갑 이름
+          example: ethereum-wallet
+        address:
+          type: string
+          description: 지갑 주소
+          example: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
+        blockchain:
+          enum: *ref_0
+          type: string
+          description: 메인넷 종류
+          example: ETHEREUM
+        createdAt:
+          type: string
+          description: '지갑 생성 시간 (형식: ms, UNIX time)'
+          example: '1612411568760'
+        updatedAt:
+          type: string
+          description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
+          example: '1612411724023'
+        status:
+          enum: *ref_1
+          type: string
+          description: 지갑 상태
+          example: ACTIVE
+        whitelistActivated:
+          type: boolean
+          description: 출금 주소 화이트리스팅의 활성화 유무
+          example: false
+        version:
+          type: string
+          description: 컨트랙트 버전
+          example: v4
+        accountKey:
+          description: KEY
+          example: &ref_20
+            address: '0x4ef3ba60c8710f45371835cddafabf33daa83e1d'
+            pub: >-
+              0x31bd93d049fefed19b640c8069046c223126505754b9a57f5df43a89b104d92c8d4be4f51a6b5bb08a3ec6c2ff022e8ff018bad52ee05fa81b4eeae16a0e2db1
+            feeDelegationEnabled: false
+            keyFile: '1'
+            keyId: 52e779750bb1330d2f23439c6da821ee
+          allOf:
+            - $ref: '#/components/schemas/KeyDTO'
+        encryptionKey:
+          type: string
+          description: 마스터 지갑 비밀번호를 복구하기 위해 암호화하는 데 쓰인 키
+          example: f0880e48251dd2f8574a8c8a4d65311030185d5e451e8a474b89c2b473b5d953
+      required:
+        - id
+        - name
+        - address
+        - blockchain
+        - createdAt
+        - updatedAt
+        - status
+        - accountKey
+        - encryptionKey
+    ChangeWalletNameRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 지갑의 새로운 이름
+          example: name
+      required:
+        - name
+    SendCoinRequestDTO:
+      type: object
+      properties:
+        ticker:
+          type: string
+          description: 암호화폐의 기호 (ticker)
+          example: ETH
+        to:
+          type: string
+          description: 암호화폐를 받을 지갑 주소
+          example: '0xab28d146e860e0b132695c941f706d783a158345'
+        amount:
+          type: string
+          description: '암호화폐의 양 (단위: wei, peb)'
+          example: '100000000'
+        passphrase:
+          type: string
+          description: 지갑의 비밀번호
+          example: passphrase
+        gasPrice:
+          type: string
+          description: >-
+            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
+            값으로 설정합니다.
+          example: '8000000000'
+        gasLimit:
+          type: string
+          description: 트랜잭션에 사용할 gas limit. null일 경우, Henesis가 자동으로 설정합니다.
+          example: '500000'
+        isHopTransaction:
+          type: boolean
+          description: 컨트랙트를 통한 입금을 원치 않는 경우, 컨트랙트가 아닌 EOA로 출금을 진행 합니다.
+          example: false
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+      required:
+        - ticker
+        - to
+        - amount
+        - passphrase
+    CreateTransactionRequestDTO:
+      type: object
+      properties:
+        to:
+          type: string
+          description: 트랜잭션을 보낼 스마트 컨트랙트 주소
+          example: '0xc10f954e2be747e1d9d47948b2c15e5b71c5d9c8'
+        value:
+          type: string
+          description: 트랜잭션에 담을 암호화폐의 양
+          example: '0'
+        data:
+          type: string
+          description: 트랜잭션에 담을 데이터
+          example: '0x0'
+        passphrase:
+          type: string
+          description: 지갑의 비밀번호
+          example: passphrase
+        gasPrice:
+          type: string
+          description: >-
+            트랜잭션에 사용할 gas price (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는
+            값으로 설정합니다.
+          example: '10000000000'
+        gasLimit:
+          type: string
+          description: 트랜잭션에 사용할 gas limit. null일 경우, Henesis가 자동으로 설정합니다.
+          example: '500000'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+      required:
+        - to
+        - data
+        - passphrase
+    Target:
+      type: object
+      properties:
+        coinId:
+          type: number
+          description: Henesis에서 부여한 Coin의 ID
+          example: 11
+        userWalletId:
+          type: string
+          description: 사용자 지갑 ID
+          example: c2bd6506cb56a6baaff32653ac77ef49
+      required:
+        - coinId
+        - userWalletId
+    CreateFlushRequestDTO:
+      type: object
+      properties:
+        targets:
+          description: 집금할 대상의 목록
+          example: &ref_2
+            - coinId: 11
+              userWalletId: c2bd6506cb56a6baaff32653ac77ef49
+          type: array
+          items:
+            $ref: '#/components/schemas/Target'
+        gasPrice:
+          type: string
+          description: >-
+            트랜잭션에 사용할 gas price 입니다. (단위: peb, jager) null일 경우, Henesis가 자동으로 5분
+            안에 채굴될 수 있는 값으로 설정합니다.
+          example: '8000000000'
+        gasLimit:
+          type: string
+          description: 트랜잭션에 사용할 gas limit 입니다. null일 경우, Henesis가 자동으로 설정합니다.
+          example: '10000000000'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+      required:
+        - targets
+    UserWalletDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 지갑 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
+        name:
+          type: string
+          description: 지갑 이름
+          example: ethereum-wallet
+        address:
+          type: string
+          description: 지갑 주소
+          example: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
+        blockchain:
+          enum: *ref_0
+          type: string
+          description: 메인넷 종류
+          example: ETHEREUM
+        createdAt:
+          type: string
+          description: '지갑 생성 시간 (형식: ms, UNIX time)'
+          example: '1612411568760'
+        updatedAt:
+          type: string
+          description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
+          example: '1612411724023'
+        status:
+          enum: *ref_1
+          type: string
+          description: 지갑 상태
+          example: ACTIVE
+        whitelistActivated:
+          type: boolean
+          description: 출금 주소 화이트리스팅의 활성화 유무
+          example: false
+        version:
+          type: string
+          description: 컨트랙트 버전
+          example: v4
+      required:
+        - id
+        - name
+        - address
+        - blockchain
+        - createdAt
+        - updatedAt
+        - status
+    GetManyResponseForUserWalletDTO:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserWalletDTO'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - results
+    CreateUserWalletRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 지갑 이름
+          example: userWalletName
+        passphrase:
+          type: string
+          description: 지갑 비밀번호
+          example: passphrase
+        gasPrice:
+          type: string
+          description: '트랜잭션에 사용할 gas price (단위: wei, peb)'
+          example: '0x1'
+        salt:
+          type: string
+          description: 지갑 생성에 사용되는 난수
+          example: salt
+      required:
+        - name
+        - passphrase
+    RetryCreateUserWalletRequestDTO:
+      type: object
+      properties:
+        gasPrice:
+          type: string
+          description: |-
+            트랜잭션에 사용할 gas price (단위: wei, peb)
+            null일 경우, Henesis가 자동으로 5분 안에 채굴될 수 있는 값으로 설정합니다.
+          example: '0x1'
+    TransferNftRequestDTO:
+      type: object
+      properties:
+        nftId:
+          type: number
+          description: 출금하고자 하는 NFT 컨트랙트의 ID
+          example: 1
+        tokenOnchainId:
+          type: string
+          description: 출금하고자 하는 토큰의 id
+          example: '3'
+        to:
+          type: string
+          description: 출금 목적 주소
+          example: '0xab28d146e860e0b132695c941f706d783a158345'
+        passphrase:
+          type: string
+          description: 지갑의 비밀번호
+          example: passphrase
+        gasPrice:
+          type: string
+          description: >-
+            트랜잭션에 사용할 gas price (단위: wei, peb, jager) null일 경우, Henesis가 자동으로 5분
+            안에 채굴될 수 있는 값으로 설정합니다.
+          example: '8000000000'
+        gasLimit:
+          type: string
+          description: 트랜잭션에 사용할 gas limit. null일 경우, Henesis가 자동으로 설정합니다.
+          example: '500000'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+      required:
+        - nftId
+        - tokenOnchainId
+        - to
+        - passphrase
+    NftTarget:
+      type: object
+      properties:
+        nftId:
+          type: number
+          description: 집금하고자 하는 NFT 컨트랙트의 ID
+          example: 11
+        userWalletId:
+          type: string
+          description: 사용자 지갑 ID
+          example: c2bd6506cb56a6baaff32653ac77ef49
+      required:
+        - nftId
+        - userWalletId
+    CreateNftFlushRequestDTO:
+      type: object
+      properties:
+        targets:
+          description: 집금할 대상의 목록
+          example: *ref_2
+          type: array
+          items:
+            $ref: '#/components/schemas/NftTarget'
+        gasPrice:
+          type: string
+          description: >-
+            트랜잭션에 사용할 gas price 입니다. (단위: wei) null일 경우, Henesis가 자동으로 5분 안에 채굴될
+            수 있는 값으로 설정합니다.
+          example: '8000000000'
+        gasLimit:
+          type: string
+          description: 트랜잭션에 사용할 gas limit 입니다. null일 경우, Henesis가 자동으로 설정합니다.
+          example: '10000000000'
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+      required:
+        - targets
+    NftDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: NFT 컨트랙트의 id
+          example: 11
+        name:
+          type: string
+          description: NFT 컨트랙트의 이름
+          example: Dave Starbelly
+        symbol:
+          type: string
+          description: NFT 컨트랙트의 심볼
+          example: Dave Starbelly
+        address:
+          type: string
+          description: NFT 컨트랙트의 주소
+          example: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+      required:
+        - id
+        - name
+        - symbol
+        - address
+    NftBalanceDTO:
+      type: object
+      properties:
+        nft:
+          description: NFT 컨트랙트
+          example: &ref_3
+            id: 11
+            name: Dave Starbelly
+            symbol: '1'
+            address: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+          allOf:
+            - $ref: '#/components/schemas/NftDTO'
+        tokenOnchainId:
+          type: string
+          description: 토큰의 ID
+          example: '1'
+        tokenUri:
+          type: string
+          description: 토큰의 URI
+          example: https://opensea-creatures-api.herokuapp.com/api/creature/3
+        tokenMetadata:
+          type: object
+          description: 토큰에 정의된 metadata
+          example:
+            description: Friendly OpenSea Creature that enjoys long swims in the ocean.
+            external_url: https://openseacreatures.io/3
+            image: >-
+              https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png
+            name: Dave Starbelly
+            attributes:
+              - trait_type: Base
+                value: Starfish
+              - trait_type: Eyes
+                value: Big
+        masterWalletId:
+          type: string
+          description: 마스터 지갑 id
+          example: 532d994e923817013aff23c6dc1ae766
+        userWalletId:
+          type: string
+          description: 유저 지갑 id
+          example: 4daf51ef18e3a1ce1148b33a6a1b1589
+        isWithdrawalPending:
+          type: boolean
+          description: 출금 중 여부
+          example: false
+      required:
+        - nft
+        - tokenOnchainId
+        - tokenUri
+        - tokenMetadata
+        - masterWalletId
+        - userWalletId
+        - isWithdrawalPending
+    GetManyResponseForNftBalanceDTO:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/NftBalanceDTO'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - results
+    NftTokenDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          description: NFT 토큰의 이름
+          example: Haechi 1st NFT
+        onchainId:
+          type: string
+          description: NFT 토큰의 온체인 ID
+          example: '1'
+        uri:
+          type: string
+          description: NFT 토큰의 URI
+          example: https://opensea-creatures-api.herokuapp.com/api/creature/3
+        externalUrl:
+          type: string
+          description: NFT 토큰 메타데이터 중 하나인 외부 주소
+          example: https://openseacreatures.io/3
+        imageUrl:
+          type: string
+          description: NFT 토큰의 이미지 주소
+          example: https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png
+        metadata:
+          type: object
+          description: NFT 토큰의 메타데이터
+          example: &ref_4
+            description: Friendly OpenSea Creature that enjoys long swims in the ocean.
+            external_url: https://openseacreatures.io/3
+            image: >-
+              https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png
+            name: Dave Starbelly
+            attributes:
+              - trait_type: Base
+                value: Starfish
+              - trait_type: Eyes
+                value: Big
+      required:
+        - name
+        - onchainId
+        - uri
+        - externalUrl
+        - imageUrl
+        - metadata
+    NftTransferDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: NFT 입출금 내역의 ID
+          example: 375031
+        from:
+          type: string
+          description: 출금 주소
+          example: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
+        to:
+          type: string
+          description: 입금 주소
+          example: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+        status:
+          enum:
+            - PENDING_APPROVAL
+            - REJECTED
+            - REQUESTED
+            - PENDING
+            - FAILED
+            - REVERTED
+            - REPLACED
+            - MINED
+            - CONFIRMED
+          type: string
+          description: 트랜잭션 상태
+          example: CONFIRMED
+        orgId:
+          type: string
+          description: 지갑이 속한 팀(Organization)의 ID
+          example: 31cafc79bd437e1b8e7b8209e399d3f3
+        walletId:
+          type: string
+          description: 입출금 지갑 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
+        depositAddressId:
+          type: string
+          description: 입금 주소 ID
+          example: ae40b1b3dd953e5592c21e58be30d807
+        nft:
+          description: NFT 정보
+          example: *ref_3
+          allOf:
+            - $ref: '#/components/schemas/NftDTO'
+        token:
+          description: NFT 토큰 정보
+          example: &ref_27
+            name: Haechi 1st NFT
+            onchainId: '1'
+            uri: https://opensea-creatures-api.herokuapp.com/api/creature/3
+            externalUrl: https://openseacreatures.io/3
+            imageUrl: >-
+              https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png
+            metadata: *ref_4
+          allOf:
+            - $ref: '#/components/schemas/NftTokenDTO'
+        transferType:
+          enum:
+            - WITHDRAWAL
+            - DEPOSIT
+          type: string
+          description: 입출금 타입
+          example: WITHDRAWAL
+        transactionId:
+          type: string
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          example: 8c87c578d7568edc156f831cf03c3ff0
+        transactionHash:
+          type: string
+          description: 트랜잭션 해시
+          example: '0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f'
+        createdAt:
+          type: string
+          description: '트랜잭션 생성 시간 (형식: ms, UNIX time)'
+          example: '1612411568760'
+        updatedAt:
+          type: string
+          description: '트랜잭션 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)'
+          example: '1612411724023'
+        name:
+          type: string
+          description: 해당 내역의 지갑 또는 입금 주소의 이름
+          example: ETH 실비 정산
+        metadata:
+          type: string
+          description: 기타 정보 기록용 메타 데이터 (255자 제한)
+          example: metadata
+      required:
+        - id
+        - from
+        - to
+        - status
+        - orgId
+        - walletId
+        - depositAddressId
+        - nft
+        - token
+        - transferType
+        - transactionId
+        - transactionHash
+        - createdAt
+        - updatedAt
+        - name
+    GetManyResponseForNftTransferDTO:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/NftTransferDTO'
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      required:
+        - results
+    NftNotFoundException:
+      type: object
+      properties:
+        message:
+          type: string
+          description: API 에러 메시지
+          example: nft '2' does not exist
+        code:
+          type: number
+          description: 헤네시스 API 에러 코드
+          example: 4000
+      required:
+        - message
+        - code
+    SyncMetadataRequestDTO:
+      type: object
+      properties:
+        tokenOnchainId:
+          type: string
+          description: 토큰의 ID
+          example: id
+      required:
+        - tokenOnchainId
+paths:
+  /api/v3/polygon/coins:
+    get:
+      operationId: polygon-CoinsController_getCoins
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 전체 코인 목록 조회하기
+      description: Henesis Wallet에서 지원하는 모든 가상자산(토큰, 코인)을 조회합니다.
+      parameters:
+        - &ref_5
+          name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - &ref_6
+          name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
+          schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
+            type: string
+        - name: flag
+          required: true
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CoinDTO'
+          description: ''
+        '401': &ref_8
+          description: 인증이 실패했을 때 발생하는 에러입니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
+              examples:
+                InvalidAccessTokenException:
+                  value: &ref_9
+                    message: expired or invalid access token and signature
+                    code: 4001
+                AccessTokenNotProvidedException:
+                  value: &ref_10
+                    message: access token not provided
+                    code: 4001
+                InvalidAccessIpException:
+                  value: &ref_11
+                    message: ip '106.101.128.133' is not allowed
+                    code: 4008
+      tags:
+        - coins
+  /api/v3/polygon/coins/{ticker}:
+    get:
+      operationId: polygon-CoinsController_getCoin
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 코인 정보 조회하기
+      description: Henesis Wallet에서 지원하는 특정 가상자산(토큰, 코인)을 조회합니다.
+      parameters:
+        - *ref_5
+        - *ref_6
+        - name: ticker
+          required: true
+          in: path
+          description: 코인의 기호
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoinDTO'
+              example:
+                id: 11
+                name: ethereum
+                ticker: ETH
+                address: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+                description: 이더리움
+                decimals: 18
+                blockchain: ETHEREUM
+                attributes: *ref_7
+          description: ''
+        '400':
+          description: 코인 정보가 없을 때 response 입니다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoCoinException'
+              example:
+                message: there is no '2' coin at 'ETHEREUM'
+                code: 4000
+        '401': *ref_8
+      tags:
+        - coins
+  /api/v3/polygon/contract-calls:
+    get:
+      operationId: polygon-ContractCallsController_getCallEvents
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 스마트 컨트랙트 호출 내역 조회하기
+      description: 내가 발생시킨 스마트 컨트랙트 호출 내역을 조회합니다.
+      parameters:
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
+          schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
+            type: string
+        - name: walletId
+          required: false
+          in: query
+          description: 지갑 ID
+          schema:
+            type: string
+        - name: transactionId
+          required: false
+          in: query
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          schema:
+            type: string
+        - name: transactionHash
+          required: false
+          in: query
+          description: 트랜잭션 해시
+          schema:
+            type: string
+        - name: status
+          required: false
+          in: query
+          description: 트랜잭션 상태
+          schema:
+            type: string
+        - name: ticker
+          required: false
+          in: query
+          description: 코인의 기호
+          schema:
+            type: string
+        - name: updatedAtGte
+          required: false
+          in: query
+          description: 'updatedAt이 해당 시점과 같거나 그보다 이후인 트랜잭션 조회 (형식: ms, UNIX time) '
+          schema:
+            type: string
+        - name: updatedAtLt
+          required: false
+          in: query
+          description: 'updatedAt이 해당 시점보다 이전인 트랜잭션 조회 (형식: ms, UNIX time) '
+          schema:
+            type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForContractCallsDTO'
+              example:
+                pagination: &ref_12
+                  nextUrl: http://localhost:3000/api/v3/ethereum/transfers?page=2
+                  previousUrl: http://localhost:3000/api/v3/ethereum/transfers?page=1
+                  totalCount: 5
+                results:
+                  - id: '375031'
+                    data: >-
+                      0xa9059cbb0000000000000000000000001f10ecbd971eab345ea19e96dc237b1fbd63de9600000000000000000000000000000000000000000000000000000000000f4240
+                    status: CONFIRMED
+                    walletId: ae40b1b3dd953e5592c21e58be30d807
+                    orgId: 31cafc79bd437e1b8e7b8209e399d3f3
+                    transactionId: 8c87c578d7568edc156f831cf03c3ff0
+                    toAddress: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+                    fromAddress: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
+                    transactionHash: >-
+                      0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f
+                    createdAt: '1612411568760'
+                    updatedAt: '1612411724023'
+                    blockchain: ETHEREUM
+                    metadata: metadata
+          description: ''
+        '400':
+          description: 올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidStatusException'
+              example: &ref_13
+                message: '''status'' is invalid: not supported event status'
+                code: 4001
+        '401':
+          description: 인증이 실패했을 때 발생하는 에러입니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
+              examples:
+                InvalidAccessTokenException:
+                  value: *ref_9
+                AccessTokenNotProvidedException:
+                  value: *ref_10
+                InvalidAccessIpException:
+                  value: *ref_11
+      tags:
+        - contract-calls
+  /api/v3/polygon/transfers:
+    get:
+      operationId: polygon-TransfersController_getTransfers
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 전체 입출금 목록 조회하기
+      description: 모든 지갑의 가상자산 입출금 내역을 조회합니다.
+      parameters:
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
+          schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
+            type: string
+        - name: ticker
+          required: false
+          in: query
+          description: 코인의 기호
+          schema:
+            type: string
+        - name: userWalletId
+          required: false
+          in: query
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+        - name: masterWalletId
+          required: false
+          in: query
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: transactionId
+          required: false
+          in: query
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          schema:
+            type: string
+        - name: transactionHash
+          required: false
+          in: query
+          description: 트랜잭션 해시
+          schema:
+            type: string
+        - name: status
+          required: false
+          in: query
+          description: 트랜잭션 상태
+          schema:
+            type: string
+        - name: transferType
+          required: false
+          in: query
+          description: 트랜잭션의 종류(입금, 출금)
+          schema:
+            type: string
+        - name: updatedAtGte
+          required: false
+          in: query
+          description: 'updatedAt이 해당 시점과 같거나 그보다 이후인 트랜잭션 조회 (형식: ms, UNIX time) '
+          schema:
+            type: string
+        - name: updatedAtLt
+          required: false
+          in: query
+          description: 'updatedAt이 해당 시점보다 이전인 트랜잭션 조회 (형식: ms, UNIX time) '
+          schema:
+            type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForTransferDTO'
+              example:
+                pagination: *ref_12
+                results:
+                  - id: 375031
+                    from: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
+                    to: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+                    amount: '1000000000'
+                    status: CONFIRMED
+                    orgId: 31cafc79bd437e1b8e7b8209e399d3f3
+                    decimals: 18
+                    walletId: ae40b1b3dd953e5592c21e58be30d807
+                    depositAddressId: ae40b1b3dd953e5592c21e58be30d807
+                    ticker: USDT
+                    transferType: WITHDRAWAL
+                    transactionId: 8c87c578d7568edc156f831cf03c3ff0
+                    transactionHash: >-
+                      0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f
+                    hopTransactionId: 6f831cf03c3ff08c87c578d7568edc15
+                    hopTransactionHash: >-
+                      0x60603c815f0ba0ad6b7f2ae398bd7cb9fe71347f984e32453fe4fe53f255dfd3
+                    createdAt: '1612411568760'
+                    updatedAt: '1612411724023'
+                    name: ETH 실비 정산
+                    metadata: metadata
+          description: ''
+        '400':
+          description: 올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidStatusException'
+              example: *ref_13
+        '401':
+          description: 인증이 실패했을 때 발생하는 에러입니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
+              examples:
+                InvalidAccessTokenException:
+                  value: *ref_9
+                AccessTokenNotProvidedException:
+                  value: *ref_10
+                InvalidAccessIpException:
+                  value: *ref_11
+      tags:
+        - transfers
+  /api/v3/polygon/fee-wallet/balance:
+    get:
+      operationId: polygon-FeeWalletController_getBalance
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 수수료 지갑 잔고 조회하기
+      description: 수수료 지갑의 잔액을 조회합니다.
+      parameters:
+        - name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
+          schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceDTO'
+              example:
+                coinId: 11
+                amount: '1000000000000'
+                spendableAmount: '1000000000000'
+                name: ethereum
+                ticker: ETH
+                decimals: 18
+          description: ''
+        '401':
+          description: 인증이 실패했을 때 발생하는 에러입니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
+              examples:
+                InvalidAccessTokenException:
+                  value: *ref_9
+                AccessTokenNotProvidedException:
+                  value: *ref_10
+                InvalidAccessIpException:
+                  value: *ref_11
+      tags:
+        - fee-wallet
+  /api/v3/polygon/transactions/{transactionId}:
+    get:
+      operationId: polygon-TransactionsController_getTransaction
+      summary: 개별 트랜잭션 조회하기
+      description: 내가 발생시킨 특정 트랜잭션의 정보를 조회합니다.
+      parameters:
+        - &ref_14
+          name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - &ref_15
+          name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
+          schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
+            type: string
+        - name: transactionId
+          required: true
+          in: path
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: &ref_16
+                id: b549bfaaa74d1c4244ecc655738b1984
+                blockchain: ETHEREUM
+                hash: >-
+                  0x8a1ef722a2884d53a86874c8ba19bcf267bb0b8a81da00c14ddc6457cf1eaf96
+                error: 'null'
+                status: CONFIRMED
+                fee: '10000000'
+                hopAddress: '0x1AA2705a26452cC22430F31A5c85974bBEDDe5a5'
+                createdAt: '1614582928222'
+                updatedAt: '1612411724023'
+          description: ''
+        '400':
+          description: transaction id가 없을 때 발생합니다
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionIdNotFoundException'
+              example:
+                message: transaction id '1' does not exists
+                code: 4000
+        '401': &ref_17
+          description: 인증이 실패했을 때 발생하는 에러입니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
+              examples:
+                InvalidAccessTokenException:
+                  value: *ref_9
+                AccessTokenNotProvidedException:
+                  value: *ref_10
+                InvalidAccessIpException:
+                  value: *ref_11
+      tags:
+        - transactions
+  /api/v3/polygon/transactions:
+    get:
+      operationId: polygon-TransactionsController_getTransactions
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 트랜잭션 목록 조회하기
+      description: 트랜잭션 목록을 조회합니다.
+      parameters:
+        - *ref_14
+        - *ref_15
+        - name: address
+          required: false
+          in: query
+          description: 트랜잭션 주소
+          schema:
+            type: string
+        - name: toAddress
+          required: false
+          in: query
+          description: 받는 주소
+          schema:
+            type: string
+        - name: fromAddress
+          required: false
+          in: query
+          description: 보내는 주소
+          schema:
+            type: string
+        - name: transactionHash
+          required: false
+          in: query
+          description: 트랜잭션 해시
+          schema:
+            type: string
+        - name: start
+          required: false
+          in: query
+          description: 해당 시점 이후의 트랜잭션 조회
+          schema:
+            type: string
+        - name: end
+          required: false
+          in: query
+          description: 해당 시점 이전의 트랜잭션 조회
+          schema:
+            type: string
+        - name: status
+          required: false
+          in: query
+          description: 트랜잭션 상태
+          schema:
+            type: string
+        - name: statuses
+          required: false
+          in: query
+          description: 트랜잭션 상태
+          schema:
+            type: array
+            items:
+              type: string
+        - name: types
+          required: false
+          in: query
+          description: 트랜잭션 종류
+          schema:
+            type: array
+            items:
+              type: string
+        - name: keyId
+          required: false
+          in: query
+          description: 키 ID
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForTransactionDTO'
+              example:
+                pagination: *ref_12
+                results:
+                  - *ref_16
+          description: ''
+        '401': *ref_17
+      tags:
+        - transactions
+  /api/v3/polygon/wallets:
+    get:
+      operationId: polygon-WalletsController_getMasterWallets
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 전체 마스터 지갑 목록 조회하기
+      description: 모든 지갑의 목록을 조회합니다.
+      parameters:
+        - &ref_18
+          name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - &ref_19
+          name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
+          schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
+            type: string
+        - name: name
+          required: false
+          in: query
+          description: 지갑 이름
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MasterWalletDTO'
+          description: ''
+        '401': &ref_21
+          description: 인증이 실패했을 때 발생하는 에러입니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
+              examples:
+                InvalidAccessTokenException:
+                  value: *ref_9
+                AccessTokenNotProvidedException:
+                  value: *ref_10
+                InvalidAccessIpException:
+                  value: *ref_11
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}:
+    get:
+      operationId: polygon-WalletsController_getMasterWallet
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 마스터 지갑 정보 조회하기
+      description: 특정 마스터 지갑의 정보를 조회합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletDTO'
+              example: &ref_23
+                id: ae40b1b3dd953e5592c21e58be30d807
+                name: ethereum-wallet
+                address: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
+                blockchain: ETHEREUM
+                createdAt: '1612411568760'
+                updatedAt: '1612411724023'
+                status: ACTIVE
+                whitelistActivated: false
+                version: v4
+                accountKey: *ref_20
+                encryptionKey: >-
+                  f0880e48251dd2f8574a8c8a4d65311030185d5e451e8a474b89c2b473b5d953
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: &ref_22
+                message: wallet 'c27732256a1f8d45df5aec31ba7ef85cd' does not exist
+                code: 4000
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/balance:
+    get:
+      operationId: polygon-WalletsController_getMasterWalletBalance
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 마스터 지갑 잔고 조회하기
+      description: 특정 마스터 지갑의 잔고를 조회합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: ticker
+          required: false
+          in: query
+          description: 코인의 기호
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BalanceDTO'
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_22
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/name:
+    patch:
+      operationId: polygon-WalletsController_changeMasterWalletName
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 마스터 지갑 이름 변경하기
+      description: 특정 마스터 지갑의 이름을 변경합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeWalletNameRequestDTO'
+      responses:
+        '200':
+          description: ''
+        '204':
+          description: ''
+        '400':
+          description: 다음과 같은 bad request 에러가 발생할 수 있습니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/WalletNotFoundException'
+                  - $ref: '#/components/schemas/NoWalletNameException'
+              examples:
+                WalletNotFoundException:
+                  value: *ref_22
+                NoWalletNameException:
+                  value: &ref_24
+                    message: wallet name should not be empty
+                    code: 4000
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/transfer:
+    post:
+      operationId: polygon-WalletsController_sendMasterWalletCoin
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 마스터 지갑에서 코인 전송하기
+      description: 특정 마스터 지갑에서 가상자산을 송금합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendCoinRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_16
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_22
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/contract-call:
+    post:
+      operationId: polygon-WalletsController_sendMasterWalletContractCall
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 마스터 지갑에서 스마트 컨트랙트 호출하기
+      description: 특정 마스터 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTransactionRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_16
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_22
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/flush:
+    post:
+      operationId: polygon-WalletsController_flush
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 잔액을 모두 끌어오기
+      description: 여러 사용자 지갑의 특정 코인/토큰 잔액을 모두 상위의 마스터 지갑으로 끌어옵니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFlushRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_16
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_22
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/user-wallets:
+    get:
+      operationId: polygon-WalletsController_getUserWallets
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 전체 사용자 지갑 목록 조회하기
+      description: 특정 마스터 지갑에 속한 모든 사용자 지갑 목록을 조회합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: sort
+          required: false
+          in: query
+          description: 결과 정렬 방식
+          schema:
+            type: string
+        - name: name
+          required: false
+          in: query
+          description: 지갑 이름
+          schema:
+            type: string
+        - name: address
+          required: false
+          in: query
+          description: 지갑 주소
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForUserWalletDTO'
+              example: *ref_23
+          description: ''
+        '401': *ref_21
+      tags:
+        - wallets
+    post:
+      operationId: polygon-WalletsController_createUserWallet
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 생성하기
+      description: 특정 마스터 지갑 하위에 새로운 사용자 지갑을 생성합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserWalletRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWalletDTO'
+              example: *ref_23
+          description: ''
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/user-wallets/{userWalletId}:
+    get:
+      operationId: polygon-WalletsController_getUserWallet
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 정보 조회하기
+      description: 특정 사용자 지갑의 정보를 조회합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletDTO'
+              example: *ref_23
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_22
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/user-wallets/{userWalletId}/recreate:
+    post:
+      operationId: polygon-WalletsController_retryCreateUserWallet
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 생성 실패시 재시도하기
+      description: 특정 마스터 지갑 하위에 특정 사용자 지갑 생성 트랜잭션이 실패했을 때 재시도합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 유저 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetryCreateUserWalletRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: &ref_25
+                id: b549bfaaa74d1c4244ecc655738b1984
+                blockchain: POLYGON
+                hash: >-
+                  0x8a1ef722a2884d53a86874c8ba19bcf267bb0b8a81da00c14ddc6457cf1eaf96
+                error: 'null'
+                status: CONFIRMED
+                fee: '10000000'
+                createdAt: '1614582928222'
+                updatedAt: '1612411724023'
+          description: ''
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/user-wallets/{userWalletId}/balance:
+    get:
+      operationId: polygon-WalletsController_getUserWalletBalance
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 잔고 조회하기
+      description: 특정 사용자 지갑의 잔고를 조회합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+        - name: ticker
+          required: false
+          in: query
+          description: 코인의 기호
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BalanceDTO'
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_22
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/user-wallets/{userWalletId}/name:
+    patch:
+      operationId: polygon-WalletsController_changeUserWalletName
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 이름 변경하기
+      description: 특정 사용자 지갑의 이름을 변경합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeWalletNameRequestDTO'
+      responses:
+        '200':
+          description: ''
+        '204':
+          description: ''
+        '400':
+          description: 다음과 같은 bad request 에러가 발생할 수 있습니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/WalletNotFoundException'
+                  - $ref: '#/components/schemas/NoWalletNameException'
+              examples:
+                WalletNotFoundException:
+                  value: *ref_22
+                NoWalletNameException:
+                  value: *ref_24
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/user-wallets/{userWalletId}/transfer:
+    post:
+      operationId: polygon-WalletsController_sendUserWalletCoin
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑에서 코인 전송하기
+      description: 특정 사용자 지갑에서 가상자산을 송금합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendCoinRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_16
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_22
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/user-wallets/{userWalletId}/contract-call:
+    post:
+      operationId: polygon-WalletsController_sendUserWalletContractCall
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑에서 스마트 컨트랙트 호출하기
+      description: 특정 사용자 지갑에서 일반적인 스마트 컨트랙트 함수를 호출하는 트랜잭션을 발생시킵니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTransactionRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_16
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_22
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/nft/transfer:
+    post:
+      operationId: polygon-WalletsController_transferNft
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 마스터 지갑 NFT 출금하기
+      description: 특정 마스터 지갑에서 NFT 토큰을 출금합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferNftRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_25
+          description: ''
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/nft/flush:
+    post:
+      operationId: polygon-WalletsController_nftFlush
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 NFT 모두 끌어오기
+      description: 사용자 지갑의 특정 NFT를 모두 상위의 지갑으로 끌어옵니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNftFlushRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_25
+          description: ''
+        '400':
+          description: 해당하는 id의 지갑이 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletNotFoundException'
+              example: *ref_22
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/user-wallets/{userWalletId}/nft/transfer:
+    post:
+      operationId: polygon-WalletsController_transferUserWalletNft
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 NFT 출금하기
+      description: 특정 사용자 지갑에서 NFT 토큰을 출금합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferNftRequestDTO'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionDTO'
+              example: *ref_16
+          description: ''
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/nft/balance:
+    get:
+      operationId: polygon-WalletsController_getNftBalance
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: NFT 잔고 조회하기
+      description: 특정 지갑의 NFT 잔고를 조회합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+        - name: tokenOnchainId
+          required: false
+          in: query
+          description: NFT 토큰의 온체인 ID
+          schema:
+            type: string
+        - name: tokenName
+          required: false
+          in: query
+          description: NFT 토큰의 이름
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForNftBalanceDTO'
+              example: &ref_26
+                pagination: *ref_12
+                results:
+                  - nft: *ref_3
+                    tokenOnchainId: '1'
+                    tokenUri: https://opensea-creatures-api.herokuapp.com/api/creature/3
+                    tokenMetadata:
+                      description: >-
+                        Friendly OpenSea Creature that enjoys long swims in the
+                        ocean.
+                      external_url: https://openseacreatures.io/3
+                      image: >-
+                        https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png
+                      name: Dave Starbelly
+                      attributes:
+                        - trait_type: Base
+                          value: Starfish
+                        - trait_type: Eyes
+                          value: Big
+                    walletId: 532d994e923817013aff23c6dc1ae766
+                    depositAddressId: 4daf51ef18e3a1ce1148b33a6a1b1589
+                    isWithdrawalPending: false
+          description: ''
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/user-wallets/{userWalletId}/nft/balance:
+    get:
+      operationId: polygon-WalletsController_getUserWalletNftBalance
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 사용자 지갑 NFT 잔고 조회하기
+      description: 특정 사용자 지갑의 NFT 잔고를 조회합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: true
+          in: path
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+        - name: tokenOnchainId
+          required: false
+          in: query
+          description: NFT 토큰의 온체인 ID
+          schema:
+            type: string
+        - name: tokenName
+          required: false
+          in: query
+          description: NFT 토큰의 이름
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForNftBalanceDTO'
+              example: *ref_26
+          description: ''
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/wallets/{masterWalletId}/nft/transfers:
+    get:
+      operationId: polygon-WalletsController_getNftTransfers
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 전체 NFT 입출금 목록 조회하기
+      description: 특정 지갑의 NFT 입출금 내역을 조회합니다.
+      parameters:
+        - *ref_18
+        - *ref_19
+        - name: masterWalletId
+          required: true
+          in: path
+          description: 마스터 지갑 ID
+          schema:
+            type: string
+        - name: nftId
+          required: false
+          in: query
+          description: NFT 컨트랙트의 ID
+          schema:
+            type: number
+        - name: tokenName
+          required: false
+          in: query
+          description: NFT 토큰의 이름
+          schema:
+            type: string
+        - name: tokenOnchainId
+          required: false
+          in: query
+          description: NFT 토큰의 온체인 ID
+          schema:
+            type: string
+        - name: userWalletId
+          required: false
+          in: query
+          description: 사용자 지갑 ID
+          schema:
+            type: string
+        - name: transactionId
+          required: false
+          in: query
+          description: >-
+            트랜잭션 ID (Henesis Wallet에서 부여하는 트랜잭션의 고유 ID입니다. 온체인상 트랜잭션 해시와 다른
+            개념입니다.)
+          schema:
+            type: string
+        - name: transactionHash
+          required: false
+          in: query
+          description: 트랜잭션 해시
+          schema:
+            type: string
+        - name: status
+          required: false
+          in: query
+          description: 트랜잭션 상태
+          schema:
+            type: string
+        - name: transferType
+          required: false
+          in: query
+          description: 트랜잭션의 종류(입금, 출금)
+          schema:
+            type: string
+        - name: updatedAtGte
+          required: false
+          in: query
+          description: 'updatedAt이 해당 시점과 같거나 그보다 이후인 트랜잭션 조회 (형식: ms, UNIX time) '
+          schema:
+            type: string
+        - name: updatedAtLt
+          required: false
+          in: query
+          description: 'updatedAt이 해당 시점보다 이전인 트랜잭션 조회 (형식: ms, UNIX time) '
+          schema:
+            type: string
+        - name: size
+          required: false
+          in: query
+          description: '한 번의 요청으로 반환되는 응답의 개수 (기본값: 15)'
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: 몇 번째 페이지를 조회할 것인지? (페이지는 0부터 시작)
+          schema:
+            type: number
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetManyResponseForNftTransferDTO'
+              example:
+                pagination: *ref_12
+                results:
+                  - id: 375031
+                    from: '0x1f10ecbd971eab345ea19e96dc237b1fbd63de96'
+                    to: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
+                    status: CONFIRMED
+                    orgId: 31cafc79bd437e1b8e7b8209e399d3f3
+                    walletId: ae40b1b3dd953e5592c21e58be30d807
+                    depositAddressId: ae40b1b3dd953e5592c21e58be30d807
+                    nft: *ref_3
+                    token: *ref_27
+                    transferType: WITHDRAWAL
+                    transactionId: 8c87c578d7568edc156f831cf03c3ff0
+                    transactionHash: >-
+                      0xef76a243fa224f723922a1b067dd916fb1b2568aff292d2d1d183a807804922f
+                    createdAt: '1612411568760'
+                    updatedAt: '1612411724023'
+                    name: POLYGON 실비 정산
+                    metadata: metadata
+          description: ''
+        '400':
+          description: 올바르지 않은 트랜잭션 상태(status)로 요청하면 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidStatusException'
+              example: *ref_13
+        '401': *ref_21
+      tags:
+        - wallets
+  /api/v3/polygon/nfts:
+    get:
+      operationId: polygon-NftsController_getNfts
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 전체 NFT 컨트랙트 목록 조회하기
+      description: 모든 NFT 컨트랙트를 조회합니다.
+      parameters:
+        - &ref_28
+          name: X-Henesis-Secret
+          in: header
+          description: 대시보드를 통해 발급 받은 API Secret을 입력합니다.
+          schema:
+            type: string
+        - &ref_29
+          name: Authorization
+          in: header
+          description: 대시보드를 통해 발급 받은 Access Token을 입력합니다. e.g. Bearer <TOKEN\>
+          schema:
+            example: Bearer <TOKEN>
+            default: 'Bearer '
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NftDTO'
+          description: ''
+        '401': &ref_30
+          description: 인증이 실패했을 때 발생하는 에러입니다.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/InvalidAccessTokenException'
+                  - $ref: '#/components/schemas/AccessTokenNotProvidedException'
+                  - $ref: '#/components/schemas/InvalidAccessIpException'
+              examples:
+                InvalidAccessTokenException:
+                  value: *ref_9
+                AccessTokenNotProvidedException:
+                  value: *ref_10
+                InvalidAccessIpException:
+                  value: *ref_11
+      tags:
+        - nfts
+  /api/v3/polygon/nfts/{nftId}:
+    get:
+      operationId: polygon-NftsController_getNft
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: NFT 컨트랙트 조회하기
+      description: NFT 컨트랙트를 조회합니다.
+      parameters:
+        - *ref_28
+        - *ref_29
+        - name: nftId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NftDTO'
+          description: ''
+        '401': *ref_30
+      tags:
+        - nfts
+  /api/v3/polygon/nfts/{nftId}/sync-metadata:
+    post:
+      operationId: polygon-NftsController_syncMetadata
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: NFT metadata 동기화 요청하기
+      description: NFT 컨트랙트의 metadata 동기화를 요청합니다.
+      parameters:
+        - *ref_28
+        - *ref_29
+        - name: nftId
+          required: true
+          in: path
+          description: NFT 컨트랙트의 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SyncMetadataRequestDTO'
+      responses:
+        '201':
+          description: ''
+        '204':
+          description: ''
+        '400':
+          description: 해당하는 id의 NFT 컨트랙트가 없을 때 발생합니다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NftNotFoundException'
+              example:
+                message: nft '2' does not exist
+                code: 4000
+        '401': *ref_30
+      tags:
+        - nfts

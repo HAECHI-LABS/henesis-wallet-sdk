@@ -8,6 +8,7 @@ import {
   CoinData,
   AttributesEnum,
   BscBnb,
+  Matic,
 } from "./coin";
 
 export class Coins {
@@ -34,6 +35,10 @@ export class Coins {
 
     if (coinData.symbol.toString() == "KLAY") {
       return new Klay(coinData);
+    }
+
+    if (coinData.symbol.toString() == "MATIC") {
+      return new Matic(coinData);
     }
 
     // FIXME: BNB can be used by binance chain
