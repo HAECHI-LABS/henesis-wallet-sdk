@@ -91,16 +91,16 @@ export class TransfersController {
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,
     // deprecated
-    // wallet id와 동일합니다.
-    // 일관성을 위해 deprecated 필드가 wallet id 과 동시에 세팅되면 deprecated를 씁니다.
+    // This field is the same as the walletId.
+    // For consistency, use the deprecated field when a user sets both the walletId and the deprecated
     @Query("depositAddressId") depositAddressId?: string,
     // deprecated
-    // wallet id와 동일합니다.
-    // 일관성을 위해 deprecated 필드가 wallet id 과 동시에 세팅되면 deprecated를 씁니다.
+    // This field is the same as the walletId.
+    // For consistency, use the deprecated field when a user sets both the walletId and the deprecated
     @Query("userWalletId") userWalletId?: string,
-    // 특정한 지갑의 입출금내역을 검색합니다. 마스터 지갑 id, 유저 지갑 id 둘 다 쓸 수 있습니다.
+    // Search the value transfer events of a wallet. By using this field, a user can query master wallet and user wallet's value transfer events.
     @Query("walletId") walletId?: string,
-    // master wallet id를 쓰면 해당 모지갑과 그 밑 지갑까지 전부 검색됩니다.
+    // By using this field, this API returns all value transfer events related to a master wallet and all its child wallets.
     @Query("masterWalletId") masterWalletId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
