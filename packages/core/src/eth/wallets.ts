@@ -51,6 +51,8 @@ export class EthWallets extends Wallets<EthMasterWallet> {
         return false;
       case BlockchainType.BINANCE_SMART_CHAIN:
         return false;
+      case BlockchainType.POLYGON:
+        return false;
       default:
         throw new Error("not supported blockchain " + this.blockchain);
     }
