@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.6...v3.8.2) (2022-03-16)
+
+**Note:** Version bump only for package @haechi-labs/henesis-wallet-core
+
+
+
+
+
+## [3.8.2-alpha.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.5...v3.8.2-alpha.6) (2022-03-16)
+
+
+### Bug Fixes
+
+* fix polygon bugs ([ab8bcfa](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ab8bcfa117ba9815d5a21a94a1744d9165b48420))
+
+
+
+
+
 ## [3.8.2-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.3...v3.8.2-alpha.4) (2022-03-15)
 
 
