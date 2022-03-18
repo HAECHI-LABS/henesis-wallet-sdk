@@ -90,11 +90,17 @@ export class TransfersController {
   public async getTransfers(
     @Request() request: express.Request,
     @Query("ticker") ticker?: string,
-    // deprecated parameter. use userWalletId
-    depositAddressId?: string,
-    // deprecated parameter. use masterWalletId
-    walletId?: string,
+    // deprecated
+    // This field is the same as the walletId.
+    // For consistency, use the deprecated field when a user sets both the walletId and the deprecated
+    @Query("depositAddressId") depositAddressId?: string,
+    // deprecated
+    // This field is the same as the walletId.
+    // For consistency, use the deprecated field when a user sets both the walletId and the deprecated
     @Query("userWalletId") userWalletId?: string,
+    // Search the value transfer events of a wallet. By using this field, a user can query master wallet and user wallet's value transfer events.
+    @Query("walletId") walletId?: string,
+    // By using this field, this API returns all value transfer events related to a master wallet and all its child wallets.
     @Query("masterWalletId") masterWalletId?: string,
     @Query("transactionId") transactionId?: string,
     @Query("transactionHash") transactionHash?: string,
@@ -106,16 +112,16 @@ export class TransfersController {
     @Query("page") page: number = 0
   ): Promise<PaginationDTO<TransferDTO>> {
     if (userWalletId != null) {
-      depositAddressId = userWalletId;
+      walletId = userWalletId;
     }
-    if (masterWalletId != null) {
-      walletId = masterWalletId;
+    if (depositAddressId != null) {
+      walletId = depositAddressId;
     }
     return await this.transfersService.getTransfers(
       request.sdk,
       {
         ticker,
-        depositAddressId,
+        masterWalletId,
         walletId,
         transactionId,
         transactionHash,
