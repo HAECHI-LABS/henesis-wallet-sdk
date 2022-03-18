@@ -6,8 +6,10 @@ import {
 
 export class GetTransfersOption {
   ticker: string;
-  depositAddressId: string;
+  // Query only the transfers from the given wallet id(master wallet, user wallet or deposit address)
   walletId: string;
+  // Query all transfers from the master wallet and the child wallets
+  masterWalletId: string;
   transactionId: string;
   transactionHash: string;
   status: EventStatus;
@@ -16,24 +18,6 @@ export class GetTransfersOption {
   updatedAtLt: string;
   size: number;
   page: number;
-
-  static toBscSDKOption(
-    option: GetTransfersOption
-  ): EthValueTransferEventPaginationOptions {
-    return {
-      transactionHash: option.transactionHash,
-      updatedAtGte: option.updatedAtGte,
-      updatedAtLt: option.updatedAtLt,
-      status: option.status,
-      transferType: option.transferType,
-      walletId: option.depositAddressId,
-      masterWalletId: option.walletId,
-      transactionId: option.transactionId,
-      symbol: option.ticker,
-      size: option.size,
-      page: option.page,
-    } as EthValueTransferEventPaginationOptions;
-  }
 
   static toSDKOption(
     option: GetTransfersOption
@@ -44,8 +28,8 @@ export class GetTransfersOption {
       updatedAtLt: option.updatedAtLt,
       status: option.status,
       transferType: option.transferType,
-      walletId: option.depositAddressId || option.walletId,
-      masterWalletId: option.walletId,
+      walletId: option.walletId,
+      masterWalletId: option.masterWalletId,
       transactionId: option.transactionId,
       symbol: option.ticker,
       size: option.size,
