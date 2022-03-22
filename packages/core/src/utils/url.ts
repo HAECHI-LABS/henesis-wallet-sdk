@@ -24,6 +24,7 @@ export const makePrefixPathByBlockchainType = (blockchain?: BlockchainType) => {
     [BlockchainType.FILECOIN]: "/fil",
     [BlockchainType.BINANCE_SMART_CHAIN]: "/bnb",
     [BlockchainType.BITCOIN_CASH]: "/bch",
+    [BlockchainType.POLYGON]: "/matic",
   };
   return blockchainByType[blockchain];
 };

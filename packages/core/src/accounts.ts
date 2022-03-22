@@ -12,6 +12,9 @@ import {
   SignUpResponse,
   HenesisLocaleLanguageEnum,
   InitializePasswordRequest,
+  DeleteAccountRequest,
+  DeleteAllowedIpRequest,
+  DeleteLoginIpsRequest,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
 
@@ -88,6 +91,30 @@ export class Accounts {
       `${this.baseUrl}/signup`,
       params
     );
+  }
+
+  async deleteAccount(accountId: string, otpCode?: string): Promise<void> {
+    const request: DeleteAccountRequest = {
+      otpCode: otpCode,
+    };
+    await this.client.delete<void>(`${this.baseUrl}/${accountId}`, {
+      data: request,
+    });
+  }
+
+  async deleteLoginIps(
+    accountId: string,
+    targetLoginIpIds: string[],
+    otpCode?: string
+  ): Promise<void> {
+    const request: DeleteLoginIpsRequest = {
+      targetIds: targetLoginIpIds,
+      otpCode: otpCode,
+    };
+
+    await this.client.delete<void>(`${this.baseUrl}/${accountId}/login-ips`, {
+      data: request,
+    });
   }
 
   async verifyEmail(email: string) {

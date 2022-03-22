@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.6...v3.8.2) (2022-03-16)
+
+**Note:** Version bump only for package henesis-wallet-sdk
+
+
+
+
+
+## [3.8.2-alpha.6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.5...v3.8.2-alpha.6) (2022-03-16)
+
+
+### Bug Fixes
+
+* fix polygon bugs ([ab8bcfa](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ab8bcfa117ba9815d5a21a94a1744d9165b48420))
+
+
+
+
+
+## [3.8.2-alpha.5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.4...v3.8.2-alpha.5) (2022-03-15)
+
+
+### Features
+
+* add polygon swagger spec ([f4e3883](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/f4e3883dfc1e7b7b6f65e7109fc493e8e3b5c451))
+
+
+
+
+
+## [3.8.2-alpha.4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.3...v3.8.2-alpha.4) (2022-03-15)
+
+
+### Features
+
+* add matic wallet to core ([#653](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/653)) ([723eb4a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/723eb4ad866a0a1c6c394944cb123260f3741b23))
+* add polygon to api proxy ([#654](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/654)) ([2edd0ab](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2edd0ab2cf9bd07bc88298a606f9e4e1801b0ac3))
+
+
+
+
+
+## [3.8.2-alpha.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.2...v3.8.2-alpha.3) (2022-02-18)
+
+**Note:** Version bump only for package henesis-wallet-sdk
+
+
+
+
+
+## [3.8.2-alpha.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.1...v3.8.2-alpha.2) (2022-02-16)
+
+
+### Bug Fixes
+
+* update timeout setting ([6ff5286](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6ff528680c1a43b9ee99a71eb0c4a571b8c0bde9))
+
+
+### Features
+
+* delete account ([632dfd4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/632dfd43f7336e8bcc65753c632327f01e25fc18))
+* delete login ips ([3b49238](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/3b49238d3d38419c4e20d7ff54f9073e44729aba))
+
+
+
+
+
 ## [3.8.2-alpha.1](https://github.com/haechi-labs/henesis-wallet-sdk/compare/v3.8.2-alpha.0...v3.8.2-alpha.1) (2022-02-07)
 
 

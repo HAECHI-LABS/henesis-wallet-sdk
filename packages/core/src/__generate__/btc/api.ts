@@ -203,7 +203,8 @@ export enum Blockchain {
     FILECOIN = 'FILECOIN',
     BINANCESMARTCHAIN = 'BINANCE_SMART_CHAIN',
     LITECOIN = 'LITECOIN',
-    BITCOINCASH = 'BITCOIN_CASH'
+    BITCOINCASH = 'BITCOIN_CASH',
+    POLYGON = 'POLYGON'
 }
 
 /**
@@ -218,7 +219,8 @@ export enum CoinSymbol {
     FIL = 'FIL',
     BNB = 'BNB',
     LTC = 'LTC',
-    BCH = 'BCH'
+    BCH = 'BCH',
+    MATIC = 'MATIC'
 }
 
 /**
@@ -1613,7 +1615,8 @@ export enum WalletDTOBlockchainEnum {
     FILECOIN = 'FILECOIN',
     BINANCESMARTCHAIN = 'BINANCE_SMART_CHAIN',
     LITECOIN = 'LITECOIN',
-    BITCOINCASH = 'BITCOIN_CASH'
+    BITCOINCASH = 'BITCOIN_CASH',
+    POLYGON = 'POLYGON'
 }
 /**
     * @export

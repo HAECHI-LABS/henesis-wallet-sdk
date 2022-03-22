@@ -162,6 +162,12 @@ export interface BlockchainDto {
      * @memberof BlockchainDto
      */
     blockchain: Blockchain;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlockchainDto
+     */
+    date?: string;
 }
 /**
  * 
@@ -193,7 +199,7 @@ export interface ChangeBillingPlanStatusResponse {
      * @type {string}
      * @memberof ChangeBillingPlanStatusResponse
      */
-    planId: string;
+    date: string;
     /**
      * 
      * @type {Array<SummarizedBillingPlanDto>}
@@ -298,6 +304,12 @@ export interface DetailedInvoiceDto {
     invoiceId: string;
     /**
      * 
+     * @type {Source}
+     * @memberof DetailedInvoiceDto
+     */
+    coinSource: Source;
+    /**
+     * 
      * @type {Array<MonthlyDetailedInvoiceDto>}
      * @memberof DetailedInvoiceDto
      */
@@ -377,6 +389,12 @@ export interface GasSavingFeeDailyBillingDto {
      * @memberof GasSavingFeeDailyBillingDto
      */
     gasSavingFee: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof GasSavingFeeDailyBillingDto
+     */
+    exchangeRate?: number;
 }
 /**
  * 
@@ -390,12 +408,6 @@ export interface GasSavingFeeMonthlyBillingDto {
      * @memberof GasSavingFeeMonthlyBillingDto
      */
     billingMonth: string;
-    /**
-     * 
-     * @type {Source}
-     * @memberof GasSavingFeeMonthlyBillingDto
-     */
-    coinSource: Source;
     /**
      * 
      * @type {Array<GasSavingFeeDailyBillingDto>}
@@ -434,6 +446,12 @@ export interface InvoiceDto {
      * @memberof InvoiceDto
      */
     invoiceId: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceDto
+     */
+    invoiceName: string;
     /**
      * 
      * @type {string}
@@ -509,7 +527,9 @@ export interface InvoiceDto {
 export enum InvoiceType {
     TERMINVOICE = 'TERM_INVOICE',
     TERMWITHDRAWALFEEINVOICE = 'TERM_WITHDRAWAL_FEE_INVOICE',
-    ADDITIONALUSAGEFEEINVOICE = 'ADDITIONAL_USAGE_FEE_INVOICE'
+    BLOCKCHAINADDITIONALUSAGEFEEINVOICE = 'BLOCKCHAIN_ADDITIONAL_USAGE_FEE_INVOICE',
+    NFTNETWORKADDITIONALUSAGEFEEINVOICE = 'NFT_NETWORK_ADDITIONAL_USAGE_FEE_INVOICE',
+    TOKENADDITIONALUSAGEFEEINVOICE = 'TOKEN_ADDITIONAL_USAGE_FEE_INVOICE'
 }
 
 /**
@@ -843,6 +863,12 @@ export interface SummarizedInvoiceDto {
     invoiceId: string;
     /**
      * 
+     * @type {string}
+     * @memberof SummarizedInvoiceDto
+     */
+    invoiceName?: string;
+    /**
+     * 
      * @type {InvoiceType}
      * @memberof SummarizedInvoiceDto
      */
@@ -1004,6 +1030,38 @@ export interface SummarizedWithdrawalFeeBillingDto {
 /**
  * 
  * @export
+ * @interface TerminateOrganizationRequest
+ */
+export interface TerminateOrganizationRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerminateOrganizationRequest
+     */
+    terminateDate: string;
+}
+/**
+ * 
+ * @export
+ * @interface TerminateOrganizationResponse
+ */
+export interface TerminateOrganizationResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof TerminateOrganizationResponse
+     */
+    orgName: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TerminateOrganizationResponse
+     */
+    terminateDate: string;
+}
+/**
+ * 
+ * @export
  * @interface TokenFeeMonthlyBillingDto
  */
 export interface TokenFeeMonthlyBillingDto {
@@ -1159,6 +1217,12 @@ export interface WithdrawalFeeDailyBillingDto {
      * @memberof WithdrawalFeeDailyBillingDto
      */
     withdrawalFee: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WithdrawalFeeDailyBillingDto
+     */
+    exchangeRate?: number;
 }
 /**
  * 
@@ -1172,12 +1236,6 @@ export interface WithdrawalFeeMonthlyBillingDto {
      * @memberof WithdrawalFeeMonthlyBillingDto
      */
     blockchain: Blockchain;
-    /**
-     * 
-     * @type {Source}
-     * @memberof WithdrawalFeeMonthlyBillingDto
-     */
-    coinSource: Source;
     /**
      * 
      * @type {string}
@@ -1547,6 +1605,53 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runDailyCoinRelatedJobsByPeriod: async (start: string, end: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'start' is not null or undefined
+            if (start === null || start === undefined) {
+                throw new RequiredError('start','Required parameter start was null or undefined when calling runDailyCoinRelatedJobsByPeriod.');
+            }
+            // verify required parameter 'end' is not null or undefined
+            if (end === null || end === undefined) {
+                throw new RequiredError('end','Required parameter end was null or undefined when calling runDailyCoinRelatedJobsByPeriod.');
+            }
+            const localVarPath = `/api/v1/operations/coin-related-jobs/period`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (start !== undefined) {
+                localVarQueryParameter['start'] = start;
+            }
+
+            if (end !== undefined) {
+                localVarQueryParameter['end'] = end;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} date 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1585,16 +1690,148 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runDailyExchangeRateJobByPeriod: async (start: string, end: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'start' is not null or undefined
+            if (start === null || start === undefined) {
+                throw new RequiredError('start','Required parameter start was null or undefined when calling runDailyExchangeRateJobByPeriod.');
+            }
+            // verify required parameter 'end' is not null or undefined
+            if (end === null || end === undefined) {
+                throw new RequiredError('end','Required parameter end was null or undefined when calling runDailyExchangeRateJobByPeriod.');
+            }
+            const localVarPath = `/api/v1/operations/daily-exchange-rate-job/period`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (start !== undefined) {
+                localVarQueryParameter['start'] = start;
+            }
+
+            if (end !== undefined) {
+                localVarQueryParameter['end'] = end;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} date 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        runDailyJob: async (date: string, options: any = {}): Promise<RequestArgs> => {
+        runDailyJobs: async (date: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'date' is not null or undefined
             if (date === null || date === undefined) {
-                throw new RequiredError('date','Required parameter date was null or undefined when calling runDailyJob.');
+                throw new RequiredError('date','Required parameter date was null or undefined when calling runDailyJobs.');
             }
             const localVarPath = `/api/v1/operations/daily-jobs`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (date !== undefined) {
+                localVarQueryParameter['date'] = date;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runDailyJobsByPeriod: async (start: string, end: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'start' is not null or undefined
+            if (start === null || start === undefined) {
+                throw new RequiredError('start','Required parameter start was null or undefined when calling runDailyJobsByPeriod.');
+            }
+            // verify required parameter 'end' is not null or undefined
+            if (end === null || end === undefined) {
+                throw new RequiredError('end','Required parameter end was null or undefined when calling runDailyJobsByPeriod.');
+            }
+            const localVarPath = `/api/v1/operations/daily-jobs/period`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (start !== undefined) {
+                localVarQueryParameter['start'] = start;
+            }
+
+            if (end !== undefined) {
+                localVarQueryParameter['end'] = end;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} date 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runExpiredBasePlanJob: async (date: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'date' is not null or undefined
+            if (date === null || date === undefined) {
+                throw new RequiredError('date','Required parameter date was null or undefined when calling runExpiredBasePlanJob.');
+            }
+            const localVarPath = `/api/v1/operations/expired-base-plan-job`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -1661,6 +1898,53 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
         },
         /**
          * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runGasSavingBehaviorJobByPeriod: async (start: string, end: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'start' is not null or undefined
+            if (start === null || start === undefined) {
+                throw new RequiredError('start','Required parameter start was null or undefined when calling runGasSavingBehaviorJobByPeriod.');
+            }
+            // verify required parameter 'end' is not null or undefined
+            if (end === null || end === undefined) {
+                throw new RequiredError('end','Required parameter end was null or undefined when calling runGasSavingBehaviorJobByPeriod.');
+            }
+            const localVarPath = `/api/v1/operations/gas-saving-behavior-job/period`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (start !== undefined) {
+                localVarQueryParameter['start'] = start;
+            }
+
+            if (end !== undefined) {
+                localVarQueryParameter['end'] = end;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} date 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1682,6 +1966,138 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
 
             if (date !== undefined) {
                 localVarQueryParameter['date'] = date;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runInvoiceJobByPeriod: async (start: string, end: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'start' is not null or undefined
+            if (start === null || start === undefined) {
+                throw new RequiredError('start','Required parameter start was null or undefined when calling runInvoiceJobByPeriod.');
+            }
+            // verify required parameter 'end' is not null or undefined
+            if (end === null || end === undefined) {
+                throw new RequiredError('end','Required parameter end was null or undefined when calling runInvoiceJobByPeriod.');
+            }
+            const localVarPath = `/api/v1/operations/invoice-job/period`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (start !== undefined) {
+                localVarQueryParameter['start'] = start;
+            }
+
+            if (end !== undefined) {
+                localVarQueryParameter['end'] = end;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} date 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runSummarizedExternalWithdrawalJob: async (date: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'date' is not null or undefined
+            if (date === null || date === undefined) {
+                throw new RequiredError('date','Required parameter date was null or undefined when calling runSummarizedExternalWithdrawalJob.');
+            }
+            const localVarPath = `/api/v1/operations/summarized-external-withdrawal-job`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (date !== undefined) {
+                localVarQueryParameter['date'] = date;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runSummarizedExternalWithdrawalJobByPeriod: async (start: string, end: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'start' is not null or undefined
+            if (start === null || start === undefined) {
+                throw new RequiredError('start','Required parameter start was null or undefined when calling runSummarizedExternalWithdrawalJobByPeriod.');
+            }
+            // verify required parameter 'end' is not null or undefined
+            if (end === null || end === undefined) {
+                throw new RequiredError('end','Required parameter end was null or undefined when calling runSummarizedExternalWithdrawalJobByPeriod.');
+            }
+            const localVarPath = `/api/v1/operations/summarized-external-withdrawal-job/period`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (start !== undefined) {
+                localVarQueryParameter['start'] = start;
+            }
+
+            if (end !== undefined) {
+                localVarQueryParameter['end'] = end;
             }
 
 
@@ -1721,6 +2137,20 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async runDailyCoinRelatedJobsByPeriod(start: string, end: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runDailyCoinRelatedJobsByPeriod(start, end, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} date 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1734,12 +2164,53 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async runDailyExchangeRateJobByPeriod(start: string, end: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runDailyExchangeRateJobByPeriod(start, end, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} date 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async runDailyJob(date: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runDailyJob(date, options);
+        async runDailyJobs(date: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runDailyJobs(date, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async runDailyJobsByPeriod(start: string, end: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runDailyJobsByPeriod(start, end, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} date 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async runExpiredBasePlanJob(date: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runExpiredBasePlanJob(date, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1760,12 +2231,67 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
         },
         /**
          * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async runGasSavingBehaviorJobByPeriod(start: string, end: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runGasSavingBehaviorJobByPeriod(start, end, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} date 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async runInvoiceJob(date: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runInvoiceJob(date, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async runInvoiceJobByPeriod(start: string, end: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runInvoiceJobByPeriod(start, end, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} date 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async runSummarizedExternalWithdrawalJob(date: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runSummarizedExternalWithdrawalJob(date, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async runSummarizedExternalWithdrawalJobByPeriod(start: string, end: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).runSummarizedExternalWithdrawalJobByPeriod(start, end, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -1791,6 +2317,16 @@ export const OperationControllerApiFactory = function (configuration?: Configura
         },
         /**
          * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runDailyCoinRelatedJobsByPeriod(start: string, end: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).runDailyCoinRelatedJobsByPeriod(start, end, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} date 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1800,12 +2336,41 @@ export const OperationControllerApiFactory = function (configuration?: Configura
         },
         /**
          * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runDailyExchangeRateJobByPeriod(start: string, end: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).runDailyExchangeRateJobByPeriod(start, end, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} date 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        runDailyJob(date: string, options?: any): AxiosPromise<void> {
-            return OperationControllerApiFp(configuration).runDailyJob(date, options).then((request) => request(axios, basePath));
+        runDailyJobs(date: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).runDailyJobs(date, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runDailyJobsByPeriod(start: string, end: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).runDailyJobsByPeriod(start, end, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} date 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runExpiredBasePlanJob(date: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).runExpiredBasePlanJob(date, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1818,12 +2383,51 @@ export const OperationControllerApiFactory = function (configuration?: Configura
         },
         /**
          * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runGasSavingBehaviorJobByPeriod(start: string, end: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).runGasSavingBehaviorJobByPeriod(start, end, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} date 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         runInvoiceJob(date: string, options?: any): AxiosPromise<void> {
             return OperationControllerApiFp(configuration).runInvoiceJob(date, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runInvoiceJobByPeriod(start: string, end: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).runInvoiceJobByPeriod(start, end, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} date 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runSummarizedExternalWithdrawalJob(date: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).runSummarizedExternalWithdrawalJob(date, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} start 
+         * @param {string} end 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        runSummarizedExternalWithdrawalJobByPeriod(start: string, end: string, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).runSummarizedExternalWithdrawalJobByPeriod(start, end, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1848,6 +2452,18 @@ export class OperationControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {string} start 
+     * @param {string} end 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public runDailyCoinRelatedJobsByPeriod(start: string, end: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).runDailyCoinRelatedJobsByPeriod(start, end, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} date 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1859,13 +2475,48 @@ export class OperationControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {string} start 
+     * @param {string} end 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public runDailyExchangeRateJobByPeriod(start: string, end: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).runDailyExchangeRateJobByPeriod(start, end, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} date 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OperationControllerApi
      */
-    public runDailyJob(date: string, options?: any) {
-        return OperationControllerApiFp(this.configuration).runDailyJob(date, options).then((request) => request(this.axios, this.basePath));
+    public runDailyJobs(date: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).runDailyJobs(date, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} start 
+     * @param {string} end 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public runDailyJobsByPeriod(start: string, end: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).runDailyJobsByPeriod(start, end, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} date 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public runExpiredBasePlanJob(date: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).runExpiredBasePlanJob(date, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1881,6 +2532,18 @@ export class OperationControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {string} start 
+     * @param {string} end 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public runGasSavingBehaviorJobByPeriod(start: string, end: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).runGasSavingBehaviorJobByPeriod(start, end, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} date 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1888,6 +2551,41 @@ export class OperationControllerApi extends BaseAPI {
      */
     public runInvoiceJob(date: string, options?: any) {
         return OperationControllerApiFp(this.configuration).runInvoiceJob(date, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} start 
+     * @param {string} end 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public runInvoiceJobByPeriod(start: string, end: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).runInvoiceJobByPeriod(start, end, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} date 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public runSummarizedExternalWithdrawalJob(date: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).runSummarizedExternalWithdrawalJob(date, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} start 
+     * @param {string} end 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public runSummarizedExternalWithdrawalJobByPeriod(start: string, end: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).runSummarizedExternalWithdrawalJobByPeriod(start, end, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -2183,6 +2881,50 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {TerminateOrganizationRequest} terminateOrganizationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        terminateOrganization: async (orgId: string, terminateOrganizationRequest: TerminateOrganizationRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            if (orgId === null || orgId === undefined) {
+                throw new RequiredError('orgId','Required parameter orgId was null or undefined when calling terminateOrganization.');
+            }
+            // verify required parameter 'terminateOrganizationRequest' is not null or undefined
+            if (terminateOrganizationRequest === null || terminateOrganizationRequest === undefined) {
+                throw new RequiredError('terminateOrganizationRequest','Required parameter terminateOrganizationRequest was null or undefined when calling terminateOrganization.');
+            }
+            const localVarPath = `/api/v1/organizations/{orgId}/terminate`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof terminateOrganizationRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(terminateOrganizationRequest !== undefined ? terminateOrganizationRequest : {}) : (terminateOrganizationRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2287,6 +3029,20 @@ export const OrganizationControllerApiFp = function(configuration?: Configuratio
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {TerminateOrganizationRequest} terminateOrganizationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async terminateOrganization(orgId: string, terminateOrganizationRequest: TerminateOrganizationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TerminateOrganizationResponse>> {
+            const localVarAxiosArgs = await OrganizationControllerApiAxiosParamCreator(configuration).terminateOrganization(orgId, terminateOrganizationRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -2362,6 +3118,16 @@ export const OrganizationControllerApiFactory = function (configuration?: Config
          */
         saveBillingOrganization(orgId: string, saveBillingOrganizationRequest: SaveBillingOrganizationRequest, options?: any): AxiosPromise<OrganizationDto> {
             return OrganizationControllerApiFp(configuration).saveBillingOrganization(orgId, saveBillingOrganizationRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {TerminateOrganizationRequest} terminateOrganizationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        terminateOrganization(orgId: string, terminateOrganizationRequest: TerminateOrganizationRequest, options?: any): AxiosPromise<TerminateOrganizationResponse> {
+            return OrganizationControllerApiFp(configuration).terminateOrganization(orgId, terminateOrganizationRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2452,6 +3218,18 @@ export class OrganizationControllerApi extends BaseAPI {
      */
     public saveBillingOrganization(orgId: string, saveBillingOrganizationRequest: SaveBillingOrganizationRequest, options?: any) {
         return OrganizationControllerApiFp(this.configuration).saveBillingOrganization(orgId, saveBillingOrganizationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} orgId 
+     * @param {TerminateOrganizationRequest} terminateOrganizationRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public terminateOrganization(orgId: string, terminateOrganizationRequest: TerminateOrganizationRequest, options?: any) {
+        return OrganizationControllerApiFp(this.configuration).terminateOrganization(orgId, terminateOrganizationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

@@ -439,7 +439,8 @@ export abstract class EthLikeWallet extends Wallet<EthTransaction> {
     if (
       ticker.toUpperCase() === "ETH" ||
       ticker.toUpperCase() === "KLAY" ||
-      ticker.toUpperCase() === "BNB"
+      ticker.toUpperCase() === "BNB" ||
+      ticker.toUpperCase() === "MATIC"
     ) {
       return this.DEFAULT_COIN_TRANSFER_GAS_LIMIT;
     }
