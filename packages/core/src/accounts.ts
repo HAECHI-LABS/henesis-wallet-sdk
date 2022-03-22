@@ -11,6 +11,7 @@ import {
   SignUpRequest,
   SignUpResponse,
   HenesisLocaleLanguageEnum,
+  InitializePasswordRequest,
 } from "./__generate__/accounts";
 import { makeQueryString } from "./utils/url";
 
@@ -73,12 +74,13 @@ export class Accounts {
 
   async initializePassword(
     targetAccountId: string,
-    otpCode: string
+    otpCode?: string
   ): Promise<void> {
-    await this.client.post(`${this.baseUrl}/initialize-password`, {
+    const queryString: InitializePasswordRequest = {
       targetAccountId: targetAccountId,
       otpCode: otpCode,
-    });
+    };
+    await this.client.post(`${this.baseUrl}/initialize-password`, queryString);
   }
 
   async signup(params: SignUpRequest): Promise<SignUpResponse> {
