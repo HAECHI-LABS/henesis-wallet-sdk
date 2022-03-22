@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.15](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v2.10.14...v2.10.15) (2022-03-22)
+
+
+### Features
+
+* revert verify-address btc end-point ([#657](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/657)) ([c510f5d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/c510f5def3a1ac056baac687cb81ec7554450507))
+
+
+
+
+
 
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
