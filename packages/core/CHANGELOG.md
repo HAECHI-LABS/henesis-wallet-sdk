@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.3-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.5...v3.8.3-alpha.0) (2022-03-22)
+
+
+### Features
+
+* initialize-password at core ([#650](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/650)) ([cba3429](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/cba3429e0d27bbfec432c8880b8951f37379f0b4))
+
+
+
+
+
 ## [3.8.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.6...v3.8.2) (2022-03-16)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-core
