@@ -49,6 +49,7 @@ import {
 } from "../dto/pagination.dto";
 import { ChangeWalletNameRequestDTO } from "../dto/change-wallet-name-request.dto";
 import { PAGE_OPTIONAL, SIZE_OPTIONAL } from "../../../v3/eth/dto/params";
+import { VerifyAddressRequestDTO } from "../dto/verify-address-request.dto";
 
 @Controller("wallets")
 @ApiExtraModels(WalletDTO, BalanceDTO)
@@ -229,6 +230,23 @@ export class WalletsController {
       request.sdk,
       walletId,
       depositAddressId
+    );
+  }
+
+  @Post("/verify-address")
+  @ApiOperation({
+    summary: "입금 주소 검증하기",
+    description: "특정 입금 주소를 검증합니다.",
+  })
+  @ApiTags("wallets")
+  @ReadMeExtension()
+  public async verifyAddress(
+    @Request() request: express.Request,
+    @Body() verifyAddressRequestDTO: VerifyAddressRequestDTO
+  ): Promise<boolean> {
+    return this.walletsService.verifyAddress(
+      request.sdk,
+      verifyAddressRequestDTO.address
     );
   }
 
