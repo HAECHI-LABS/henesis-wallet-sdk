@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.3-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.5...v3.8.3-alpha.0) (2022-03-22)
+
+
+### Bug Fixes
+
+* apply new package-lock ([2746ffd](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2746ffd57799fa71b5823dd9c041956ee8545c92))
+* fix value transfer event query parameters ([#649](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/649)) ([aca38a3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/aca38a30402106f1ef3a409ff94ba22048d800bc))
+
+
+### Features
+
+* initialize-password at core ([#650](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/650)) ([cba3429](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/cba3429e0d27bbfec432c8880b8951f37379f0b4))
+* revert verify-address btc end-point ([#657](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/657)) ([a1e078e](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a1e078e6268dda1dd24ab46ceca94ebde43bcc4e))
+
+
+
+
+
 ## [3.8.2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.6...v3.8.2) (2022-03-16)
 
 **Note:** Version bump only for package henesis-wallet-sdk
