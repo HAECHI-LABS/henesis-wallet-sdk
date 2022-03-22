@@ -104,4 +104,8 @@ export class WalletsService {
   private getWalletById(sdk: SDK, id: string): Promise<BtcMasterWallet> {
     return sdk.btc.wallets.getWallet(id);
   }
+
+  public verifyAddress(sdk: SDK, address: string): boolean {
+    return sdk.btc.wallets.verifyAddress(address);
+  }
 }
