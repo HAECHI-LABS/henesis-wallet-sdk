@@ -11,6 +11,7 @@ import {
   SignUpRequest,
   SignUpResponse,
   HenesisLocaleLanguageEnum,
+  InitializePasswordRequest,
   DeleteAccountRequest,
   DeleteAllowedIpRequest,
   DeleteLoginIpsRequest,
@@ -72,6 +73,17 @@ export class Accounts {
       targetAccountId: targetAccountId,
       otpCode: otpCode,
     });
+  }
+
+  async initializePassword(
+    targetAccountId: string,
+    otpCode?: string
+  ): Promise<void> {
+    const queryString: InitializePasswordRequest = {
+      targetAccountId: targetAccountId,
+      otpCode: otpCode,
+    };
+    await this.client.post(`${this.baseUrl}/initialize-password`, queryString);
   }
 
   async signup(params: SignUpRequest): Promise<SignUpResponse> {
