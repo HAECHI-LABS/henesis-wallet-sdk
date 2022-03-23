@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.3-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.7.0...v3.8.3-alpha.1) (2022-03-23)
+
+
+### Bug Fixes
+
+* apply new lock files ([153b0fb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/153b0fb55b29253a9902275a990738a2e34b6c81))
+* fix transfers query bug ([49f1bc3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/49f1bc38ea016282c497f36546514da7489d5e95))
+* fix value transfer event query parameters ([#649](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/649)) ([ae67229](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ae67229babca0358ef9dc3a1566f3ea702171621))
+
+
+### Features
+
+* add polygon swagger spec ([6bc8d96](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6bc8d968a0c910dd5b87f7c6c97e5c7d215aaea7))
+* add polygon to api proxy ([#654](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/654)) ([6f95ab2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6f95ab264bb94b64a0db93d4eb4a40708650ed48))
+* revert verify-address btc end-point ([#657](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/657)) ([78ad6dc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/78ad6dc3cd7e256646f4e829dc0b45104e31dbf3))
+
+
+
+
+
 ## [3.8.3-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.5...v3.8.3-alpha.0) (2022-03-22)
 
 

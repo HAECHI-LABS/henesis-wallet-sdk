@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.3-alpha.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.7.0...v3.8.3-alpha.1) (2022-03-23)
+
+
+### Bug Fixes
+
+* add a method creating versioned wallet with recovery kit ([#640](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/640)) ([239c4f6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/239c4f64dbd213008829b2cfa02d93a2301f10d8))
+* add getRequestActivationOrganizations api ([73bda18](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/73bda18fb4b8fdee4fa10f6b04c3643d5c406361))
+* add requestActivationOrganization func await ([0196561](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0196561e3153a0780d590d646d42f1cf5a30d0ac))
+* api client throw error 수정 ([69867d2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/69867d28c8ec11a954f616df2d0bcf2d1885d4df))
+* apply new lock files ([153b0fb](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/153b0fb55b29253a9902275a990738a2e34b6c81))
+* apply new package-lock ([9a4be77](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9a4be7771fc1a8bbdf03fefcf23eab9421d41a94))
+* fix transfers query bug ([49f1bc3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/49f1bc38ea016282c497f36546514da7489d5e95))
+* fix value transfer event query parameters ([#649](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/649)) ([ae67229](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/ae67229babca0358ef9dc3a1566f3ea702171621))
+* fixed org test failed ([aade437](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/aade437efe35230cf24180723dc9d2c83e6e1783))
+* fixed summarizedBlockchain undefined error ([7ce0711](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/7ce07110f26a7a5fb2315962549bdf7f17f57186))
+* update convert blockchain type ([a168304](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a1683049aef12d7354bff42ed5d2ebfb68d46e8a))
+* update initialized otp ([b9278b4](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b9278b4a6fd82fe4504eb484777b089028582856))
+* update language koen ([9a2a3a5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/9a2a3a5c80c70d4d4e9950b9dac965bdf790570d))
+* update org info blockchaintype ([d43998d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d43998d637ded355993588dcf55ae224dc91ed56))
+* update otp api ([b89e4e7](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b89e4e77deb888f5e2773d84210ba037554e0787))
+* update post requestActivation api path ([0d49a23](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/0d49a2308e3bee8b86abc72ad40744157b687eb6))
+* update requestActivation api params ([b172a15](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b172a150946e8f915c7fb520326bca0ebf83b168))
+* update timeout setting ([2cac5cc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2cac5cce25f6bfce08f1ff399c9636ca7e61b85c))
+
+
+### Features
+
+* add a method creating versioned wallet ([#634](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/634)) ([09c6407](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/09c6407771b7e44864ad7906dd19d07eac19ed0b))
+* add activation type api ([17fbd95](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/17fbd95e45d2a73fca638ec3643d85283ac356c3))
+* add billings api ([494b946](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/494b94601f4893bcd0123334a7c5ca843e7dee01))
+* add billings modules ([4aa25da](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/4aa25dafd98734d0cd9e43d4778170078d3f0084))
+* add invoice examples ([b09810d](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/b09810d9dbf465404f704cf057373c6a5fb28632))
+* add matic wallet to core ([#653](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/653)) ([a9d94ec](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/a9d94ec4dc015585be17576348606ddab3f41118))
+* add polygon swagger spec ([6bc8d96](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6bc8d968a0c910dd5b87f7c6c97e5c7d215aaea7))
+* add polygon to api proxy ([#654](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/654)) ([6f95ab2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6f95ab264bb94b64a0db93d4eb4a40708650ed48))
+* add request activation example ([25cfa45](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/25cfa45f68373e4aa51fd957b1d511a08cd41f9a))
+* delete account ([5587f84](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/5587f84d9c0e0d016d7d4ae127104ff6f80f1152))
+* delete login ips ([eb2b9d0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/eb2b9d01b5e9e25079149ec0377822076b3c52bb))
+* initialize-password at core ([#650](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/650)) ([35188d5](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/35188d58e1e3ecce88bb416cc54920fe7b523eb1))
+* revert verify-address btc end-point ([#657](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/657)) ([78ad6dc](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/78ad6dc3cd7e256646f4e829dc0b45104e31dbf3))
+* set billings api path ([cce37bf](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/cce37bf3d7e2f1b4f45a9e4f0c6e0353468a75eb))
+
+
+
+
+
 ## [3.8.3-alpha.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.2-alpha.5...v3.8.3-alpha.0) (2022-03-22)
 
 
