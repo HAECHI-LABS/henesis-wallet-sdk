@@ -50,10 +50,22 @@ export const WALLET_ID_REQUIRED: ApiParamOptions = {
   required: true,
   description: "지갑 ID",
 };
+export const WALLET_ID_OPTIONAL_ONLY: ApiParamOptions = {
+  name: "walletId",
+  required: false,
+  description:
+    "단일 지갑(혹은 입금 주소)을 조회하고 싶은 경우, 해당 지갑 ID를 입력합니다.",
+};
 export const MASTER_WALLET_ID_OPTIONAL: ApiParamOptions = {
   name: "masterWalletId",
   required: false,
   description: "마스터 지갑 ID",
+};
+export const MASTER_WALLET_ID_OPTIONAL_QUERY_ALL: ApiParamOptions = {
+  name: "masterWalletId",
+  required: false,
+  description:
+    "마스터 지갑 ID (해당 마스터 지갑을 포함하여 하위의 사용자 지갑 입출금 내역도 함께 조회합니다.)",
 };
 export const MASTER_WALLET_ID_REQUIRED: ApiParamOptions = {
   name: "masterWalletId",

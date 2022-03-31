@@ -14,9 +14,15 @@ import {
   EXAMPLE_ETHEREUM_PAGINATION_TRANSFER_DTO,
   PaginationDTO,
 } from "../dto/pagination.dto";
-import { ApiBadRequestResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+  ApiBadRequestResponse,
+  ApiOperation,
+  ApiQueryOptions,
+  ApiTags,
+} from "@nestjs/swagger";
 import {
   DEPOSIT_ADDRESS_ID_OPTIONAL,
+  MASTER_WALLET_ID_OPTIONAL_QUERY_ALL,
   PAGE_OPTIONAL,
   SIZE_OPTIONAL,
   STATUS_OPTIONAL,
@@ -26,7 +32,7 @@ import {
   TRANSFER_TYPE_OPTIONAL,
   UPDATED_AT_GTE_OPTIONAL,
   UPDATED_AT_LE_OPTIONAL,
-  WALLET_ID_OPTIONAL,
+  WALLET_ID_OPTIONAL_ONLY,
 } from "../dto/params";
 import {
   EventStatus,
@@ -46,8 +52,13 @@ export class TransfersController {
   @Get("/")
   @Queries(
     TICKER_OPTIONAL,
-    DEPOSIT_ADDRESS_ID_OPTIONAL,
-    WALLET_ID_OPTIONAL,
+    {
+      name: "depositAddressId",
+      required: false,
+      description: "(Deprecated) walletId를 사용해 주세요.",
+    } as ApiQueryOptions,
+    WALLET_ID_OPTIONAL_ONLY,
+    MASTER_WALLET_ID_OPTIONAL_QUERY_ALL,
     TRANSACTION_ID_OPTIONAL,
     TRANSACTION_HASH_OPTIONAL,
     STATUS_OPTIONAL,

@@ -30,9 +30,8 @@ import {
   TRANSFER_TYPE_OPTIONAL,
   UPDATED_AT_GTE_OPTIONAL,
   UPDATED_AT_LE_OPTIONAL,
-  USER_WALLET_ID_OPTIONAL,
-  MASTER_WALLET_ID_OPTIONAL,
-  WALLET_ID_OPTIONAL,
+  MASTER_WALLET_ID_OPTIONAL_QUERY_ALL,
+  WALLET_ID_OPTIONAL_ONLY,
 } from "../../eth/dto/params";
 import {
   EventStatus,
@@ -52,17 +51,17 @@ export class TransfersController {
   @Get("/")
   @Queries(
     TICKER_OPTIONAL,
-    USER_WALLET_ID_OPTIONAL,
-    MASTER_WALLET_ID_OPTIONAL,
-    {
-      name: "walletId",
-      required: false,
-      description: "(Deprecated) 마스터 지갑 ID와 동일합니다.",
-    } as ApiQueryOptions,
+    WALLET_ID_OPTIONAL_ONLY,
+    MASTER_WALLET_ID_OPTIONAL_QUERY_ALL,
     {
       name: "depositAddressId",
-      required: true,
-      description: "(Deprecated) 사용자 지갑 ID와 동일합니다.",
+      required: false,
+      description: "(Deprecated) walletId를 사용해 주세요.",
+    } as ApiQueryOptions,
+    {
+      name: "userWalletId",
+      required: false,
+      description: "(Deprecated) walletId를 사용해 주세요.",
     } as ApiQueryOptions,
     TRANSACTION_ID_OPTIONAL,
     TRANSACTION_HASH_OPTIONAL,
