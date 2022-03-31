@@ -2,14 +2,19 @@ import { Client } from "../httpClient";
 import { Balance, Key, Pagination, PaginationOptions } from "../types";
 import {
   BalanceDTO,
+  CreateTransactionRequest,
   HenesisKeyDTO,
   PaginationTransactionHistoryDTO,
   SimplifiedWalletDTO,
+  TransactionDTO,
   TransactionType,
 } from "../__generate__/eth";
 import { BNConverter, Transaction } from "../";
 import { makeQueryString } from "../utils/url";
 import { convertTransactionHistoryDTO } from "./utils";
+import { transformBlockchainType } from "../blockchain";
+import { EthTransaction } from "./abstractWallet";
+import BN from "bn.js";
 
 export interface TransactionHistory extends Transaction {
   wallet: SimplifiedWalletDTO;
@@ -63,6 +68,25 @@ export class HenesisKeys {
       name,
       symbol,
       decimals,
+    };
+  }
+
+  async henesisKeyWithdrawal(
+    toAddress: string,
+    amount: BN
+  ): Promise<EthTransaction> {
+    const request: CreateTransactionRequest = {
+      data: "",
+      toAddress: toAddress,
+      value: BNConverter.bnToHexString(amount),
+    };
+    const response = await this.client.post<TransactionDTO>(
+      `${this.baseUrl}/transactions`,
+      request
+    );
+    return {
+      ...response,
+      blockchain: transformBlockchainType(response.blockchain),
     };
   }
 
