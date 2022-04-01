@@ -1,6 +1,6 @@
 {
   "name": "@haechi-labs/henesis-wallet-api-proxy",
-  "version": "3.8.3-alpha.1",
+  "version": "3.8.3",
   "description": "henesis wallet api proxy",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
@@ -18,7 +18,7 @@
     "test": "jest --passWithNoTests",
     "type-check": "tsc --noEmit",
     "build": "rm -rf ./lib && nest build",
-    "build:spec": "npm run build:spec:version && npm run build:spec:v2-btc && npm run build:spec:v3-ltc && npm run build:spec:v3-bch && npm run build:spec:v2-eth && npm run build:spec:v2-klay && npm run build:spec:v3-eth && npm run build:spec:v3-klay && npm run build:spec:v3-fil && npm run build:spec:v3-bsc",
+    "build:spec": "npm run build:spec:version && npm run build:spec:v2-btc && npm run build:spec:v3-ltc && npm run build:spec:v3-bch && npm run build:spec:v2-eth && npm run build:spec:v2-klay && npm run build:spec:v3-eth && npm run build:spec:v3-klay && npm run build:spec:v3-fil && npm run build:spec:v3-bsc && npm run build:spec:v3-polygon",
     "build:spec:v2-btc": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v2 ENDPOINT=bitcoin nest start",
     "build:spec:v3-ltc": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v3 ENDPOINT=litecoin nest start",
     "build:spec:v3-bch": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v3 ENDPOINT=bitcoin-cash nest start",
@@ -39,7 +39,7 @@
     "preBootstrap:windows": "if exist node_modules rmdir /q /s node_modules"
   },
   "dependencies": {
-    "@haechi-labs/henesis-wallet-core": "^3.8.3-alpha.1",
+    "@haechi-labs/henesis-wallet-core": "^3.8.3",
     "@nestjs/common": "^7.6.15",
     "@nestjs/core": "^7.6.15",
     "@nestjs/platform-express": "^7.6.15",

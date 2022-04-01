@@ -397,6 +397,15 @@ components:
           $ref: '#/components/schemas/PaginationMetadata'
       required:
         - results
+    VerifyAddressRequestDTO:
+      type: object
+      properties:
+        address:
+          type: string
+          description: 받을 주소
+          example: 2MsG2rSiQsGQJJAvvxdXkvsR25QJN9uAqqm
+      required:
+        - address
     TransferRequestDTO:
       type: object
       properties:
@@ -958,6 +967,38 @@ paths:
                 $ref: '#/components/schemas/DepositAddressDTO'
               example: *ref_14
           description: ''
+        '401': *ref_12
+      tags:
+        - wallets
+  /api/v2/btc/wallets/verify-address:
+    post:
+      operationId: bitcoin-WalletsController_verifyAddress
+      x-readme:
+        explorer-enabled: false
+        samples-languages:
+          - curl
+          - node
+          - java
+          - python
+          - go
+      summary: 입금 주소 검증하기
+      description: 특정 입금 주소를 검증합니다.
+      parameters:
+        - *ref_9
+        - *ref_10
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyAddressRequestDTO'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
         '401': *ref_12
       tags:
         - wallets
