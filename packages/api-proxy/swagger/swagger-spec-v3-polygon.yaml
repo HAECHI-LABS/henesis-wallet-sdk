@@ -1607,16 +1607,16 @@ paths:
           description: 코인의 기호
           schema:
             type: string
-        - name: userWalletId
+        - name: walletId
           required: false
           in: query
-          description: 사용자 지갑 ID
+          description: 단일 지갑(혹은 입금 주소)을 조회하고 싶은 경우, 해당 지갑 ID를 입력합니다.
           schema:
             type: string
         - name: masterWalletId
           required: false
           in: query
-          description: 마스터 지갑 ID
+          description: 마스터 지갑 ID (해당 마스터 지갑을 포함하여 하위의 사용자 지갑 입출금 내역도 함께 조회합니다.)
           schema:
             type: string
         - name: transactionId

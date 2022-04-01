@@ -22,6 +22,7 @@ import {
 } from "@nestjs/swagger";
 import {
   MASTER_WALLET_ID_OPTIONAL,
+  MASTER_WALLET_ID_OPTIONAL_QUERY_ALL,
   PAGE_OPTIONAL,
   SIZE_OPTIONAL,
   STATUS_OPTIONAL,
@@ -32,6 +33,7 @@ import {
   UPDATED_AT_GTE_OPTIONAL,
   UPDATED_AT_LE_OPTIONAL,
   USER_WALLET_ID_OPTIONAL,
+  WALLET_ID_OPTIONAL_ONLY,
 } from "../../eth/dto/params";
 import {
   EventStatus,
@@ -51,14 +53,14 @@ export class TransfersController {
   @Get("/")
   @Queries(
     TICKER_OPTIONAL,
-    USER_WALLET_ID_OPTIONAL,
-    // 2022/02/04 only the binance is fixed
+    // USER_WALLET_ID_OPTIONAL,
     {
-      name: "masterWalletId",
+      name: "userWalletId",
       required: false,
-      description:
-        "마스터 지갑 ID (해당 마스터 지갑을 포함하여 하위의 사용자 지갑 입출금 내역도 함께 조회합니다.)",
+      description: "(Deprecated) walletId를 사용해 주세요.",
     } as ApiQueryOptions,
+    MASTER_WALLET_ID_OPTIONAL_QUERY_ALL,
+    WALLET_ID_OPTIONAL_ONLY,
     TRANSACTION_ID_OPTIONAL,
     TRANSACTION_HASH_OPTIONAL,
     STATUS_OPTIONAL,

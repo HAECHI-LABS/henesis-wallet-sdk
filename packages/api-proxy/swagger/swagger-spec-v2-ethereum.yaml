@@ -351,6 +351,7 @@ components:
             - FILECOIN
             - BINANCE_SMART_CHAIN
             - BITCOIN_CASH
+            - POLYGON
           type: string
           description: 블록체인 플랫폼
           example: ETHEREUM
@@ -515,6 +516,7 @@ components:
             - FILECOIN
             - BINANCE_SMART_CHAIN
             - BITCOIN_CASH
+            - POLYGON
           type: string
           description: 블록체인 타입
           example: ETHEREUM
@@ -603,6 +605,7 @@ components:
             - FILECOIN
             - BINANCE_SMART_CHAIN
             - BITCOIN_CASH
+            - POLYGON
           type: string
           description: 블록체인 타입
           example: ETHEREUM
