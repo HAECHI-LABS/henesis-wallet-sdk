@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.9.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.3...v3.9.0) (2022-04-01)
+
+
+### Features
+
+* fee wallet withdrawal ([#664](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/664)) ([2e5d6c1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/2e5d6c1c231fba23ead03c406f423961b7ab49c4))
+* fee wallet withdrawal ([#665](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/665)) ([e513388](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e513388f2e0f98495d010be2696c69fc12a1f83a))
+
+
+
+
+
 ## [3.8.3](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.3-alpha.1...v3.8.3) (2022-03-31)
 
 **Note:** Version bump only for package henesis-wallet-sdk
