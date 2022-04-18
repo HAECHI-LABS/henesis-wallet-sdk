@@ -74,6 +74,8 @@ export class HenesisKeys {
   async henesisKeyWithdrawal(
     toAddress: string,
     amount: BN,
+    gasPrice: BN,
+    gasLimit: BN,
     otpCode: string
   ): Promise<EthTransaction> {
     const request: CreateTransactionRequest = {
@@ -81,6 +83,8 @@ export class HenesisKeys {
       toAddress: toAddress,
       value: BNConverter.bnToHexString(amount),
       otpCode: otpCode,
+      gasLimit: BNConverter.bnToHexString(gasLimit),
+      gasPrice: BNConverter.bnToHexString(gasPrice),
     };
     const response = await this.client.post<TransactionDTO>(
       `${this.baseUrl}/transactions`,
