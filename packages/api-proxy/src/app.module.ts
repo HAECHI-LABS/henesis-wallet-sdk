@@ -41,6 +41,8 @@ function printEnvironment(): string {
       return "development";
     case "local":
       return "local";
+    case "garden-test":
+      return "garden-test";
     default:
       return "production";
   }

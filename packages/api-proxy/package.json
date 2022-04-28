@@ -13,6 +13,7 @@
     "start": "nest start",
     "start:local": "cross-env NODE_ENV=local nest start --watch",
     "start:dev": "cross-env NODE_ENV=development nest start --debug",
+    "start:garden-test": "cross-env NODE_ENV=garden-test nest start --debug",
     "start:test": "cross-env NODE_ENV=test nest start --watch",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
     "test": "jest --passWithNoTests",

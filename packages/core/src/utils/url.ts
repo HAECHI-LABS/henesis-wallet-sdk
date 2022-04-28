@@ -7,6 +7,7 @@ baseUrls.set(Env.Local, "http://localhost:8080/api/v2");
 baseUrls.set(Env.Test, "https://test.wallet.henesis.io/api/v2");
 baseUrls.set(Env.Dev, "https://dev.wallet.henesis.io/api/v2");
 baseUrls.set(Env.Prod, "https://wallet.henesis.io/api/v2");
+baseUrls.set(Env.GardenTest, "http://wallet-gateway:8881/api/v2");
 
 export const removePrefixApi = (url: string) => {
   return url.replace("/api/v2", "");
