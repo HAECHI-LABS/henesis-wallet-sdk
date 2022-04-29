@@ -23,6 +23,7 @@ export const enum Env {
   Dev,
   Test,
   Prod,
+  GardenTest,
 }
 
 export interface SDKOptions {

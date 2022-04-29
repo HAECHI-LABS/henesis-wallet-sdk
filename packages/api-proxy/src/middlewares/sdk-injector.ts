@@ -28,6 +28,9 @@ export class SdkMiddleware implements NestMiddleware {
     if (process.env.NODE_ENV === "local") {
       env = Env.Local;
     }
+    if (process.env.NODE_ENV === "garden-test") {
+      env = Env.GardenTest;
+    }
     const url = process.env.URL;
     req.sdk = new SDK({
       accessToken,
