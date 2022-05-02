@@ -30,6 +30,10 @@ export interface SDKOptions {
   secret: string;
   url?: string;
   env?: Env;
+  origin?: {
+    forwardedFor: string;
+    remoteAddress: string;
+  };
 }
 
 export class SDK {
@@ -79,6 +83,7 @@ export class SDK {
       accessToken: params.accessToken,
       url: baseUrl,
       env,
+      origin: params.origin ?? { forwardedFor: "", remoteAddress: "" },
     }) as any;
     this.withdrawalApproval = new WithdrawalApprovals(this.client);
     this.accounts = new Accounts(this.client);

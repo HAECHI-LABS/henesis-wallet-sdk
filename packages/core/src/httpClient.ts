@@ -16,6 +16,10 @@ export interface ClientOptions {
   secret: string;
   url: string;
   env: Env;
+  origin: {
+    forwardedFor: string;
+    remoteAddress: string;
+  };
 }
 
 export interface Client {
@@ -53,11 +57,17 @@ export class HttpClient {
 
   private readonly env: Env;
 
+  private readonly origin: {
+    forwardedFor: string;
+    remoteAddress: string;
+  };
+
   constructor(options: ClientOptions) {
     this.baseUrl = options.url;
     this.secret = options.secret;
     this.accessToken = options.accessToken;
     this.env = options.env;
+    this.origin = options.origin;
     this.client = this.makeSDKClient({
       timeout: TIMEOUT_MILLISECONDS,
     });
@@ -155,6 +165,8 @@ export class HttpClient {
         const message = config.method.toUpperCase() + path + body + timestamp;
         config.headers["X-Henesis-Signature"] = this.createSig(message);
       }
+      config.headers["X-Henesis-Forwarded-For"] = this.origin.forwardedFor;
+      config.headers["X-Henesis-Remote-Address"] = this.origin.remoteAddress;
       config.headers["X-Henesis-Timestamp"] = timestamp;
       config.headers["X-Henesis-User-Agent"] =
         typeof window !== "undefined"
