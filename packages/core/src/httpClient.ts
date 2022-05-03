@@ -165,8 +165,10 @@ export class HttpClient {
         const message = config.method.toUpperCase() + path + body + timestamp;
         config.headers["X-Henesis-Signature"] = this.createSig(message);
       }
-      config.headers["X-Henesis-Forwarded-For"] = this.origin.forwardedFor;
-      config.headers["X-Henesis-Remote-Address"] = this.origin.remoteAddress;
+      config.headers["X-Henesis-Forwarded-For"] =
+        this.origin.forwardedFor ?? "";
+      config.headers["X-Henesis-Remote-Address"] =
+        this.origin.remoteAddress ?? "";
       config.headers["X-Henesis-Timestamp"] = timestamp;
       config.headers["X-Henesis-User-Agent"] =
         typeof window !== "undefined"
