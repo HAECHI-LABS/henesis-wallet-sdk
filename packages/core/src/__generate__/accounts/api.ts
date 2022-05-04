@@ -214,6 +214,16 @@ export interface ActivationStateDTO {
 /**
  * 
  * @export
+ * @enum {string}
+ */
+export enum ActivationType {
+    BLOCKCHAINNETWORK = 'BLOCKCHAIN_NETWORK',
+    NFTUSAGE = 'NFT_USAGE'
+}
+
+/**
+ * 
+ * @export
  * @interface AllowedIpDTO
  */
 export interface AllowedIpDTO {
@@ -316,6 +326,19 @@ export enum Blockchain {
 /**
  * 
  * @export
+ * @interface BlockchainDTO
+ */
+export interface BlockchainDTO {
+    /**
+     * 
+     * @type {Blockchain}
+     * @memberof BlockchainDTO
+     */
+    blockchain: Blockchain;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 export enum Cause {
@@ -367,6 +390,12 @@ export interface Claim {
      * @memberof Claim
      */
     type?: ClaimTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof Claim
+     */
+    version?: number;
     /**
      * 
      * @type {boolean}
@@ -492,6 +521,12 @@ export interface CoinListingRequestDTO {
      * @memberof CoinListingRequestDTO
      */
     id: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CoinListingRequestDTO
+     */
+    coinId: number;
     /**
      * 
      * @type {CoinRequestStatus}
@@ -904,6 +939,12 @@ export interface IdentityDTO {
      * @type {string}
      * @memberof IdentityDTO
      */
+    passwordInitializedAt?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof IdentityDTO
+     */
     accessToken: string;
     /**
      * 
@@ -923,6 +964,12 @@ export interface IdentityDTO {
      * @memberof IdentityDTO
      */
     activeNft: Array<Blockchain>;
+    /**
+     * 
+     * @type {UsageType}
+     * @memberof IdentityDTO
+     */
+    usageType: UsageType;
 }
 /**
  * 
@@ -1398,6 +1445,12 @@ export interface OrganizationDTO {
      * @memberof OrganizationDTO
      */
     activeNft: Array<Blockchain>;
+    /**
+     * 
+     * @type {UsageType}
+     * @memberof OrganizationDTO
+     */
+    usageType: UsageType;
 }
 /**
  * 
@@ -1752,6 +1805,25 @@ export interface SimpleAccountDTO {
 /**
  * 
  * @export
+ * @interface SyncActiveBlockchainRequest
+ */
+export interface SyncActiveBlockchainRequest {
+    /**
+     * 
+     * @type {ActivationType}
+     * @memberof SyncActiveBlockchainRequest
+     */
+    type: ActivationType;
+    /**
+     * 
+     * @type {Array<BlockchainDTO>}
+     * @memberof SyncActiveBlockchainRequest
+     */
+    blockchains: Array<BlockchainDTO>;
+}
+/**
+ * 
+ * @export
  * @interface UpdateLanguageRequest
  */
 export interface UpdateLanguageRequest {
@@ -1826,6 +1898,17 @@ export interface UpdatePasswordRequest {
      */
     otpCode?: string;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum UsageType {
+    ALL = 'ALL',
+    API = 'API',
+    DASHBOARD = 'DASHBOARD'
+}
+
 /**
  * 
  * @export
@@ -3946,10 +4029,10 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllAccountsByOrganizationId: async (organizationId: string, options: any = {}): Promise<RequestArgs> => {
+        getAllActiveAccountsByOrganizationId: async (organizationId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'organizationId' is not null or undefined
             if (organizationId === null || organizationId === undefined) {
-                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling getAllAccountsByOrganizationId.');
+                throw new RequiredError('organizationId','Required parameter organizationId was null or undefined when calling getAllActiveAccountsByOrganizationId.');
             }
             const localVarPath = `/api/v2/operation/organizations/{organizationId}/accounts`
                 .replace(`{${"organizationId"}}`, encodeURIComponent(String(organizationId)));
@@ -4191,6 +4274,50 @@ export const OperationControllerApiAxiosParamCreator = function (configuration?:
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {SyncActiveBlockchainRequest} syncActiveBlockchainRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        syncActiveBlockchains: async (orgId: string, syncActiveBlockchainRequest: SyncActiveBlockchainRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            if (orgId === null || orgId === undefined) {
+                throw new RequiredError('orgId','Required parameter orgId was null or undefined when calling syncActiveBlockchains.');
+            }
+            // verify required parameter 'syncActiveBlockchainRequest' is not null or undefined
+            if (syncActiveBlockchainRequest === null || syncActiveBlockchainRequest === undefined) {
+                throw new RequiredError('syncActiveBlockchainRequest','Required parameter syncActiveBlockchainRequest was null or undefined when calling syncActiveBlockchains.');
+            }
+            const localVarPath = `/api/v2/operation/organizations/{orgId}/sync-active-blockchains`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof syncActiveBlockchainRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(syncActiveBlockchainRequest !== undefined ? syncActiveBlockchainRequest : {}) : (syncActiveBlockchainRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4311,8 +4438,8 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllAccountsByOrganizationId(organizationId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AccountDTO>>> {
-            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getAllAccountsByOrganizationId(organizationId, options);
+        async getAllActiveAccountsByOrganizationId(organizationId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AccountDTO>>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).getAllActiveAccountsByOrganizationId(organizationId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -4391,6 +4518,20 @@ export const OperationControllerApiFp = function(configuration?: Configuration) 
          */
         async rejectCoinListingRequest(requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).rejectCoinListingRequest(requestId, rejectCoinListingRequestRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {SyncActiveBlockchainRequest} syncActiveBlockchainRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async syncActiveBlockchains(orgId: string, syncActiveBlockchainRequest: SyncActiveBlockchainRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await OperationControllerApiAxiosParamCreator(configuration).syncActiveBlockchains(orgId, syncActiveBlockchainRequest, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -4484,8 +4625,8 @@ export const OperationControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllAccountsByOrganizationId(organizationId: string, options?: any): AxiosPromise<Array<AccountDTO>> {
-            return OperationControllerApiFp(configuration).getAllAccountsByOrganizationId(organizationId, options).then((request) => request(axios, basePath));
+        getAllActiveAccountsByOrganizationId(organizationId: string, options?: any): AxiosPromise<Array<AccountDTO>> {
+            return OperationControllerApiFp(configuration).getAllActiveAccountsByOrganizationId(organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4540,6 +4681,16 @@ export const OperationControllerApiFactory = function (configuration?: Configura
          */
         rejectCoinListingRequest(requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any): AxiosPromise<void> {
             return OperationControllerApiFp(configuration).rejectCoinListingRequest(requestId, rejectCoinListingRequestRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} orgId 
+         * @param {SyncActiveBlockchainRequest} syncActiveBlockchainRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        syncActiveBlockchains(orgId: string, syncActiveBlockchainRequest: SyncActiveBlockchainRequest, options?: any): AxiosPromise<void> {
+            return OperationControllerApiFp(configuration).syncActiveBlockchains(orgId, syncActiveBlockchainRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4647,8 +4798,8 @@ export class OperationControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof OperationControllerApi
      */
-    public getAllAccountsByOrganizationId(organizationId: string, options?: any) {
-        return OperationControllerApiFp(this.configuration).getAllAccountsByOrganizationId(organizationId, options).then((request) => request(this.axios, this.basePath));
+    public getAllActiveAccountsByOrganizationId(organizationId: string, options?: any) {
+        return OperationControllerApiFp(this.configuration).getAllActiveAccountsByOrganizationId(organizationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4715,6 +4866,18 @@ export class OperationControllerApi extends BaseAPI {
      */
     public rejectCoinListingRequest(requestId: string, rejectCoinListingRequestRequest: RejectCoinListingRequestRequest, options?: any) {
         return OperationControllerApiFp(this.configuration).rejectCoinListingRequest(requestId, rejectCoinListingRequestRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} orgId 
+     * @param {SyncActiveBlockchainRequest} syncActiveBlockchainRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OperationControllerApi
+     */
+    public syncActiveBlockchains(orgId: string, syncActiveBlockchainRequest: SyncActiveBlockchainRequest, options?: any) {
+        return OperationControllerApiFp(this.configuration).syncActiveBlockchains(orgId, syncActiveBlockchainRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
