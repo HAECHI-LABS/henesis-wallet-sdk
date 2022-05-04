@@ -21,12 +21,19 @@ import {
 import { makeQueryString } from "./utils/url";
 import { BlockchainType, transformBlockchainType } from "./blockchain";
 
+export enum UsageType {
+  ALL = "ALL",
+  API = "API",
+  DASHBOARD = "DASHBOARD",
+}
+
 export interface Organization {
   id: string;
   name: string;
   secret: string;
   inactivatedAt: string | null;
   whitelistActivated: boolean;
+  usageType: UsageType;
   activeBlockchain: Array<BlockchainType>;
   activeNft: Array<BlockchainType>;
 }
