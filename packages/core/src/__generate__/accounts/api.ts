@@ -508,6 +508,12 @@ export interface CoinContractDTO {
      * @memberof CoinContractDTO
      */
     address: string;
+    /**
+     * 
+     * @type {CoinType}
+     * @memberof CoinContractDTO
+     */
+    coinType: CoinType;
 }
 /**
  * 
@@ -577,6 +583,12 @@ export interface CoinListingRequestDTO {
     address: string;
     /**
      * 
+     * @type {CoinType}
+     * @memberof CoinListingRequestDTO
+     */
+    coinType: CoinType;
+    /**
+     * 
      * @type {string}
      * @memberof CoinListingRequestDTO
      */
@@ -598,6 +610,24 @@ export enum CoinRequestStatus {
     REJECTED = 'REJECTED',
     CANCELED = 'CANCELED',
     APPROVED = 'APPROVED'
+}
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+export enum CoinType {
+    ETHEREUM = 'ETHEREUM',
+    KLAYTN = 'KLAYTN',
+    BITCOIN = 'BITCOIN',
+    FILECOIN = 'FILECOIN',
+    BINANCESMARTCHAIN = 'BINANCE_SMART_CHAIN',
+    LITECOIN = 'LITECOIN',
+    BITCOINCASH = 'BITCOIN_CASH',
+    POLYGON = 'POLYGON',
+    TOKEN = 'TOKEN',
+    NFT = 'NFT'
 }
 
 /**
@@ -643,6 +673,12 @@ export interface CreateCoinListingRequestRequest {
      * @memberof CreateCoinListingRequestRequest
      */
     address: string;
+    /**
+     * 
+     * @type {CoinType}
+     * @memberof CreateCoinListingRequestRequest
+     */
+    coinType: CoinType;
 }
 /**
  * 
