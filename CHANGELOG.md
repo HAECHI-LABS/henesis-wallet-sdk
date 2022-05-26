@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.9.0...v3.9.1) (2022-05-26)
+
+
+### Bug Fixes
+
+* add nfts tag to the getNfts API ([#669](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/669)) ([db174ea](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/db174eabf2638813cadfb072fb83907c3b166faa))
+* default henesis origin header ([#674](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/674)) ([e8acb86](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e8acb8673bd5ab9d1a0f9881883301e6aa5e01f5))
+
+
+### Features
+
+* add paramas to henesis key withdrawal ([e5001cd](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/e5001cdd1c2712eaa01b21c59d8baf6020545ecb))
+* add usage type to organization interface ([359f4d2](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/359f4d221cd80ccc93356f7c3910aaa3478b122f))
+* codegen account ([44dbe4a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/44dbe4a1048b77ed1551b6874403e04a19502a7d))
+* codegen account api ([090e06b](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/090e06bce867e2cef602816da4de903a814ed918))
+* eth codegen ([6168ff6](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/6168ff61d7cd192fba8f09353fd4ada66627a4d0))
+* garden test support ([#671](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/671)) ([fdb585a](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/fdb585ac3fd47c8addd02408b8384314658a8c79))
+* henesis origin header ([#672](https://github.com/HAECHI-LABS/henesis-wallet-sdk/issues/672)) ([8aeed1f](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/8aeed1f64fc5191a727c23cb997d27421c8e4f2b))
+
+
+
+
+
 # [3.9.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.3...v3.9.0) (2022-04-01)
 
 
