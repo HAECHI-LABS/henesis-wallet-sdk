@@ -168,6 +168,12 @@ export interface ActivationRequestDTO {
      * @memberof ActivationRequestDTO
      */
     updatedAt: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivationRequestDTO
+     */
+    activatedDate?: string;
 }
 /**
  * 
@@ -211,16 +217,6 @@ export interface ActivationStateDTO {
      */
     createdAt: string;
 }
-/**
- * 
- * @export
- * @enum {string}
- */
-export enum ActivationType {
-    BLOCKCHAINNETWORK = 'BLOCKCHAIN_NETWORK',
-    NFTUSAGE = 'NFT_USAGE'
-}
-
 /**
  * 
  * @export
@@ -294,6 +290,12 @@ export interface ApproveCoinListingRequestRequest {
      * @memberof ApproveCoinListingRequestRequest
      */
     coinListingDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApproveCoinListingRequestRequest
+     */
+    coinType?: ApproveCoinListingRequestRequestCoinTypeEnum;
 }
 
 /**
@@ -305,6 +307,22 @@ export enum ApproveCoinListingRequestRequestAttributesEnum {
     NONSTANDARDRETURNTYPE = 'ERC20_NON_STANDARD_RETURN_TYPE',
     REBASE = 'ERC20_REBASE',
     PAUSABLE = 'ERC20_PAUSABLE'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ApproveCoinListingRequestRequestCoinTypeEnum {
+    ETHEREUM = 'ETHEREUM',
+    KLAYTN = 'KLAYTN',
+    BITCOIN = 'BITCOIN',
+    FILECOIN = 'FILECOIN',
+    BINANCESMARTCHAIN = 'BINANCE_SMART_CHAIN',
+    LITECOIN = 'LITECOIN',
+    BITCOINCASH = 'BITCOIN_CASH',
+    POLYGON = 'POLYGON',
+    TOKEN = 'TOKEN',
+    NFT = 'NFT'
 }
 
 /**
@@ -335,6 +353,12 @@ export interface BlockchainDTO {
      * @memberof BlockchainDTO
      */
     blockchain: Blockchain;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlockchainDTO
+     */
+    activatedDate: string;
 }
 /**
  * 
@@ -1846,10 +1870,10 @@ export interface SimpleAccountDTO {
 export interface SyncActiveBlockchainRequest {
     /**
      * 
-     * @type {ActivationType}
+     * @type {Activation}
      * @memberof SyncActiveBlockchainRequest
      */
-    type: ActivationType;
+    type: Activation;
     /**
      * 
      * @type {Array<BlockchainDTO>}
