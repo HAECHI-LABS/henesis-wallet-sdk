@@ -16,6 +16,10 @@ export interface ClientOptions {
   secret: string;
   url: string;
   env: Env;
+  origin: {
+    forwardedFor: string;
+    remoteAddress: string;
+  };
 }
 
 export interface Client {
@@ -38,6 +42,30 @@ export const isSuccessStatus = (status: number) => {
 
 const TIMEOUT_MILLISECONDS = 30000;
 
+// copied from https://stackoverflow.com/a/8809472/2756490
+function generateUUID() {
+  // Public Domain/MIT
+  var d = new Date().getTime(); //Timestamp
+  var d2 =
+    (typeof performance !== "undefined" &&
+      performance.now &&
+      performance.now() * 1000) ||
+    0; //Time in microseconds since page-load or 0 if unsupported
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16; //random number between 0 and 16
+    if (d > 0) {
+      //Use timestamp until depleted
+      r = (d + r) % 16 | 0;
+      d = Math.floor(d / 16);
+    } else {
+      //Use microseconds since page-load if supported
+      r = (d2 + r) % 16 | 0;
+      d2 = Math.floor(d2 / 16);
+    }
+    return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
+}
+
 export class HttpClient {
   private readonly baseUrl: string;
 
@@ -53,11 +81,17 @@ export class HttpClient {
 
   private readonly env: Env;
 
+  private readonly origin: {
+    forwardedFor: string;
+    remoteAddress: string;
+  };
+
   constructor(options: ClientOptions) {
     this.baseUrl = options.url;
     this.secret = options.secret;
     this.accessToken = options.accessToken;
     this.env = options.env;
+    this.origin = options.origin;
     this.client = this.makeSDKClient({
       timeout: TIMEOUT_MILLISECONDS,
     });
@@ -155,11 +189,17 @@ export class HttpClient {
         const message = config.method.toUpperCase() + path + body + timestamp;
         config.headers["X-Henesis-Signature"] = this.createSig(message);
       }
+      config.headers["X-Henesis-Forwarded-For"] =
+        this.origin.forwardedFor ?? "";
+      config.headers["X-Henesis-Remote-Address"] =
+        this.origin.remoteAddress ?? "";
       config.headers["X-Henesis-Timestamp"] = timestamp;
       config.headers["X-Henesis-User-Agent"] =
         typeof window !== "undefined"
           ? window.navigator.userAgent
           : `HenesisWallet/${packageJson.version}`;
+
+      config.headers["X-Henesis-Request-Id"] = generateUUID();
 
       return config;
     });

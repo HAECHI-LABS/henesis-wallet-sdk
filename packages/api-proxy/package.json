@@ -1,6 +1,6 @@
 {
   "name": "@haechi-labs/henesis-wallet-api-proxy",
-  "version": "3.8.3",
+  "version": "3.9.0",
   "description": "henesis wallet api proxy",
   "author": "Haechi-labs <haechi@haechi.io>",
   "homepage": "",
@@ -13,6 +13,7 @@
     "start": "nest start",
     "start:local": "cross-env NODE_ENV=local nest start --watch",
     "start:dev": "cross-env NODE_ENV=development nest start --debug",
+    "start:garden-test": "cross-env NODE_ENV=garden-test nest start --debug",
     "start:test": "cross-env NODE_ENV=test nest start --watch",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
     "test": "jest --passWithNoTests",
@@ -39,7 +40,7 @@
     "preBootstrap:windows": "if exist node_modules rmdir /q /s node_modules"
   },
   "dependencies": {
-    "@haechi-labs/henesis-wallet-core": "^3.8.3",
+    "@haechi-labs/henesis-wallet-core": "^3.9.0",
     "@nestjs/common": "^7.6.15",
     "@nestjs/core": "^7.6.15",
     "@nestjs/platform-express": "^7.6.15",

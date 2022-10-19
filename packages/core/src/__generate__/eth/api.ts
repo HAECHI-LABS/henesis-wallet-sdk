@@ -2649,6 +2649,19 @@ export interface NonceDTO {
 /**
  * 
  * @export
+ * @interface OperationCreateCoinRequest
+ */
+export interface OperationCreateCoinRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof OperationCreateCoinRequest
+     */
+    address?: string;
+}
+/**
+ * 
+ * @export
  * @interface Pageable
  */
 export interface Pageable {
@@ -3377,13 +3390,13 @@ export interface Sort {
      * @type {boolean}
      * @memberof Sort
      */
-    unsorted?: boolean;
+    empty?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof Sort
      */
-    empty?: boolean;
+    unsorted?: boolean;
 }
 /**
  * 
@@ -3681,7 +3694,7 @@ export enum TransactionType {
     NFTFLUSH = 'NFT_FLUSH',
     NFTWITHDRAWAL = 'NFT_WITHDRAWAL',
     HOPTRANSACTION = 'HOP_TRANSACTION',
-    FEE_WALLET_WITHDRAWAL = 'FEE_WALLET_WITHDRAWAL'
+    FEEWALLETWITHDRAWAL = 'FEE_WALLET_WITHDRAWAL'
 }
 
 /**
@@ -6972,6 +6985,79 @@ export const BscOperationControllerApiAxiosParamCreator = function (configuratio
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNftCoin3: async (operationCreateCoinRequest: OperationCreateCoinRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'operationCreateCoinRequest' is not null or undefined
+            if (operationCreateCoinRequest === null || operationCreateCoinRequest === undefined) {
+                throw new RequiredError('operationCreateCoinRequest','Required parameter operationCreateCoinRequest was null or undefined when calling createNftCoin3.');
+            }
+            const localVarPath = `/api/v2/bnb/operation/coins/nft`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof operationCreateCoinRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(operationCreateCoinRequest !== undefined ? operationCreateCoinRequest : {}) : (operationCreateCoinRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} address 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinByAddress3: async (address: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'address' is not null or undefined
+            if (address === null || address === undefined) {
+                throw new RequiredError('address','Required parameter address was null or undefined when calling getCoinByAddress3.');
+            }
+            const localVarPath = `/api/v2/bnb/operation/coins/address/{address}`
+                .replace(`{${"address"}}`, encodeURIComponent(String(address)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -7008,6 +7094,32 @@ export const BscOperationControllerApiFp = function(configuration?: Configuratio
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createNftCoin3(operationCreateCoinRequest: OperationCreateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await BscOperationControllerApiAxiosParamCreator(configuration).createNftCoin3(operationCreateCoinRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} address 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCoinByAddress3(address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await BscOperationControllerApiAxiosParamCreator(configuration).getCoinByAddress3(address, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -7035,6 +7147,24 @@ export const BscOperationControllerApiFactory = function (configuration?: Config
          */
         createHenesisKey3(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): AxiosPromise<HenesisKeyDTO> {
             return BscOperationControllerApiFp(configuration).createHenesisKey3(createHenesisKeyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNftCoin3(operationCreateCoinRequest: OperationCreateCoinRequest, options?: any): AxiosPromise<CoinDTO> {
+            return BscOperationControllerApiFp(configuration).createNftCoin3(operationCreateCoinRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} address 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinByAddress3(address: string, options?: any): AxiosPromise<CoinDTO> {
+            return BscOperationControllerApiFp(configuration).getCoinByAddress3(address, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -7067,6 +7197,28 @@ export class BscOperationControllerApi extends BaseAPI {
      */
     public createHenesisKey3(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any) {
         return BscOperationControllerApiFp(this.configuration).createHenesisKey3(createHenesisKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BscOperationControllerApi
+     */
+    public createNftCoin3(operationCreateCoinRequest: OperationCreateCoinRequest, options?: any) {
+        return BscOperationControllerApiFp(this.configuration).createNftCoin3(operationCreateCoinRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} address 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BscOperationControllerApi
+     */
+    public getCoinByAddress3(address: string, options?: any) {
+        return BscOperationControllerApiFp(this.configuration).getCoinByAddress3(address, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -13308,14 +13460,52 @@ export const EthOperationControllerApiAxiosParamCreator = function (configuratio
         },
         /**
          * 
+         * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNftCoin2: async (operationCreateCoinRequest: OperationCreateCoinRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'operationCreateCoinRequest' is not null or undefined
+            if (operationCreateCoinRequest === null || operationCreateCoinRequest === undefined) {
+                throw new RequiredError('operationCreateCoinRequest','Required parameter operationCreateCoinRequest was null or undefined when calling createNftCoin2.');
+            }
+            const localVarPath = `/api/v2/eth/operation/coins/nft`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof operationCreateCoinRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(operationCreateCoinRequest !== undefined ? operationCreateCoinRequest : {}) : (operationCreateCoinRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} address 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoinByAddress1: async (address: string, options: any = {}): Promise<RequestArgs> => {
+        getCoinByAddress2: async (address: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'address' is not null or undefined
             if (address === null || address === undefined) {
-                throw new RequiredError('address','Required parameter address was null or undefined when calling getCoinByAddress1.');
+                throw new RequiredError('address','Required parameter address was null or undefined when calling getCoinByAddress2.');
             }
             const localVarPath = `/api/v2/eth/operation/coins/address/{address}`
                 .replace(`{${"address"}}`, encodeURIComponent(String(address)));
@@ -13379,12 +13569,25 @@ export const EthOperationControllerApiFp = function(configuration?: Configuratio
         },
         /**
          * 
+         * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createNftCoin2(operationCreateCoinRequest: OperationCreateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await EthOperationControllerApiAxiosParamCreator(configuration).createNftCoin2(operationCreateCoinRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} address 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCoinByAddress1(address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
-            const localVarAxiosArgs = await EthOperationControllerApiAxiosParamCreator(configuration).getCoinByAddress1(address, options);
+        async getCoinByAddress2(address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await EthOperationControllerApiAxiosParamCreator(configuration).getCoinByAddress2(address, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -13420,12 +13623,21 @@ export const EthOperationControllerApiFactory = function (configuration?: Config
         },
         /**
          * 
+         * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNftCoin2(operationCreateCoinRequest: OperationCreateCoinRequest, options?: any): AxiosPromise<CoinDTO> {
+            return EthOperationControllerApiFp(configuration).createNftCoin2(operationCreateCoinRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} address 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoinByAddress1(address: string, options?: any): AxiosPromise<CoinDTO> {
-            return EthOperationControllerApiFp(configuration).getCoinByAddress1(address, options).then((request) => request(axios, basePath));
+        getCoinByAddress2(address: string, options?: any): AxiosPromise<CoinDTO> {
+            return EthOperationControllerApiFp(configuration).getCoinByAddress2(address, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -13462,13 +13674,24 @@ export class EthOperationControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EthOperationControllerApi
+     */
+    public createNftCoin2(operationCreateCoinRequest: OperationCreateCoinRequest, options?: any) {
+        return EthOperationControllerApiFp(this.configuration).createNftCoin2(operationCreateCoinRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} address 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EthOperationControllerApi
      */
-    public getCoinByAddress1(address: string, options?: any) {
-        return EthOperationControllerApiFp(this.configuration).getCoinByAddress1(address, options).then((request) => request(this.axios, this.basePath));
+    public getCoinByAddress2(address: string, options?: any) {
+        return EthOperationControllerApiFp(this.configuration).getCoinByAddress2(address, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -19889,14 +20112,52 @@ export const KlayOperationControllerApiAxiosParamCreator = function (configurati
         },
         /**
          * 
+         * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNftCoin1: async (operationCreateCoinRequest: OperationCreateCoinRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'operationCreateCoinRequest' is not null or undefined
+            if (operationCreateCoinRequest === null || operationCreateCoinRequest === undefined) {
+                throw new RequiredError('operationCreateCoinRequest','Required parameter operationCreateCoinRequest was null or undefined when calling createNftCoin1.');
+            }
+            const localVarPath = `/api/v2/klay/operation/coins/nft`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof operationCreateCoinRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(operationCreateCoinRequest !== undefined ? operationCreateCoinRequest : {}) : (operationCreateCoinRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} address 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoinByAddress: async (address: string, options: any = {}): Promise<RequestArgs> => {
+        getCoinByAddress1: async (address: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'address' is not null or undefined
             if (address === null || address === undefined) {
-                throw new RequiredError('address','Required parameter address was null or undefined when calling getCoinByAddress.');
+                throw new RequiredError('address','Required parameter address was null or undefined when calling getCoinByAddress1.');
             }
             const localVarPath = `/api/v2/klay/operation/coins/address/{address}`
                 .replace(`{${"address"}}`, encodeURIComponent(String(address)));
@@ -19960,12 +20221,25 @@ export const KlayOperationControllerApiFp = function(configuration?: Configurati
         },
         /**
          * 
+         * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createNftCoin1(operationCreateCoinRequest: OperationCreateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await KlayOperationControllerApiAxiosParamCreator(configuration).createNftCoin1(operationCreateCoinRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @param {string} address 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCoinByAddress(address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
-            const localVarAxiosArgs = await KlayOperationControllerApiAxiosParamCreator(configuration).getCoinByAddress(address, options);
+        async getCoinByAddress1(address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await KlayOperationControllerApiAxiosParamCreator(configuration).getCoinByAddress1(address, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -20001,12 +20275,21 @@ export const KlayOperationControllerApiFactory = function (configuration?: Confi
         },
         /**
          * 
+         * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNftCoin1(operationCreateCoinRequest: OperationCreateCoinRequest, options?: any): AxiosPromise<CoinDTO> {
+            return KlayOperationControllerApiFp(configuration).createNftCoin1(operationCreateCoinRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} address 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCoinByAddress(address: string, options?: any): AxiosPromise<CoinDTO> {
-            return KlayOperationControllerApiFp(configuration).getCoinByAddress(address, options).then((request) => request(axios, basePath));
+        getCoinByAddress1(address: string, options?: any): AxiosPromise<CoinDTO> {
+            return KlayOperationControllerApiFp(configuration).getCoinByAddress1(address, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -20043,13 +20326,24 @@ export class KlayOperationControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KlayOperationControllerApi
+     */
+    public createNftCoin1(operationCreateCoinRequest: OperationCreateCoinRequest, options?: any) {
+        return KlayOperationControllerApiFp(this.configuration).createNftCoin1(operationCreateCoinRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} address 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KlayOperationControllerApi
      */
-    public getCoinByAddress(address: string, options?: any) {
-        return KlayOperationControllerApiFp(this.configuration).getCoinByAddress(address, options).then((request) => request(this.axios, this.basePath));
+    public getCoinByAddress1(address: string, options?: any) {
+        return KlayOperationControllerApiFp(this.configuration).getCoinByAddress1(address, options).then((request) => request(this.axios, this.basePath));
     }
 
 }
@@ -26114,6 +26408,79 @@ export const MaticOperationControllerApiAxiosParamCreator = function (configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNftCoin: async (operationCreateCoinRequest: OperationCreateCoinRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'operationCreateCoinRequest' is not null or undefined
+            if (operationCreateCoinRequest === null || operationCreateCoinRequest === undefined) {
+                throw new RequiredError('operationCreateCoinRequest','Required parameter operationCreateCoinRequest was null or undefined when calling createNftCoin.');
+            }
+            const localVarPath = `/api/v2/matic/operation/coins/nft`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof operationCreateCoinRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(operationCreateCoinRequest !== undefined ? operationCreateCoinRequest : {}) : (operationCreateCoinRequest || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} address 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinByAddress: async (address: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'address' is not null or undefined
+            if (address === null || address === undefined) {
+                throw new RequiredError('address','Required parameter address was null or undefined when calling getCoinByAddress.');
+            }
+            const localVarPath = `/api/v2/matic/operation/coins/address/{address}`
+                .replace(`{${"address"}}`, encodeURIComponent(String(address)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -26150,6 +26517,32 @@ export const MaticOperationControllerApiFp = function(configuration?: Configurat
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createNftCoin(operationCreateCoinRequest: OperationCreateCoinRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await MaticOperationControllerApiAxiosParamCreator(configuration).createNftCoin(operationCreateCoinRequest, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} address 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCoinByAddress(address: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CoinDTO>> {
+            const localVarAxiosArgs = await MaticOperationControllerApiAxiosParamCreator(configuration).getCoinByAddress(address, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -26177,6 +26570,24 @@ export const MaticOperationControllerApiFactory = function (configuration?: Conf
          */
         createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any): AxiosPromise<HenesisKeyDTO> {
             return MaticOperationControllerApiFp(configuration).createHenesisKey(createHenesisKeyRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNftCoin(operationCreateCoinRequest: OperationCreateCoinRequest, options?: any): AxiosPromise<CoinDTO> {
+            return MaticOperationControllerApiFp(configuration).createNftCoin(operationCreateCoinRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} address 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCoinByAddress(address: string, options?: any): AxiosPromise<CoinDTO> {
+            return MaticOperationControllerApiFp(configuration).getCoinByAddress(address, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -26209,6 +26620,28 @@ export class MaticOperationControllerApi extends BaseAPI {
      */
     public createHenesisKey(createHenesisKeyRequest: CreateHenesisKeyRequest, options?: any) {
         return MaticOperationControllerApiFp(this.configuration).createHenesisKey(createHenesisKeyRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {OperationCreateCoinRequest} operationCreateCoinRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MaticOperationControllerApi
+     */
+    public createNftCoin(operationCreateCoinRequest: OperationCreateCoinRequest, options?: any) {
+        return MaticOperationControllerApiFp(this.configuration).createNftCoin(operationCreateCoinRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} address 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MaticOperationControllerApi
+     */
+    public getCoinByAddress(address: string, options?: any) {
+        return MaticOperationControllerApiFp(this.configuration).getCoinByAddress(address, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

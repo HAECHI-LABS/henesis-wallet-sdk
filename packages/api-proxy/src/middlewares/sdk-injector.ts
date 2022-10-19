@@ -5,6 +5,11 @@ import { Env, SDK } from "@haechi-labs/henesis-wallet-core";
 @Injectable()
 export class SdkMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction): any {
+    const origin = {
+      forwardedFor: req.headers["x-forwarded-for"] as string,
+      remoteAddress: req.socket.remoteAddress as string,
+    };
+
     let accessToken;
     let secret;
     if (req.headers.authorization) {
@@ -28,12 +33,16 @@ export class SdkMiddleware implements NestMiddleware {
     if (process.env.NODE_ENV === "local") {
       env = Env.Local;
     }
+    if (process.env.NODE_ENV === "garden-test") {
+      env = Env.GardenTest;
+    }
     const url = process.env.URL;
     req.sdk = new SDK({
       accessToken,
       secret,
       env,
       url,
+      origin,
     });
     next();
   }

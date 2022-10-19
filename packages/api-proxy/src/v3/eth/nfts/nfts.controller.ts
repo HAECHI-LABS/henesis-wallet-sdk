@@ -58,6 +58,7 @@ export class NftsController {
     summary: "전체 NFT 컨트랙트 목록 조회하기",
     description: "모든 NFT 컨트랙트를 조회합니다.",
   })
+  @ApiTags("nfts")
   @ReadMeExtension()
   public async getNfts(@Request() request: express.Request): Promise<NftDTO[]> {
     return await this.nftsService.getNfts(request.sdk);
