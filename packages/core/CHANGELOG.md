@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0](/compare/v3.9.0...v3.10.0) (2022-10-19)
+
+
+### Bug Fixes
+
+* default henesis origin header (#674) e8acb86, closes #674
+
+
+### Features
+
+* add paramas to henesis key withdrawal e5001cd
+* add usage type to organization interface 359f4d2
+* codegen account 44dbe4a
+* codegen account api 090e06b
+* eth codegen 6168ff6
+* garden test support (#671) fdb585a, closes #671
+* henesis origin header (#672) 8aeed1f, closes #672
+
+
+
+
+
 # [3.9.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.3...v3.9.0) (2022-04-01)
 
 

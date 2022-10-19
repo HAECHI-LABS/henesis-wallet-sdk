@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0](/compare/v3.9.0...v3.10.0) (2022-10-19)
+
+
+### Bug Fixes
+
+* Add Matic replace proxy (#684) 59e6bf3, closes #684
+* add nfts tag to the getNfts API (#669) db174ea, closes #669
+
+
+### Features
+
+* garden test support (#671) fdb585a, closes #671
+* henesis origin header (#672) 8aeed1f, closes #672
+
+
+
+
+
 # [3.9.0](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.8.3...v3.9.0) (2022-04-01)
 
 **Note:** Version bump only for package @haechi-labs/henesis-wallet-api-proxy
