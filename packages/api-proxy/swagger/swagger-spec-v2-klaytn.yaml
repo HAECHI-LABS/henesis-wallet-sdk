@@ -295,7 +295,6 @@ components:
       properties:
         coinId:
           type: number
-          nullable: true
           description: 암호화폐 ID
           example: 2
         coinType:
@@ -343,15 +342,6 @@ components:
           description: 트랜잭션 ID
           example: 2def027e99e906f8b912c691def10861
         blockchain:
-          enum:
-            - ETHEREUM
-            - KLAYTN
-            - BITCOIN
-            - LITECOIN
-            - FILECOIN
-            - BINANCE_SMART_CHAIN
-            - BITCOIN_CASH
-            - POLYGON
           type: string
           description: 블록체인 플랫폼
           example: ETHEREUM
@@ -372,17 +362,6 @@ components:
           description: 트랜잭션 전송 시 발생한 에러
           example: null
         status:
-          enum:
-            - PENDING_APPROVAL
-            - REJECTED
-            - REQUESTED
-            - PENDING
-            - FAILED
-            - MINED
-            - REVERTED
-            - INTERNAL_REVERTED
-            - CONFIRMED
-            - REPLACED
           type: string
           description: 트랜잭션 상태
           example: CONFIRMED
@@ -436,6 +415,7 @@ components:
         - keyId
         - status
         - isFeeDelegated
+        - hopAddress
         - createdAt
         - updatedAt
     GetManyResponseForTransactionDTO:
@@ -499,24 +479,10 @@ components:
           description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
           example: '1615793656270'
         status:
-          enum:
-            - ACTIVE
-            - CREATING
-            - FAILED
-            - INACTIVE
           type: string
           description: 지갑 상태
           example: ACTIVE
         blockchain:
-          enum:
-            - ETHEREUM
-            - KLAYTN
-            - BITCOIN
-            - LITECOIN
-            - FILECOIN
-            - BINANCE_SMART_CHAIN
-            - BITCOIN_CASH
-            - POLYGON
           type: string
           description: 블록체인 타입
           example: ETHEREUM
@@ -526,12 +492,10 @@ components:
           example: v3
         transactionId:
           type: string
-          nullable: true
           description: 지갑 생성 트랜잭션의 ID
           example: 183365bc7837eceb5c9292e5be1655b7
         error:
           type: string
-          nullable: true
           description: 지갑 생성 실패 시 발생한 에러
           example: null
         accountKey:
@@ -561,6 +525,9 @@ components:
         - updatedAt
         - status
         - blockchain
+        - version
+        - transactionId
+        - error
         - accountKey
         - encryptionKey
         - whitelistActivated
@@ -588,24 +555,10 @@ components:
           description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
           example: '1615793656270'
         status:
-          enum:
-            - ACTIVE
-            - CREATING
-            - FAILED
-            - INACTIVE
           type: string
           description: 지갑 상태
           example: ACTIVE
         blockchain:
-          enum:
-            - ETHEREUM
-            - KLAYTN
-            - BITCOIN
-            - LITECOIN
-            - FILECOIN
-            - BINANCE_SMART_CHAIN
-            - BITCOIN_CASH
-            - POLYGON
           type: string
           description: 블록체인 타입
           example: ETHEREUM
@@ -615,12 +568,10 @@ components:
           example: v3
         transactionId:
           type: string
-          nullable: true
           description: 지갑 생성 트랜잭션의 ID
           example: 183365bc7837eceb5c9292e5be1655b7
         error:
           type: string
-          nullable: true
           description: 지갑 생성 실패 시 발생한 에러
           example: null
       required:
@@ -631,6 +582,9 @@ components:
         - updatedAt
         - status
         - blockchain
+        - version
+        - transactionId
+        - error
     SendMasterWalletContractCallRequestDTO:
       type: object
       properties:
@@ -734,9 +688,11 @@ components:
           description: 마스터 지갑의 비밀번호
           example: passphrase
         requests:
-          type: object
           description: 전송할 트랜잭션 요청들
           example: ContractCallRequest or TransferRequest
+          type: array
+          items:
+            type: string
       required:
         - passphrase
         - requests
@@ -1758,8 +1714,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ChangeMasterWalletNameRequestDTO'
       responses:
-        '200':
-          description: ''
         '204':
           description: ''
         '401': *ref_21
@@ -2154,8 +2108,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ChangeUserWalletNameRequestDTO'
       responses:
-        '200':
-          description: ''
         '204':
           description: ''
         '401': *ref_21

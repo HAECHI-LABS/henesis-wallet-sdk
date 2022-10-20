@@ -32,9 +32,9 @@
     "build:spec:v3-polygon": "cross-env BUILD_SWAGGER_SPEC=true API_VERSION=v3 ENDPOINT=polygon nest start",
     "build:spec:version": "cross-env BUILD_SWAGGER_SPEC=true ENDPOINT=version nest start",
     "build:windows": "npm run preBuild:windows && mkdir lib && tsc",
-    "eslint": "../../node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src",
-    "eslint:fix": "../../node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx ./src --fix",
-    "prettier": "prettier './src/**/*.{js,ts,tsx}' --write",
+    "eslint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
+    "eslint:fix": "eslint --ext .js,.jsx,.ts,.tsx ./src --fix",
+    "prettier": "prettier \"./src/**/*.{js,ts,tsx}\" --write",
     "preBuild:windows": "if exist lib rmdir /q /s lib",
     "preBootstrap": "rm -rf ./node_modules",
     "preBootstrap:windows": "if exist node_modules rmdir /q /s node_modules"

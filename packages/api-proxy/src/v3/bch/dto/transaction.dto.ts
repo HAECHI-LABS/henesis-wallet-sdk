@@ -76,6 +76,7 @@ export class TransactionDto {
   @ApiModelProperty({
     description: "트랜잭션을 통해 생성된 UTXO의 Output",
     example: EXAMPLE_TRANSACTION_DTO.outputs,
+    isArray: true,
   })
   outputs: TransactionOutputDto[];
 

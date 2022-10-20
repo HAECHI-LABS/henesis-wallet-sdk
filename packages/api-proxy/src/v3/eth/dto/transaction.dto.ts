@@ -63,6 +63,7 @@ export class TransactionDTO {
   @ApiModelProperty({
     description: "메인넷 종류",
     example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.blockchain,
+    enum: Object.values(BlockchainType),
   })
   blockchain: BlockchainType;
 
@@ -82,6 +83,7 @@ export class TransactionDTO {
   @ApiModelProperty({
     description: "트랜잭션 상태",
     example: EXAMPLE_ETHEREUM_TRANSACTION_DTO.status,
+    enum: Object.values(TransactionStatus),
   })
   status: TransactionStatus;
 
