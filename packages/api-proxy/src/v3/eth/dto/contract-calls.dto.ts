@@ -44,6 +44,7 @@ export class ContractCallsDTO {
   @ApiModelProperty({
     description: "트랜잭션 상태",
     example: EXAMPLE_ETHEREUM_CONTRACT_CALLS_DTO.status,
+    enum: Object.values(EventStatus),
   })
   status: EventStatus;
 
@@ -99,6 +100,7 @@ export class ContractCallsDTO {
   @ApiModelProperty({
     description: "메인넷 종류",
     example: EXAMPLE_ETHEREUM_CONTRACT_CALLS_DTO.blockchain,
+    enum: Object.values(BlockchainType),
   })
   blockchain: BlockchainType;
 

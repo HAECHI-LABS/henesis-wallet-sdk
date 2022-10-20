@@ -42,6 +42,7 @@ export class CreateFlushRequestDTO {
   @ApiModelProperty({
     description: "집금할 대상의 목록",
     example: EXAMPLE_KLAYTN_CREATE_FLUSH_REQUEST_DTO.targets,
+    isArray: true,
   })
   targets: Target[];
 

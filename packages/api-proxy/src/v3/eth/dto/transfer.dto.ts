@@ -65,6 +65,7 @@ export class TransferDTO {
   @ApiModelProperty({
     description: "트랜잭션 상태",
     example: EXAMPLE_ETHEREUM_TRANSFER_DTO.status,
+    enum: Object.values(EventStatus),
   })
   status: EventStatus;
 
@@ -101,6 +102,7 @@ export class TransferDTO {
   @ApiModelProperty({
     description: "입출금 타입",
     example: EXAMPLE_ETHEREUM_TRANSFER_DTO.transferType,
+    enum: Object.values(TransferType),
   })
   transferType: TransferType;
 

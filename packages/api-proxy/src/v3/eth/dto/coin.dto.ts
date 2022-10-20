@@ -65,12 +65,15 @@ export class CoinDTO {
   @ApiModelProperty({
     description: "코인이 발행된 메인넷",
     example: EXAMPLE_ETHEREUM_COIN_DTO.blockchain,
+    enum: Object.values(Blockchain),
   })
   blockchain: Blockchain;
 
   @ApiModelProperty({
     description: "코인의 메타 데이터",
     example: EXAMPLE_ETHEREUM_COIN_DTO.attributes,
+    enum: Object.values(CoinDTOAttributesEnum),
+    isArray: true,
   })
   attributes: CoinDTOAttributesEnum[];
 

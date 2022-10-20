@@ -46,6 +46,7 @@ export class WalletDTO {
   @ApiModelProperty({
     description: "메인넷 종류",
     example: EXAMPLE_ETHEREUM_WALLET_DTO.blockchain,
+    enum: Object.values(BlockchainType),
   })
   blockchain: BlockchainType;
 
@@ -64,6 +65,7 @@ export class WalletDTO {
   @ApiModelProperty({
     description: "지갑 상태",
     example: EXAMPLE_ETHEREUM_WALLET_DTO.status,
+    enum: Object.values(WalletStatus),
   })
   status: WalletStatus;
 

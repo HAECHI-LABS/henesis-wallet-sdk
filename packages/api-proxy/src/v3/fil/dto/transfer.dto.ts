@@ -63,6 +63,7 @@ export class TransferDTO {
   @ApiModelProperty({
     description: "출금 상태",
     example: EXAMPLE_FILECOIN_TRANSFER_DTO.status,
+    enum: Object.values(TransferStatus),
   })
   status: TransferStatus;
 
@@ -81,6 +82,7 @@ export class TransferDTO {
   @ApiModelProperty({
     description: "입출금 타입",
     example: EXAMPLE_FILECOIN_TRANSFER_DTO.type,
+    enum: Object.values(TransferType),
   })
   type: TransferType;
 

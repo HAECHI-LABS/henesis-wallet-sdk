@@ -217,6 +217,7 @@ components:
       required:
         - id
         - hash
+        - feeAmount
     TransferDTO:
       type: object
       properties:
@@ -241,6 +242,9 @@ components:
           description: '총 수수료 양 (단위: attoFIL)'
           example: '1000000000'
         status:
+          type: string
+          description: 출금 상태
+          example: CONFIRMED
           enum:
             - REQUESTED
             - PENDING
@@ -248,9 +252,6 @@ components:
             - MINED
             - REVERTED
             - CONFIRMED
-          type: string
-          description: 출금 상태
-          example: CONFIRMED
         masterWalletId:
           type: string
           description: 입출금 마스터 지갑 ID
@@ -260,12 +261,12 @@ components:
           description: 입출금이 발생한 마스터 지갑 혹은 입금 주소 ID
           example: 3dd953e5592c21e58be30d807ae40b1b
         type:
-          enum:
-            - WITHDRAWAL
-            - DEPOSIT
           type: string
           description: 입출금 타입
           example: WITHDRAWAL
+          enum:
+            - WITHDRAWAL
+            - DEPOSIT
         proposalTransaction:
           description: 입출금 요청 트랜잭션
           example: &ref_0
@@ -296,10 +297,12 @@ components:
         - from
         - to
         - amount
+        - feeAmount
         - status
         - masterWalletId
         - walletId
         - type
+        - proposalTransaction
         - transaction
         - createdAt
         - updatedAt
@@ -399,14 +402,14 @@ components:
           description: '마스터 지갑 정보 수정 시간 (단위: ms, UNIX time)'
           example: '1614582928222'
         status:
+          type: string
+          description: 마스터 지갑 상태
+          example: ACTIVE
           enum:
             - ACTIVE
             - CREATING
             - FAILED
             - INACTIVE
-          type: string
-          description: 마스터 지갑 상태
-          example: ACTIVE
       required:
         - id
         - name
@@ -474,7 +477,7 @@ components:
               metadata: metadata
           type: array
           items:
-            $ref: '#/components/schemas/TransferDTO'
+            type: array
         createdAt:
           type: string
           description: '집금 발생 시간 (형식: ms, UNIX time)'
@@ -577,6 +580,7 @@ components:
         - to
         - amount
         - passphrase
+        - gasPremium
     FlushRequestDTO:
       type: object
       properties:
@@ -1001,8 +1005,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ChangeWalletNameRequestDTO'
       responses:
-        '200':
-          description: ''
         '204':
           description: ''
         '400':

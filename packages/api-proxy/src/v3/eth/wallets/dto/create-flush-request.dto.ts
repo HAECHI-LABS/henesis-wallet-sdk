@@ -47,6 +47,8 @@ export class CreateFlushRequestDTO {
   @ApiModelProperty({
     description: "집금할 대상의 목록",
     example: EXAMPLE_ETHEREUM_CREATE_FLUSH_REQUEST_DTO.targets,
+    isArray: true,
+    type: Target,
   })
   targets: Target[];
 
@@ -89,6 +91,8 @@ export class CreateNftFlushRequestDTO {
   @ApiModelProperty({
     description: "집금할 대상의 목록",
     example: EXAMPLE_ETHEREUM_CREATE_FLUSH_REQUEST_DTO.targets,
+    isArray: true,
+    type: NftTarget,
   })
   targets: NftTarget[];
 

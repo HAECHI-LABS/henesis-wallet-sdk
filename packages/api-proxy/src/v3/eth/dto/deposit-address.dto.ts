@@ -34,6 +34,7 @@ export class DepositAddressDTO {
   @ApiModelProperty({
     description: "메인넷 종류",
     example: EXAMPLE_ETHEREUM_DEPOSIT_ADDRESS_DTO.blockchain,
+    enum: Object.values(BlockchainType),
   })
   blockchain: BlockchainType;
 
