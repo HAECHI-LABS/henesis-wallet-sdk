@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/compare/v3.10.0-hotfix.3...v3.10.1) (2022-10-24)
+
+
+### Bug Fixes
+
+* Open API - Support Enum, Array Type, swagger generated, fix eslint and prettier ([d1ea7e1](https://github.com/HAECHI-LABS/henesis-wallet-sdk/commit/d1ea7e1f459d55f2ba4b3c7c45ce2637e58856c0))
+
+
+
+
+
 # [3.10.0](/compare/v3.9.0...v3.10.0) (2022-10-19)
 
 
