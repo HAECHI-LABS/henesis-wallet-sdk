@@ -17,9 +17,12 @@ export class FeeWalletBalanceDTO {
     example: EXAMPLE_FILECOIN_FEE_WALLET_BALANCE_DTO.defaultFeeWallet,
   })
   defaultFeeWallet: BalanceDTO;
+
   @ApiModelProperty({
     description: "요청 수수료 지갑들의 잔액",
     example: EXAMPLE_FILECOIN_FEE_WALLET_BALANCE_DTO.proposalFeeWallets,
+    isArray: true,
+    type: BalanceWithIdDTO,
   })
   proposalFeeWallets: BalanceWithIdDTO[];
 

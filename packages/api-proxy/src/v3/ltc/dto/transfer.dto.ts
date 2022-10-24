@@ -50,6 +50,7 @@ export class TransferDTO {
   @ApiModelProperty({
     description: "전송(Transfer) 상태",
     example: EXAMPLE_TRANSFER_DTO.status,
+    enum: Object.values(TransferStatus),
   })
   status: TransferStatus;
 
@@ -87,6 +88,7 @@ export class TransferDTO {
   @ApiModelProperty({
     description: "전송(Transfer) 타입",
     example: EXAMPLE_TRANSFER_DTO.type,
+    enum: Object.values(TransferType),
   })
   type: TransferType;
 

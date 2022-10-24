@@ -24,6 +24,8 @@ export class FeeWalletDTO {
   @ApiModelProperty({
     description: "요청 수수료 지갑 목록",
     example: EXAMPLE_FILECOIN_FEE_WALLET_DTO.proposalFeeWallets,
+    isArray: true,
+    type: ProposalFeeWalletDTO,
   })
   proposalFeeWallets: ProposalFeeWalletDTO[];
 

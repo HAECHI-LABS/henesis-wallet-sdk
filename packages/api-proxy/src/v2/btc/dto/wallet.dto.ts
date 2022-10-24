@@ -66,6 +66,7 @@ export class WalletDTO {
   @ApiModelProperty({
     description: "지갑 상태",
     example: EXAMPLE_WALLET_DTO.status,
+    enum: Object.values(WalletStatus),
   })
   status: WalletStatus;
 

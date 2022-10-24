@@ -45,6 +45,7 @@ export class MasterWalletDto {
   @ApiModelProperty({
     description: "마스터 지갑 상태",
     example: EXAMPLE_FILECOIN_MASTER_WALLET_DTO.status,
+    enum: Object.values(WalletStatus),
   })
   status: WalletStatus;
 

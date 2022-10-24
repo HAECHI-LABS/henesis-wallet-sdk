@@ -93,6 +93,9 @@ components:
           description: 코인의 소수점 자릿수
           example: 18
         blockchain:
+          type: string
+          description: 코인이 발행된 메인넷
+          example: ETHEREUM
           enum:
             - ETHEREUM
             - KLAYTN
@@ -102,16 +105,13 @@ components:
             - LITECOIN
             - BITCOIN_CASH
             - POLYGON
-          type: string
-          description: 코인이 발행된 메인넷
-          example: ETHEREUM
         attributes:
-          items:
-            type: array
           description: 코인의 메타 데이터
           example: &ref_6
             - ERC20_STANDARD
           type: array
+          items:
+            type: array
       required:
         - id
         - name
@@ -148,6 +148,9 @@ components:
           example: >-
             0xa9059cbb0000000000000000000000001f10ecbd971eab345ea19e96dc237b1fbd63de9600000000000000000000000000000000000000000000000000000000000f4240
         status:
+          type: string
+          description: 트랜잭션 상태
+          example: CONFIRMED
           enum:
             - PENDING_APPROVAL
             - REJECTED
@@ -158,9 +161,6 @@ components:
             - REPLACED
             - MINED
             - CONFIRMED
-          type: string
-          description: 트랜잭션 상태
-          example: CONFIRMED
         walletId:
           type: string
           description: 지갑 ID
@@ -196,6 +196,9 @@ components:
           description: '트랜잭션 상태가 마지막으로 변경된 시간 (형식: ms, UNIX time)'
           example: '1612411724023'
         blockchain:
+          type: string
+          description: 메인넷 종류
+          example: ETHEREUM
           enum:
             - ETHEREUM
             - KLAYTN
@@ -205,9 +208,6 @@ components:
             - BINANCE_SMART_CHAIN
             - BITCOIN_CASH
             - POLYGON
-          type: string
-          description: 메인넷 종류
-          example: ETHEREUM
         metadata:
           type: string
           description: 기타 정보 기록용 메타 데이터 (255자 제한)
@@ -275,6 +275,9 @@ components:
           description: 암호화폐의 양
           example: '1000000000'
         status:
+          type: string
+          description: 트랜잭션 상태
+          example: CONFIRMED
           enum:
             - PENDING_APPROVAL
             - REJECTED
@@ -285,9 +288,6 @@ components:
             - REPLACED
             - MINED
             - CONFIRMED
-          type: string
-          description: 트랜잭션 상태
-          example: CONFIRMED
         orgId:
           type: string
           description: 지갑이 속한 팀(Organization)의 ID
@@ -309,12 +309,12 @@ components:
           description: 암호화폐의 기호
           example: USDT
         transferType:
-          enum:
-            - WITHDRAWAL
-            - DEPOSIT
           type: string
           description: 입출금 타입
           example: WITHDRAWAL
+          enum:
+            - WITHDRAWAL
+            - DEPOSIT
         transactionId:
           type: string
           description: >-
@@ -405,6 +405,9 @@ components:
             다른 개념입니다)
           example: b549bfaaa74d1c4244ecc655738b1984
         blockchain:
+          type: string
+          description: 메인넷 종류
+          example: ETHEREUM
           enum:
             - ETHEREUM
             - KLAYTN
@@ -414,9 +417,6 @@ components:
             - BINANCE_SMART_CHAIN
             - BITCOIN_CASH
             - POLYGON
-          type: string
-          description: 메인넷 종류
-          example: ETHEREUM
         hash:
           type: string
           description: 트랜잭션 해시 (트랜잭션 상태가 REQUESTED일 때는 존재하지 않습니다)
@@ -426,6 +426,9 @@ components:
           description: 트랜잭션 전송 시 발생한 에러
           example: 'null'
         status:
+          type: string
+          description: 트랜잭션 상태
+          example: CONFIRMED
           enum:
             - PENDING_APPROVAL
             - REJECTED
@@ -437,9 +440,6 @@ components:
             - INTERNAL_REVERTED
             - CONFIRMED
             - REPLACED
-          type: string
-          description: 트랜잭션 상태
-          example: CONFIRMED
         fee:
           type: string
           description: 트랜잭션 수수료
@@ -460,6 +460,7 @@ components:
         - id
         - blockchain
         - status
+        - hopAddress
         - createdAt
         - updatedAt
     GetManyResponseForTransactionDTO:
@@ -531,6 +532,9 @@ components:
           description: 지갑 주소
           example: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
         blockchain:
+          type: string
+          description: 메인넷 종류
+          example: ETHEREUM
           enum: &ref_0
             - ETHEREUM
             - KLAYTN
@@ -540,9 +544,6 @@ components:
             - BINANCE_SMART_CHAIN
             - BITCOIN_CASH
             - POLYGON
-          type: string
-          description: 메인넷 종류
-          example: ETHEREUM
         createdAt:
           type: string
           description: '지갑 생성 시간 (형식: ms, UNIX time)'
@@ -552,14 +553,14 @@ components:
           description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
           example: '1612411724023'
         status:
+          type: string
+          description: 지갑 상태
+          example: ACTIVE
           enum: &ref_1
             - ACTIVE
             - CREATING
             - FAILED
             - INACTIVE
-          type: string
-          description: 지갑 상태
-          example: ACTIVE
         whitelistActivated:
           type: boolean
           description: 출금 주소 화이트리스팅의 활성화 유무
@@ -626,6 +627,9 @@ components:
           description: 입금 주소 이름
           example: deposit-address-1
         blockchain:
+          type: string
+          description: 메인넷 종류
+          example: ETHEREUM
           enum:
             - ETHEREUM
             - KLAYTN
@@ -635,9 +639,6 @@ components:
             - BINANCE_SMART_CHAIN
             - BITCOIN_CASH
             - POLYGON
-          type: string
-          description: 메인넷 종류
-          example: ETHEREUM
         createdAt:
           type: string
           description: '지갑 생성 시간 (단위: ms, UNIX time)'
@@ -700,10 +701,10 @@ components:
           description: 지갑 주소
           example: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
         blockchain:
-          enum: *ref_0
           type: string
           description: 메인넷 종류
           example: ETHEREUM
+          enum: *ref_0
         createdAt:
           type: string
           description: '지갑 생성 시간 (형식: ms, UNIX time)'
@@ -713,10 +714,10 @@ components:
           description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
           example: '1612411724023'
         status:
-          enum: *ref_1
           type: string
           description: 지갑 상태
           example: ACTIVE
+          enum: *ref_1
         whitelistActivated:
           type: boolean
           description: 출금 주소 화이트리스팅의 활성화 유무
@@ -838,20 +839,6 @@ components:
         - to
         - data
         - passphrase
-    Target:
-      type: object
-      properties:
-        coinId:
-          type: number
-          description: Henesis에서 부여한 Coin의 ID
-          example: 11
-        userWalletId:
-          type: string
-          description: 사용자 지갑 ID
-          example: c2bd6506cb56a6baaff32653ac77ef49
-      required:
-        - coinId
-        - userWalletId
     CreateFlushRequestDTO:
       type: object
       properties:
@@ -862,7 +849,7 @@ components:
               userWalletId: c2bd6506cb56a6baaff32653ac77ef49
           type: array
           items:
-            $ref: '#/components/schemas/Target'
+            type: array
         gasPrice:
           type: string
           description: >-
@@ -895,10 +882,10 @@ components:
           description: 지갑 주소
           example: '0xdde12e85d7f5d0003eff13f7a3cf6068b5a41454'
         blockchain:
-          enum: *ref_0
           type: string
           description: 메인넷 종류
           example: ETHEREUM
+          enum: *ref_0
         createdAt:
           type: string
           description: '지갑 생성 시간 (형식: ms, UNIX time)'
@@ -908,10 +895,10 @@ components:
           description: '지갑 정보 수정 시간 (단위: ms, UNIX time)'
           example: '1612411724023'
         status:
-          enum: *ref_1
           type: string
           description: 지갑 상태
           example: ACTIVE
+          enum: *ref_1
         whitelistActivated:
           type: boolean
           description: 출금 주소 화이트리스팅의 활성화 유무
@@ -1008,20 +995,6 @@ components:
         - tokenOnchainId
         - to
         - passphrase
-    NftTarget:
-      type: object
-      properties:
-        nftId:
-          type: number
-          description: 집금하고자 하는 NFT 컨트랙트의 ID
-          example: 11
-        userWalletId:
-          type: string
-          description: 사용자 지갑 ID
-          example: c2bd6506cb56a6baaff32653ac77ef49
-      required:
-        - nftId
-        - userWalletId
     CreateNftFlushRequestDTO:
       type: object
       properties:
@@ -1032,7 +1005,7 @@ components:
               depositAddressId: c2bd6506cb56a6baaff32653ac77ef49
           type: array
           items:
-            $ref: '#/components/schemas/NftTarget'
+            type: string
         gasPrice:
           type: string
           description: >-
@@ -1198,6 +1171,9 @@ components:
           description: 입금 주소
           example: '0xdd00383e5a51166bba3e96d84c14a36d72e6c128'
         status:
+          type: string
+          description: 트랜잭션 상태
+          example: CONFIRMED
           enum:
             - PENDING_APPROVAL
             - REJECTED
@@ -1208,9 +1184,6 @@ components:
             - REPLACED
             - MINED
             - CONFIRMED
-          type: string
-          description: 트랜잭션 상태
-          example: CONFIRMED
         orgId:
           type: string
           description: 지갑이 속한 팀(Organization)의 ID
@@ -1241,12 +1214,12 @@ components:
           allOf:
             - $ref: '#/components/schemas/NftTokenDTO'
         transferType:
-          enum:
-            - WITHDRAWAL
-            - DEPOSIT
           type: string
           description: 입출금 타입
           example: WITHDRAWAL
+          enum:
+            - WITHDRAWAL
+            - DEPOSIT
         transactionId:
           type: string
           description: >-
@@ -2155,8 +2128,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ChangeWalletNameRequestDTO'
       responses:
-        '200':
-          description: ''
         '204':
           description: ''
         '400':
@@ -2603,8 +2574,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ChangeWalletNameRequestDTO'
       responses:
-        '200':
-          description: ''
         '204':
           description: ''
         '400':
@@ -3246,8 +3215,6 @@ paths:
             schema:
               $ref: '#/components/schemas/SyncMetadataRequestDTO'
       responses:
-        '201':
-          description: ''
         '204':
           description: ''
         '400':

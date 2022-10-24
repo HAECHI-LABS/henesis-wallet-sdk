@@ -7,17 +7,7 @@ info:
 tags: []
 servers:
   - url: http://localhost:3000
-components:
-  schemas:
-    VersionDTO:
-      type: object
-      properties:
-        version:
-          type: string
-          description: 현재 Henesis API Proxy의 버전
-          example: 2.10.10
-      required:
-        - version
+components: {}
 paths:
   /api/version:
     get:
@@ -36,9 +26,5 @@ paths:
       responses:
         '200':
           description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/VersionDTO'
       tags:
         - version
