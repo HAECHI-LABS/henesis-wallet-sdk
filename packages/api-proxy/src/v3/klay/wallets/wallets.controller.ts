@@ -40,7 +40,6 @@ import {
 import {
   EXAMPLE_ETHEREUM_TRANSACTION_DTO,
   EXAMPLE_KLAYTN_TRANSACTION_DTO,
-  EXAMPLE_POLYGON_TRANSACTION_DTO,
   TransactionDTO,
 } from "../../eth/dto/transaction.dto";
 import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
