@@ -39,7 +39,8 @@ import {
 } from "../../eth/dto/balance.dto";
 import {
   EXAMPLE_ETHEREUM_TRANSACTION_DTO,
-  EXAMPLE_KLAYTN_TRANSACTION_DTO, EXAMPLE_POLYGON_TRANSACTION_DTO,
+  EXAMPLE_KLAYTN_TRANSACTION_DTO,
+  EXAMPLE_POLYGON_TRANSACTION_DTO,
   TransactionDTO,
 } from "../../eth/dto/transaction.dto";
 import { DepositAddressDTO } from "../../eth/dto/deposit-address.dto";
@@ -60,7 +61,8 @@ import {
   TOKEN_NAME_OPTIONAL,
   TOKEN_ONCHAIN_ID_OPTIONAL,
   TRANSACTION_HASH_OPTIONAL,
-  TRANSACTION_ID_OPTIONAL, TRANSACTION_ID_REQUIRED,
+  TRANSACTION_ID_OPTIONAL,
+  TRANSACTION_ID_REQUIRED,
   TRANSFER_TYPE_OPTIONAL,
   UPDATED_AT_GTE_OPTIONAL,
   UPDATED_AT_LE_OPTIONAL,
@@ -72,10 +74,12 @@ import express from "express";
 import {
   DepositAddressNotFoundException,
   EXAMPLE_INVALID_STATUS_EXCEPTION_DTO,
-  EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO, EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO,
+  EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
+  EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO,
   EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
   InvalidStatusException,
-  NoWalletNameException, TransactionIdNotFoundException,
+  NoWalletNameException,
+  TransactionIdNotFoundException,
   WalletNotFoundException,
 } from "../../eth/dto/exceptions.dto";
 import {
@@ -108,7 +112,7 @@ import {
   PARAM_USER_WALLET_ID,
 } from "../../../v2/eth/dto/params";
 import { RetryCreateUserWalletRequestDTO } from "../../eth/dto/retry-create-user-wallet-request.dto";
-import {ReplaceTransactionRequestDTO} from "../../eth/transactions/dto/replace-transaction-request.dto";
+import { ReplaceTransactionRequestDTO } from "../../eth/transactions/dto/replace-transaction-request.dto";
 
 @Controller("wallets")
 @ApiExtraModels(
