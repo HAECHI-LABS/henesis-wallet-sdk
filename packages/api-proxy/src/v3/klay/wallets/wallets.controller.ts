@@ -61,6 +61,7 @@ import {
   TOKEN_ONCHAIN_ID_OPTIONAL,
   TRANSACTION_HASH_OPTIONAL,
   TRANSACTION_ID_OPTIONAL,
+  TRANSACTION_ID_REQUIRED,
   TRANSFER_TYPE_OPTIONAL,
   UPDATED_AT_GTE_OPTIONAL,
   UPDATED_AT_LE_OPTIONAL,
@@ -73,9 +74,11 @@ import {
   DepositAddressNotFoundException,
   EXAMPLE_INVALID_STATUS_EXCEPTION_DTO,
   EXAMPLE_NO_WALLET_NAME_EXCEPTION_DTO,
+  EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO,
   EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO,
   InvalidStatusException,
   NoWalletNameException,
+  TransactionIdNotFoundException,
   WalletNotFoundException,
 } from "../../eth/dto/exceptions.dto";
 import {
@@ -108,6 +111,7 @@ import {
   PARAM_USER_WALLET_ID,
 } from "../../../v2/eth/dto/params";
 import { RetryCreateUserWalletRequestDTO } from "../../eth/dto/retry-create-user-wallet-request.dto";
+import { ReplaceTransactionRequestDTO } from "../../eth/transactions/dto/replace-transaction-request.dto";
 
 @Controller("wallets")
 @ApiExtraModels(
@@ -311,6 +315,48 @@ export class WalletsController {
       request.sdk,
       masterWalletId,
       createTransactionRequest
+    );
+  }
+
+  @Post("/:masterWalletId/transactions/:transactionId/replace")
+  @ApiCreatedResponse({
+    content: ApiResponseContentGenerator(
+      TransactionDTO,
+      EXAMPLE_KLAYTN_TRANSACTION_DTO
+    ),
+  })
+  @PathParams(MASTER_WALLET_ID_REQUIRED, TRANSACTION_ID_REQUIRED)
+  @ApiBadRequestResponse({
+    description: "해당하는 id의 지갑이 없을 때 발생합니다.",
+    content: ApiResponseContentGenerator(
+      WalletNotFoundException,
+      EXAMPLE_WALLET_NOT_FOUND_EXCEPTION_DTO
+    ),
+  })
+  @ApiBadRequestResponse({
+    description: "transaction id가 없을 때 발생합니다",
+    content: ApiResponseContentGenerator(
+      TransactionIdNotFoundException,
+      EXAMPLE_TRANSACTION_ID_NOT_FOUND_EXCEPTION_DTO
+    ),
+  })
+  @ApiOperation({
+    summary: "트랜잭션 교체",
+    description: "마스터 지갑에서 발생한 트랜잭션을 교체합니다",
+  })
+  @ApiTags("wallets")
+  @ReadMeExtension()
+  public async replaceMasterWalletTransaction(
+    @Request() request: express.Request,
+    @Param("masterWalletId") masterWalletId: string,
+    @Param("transactionId") transactionId: string,
+    @Body() replaceTransactionRequest: ReplaceTransactionRequestDTO
+  ): Promise<TransactionDTO> {
+    return await this.walletsService.replaceMasterWalletTransaction(
+      request.sdk,
+      masterWalletId,
+      transactionId,
+      replaceTransactionRequest
     );
   }
 
